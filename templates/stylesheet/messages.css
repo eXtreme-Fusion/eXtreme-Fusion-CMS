@@ -1,0 +1,22 @@
+#messages_frame { overflow:auto;height:400px;}
+#messages_frame section div span.alt { float:right; }
+#message_count { display:none; }
+
+
+
+
+#message_textarea { clear:both; padding-top:10px; ;}
+#message_textarea input { float:right; margin-right:10px;  }
+#message_textarea a { float:left; margin-left:10px;  }
+#message_textarea textarea { margin-bottom:10px;}
+
+#message_to { float:left; margin-left:10px; }
+#message_to select { width:200px; }
+
+#message_subject { margin-left:30px;margin-right:auto; }
+#message_subject input { width:300px; }
+
+#message { margin-left:30px;margin-right:auto; height: 250px;}
+#message input { width:300px; }
+
+#messages_buttons { margin-left:30px;margin-right:auto; padding-top: 10px; }

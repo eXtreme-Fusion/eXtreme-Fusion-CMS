@@ -1,0 +1,20 @@
+.cat-info {
+	float:left;
+	width:150px;
+	height:120px;
+	border-radius:10px;
+	padding-top:10px;
+	margin:0px 10px 10px 10px;
+	background:#2E2E2E;
+}
+.cat-info:hover {
+	background:#3a3a3a;
+}
+.cat-info a:hover {
+	text-decoration:none;
+}
+.cat-info img {
+	min-width:5px;
+	margin:auto;
+	position:relative;
+}

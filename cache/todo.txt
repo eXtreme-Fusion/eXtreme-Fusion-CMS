@@ -1,0 +1,4 @@
+W plikach z tego katalogu trzeba by dodaæ warunek:
+
+Jeœli plik otwierany jest bezposrednio, to wykonuje siê funkcja header() wysy³aj¹ca b³¹d 403.
+By³oby to zabezpieczenie dla u¿ytkowników systemu w wersji bez htaccess.

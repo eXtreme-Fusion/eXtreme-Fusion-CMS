@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /cache/
+Disallow: /locale/
+Disallow: /module/
+Disallow: /pages/
+Disallow: /system/
+Disallow: /templates/
+Disallow: /templates_c/
+Disallow: /themes/
