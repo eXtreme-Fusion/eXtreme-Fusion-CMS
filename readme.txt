@@ -1,0 +1,1 @@
+To jest plik readme. Znajd¹ siê tu informacje na temat projektu EF.
