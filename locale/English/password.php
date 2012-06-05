@@ -6,6 +6,6 @@ return array(
 							If you did not use password recovery option, please ignore this message. :eol
 							To generate new password, please go to the following website address: :eol
 							<a href=":link">:link</a>',
-	'Your new pass' => '<p>Your new password: :password</p><p>Thank you for using password recovery system.</p>
+	'Your new pass' => '<p>Your new password: :password</p><p>Thank you for using password recovery system.</p>',
 	
 );

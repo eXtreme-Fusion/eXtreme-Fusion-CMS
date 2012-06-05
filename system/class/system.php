@@ -262,16 +262,15 @@ class System {
 	// Ładuje systemowy plik htaccess
 	public function loadRewrite()
 	{
-		@rename(DIR_SITE.'sample-.htaccess', DIR_SITE.'.htaccess');
+		@rename(DIR_SITE.'sample.htaccess', DIR_SITE.'.htaccess');
 	}
 
-	// TODO:: po co to?
 	// Dezaktywuje systemowy plik htaccess
 	public function removeRewrite()
 	{
-		if (file_exists(DIR_SITE.'sample-.htaccess'))
+		if (file_exists(DIR_SITE.'sample.htaccess'))
 		{
-			unlink(DIR_SITE.'sample-.htaccess');
+			unlink(DIR_SITE.'sample.htaccess');
 		}
 	}
 }

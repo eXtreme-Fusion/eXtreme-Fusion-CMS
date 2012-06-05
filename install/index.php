@@ -1027,6 +1027,7 @@ function dbconnect($db_host, $db_user, $db_pass, $db_name) {
 
 	$db_connect = @mysql_connect($db_host, $db_user, $db_pass);
 	$db_select = @mysql_select_db($db_name);
+	dbquery("SET NAMES utf8");
 	if (!$db_connect) {
 		return false;
 	} else {

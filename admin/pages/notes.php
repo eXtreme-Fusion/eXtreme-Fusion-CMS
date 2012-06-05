@@ -32,7 +32,7 @@ try
 		$_pdo->exec('UPDATE [notes] SET `note` = :note WHERE `id` = :id',
 			array(
 				array(':id', $_request->post('note_id')->show(), PDO::PARAM_INT),
-				array(':note', $_request->post('note_note')strip(), PDO::PARAM_STR)
+				array(':note', $_request->post('note_note')->strip(), PDO::PARAM_STR)
 			)
 		);
 		
