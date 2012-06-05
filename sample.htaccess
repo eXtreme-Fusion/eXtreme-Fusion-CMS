@@ -2,10 +2,10 @@
 ###| eXtreme-Fusion - Content Management System - version 5         |
 ###+----------------------------------------------------------------+
 ###| Copyright (c) 2005-2012 eXtreme-Fusion Crew                    |
-###| http://extreme-fusion.org/                               	    |
+###| http://extreme-fusion.org/                               		|
 ###+----------------------------------------------------------------+
-###| This product is licensed under the BSD License.                |
-###| http://extreme-fusion.org/ef5/license/		            |
+###| This product is licensed under the BSD License.			    |
+###| http://extreme-fusion.org/ef5/license/						 	|
 ###+---------------------------------------------------------------*/
 AddType text/x-component .htc
 php_flag register_globals off
