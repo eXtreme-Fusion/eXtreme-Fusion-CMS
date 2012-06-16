@@ -9,7 +9,6 @@
 | http://extreme-fusion.org/ef5/license/						 |
 +---------------------------------------------------------------*/
 error_reporting(E_ALL | E_STRICT);
-ini_set('register_globals', 0);
 
 define('FUSION_SELF', basename($_SERVER['PHP_SELF']));
 define('VERSION', '5.0');
@@ -26,8 +25,6 @@ else
 	define('DIR_LOCALE', '..'.DS.'locale'.DS);
 	define('DIR_CLASS', '..'.DS.'system'.DS.'class'.DS);
 }
-
-session_start();
 
 require '..'.DS.'system'.DS.'helpers'.DS.'main.php';
 require '..'.DS.'system'.DS.'class'.DS.'system.php';
