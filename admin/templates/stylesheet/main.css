@@ -25,7 +25,7 @@ body {
 	}
 
 /* Rozszerzenia */
-textarea {resize:none;}
+textarea {resize:vertical;min-height:80px}
 .center {text-align:center;}
 .center-box {margin:0 auto;text-align:center;}
 .italic{font-style:italic}

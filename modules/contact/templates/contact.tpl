@@ -1,6 +1,5 @@
 {if $contact}
-	{php} opentable(__('Contact with :contact', array(':contact' => $contact.title))) {/php}
-	
+	{php} opentable(__('Contact with :contact', array(':contact' => $this->data['contact']['title']))) {/php}
 	{if $error}
 		<div class="error">
 			{section=error}
@@ -22,7 +21,7 @@
 	{if $message}<div class="{$class}">{$message}</div>{/if}
 		<form id="This" action="{$URL_REQUEST}" method="post">
 			<div class="tbl center">
-				Przy pomocy tego formularza możesz się skontaktować z <strong>{$contact.title}</strong>.
+				<p>{$contact.description}</strong>
 			</div>
 			<div class="tbl">
 				<div class="formLabel grid_2 sep_1"><label for="email">Twój adres e-Mail:</label></div>
@@ -40,7 +39,7 @@
 			</div>
 			<div class="tbl">
 				<div class="formLabel grid_2 sep_1"><label for="message">Wiadomość:</label></div>
-				<div class="formField grid_7"><textarea name="message" cols="50" rows="7" id="message" class="textbox">{$form_message}</textarea></div>
+				<div class="formField grid_7"><textarea name="message" cols="50" rows="7" id="message" class="textbox">{if $form_message}{$form_message}{else}{$contact.value}{/if}</textarea></div>
 			</div>
 			<div class="tbl">
 				<div class="formLabel grid_2 sep_1"><label for="message">Wyślij mi kopię:</label></div>

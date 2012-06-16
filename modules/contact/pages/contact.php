@@ -45,6 +45,10 @@ if ($id && $title)
 		$_tpl->printMessage('error', __('Wystąpił błąd podczas wysyłania wiadomości. Prosimy o kontakt z Administratorem.'));
 	}
 
+	$row = $_pdo->getRow('SELECT * FROM [contact] WHERE `id` = :id',
+		array(':id', $id, PDO::PARAM_INT)
+	);
+	
 	if ($_request->post('send_message')->show())
 	{
 		$error = array();
@@ -79,7 +83,8 @@ if ($id && $title)
 				// Czy wysłać kopię do nadawcy?
 				if ($_request->post('sendme_copy')->show())
 				{
-					if ($_mail->send($_request->post('email')->show(), $_sett->get('contact_email'), $_request->post('subject')->filters('trim', 'strip'), $_request->post('message')->show()))
+					$message = 'Wiadomośc do: '.$row['title'].'<br /><br />'.$_request->post('message')->show();
+					if ($_mail->send($_request->post('email')->show(), $_sett->get('contact_email'), $_request->post('subject')->filters('trim', 'strip'), $message))
 					{
 						$_tpl->printMessage('valid', 'Wysłano wiadomość.');
 					}
@@ -115,9 +120,7 @@ if ($id && $title)
 		$_tpl->assign('email', $_user->get('email'));
 	}
 
-	$row = $_pdo->getRow('SELECT `id`, `title`, `email` FROM [contact] WHERE `id` = :id',
-		array(':id', $id, PDO::PARAM_INT)
-	);
+
 
 	if ($row)
 	{
@@ -126,14 +129,9 @@ if ($id && $title)
 			'Keys' => 'contact, '.$row['title'].', form',
 			'Desc' => __('Contact with :contact', array(':contact' => $row['title']))
 		);
-
-		$contact = array(
-			'title' => $row['title'],
-			'email' => $row['email']
-		);
 	}
 
-	$_tpl->assign('contact', $contact);
+	$_tpl->assign('contact', $row);
 	
 	if ($_protection)
 	{

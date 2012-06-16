@@ -3,13 +3,24 @@
 
 <form id="This" action="{$URL_REQUEST}" method="post">
 	<div class="tbl1">
-		<div class="formLabel sep_1 grid_3"><label for="email">{i18n('Adres email')}:</label></div>
-		<div class="formField grid_7"><input type="text" name="email" id="email" value="{$contact.email}" /></div>
+		<div class="formLabel sep_1 grid_4"><label for="title">{i18n('Nazwa')}:</label><small>Przykładowo: Dział techniczny</small></div>
+		<div class="formField grid_6"><input type="text" name="title" id="title" value="{$contact.title}" /></div>
 	</div>
-  
+	
 	<div class="tbl2">
-		<div class="formLabel sep_1 grid_3"><label for="title">{i18n('Nagłówek')}:</label></div>
-		<div class="formField grid_7"><input type="text" name="title" id="title" value="{$contact.title}" /></div>
+		<div class="formLabel sep_1 grid_4"><label for="email">{i18n('Adres e-mail odbiorcy')}:</label><small>Adres e-mail, na który będą wysyłane wiadomości</small></div>
+		<div class="formField grid_6"><input type="text" name="email" id="email" value="{$contact.email}" /></div>
+	</div>
+
+	
+	<div class="tbl1">
+		<div class="formLabel sep_1 grid_4"><label for="Description">{i18n('Opis nad formularzem')}:</label><small>Przykładowo: Aby skontaktować się z Działem technicznym, wypełnij poniższy formularz.</small></div>
+		<div class="formField grid_6"><textarea name="description" id="Description">{$contact.description}</textarea></div>
+	</div>
+	
+	<div class="tbl2">
+		<div class="formLabel sep_1 grid_4"><label for="Value">{i18n('Domyślna wartość')}:</label><small>W polu do wpisania wiadomości można zamieścić wytyczne, które nadawca powinien uwzględnić. Przykładowo: zainteresowania, stanowisko pracy, używany system CMS.</small></div>
+		<div class="formField grid_6"><textarea name="value" id="Value">{$contact.value}</textarea></div>
 	</div>
 
 	<div class="tbl AdminButtons">
