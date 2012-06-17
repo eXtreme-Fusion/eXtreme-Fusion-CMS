@@ -8,7 +8,7 @@
 ###| http://extreme-fusion.org/ef5/license/						 	|
 ###+---------------------------------------------------------------*/
 AddType text/x-component .htc
-php_flag register_globals off  ## test
+php_flag register_globals off
 
 ### EN: REWRITE RULES AND ROUTER
 Options +FollowSymlinks
