@@ -8,100 +8,64 @@
 | This product is licensed under the BSD License.				 |
 | http://extreme-fusion.org/ef5/license/						 |
 +---------------------------------------------------------------*/
-//$_head->set('<link href="'.ADDR_TEMPLATES.'stylesheet/news_cats.css" media="screen" rel="stylesheet" />');
 $_locale->load('news_cats');
 
-$theme = array(
-	'Title' => __('News categories'),
-	'Keys' => '',
-	'Desc' => ''
-);
+$_head->set($_tpl->getHeaders());
 
 if ( ! $_theme->tplExists())
 {
 	$_head->set('<link href="'.ADDR_TEMPLATES.'stylesheet/news_cats.css" media="screen" rel="stylesheet" />');
 }
  
-if ($_route->getByID(1) && isNum($_route->getByID(1), FALSE))
+if ($_route->getAction())
 {
-	$cache = $_system->cache('news_cats_'.$_route->getByID(1), NULL, 86700);
+	$cache = $_system->cache('news,cat-'.$_route->getAction().','.$_user->getCacheName(), NULL, 'news_cats', 0);
 	if ($cache === NULL)
 	{
-		$_tpl->assign('preview', TRUE);
-		
-		$rows = $_pdo->getMatchRowsCount('SELECT `id` FROM [news_cats] WHERE `id` = :id', 
+		$row = $_pdo->getRow('SELECT `id` FROM [news] WHERE `category` = :category',
 			array(
-				array(':id', $_route->getByID(1), PDO::PARAM_INT)
+				array(':category', $_route->getAction(), PDO::PARAM_INT)
 			)
 		);
 		
-		if ($rows)
+		if ($row)
 		{
-			$_tpl->assign('rows', TRUE);
-
-			$data = $_pdo->getRow('SELECT * FROM [news_cats] WHERE `id` = :id', 
-				array(
-					array(':id', $_route->getByID(1), PDO::PARAM_INT)
-				)
-			);
-
-			$count = $_pdo->getSelectCount('SELECT count(*) FROM [news] WHERE `category` = :category AND `access` IN (:access)',
-				array(
-					array(':category', $data['id'], PDO::PARAM_INT),
-					array(':access', $_user->listRoles(), PDO::PARAM_STR)
-				)
-			);
 			
-			$_tpl->assign('c', array(
-				'cat_id'    => $data['id'],
-				'cat_name'  => $data['name'],
-				'cat_image' => $data['image'],
-				'cat_news'  => $count
-			));
-
 			$query = $_pdo->getData('
 				SELECT tn.`id`, tn.`title`, tn.`link`, tn.`content`, tn.`author`, tn.`reads`, tn.`datestamp`, tu.`id` AS `user_id`, tu.`username`
 				FROM [news] tn
 				LEFT JOIN [users] tu ON tn.`author`= tu.`id`
-				WHERE `category` = :category AND tn.`access` IN (:access)
+				WHERE `category` = :category
 				ORDER BY tn.`datestamp` ASC, tn.`title`',
 				array(
-					array(':category', $data['id'], PDO::PARAM_INT),
-					array(':access', $_user->listRoles(), PDO::PARAM_STR)
+					array(':category', intval($row['id']), PDO::PARAM_INT)
 				)
 			);
-			
-			$cache = array();
+
 			if ($_pdo->getRowsCount($query))
 			{
-				foreach ($query as $row)
+				$i = 0;
+				foreach($query as $data)
 				{
-					$cache[] = $row;
+					$cache[] = array(
+						'row_color'      => $i % 2 == 0 ? 'tbl1' : 'tbl2',
+						'news_title_id'   => $data['id'],
+						'news_title_name' => $data['title'],
+						'news_content'   => substr($data['content'], 0, 85).'...',
+						'news_author_id'   => $data['user_id'],
+						'news_author_name' => $_user->getUsername($data['user_id']),
+						'news_reads'     => $data['reads'],
+						'news_datestamp' => HELP::showDate('shortdate', $data['datestamp']),
+						'news_url'		=> $_route->path(array('controller' => 'news', 'action' => $data['id'], HELP::Title2Link($data['title']))),
+						'profile_url'	=> $_route->path(array('controller' => 'profile', 'action' => $data['user_id'], HELP::Title2Link($data['username'])))
+					);
+					$i++;
 				}
 			}
-			$_system->cache('news_cats_'.$_route->getByID(1), $cache);
-		}
-		
-		$i = 0; $n = array();
-		if ( ! empty($cache))
-		{
-			foreach($cache as $data)
-			{
-				$n[] = array(
-					'row_color'      => $i % 2 == 0 ? 'tbl1' : 'tbl2',
-					'news_title_id'   => $data['id'],
-					'news_title_name' => $data['title'],
-					'news_content'   => substr($data['content'], 0, 85).'...',
-					'news_author_id'   => $data['user_id'],
-					'news_author_name' => $_user->getUsername($data['user_id']),
-					'news_reads'     => $data['reads'],
-					'news_datestamp' => HELP::showDate('shortdate', $data['datestamp']),
-					'news_url'		=> $_route->path(array('controller' => 'news', 'action' => $data['id'], HELP::Title2Link($data['title']))),
-					'profile_url'	=> $_route->path(array('controller' => 'profile', 'action' => $data['user_id'], HELP::Title2Link($data['username'])))
-				);
-				$i++;
-			}
-			$_tpl->assign('n', $n);
+			
+			var_dump( $cache);
+			
+			$_system->cache('news,cat-'.$_route->getAction().','.$_user->getCacheName(), $cache, 'news_cats');
 		}
 	}
 }
