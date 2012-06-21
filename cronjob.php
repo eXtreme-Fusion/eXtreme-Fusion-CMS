@@ -12,7 +12,7 @@
 // Cron Job (1 MIN)
 if ($_sett->get('cronjob_templates_clean') < (time()-60))
 {
-	$_files->rmDirRecursive(DIR_TEMPLATES_C);
+	$_files->rmDirRecursive(DIR_CACHE);
 	$_sett->update(array('cronjob_templates_clean' => time()));
 }
 

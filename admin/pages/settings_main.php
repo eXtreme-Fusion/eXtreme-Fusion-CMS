@@ -49,7 +49,7 @@ try
 			'exclude_right' => $_request->post('exclude_right')->strip()
 		));
 		
-		$_files->rmDirRecursive(DIR_TEMPLATES_C);
+		$_files->rmDirRecursive(DIR_CACHE);
 
 		/**
 		 * Poniższe sprawdzanie czy szablon istnieje jest zabezpieczeniem przed następującą sytuacją:

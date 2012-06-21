@@ -312,7 +312,7 @@ class pageNavParser extends optClass
 		$this->httpHeaders(OPT_HTML);
 
 		$this->root = DIR_TEMPLATES.'paging'.DS;
-		$this->compile = DIR_SITE.'templates_c'.DS;
+		$this->compile = DIR_CACHE;
 	}
 
 	// Parametr drugi to katalog, w którym znajduje się szablon.
@@ -339,7 +339,7 @@ class General extends Parser
 
 		parent::loadSystem();
 		$this->root = $root;
-		$this->compile         = DIR_SITE.'templates_c'.DS;
+		$this->compile         = DIR_CACHE;
 		$this->cache           = DIR_CACHE;
 	}
 
@@ -376,7 +376,7 @@ class SiteAjax extends Parser
 
 		parent::loadSystem();
 		$this->setCompilePrefix('site_ajax_');
-		$this->compile         = DIR_SITE.'templates_c'.DS;
+		$this->compile         = DIR_CACHE;
 		$this->cache           = DIR_CACHE;
 
 		$this->_theme = DIR_THEME.'templates'.DS.'ajax'.DS;
@@ -431,7 +431,7 @@ class Iframe extends Parser
 	{
 		$this->setCompilePrefix('admin_iframe_');
 		$this->root            = DIR_ADMIN_TEMPLATES;
-		$this->compile         = DIR_SITE.'templates_c'.DS;
+		$this->compile         = DIR_CACHE;
 	}
 
 	public function template($iframe)
@@ -508,7 +508,7 @@ class Site extends Parser
 	{
 		$this->setCompilePrefix('site_');
 		$this->root            = DIR_TEMPLATES;
-		$this->compile         = DIR_SITE.'templates_c'.DS;
+		$this->compile         = DIR_CACHE;
 		$this->cache           = DIR_CACHE;
 	}
 
@@ -627,7 +627,7 @@ class Panel extends Parser
 	{
 		$this->setCompilePrefix('panels_');
 		$this->root            = DIR_TEMPLATES;
-		$this->compile         = DIR_SITE.'templates_c'.DS;
+		$this->compile         = DIR_CACHE;
 		$this->cache           = DIR_CACHE;
 	}
 
@@ -711,7 +711,7 @@ class Ajax extends Parser
 	protected function setConfig()
 	{
 		$this->setCompilePrefix('ajax_');
-		$this->compile         = DIR_SITE.'templates_c'.DS;
+		$this->compile         = DIR_CACHE;
 		$this->cache           = DIR_CACHE;
 	}
 
@@ -784,7 +784,7 @@ class AdminModuleIframe extends Parser
 	protected function setConfig()
 	{
 		$this->setCompilePrefix('modules_');
-		$this->compile         = DIR_SITE.'templates_c'.DS;
+		$this->compile         = DIR_CACHE;
 		$this->cache           = DIR_CACHE;
 	}
 
@@ -832,7 +832,7 @@ class AdminMainEngine extends Parser
 	{
 		$this->setCompilePrefix('admin_');
 		$this->root            = DIR_ADMIN_TEMPLATES;
-		$this->compile         = DIR_SITE.'templates_c'.DS;
+		$this->compile         = DIR_CACHE;
 		$this->cache           = DIR_CACHE;
 	}
 

@@ -27,7 +27,7 @@ class Comment
 		$this->_sett = $_sett;
 
 		$this->_tpl->root = DIR_TEMPLATES.'pre'.DS;
-		$this->_tpl->compile = DIR_TEMPLATES_C;
+		$this->_tpl->compile = DIR_CACHE;
 	}
 
 	public function get($type, $item, $rowstart = 0, $only_comments = FALSE)

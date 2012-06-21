@@ -36,7 +36,7 @@ class Theme extends optClass
 	{
 		$this->setCompilePrefix('themes_');
 		$this->root            = DIR_THEMES.$this->_theme.DS.'templates'.DS;
-		$this->compile         = DIR_SITE.'templates_c'.DS;
+		$this->compile         = DIR_CACHE;
 		$this->cache           = DIR_SITE.'cache'.DS;
 		$this->gzipCompression = 0;
 		//$this->httpHeaders(OPT_HTML);

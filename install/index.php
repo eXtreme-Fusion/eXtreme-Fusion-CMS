@@ -11,31 +11,34 @@
 error_reporting(E_ALL | E_STRICT);
 
 /*
-define('FUSION_SELF', basename($_SERVER['PHP_SELF']));
-define('VERSION', '5.0');
-*/
+define('FUSION_SELF', basename($_SERVER['PHP_SELF']));*/
 
-if( ! DEFINED('DS')) 
-{
-	define('DS', DIRECTORY_SEPARATOR);
-}
+// Instalowana wersja systemu - wyświetlana w nagłówku nawigacji
+define('VERSION', '5 Beta 5');
 
-require __DIR__.'../bootstrap.php';
+$HostURL = explode('install', $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']);
+
+define('DS', DIRECTORY_SEPARATOR);
+
+define('DIR_BASE', dirname(__FILE__).DS);
+define('DIR_SITE', realpath(DIR_BASE.'../').DS);
+
+define('ADDR_SITE', 'http://'.$HostURL[0]);
+
+require DIR_SITE.'bootstrap.php';
+
+/** Templates init **/
 require_once OPT_DIR.'opt.class.php';
 
 $_tpl = new optClass;
-$_tpl->compile(DIR_COMPILE);
+$_tpl->compile = DIR_CACHE;
+$_tpl->root = DIR_BASE.DS.'templates';
+/***/
 	
 if (isset($_POST['step']) && $_POST['step'] == '6')
 {
-	require_once '..'.DS.'config.php';
+	require_once DIR_SITE.'config.php';
 
-}
-else
-{
-	define('EF5_SYSTEM', TRUE);
-	define('DIR_LOCALE', '..'.DS.'locale'.DS);
-	define('DIR_CLASS', '..'.DS.'system'.DS.'class'.DS);
 }
 
 require '..'.DS.'system'.DS.'helpers'.DS.'main.php';
@@ -316,7 +319,6 @@ $collate = 'utf8_general_ci';
 								"..".DS."templates".DS."images".DS."news".DS => false,
 								"..".DS."templates".DS."images".DS."news".DS."thumbs".DS => false,
 								"..".DS."templates".DS."images".DS."news_cats".DS => false,
-								"..".DS."templates_c".DS => false,
 								"..".DS."tmp".DS => false,
 								"..".DS."config.php" => false
 							);
@@ -461,7 +463,7 @@ $collate = 'utf8_general_ci';
 									if ($cache_prefix == "") { $field_class[4] = " tbl-error"; }
 								}
 							}
-							$HostURL = explode("install", $_SERVER["HTTP_HOST"].$_SERVER['PHP_SELF']);
+							
 
 							?>
 
@@ -514,7 +516,7 @@ $collate = 'utf8_general_ci';
 							</div>
 							<div class="tbl1">
 								<div class="formLabel grid_4"><label for="06"><?php echo(__('URL:')) ?></label></div>
-								<div class="formField grid_3"><input id="06" type='text' value='<?php echo("http://".$HostURL[0]) ?>' name='site_url' /></div>
+								<div class="formField grid_3"><input id="06" type='text' value='<?php echo ADDR_SITE ?>' name='site_url' /></div>
 								<div class="clear"></div>
 							</div>
 
