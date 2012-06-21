@@ -18,7 +18,7 @@
 						<div class="formLabel sep_1 grid_2">{$bbcode_active.name}</div>
 						<div class="formField grid_2">
 							{if $bbcode_active.image}
-								<img src="{$ADDR_SITE}system/bbcodes/images/{$bbcode_active.row}{if $bbcode_active.image == 1}.png{elseif $bbcode_active.image == 2}.gif{elseif $bbcode_active.image == 3}.jpg{/if}" alt="{$bbcode_active.name}" />
+								<img src="{$ADDR_IMAGES}bbcodes/{$bbcode_active.row}{if $bbcode_active.image == 1}.png{elseif $bbcode_active.image == 2}.gif{elseif $bbcode_active.image == 3}.jpg{/if}" alt="{$bbcode_active.name}" />
 							{else}
 								-
 							{/if}
@@ -53,7 +53,7 @@
 			<div class="sep_1 grid_2">{$bbcode_inactive.name}</div>
 			<div class="grid_2">
 				{if $bbcode_inactive.image}
-					<img src="{$ADDR_SITE}system/bbcodes/images/{$bbcode_inactive.row}{if $bbcode_inactive.image == 1}.png{elseif $bbcode_inactive.image == 2}.gif{elseif $bbcode_inactive.image == 3}.jpg{/if}" alt="{$bbcode_inactive.name}" />
+					<img src="{$ADDR_IMAGES}bbcodes/{$bbcode_inactive.row}{if $bbcode_inactive.image == 1}.png{elseif $bbcode_inactive.image == 2}.gif{elseif $bbcode_inactive.image == 3}.jpg{/if}" alt="{$bbcode_inactive.name}" />
 				{else}
 					-
 				{/if}
