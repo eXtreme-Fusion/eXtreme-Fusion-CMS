@@ -28,7 +28,7 @@ function render_page($license = FALSE)
 
 	if ( ! $license)
 	{
-		TPL::this()->assign('Copyright', TPL::this()->showCopyright(TRUE));
+		TPL::this()->assign('Copyright', TPL::this()->showCopyright(FALSE));
 	}
 
 	TPL::this()->assign('AdminLinks', TPL::this()->showAdminLinks());
