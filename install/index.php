@@ -10,14 +10,26 @@
 +---------------------------------------------------------------*/
 error_reporting(E_ALL | E_STRICT);
 
+/*
 define('FUSION_SELF', basename($_SERVER['PHP_SELF']));
 define('VERSION', '5.0');
-if( ! DEFINED('DS')) define('DS', DIRECTORY_SEPARATOR);
+*/
 
+if( ! DEFINED('DS')) 
+{
+	define('DS', DIRECTORY_SEPARATOR);
+}
+
+require __DIR__.'../bootstrap.php';
+require_once OPT_DIR.'opt.class.php';
+
+$_tpl = new optClass;
+$_tpl->compile(DIR_COMPILE);
+	
 if (isset($_POST['step']) && $_POST['step'] == '6')
 {
 	require_once '..'.DS.'config.php';
-	require DIR_SITE.'bootstrap.php';
+
 }
 else
 {

@@ -52,7 +52,7 @@ defined('DIR_FUNCTION') || define('DIR_FUNCTION', DIR_SYSTEM.'function'.DS);
 defined('DIR_INCLUDES') || define('DIR_INCLUDES', DIR_SYSTEM.'includes'.DS);
 
 defined('DIR_TEMPLATES') || define('DIR_TEMPLATES', DIR_SITE.'templates'.DS);
-defined('DIR_TEMPLATES_C') || define('DIR_TEMPLATES_C', DIR_SITE.'templates_c'.DS);
+defined('DIR_COMPILE') || define('DIR_COMPILE', DIR_SITE.'compile'.DS);
 defined('DIR_IMAGES') || define('DIR_IMAGES', DIR_TEMPLATES.'images'.DS);
 
 defined('DIR_UPLOAD') || define('DIR_UPLOAD', DIR_SITE.'upload'.DS);
