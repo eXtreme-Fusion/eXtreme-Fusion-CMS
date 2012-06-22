@@ -114,6 +114,8 @@ try
     ob_start();
 
     $_system = new System;
+	
+	//$_system->setEnv();
 
 	# PHP Data Object
     $_pdo = new PDO_EXT('mysql:host='.$_dbconfig['host'].';dbname='.$_dbconfig['database'].';port='.$_dbconfig['port'], $_dbconfig['user'], $_dbconfig['password'], array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES '.$_dbconfig['charset']));

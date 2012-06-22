@@ -69,6 +69,8 @@ class Router
 			'url' => $this->_sett->getUns('routing', 'url_ext')
 		);
 
+		$this->setEnv();
+		
 		/**
 		 * Metoda zwróci FALSE, jeśli żądanie nie spełnia warunku dotyczącego rozszerzenia.
 		 * Wyświetli się błąd 404, więc wykonanie poniższych metod jest niepotrzebne.
@@ -80,6 +82,17 @@ class Router
 			$this->setParams();
 			$this->setAction();
 		}
+	}
+	
+	/**
+	 * Konfiguruje środowisko pracy dla Routera.
+	 * Tworzy stałą PATH_INFO zawierającą żądanie URL.
+	 */
+	protected function setEnv()
+	{
+		$path = str_replace(basename($_SERVER['PHP_SELF']), '', $_SERVER['SCRIPT_NAME']);
+
+		define('PATH_INFO', str_replace($path, '', $_SERVER['REQUEST_URI']));
 	}
 
 /*start of**********TEST*********/

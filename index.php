@@ -15,23 +15,9 @@ try
 	// Czy dla podstrony musi istnieæ plik TPL?
 	defined('TPL_REQUIRED') || define('TPL_REQUIRED', FALSE);
 
-	// Deklaracja sta³ej œcie¿ki adresu URL
-	if (isset($_SERVER['PATH_INFO']))
-	{
-		define('PATH_INFO', $_SERVER['PATH_INFO']);
-	}
-	elseif (isset($_SERVER['ORIG_PATH_INFO']))
-	{
-		define('PATH_INFO', $_SERVER['ORIG_PATH_INFO']);
-	}
-	else
-	{
-		// Strona g³ówna
-		define('PATH_INFO', '');
-	}
-
 	require_once 'system/sitecore.php';
-
+	
+	// Deklaracja sta³ej œcie¿ki adresu URL
 	if ($_sett->get('maintenance') == 1 && ((iMEMBER && $_sett->get('maintenance_level') == 1 && $_user->get('id') != 1) || ($_sett->get('maintenance_level') > $_user->get('level'))))
 	{
 		HELP::redirect(ADDR_SITE.'maintenance.html');
@@ -51,6 +37,7 @@ try
 	# Routing class
 	$_route = new Router($_sett->get('rewrite_module'), $_sett, 'page', $_sett->get('opening_page'), TRUE, TRUE, FALSE, 'admin');
 
+	
 	/** Konfiguracja obiektu szablonu **/
 	$_tpl   = new Site($_route);
 
