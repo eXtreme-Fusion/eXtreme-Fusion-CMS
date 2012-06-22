@@ -19,10 +19,35 @@ if ( ! $_theme->tplExists())
  
 if ($_route->getAction())
 {
-	$cache = $_system->cache('news,cat-'.$_route->getAction().','.$_user->getCacheName(), NULL, 'news_cats', 0);
+	// Cache dla kategorii newsów opisu, miniaturek, id
+	$category = $_system->cache('news_cats,cat-'.$_route->getAction().','.$_user->getCacheName(), NULL, 'news_cats', 60);
+	if ($category === NULL)
+	{
+		$rows = $_pdo->getRow('SELECT * FROM [news_cats] WHERE `id` = :id', 
+			array(
+				array(':id', $_route->getAction(), PDO::PARAM_INT)
+			)
+		);
+		
+		$category = array(
+			'cat_id'    => $rows['id'],
+			'cat_name'  => $rows['name'],
+			'cat_image' => $rows['image'],
+			'cat_news_count'  => $_pdo->getSelectCount('SELECT `id` FROM [news] WHERE `category` = :category',
+				array(
+					array(':category', $_route->getAction(), PDO::PARAM_INT)
+				)
+			)
+		);
+
+		$_system->cache('news_cats,cat-'.$_route->getAction().','.$_user->getCacheName(), $category, 'news_cats');
+	}
+	
+	// Cache dla wystêpuj¹cych newsów w danej kategorii
+	$cache = $_system->cache('news,cat-'.$_route->getAction().','.$_user->getCacheName(), NULL, 'news_cats', 60);
 	if ($cache === NULL)
 	{
-		$row = $_pdo->getRow('SELECT `id` FROM [news] WHERE `category` = :category',
+		$row = $_pdo->getSelectCount('SELECT `id` FROM [news] WHERE `category` = :category',
 			array(
 				array(':category', $_route->getAction(), PDO::PARAM_INT)
 			)
@@ -30,7 +55,6 @@ if ($_route->getAction())
 		
 		if ($row)
 		{
-			
 			$query = $_pdo->getData('
 				SELECT tn.`id`, tn.`title`, tn.`link`, tn.`content`, tn.`author`, tn.`reads`, tn.`datestamp`, tu.`id` AS `user_id`, tu.`username`
 				FROM [news] tn
@@ -38,7 +62,7 @@ if ($_route->getAction())
 				WHERE `category` = :category
 				ORDER BY tn.`datestamp` ASC, tn.`title`',
 				array(
-					array(':category', intval($row['id']), PDO::PARAM_INT)
+					array(':category', $_route->getAction(), PDO::PARAM_INT)
 				)
 			);
 
@@ -62,12 +86,13 @@ if ($_route->getAction())
 					$i++;
 				}
 			}
-			
-			var_dump( $cache);
-			
 			$_system->cache('news,cat-'.$_route->getAction().','.$_user->getCacheName(), $cache, 'news_cats');
 		}
 	}
+	
+	$_tpl->assign('rows', $cache);
+	
+	$_tpl->assign('category', $category);
 }
 else
 {
