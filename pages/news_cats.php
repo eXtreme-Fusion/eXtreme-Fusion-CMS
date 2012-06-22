@@ -113,6 +113,8 @@ else
 		$_system->cache('news_cats_count', $cache_count);
 	}
 	
+
+	
 	foreach($cache_count as $val)
 	{
 		if ($_user->hasAccess($val['access']))
