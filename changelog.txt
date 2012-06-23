@@ -1,0 +1,5 @@
+eXtreme-Fusion V Beta 5 2012.06.23
+
+- zrezygnowano z $_SERVER['PATH_INFO'] na rzecz $_SERVER['REQUEST_URI'] ze wzglêdu na wystêpuj¹ce problemy na serwerach nginx
+- zrezygnowano z odrzucania pliku .htaccess gdy brakuje na serwerze jedynie modu³u rewrite;
+  usuniêto problem (b³¹d 500) z przenoszeniem strony na nowy serwer, na którym (w przeciwieñstwie do pierwotnego) brakuje modu³u rewrite
