@@ -31,7 +31,7 @@ $_tpl = new optClass;
 $_tpl->compile = DIR_CACHE;
 $_tpl->root = DIR_BASE.DS.'templates';
 /***/
-	
+
 if (isset($_POST['step']) && $_POST['step'] == '6')
 {
 	require_once DIR_SITE.'config.php';
@@ -237,19 +237,18 @@ $collate = 'utf8_general_ci';
 					<?php
 						}
 
-						if (isset($_POST['step']) && $_POST['step'] == '2') 
+						if (isset($_POST['step']) && $_POST['step'] == '2')
 						{
 							$check_rewrite = FALSE;
 							$check_display = '';
 							$config_prepared = FALSE;
-							$htaccess_prepared = FALSE;
-							//$htaccess_source_error = FALSE;
+
 							$rename_available = function_exists('rename');
-							
-							if ( ! file_exists(DIR_SITE.'config.php')) 
+
+							if ( ! file_exists(DIR_SITE.'config.php'))
 							{
-								if (file_exists(DIR_SITE.'sample.config.php') && $rename_available) 
-								{		
+								if (file_exists(DIR_SITE.'sample.config.php') && $rename_available)
+								{
 									@rename(DIR_SITE.'sample.config.php', DIR_SITE.'config.php');
 								}
 								else
@@ -257,9 +256,9 @@ $collate = 'utf8_general_ci';
 									$handle = fopen(DIR_SITE.'config.php', 'w');
 									fclose($handle);
 								}
-								
-								
-								
+
+
+
 								if (file_exists(DIR_SITE.'config.php'))
 								{
 									// W dalszej części instalacji będzie sprawdzone, czy udało się nadać chmod
@@ -273,70 +272,22 @@ $collate = 'utf8_general_ci';
 							{
 								$config_prepared = TRUE;
 							}
-							
-							/*if ($_system->apacheLoadedModules('mod_rewrite')) 
-							{
-								$check_rewrite = TRUE;
 
-								if ( ! file_exists(DIR_SITE.'.htaccess')) 
-								{
-									//$htc_cont = file_get_contents(DIR_SITE.'sample.htaccess');
 
-									if (file_exists(DIR_SITE.'sample.htaccess')) 
-									{
-										if ($rename_available && @rename(DIR_SITE.'sample.htaccess', DIR_SITE.'.htaccess')) 
-										{
-											$htaccess_prepared_error = TRUE;
-										}
-									}
-									else
-									{
-										$htaccess_source_error = TRUE;
-									}
-								}
-								else
-								{
-									
-								}
-							}*/
-							
 							if (! $config_prepared ): ?>
-							
-							<div class="info"><?php echo "Nazwy poniższych plików proszę zmienić według instrukcji. Czynność jest niezbędna do dokończenia instalacji.";  ?></div><br />
 
-							<?php
-							if (! $config_prepared)
-							{ ?>
+								<div class="info">Nazwy poniższych plików proszę zmienić według instrukcji. Czynność jest niezbędna do dokończenia instalacji.</div><br />
+
 								<div class='grid_2'>&nbsp;</div>
 								<div class='grid_3'>&raquo; sample.config.php => config.php</div>
 								<div class='center grid_3'><span style='color:red;'>Nie zmieniono</span></div>
 								<div class='clear'></div>
-							 <?php
-							}
-							
-							if ($check_rewrite === TRUE) 
-							{ 
-								if (isset($htaccess_source_error))
-								{ ?>
-									<p>Twój serwer obsługuje `rewrite module`, ale nie znaleziono pliku sample.htaccess. Należy go zamieścić na serwerze.</p>
-								 <?php
-								}
-								elseif (isset($htaccess_prepared_error))
-								{ ?>
-							
-									<div class='grid_2'>&nbsp;</div>
-									<div class='grid_3'>&raquo; sample.htaccess => .htaccess</div>
-									<div class='center grid_3'><span style='color:red;'>Nie zmieniono</span></div>
-									<div class='clear'></div>
-								 <?php 
-								}
-							} ?>
 
-								
-							 <?php
-							endif; ?>
+							<?php endif; ?>
+							
+							<!---tu dac info że serwer nie ma rewrite (najpierw sprawdzic czy rzeczywiscie nie ma) -->
 
-							<div class="info"><?php echo "Proszę zmienić uprawnienia na zapis w poniższych katalogach i plikach"; ?></div><br />
+							<div class="info">Poniższym katalogom i plikom należy ustawić zapisywalność (chmod 777).</div><br />
 
 							<?php
 							$check_arr = array(
@@ -371,7 +322,7 @@ $collate = 'utf8_general_ci';
 									}
 								}
 								$check_display .= "<div class='grid_2'>&nbsp;</div>\n";
-								$check_display .= "<div class='grid_3'>&raquo; ".str_replace(array('..\\', '../'), '', $key)."</div>\n";
+								$check_display .= "<div class='grid_3'>&raquo; ".str_replace(array('..\\', '../', '\\'), '/', $key)."</div>\n";
 								$check_display .= "<div class='center grid_3'>".($check_arr[$key] == TRUE ? "<span style='color:green;'>".__('Writeable')."</span>" : "<span style='color:red;'>".__('Unwriteable')."</span>")."</div>\n";
 								$check_display .= "<div class='clear'></div>\n";
 							}
@@ -460,7 +411,7 @@ $collate = 'utf8_general_ci';
 								<?php } ?>
 							</div>
 							<div class="clear"></div>
-						 <?php 
+						 <?php
 						}
 
 
@@ -498,7 +449,7 @@ $collate = 'utf8_general_ci';
 									if ($cache_prefix == "") { $field_class[4] = " tbl-error"; }
 								}
 							}
-							
+
 
 							?>
 
