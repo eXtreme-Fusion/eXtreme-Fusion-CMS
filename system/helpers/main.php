@@ -89,6 +89,20 @@ Class HELP
 		}
 	}
 
+	// TODO:: Przerobic na metodę routera
+	public static function createNaviLink($url, $rewrite)
+	{
+		if (!preg_match('/^http:/i', $url))
+		{
+			if ($rewrite)
+			{
+				return ADDR_SITE.$url;
+			}
+			
+			return ADDR_SITE.'index.php/'.$url;
+		}
+	}
+
 	public static function hoursToSeconds($time, $conv = FALSE)
 	{
 		if (isNum($time, TRUE))
