@@ -10,9 +10,6 @@
 +---------------------------------------------------------------*/
 error_reporting(E_ALL | E_STRICT);
 
-/*
-define('FUSION_SELF', basename($_SERVER['PHP_SELF']));*/
-
 // Instalowana wersja systemu - wyświetlana w nagłówku nawigacji
 define('VERSION', '5 Beta 5');
 
@@ -41,20 +38,20 @@ if (isset($_POST['step']) && $_POST['step'] == '6')
 
 }
 
-require '..'.DS.'system'.DS.'helpers'.DS.'main.php';
-require '..'.DS.'system'.DS.'class'.DS.'system.php';
+require DIR_SITE.'system'.DS.'helpers'.DS.'main.php';
+require DIR_SITE.'system'.DS.'class'.DS.'system.php';
 
 $_system = new System(FALSE);
 
 $default_lang = detectBrowserLanguage();
 
-if (isset($_POST['localeset']) && file_exists('..'.DS.'locale'.DS.$_POST['localeset']) && is_dir('..'.DS.'locale'.DS.$_POST['localeset']))
+if (isset($_POST['localeset']) && file_exists(DIR_SITE.'locale'.DS.$_POST['localeset']) && is_dir(DIR_SITE.'locale'.DS.$_POST['localeset']))
 {
 	$_SESSION['localeset'] = $_POST['localeset'];
 }
 elseif ( ! isset($_SESSION['localeset']))
 {
-	if (file_exists('..'.DS.'locale'.DS.$default_lang) && is_dir('..'.DS.'locale'.DS.$default_lang))
+	if (file_exists(DIR_SITE.'locale'.DS.$default_lang) && is_dir(DIR_SITE.'locale'.DS.$default_lang))
 	{
 		$_SESSION['localeset'] = $default_lang;
 	}
@@ -155,7 +152,7 @@ $collate = 'utf8_general_ci';
 				<form action="index.php" method="post" id="This" enctype="multipart/form-data" style="float:left;width:720px;" autocomplete="off">
 					<?php
 						if (!isset($_POST['step']) || $_POST['step'] == "" || $_POST['step'] == "1") {
-							$locale_list = makefileopts(makefilelist('..'.DS.'locale/', ".svn|.|..", true, "folders"), detectBrowserLanguage());
+							$locale_list = makefileopts(makefilelist(DIR_SITE.'locale/', ".svn|.|..", TRUE, "folders"), detectBrowserLanguage());
 
 					?>
 						<div class="tbl1">
@@ -240,105 +237,142 @@ $collate = 'utf8_general_ci';
 					<?php
 						}
 
-						if (isset($_POST['step']) && $_POST['step'] == "2") {
-							$check_rewrite = false;
-							$check_display = "";
-							$config_prepared = false;
-							$htaccess_prepared = false;
-
-							if ( ! file_exists('..'.DS.'config.php')) {
-								if (file_exists('..'.DS.'sample.config.php') && function_exists("rename")) {
-									if (@rename('..'.DS.'sample.config.php', '..'.DS.'config.php') && @chmod('..'.DS.'config.php', 0777)) {
-										$config_prepared = true;
-									}
+						if (isset($_POST['step']) && $_POST['step'] == '2') 
+						{
+							$check_rewrite = FALSE;
+							$check_display = '';
+							$config_prepared = FALSE;
+							$htaccess_prepared = FALSE;
+							//$htaccess_source_error = FALSE;
+							$rename_available = function_exists('rename');
+							
+							if ( ! file_exists(DIR_SITE.'config.php')) 
+							{
+								if (file_exists(DIR_SITE.'sample.config.php') && $rename_available) 
+								{		
+									@rename(DIR_SITE.'sample.config.php', DIR_SITE.'config.php');
 								}
-								/* Po co to?
-								 else {
-									$handle = fopen('..'.DS.'config.php', "w");
+								else
+								{
+									$handle = fopen(DIR_SITE.'config.php', 'w');
 									fclose($handle);
-								}*/
+								}
+								
+								
+								
+								if (file_exists(DIR_SITE.'config.php'))
+								{
+									// W dalszej części instalacji będzie sprawdzone, czy udało się nadać chmod
+									@chmod(DIR_SITE.'config.php', 0777);
+									//echo 5; exit;
+									// Plik istnieje i o to chodziło
+									$config_prepared = TRUE;
+								}
 							}
-							if ($_system->apacheLoadedModules('mod_rewrite')) {
-								$check_rewrite = true;
+							else
+							{
+								$config_prepared = TRUE;
+							}
+							
+							/*if ($_system->apacheLoadedModules('mod_rewrite')) 
+							{
+								$check_rewrite = TRUE;
 
-								if ( ! file_exists('..'.DS.'.htaccess')) {
-									if (file_exists('..'.DS.'sample.htaccess') && function_exists("rename")) {
-										if (@rename('..'.DS.'sample.htaccess', '..'.DS.'.htaccess')) {
-											$htaccess_prepared = true;
+								if ( ! file_exists(DIR_SITE.'.htaccess')) 
+								{
+									//$htc_cont = file_get_contents(DIR_SITE.'sample.htaccess');
+
+									if (file_exists(DIR_SITE.'sample.htaccess')) 
+									{
+										if ($rename_available && @rename(DIR_SITE.'sample.htaccess', DIR_SITE.'.htaccess')) 
+										{
+											$htaccess_prepared_error = TRUE;
 										}
 									}
+									else
+									{
+										$htaccess_source_error = TRUE;
+									}
 								}
-							}
-
-
-
-							 ?>
-
-
+								else
+								{
+									
+								}
+							}*/
+							
+							if (! $config_prepared ): ?>
+							
 							<div class="info"><?php echo "Nazwy poniższych plików proszę zmienić według instrukcji. Czynność jest niezbędna do dokończenia instalacji.";  ?></div><br />
 
-							<div class='grid_2'>&nbsp;</div>
-							<div class='grid_3'>&raquo; sample.config.php => config.php</div>
-							<div class='center grid_3'>
-								<?php if (file_exists('..'.DS.'config.php')) {
-									echo "<span style='color:green;'>OK</span>";
-								}else {
-									$extension_error = true;
-									echo "<span style='color:red;'>Nie zmieniono</span>";
-								} ?>
-								</div>
-							<div class='clear'></div>
 							<?php
-							if ($check_rewrite === true) { ?>
-							<div class='grid_2'>&nbsp;</div>
-							<div class='grid_3'>&raquo; sample.htaccess => .htaccess</div>
-							<div class='center grid_3'><?php if (file_exists('..'.DS.'.htaccess')) {
-									echo "<span style='color:green;'>OK</span>";
-								}else {
-									$extension_error = true;
-									echo "<span style='color:red;'>Nie zmieniono</span>";
-								} ?>
-								</div>
-							<div class='clear'></div>
-							<?php } ?>
+							if (! $config_prepared)
+							{ ?>
+								<div class='grid_2'>&nbsp;</div>
+								<div class='grid_3'>&raquo; sample.config.php => config.php</div>
+								<div class='center grid_3'><span style='color:red;'>Nie zmieniono</span></div>
+								<div class='clear'></div>
+							 <?php
+							}
+							
+							if ($check_rewrite === TRUE) 
+							{ 
+								if (isset($htaccess_source_error))
+								{ ?>
+									<p>Twój serwer obsługuje `rewrite module`, ale nie znaleziono pliku sample.htaccess. Należy go zamieścić na serwerze.</p>
+								 <?php
+								}
+								elseif (isset($htaccess_prepared_error))
+								{ ?>
+							
+									<div class='grid_2'>&nbsp;</div>
+									<div class='grid_3'>&raquo; sample.htaccess => .htaccess</div>
+									<div class='center grid_3'><span style='color:red;'>Nie zmieniono</span></div>
+									<div class='clear'></div>
+								 <?php 
+								}
+							} ?>
 
-							<br /><div class="info"><?php echo "Proszę także zmienić uprawnienia na zapis w poniższych katalogach i plikach"; ?></div><br />
+								
+							 <?php
+							endif; ?>
+
+							<div class="info"><?php echo "Proszę zmienić uprawnienia na zapis w poniższych katalogach i plikach"; ?></div><br />
 
 							<?php
 							$check_arr = array(
-								"..".DS."cache".DS => false,
-								"..".DS."upload".DS => false,
-								"..".DS."upload".DS."archives".DS => false,
-								"..".DS."upload".DS."documents".DS => false,
-								"..".DS."upload".DS."images".DS => false,
-								"..".DS."upload".DS."movies".DS => false,
-								"..".DS."system".DS."opt".DS."plugins".DS => false,
-								"..".DS."templates".DS."images".DS => false,
-								"..".DS."templates".DS."images".DS."imagelist.js" => false,
-								"..".DS."templates".DS."images".DS."avatars".DS => false,
-								"..".DS."templates".DS."images".DS."news".DS => false,
-								"..".DS."templates".DS."images".DS."news".DS."thumbs".DS => false,
-								"..".DS."templates".DS."images".DS."news_cats".DS => false,
-								"..".DS."tmp".DS => false,
-								"..".DS."config.php" => false
+								"..".DS."cache".DS => FALSE,
+								"..".DS."upload".DS => FALSE,
+								"..".DS."upload".DS."archives".DS => FALSE,
+								"..".DS."upload".DS."documents".DS => FALSE,
+								"..".DS."upload".DS."images".DS => FALSE,
+								"..".DS."upload".DS."movies".DS => FALSE,
+								"..".DS."system".DS."opt".DS."plugins".DS => FALSE,
+								"..".DS."templates".DS."images".DS => FALSE,
+								"..".DS."templates".DS."images".DS."imagelist.js" => FALSE,
+								"..".DS."templates".DS."images".DS."avatars".DS => FALSE,
+								"..".DS."templates".DS."images".DS."news".DS => FALSE,
+								"..".DS."templates".DS."images".DS."news".DS."thumbs".DS => FALSE,
+								"..".DS."templates".DS."images".DS."news_cats".DS => FALSE,
+								"..".DS."tmp".DS => FALSE,
+								"..".DS."config.php" => FALSE
 							);
 
-							$write_check = true; $i = 0;
+							$write_check = TRUE; $i = 0;
 							foreach ($check_arr as $key => $value) {
 								if (file_exists($key) && is_writable($key)) {
-									$check_arr[$key] = true;
+									$check_arr[$key] = TRUE;
 									$i++;
 								} else {
 									if (file_exists($key) && function_exists("chmod") && @chmod($key, 0777) && is_writable($key)) {
-										$check_arr[$key] = true;
+										$check_arr[$key] = TRUE;
 										$i++;
 									} else {
-										$write_check = false;
+										$write_check = FALSE;
 									}
 								}
 								$check_display .= "<div class='grid_2'>&nbsp;</div>\n";
 								$check_display .= "<div class='grid_3'>&raquo; ".str_replace(array('..\\', '../'), '', $key)."</div>\n";
-								$check_display .= "<div class='center grid_3'>".($check_arr[$key] == true ? "<span style='color:green;'>".__('Writeable')."</span>" : "<span style='color:red;'>".__('Unwriteable')."</span>")."</div>\n";
+								$check_display .= "<div class='center grid_3'>".($check_arr[$key] == TRUE ? "<span style='color:green;'>".__('Writeable')."</span>" : "<span style='color:red;'>".__('Unwriteable')."</span>")."</div>\n";
 								$check_display .= "<div class='clear'></div>\n";
 							}
 							$count = $i;
@@ -426,14 +460,15 @@ $collate = 'utf8_general_ci';
 								<?php } ?>
 							</div>
 							<div class="clear"></div>
-						<?php }
+						 <?php 
+						}
 
 
 						if (isset($_POST['step']) && $_POST['step'] == "3") {
 							$HostURL = '';
-							$db_prefix = "extreme_".substr(md5(uniqid("ef5_db", false)), 13, 7)."_";
-							$cookie_prefix = "extreme_".substr(md5(uniqid("ef5_cookie", false)), 13, 7)."_";
-							$cache_prefix = "extreme_".substr(md5(uniqid("ef5_cache", false)), 13, 7)."_";
+							$db_prefix = "extreme_".substr(md5(uniqid("ef5_db", FALSE)), 13, 7)."_";
+							$cookie_prefix = "extreme_".substr(md5(uniqid("ef5_cookie", FALSE)), 13, 7)."_";
+							$cache_prefix = "extreme_".substr(md5(uniqid("ef5_cache", FALSE)), 13, 7)."_";
 
 							$db_host = (isset($_POST['db_host']) ? stripinput(trim($_POST['db_host'])) : "localhost");
 							$db_port = (isset($_POST['db_port']) ? stripinput(trim($_POST['db_port'])) : "3306");
@@ -565,11 +600,11 @@ $collate = 'utf8_general_ci';
 								$db_select = @mysql_select_db($db_name);
 								if ($db_select) {
 									if (dbrows(dbquery("SHOW TABLES LIKE '$db_prefix%'")) == "0") {
-										$table_name = uniqid($db_prefix, false); $can_write = true;
+										$table_name = uniqid($db_prefix, FALSE); $can_write = TRUE;
 										$result = dbquery("CREATE TABLE ".$table_name." (test_field VARCHAR(10) NOT NULL) ENGINE=MyISAM;");
-										if (!$result) { $can_write = false; }
+										if (!$result) { $can_write = FALSE; }
 										$result = dbquery("DROP TABLE ".$table_name);
-										if (!$result) { $can_write = false; }
+										if (!$result) { $can_write = FALSE; }
 										if ($can_write) {
 
 											include_once "create_config.php";
@@ -577,7 +612,7 @@ $collate = 'utf8_general_ci';
 											$temp = fopen("..".DS."config.php","w");
 											if (fwrite($temp, $config)) {
 												fclose($temp);
-												$fail = false;
+												$fail = FALSE;
 
 												include_once "create_db.php";
 
@@ -585,51 +620,51 @@ $collate = 'utf8_general_ci';
 													$msg .= "<div class='valid'>".__('Database connection established.')."</div><br />";
 													$msg .= "<div class='valid'>".__('Config file successfully written.')."</div><br />";
 													$msg .= "<div class='valid'>".__('Database tables created.')."</div>";
-													$success = true;
+													$success = TRUE;
 													$db_error = 6;
 												} else {
 													$msg .= "<div class='valid'>".__('Database connection established.')."</div><br />";
 													$msg .= "<div class='valid'>".__('Config file successfully written.')."</div><br />";
 													$msg .= "<div class='error'><strong>".__('Error:')."</strong> ".__('Unable to create database tables.')."</div>";
-													$success = false;
+													$success = FALSE;
 													$db_error = 0;
 												}
 											} else {
 												$msg .= "<div class='valid'>".__('Database connection established.')."</div><br />";
 												$msg .= "<div class='error'><strong>".__('Error:')."</strong> ".__('Unable to write config file.')."</div><br />";
 												$msg .= "<div class='status'>".__('Please ensure config.php is writable.')."</div>";
-												$success = false;
+												$success = FALSE;
 												$db_error = 5;
 											}
 										} else {
 											$msg .= "<div class='valid'>".__('Database connection established.')."</div><br />";
 											$msg .= "<div class='error'><strong>".__('Error:')."</strong> ".__('Could not write or delete MySQL tables.')."</div><br />";
 											$msg .= "<div class='status'>".__('Please make sure your MySQL user has read, write and delete permission for the selected database.')."</div>";
-											$success = false;
+											$success = FALSE;
 											$db_error = 4;
 										}
 									} else {
 										$msg .= "<div class='error'><strong>".__('Error:')."</strong> ".__('Table prefix error.')."</div><br />";
 										$msg .= "<div class='status'>".__('The specified table prefix is already in use.')."</div>";
-										$success = false;
+										$success = FALSE;
 										$db_error = 3;
 									}
 								} else {
 									$msg .= "<div class='error'><strong>".__('Error:')."</strong> ".__('Unable to connect with MySQL database.')."</div><br />";
 									$msg .= "<div class='status'>".__('The specified MySQL database does not exist.')."</div>";
-									$success = false;
+									$success = FALSE;
 									$db_error = 2;
 								}
 							} else {
 								$msg .= "<div class='error'><strong>".__('Error:')."</strong> ".__('Unable to connect with MySQL.')."</div><br />";
 								$msg .= "<div class='status'>".__('Please ensure your MySQL username and password are correct.')."</div>";
-								$success = false;
+								$success = FALSE;
 								$db_error = 1;
 							}
 						} else {
 							$msg .= "<div class='error'><strong>".__('Error:')."</strong> ".__('Empty fields.')."</div><br />";
 							$msg .= "<div class='status'>".__('Please make sure you have filled out all the MySQL connection fields.')."</div>";
-							$success = false;
+							$success = FALSE;
 							$db_error = 7;
 						}
 						echo("<input type='hidden' name='localeset' value='".stripinput($_POST['localeset'])."' />");
@@ -712,11 +747,11 @@ $collate = 'utf8_general_ci';
 								$db_select = @mysql_select_db($db_name);
 								if ($db_select) {
 									if (dbrows(dbquery("SHOW TABLES LIKE '$db_prefix%'")) == "0") {
-										$table_name = uniqid($db_prefix, false); $can_write = true;
+										$table_name = uniqid($db_prefix, FALSE); $can_write = TRUE;
 										$result = dbquery("CREATE TABLE ".$table_name." (test_field VARCHAR(10) NOT NULL) ENGINE=MyISAM;");
-										if (!$result) { $can_write = false; }
+										if (!$result) { $can_write = FALSE; }
 										$result = dbquery("DROP TABLE ".$table_name);
-										if (!$result) { $can_write = false; }
+										if (!$result) { $can_write = FALSE; }
 										if ($can_write) {
 
 											include_once "create_config.php";
@@ -724,7 +759,7 @@ $collate = 'utf8_general_ci';
 											$temp = fopen("..".DS."config.php","w");
 											if (fwrite($temp, $config)) {
 												fclose($temp);
-												$fail = false;
+												$fail = FALSE;
 
 												include_once "create_db.php";
 
@@ -732,51 +767,51 @@ $collate = 'utf8_general_ci';
 													$msg .= "<div class='valid'>".__('Database connection established.')."</div><br />";
 													$msg .= "<div class='valid'>".__('Config file successfully written.')."</div><br />";
 													$msg .= "<div class='valid'>".__('Database tables created.')."</div>";
-													$success = true;
+													$success = TRUE;
 													$db_error = 6;
 												} else {
 													$msg .= "<div class='valid'>".__('Database connection established.')."</div><br />";
 													$msg .= "<div class='valid'>".__('Config file successfully written.')."</div><br />";
 													$msg .= "<div class='error'><strong>".__('Error:')."</strong> ".__('Unable to create database tables.')."</div>";
-													$success = false;
+													$success = FALSE;
 													$db_error = 0;
 												}
 											} else {
 												$msg .= "<div class='valid'>".__('Database connection established.')."</div><br />";
 												$msg .= "<div class='error'><strong>".__('Error:')."</strong> ".__('Unable to write config file.')."</div><br />";
 												$msg .= "<div class='status'>".__('Please ensure config.php is writable.')."</div>";
-												$success = false;
+												$success = FALSE;
 												$db_error = 5;
 											}
 										} else {
 											$msg .= "<div class='valid'>".__('Database connection established.')."</div><br />";
 											$msg .= "<div class='error'><strong>".__('Error:')."</strong> ".__('Could not write or delete MySQL tables.')."</div><br />";
 											$msg .= "<div class='status'>".__('Please make sure your MySQL user has read, write and delete permission for the selected database.')."</div>";
-											$success = false;
+											$success = FALSE;
 											$db_error = 4;
 										}
 									} else {
 										$msg .= "<div class='error'><strong>".__('Error:')."</strong> ".__('Table prefix error.')."</div><br />";
 										$msg .= "<div class='status'>".__('The specified table prefix is already in use.')."</div>";
-										$success = false;
+										$success = FALSE;
 										$db_error = 3;
 									}
 								} else {
 									$msg .= "<div class='error'><strong>".__('Error:')."</strong> ".__('Unable to connect with MySQL database.')."</div><br />";
 									$msg .= "<div class='status'>".__('The specified MySQL database does not exist.')."</div>";
-									$success = false;
+									$success = FALSE;
 									$db_error = 2;
 								}
 							} else {
 								$msg .= "<div class='error'><strong>".__('Error:')."</strong> ".__('Unable to connect with MySQL.')."</div><br />";
 								$msg .= "<div class='status'>".__('Please ensure your MySQL username and password are correct.')."</div>";
-								$success = false;
+								$success = FALSE;
 								$db_error = 1;
 							}
 						} else {
 							$msg .= "<div class='error'><strong>".__('Error:')."</strong> ".__('Empty fields.')."</div><br />";
 							$msg .= "<div class='status'>".__('Please make sure you have filled out all the MySQL connection fields.')."</div>";
-							$success = false;
+							$success = FALSE;
 							$db_error = 7;
 						}
 
@@ -921,9 +956,9 @@ $collate = 'utf8_general_ci';
 
 					if (isset($_POST['step']) && $_POST['step'] == "6") {
 
-						if (file_exists('..'.DS.'cache'.DS))
+						if (file_exists(DIR_SITE.'cache'.DS))
 						{
-							$_system->clearCache(NULL, array(), '..'.DS.'cache'.DS);
+							$_system->clearCache(NULL, array(), DIR_SITE.'cache'.DS);
 						}
 
 						$dbconnect = dbconnect($_dbconfig['host'].':'.$_dbconfig['port'], $_dbconfig['user'], $_dbconfig['password'], $_dbconfig['database']);
@@ -934,7 +969,7 @@ $collate = 'utf8_general_ci';
 						$email = (isset($_POST['email']) ? stripinput(trim($_POST['email'])) : "");
                         $site_url = (isset($_POST['site_url']) ? $_POST['site_url'] : "");
 
-						$error = ""; $error_pass = "0"; $error_name = "0"; $error_mail = "0";
+						$error = ''; $error_pass = "0"; $error_name = "0"; $error_mail = "0";
 
 						if ($username == "") {
 							$error .= __('User name field can not be left empty.')."<br /><br />\n";
@@ -970,7 +1005,7 @@ $collate = 'utf8_general_ci';
 								include_once "create_settings.php";
 							}
 
-							if (function_exists("chmod")) { @chmod('..'.DS.'config.php', 0644); }
+							if (function_exists("chmod")) { @chmod(DIR_SITE.'config.php', 0644); }
 							?>
 
 							<div class="center"><?php echo(__('Setup complete')) ?></div><br />
@@ -1040,9 +1075,9 @@ function dbconnect($db_host, $db_user, $db_pass, $db_name) {
 	$db_select = @mysql_select_db($db_name);
 	dbquery("SET NAMES utf8");
 	if (!$db_connect) {
-		return false;
+		return FALSE;
 	} else {
-		return true;
+		return TRUE;
 	}
 }
 
@@ -1050,7 +1085,7 @@ function dbquery($query) {
 	$result = @mysql_query($query);
 	if (!$result) {
 		echo mysql_error();
-		return false;
+		return FALSE;
 	} else {
 		return $result;
 	}
@@ -1086,7 +1121,7 @@ function insert($table = null, $fields = null)
 	// Sprawdzanie, czy parametry nie zostały pominięte, a zmienna $fields jest tablicą
 	if (is_null($table) || is_null($fields) || !is_array($fields))
 	{
-		return false;
+		return FALSE;
 	}
 
 	$keys = implode('`, `', array_keys($fields));
@@ -1112,13 +1147,13 @@ function isnum($value) {
 	if (!is_array($value)) {
 		return (preg_match("/^[0-9]+$/", $value));
 	} else {
-		return false;
+		return FALSE;
 	}
 }
 */
 
 // Create a list of files or folders and store them in an array
-function makefilelist($folder, $filter, $sort=true, $type="files") {
+function makefilelist($folder, $filter, $sort=TRUE, $type="files") {
 	$res = array();
 	$filter = explode("|", $filter);
 	$temp = opendir($folder);
@@ -1136,7 +1171,7 @@ function makefilelist($folder, $filter, $sort=true, $type="files") {
 
 // Create a selection list from an array created by makefilelist()
 function makefileopts($files, $selected = "") {
-	$res = "";
+	$res = '';
 	for ($i=0; $i < count($files); $i++) {
 		$sel = ($selected == $files[$i] ? " selected='selected'" : "");
 		$res .= "<option value='".$files[$i]."'$sel>".$files[$i]."</option>\n";
@@ -1173,5 +1208,5 @@ function detectBrowserLanguage()
 	return $current;
 }
 
-if (isset($db_connect) && $db_connect != false) { mysql_close($db_connect); }
+if (isset($db_connect) && $db_connect != FALSE) { mysql_close($db_connect); }
 ?>
