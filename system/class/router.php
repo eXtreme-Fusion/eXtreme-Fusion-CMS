@@ -46,6 +46,8 @@ class Router
 		$_params_void_order = array(),
 		$_params_merge = array(), 	/**********TEST*********/ // Tablica parametrów zdefiniowanych i niezdefiniowanych (patrz opis metody setMergeParams()).
 		$_action = '';			  	/**********TEST*********/
+		
+	protected $_index_file = 'index.php';
 
 
 	public function __construct($rewrite, $_sett, $main_param, $opening_page, $ret_default = FALSE, $search_more = TRUE, $search_admin = FALSE, $searching = '')
@@ -90,9 +92,14 @@ class Router
 	 */
 	protected function setEnv()
 	{
-		$path = str_replace(basename($_SERVER['PHP_SELF']), '', $_SERVER['SCRIPT_NAME']);
-
-		define('PATH_INFO', str_replace($path, '', $_SERVER['REQUEST_URI']));
+		/**
+		 * Lokalizacja na serwerze wykonywanego skryptu.
+		 * Nie zawiera nazwy pliku w przeciwieństwie do $_SERVER['SCRIPT_NAME'].
+		 * Przy korzystaniu z `rewrite module` obcina żądanie o wartość tej zmiennej.
+		 */
+		$script_path = str_replace($this->_index_file, '', $_SERVER['SCRIPT_NAME']);
+		
+		define('PATH_INFO', str_replace(array($_SERVER['SCRIPT_NAME'], $script_path), '', $_SERVER['REQUEST_URI']));
 	}
 
 /*start of**********TEST*********/
