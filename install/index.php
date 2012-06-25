@@ -278,8 +278,6 @@ $collate = 'utf8_general_ci';
 
 							<?php endif; ?>
 							
-							<!---tu dac info że serwer nie ma rewrite (najpierw sprawdzic czy rzeczywiscie nie ma) -->
-
 							<div class="info">Poniższym katalogom i plikom należy ustawić zapisywalność (chmod 777).</div><br />
 
 							<?php

@@ -233,13 +233,18 @@ class System {
 		return $row;
 	}
 
+	public function apacheCheckModuleExists()
+	{
+		return function_exists('apache_get_modules');
+	}
+	
 	/**
 	 * Sprawdza, czy moduł Apache podany parametrem istnieje
 	 * lub zwraca tablicę załądowanych modułów Apache
 	 */
 	public function apacheLoadedModules($name = NULL)
 	{
-		if (function_exists('apache_get_modules'))
+		if ($this->apacheCheckModuleExists())
 		{
 			if ($name !== NULL)
 			{
@@ -288,8 +293,11 @@ class System {
 	
 	public function pathInfoExists()
 	{
-		$result = (bool) ($this->rewriteAvailable() || isset($_SERVER['PATH_INFO']) || isset($_SERVER['ORIG_PATH_INFO']));
+		$apache = (isset($_SERVER['SERVER_SOFTWARE']) && preg_match('/Apache/i', $_SERVER['SERVER_SOFTWARE'])) || (isset($_SERVER['SERVER_SIGNATURE']) && preg_match('/Apache/i', $_SERVER['SERVER_SIGNATURE']));
 		
+		$result = (bool) ($this->rewriteAvailable() || isset($_SERVER['PATH_INFO']) || isset($_SERVER['ORIG_PATH_INFO']) || $apache);
+		
+		// Serwer to nie Apache
 		if ($result === FALSE)
 		{
 			$data = $this->cache('path_exists', NULL, 'system', 86400);
@@ -298,12 +306,15 @@ class System {
 				return FALSE;
 			}
 			else
-			{//echo 5; exit;
+			{
 				return TRUE;
 			}
 		}
 
-		$this->cache('path_exists', array(TRUE), 'system');
+		if (! $apache)
+		{
+			$this->cache('path_exists', array(TRUE), 'system');
+		}
 		return TRUE;
 	}
 }
