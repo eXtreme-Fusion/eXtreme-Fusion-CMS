@@ -98,13 +98,8 @@ Class HELP
 		if (!preg_match('/^http:/i', $url))
 		{
 			if ($url)
-			{
-				if ($rewrite)
-				{
-					return ADDR_SITE.$url;
-				}
-				
-				return ADDR_SITE.'index.php/'.$url;
+			{	
+				return ADDR_SITE.self::$_url->getPathPrefix().$url;
 			}
 
 			return ADDR_SITE;
