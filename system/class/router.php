@@ -47,9 +47,6 @@ class Router
 		$_params_void_order = array(),
 		$_params_merge = array(), 	/**********TEST*********/ // Tablica parametrów zdefiniowanych i niezdefiniowanych (patrz opis metody setMergeParams()).
 		$_action = '';			  	/**********TEST*********/
-		
-	protected $_index_file = 'index.php';
-
 
 	public function __construct($rewrite, $_sett, $main_param, $opening_page, $ret_default = FALSE, $search_more = TRUE, $search_admin = FALSE, $searching = '')
 	{
