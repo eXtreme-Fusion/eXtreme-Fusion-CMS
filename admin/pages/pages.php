@@ -1,13 +1,14 @@
 <?php
-/*---------------------------------------------------------------+
-| eXtreme-Fusion - Content Management System - version 5         |
-+----------------------------------------------------------------+
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 |
-| http://extreme-fusion.org/                               		 |
-+----------------------------------------------------------------+
-| This product is licensed under the BSD License.				 |
-| http://extreme-fusion.org/ef5/license/						 |
-+---------------------------------------------------------------*/
+/***********************************************************
+| eXtreme-Fusion 5.0 Beta 5
+| Content Management System       
+|
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
+| http://extreme-fusion.org/                               		 
+|
+| This product is licensed under the BSD License.				 
+| http://extreme-fusion.org/ef5/license/						 
+***********************************************************/
 
 // Paweł jak będziesz dokańczać strony swoje to pole z nazwą strony niech nie nazywa się 'name' tylko 'title'
 // W innym przypadku koliduje to z API tagów. To samo ma się do opisu tzw. description

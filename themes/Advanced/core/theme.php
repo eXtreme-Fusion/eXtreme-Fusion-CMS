@@ -1,13 +1,14 @@
 <?php defined('EF5_SYSTEM') || exit;
-/*---------------------------------------------------------------+
-| eXtreme-Fusion - Content Management System - version 5         |
-+----------------------------------------------------------------+
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 |
-| http://extreme-fusion.org/                               		 |
-+----------------------------------------------------------------+
-| This product is licensed under the BSD License.				 |
-| http://extreme-fusion.org/ef5/license/						 |
-+---------------------------------------------------------------*/
+/***********************************************************
+| eXtreme-Fusion 5.0 Beta 5
+| Content Management System       
+|
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
+| http://extreme-fusion.org/                               		 
+|
+| This product is licensed under the BSD License.				 
+| http://extreme-fusion.org/ef5/license/						 
+***********************************************************/
 define("THEME_WIDTH", "100%");
 define("THEME_BULLET", "<img class='bullet' src='".ADDR_THEME."images/bullet.gif' alt='->' />"); //bullet image
 define('MainBanners', TPL::this()->showbanners());
