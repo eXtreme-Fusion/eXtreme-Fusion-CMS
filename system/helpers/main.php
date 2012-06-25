@@ -95,12 +95,17 @@ Class HELP
 	{
 		if (!preg_match('/^http:/i', $url))
 		{
-			if ($rewrite)
+			if ($url)
 			{
-				return ADDR_SITE.$url;
+				if ($rewrite)
+				{
+					return ADDR_SITE.$url;
+				}
+				
+				return ADDR_SITE.'index.php/'.$url;
 			}
-			
-			return ADDR_SITE.'index.php/'.$url;
+
+			return ADDR_SITE;
 		}
 	}
 

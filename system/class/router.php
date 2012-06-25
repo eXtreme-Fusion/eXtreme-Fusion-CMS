@@ -93,14 +93,18 @@ class Router
 	 */
 	protected function setEnv()
 	{
-		/**
-		 * Lokalizacja na serwerze wykonywanego skryptu.
-		 * Nie zawiera nazwy pliku w przeciwieństwie do $_SERVER['SCRIPT_NAME'].
-		 * Przy korzystaniu z `rewrite module` obcina żądanie o wartość tej zmiennej.
-		 */
-		$script_path = str_replace($this->_index_file, '', $_SERVER['SCRIPT_NAME']);
+		$dirname = dirname($_SERVER['SCRIPT_NAME']);
+
+		if ($dirname === $this->_sep)
+		{
+			$to_replace = $this->_sep.'index.php';
+		}
+		else
+		{
+			$to_replace = array($dirname, $this->_sep.'index.php');
+		}
 		
-		define('PATH_INFO', str_replace(array($_SERVER['SCRIPT_NAME'], $script_path), '', $_SERVER['REQUEST_URI']));
+		define('PATH_INFO', str_replace($to_replace, '', $_SERVER['REQUEST_URI']));
 	}
 
 /*start of**********TEST*********/
