@@ -14,17 +14,6 @@ try
 	error_reporting(E_ALL | E_NOTICE);
 
 	require_once DIR_CLASS.'exception.php';
-
-	// Deklaracja sta³ej œcie¿ki adresu URL
-	if (isset($_SERVER['PATH_INFO']))
-	{
-		define('PATH_INFO', $_SERVER['PATH_INFO']);
-	}
-	else
-	{
-		// Strona g³ówna
-		define('PATH_INFO', '');
-	}
 	
 	if( ! extension_loaded('pdo')) 
 	{
