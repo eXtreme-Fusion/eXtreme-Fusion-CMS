@@ -20,7 +20,7 @@ if ($_user->isLoggedIn())
 		$query = $_pdo->getData('SELECT `id`, `username` FROM [users] WHERE `username` LIKE "%'.$username.'%" AND id != '.$_user->get('id').' ORDER BY `username` ASC LIMIT 0,10');
 		foreach ($query as $row)
 		{
-			echo '<p><a href="'.HELP::path(array('controller' => 'messages', 'action' => 'view', $row['id'])).'">'.$_user->getUsername($row['id']).'</a></p>';
+			echo '<p><a href="'.$_url->path(array('controller' => 'messages', 'action' => 'view', $row['id'])).'">'.$_user->getUsername($row['id']).'</a></p>';
 		}
 	}
 }

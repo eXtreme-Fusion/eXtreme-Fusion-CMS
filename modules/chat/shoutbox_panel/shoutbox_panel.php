@@ -15,4 +15,4 @@ if ($_user->isLoggedIn())
 	$_panel->assign('IsLoggedIn', TRUE);
 }
 
-$_panel->assign('url_chat', HELP::path(array('controller' => 'chat')));
+$_panel->assign('url_chat', $_url->path(array('controller' => 'chat')));

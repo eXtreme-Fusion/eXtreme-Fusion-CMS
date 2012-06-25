@@ -54,7 +54,7 @@ try
 				}
 				else
 				{
-					return HELP::path($ret);
+					return $_url->path($ret);
 				}
 			}
 		}
@@ -66,7 +66,7 @@ try
 			}
 			else
 			{
-				return HELP::path($value);
+				return $_url->path($value);
 			}
 		}
 		
@@ -144,9 +144,6 @@ try
 		
 	# Helper class
 	HELP::init($_pdo, $_sett, $_user, $_url);
-	
-	
-
 
 	if ($_request->post('login')->show() && $_request->post('username')->show() && $_request->post('password')->show())
 	{
