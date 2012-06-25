@@ -11,6 +11,8 @@
 ***********************************************************/
 class System {
 
+	private $_rewrite_available;
+	
 	/**
 	 * Zabezpieczenie przez atakami XSS.
 	 *
@@ -258,6 +260,16 @@ class System {
 
 		throw new systemException('Błąd: Funkcja <span class="bold">apache_get_modules()</span> jest niedostępna!');
 	}
+	
+	public function rewriteAvailable()
+	{
+		if ($this->_rewrite_available !== NULL)
+		{
+			return $this->_rewrite_available;
+		}
+		
+		return $this->_rewrite_available = $this->apacheLoadedModules('mod_rewrite');
+	}
 
 	// Ładuje systemowy plik htaccess
 	public function loadRewrite()
@@ -272,5 +284,10 @@ class System {
 		{
 			unlink(DIR_SITE.'sample.htaccess');
 		}
+	}
+	
+	public function pathInfoExists()
+	{
+		return (bool) ($this->rewriteAvailable() || isset($_SERVER['PATH_INFO']) || isset($_SERVER['ORIG_PATH_INFO']));
 	}
 }

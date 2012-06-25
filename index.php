@@ -33,9 +33,9 @@ try
 	require_once DIR_CLASS.'themes.php';
 
 	/******* Koniec sekcji szablonu systemowego */
-//var_dump($_system->apacheLoadedModules('mod_rewrite')); exit;
+
 	# Routing class
-	$_route = new Router($_system->apacheLoadedModules('mod_rewrite'), $_sett, 'page', $_sett->get('opening_page'), TRUE, TRUE, FALSE, 'admin');
+	$_route = new Router($_request, $_sett, $_system->rewriteAvailable(), 'page', $_sett->get('opening_page'), TRUE, TRUE, FALSE, 'admin');
 
 	
 	/** Konfiguracja obiektu szablonu **/

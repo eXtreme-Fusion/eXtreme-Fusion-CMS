@@ -67,13 +67,15 @@ Class HELP
 	protected static
 		$_pdo,
 		$_sett,
-		$_user;
+		$_user,
+		$_url;
 
-	public static function init($pdo, $sett, $user)
+	public static function init($pdo, $sett, $user, $url)
 	{
 		self::$_pdo  = $pdo;
 		self::$_sett = $sett;
 		self::$_user = $user;
+		self::$_url = $url;
 	}
 
 	/** METODY NAPISANE PRZEZ EF TEAM: **/
@@ -761,73 +763,7 @@ Class HELP
 	
 	public static function path(array $data)
 	{
-		$sep = self::$_sett->getUns('routing', 'main_sep');
-		$param_sep = self::$_sett->getUns('routing', 'param_sep');
-		$ext_allowed = TRUE;		// Czy linki mogą posiadać rozszerzenie?
-		
-		if (isset($data['controller']))
-		{
-			$ctrl = $data['controller'];
-		}
-		else
-		{
-			die('Kontroler jest wymagany');
-		}
-
-		unset($data['controller']);
-
-		if (isset($data['action']))
-		{
-			$action = $sep.$data['action'];
-		}
-		else
-		{
-			$action = '';
-		}
-
-		unset($data['action']);
-
-		if (isset($data['extension']) && $data['extension'])
-		{
-			$ext = '.'.str_replace('.', '', $data['extension']);
-		}
-		elseif ($ext_allowed)
-		{
-			$ext = self::$_sett->getUns('routing', 'url_ext');
-		}
-		else
-		{
-			$ext = '';
-		}
-
-
-		unset($data['extension']);
-
-		$params = array();
-		foreach($data as $key => $val)
-		{
-			$params[] = !is_int($key) ? $key.$param_sep.$val : $val;
-		}
-
-		if ($params)
-		{
-			$params = $sep.implode($sep, $params);
-		}
-		else
-		{
-			$params = '';
-		}
-
-		if (self::$_sett->get('rewrite_module'))
-		{
-			$trace = '';
-		}
-		else
-		{
-			$trace = 'index.php/';
-		}
-
-		return ADDR_SITE.$trace.$ctrl.$action.$params.$ext;
+		return self::$_url->path($data);
 	}
 	
 	// Format the date & time accordingly

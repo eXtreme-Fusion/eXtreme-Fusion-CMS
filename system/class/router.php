@@ -21,6 +21,8 @@ class Router
 	protected
 		// OBIEKTY
 		$_sett,						// Obiekt klasy Settings
+		$_request,
+		$_url,
 		// USTAWIENIA
 		$_sep,
 		$_param_sep = '-',			/**********TEST*********/
@@ -32,7 +34,7 @@ class Router
 		$_search_by_admin_file,
 		$_searching,
 		$_rewrite,
-		$_ext_allowed = TRUE,	  	// Czy linki mogą posiadać rozszerzenie?
+		$_ext_allowed,	  	// Czy linki mogą posiadać rozszerzenie?
 
 		$_path = NULL,				// Żądanie URL
 		$_values = array(),			// Parametry żądania URL
@@ -48,10 +50,13 @@ class Router
 		$_params_merge = array(), 	/**********TEST*********/ // Tablica parametrów zdefiniowanych i niezdefiniowanych (patrz opis metody setMergeParams()).
 		$_action = '';			  	/**********TEST*********/
 
-	public function __construct($rewrite, $_sett, $main_param, $opening_page, $ret_default = FALSE, $search_more = TRUE, $search_admin = FALSE, $searching = '')
+	protected $_path_info_exists;
+
+	public function __construct($request, $_sett, $rewrite, $main_param, $opening_page, $ret_default = FALSE, $search_more = TRUE, $search_admin = FALSE, $searching = '')
 	{
 		$this->_sett = $_sett;
-
+		$this->_request = $request;
+		
 		$this->_rewrite = $rewrite;
 		$this->_sep = $this->_sett->getUns('routing', 'main_sep');
 		$this->_param_sep = $this->_sett->getUns('routing', 'param_sep');
@@ -69,7 +74,14 @@ class Router
 			'url' => $this->_sett->getUns('routing', 'url_ext')
 		);
 
+		$this->_path_info_exists = (bool) ($this->_rewrite || isset($_SERVER['PATH_INFO']) || isset($_SERVER['ORIG_PATH_INFO']));
+		
 		$this->setEnv();
+				
+		$this->_url = new URL($this->_ext['url'], $this->_sep, $this->_param_sep, $this->_rewrite, $this->_path_info_exists, $this->getFileName());
+
+		$this->_ext_allowed = $this->_url->extAllowed();
+		
 		
 		/**
 		 * Metoda zwróci FALSE, jeśli żądanie nie spełnia warunku dotyczącego rozszerzenia.
@@ -90,18 +102,25 @@ class Router
 	 */
 	protected function setEnv()
 	{
-		$dirname = dirname($_SERVER['SCRIPT_NAME']);
-
-		if ($dirname === $this->_sep)
+		if ($this->_path_info_exists)
 		{
-			$to_replace = $this->_sep.'index.php';
+			$dirname = dirname($_SERVER['SCRIPT_NAME']);
+
+			if ($dirname === $this->_sep)
+			{
+				$to_replace = $this->_sep.'index.php';
+			}
+			else
+			{
+				$to_replace = array($dirname, $this->_sep.'index.php');
+			}
+			
+			define('PATH_INFO', str_replace($to_replace, '', $_SERVER['REQUEST_URI']));
 		}
 		else
 		{
-			$to_replace = array($dirname, $this->_sep.'index.php');
+			define('PATH_INFO', $this->_request->get('q', '')->show());
 		}
-		
-		define('PATH_INFO', str_replace($to_replace, '', $_SERVER['REQUEST_URI']));
 	}
 
 /*start of**********TEST*********/
@@ -588,90 +607,9 @@ class Router
 		return isset($this->_ext[$key]) ? $this->_ext[$key] : FALSE;
 	}
 
-	/**
-	 * Generator linków dla plików szablonu.
-	 *
-	 * Predefiniowane indeksy (niewymagane, mogą zostać pominięte):
-	 * - controller
-	 * - action
-	 * - extension
-	 *
-	 * Pozostałe to parametry, które mogą mieć nazwę (indeks tablicy)
-	 * lub być tylko wartością. Przykład:
-	 *
-	 *	$_route->path(array('param1', 'param2' => 'value_for_param2'));
-	 *
-	 * Przykład użycia dla podstrony profile.html:
-	 *
-	 *	$_route->path(array('controller' => 'profile', 'action' => 'user', 457, 'extension' => 'html'));
-	 *
-	 * Przy załadowanym "rewrite module" wygenerowany zostanie następujący link:
-	 * http://twojastrona/profile/user/457.html
-	 */
 	public function path(array $data)
 	{
-		if (isset($data['controller']))
-		{
-			$ctrl = $data['controller'];
-		}
-		else
-		{
-			$ctrl = $this->getFileName();
-		}
-
-		unset($data['controller']);
-
-		if (isset($data['action']))
-		{
-			$action = $this->_sep.$data['action'];
-		}
-		else
-		{
-			$action = '';
-		}
-
-		unset($data['action']);
-
-			if (isset($data['extension']) && $data['extension'])
-			{
-				$ext = '.'.str_replace('.', '', $data['extension']);
-			}
-			elseif ($this->_ext_allowed)
-			{
-				$ext = $this->_ext['url'];
-			}
-			else
-			{
-				$ext = '';
-			}
-
-
-		unset($data['extension']);
-
-		$params = array();
-		foreach($data as $key => $val)
-		{
-			$params[] = !is_int($key) ? $key.$this->_param_sep.$val : $val;
-		}
-
-		if ($params)
-		{
-			$params = $this->_sep.implode($this->_sep, $params);
-		}
-		else
-		{
-			$params = '';
-		}
-
-		if ($this->_rewrite)
-		{
-			$trace = '';
-		}
-		else
-		{
-			$trace = 'index.php/';
-		}
-
-		return ADDR_SITE.$trace.$ctrl.$action.$params.$ext;
+		return $this->_url->path($data);
 	}
+
 }
