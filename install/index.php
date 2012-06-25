@@ -243,11 +243,9 @@ $collate = 'utf8_general_ci';
 							$check_display = '';
 							$config_prepared = FALSE;
 
-							$rename_available = function_exists('rename');
-
 							if ( ! file_exists(DIR_SITE.'config.php'))
 							{
-								if (file_exists(DIR_SITE.'sample.config.php') && $rename_available)
+								if (file_exists(DIR_SITE.'sample.config.php') && function_exists('rename'))
 								{
 									@rename(DIR_SITE.'sample.config.php', DIR_SITE.'config.php');
 								}
@@ -257,14 +255,8 @@ $collate = 'utf8_general_ci';
 									fclose($handle);
 								}
 
-
-
 								if (file_exists(DIR_SITE.'config.php'))
 								{
-									// W dalszej części instalacji będzie sprawdzone, czy udało się nadać chmod
-									@chmod(DIR_SITE.'config.php', 0777);
-									//echo 5; exit;
-									// Plik istnieje i o to chodziło
 									$config_prepared = TRUE;
 								}
 							}
@@ -309,15 +301,22 @@ $collate = 'utf8_general_ci';
 							);
 
 							$write_check = TRUE; $i = 0;
-							foreach ($check_arr as $key => $value) {
-								if (file_exists($key) && is_writable($key)) {
+							foreach ($check_arr as $key => $value) 
+							{
+								if (file_exists($key) && is_writable($key)) 
+								{
 									$check_arr[$key] = TRUE;
 									$i++;
-								} else {
-									if (file_exists($key) && function_exists("chmod") && @chmod($key, 0777) && is_writable($key)) {
+								} 
+								else 
+								{
+									if (file_exists($key) && function_exists('chmod') && @chmod($key, 0777) && is_writable($key)) 
+									{
 										$check_arr[$key] = TRUE;
 										$i++;
-									} else {
+									} 
+									else 
+									{
 										$write_check = FALSE;
 									}
 								}
