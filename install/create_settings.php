@@ -1,13 +1,14 @@
 <?php
-/*---------------------------------------------------------------+
-| eXtreme-Fusion - Content Management System - version 5         |
-+----------------------------------------------------------------+
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 |
-| http://extreme-fusion.org/                               		 |
-+----------------------------------------------------------------+
-| This product is licensed under the BSD License.				 |
-| http://extreme-fusion.org/ef5/license/						 |
-+---------------------------------------------------------------*/
+/***********************************************************
+| eXtreme-Fusion 5.0 Beta 5
+| Content Management System       
+|
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
+| http://extreme-fusion.org/                               		 
+|
+| This product is licensed under the BSD License.				 
+| http://extreme-fusion.org/ef5/license/						 
+***********************************************************/
 
 date_default_timezone_set('UTC');
 mysql_query('SET NAMES utf8');
@@ -245,11 +246,11 @@ $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."panels (`name`, `filename
 $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."panels (`name`, `filename`, `content`, `side`, `order`, `type`, `access`, `display`, `status`) VALUES ('".__('User Panel')."', 'user_info_panel', '', '4', 1, 'file', '3', '0', '1')");
 
 $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('Home')."', '', '3', '2', '0', '1')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('News Cats')."', 'news_cats', '3', '2', '0', '2')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('Users')."', 'users', '3', '2', '0', '3')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('News Cats')."', 'news_cats.html', '3', '2', '0', '2')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('Users')."', 'users.html', '3', '2', '0', '3')");
 //$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('Login')."', 'login', '3', '1', '0', '4')");
 //$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('Search')."', 'search', '3', '0', '0', '5')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('Materiały i wpisy')."', 'pages', '3', '2', '0', '3')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('Materiały i wpisy')."', 'pages.html', '3', '2', '0', '3')");
 
 
 $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."user_field_cats (`name`, `order`) VALUES ('".__('Information')."', 1)");

@@ -1,18 +1,22 @@
 <?php defined('EF5_SYSTEM') || exit;
-/*---------------------------------------------------------------+
-| eXtreme-Fusion - Content Management System - version 5         |
-+----------------------------------------------------------------+
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 |
-| http://extreme-fusion.org/                               		 |
-+----------------------------------------------------------------+
-| This product is licensed under the BSD License.				 |
-| http://extreme-fusion.org/ef5/license/						 |
-+---------------------------------------------------------------*/
+/***********************************************************
+| eXtreme-Fusion 5.0 Beta 5
+| Content Management System       
+|
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
+| http://extreme-fusion.org/                               		 
+|
+| This product is licensed under the BSD License.				 
+| http://extreme-fusion.org/ef5/license/						 
+***********************************************************/
 
 class Theme extends optClass
 {
 	public $_sett;
 	private $_tpl_file_name;
+	
+	protected $_system;
+	
 
 	/**
 	 * Przypisuje do zmiennych klasy ustawień oraz bazy danych.
@@ -21,11 +25,12 @@ class Theme extends optClass
 	 * @param   Database  klasa bazy danych
 	 * @return  void
 	 */
-	public function __construct(Sett $sett, $user, $pdo, $request, $tpl_file_name = NULL)
+	public function __construct(Sett $sett, System $system, $user, $pdo, $request, $tpl_file_name = NULL)
 	{
 		$this->_sett = $sett;
 		$this->_user = $user;
 		$this->_pdo = $pdo;
+		$this->_system = $system;
 		$this->_request = $request;
 		$this->_theme = $sett->get('theme');
 		$this->setConfig();
@@ -219,7 +224,7 @@ class Theme extends optClass
 				{
 					$link_target = $sdata['window'] == '1' ? ' target="_blank"' : '';
 					$li_class = ($i == 0 ? ' class="first-link'.($class ? ' '.$class : '').'"' : ($class ? ' class="'.$class.'"': ''));
-					$res .= "<li".$li_class.">".$sep."<a href='".($sdata['url'] !== '' ? HELP::path(array('controller' => $sdata['url'])) : ADDR_SITE)."'$link_target><span>".parseBBCode($sdata['name'], "b|i|u|color")."</span></a></li>\n";
+					$res .= "<li".$li_class.">".$sep."<a href='".HELP::createNaviLink($sdata['url'], $this->_system->apacheLoadedModules('mod_rewrite'))."'$link_target><span>".parseBBCode($sdata['name'], "b|i|u|color")."</span></a></li>\n";
 					$i++;
 				}
 			}

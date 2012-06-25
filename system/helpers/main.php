@@ -1,13 +1,14 @@
 <?php
-/*---------------------------------------------------------------+
-| eXtreme-Fusion - Content Management System - version 5         |
-+----------------------------------------------------------------+
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 |
-| http://extreme-fusion.org/                               		 |
-+----------------------------------------------------------------+
-| This product is licensed under the BSD License.				 |
-| http://extreme-fusion.org/ef5/license/						 |
-+---------------------------------------------------------------*/
+/***********************************************************
+| eXtreme-Fusion 5.0 Beta 5
+| Content Management System       
+|
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
+| http://extreme-fusion.org/                               		 
+|
+| This product is licensed under the BSD License.				 
+| http://extreme-fusion.org/ef5/license/						 
+***********************************************************/
 
 defined('EF5_SYSTEM') || exit;
 
@@ -86,6 +87,20 @@ Class HELP
 			}
 
 			return $time/(60*60*24);
+		}
+	}
+
+	// TODO:: Przerobic na metodę routera
+	public static function createNaviLink($url, $rewrite)
+	{
+		if (!preg_match('/^http:/i', $url))
+		{
+			if ($rewrite)
+			{
+				return ADDR_SITE.$url;
+			}
+			
+			return ADDR_SITE.'index.php/'.$url;
 		}
 	}
 
