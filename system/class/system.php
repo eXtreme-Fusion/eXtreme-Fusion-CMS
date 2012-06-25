@@ -1,19 +1,19 @@
 <?php
 /***********************************************************
 | eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
+| This product is licensed under the BSD License.
+| http://extreme-fusion.org/ef5/license/
 ***********************************************************/
 class System {
 
 	private $_rewrite_available;
-	private $_furl;
-	
+	private $_furl = FALSE;
+
 	/**
 	 * Zabezpieczenie przez atakami XSS.
 	 *
@@ -26,9 +26,12 @@ class System {
 		{
 			throw new systemException(__('Podejrzewany atak XSS po zmiennej $_GET!'));
 		}
-		
-		require DIR_SITE.'config.php';
-		$this->_furl = isset($_route['custom_furl']) && $_route['custom_furl'] === TRUE;
+
+		if (file_exists(DIR_SITE.'config.php'))
+		{
+			require DIR_SITE.'config.php';
+			$this->_furl = isset($_route['custom_furl']) && $_route['custom_furl'] === TRUE;
+		}
 	}
 
 	/**
@@ -73,10 +76,10 @@ class System {
 		if ($code)
 		{
 			// TODO:: czy wartość $key/$string nie powinna być brana z zakodowanej cześci $data zamiast z nazwy pliku?
-			// TODO:: bo wydaje mi się że w obecnej formie może się zdarzyć tak, że w zawartości 
-			// TODO:: cache'owanego pliku nie znajdzie wyrażenia spod tych zmiennych (które pochodzi z nazwy pliku a nie zawartości) 
+			// TODO:: bo wydaje mi się że w obecnej formie może się zdarzyć tak, że w zawartości
+			// TODO:: cache'owanego pliku nie znajdzie wyrażenia spod tych zmiennych (które pochodzi z nazwy pliku a nie zawartości)
 			// TODO:: i wtedy łatwo rozkodować taki plik.
-			
+
 			// Tworzy klucz który jest mieszany z base64_decode/base64_encode,
 			// zabezpiecza przed bezpośrednim odczytaniem danych z przez base64_decode
 			$key = substr(sha1($file), 1, 7);
@@ -149,7 +152,7 @@ class System {
 	 */
 	public function clearCache($dir = NULL, array $cache = array(), $path = DIR_CACHE)
 	{
-	
+
 		if (file_exists($path.$dir))
 		{
 			// Przeszukuje katalog pamięci podręcznej
@@ -175,7 +178,7 @@ class System {
 
 			return TRUE;
 		}
-		
+
 		return FALSE;
 	}
 
@@ -241,7 +244,7 @@ class System {
 	{
 		return function_exists('apache_get_modules');
 	}
-	
+
 	/**
 	 * Sprawdza, czy moduł Apache podany parametrem istnieje
 	 * lub zwraca tablicę załądowanych modułów Apache
@@ -269,14 +272,14 @@ class System {
 
 		throw new systemException('Błąd: Funkcja <span class="bold">apache_get_modules()</span> jest niedostępna!');
 	}
-	
+
 	public function rewriteAvailable()
 	{
 		if ($this->_rewrite_available !== NULL)
 		{
 			return $this->_rewrite_available;
 		}
-		
+
 		return $this->_rewrite_available = $this->apacheLoadedModules('mod_rewrite');
 	}
 
@@ -294,27 +297,35 @@ class System {
 			unlink(DIR_SITE.'sample.htaccess');
 		}
 	}
-	
+
 	/**
 	 * Zwraca informację, czy serwer obsługuje ścieżki w adresie URL podane po nazwie pliku.
 	 * Przykład: index.php/ctrl/act/
 	 *
 	 * PATH_INFO nie występuje na stronie głównej, dlatego sprawdzane jest, czy serwerem jest Apache,
-	 * który ścieżki ma domyślnie skonfigurowane prawidłowo.
+	 * który ścieżki ma zazwyczaj skonfigurowane prawidłowo.
 	 *
-	 * Jeżeli strona pracuje na innym serwerze, na którym skonfigurowałeś PATH_INFO,
+	 * W przypadku IIS (test na 7.5), na stronie głównej występuje ORIG_PATH_INFO, a na podstronach także PATH_INFO.
+	 * ORIG_PATH_INFO jest stosowane również na niektórych serwerach Apache.
+	 *
+	 * Jeżeli korzystasz z innego serwera, który jest skonfigurowany do PATH_INFO,
 	 * wystarczy w pliku config.php zmienić wartość z FALSE na TRUE przy $_route['custom_furl'].
 	 *
 	 * Dla użytkowników systemu, którzy nie mają możliwości edycji pliku config.php, zaimplementowano system cache, który
 	 * wychwytuje sytuację, gdy PATH_INFO wystąpi na którejś z podstron. Zapisywany jest o tym raport, dzięki czemu przyjazne
 	 * linki zostają włączone.
+	 *
+	 * Przy standardowej konfiguracji, linki wyglądają następująco:
+		Apache: 	/ctrl/act/param-value/
+		IIS: 		/index.php/ctrl/act/param-value/
+		nginx:		/index.php?q=ctrl/act/param-value/
 	 */
 	public function pathInfoExists()
 	{
 		$apache = (isset($_SERVER['SERVER_SOFTWARE']) && preg_match('/Apache/i', $_SERVER['SERVER_SOFTWARE'])) || (isset($_SERVER['SERVER_SIGNATURE']) && preg_match('/Apache/i', $_SERVER['SERVER_SIGNATURE']));
-		
+
 		return $result = (bool) ($this->rewriteAvailable() || isset($_SERVER['PATH_INFO']) || isset($_SERVER['ORIG_PATH_INFO']) || $apache || $this->_furl);
-		
+
 		// Serwer to nie Apache
 		if ($result === FALSE)
 		{
