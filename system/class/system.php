@@ -83,7 +83,7 @@ class System {
 		{
 			if (is_file($dir.$file))
 			{
-				if ((time() - filemtime($dir.$file)) < $lifetime)
+				if ((time() - filemtime($dir.$file)) < $lifetime || $lifetime === NULL)
 				{
 					if ( ! $code)
 					{
@@ -288,6 +288,22 @@ class System {
 	
 	public function pathInfoExists()
 	{
-		return (bool) ($this->rewriteAvailable() || isset($_SERVER['PATH_INFO']) || isset($_SERVER['ORIG_PATH_INFO']));
+		$result = (bool) ($this->rewriteAvailable() || isset($_SERVER['PATH_INFO']) || isset($_SERVER['ORIG_PATH_INFO']));
+		
+		if ($result === FALSE)
+		{
+			$data = $this->cache('path_exists', NULL, 'system', 86400);
+			if ($data[0] === FALSE)
+			{
+				return FALSE;
+			}
+			else
+			{//echo 5; exit;
+				return TRUE;
+			}
+		}
+
+		$this->cache('path_exists', array(TRUE), 'system');
+		return TRUE;
 	}
 }

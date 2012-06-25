@@ -139,7 +139,7 @@ try
 
 	# Files class
 	$_files = new Files;
-	
+	//var_dump($_system->pathInfoExists()); exit;
 	$_url = new URL($_sett->getUns('routing', 'url_ext'), $_sett->getUns('routing', 'main_sep'), $_sett->getUns('routing', 'param_sep'), $_system->rewriteAvailable(), $_system->pathInfoExists());
 		
 	# Helper class

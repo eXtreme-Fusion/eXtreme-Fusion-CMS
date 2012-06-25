@@ -52,7 +52,7 @@ class Router
 
 	protected $_path_info_exists;
 
-	public function __construct($request, $_sett, $rewrite, $main_param, $opening_page, $ret_default = FALSE, $search_more = TRUE, $search_admin = FALSE, $searching = '')
+	public function __construct($request, $_sett, $rewrite, $main_param, $path_info_exists, $opening_page, $ret_default = FALSE, $search_more = TRUE, $search_admin = FALSE, $searching = '')
 	{
 		$this->_sett = $_sett;
 		$this->_request = $request;
@@ -74,7 +74,7 @@ class Router
 			'url' => $this->_sett->getUns('routing', 'url_ext')
 		);
 
-		$this->_path_info_exists = (bool) ($this->_rewrite || isset($_SERVER['PATH_INFO']) || isset($_SERVER['ORIG_PATH_INFO']));
+		$this->_path_info_exists = $path_info_exists;
 		
 		$this->setEnv();
 				

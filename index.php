@@ -35,7 +35,7 @@ try
 	/******* Koniec sekcji szablonu systemowego */
 
 	# Routing class
-	$_route = new Router($_request, $_sett, $_system->rewriteAvailable(), 'page', $_sett->get('opening_page'), TRUE, TRUE, FALSE, 'admin');
+	$_route = new Router($_request, $_sett, $_system->rewriteAvailable(), 'page', $_system->pathInfoExists(), $_sett->get('opening_page'), TRUE, TRUE, FALSE, 'admin');
 
 	
 	/** Konfiguracja obiektu szablonu **/

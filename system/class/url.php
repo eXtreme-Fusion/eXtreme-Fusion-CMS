@@ -38,7 +38,7 @@ class URL
 			return '';
 		}
 		elseif ($this->path_info_exists)
-		{
+		{//echo 4; exit;
 			return 'index.php/';
 		}
 
@@ -124,18 +124,8 @@ class URL
 			$params = '';
 		}
 
-		if ($this->rewrite_loaded)
-		{
-			$trace = '';
-		}
-		elseif ($this->path_info_exists)
-		{
-			$trace = 'index.php/';
-		}
-		else
-		{
-			$trace = 'index.php?q=';
-		}
+		
+		$trace = $this->getPathPrefix();
 
 		return ADDR_SITE.$trace.$ctrl.$action.$params.$ext;
 	}
