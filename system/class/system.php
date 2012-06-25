@@ -12,6 +12,7 @@
 class System {
 
 	private $_rewrite_available;
+	private $_furl;
 	
 	/**
 	 * Zabezpieczenie przez atakami XSS.
@@ -25,6 +26,9 @@ class System {
 		{
 			throw new systemException(__('Podejrzewany atak XSS po zmiennej $_GET!'));
 		}
+		
+		require DIR_SITE.'config.php';
+		$this->_furl = isset($_route['custom_furl']) && $_route['custom_furl'] === TRUE;
 	}
 
 	/**
@@ -277,13 +281,13 @@ class System {
 	}
 
 	// Ładuje systemowy plik htaccess
-	public function loadRewrite()
+	/*depr*/public function loadRewrite()
 	{
 		@rename(DIR_SITE.'sample.htaccess', DIR_SITE.'.htaccess');
 	}
 
 	// Dezaktywuje systemowy plik htaccess
-	public function removeRewrite()
+	/*depr*/public function removeRewrite()
 	{
 		if (file_exists(DIR_SITE.'sample.htaccess'))
 		{
@@ -291,11 +295,25 @@ class System {
 		}
 	}
 	
+	/**
+	 * Zwraca informację, czy serwer obsługuje ścieżki w adresie URL podane po nazwie pliku.
+	 * Przykład: index.php/ctrl/act/
+	 *
+	 * PATH_INFO nie występuje na stronie głównej, dlatego sprawdzane jest, czy serwerem jest Apache,
+	 * który ścieżki ma domyślnie skonfigurowane prawidłowo.
+	 *
+	 * Jeżeli strona pracuje na innym serwerze, na którym skonfigurowałeś PATH_INFO,
+	 * wystarczy w pliku config.php zmienić wartość z FALSE na TRUE przy $_route['custom_furl'].
+	 *
+	 * Dla użytkowników systemu, którzy nie mają możliwości edycji pliku config.php, zaimplementowano system cache, który
+	 * wychwytuje sytuację, gdy PATH_INFO wystąpi na którejś z podstron. Zapisywany jest o tym raport, dzięki czemu przyjazne
+	 * linki zostają włączone.
+	 */
 	public function pathInfoExists()
 	{
 		$apache = (isset($_SERVER['SERVER_SOFTWARE']) && preg_match('/Apache/i', $_SERVER['SERVER_SOFTWARE'])) || (isset($_SERVER['SERVER_SIGNATURE']) && preg_match('/Apache/i', $_SERVER['SERVER_SIGNATURE']));
 		
-		$result = (bool) ($this->rewriteAvailable() || isset($_SERVER['PATH_INFO']) || isset($_SERVER['ORIG_PATH_INFO']) || $apache);
+		return $result = (bool) ($this->rewriteAvailable() || isset($_SERVER['PATH_INFO']) || isset($_SERVER['ORIG_PATH_INFO']) || $apache || $this->_furl);
 		
 		// Serwer to nie Apache
 		if ($result === FALSE)

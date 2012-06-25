@@ -36,6 +36,14 @@ $config .= '    \'charset\' => \'utf8\','.PHP_EOL;
 $config .= '    \'version\' => \'eXtreme-Fusion CMS - Ninja Edition\''.PHP_EOL;
 $config .= ');'.PHP_EOL.PHP_EOL;
 
+$config .= '#Routing'.PHP_EOL.PHP_EOL;
+
+
+$config .= '$_route = array('.PHP_EOL;
+$config .= '	//Change this to TRUE if your server has been configured to work with $_SERVER[\'PATH_INFO\']'.PHP_EOL;
+$config .= '    \'custom_furl\' => FALSE,'.PHP_EOL;
+$config .= ');'.PHP_EOL.PHP_EOL;
+
 $config .= '#Cookie && cache'.PHP_EOL.PHP_EOL;
 
 $config .= 'defined(\'COOKIE_PREFIX\') || define(\'COOKIE_PREFIX\', \''.$cookie_prefix.'\');'.PHP_EOL;
