@@ -93,7 +93,7 @@ Class HELP
 	}
 
 	// TODO:: Przerobic na metodę routera
-	public static function createNaviLink($url, $rewrite)
+	public static function createNaviLink($url)
 	{
 		if (!preg_match('/^http:/i', $url))
 		{

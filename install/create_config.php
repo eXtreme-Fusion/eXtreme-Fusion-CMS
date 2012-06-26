@@ -41,7 +41,9 @@ $config .= '#Routing'.PHP_EOL.PHP_EOL;
 
 $config .= '$_route = array('.PHP_EOL;
 $config .= '	//Change this to TRUE if your server has been configured to work with $_SERVER[\'PATH_INFO\']'.PHP_EOL;
-$config .= '    \'custom_furl\' => FALSE,'.PHP_EOL;
+$config .= '    \'custom_furl\' => '.$custom_furl.','.PHP_EOL;
+$config .= '	//Change this to TRUE if your server has got configured modRewrite'.PHP_EOL;
+$config .= '    \'custom_rewrite\' => '.$custom_rewrite.','.PHP_EOL;
 $config .= ');'.PHP_EOL.PHP_EOL;
 
 $config .= '#Cookie && cache'.PHP_EOL.PHP_EOL;

@@ -188,11 +188,11 @@ $collate = 'utf8_general_ci';
 							</a>
 						</div>
 						<div class="clear"></div>
-						<ul id="links">
-							<li id="team-tab"><a href="javascript:void(0)">Twórcy eXtreme-Fusion CMS v5</a></li>
-						</ul>
+						
+						<div class="tab-click" id="crew-list"><a href="javascript:void(0)">Twórcy eXtreme-Fusion CMS v5</a></div>
+					
 
-						<div id="ef-crew">
+						<div id="tab-crew-list" class="tab-cont">
 							<div class="center">
 								<div id="leaders">
 									<div class="left"><span class="bold">Project founder:</span> Wojciech (zer0) Mycka</div>
@@ -333,6 +333,7 @@ $collate = 'utf8_general_ci';
 							<?php
 							echo $check_display;
 
+							
 
 							?>
 
@@ -364,13 +365,6 @@ $collate = 'utf8_general_ci';
 
 								 <?php
 								}
-
-
-
-
-
-
-
 
 								if (!isset($extension_error))
 								{ ?>
@@ -420,7 +414,7 @@ $collate = 'utf8_general_ci';
 							$cache_prefix = "extreme_".substr(md5(uniqid("ef5_cache", FALSE)), 13, 7)."_";
 
 							$db_host = (isset($_POST['db_host']) ? stripinput(trim($_POST['db_host'])) : "localhost");
-							$db_port = (isset($_POST['db_port']) ? stripinput(trim($_POST['db_port'])) : "3306");
+							$db_port = (isset($_POST['db_port']) ? stripinput(trim($_POST['db_port'])) : '');
 							$db_user = (isset($_POST['db_user']) ? stripinput(trim($_POST['db_user'])) : "");
 							$db_name = (isset($_POST['db_name']) ? stripinput(trim($_POST['db_name'])) : "");
 							$db_prefix = (isset($_POST['db_prefix']) ? stripinput(trim($_POST['db_prefix'])) : $db_prefix);
@@ -458,52 +452,87 @@ $collate = 'utf8_general_ci';
 								}
 							?>
 							<div class="info"><?php echo(__('Please enter your MySQL database access settings.')) ?></div><br />
-							<div class="tbl1">
-								<div class="formLabel grid_4"><label for="01"><?php echo(__('Database Hostname:')) ?></label></div>
-								<div class="formField grid_3"><input id="01" type='text' value='<?php echo($db_host) ?>' name='db_host' /></div>
-								<div class="clear"></div>
-							</div>
-							<div class="tbl2">
-								<div class="formLabel grid_4"><label for="01"><?php echo(__('Database Port:')) ?></label></div>
-								<div class="formField grid_3"><input id="01" type='text' value='<?php echo($db_port) ?>' name='db_port' /></div>
-								<div class="clear"></div>
-							</div>
-							<div class="tbl1">
-								<div class="formLabel grid_4"><label for="02"><?php echo(__('Database Username:')) ?></label></div>
-								<div class="formField grid_3"><input id="02" type='text' value='<?php echo($db_user) ?>' name='db_user' /></div>
-								<div class="clear"></div>
-							</div>
-							<div class="tbl2">
-								<div class="formLabel grid_4"><label for="03"><?php echo(__('Database Password:')) ?></label></div>
-								<div class="formField grid_3"><input id="03" type='password' name='db_pass' /></div>
-								<div class="clear"></div>
-							</div>
+
 							<div class="tbl1">
 								<div class="formLabel grid_4"><label for="04"><?php echo(__('Database Name:')) ?></label></div>
 								<div class="formField grid_3"><input id="04" type='text' value='<?php echo($db_name) ?>' name='db_name' /></div>
 								<div class="clear"></div>
 							</div>
 							<div class="tbl2">
-								<div class="formLabel grid_4"><label for="05"><?php echo(__('Table Prefix:')) ?></label></div>
-								<div class="formField grid_3"><input id="05" type='text' value='<?php echo($db_prefix) ?>' name='db_prefix' /></div>
+								<div class="formLabel grid_4"><label for="02"><?php echo(__('Database Username:')) ?></label></div>
+								<div class="formField grid_3"><input id="02" type='text' value='<?php echo($db_user) ?>' name='db_user' /></div>
 								<div class="clear"></div>
 							</div>
 							<div class="tbl1">
-								<div class="formLabel grid_4"><label for="06"><?php echo(__('Cookie Prefix:')) ?></label></div>
-								<div class="formField grid_3"><input id="06" type='text' value='<?php echo($cookie_prefix) ?>' name='cookie_prefix' /></div>
-								<div class="clear"></div>
-							</div>
-							<div class="tbl2">
-								<div class="formLabel grid_4"><label for="06"><?php echo(__('Cache Prefix:')) ?></label></div>
-								<div class="formField grid_3"><input id="06" type='text' value='<?php echo($cache_prefix) ?>' name='cache_prefix' /></div>
-								<div class="clear"></div>
-							</div>
-							<div class="tbl1">
-								<div class="formLabel grid_4"><label for="06"><?php echo(__('URL:')) ?></label></div>
-								<div class="formField grid_3"><input id="06" type='text' value='<?php echo ADDR_SITE ?>' name='site_url' /></div>
+								<div class="formLabel grid_4"><label for="03"><?php echo(__('Password:')) ?></label></div>
+								<div class="formField grid_3"><input id="03" type='password' name='db_pass' /></div>
 								<div class="clear"></div>
 							</div>
 
+							
+							<div class="tab-click" id="url"><a href="javascript:void(0)">Zaawansowane</a></div>
+					
+
+							<div id="tab-url" class="tab-cont">
+								<p id="CustomStep3" class="red">
+									UWAGA! Jeżeli po zakończeniu instalacji wystąpią problemy z linkami i adresami URL (błędy 404), 
+									należy przeinstalować system nie zaznaczając poniższego pola lub zmienić ustawienia $_route w pliku config.php
+								</p>
+								<?php if ($_system->httpServerIs('Apache')):
+									if (!$_system->apacheModulesListingAvailable()): ?>
+										<div class="formWarning formMessage">											
+											<input type="checkbox" name="custom_rewrite" value="true" id="CustomRewrite" />
+											<label for="CustomRewrite">
+												Instalator nie mógł ustalić, czy twój serwer obsługuje modRewrite. 
+												Zaznacz to pole, jeżeli jesteś pewny, że wymieniony moduł jest dostępny.
+												Odpowiada on za tworzenie linków przyjaznych wyszukiwarkom.
+											</label>
+										</div>
+									<?php endif;
+								elseif (!$_system->serverPathInfoExists()): ?>		
+									<div class="formWarning formMessage">
+										<input type="checkbox" name="custom_furl" value="true" id="CustomFurl" />
+										<label for="CustomFurl">
+											Instalator rozpoznał, że używasz innego serwera niż Apache. 
+											Aby móc korzystać z linków przyjaznych wyszukiwarkom, serwer musi obsługiwać ścieżki PATH_INFO.
+											Po zakończeniu instalacji system spróbuje ustalić, czy są one dostępne, przy czym występuje ryzyko pomyłki. 
+											Aby temu zapobiec, zaznacz poniższe pole, jeżeli masz pewność, iż twój serwer obsługuje PATH_INFO.
+										</label>
+									</div>
+								<?php endif; ?>
+								
+								<div class="tbl1">
+									<div class="formLabel grid_4"><label for="01"><?php echo(__('Database Hostname:')) ?></label></div>
+									<div class="formField grid_3"><input id="01" type='text' value='<?php echo($db_host) ?>' name='db_host' /></div>
+									<div class="clear"></div>
+								</div>
+								<div class="tbl2">
+									<div class="formLabel grid_4"><label for="01"><?php echo(__('Database Port:')) ?></label></div>
+									<div class="formField grid_3"><input id="01" type='text' value='<?php echo($db_port) ?>' name='db_port' /></div>
+									<div class="clear"></div>
+								</div>
+								<div class="tbl1">
+									<div class="formLabel grid_4"><label for="05"><?php echo(__('Table Prefix:')) ?></label></div>
+									<div class="formField grid_3"><input id="05" type='text' value='<?php echo($db_prefix) ?>' name='db_prefix' /></div>
+									<div class="clear"></div>
+								</div>
+								<div class="tbl2">
+									<div class="formLabel grid_4"><label for="06"><?php echo(__('Cookie Prefix:')) ?></label></div>
+									<div class="formField grid_3"><input id="06" type='text' value='<?php echo($cookie_prefix) ?>' name='cookie_prefix' /></div>
+									<div class="clear"></div>
+								</div>
+								<div class="tbl1">
+									<div class="formLabel grid_4"><label for="06"><?php echo(__('Cache Prefix:')) ?></label></div>
+									<div class="formField grid_3"><input id="06" type='text' value='<?php echo($cache_prefix) ?>' name='cache_prefix' /></div>
+									<div class="clear"></div>
+								</div>
+								<div class="tbl2">
+									<div class="formLabel grid_4"><label for="06"><?php echo(__('URL:')) ?></label></div>
+									<div class="formField grid_3"><input id="06" type='text' value='<?php echo ADDR_SITE ?>' name='site_url' /></div>
+									<div class="clear"></div>
+								</div>
+							</div>
+								
 							<br /><hr /><br />
 							<div class="center">
 								<input type='hidden' name='localeset' value='<?php echo(stripinput($_POST['localeset'])) ?>' />
@@ -677,6 +706,10 @@ $collate = 'utf8_general_ci';
 						$cookie_prefix = (isset($_POST['cookie_prefix']) ? stripinput(trim($_POST['cookie_prefix'])) : "");
 						$cache_prefix = (isset($_POST['cache_prefix']) ? stripinput(trim($_POST['cache_prefix'])) : "");
 						$site_url = (isset($_POST['site_url']) ? $_POST['site_url'] : "");
+						
+						$custom_rewrite = isset($_POST['custom_rewrite']) ? 'TRUE' : 'FALSE';
+						$custom_furl = isset($_POST['custom_furl']) ? 'TRUE' : 'FALSE';
+						
 						if ($db_prefix != "") {
 							$db_prefix_last = $db_prefix[strlen($db_prefix)-1];
 							if ($db_prefix_last != "_") { $db_prefix = $db_prefix."_"; }
@@ -690,7 +723,7 @@ $collate = 'utf8_general_ci';
 							if ($cache_prefix_last != "_") { $cache_prefix = $cache_prefix."_"; }
 						}
 
-						if ($db_host != "" && $db_port != "" && $db_user != "" && $db_name != "" && $db_prefix != "") {
+						if ($db_host != "" && $db_user != "" && $db_name != "" && $db_prefix != "") {
 							$db_connect = @mysql_connect($db_host.':'.$db_port, $db_user, $db_pass);
 							if ($db_connect) {
 								$db_select = @mysql_select_db($db_name);

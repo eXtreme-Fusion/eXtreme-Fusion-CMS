@@ -131,7 +131,8 @@ insert($_dbconfig['prefix'].'settings', array('key' => 'routing', 'value' => ser
 	'logic_ext' => '.php'
 ))));
 
-if ($_system->apacheLoadedModules('mod_rewrite'))
+/** Nie usuwac/Do not remove
+if ($_system->apachemoduleLoaded('mod_rewrite'))
 {
 	insert($_dbconfig['prefix'].'settings', array('key' => 'rewrite_module', 'value' => 1));
 }
@@ -139,7 +140,7 @@ else
 {
 	insert($_dbconfig['prefix'].'settings', array('key' => 'rewrite_module', 'value' => 0));
 }
-
+**/
 /*
 * Admin Panel Settings
 */

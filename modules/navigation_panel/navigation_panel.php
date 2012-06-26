@@ -40,7 +40,7 @@ if ($_pdo->getRowsCount($query))
 			$nav[] = array(
 				'name' => $name,
 				'link_target' => $link_target,
-				'url' => HELP::createNaviLink($data['url'], $_system->apacheLoadedModules('mod_rewrite')),
+				'url' => HELP::createNaviLink($data['url']),
 				'bullet' => $bullet
 			);
 

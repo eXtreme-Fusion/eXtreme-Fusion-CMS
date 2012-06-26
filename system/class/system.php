@@ -13,15 +13,17 @@ class System {
 
 	private $_rewrite_available;
 	private $_furl = FALSE;
+	private $_rewrite = FALSE;
 
 	/**
-	 * Zabezpieczenie przez atakami XSS.
+	 * Tworzenie środowiska pracy systemu
 	 *
 	 * @return  void
 	 * @throws  systemException
 	 */
 	public function __construct($cleaning = TRUE)
 	{
+		// Zabezpieczenie przed atakami XSS.
 		if ($cleaning && HELP::stripget($_GET))
 		{
 			throw new systemException(__('Podejrzewany atak XSS po zmiennej $_GET!'));
@@ -31,7 +33,11 @@ class System {
 		{
 			require DIR_SITE.'config.php';
 			$this->_furl = isset($_route['custom_furl']) && $_route['custom_furl'] === TRUE;
+			$this->_rewrite = isset($_route['custom_rewrite']) && $_route['custom_rewrite'] === TRUE;
 		}
+		
+		$_SERVER['SERVER_SOFTWARE'] = isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : '';
+		$_SERVER['SERVER_SIGNATURE'] = isset($_SERVER['SERVER_SIGNATURE']) ? $_SERVER['SERVER_SIGNATURE'] : '';
 	}
 
 	/**
@@ -240,7 +246,8 @@ class System {
 		return $row;
 	}
 
-	public function apacheCheckModuleExists()
+	// Zwraca informację, czy uzyskanie listy załadowanych modułów Apache jest możliwe
+	public function apacheModulesListingAvailable()
 	{
 		return function_exists('apache_get_modules');
 	}
@@ -249,9 +256,9 @@ class System {
 	 * Sprawdza, czy moduł Apache podany parametrem istnieje
 	 * lub zwraca tablicę załądowanych modułów Apache
 	 */
-	public function apacheLoadedModules($name = NULL)
+	public function apacheModuleLoaded($name = NULL)
 	{
-		if ($this->apacheCheckModuleExists())
+		if ($this->apacheModulesListingAvailable())
 		{
 			if ($name !== NULL)
 			{
@@ -273,6 +280,7 @@ class System {
 		throw new systemException('Błąd: Funkcja <span class="bold">apache_get_modules()</span> jest niedostępna!');
 	}
 
+	// Przed wywołaniem tej funkcji należy sprawdzić System::apacheModulesListingAvailable()
 	public function rewriteAvailable()
 	{
 		if ($this->_rewrite_available !== NULL)
@@ -280,22 +288,7 @@ class System {
 			return $this->_rewrite_available;
 		}
 
-		return $this->_rewrite_available = $this->apacheLoadedModules('mod_rewrite');
-	}
-
-	// Ładuje systemowy plik htaccess
-	/*depr*/public function loadRewrite()
-	{
-		@rename(DIR_SITE.'sample.htaccess', DIR_SITE.'.htaccess');
-	}
-
-	// Dezaktywuje systemowy plik htaccess
-	/*depr*/public function removeRewrite()
-	{
-		if (file_exists(DIR_SITE.'sample.htaccess'))
-		{
-			unlink(DIR_SITE.'sample.htaccess');
-		}
+		return $this->_rewrite_available = $this->apacheModuleLoaded('mod_rewrite') || $this->_rewrite;
 	}
 
 	/**
@@ -316,15 +309,15 @@ class System {
 	 * linki zostają włączone.
 	 *
 	 * Przy standardowej konfiguracji, linki wyglądają następująco:
-		Apache: 	/ctrl/act/param-value/
-		IIS: 		/index.php/ctrl/act/param-value/
-		nginx:		/index.php?q=ctrl/act/param-value/
+		Apache + rewrite: 	/ctrl/act/param-value/
+		IIS: 				/index.php/ctrl/act/param-value/
+		nginx:				/index.php?q=ctrl/act/param-value/
 	 */
 	public function pathInfoExists()
 	{
 		$apache = (isset($_SERVER['SERVER_SOFTWARE']) && preg_match('/Apache/i', $_SERVER['SERVER_SOFTWARE'])) || (isset($_SERVER['SERVER_SIGNATURE']) && preg_match('/Apache/i', $_SERVER['SERVER_SIGNATURE']));
 
-		return $result = (bool) ($this->rewriteAvailable() || isset($_SERVER['PATH_INFO']) || isset($_SERVER['ORIG_PATH_INFO']) || $apache || $this->_furl);
+		return $result = (bool) ($this->rewriteAvailable() || $this->serverPathInfoExists() || $apache || $this->_furl);
 
 		// Serwer to nie Apache
 		if ($result === FALSE)
@@ -345,5 +338,15 @@ class System {
 			$this->cache('path_exists', array(TRUE), 'system');
 		}
 		return TRUE;
+	}
+	
+	public function serverPathInfoExists()
+	{
+		return isset($_SERVER['PATH_INFO']) || isset($_SERVER['ORIG_PATH_INFO']);
+	}
+	
+	public function httpServerIs($name)
+	{
+		return preg_match('/'.$name.'/i', $_SERVER['SERVER_SOFTWARE']) || preg_match('/'.$name.'/i', $_SERVER['SERVER_SIGNATURE']);
 	}
 }

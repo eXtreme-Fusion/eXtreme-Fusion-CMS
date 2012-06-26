@@ -224,7 +224,7 @@ class Theme extends optClass
 				{
 					$link_target = $sdata['window'] == '1' ? ' target="_blank"' : '';
 					$li_class = ($i == 0 ? ' class="first-link'.($class ? ' '.$class : '').'"' : ($class ? ' class="'.$class.'"': ''));
-					$res .= "<li".$li_class.">".$sep."<a href='".HELP::createNaviLink($sdata['url'], $this->_system->apacheLoadedModules('mod_rewrite'))."'$link_target><span>".parseBBCode($sdata['name'], "b|i|u|color")."</span></a></li>\n";
+					$res .= "<li".$li_class.">".$sep."<a href='".HELP::createNaviLink($sdata['url'])."'$link_target><span>".parseBBCode($sdata['name'], "b|i|u|color")."</span></a></li>\n";
 					$i++;
 				}
 			}
