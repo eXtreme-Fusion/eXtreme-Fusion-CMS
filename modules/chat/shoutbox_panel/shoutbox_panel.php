@@ -8,7 +8,7 @@
 | This product is licensed under the BSD License.				 |
 | http://extreme-fusion.org/ef5/license/						 |
 +---------------------------------------------------------------*/
-$_head->set('<script src="'.ADDR_SITE.'modules\chat\templates\shoutbox.js"></script>');
+$_head->set('<script src="'.ADDR_SITE.'modules/chat/templates/shoutbox.js"></script>');
 
 if ($_user->isLoggedIn()) 
 {

@@ -9,8 +9,14 @@
 | This product is licensed under the BSD License.				 
 | http://extreme-fusion.org/ef5/license/						 
 ***********************************************************/
-session_start();
-	
+
+// TODO:: Odnoœnie kodu z pliku admin/pages/mudules.php 
+// TODO:: Niwelacja komunikatu o rozpoczêtej sesji "Notice: A session had already been started - ignoring session_start()"
+if ( ! isset($_SESSION)) 
+{
+	session_start();
+}
+
 if (ini_get('register_globals'))
 {
 	$data = array('_GET', '_POST', '_COOKIE', '_FILES', '_SERVER', '_SESSION', '_ENV');

@@ -12,6 +12,9 @@
 try
 {
 	require_once '../../config.php';
+	// TODO:: Niwelacja komunikatu o rozpoczętej sesji "Notice: A session had already been started - ignoring session_start()"
+	// TODO:: Albo bez require DIR_SITE.'bootstrap.php';
+	// TODO:: Albo z require DIR_SITE.'bootstrap.php'; lecz bez zmodyfikwanego bootstrap.php podczas rozpoczynania sesji.
 	require DIR_SITE.'bootstrap.php';
 	require_once DIR_SYSTEM.'admincore.php';
 	require DIR_CLASS.'modules.php';
