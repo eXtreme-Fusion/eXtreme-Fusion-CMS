@@ -1,7 +1,7 @@
 {php} opentable(__('Chat')) {/php}
     {if $iUSER} 
     <div id="request_chat"></div>
-    <div id="chat_post">0</div>
+    <div id="chat_post"></div>
     <div id="chat_messages"><section></section></div>
     
     <div id="chat_form">

@@ -1,7 +1,7 @@
 <div id="ShoutBoxPanel">
 	{php} openside(__('ShoutBox')) {/php}
 	<div id="ShoutBoxUpArrow"></div>
-		<div id="chat_post"></div>
+		Napisanych postów: <div id="chat_post"></div>
 	
 		<div class="InfoBoxPanel">
 			{if $IsLoggedIn}
