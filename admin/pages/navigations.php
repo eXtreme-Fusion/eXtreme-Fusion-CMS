@@ -240,7 +240,7 @@ try
 					$data[] = array(
 						'id' => $row['id'],
 						'name' => $row['name'],
-						'url' => $row['url'] !== 'admin/' ? $row['url'] !== '' ? $_url->path(array('controller' => $row['url'])) : ADDR_SITE : ADDR_ADMIN,
+						'url' => $row['url'] !== '' ? $row['url'] : ADDR_SITE,
 						'perse_url' => ((strstr($row['url'], "http://") || strstr($row['url'], "https://")) ? TRUE : FALSE),
 						'order' => $row['order'],
 						'visibility' => $_user->getRoleName($row['visibility']),
