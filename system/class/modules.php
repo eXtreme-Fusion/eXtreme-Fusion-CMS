@@ -51,7 +51,7 @@ class Modules
 	{
 		foreach (new DirectoryIterator(DIR_MODULES) as $file)
 		{
-			if ( ! in_array($file->getFilename(), array('..', '.', '.svn')))
+			if ( ! in_array($file->getFilename(), array('..', '.', '.svn', '.gitignore')))
 			{
 				if (is_dir($file->getPathname()) && file_exists($file->getPathname().DS.'config.php'))
 				{

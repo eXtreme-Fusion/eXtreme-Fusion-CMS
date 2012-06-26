@@ -153,7 +153,7 @@ $collate = 'utf8_general_ci';
 				<form action="index.php" method="post" id="This" enctype="multipart/form-data" style="float:left;width:720px;" autocomplete="off">
 					<?php
 						if (!isset($_POST['step']) || $_POST['step'] == "" || $_POST['step'] == "1") {
-							$locale_list = makefileopts(makefilelist(DIR_SITE.'locale/', ".svn|.|..", TRUE, "folders"), detectBrowserLanguage());
+							$locale_list = makefileopts(makefilelist(DIR_SITE.'locale/', ".gitignore|.svn|.|..", TRUE, "folders"), detectBrowserLanguage());
 
 					?>
 						<div class="tbl1">

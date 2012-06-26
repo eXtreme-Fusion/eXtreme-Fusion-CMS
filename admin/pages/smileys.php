@@ -124,7 +124,7 @@ try
 	
     $_tpl->assign('smiley_code', $smiley_code);
     $_tpl->assign('smiley_text', $smiley_text);
-    $_tpl->assign('smiley_image', $_tpl->createSelectOpts($_files->createFileList(DIR_IMAGES.'smiley', array('.', '..', 'index.php', 'Thumbs.db', '.svn'), TRUE, 'files'), $smiley_code, FALSE));
+    $_tpl->assign('smiley_image', $_tpl->createSelectOpts($_files->createFileList(DIR_IMAGES.'smiley', array('.', '..', 'index.php', 'Thumbs.db', '.svn', '.gitignore'), TRUE, 'files'), $smiley_code, FALSE));
 
 	$query = $_pdo->getData('SELECT * FROM [smileys] ORDER by `id`');
     if ($query)

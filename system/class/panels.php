@@ -50,15 +50,15 @@ class Panels
 
 	public function adminGetFtpPanels()
 	{
-	  $this->panels = HELP::getFileList(DIR_MODULES, array('.', '..', '.svn'), TRUE, 'folders', '_panel');
+	  $this->panels = HELP::getFileList(DIR_MODULES, array('.', '..', '.svn', '.gitignore'), TRUE, 'folders', '_panel');
 	}
 
 	public function adminGetModulesPanels()
 	{
-		$modules = HELP::getFileList(DIR_MODULES, array('.', '..', '.svn'), TRUE, 'folders');
+		$modules = HELP::getFileList(DIR_MODULES, array('.', '..', '.svn', '.gitignore'), TRUE, 'folders');
 		foreach ($modules as $module)
 		{
-			$module_panel = HELP::getFileList(DIR_MODULES.$module.DS, array('.', '..', '.svn'), TRUE, 'folders', '_panel');
+			$module_panel = HELP::getFileList(DIR_MODULES.$module.DS, array('.', '..', '.svn', '.gitignore'), TRUE, 'folders', '_panel');
 			foreach($module_panel as $mpanel)
 			{
 			  if ($mpanel != NULL)

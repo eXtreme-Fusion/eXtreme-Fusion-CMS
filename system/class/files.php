@@ -19,7 +19,7 @@ class Files
 
 	public function __construct()
 	{
-		$this->_omit_ext = array('..', '.', '.svn');
+		$this->_omit_ext = array('..', '.', '.svn', '.gitignore');
 		$this->_size_title = array(__('B'), __('kB'), __('MB'), __('GB'), __('TB'));
 		$this->_size = NULL;
 	}
@@ -245,7 +245,7 @@ class Files
 	 *
 	 *     
 	 * @param   string    	Ścieżka do katalogu
-	 * @param   array    	Filtr np.: array('..', '.', '.svn')
+	 * @param   array    	Filtr np.: array('..', '.', '.svn', '.gitignore')
 	 * @param   bool    	Sortowanie wyników
 	 * @param   string    	Typ: pliki/katalogi
 	 * @return  array  		Lista plików/katalogów
