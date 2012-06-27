@@ -220,6 +220,9 @@ try
 
 	// Usuwanie niepotrzebnych wpisów z tabeli u¿ytkowników online.
 	$_pdo->exec('DELETE FROM [users_online] WHERE `last_activity` < '.(time()-60*60*2));
+	
+	$_tree = new Tree($_pdo, 'drzewko');
+	$_tree->delete(1);
 
 	session_write_close();
 }
@@ -237,5 +240,5 @@ catch(userException $exception)
 }
 catch(PDOException $exception)
 {
-    new dBug($exception);
+   echo $exception;
 }
