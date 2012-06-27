@@ -128,7 +128,8 @@ insert($_dbconfig['prefix'].'settings', array('key' => 'routing', 'value' => ser
 	'main_sep' => '/',
 	'url_ext' => '.html',
 	'tpl_ext' => '.tpl',
-	'logic_ext' => '.php'
+	'logic_ext' => '.php',
+	'ext_allowed' => '1'
 ))));
 
 /** Nie usuwac/Do not remove
