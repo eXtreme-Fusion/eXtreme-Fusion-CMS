@@ -59,6 +59,8 @@ class Theme extends optClass
 		$this->assign('THEME_TEMPLATE_IMAGES', ADDR_SITE.'themes/'.$this->_theme.'/templates/images/');
 		$this->assign('THEME_TEMPLATE_STYLES', ADDR_SITE.'themes/'.$this->_theme.'/templates/stylesheet/');
 		$this->assign('THEME_TEMPLATE_JAVA_SCRIPT', ADDR_SITE.'themes/'.$this->_theme.'/templates/js/');
+		$this->assign('URL_REQUEST', URL_REQUEST);
+				
 		$this->assign('SystemVersion', 'eXtreme-Fusion '.$this->_sett->get('version'));
 		$this->assign('getTryLogin', $this->_user->getTryLogin());
 		
