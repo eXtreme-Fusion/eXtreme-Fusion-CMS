@@ -32,7 +32,8 @@ try
 				'main_sep' => $_request->post('main_sep')->strip(),
 				'url_ext' => $_request->post('url_ext')->strip(),
 				'tpl_ext' => $_request->post('tpl_ext')->strip(),
-				'logic_ext' => $_request->post('logic_ext')->strip()
+				'logic_ext' => $_request->post('logic_ext')->strip(),
+				'ext_allowed' => $_result->post('ext_allowed')->isNum(TRUE)
 			))
 		));
 		
@@ -48,7 +49,8 @@ try
 		'main_sep' => $_sett->getUns('routing', 'main_sep'),
 		'url_ext' => $_sett->getUns('routing', 'url_ext'),
 		'tpl_ext' => $_sett->getUns('routing', 'tpl_ext'),
-		'logic_ext' => $_sett->getUns('routing', 'logic_ext')
+		'logic_ext' => $_sett->getUns('routing', 'logic_ext'),
+		'ext_allowed' => $_sett->getUns('routing', 'ext_allowed')
 	));
 
 	$_tpl->template('settings_routing');
