@@ -43,6 +43,8 @@ try
 		);
     }
 	
+	
+	
 	if ($_request->get('action')->show() === 'delete' && $_request->get('id')->isNum()) 
 	{
 		$row = $_pdo->getRow('SELECT `order` FROM [navigation] WHERE `id` = :id',
