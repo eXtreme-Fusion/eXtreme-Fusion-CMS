@@ -1,5 +1,14 @@
 <?php
-
+/***********************************************************
+| eXtreme-Fusion 5.0 Beta 5
+| Content Management System       
+|
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
+| http://extreme-fusion.org/                               		 
+|
+| This product is licensed under the BSD License.				 
+| http://extreme-fusion.org/ef5/license/						 
+***********************************************************/
 class Tree
 {
 	// Database object
@@ -59,10 +68,10 @@ class Tree
 			{
 				if ($del_sub)
 				{
-					// Iloœc elementów podzbioru
+					// IloÅ›c elementÃ³w podzbioru
 					$count = ($data['right']-$data['left']-1);
 
-					// Przesuniêcie left/right pozosta³ych elementów
+					// PrzesuniÄ™cie left/right pozostaÅ‚ych elementÃ³w
 					$order = $count + 2;
 
 					$this->_pdo->exec('DELETE FROM ['.$this->table.'] WHERE `left` BETWEEN '.$data['left'].' AND '.$data['right'].' OR `id` = '.$id);

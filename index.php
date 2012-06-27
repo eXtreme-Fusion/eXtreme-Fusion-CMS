@@ -1,23 +1,23 @@
 <?php
 /***********************************************************
 | eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
+| This product is licensed under the BSD License.
+| http://extreme-fusion.org/ef5/license/
 ***********************************************************/
 
 try
 {
-	// Czy dla podstrony musi istnieæ plik TPL?
+	// Czy dla podstrony musi istnieÄ‡ plik TPL?
 	defined('TPL_REQUIRED') || define('TPL_REQUIRED', FALSE);
 
 	require_once 'system/sitecore.php';
-	
-	// Deklaracja sta³ej œcie¿ki adresu URL
+
+	// Deklaracja staÅ‚ej Å›cieÅ¼ki adresu URL
 	if ($_sett->get('maintenance') == 1 && ((iMEMBER && $_sett->get('maintenance_level') == 1 && $_user->get('id') != 1) || ($_sett->get('maintenance_level') > $_user->get('level'))))
 	{
 		HELP::redirect(ADDR_SITE.'maintenance.html');
@@ -29,7 +29,7 @@ try
 
 	require_once DIR_CLASS.'header.php';
 
-	// Wczytywanie g³ównej klasy
+	// Wczytywanie gÅ‚Ã³wnej klasy
 	require_once DIR_CLASS.'themes.php';
 
 	/******* Koniec sekcji szablonu systemowego */
@@ -37,7 +37,7 @@ try
 	# Routing class
 	$_route = new Router($_request, $_sett, $_system->rewriteAvailable(), 'page', $_system->pathInfoExists(), $_sett->get('opening_page'), TRUE, TRUE, FALSE, 'admin');
 
-	
+
 	/** Konfiguracja obiektu szablonu **/
 	$_tpl   = new Site($_route);
 
@@ -46,7 +46,7 @@ try
 	/*****/
 
 	/**
-	 * Pobieranie linków definiowanych przez administratora
+	 * Pobieranie linkÃ³w definiowanych przez administratora
 	 */
 	$query = $_pdo->getData('SELECT * FROM [links] WHERE `link`=:link',
 		array(
@@ -58,12 +58,12 @@ try
 	{
 		foreach($query as $row)
 		{
-			// Ustawia administracyjn¹ œcie¿kê odczytu pliku
+			// Ustawia administracyjnÄ… Å›cieÅ¼kÄ™ odczytu pliku
 			$_route->setAdminFile($row['file']);
 		}
 	}
 
-	// Scie¿ki, w których jest wyszukiwany plik wg kolejnoœci przeszukiwania
+	// ScieÅ¼ki, w ktÃ³rych jest wyszukiwany plik wg kolejnoÅ›ci przeszukiwania
 	$folders = array(
 		'pages'.DS,
 		'modules'.DS.$_route->getFileName().DS.'pages'.DS
@@ -72,9 +72,9 @@ try
 	$_route->setFolders($folders);
 
 	/**
-	 * Ustawia ostateczn¹ sciê¿kê odczytu pliku
-	 * W przypadku gdy wykona³a siê metoda setAdminFile(), sprawdzi czy plik istnieje.
-	 * Jeœli nie, wyszuka go w lokalizacjach podanych parametrem
+	 * Ustawia ostatecznÄ… sciÄ™Å¼kÄ™ odczytu pliku
+	 * W przypadku gdy wykonaÅ‚a siÄ™ metoda setAdminFile(), sprawdzi czy plik istnieje.
+	 * JeÅ›li nie, wyszuka go w lokalizacjach podanych parametrem
 	 */
 	$_route->setExitFile();
 
@@ -91,12 +91,12 @@ try
 			$_route->setNewConfig($row['full_path']);
 		}
 	}
-	// Tworzenie emulatora statycznoœci klasy OPT
+	// Tworzenie emulatora statycznoÅ›ci klasy OPT
 	TPL::build($_theme = new Theme($_sett, $_system, $_user, $_pdo, $_request, $_route->getTplFileName()));
 
 	//$_theme->registerFunction('url', 'Url');
-	
-	// £adowanie pliku startowego modu³u
+
+	// Åadowanie pliku startowego moduÅ‚u
 	if ($row = $_system->getModuleBootstrap())
 	{
 		foreach ($row as $name)
@@ -115,10 +115,10 @@ try
 		$_route->trace(array('controller' => 'error', 'action' => 404, 'params' => NULL));
 	}
 
-	// £adowanie pliku PHP wybranej podstrony
+	// Åadowanie pliku PHP wybranej podstrony
 	require $_route->getExitFile();
 
-	// Za³¹czanie predefiniowanych elementów szablonu systemu (panele)
+	// ZaÅ‚Ä…czanie predefiniowanych elementÃ³w szablonu systemu (panele)
 	require_once DIR_SYSTEM.'panels.php';
 
 	/**
@@ -144,7 +144,7 @@ try
 
 	/******* Koniec konfiguracji sekcji HEAD */
 
-	// Za³¹czanie sekcji HEAD
+	// ZaÅ‚Ä…czanie sekcji HEAD
 	if (file_exists(DIR_THEME.'templates'.DS.'pre'.DS.'header'.$_route->getExt('tpl')))
 	{
 		$_tpl->template('header'.$_route->getExt('tpl'), DIR_THEME.'templates'.DS.'pre'.DS);
@@ -162,10 +162,10 @@ try
 	{
 		if (! $_tpl->getPageCompileDir())
 		{
-			// Wyœwietlanie podstrony TPL z katalogu szablonu
+			// WyÅ›wietlanie podstrony TPL z katalogu szablonu
 			if (( ! defined('THIS') || ! THIS) && $_theme->tplExists())
 			{
-				// Zmienia œcie¿kê, sk¹d jest odczytywany szablon
+				// Zmienia Å›cieÅ¼kÄ™, skÄ…d jest odczytywany szablon
 				$_tpl->setCustomRoot(DIR_THEME.'templates'.DS.'pages'.DS);
 			}
 
@@ -191,7 +191,7 @@ try
 
 		$_tpl->setDefaultRoot();
 	}
-	// Wyœwietlanie komunikatu o b³êdzie w pliku PHP
+	// WyÅ›wietlanie komunikatu o bÅ‚Ä™dzie w pliku PHP
 	else
 	{
 		$_tpl->assign('Message', $exc_error['Message']);
@@ -201,7 +201,7 @@ try
 		$_tpl->template('pre'.DS.'exception'.$_route->getExt('tpl'));
 	}
 
-	// Wyœwietlanie dodatkowych plików szablonu
+	// WyÅ›wietlanie dodatkowych plikÃ³w szablonu
 	if (isset($theme['parse']) && is_array($theme['parse']))
 	{
 		foreach($theme['parse'] as $file)
@@ -215,12 +215,12 @@ try
 
 	render_page(FALSE);
 
-	// Za³¹czanie szablonu zamykaj¹cego stronê
+	// ZaÅ‚Ä…czanie szablonu zamykajÄ…cego stronÄ™
 	$_tpl->template('pre'.DS.'footer'.$_route->getExt('tpl'));
 
-	// Usuwanie niepotrzebnych wpisów z tabeli u¿ytkowników online.
+	// Usuwanie niepotrzebnych wpisÃ³w z tabeli uÅ¼ytkownikÃ³w online.
 	$_pdo->exec('DELETE FROM [users_online] WHERE `last_activity` < '.(time()-60*60*2));
-	
+
 /**
 	$_tree = new Tree($_pdo, 'drzewko');
 	$_tree->delete(1);
