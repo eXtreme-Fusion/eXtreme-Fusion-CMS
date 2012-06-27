@@ -1,4 +1,4 @@
-eXtreme-Fusion V Beta 5 2012.06.23
+﻿eXtreme-Fusion V Beta 5 2012.06.23
 
 - zrezygnowano z $_SERVER['PATH_INFO'] na rzecz $_SERVER['REQUEST_URI'] ze względu na występujące 
   problemy na serwerach nginx
@@ -10,4 +10,5 @@ eXtreme-Fusion V Beta 5 2012.06.23
 - uproszczono instalacje: mało używane elementy schowano jako Zaawansowane
 - dodano checkboxy umożliwiające poinformowanie systemu, że modRewrite jest dostępny, gdy instalator sam nie może 
   tego wykryć; analogicznie co do PATH_INFO
+- edycja ustawień routera (możliwość wyboru dozwolonego rozszerzenia)
 
