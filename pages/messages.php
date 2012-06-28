@@ -64,15 +64,54 @@ elseif ($_route->getAction() === 'view')
 	else
 	{
 		$_tpl->assign('new_discuss', TRUE);
+    
+		$query = $_pdo->getData('SELECT `id`, `username` FROM [users] WHERE `id` != :user  ORDER BY username DESC',
+			array(
+				array(':user', $_user->get('id'), PDO::PARAM_INT)
+			)
+		);
+    $i = 0;
+		foreach($query as $row)
+		{
+
+			$data[$i] = array(
+				'id' => $row['id'],
+				'username' => $row['username']
+			);
+			$i++;
+		}
+    $_tpl->assign('data', $data);
 	}
 }
 // Podstrona określania odbiorcy
 elseif ($_route->getAction() === 'new')
 {
+    $_tpl->assign('new_discuss', TRUE);
+    $theme = array(
+			'Title' => __('Nowa wiadomość do: ').$_user->getByID(intval($_route->getParamVoid(1)), 'username').' &raquo; '.$_sett->get('site_name'),
+			'Keys' => 'Prywatne wiadomości, komunikacja, prywatny chat z '.$_user->getByID(intval($_route->getParamVoid(1)), 'username').'',
+			'Desc' => 'W łatwy sposób możesz komunikować się z '.$_user->getByID(intval($_route->getParamVoid(1)), 'username').'.'
+		);
+		$query = $_pdo->getData('SELECT `id`, `username` FROM [users] WHERE `id` != :user  ORDER BY username DESC',
+			array(
+				array(':user', $_user->get('id'), PDO::PARAM_INT)
+			)
+		);
+    $i = 0;
+		foreach($query as $row)
+		{
 
+			$data[$i] = array(
+				'id' => $row['id'],
+				'username' => $row['username']
+			);
+			$i++;
+		}
+    $_tpl->assign('data', $data);	
+ 
 }
-
-if ($_route->getAction() === NULL || $_route->getAction() === 'view')
+// Lista wiadomosći
+if ($_route->getAction() === NULL)
 {
 	if($query)
 	{

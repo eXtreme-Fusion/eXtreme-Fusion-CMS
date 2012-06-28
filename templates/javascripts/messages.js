@@ -12,13 +12,17 @@ $(function() {
 				alert('Nie podano tematu wiadomości');
 				return false;
 			}
+			var to_user = $('select#message_to').val();
 		} else {
+			var to_user = $('input[name*="to"]', this).val();
 			new_message = '';
 		}
+		
 
+		
 		$.post(addr_site+'pages/ajax/messages.php', {
 			message: $('input[name*="message"]', this).val(),
-			to: $('input[name*="to"]', this).val(),
+			to: to_user,
 			item_id: $('input[name*="item_id"]', this).val(),
 			send: true,
 			message_subject: new_message,

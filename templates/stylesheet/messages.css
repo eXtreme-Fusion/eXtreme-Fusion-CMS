@@ -1,4 +1,4 @@
-#messages_frame { overflow:auto;height:400px;}
+#messages_frame { overflow:auto;height:450px;}
 #messages_frame section div span.alt { float:right; }
 #message_count { display:none; }
 
@@ -10,7 +10,7 @@
 #message_textarea a { float:left; margin-left:10px;  }
 #message_textarea textarea { margin-bottom:10px;}
 
-#message_to { float:left; margin-left:10px; }
+#message_to {margin-left:30px;margin-right:auto; }
 #message_to select { width:200px; }
 
 #message_subject { margin-left:30px;margin-right:auto; }
@@ -20,3 +20,7 @@
 #message input { width:300px; }
 
 #messages_buttons { margin-left:30px;margin-right:auto; padding-top: 10px; }
+
+.pw_message_item{
+padding-left:10px;
+}

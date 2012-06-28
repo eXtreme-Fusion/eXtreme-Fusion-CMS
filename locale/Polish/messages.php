@@ -7,5 +7,9 @@ return array(
 	'Subject:' => 'Tytuł:',
 	'Send' => 'Wyślij',
 	'There are no messages.' => 'Brak wiadomości.',
-
+	'To:' => 'Do:',
+	'Message:' => 'Treść:',
+	'Enter a topic name' => 'Podaj nazwe tematu',
+	'Enter your message' => 'Podaj treść wiadomości',
+  'Chat:' => 'Rozmowa:',
 );
