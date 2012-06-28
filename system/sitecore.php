@@ -192,7 +192,7 @@ try
 
 	if ($_user->iUSER())
 	{
-		if ($_user->get('theme') !== 'Default' && $_sett->get('userthemes') === 1)
+		if ($_user->get('theme') !== 'Default' && $_sett->get('userthemes') === '1')
 		{
 			if ( ! HELP::theme_exists($_user->get('theme')))
 			{

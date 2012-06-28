@@ -49,9 +49,7 @@ try
 	 * Pobieranie linków definiowanych przez administratora
 	 */
 	$query = $_pdo->getData('SELECT * FROM [links] WHERE `link`=:link',
-		array(
-			array(':link', $_route->getFileName(), PDO::PARAM_STR)
-		)
+		array(':link', $_route->getFileName(), PDO::PARAM_STR)
 	);
 
 	if ($_pdo->getRowsCount($query))
@@ -221,10 +219,10 @@ try
 	// Usuwanie niepotrzebnych wpisów z tabeli użytkowników online.
 	$_pdo->exec('DELETE FROM [users_online] WHERE `last_activity` < '.(time()-60*60*2));
 
-/**
+/*
 	$_tree = new Tree($_pdo, 'drzewko');
-	$_tree->delete(1);
-**/
+	$_tree->add(0, 1);
+*/
 	session_write_close();
 }
 catch(optException $exception)
