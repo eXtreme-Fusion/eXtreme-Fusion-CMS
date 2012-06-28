@@ -12,7 +12,7 @@
 			<div class="profile-info tbl2">
 				<div><strong>{i18n('e-Mail')}:</strong>{$user.email}</div>
 				<div><strong>{i18n('Joined')}:</strong>{$user.joined}</div>
-				<div><strong>{i18n('Last Visit')}:</strong>{if $user.is_online == 1}<span class="green">{i18n('Online')}</span><img src="{$ADDR_IMAGES}online.png" alt="{i18n('Online')}">{else}{$user.last_visit_time}<img src="{$ADDR_IMAGES}offline.png" alt="{i18n('Offline')}">{/if}</div>
+				<div><strong>{i18n('Last Visit')}:</strong>{if $user.is_online == 1}<span class="green">{i18n('Online')}</span><img src="{$ADDR_IMAGES}online.png" alt="{i18n('Online')}">{else}<span class="red">{$user.last_visit_time}</span><img src="{$ADDR_IMAGES}offline.png" alt="{i18n('Offline')}">{/if}</div>
 				<div><strong>{i18n('Groups')}:</strong>{$user.roles}</div>
 			</div>
 		</div>
@@ -28,24 +28,23 @@
 
 		<div class="tab_cont profile-fields" id="tab_cont_stats">
 			<div class="profile-col">
-				<div class="col">Dodane newsy: {$user.news}</div>
-				<div class="col">Napisane komentarze: {$user.comment}</div>
+				<div class="col"><p><strong>Dodane newsy:</strong> {$user.news}</p></div>
+				<div class="col"><p><strong>Napisane komentarze:</strong> {$user.comment}</p></div>
 			</div>
 			{if $chat != 0}
 				<div class="profile-col">
-					<div class="col">Posty w chacie: {$chat}</div>
+					<div class="col"><p><strong>Posty w chacie:</strong> {$chat}</p></div>
 				</div>
 			{/if}
 			{if $cautions != 0}
 				<div class="profile-col">
-					<div class="col"><a href="{$cautions.link}">Ostrzeżenia</a>: {$cautions.cautions}</div>
-					<div class="col"></div>
+					<div class="col"><p><strong><a href="{$cautions.link}">Ostrzeżenia:</a></strong> {$cautions.cautions}</p></div>
 				</div>
 			{/if}
 			{if $points_stat}
 				<div class="profile-col">
-					<div class="col">Punkty: {$points_stat.points}</div>
-					<div class="col">Ranga: {$points_stat.rank}</div>
+					<div class="col"><p><strong>Punkty:</strong> {$points_stat.points}</p></div>
+					<div class="col"><p><strong>Ranga:</strong> {$points_stat.rank}</p></div>
 				</div>
 			{/if}
 		</div>
@@ -54,7 +53,7 @@
 				{section=fields}
 					<div class="profile-fields-col">
 						{if $fields.type == 2}
-							<p><strong>{i18n($fields.name)}</strong><br />{if $fields.value}{$fields.value}{else}{i18n('No data')}{/if}</p>
+							<p class="profile_sign"><strong>{i18n($fields.name)}</strong>{if $fields.value}{$fields.value}{else}{i18n('No data')}{/if}</p>
 						{else}
 							<p><strong>{i18n($fields.name)}</strong>&nbsp;{if $fields.value}{$fields.value}{else}{i18n('No data')}{/if}</p>
 						{/if}
