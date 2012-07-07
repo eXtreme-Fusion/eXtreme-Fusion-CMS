@@ -51,13 +51,13 @@
 		{section=cats}
 			<div class="tab_cont profile-fields" id="tab_cont_{$cats.id}">
 				{section=fields}
+				{if $fields.type == 2}
+					<p class="profile_sign"><strong>{i18n($fields.name)}</strong>{if $fields.value}{$fields.value}{else}{i18n('No data')}{/if}</p>
+				{else}
 					<div class="profile-fields-col">
-						{if $fields.type == 2}
-							<p class="profile_sign"><strong>{i18n($fields.name)}</strong>{if $fields.value}{$fields.value}{else}{i18n('No data')}{/if}</p>
-						{else}
-							<p><strong>{i18n($fields.name)}</strong>&nbsp;{if $fields.value}{$fields.value}{else}{i18n('No data')}{/if}</p>
-						{/if}
+						<p><strong>{i18n($fields.name)}</strong>&nbsp;{if $fields.value}{$fields.value}{else}{i18n('No data')}{/if}</p>
 					</div>
+				{/if}
 				{/section}
 			</div>
 		{/section}
