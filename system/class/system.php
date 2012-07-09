@@ -193,12 +193,13 @@ class System {
 	 *
 	 * @return  string
 	 */
-	public function detectBrowserLanguage()
+	 //todo::przenieśc do helpera lub osobnej klasy statycznej
+	public static function detectBrowserLanguage($full = FALSE)
 	{
 		$langs = array(
-			'pl' => 'polish',
-			'en' => 'english',
-			'cz' => 'czech'
+			'pl' => 'Polish',
+			'en' => 'English',
+			'cz' => 'Czech'
 		);
 
 		$var = explode(';', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
@@ -220,7 +221,12 @@ class System {
 			$current = 'en';
 		}
 
-		return $current;
+		if ($full === FALSE)
+		{
+			return $current;
+		}
+		
+		return $langs[$current];
 	}
 
 	public function getModuleBootstrap($cache_expire = 43200)

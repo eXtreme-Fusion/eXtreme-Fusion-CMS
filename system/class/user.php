@@ -120,8 +120,19 @@ class User {
 		$this->onlineCleanTable();
 	}
 
+	
 	/************* metody do testów */
 
+	public function getLang()
+	{
+		if ($this->isLoggedIn())
+		{
+			return $this->get('lang');
+		}
+		
+		return System::detectBrowserLanguage(TRUE);
+		
+	}
 	// Sprawdzanie dostępności nazwy użytkownika i ewentualna zmiana
 	// aby zmienić nazwę usera, nalezy podać ID
 	// Przed wywołaniem funkcji należy sprawdzić nazwę użytkownika, np:

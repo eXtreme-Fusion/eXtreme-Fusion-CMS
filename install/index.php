@@ -698,7 +698,7 @@ $collate = 'utf8_general_ci';
 					if (isset($_POST['step']) && $_POST['step'] == "5") {
 						$msg = '';
 						$db_host = (isset($_POST['db_host']) ? stripinput(trim($_POST['db_host'])) : "");
-						$db_port = (isset($_POST['db_port']) ? stripinput(trim($_POST['db_port'])) : "");
+						$db_port = (isset($_POST['db_port']) ? stripinput(trim($_POST['db_port'])) : "3306");
 						$db_user = (isset($_POST['db_user']) ? stripinput(trim($_POST['db_user'])) : "");
 						$db_pass = (isset($_POST['db_pass']) ? stripinput(trim($_POST['db_pass'])) : "");
 						$db_name = (isset($_POST['db_name']) ? stripinput(trim($_POST['db_name'])) : "");

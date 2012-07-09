@@ -149,7 +149,7 @@ else
 
 	// Sprawdzanie, czy użytkownik ma prawo do zobaczenia jakiegokolwiek newsa
 	$rows = $_pdo->getMatchRowsCount('SELECT `id` FROM [news] WHERE `access` IN ('.$_user->listRoles().') AND `draft` = 0 AND `language` = :lang', 
-		array(':lang', $_user->get('lang'), PDO::PARAM_STR)
+		array(':lang', $_user->getLang(), PDO::PARAM_STR)
 	);
 
 	if ($rows)
