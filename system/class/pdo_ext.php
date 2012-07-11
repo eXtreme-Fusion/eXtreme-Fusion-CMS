@@ -317,9 +317,7 @@ class PDO_EXT extends PDO
 	**/
 	public function getSelectCount($query, array $prepare = array())
 	{
-		$var = $this->getRow($query, $prepare, PDO::FETCH_NUM);
-
-		return $var[0];
+		return current($this->getRow($query, $prepare, PDO::FETCH_NUM));
 	}
 
 	/**
