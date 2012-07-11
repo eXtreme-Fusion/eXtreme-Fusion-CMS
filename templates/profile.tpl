@@ -64,6 +64,7 @@
 				</div>
 			{/if}
 		</div>
+		
 		{section=cats}
 			<div class="tab_cont profile-fields" id="tab_cont_{$cats.id}">
 				{section=fields}
