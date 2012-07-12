@@ -9,6 +9,7 @@
 | http://extreme-fusion.org/ef5/license/						 |
 +---------------------------------------------------------------*/
 require_once '../../system/sitecore.php';
+$_locale->moduleLoad('polls', 'polls');
 echo'<script src="'.ADDR_MODULES.'polls/templates/javascripts/polls_panel.js"></script>';
 
 if ($_request->post('send'))
@@ -55,28 +56,28 @@ if ($_pdo->getRowsCount($query))
 		if( ! $query)
 		{
 			$polls[$i] = array(
-				'ID' => $row['id'],
-				'Question' => $row['question'],
-				'DateStart' => HELP::showDate('shortdate', $row['date_start'])
+				'id' => $row['id'],
+				'question' => $row['question'],
+				'date_start' => HELP::showDate('shortdate', $row['date_start'])
 			);
 
 			$n = 0;
 			foreach(unserialize($row['response']) as $key => $val)
 			{
 				$response[$i][$key] = array(
-					'Val' => $val,
-					'N' => $n
+					'val' => $val,
+					'n' => $n
 				);
 				$n++;
 			}
 
-			$_ajax->assign('PanelData', $polls);
-			$_ajax->assign('PanelResponse', $response);
+			$_ajax->assign('polls_data', $polls);
+			$_ajax->assign('polls_rsponse', $response);
 		}
 
 		if($_user->isLoggedIn())
 		{
-			$_ajax->assign('Login', TRUE);
+			$_ajax->assign('login', TRUE);
 		}
 
 		$i++;
