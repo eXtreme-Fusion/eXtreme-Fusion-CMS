@@ -7,13 +7,13 @@
 				{else}
 					<img src="{$ADDR_IMAGES}avatars/none.jpg" class="avatar">
 				{/if}
+				<p>{if $user.is_online == 1}<img src="{$ADDR_IMAGES}online.png" alt="{i18n('Online')}"><span class="online">{i18n('Online')}</span>{else}<img src="{$ADDR_IMAGES}offline.png" alt="{i18n('Offline')}">{$user.last_visit_time}{/if}</p>
 			</div>
 			<div class="profile-title"><img src="{$ADDR_IMAGES}profile/info.png"><span id="profile-username">{i18n('Member Profile :Username', array(':Username' => $user.username))}</span><span id="profile-status">{$user.role}</span></div>
 			<div class="profile-info tbl2">
-				<div><strong>{i18n('e-Mail')}:</strong>{$user.email}</div>
-				<div><strong>{i18n('Joined')}:</strong>{$user.joined}</div>
-				<div><strong>{i18n('Last Visit')}:</strong>{if $user.is_online == 1}<span>{i18n('Online')}</span><img src="{$ADDR_IMAGES}online.png" alt="{i18n('Online')}">{else}<span>{$user.last_visit_time}</span><img src="{$ADDR_IMAGES}offline.png" alt="{i18n('Offline')}">{/if}</div>
-				<div><strong>{i18n('Groups')}:</strong>{$user.roles}</div>
+				<p><strong>{i18n('e-Mail')}:</strong>{$user.email}</p>
+				<p><strong>{i18n('Joined')}:</strong>{$user.joined}</p>
+				<p><strong>{i18n('Groups')}:</strong>{$user.roles}</p>
 			</div>
 		</div>
 		
@@ -27,37 +27,37 @@
 		</div>
 
 		<div class="tab_cont profile-fields" id="tab_cont_stats">
-			<div class="element col">
+			<div class="element">
 				<strong>Dodane newsy</strong>
 				<p>{$user.news}</p>
 				<div class="clear"></div>
 			</div>
-			<div class="element col">
+			<div class="element">
 				<strong>Napisane komentarze</strong>
 				<p>{$user.comment}</p>
 				<div class="clear"></div>
 			</div>
 			{if $chat != 0}
-				<div class="element col">
+				<div class="element">
 					<strong>Posty w chacie</strong>
 					<p>{$chat}</p>
 					<div class="clear"></div>
 				</div>
 			{/if}
 			{if $cautions != 0}
-				<div class="element col">
+				<div class="element">
 					<strong><a href="{$cautions.link}">Ostrzeżenia</a></strong>
 					<p>{$cautions.cautions}</p>
 					<div class="clear"></div>
 				</div>
 			{/if}
 			{if $points_stat}
-				<div class="element col">
+				<div class="element">
 					<strong>Punkty</strong>
 					<p>{$points_stat.points}</p>
 					<div class="clear"></div>
 				</div>
-				<div class="element col">
+				<div class="element">
 					<strong>Ranga</strong>
 					<p>{$points_stat.rank}</p>
 					<div class="clear"></div>
@@ -68,19 +68,22 @@
 		{section=cats}
 			<div class="tab_cont profile-fields" id="tab_cont_{$cats.id}">
 				{section=fields}
-				{if $fields.type == 2}
-					<div class="element_big">
-						<strong>{i18n($fields.name)}</strong>
-						<p>{if $fields.value}{$fields.value}{else}{i18n('No data')}{/if}</p>
-						<div class="clear"></div>
-					</div>
-				{else}
-					<div class="element">
-						<strong>{i18n($fields.name)}</strong>
-						<p>{if $fields.value}{$fields.value}{else}{i18n('No data')}{/if}</p>
-						<div class="clear"></div>
-					</div>
-				{/if}
+					{if $fields.value && ($fields.type == 1 || $fields.type == 3)}
+						<div class="element">
+							<strong>{i18n($fields.name)}</strong>
+							<p>{$fields.value}</p>
+							<div class="clear"></div>
+						</div>
+					{/if}
+				{/section}
+				{section=fields}
+					{if $fields.value && $fields.type == 2}
+						<div class="element_big">
+							<strong>{i18n($fields.name)}</strong>
+							<p>{$fields.value}</p>
+							<div class="clear"></div>
+						</div>
+					{/if}
 				{/section}
 			</div>
 		{/section}
