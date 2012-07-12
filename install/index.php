@@ -414,6 +414,7 @@ $collate = 'utf8_general_ci';
 							$cache_prefix = "extreme_".substr(md5(uniqid("ef5_cache", FALSE)), 13, 7)."_";
 
 							$db_host = (isset($_POST['db_host']) ? stripinput(trim($_POST['db_host'])) : "localhost");
+							// The port is required by certain configurations, so here we set the default.
 							$db_port = (isset($_POST['db_port']) ? stripinput(trim($_POST['db_port'])) : '3306');
 							$db_user = (isset($_POST['db_user']) ? stripinput(trim($_POST['db_user'])) : "");
 							$db_name = (isset($_POST['db_name']) ? stripinput(trim($_POST['db_name'])) : "");

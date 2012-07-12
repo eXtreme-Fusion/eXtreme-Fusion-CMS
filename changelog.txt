@@ -1,14 +1,17 @@
-﻿eXtreme-Fusion V Beta 5 2012.06.23
+﻿							eXtreme-Fusion V Beta 5 2012.06.23
 
-- zrezygnowano z $_SERVER['PATH_INFO'] na rzecz $_SERVER['REQUEST_URI'] ze względu na występujące 
+- zrezygnowano z $_SERVER['PATH_INFO'] na rzecz $_SERVER['REQUEST_URI'] ze względu na występujące
   problemy na serwerach nginx
 - zrezygnowano z odrzucania pliku .htaccess gdy brakuje na serwerze jedynie modułu rewrite;
-  usunięto problem (błąd 500) z przenoszeniem strony na nowy serwer, na którym (w przeciwieństwie 
+  usunięto problem (błąd 500) z przenoszeniem strony na nowy serwer, na którym (w przeciwieństwie
   do pierwotnego) brakuje modułu rewrite
 - wprowadzono zmiany umożliwiające korzystanie z Przyjaznych Linków na serwerach cba.pl
 
 - uproszczono instalacje: mało używane elementy schowano jako Zaawansowane
-- dodano checkboxy umożliwiające poinformowanie systemu, że modRewrite jest dostępny, gdy instalator sam nie może 
-  tego wykryć; analogicznie co do PATH_INFO
-- edycja ustawień routera (możliwość wyboru dozwolonego rozszerzenia)
+- dodano checkboxy umożliwiające poinformowanie instalatora,
+  że modRewrite jest dostępny; analogicznie co do PATH_INFO
+- edycja ustawień routera (możliwość wyboru jednego z dozwolonych rozszerzeń adresu URL)
+
+- nowy wygląd podstrony Profil użytkownika
+- wyeliminowano błąd powodujący niewyświetlanie się newsów osobom niezalogowanym
 
