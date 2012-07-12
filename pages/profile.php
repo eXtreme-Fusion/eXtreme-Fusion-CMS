@@ -259,5 +259,5 @@ if ($row)
 			$_request->redirect(ADDR_SITE.'profile,'.$id.'.html');
 		}
 	}
-	// END :: Point System module - admin action
+	// END :: Point System module - admin action 
 }

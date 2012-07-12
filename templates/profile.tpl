@@ -91,6 +91,7 @@
                 </div>
             {/if}
         {/section}
+
     {php} closetable() {/php}
     
     {if $points}
