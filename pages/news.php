@@ -128,7 +128,7 @@ if ($_route->getAction())
 
 	$_tpl->assignGroup(array(
 
-		'bbcode' => bbcodes()
+		'bbcode' => $_sbb->bbcodes()
 	));
 }
 else

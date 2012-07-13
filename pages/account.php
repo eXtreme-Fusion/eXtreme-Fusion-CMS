@@ -256,7 +256,7 @@ if ($_request->post('save')->show() && $_request->post('email')->show())
 				$cat['has_fields'] = '0';
 			}
 		}
-
+		$_tpl->assign('bbcode', $_sbb->bbcodes());
 		$_tpl->assign('Fields', $new_fields);
 	}
 

@@ -107,7 +107,7 @@ if ($row)
 					
 					if (isset($data[$field['index']]) && $data[$field['index']])
 					{
-						$new_fields[$key][$i]['value'] = $data[$field['index']];
+						$new_fields[$key][$i]['value'] = $_sbb->parseBBCode($data[$field['index']]);
 						$field_exists = TRUE;
 					}
 					else

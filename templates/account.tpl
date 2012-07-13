@@ -83,7 +83,12 @@
 						</div>
 					{else}
 						<div class="formField grid_7">
-							<textarea name="{$Fields.index}" id="{$Fields.name}" rows="3" class="resize">{$Fields.value}</textarea>
+							<div><textarea name="{$Fields.index}" id="{$Fields.name}" rows="3" class="resize">{$Fields.value}</textarea></div>
+							<div>
+								{section=bbcode}
+									<button type="button" onClick="addText('{$Fields.index}', '[{$bbcode.value}]', '[/{$bbcode.value}]');"><img src="{$bbcode.image}" title="{$bbcode.description}" class="tip"></button>
+								{/section}
+							</div>
 						</div>
 					{/if}
 				</div>

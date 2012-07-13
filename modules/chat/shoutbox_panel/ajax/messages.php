@@ -35,7 +35,7 @@ $_ajax = new Ajax(DIR_MODULES.DS.'chat'.DS.'shoutbox_panel'.DS.'ajax'.DS);
 			$posts[] = array(
 				'id' => $row['id'],
 				'user' => $_user->getusername($row['user_id']),
-				'content' => $row['content'],
+				'content' => $_sbb->parseBBCode($row['content']),
 				'date' => HELP::showDate('longdate', $row['datestamp'])
 			);
 		}

@@ -156,15 +156,15 @@ try
 				require DIR_SYSTEM.DS.'bbcodes'.DS.$row['name'].'.php';
 			}
 		
-			if (file_exists(DIR_SYSTEM.DS.'bbcodes'.DS.'images'.DS.$row['name'].'.png'))
+			if (file_exists(DIR_IMAGES.DS.'bbcodes'.DS.$row['name'].'.png'))
 			{
 				$bbcode_info['image'] = 1;
 			}
-			else if (file_exists(DIR_SYSTEM.DS.'bbcodes'.DS.'images'.DS.$row['name'].'.gif'))
+			else if (file_exists(DIR_IMAGES.DS.'bbcodes'.DS.$row['name'].'.gif'))
 			{
 				$bbcode_info['image'] = 2;
 			}
-			else if (file_exists(DIR_SYSTEM.DS.'bbcodes'.DS.'images'.DS.$row['name'].'.jpg'))
+			else if (file_exists(DIR_IMAGES.DS.'bbcodes'.DS.$row['name'].'.jpg'))
 			{
 				$bbcode_info['image'] = 3;
 			}
@@ -196,15 +196,15 @@ try
 					require DIR_SYSTEM.DS.'bbcodes'.DS.$row.'.php';
 				}
 			
-				if (file_exists(DIR_SYSTEM.DS.'bbcodes'.DS.'images'.DS.$row.'.png'))
+				if (file_exists(DIR_IMAGES.DS.'bbcodes'.DS.$row.'.png'))
 				{
 					$bbcode_info['image'] = 1;
 				}
-				else if (file_exists(DIR_SYSTEM.DS.'bbcodes'.DS.'images'.DS.$row.'.gif'))
+				else if (file_exists(DIR_IMAGES.DS.'bbcodes'.DS.$row.'.gif'))
 				{
 					$bbcode_info['image'] = 2;
 				}
-				else if (file_exists(DIR_SYSTEM.DS.'bbcodes'.DS.'images'.DS.$row.'.jpg'))
+				else if (file_exists(DIR_IMAGES.DS.'bbcodes'.DS.$row.'.jpg'))
 				{
 					$bbcode_info['image'] = 3;
 				}

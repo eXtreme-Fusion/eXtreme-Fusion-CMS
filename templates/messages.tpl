@@ -33,53 +33,55 @@
 		<a href="{$url_new_message}" class="button" id="button">{i18n('Write a message')}</a>
 	{/if}
 {elseif $action == 'view' || $action == 'new'}
-		  <div id="messages_frame">
-		  {if !$new_discuss}
-		    <div class="tbl1">{i18n('Chat:')}</div>
-		  {/if}  
-			<section></section>
+	<div id="messages_frame">
+		{if !$new_discuss}
+			<div class="tbl1">{i18n('Chat:')}</div>
+		{/if}  
+		<section></section>
 
-
-
-		 {*Odpowiedź po wysłaniu wiadomości*}
-		  <div id="form_request"></div>
+		{*Odpowiedź po wysłaniu wiadomości*}
+		<div id="form_request"></div>
 		{*}	{*} <div id="messages_form">
 			<form action="{$URL_REQUEST}" method="post" style="width: 100%;">
 				{if $new_discuss}
+					<div class="tbl1">
+						<div>{i18n('To:')}</div>
+						<lable>
+							<select name="to" class="textbox" id="message_to" required>
+								{section=data}
+									<option value="{$data.id}">{$data.username}</option>
+								{/section}
+							</select>
+						</lable>                               
+					</div>                            
+					<div class="tbl2">
+						<div>{i18n('Subject:')}</div> <input type="text" name="subject"  style="width: 70%;" value='{i18n('Enter a topic name')}...' onfocus="if(this.value=='{i18n('Enter a topic name')}...') this.value='' ; " onblur="if(this.value=='') this.value='{i18n('Enter a topic name')}...';"  id="message_subject" required /><br />
+					</div>
+				{/if}
 				<div class="tbl1">
-				   <div>{i18n('To:')}</div>
-	         <lable>
-             <select name="to" class="textbox" id="message_to" required>
-              {section=data}
-                <option value="{$data.id}">{$data.username}</option>
-              {/section}
-             </select 
-           <lable>                               
-        </div>                            
-				<div class="tbl2">
-           <div>{i18n('Subject:')}</div> <input type="text" name="subject"  style="width: 70%;" value='{i18n('Enter a topic name')}...' onfocus="if(this.value=='{i18n('Enter a topic name')}...') this.value='' ; " onblur="if(this.value=='') this.value='{i18n('Enter a topic name')}...';"  id="message_subject" required /><br />
+					<div>{i18n('Message:')}</div> <input type="text" name="message" style="width: 70%;"  value='{i18n('Enter your message')}...' onfocus="if(this.value=='{i18n('Enter your message')}...') this.value='' ; " onblur="if(this.value=='') this.value='{i18n('Enter your message')}...';" wrap="phisical" id="message" autocomplete="off" />
+					{*}<textarea cols="70" rows="20" id="message" name="message" style="width: 70%;"  value}='{i18n('Enter your message')}...' onfocus="if(this.value=='{i18n('Enter your message')}...') this.value='' ; " onblur="if(this.value=='') this.value='{i18n('Enter your message')}...';" > </textarea>{*}
 				</div>
-        {/if}
 				<div class="tbl1">
-           <div>{i18n('Message:')}</div> <input type="text" name="message" style="width: 70%;"  value='{i18n('Enter your message')}...' onfocus="if(this.value=='{i18n('Enter your message')}...') this.value='' ; " onblur="if(this.value=='') this.value='{i18n('Enter your message')}...';" wrap="phisical" id="message" autocomplete="off" />
-				 {*}<textarea cols="70" rows="20" id="message" name="message" style="width: 70%;"  value}='{i18n('Enter your message')}...' onfocus="if(this.value=='{i18n('Enter your message')}...') this.value='' ; " onblur="if(this.value=='') this.value='{i18n('Enter your message')}...';" > </textarea>{*}
-			  </div>
-			  <div class="tbl2">
-           <div id="messages_buttons" >
-				   <a href="{$ADDR_SITE}messages.html" class="button">{i18n('Back')}</a>
-				   <input type="submit" name="send" class="button" value="{i18n('Send')}" />
-        </div>
-          <input type="hidden" value="{$get_item_id}" name="item_id" />
-				{if !$new_discuss}        				  
-				  <input type="hidden" value="{$to}" name="to"/></div>
-				{/if}  
+					{section=bbcode}
+						<button type="button" onClick="addText('{$bbcode.textarea}', '[{$bbcode.value}]', '[/{$bbcode.value}]');"><img src="{$bbcode.image}" title="{$bbcode.description}" class="tip"></button>
+					{/section}
+				</div>
+				<div class="tbl2">
+					<div id="messages_buttons" >
+						<a href="{$ADDR_SITE}messages.html" class="button">{i18n('Back')}</a>
+						<input type="submit" name="send" class="button" value="{i18n('Send')}" />
+					</div>
+					<input type="hidden" value="{$get_item_id}" name="item_id" />
+					{if !$new_discuss}        				  
+						<input type="hidden" value="{$to}" name="to"/></div>
+					{/if}
+				</div>
 			</form>
-		  </div>
-		  </div>
-
-
+		</div>
+	</div>
 {else}
-		  <div class="status">{i18n('Nie ma takiej podstrony.')}</div>
+	<div class="status">{i18n('Nie ma takiej podstrony.')}</div>
 {/if}
 
 {php} closetable() {/php}

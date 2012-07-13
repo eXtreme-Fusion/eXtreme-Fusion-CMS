@@ -17,15 +17,17 @@ class Comment
 	protected $_user;
 	protected $_head;
 	protected $_sett;
+	protected $_sbb;
 
 
-	public function __construct($_tpl, $_pdo, $_user, $_sett, $_head = NULL)
+	public function __construct($_tpl, $_pdo, $_user, $_sett, $_sbb, $_head = NULL)
 	{
 		$this->_pdo = $_pdo;
 		$this->_user = $_user;
 		$this->_tpl = $_tpl;
 		$this->_head = $_head;
 		$this->_sett = $_sett;
+		$this->_sbb = $_sbb;
 
 		$this->_tpl->root = DIR_TEMPLATES.'pre'.DS;
 		$this->_tpl->compile = DIR_CACHE;
@@ -74,7 +76,7 @@ class Comment
 					$val['avatar_desc'] = __('None');
 				}
 
-				$val['post'] = parseBBCode(nl2br($val['post']));
+				$val['post'] = $this->_sbb->parseBBCode(nl2br($val['post']));
 			}
 		}
 

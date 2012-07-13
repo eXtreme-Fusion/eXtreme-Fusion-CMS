@@ -19,7 +19,7 @@ $bbcode_info = array(
 
 if($bbcode_used)
 {
-	/*$_head->set("<script>
+	/*$this->_head->set("<script>
 		$(document).ready(function(){
 			$('#spoilercontent').hide();
 			$('#spoilerhead').click(function () {

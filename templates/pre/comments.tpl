@@ -7,7 +7,7 @@
 				{/if}
 				<textarea id="post" rows="4" class="cm_textarea" name="post"></textarea><br />
 					{section=bbcode}
-						<button type="button" onClick="addText('{$bbcode.textarea}', '[{$bbcode.value}]', '[/{$bbcode.value}]', 'This');" title="{$bbcode.description}" class="tip"><img src="{$bbcode.image}"></button>
+						<button type="button" onClick="addText('{$bbcode.textarea}', '[{$bbcode.value}]', '[/{$bbcode.value}]');"><img src="{$bbcode.image}" title="{$bbcode.description}" class="tip"></button>
 					{/section}
 				<input id="item" type="hidden" name="item" value="{$item}" />
 				<input id="type" type="hidden" name="type" value="{$type}" />
