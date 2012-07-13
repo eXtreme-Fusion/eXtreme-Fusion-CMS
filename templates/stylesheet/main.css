@@ -95,14 +95,14 @@ h1 {
 
 
 /* Treść */
-#Content {
+.main_panel_content {
 	margin-left:auto;
 	margin-right:auto;
 	margin-bottom:20px;
 	width:100%;
 	overflow:hidden;
 }
-#Content .corner4px .cc {
+.main_panel_content .corner4px .cc {
 	padding:13px 15px;
 }
 .buttons, .button-l, .button-r, .button-c {
