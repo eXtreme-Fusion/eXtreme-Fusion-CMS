@@ -9,7 +9,7 @@
                 {/if}
                 <p>{if $user.is_online == 1}<img src="{$ADDR_IMAGES}online.png" alt="{i18n('Online')}"><span class="online">{i18n('Online')}</span>{else}<img src="{$ADDR_IMAGES}offline.png" alt="{i18n('Offline')}">{$user.last_visit_time}{/if}</p>
             </div>
-            <div class="profile-title"><img src="{$ADDR_IMAGES}profile/info.png" alt="Profile"><span id="profile-username">{i18n('Member Profile :Username', array(':Username' => $user.username))}</span><span id="profile-status">{$user.role}</span></div>
+            <div class="profile-title"><img src="{$ADDR_IMAGES}profile/info.png" alt="Profile"><span id="profile-username">{i18n('Member Profile :Username', array(':Username' => $user.username))}</span>{if $user.myid > 0 && $user.id != $user.myid}<a href="{$user.pm_link}" title="Wyślij wiadomość">[ Wyślij wiadomość ]</a>{/if}<span id="profile-status">{$user.role}</span></div>
             <div class="profile-info tbl2">
                 <p><strong>{i18n('e-Mail')}:</strong><span>{$user.email}</span></p>
                 <p><strong>{i18n('Joined')}:</strong><span>{$user.joined}</span></p>
