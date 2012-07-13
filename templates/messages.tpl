@@ -46,13 +46,13 @@
 				{if $new_discuss}
 					<div class="tbl1">
 						<div>{i18n('To:')}</div>
-						<lable>
+						<label>
 							<select name="to" class="textbox" id="message_to" required>
 								{section=data}
 									<option value="{$data.id}">{$data.username}</option>
 								{/section}
 							</select>
-						</lable>                               
+						</label>                               
 					</div>                            
 					<div class="tbl2">
 						<div>{i18n('Subject:')}</div> <input type="text" name="subject"  style="width: 70%;" value='{i18n('Enter a topic name')}...' onfocus="if(this.value=='{i18n('Enter a topic name')}...') this.value='' ; " onblur="if(this.value=='') this.value='{i18n('Enter a topic name')}...';"  id="message_subject" required /><br />
@@ -60,11 +60,11 @@
 				{/if}
 				<div class="tbl1">
 					<div>{i18n('Message:')}</div> <input type="text" name="message" style="width: 70%;"  value='{i18n('Enter your message')}...' onfocus="if(this.value=='{i18n('Enter your message')}...') this.value='' ; " onblur="if(this.value=='') this.value='{i18n('Enter your message')}...';" wrap="phisical" id="message" autocomplete="off" />
-					{*}<textarea cols="70" rows="20" id="message" name="message" style="width: 70%;"  value}='{i18n('Enter your message')}...' onfocus="if(this.value=='{i18n('Enter your message')}...') this.value='' ; " onblur="if(this.value=='') this.value='{i18n('Enter your message')}...';" > </textarea>{*}
+					{*}<textarea cols="70" rows="20" id="message" name="message" style="width: 70%;"  value='{i18n('Enter your message')}...' onfocus="if(this.value=='{i18n('Enter your message')}...') this.value='' ; " onblur="if(this.value=='') this.value='{i18n('Enter your message')}...';" > </textarea>{*}
 				</div>
 				<div class="tbl1">
 					{section=bbcode}
-						<button type="button" onClick="addText('{$bbcode.textarea}', '[{$bbcode.value}]', '[/{$bbcode.value}]');"><img src="{$bbcode.image}" title="{$bbcode.description}" class="tip"></button>
+						<button type="button" onClick="addText('{$bbcode.textarea}', '[{$bbcode.value}]', '[/{$bbcode.value}]');"><img src="{$bbcode.image}" title="{$bbcode.description}" alt="{$bbcode.value}" class="tip"></button>
 					{/section}
 				</div>
 				<div class="tbl2">
