@@ -84,9 +84,8 @@
 }
 
 .indentmenu ul {
-	margin-bottom: 5px;
-	padding: 0;
-	float:left;
+    float: left;
+    padding: 0;
 }
 
 .indentmenu ul li {
@@ -94,17 +93,15 @@
 }
 
 .indentmenu ul li a {
-	float: left;
-	color: #fafafa;
-	text-shadow: 1px 1px 1px #000;
-	text-decoration: none;
-	padding: 4px 15px;
-	margin-right: 5px;
-	background: #3a3a3a;
-	border-top: 2px #9fd10f solid;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
+    background: none repeat scroll 0 0 #3A3A3A;
+    border-radius: 5px 5px 0 0;
+    border-top: 2px solid #9FD10F;
+    color: #FAFAFA;
+    float: left;
+    margin-right: 5px;
+    padding: 4px 15px;
+    text-decoration: none;
+    text-shadow: 1px 1px 1px #000000;
 }
 
 .indentmenu ul li a:visited {
@@ -112,19 +109,17 @@
 }
 
 .indentmenu ul li a.selected {
-	color: #fafafa !important;
-	background: #2e2e2e url(../images/profile/profile_bg.png);
+    background-color: #2E2E2E;
+    color: #FAFAFA !important;
 }
 
 /* Tab content */
 .profile-fields {
-	float:left;
-	width:98%;
-	padding:7px;
-	background: #2e2e2e;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
+    background: none repeat scroll 0 0 #2E2E2E;
+    border-radius: 0 5px 5px 5px;
+    float: left;
+    padding: 7px;
+    width: 98%;
 }
 .profile-fields .element {
 	padding: 5px 15px;
