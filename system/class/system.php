@@ -59,7 +59,7 @@ class System {
 	{
 		// Wyłączenie szyfrowania cache wersja jedynie dla DEV
 		// Pamiętaj o ręcznym usunięciu cache po zmianie parametru FALSE/TRUE
-		$code = TRUE;
+		$code = FALSE;
 
 		// Koduje nazwę pliku pamięci podręcznej
 		if ( ! $code)

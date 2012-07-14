@@ -20,7 +20,7 @@ if ( ! $_theme->tplExists())
  
 if ($_route->getAction())
 {
-	// Cache dla kategorii newsów opisu, miniaturek, id
+	// Cache dla kategorii newsï¿½w opisu, miniaturek, id
 	$category = $_system->cache('news_cats,cat-'.$_route->getAction().','.$_user->getCacheName(), NULL, 'news_cats', 60);
 	if ($category === NULL)
 	{
@@ -34,7 +34,7 @@ if ($_route->getAction())
 			'cat_id'    => $rows['id'],
 			'cat_name'  => $rows['name'],
 			'cat_image' => $rows['image'],
-			'cat_news_count'  => $_pdo->getSelectCount('SELECT `id` FROM [news] WHERE `category` = :category',
+			'cat_news_count'  => $_pdo->getSelectCount('SELECT COUNT(`id`) FROM [news] WHERE `category` = :category',
 				array(
 					array(':category', $_route->getAction(), PDO::PARAM_INT)
 				)
@@ -44,11 +44,11 @@ if ($_route->getAction())
 		$_system->cache('news_cats,cat-'.$_route->getAction().','.$_user->getCacheName(), $category, 'news_cats');
 	}
 	
-	// Cache dla wystêpuj¹cych newsów w danej kategorii
+	// Cache dla wystï¿½pujï¿½cych newsï¿½w w danej kategorii
 	$cache = $_system->cache('news,cat-'.$_route->getAction().','.$_user->getCacheName(), NULL, 'news_cats', 60);
 	if ($cache === NULL)
 	{
-		$row = $_pdo->getSelectCount('SELECT `id` FROM [news] WHERE `category` = :category',
+		$row = $_pdo->getSelectCount('SELECT COUNT(`id`) FROM [news] WHERE `category` = :category',
 			array(
 				array(':category', $_route->getAction(), PDO::PARAM_INT)
 			)
@@ -97,7 +97,7 @@ if ($_route->getAction())
 }
 else
 {
-	$cache_count = $_system->cache('news_cats_count', NULL, 86700);
+	$cache_count = $_system->cache('news_cats_count', NULL, 'news_cats', 60);
 	if ($cache_count === NULL)
 	{
 		$count = $_pdo->getData('SELECT category, access FROM [news]');		
@@ -111,7 +111,7 @@ else
 				$cache_count[] = $row;
 			}
 		}
-		$_system->cache('news_cats_count', $cache_count);
+		$_system->cache('news_cats_count', $cache_count, 'news_cats');
 	}
 	
 
@@ -131,7 +131,7 @@ else
 		}
 	}
 	
-	$cache = $_system->cache('news_cats', NULL, 86700);
+	$cache = $_system->cache('news_cats_list', NULL, 'news_cats', 60);
 	if ($cache === NULL)
 	{
 		$query = $_pdo->getData('
@@ -147,7 +147,7 @@ else
 				$cache[] = $row;
 			}
 		}
-		$_system->cache('news_cats', $cache);
+		$_system->cache('news_cats_list', $cache, 'news_cats');
 	}
 	$i = 0;  $d = array();
 	foreach($cache as $data)

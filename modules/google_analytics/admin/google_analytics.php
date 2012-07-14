@@ -33,7 +33,7 @@ try
 		{
 			if (function_exists('curl_exec'))
 			{
-				$google_analytics = $_system->cache('google_analytics', NULL, 86700);
+				$google_analytics = $_system->cache('google_analytics', NULL, 'google_analytics', 86700);
 				
 				if ($google_analytics === NULL)
 				{
