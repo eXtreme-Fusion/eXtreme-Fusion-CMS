@@ -20,7 +20,7 @@ if ( ! $_theme->tplExists())
  
 if ($_route->getAction())
 {
-	// Cache dla kategorii news�w opisu, miniaturek, id
+	// Cache dla kategorii newsów opisu, miniaturek, id
 	$category = $_system->cache('news_cats,cat-'.$_route->getAction().','.$_user->getCacheName(), NULL, 'news_cats', 60);
 	if ($category === NULL)
 	{
@@ -44,7 +44,7 @@ if ($_route->getAction())
 		$_system->cache('news_cats,cat-'.$_route->getAction().','.$_user->getCacheName(), $category, 'news_cats');
 	}
 	
-	// Cache dla wyst�puj�cych news�w w danej kategorii
+	// Cache dla wystęujących newsów w danej kategorii
 	$cache = $_system->cache('news,cat-'.$_route->getAction().','.$_user->getCacheName(), NULL, 'news_cats', 60);
 	if ($cache === NULL)
 	{
@@ -114,8 +114,6 @@ else
 		$_system->cache('news_cats_count', $cache_count, 'news_cats');
 	}
 	
-
-	
 	foreach($cache_count as $val)
 	{
 		if ($_user->hasAccess($val['access']))
@@ -149,18 +147,20 @@ else
 		}
 		$_system->cache('news_cats_list', $cache, 'news_cats');
 	}
+	
 	$i = 0;  $d = array();
 	foreach($cache as $data)
 	{
 		$d[] = array(
-			'row_color'     => $i % 2 == 0 ? 'tbl1' : 'tbl2',
-			'cat_id'        => $data['id'],
-			'cat_title_name' => $data['name'],
-			'cat_image'     => $data['image'],
-			'cat_count_news' => isset($array[$data['id']]) ? $array[$data['id']] : 0,
-			'url'		   => $_route->path(array('controller' => 'news_cats', 'action' => $data['id'], HELP::Title2Link($data['name'])))
+			'row_color'     	=> $i % 2 == 0 ? 'tbl1' : 'tbl2',
+			'cat_id'        	=> $data['id'],
+			'cat_title_name' 	=> $data['name'],
+			'cat_image'    		=> $data['image'],
+			'cat_count_news' 	=> isset($array[$data['id']]) ? $array[$data['id']] : 0,
+			'url'		   		=> $_route->path(array('controller' => 'news_cats', 'action' => $data['id'], HELP::Title2Link($data['name'])))
 		);
 		$i++;
 	}
+	
 	$_tpl->assign('i', $d);
 }
