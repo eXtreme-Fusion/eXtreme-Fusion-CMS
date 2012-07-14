@@ -299,7 +299,9 @@ class pageNavParser extends optClass
 {
 	private $_ext = '.tpl';
 
-	public function __construct()
+	private $_route;
+	
+	public function __construct($_route = NULL)
 	{
 		$this->plugins = OPT_DIR.'plugins'.DS;
 		$this->gzipCompression = FALSE;
@@ -314,8 +316,15 @@ class pageNavParser extends optClass
 
 		$this->root = DIR_TEMPLATES.'paging'.DS;
 		$this->compile = DIR_CACHE;
+		
+		$this->_route = $_route;
 	}
 
+	public function route()
+	{
+		return $this->_route;
+	}
+	
 	// Parametr drugi to katalog, w którym znajduje się szablon.
 	// Doskonałe dla modułów, które mogą w ten sposób definiować własne szablony stronicowania,
 	// używając AJAXA lub innych technik.
