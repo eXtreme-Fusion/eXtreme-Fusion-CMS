@@ -19,9 +19,9 @@ if ($_user->isLoggedIn())
 		'Desc' => 'Łatwy dostęp do najpotrzebniejszych miejsc na stronie.'
 	);
 
-	if ($_route->getParam('page'))
+	if ($_route->getAction())
 	{
-		HELP::redirect(base64_decode($_route->getParam('page')));
+		HELP::redirect(base64_decode($_route->getAction()));
 	}
 	
 	$_tpl->assign('is_logged_in', TRUE);
