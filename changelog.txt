@@ -16,3 +16,6 @@
 - nowy wygląd podstrony Profil użytkownika
 - wyeliminowano błąd z niewyświetlaniem się newsów osobom niezalogowanym
 
+							2012.07.14
+- poprawiono postronę kategorii newsów
+- poprawiono problem z nie czyszczącymi się elementami cache podczas edycji kategori newsów/newsów
