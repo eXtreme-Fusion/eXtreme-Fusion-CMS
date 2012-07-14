@@ -229,7 +229,7 @@ try
 	
 	# Smiley and BBCode
 	include DIR_CLASS.'sbb.php';
-	$_sbb = new SmileyBBcode($_sett, $_pdo, $_locale, $_head, $_user);
+	! class_exists('SmileyBBcode') ||  $_sbb = new SmileyBBcode($_sett, $_pdo, $_locale, $_head, $_user);
 
 	# Comments
 	$_comment = new Comment(new Basic, $_pdo, $_user, $_sett, $_sbb, $_head);
