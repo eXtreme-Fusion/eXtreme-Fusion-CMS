@@ -14,7 +14,6 @@ try
 {
 	function optUrl(optClass &$_tpl)
 	{
-		global $_tpl;
 		$value = func_get_args();
 		unset($value[0]);
 
@@ -221,13 +220,6 @@ try
     define('iADMIN', $_user->iADMIN());
 
 	$_head  = new Header;
-
-
-
-
-
-
-
 
     // Zadania Cron
     // Cron-Jobs
