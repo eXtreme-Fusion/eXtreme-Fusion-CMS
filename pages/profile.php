@@ -165,7 +165,9 @@ if ($row)
 			'is_online' => inArray($row['id'], $_user->getOnline(), 'id') ? 1 : 0,
 			'time' => time(),
 			'news' => $news,
-			'comment' => $comment
+			'comment' => $comment,
+			'myid' => $_user->get('id'),
+			'pm_link' => ''
 		);
 		//var_dump(inArray($row['id'], $_user->getOnline(), 'id'));exit;
 		if ($_pdo->tableExists('chat_messages'))
