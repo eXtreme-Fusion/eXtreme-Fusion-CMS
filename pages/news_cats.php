@@ -29,7 +29,7 @@ if ($_route->getAction())
 	if ($rowa)
 	{
 		# STRONICOWANIE #
-		$items_per_page = 3;
+		$items_per_page = 2;
 		//$items_per_page = intval($_user->get('itemnews') ? $_user->get('itemnews') : $_sett->get('news_per_page'));
 
 		if ( ! $_route->getByID(3))
