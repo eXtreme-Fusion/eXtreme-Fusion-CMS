@@ -1,4 +1,5 @@
 {if ! $only_comments}
+	{php} opentable(__('Add Comments')) {/php}
 	{if $can_comment}
 		<div id="comment_form">
 			<form method="post" action="{$URL_REQUEST}" class="center">
@@ -19,6 +20,7 @@
 	{else}
 		<p class="center">{i18n('Komentowanie zostało wyłączone dla Twojej grupy uprawnień.')}</p>
 	{/if}
+	{php} closetable() {/php}
 	<div id="comment-block">
 {/if}
 
