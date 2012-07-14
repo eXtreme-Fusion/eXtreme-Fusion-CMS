@@ -24,13 +24,23 @@ class ServiceContainerBuilder extends ServiceContainer
 
 	public function setArguments(array $arguments)
 	{
-		$this->arguments = $arguments;
+		$this->arguments = array();
+		
+		foreach($arguments as $argument)
+		{
+			$this->addArgument($argument);
+		}
 
 		return $this;
 	}
 
 	public function addArgument($argument)
 	{
+		if ($argument instanceof Reference)
+		{
+			$argument = $argument->get();
+		}
+		
 		$this->arguments[] = $argument;
 
 		return $this;

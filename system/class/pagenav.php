@@ -144,7 +144,7 @@ class PageNav implements PageNavIntf
 	{
 		if ($paging)
 		{
-			$_tpl = new pageNavParser();
+			$_tpl = new pageNavParser(StaticContainer::get('route'));
 
 			$_tpl->assignGroup(array(
 				'nums' => count($paging['nums']) > 1 ? $paging['nums'] : NULL,

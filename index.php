@@ -37,7 +37,8 @@ try
 	# Routing class
 	$_route = new Router($_request, $_sett, $_system->rewriteAvailable(), 'page', $_system->pathInfoExists(), $_sett->get('opening_page'), TRUE, TRUE, FALSE, 'admin');
 
-
+	StaticContainer::register('route', $_route);
+	
 	/** Konfiguracja obiektu szablonu **/
 	$_tpl   = new Site($_route);
 

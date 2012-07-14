@@ -66,23 +66,24 @@ try
 	}
 
 	error_reporting(E_ALL | E_NOTICE);
-
-	if ( ! defined('__DIR__')) define('__DIR__', dirname(__FILE__));
-
-	if ( ! file_exists(__DIR__.'/../config.php'))
+	
+	define('DIR_BASE', realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..').DIRECTORY_SEPARATOR);
+	
+	if ( ! file_exists(DIR_BASE.'config.php'))
 	{
-		if (file_exists(__DIR__.'/../install/'.DIRECTORY_SEPARATOR))
+		if (file_exists(DIR_BASE.'install'.DIRECTORY_SEPARATOR))
 		{
 			header('Location: install/');
+			exit;
 		}
 		else
 		{
-			die('Config file does not exists. Please upload config.php again.');
+			die('Installer not found on server. Please upload install directory again.');
 		}
 	}
 	else
 	{
-		require __DIR__.'/../config.php';
+		require DIR_BASE.'config.php';
 		require DIR_SITE.'bootstrap.php';
 	}
 
@@ -104,10 +105,10 @@ try
 	require_once DIR_CLASS.'robots.php';
 
     ob_start();
-	require __DIR__.'/../config.php';
 
     $ec = new Container(array('pdo.config' => $_dbconfig));
 
+	
 	# PHP Data Object
     $_pdo = $ec->pdo;
 
@@ -118,7 +119,10 @@ try
 	$_sett = $ec->sett;
 
 	require_once DIR_SYSTEM.'table_list.php';
-    $_user = new User($_sett, $_pdo);
+	
+	//1. way:
+    $_user = $ec->register('user')->setArguments(array(new Reference('sett'), new Reference('pdo')))->get();
+	
     $_locale = new Locales($_sett->get('locale'), DIR_LOCALE);
 
 
@@ -130,7 +134,7 @@ try
 
 	# Files class
 	$_files = new Files;
-	//var_dump($_system->pathInfoExists()); exit;
+
 	$_url = new URL($_sett->getUns('routing', 'url_ext'), $_sett->getUns('routing', 'main_sep'), $_sett->getUns('routing', 'param_sep'), $_system->rewriteAvailable(), $_system->pathInfoExists());
 
 	# Helper class
