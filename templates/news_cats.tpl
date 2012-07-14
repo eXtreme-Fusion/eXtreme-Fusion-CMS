@@ -25,6 +25,7 @@
 						<div class="grid_2">{$rows.news_datestamp}</div>
 					</div>
 				{/section}
+				{$page_nav}
 		{else}
 			<div class="tbl">
 				<div class="status">{i18n('There are no news in the specified category.')}</div>
