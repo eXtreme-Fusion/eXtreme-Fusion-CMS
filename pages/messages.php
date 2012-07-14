@@ -15,6 +15,9 @@ $_user->onlyForUsers($_route);
 
 $_locale->load('messages');
 
+//Initiation of Smiley & BBCode parser
+$_sbb = SmileyBBcode::getInstance($_sett, $_pdo, $_locale, $_head, $_user);
+
 $_tpl->assign('bbcode', $_sbb->bbcodes());
 
 $_head->set('<script src="'.ADDR_TEMPLATES.'javascripts/messages.js"></script>');
@@ -27,9 +30,7 @@ if ($_route->getAction() === NULL)
 	$_pdo->exec('DELETE FROM [messages] WHERE datestamp < '.(time() - 60*60*24*61)); // automatyczne usuwanie wiadomości starszych niż 61 dni
 
 	$query = $_pdo->getData('SELECT k.to, k.from, (SELECT mm.subject FROM [messages] AS mm WHERE mm.item_id = k.item_id ORDER BY mm.id ASC LIMIT 1) AS subject, k.datestamp, k.item_id, k.read FROM [messages] AS k WHERE (k.to = :user OR k.from = :user) AND k.id IN (SELECT max(b.id) FROM [messages] AS b GROUP BY b.item_id) ORDER BY k.id DESC',
-		array(
-			array(':user', $_user->get('id'), PDO::PARAM_INT)
-		)
+		array(':user', $_user->get('id'), PDO::PARAM_INT)
 	);
 
 

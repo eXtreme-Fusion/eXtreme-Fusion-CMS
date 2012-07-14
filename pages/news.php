@@ -106,6 +106,7 @@ if ($_route->getAction())
 			$_tpl->assign('news', $d);
 			if ($data['allow_comments'] === '1')
 			{
+				$_comment = $ec->comment;
 				$_tpl->assign('comments', $_comment->get($_route->getFileName(), $data['news_id']));
 
 				if (isset($_POST['comment']['save']))
@@ -126,8 +127,9 @@ if ($_route->getAction())
 		HELP::redirect(ADDR_SITE);
 	}
 
+	$_sbb = $ec->sbb;
+	
 	$_tpl->assignGroup(array(
-
 		'bbcode' => $_sbb->bbcodes()
 	));
 }

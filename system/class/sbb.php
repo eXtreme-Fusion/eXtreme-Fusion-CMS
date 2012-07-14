@@ -17,8 +17,10 @@ class SmileyBBcode
 	protected $_head;
 	protected $_user;
 
-
-	public function __construct($_sett, $_pdo, $_locale, $_head, $_user)
+	//** Singleton pattern implementation **/
+	private static $_inst;
+	
+	private function __construct($_sett, $_pdo, $_locale, $_head, $_user)
 	{
 		$this->_pdo = $_pdo;
 		$this->_user = $_user;
@@ -26,7 +28,18 @@ class SmileyBBcode
 		$this->_head = $_head;
 		$this->_sett = $_sett;
 	}
-
+	
+	public static function getInstance($_sett, $_pdo, $_locale, $_head, $_user)
+	{
+		if (!self::$_inst)
+		{
+			self::$_inst = new SmileyBBcode($_sett, $_pdo, $_locale, $_head, $_user);
+		}
+		
+		return self::$_inst;
+	}
+	/** end of Singleton implementation **/
+	
 	public function bbcodes($textarea = 'message')
 	{
 		$bbcode_used = FALSE;
