@@ -1,12 +1,12 @@
 /*Profile header*/
 .profile {
 	width:100%;
-	height:80px;
 	background:#2e2e2e;
-	margin-bottom: 120px;
+	margin-bottom: 20px;
 	border-radius:5px;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
+	overflow:hidden;
 }
 .profile-avatar {
 	float:left;
