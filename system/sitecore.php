@@ -14,6 +14,7 @@ try
 {
 	function optUrl(optClass &$_tpl)
 	{
+		global $_tpl;
 		$value = func_get_args();
 		unset($value[0]);
 

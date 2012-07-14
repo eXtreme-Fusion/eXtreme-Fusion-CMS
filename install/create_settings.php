@@ -111,6 +111,8 @@ insert($_dbconfig['prefix'].'settings', array('key' => 'maintenance_level', 'val
 insert($_dbconfig['prefix'].'settings', array('key' => 'default_search', 'value' => 'all'));
 insert($_dbconfig['prefix'].'settings', array('key' => 'deactivation_period', 'value' => 365));
 insert($_dbconfig['prefix'].'settings', array('key' => 'deactivation_response', 'value' => 14));
+insert($_dbconfig['prefix'].'settings', array('key' => 'news_cats_per_page', 'value' => 25));
+insert($_dbconfig['prefix'].'settings', array('key' => 'news_cats_iteam_per_page', 'value' => 10));
 insert($_dbconfig['prefix'].'settings', array('key' => 'news_per_page', 'value' => 11));
 insert($_dbconfig['prefix'].'settings', array('key' => 'notes_per_page', 'value' => 4));
 insert($_dbconfig['prefix'].'settings', array('key' => 'users_per_page', 'value' => 10));

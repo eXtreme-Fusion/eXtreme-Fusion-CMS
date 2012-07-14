@@ -29,8 +29,8 @@ if ($_route->getAction())
 	if ($rowa)
 	{
 		# STRONICOWANIE #
-		$items_per_page = 2;
-		//$items_per_page = intval($_user->get('itemnews') ? $_user->get('itemnews') : $_sett->get('news_per_page'));
+		//$items_per_page = 2;
+		$items_per_page = $_sett->get('news_cats_iteam_per_page');
 
 		if ( ! $_route->getByID(3))
 		{
@@ -122,7 +122,10 @@ if ($_route->getAction())
 	
 		if ($rowa)
 		{
-			$_pagenav = new PageNav(new Paging($rowa, $_GET['current'], $items_per_page), $_tpl, 5, array($_route->getByID(2), FALSE));
+			// TO DO
+			// Nie wiem czy tak stworzone parametry odpowiadają naszemu stylowi 
+			// array($_route->getFileName(), $_route->getByID(1).$_sett->getUns('routing', 'main_sep').$_route->getByID(2), FALSE)
+			$_pagenav = new PageNav(new Paging($rowa, $_GET['current'], $items_per_page), $_tpl, 5, array($_route->getFileName(), $_route->getByID(1).$_sett->getUns('routing', 'main_sep').$_route->getByID(2), FALSE));
 
 			if (file_exists(DIR_THEME.'templates'.DS.'paging'.DS.'news_cats_page_nav.tpl'))
 			{
