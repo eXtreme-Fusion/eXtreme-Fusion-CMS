@@ -5,7 +5,7 @@
 				<img src="{$THEME_IMAGES}logo.png" alt="{$Sitename}" />
 			</a>
 			<div id="RightHeaderBG">
-				<a href="http://www.extreme-fusion.org/downloads.php?action=get&amp;id=530" rel="blank" class="tip" title="Download eXtreme-Fusion 4.17">
+				<a href="http://www.extreme-fusion.pl/downloads.php?action=get&amp;id=530" rel="blank" class="tip" title="Download eXtreme-Fusion 4.17">
 					Download eXtreme-Fusion 4.17
 				</a>
 			</div>

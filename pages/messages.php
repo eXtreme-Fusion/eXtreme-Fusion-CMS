@@ -16,7 +16,6 @@ $_user->onlyForUsers($_route);
 $_locale->load('messages');
 
 $_tpl->assign('bbcode', $_sbb->bbcodes());
-print_r($_sbb->bbcodes());
 
 $_head->set('<script src="'.ADDR_TEMPLATES.'javascripts/messages.js"></script>');
 $_head->set('<link href="'.ADDR_TEMPLATES.'stylesheet/messages.css" media="screen" rel="stylesheet" />');
