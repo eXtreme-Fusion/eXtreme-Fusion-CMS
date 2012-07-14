@@ -1725,7 +1725,7 @@ class User {
 	{
 		if ( ! $this->isLoggedIn())
 		{
-			HELP::redirect($_route->path(array('controller' => 'login', 'action' => 'redirect', 'page' => base64_encode($_SERVER['REQUEST_URI']))));
+			HELP::redirect($_route->path(array('controller' => 'login', 'action' => base64_encode($_SERVER['REQUEST_URI']))));
 		}
 	}
 }
