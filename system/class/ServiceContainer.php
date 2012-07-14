@@ -66,7 +66,7 @@ class ServiceContainer implements ArrayAccess
 
 	public function getService($id)
 	{
-		if (isset(self::$shared['comment']))
+		if (isset(self::$shared[$id]))
 		{
 			return self::$shared[$id];
 		}
