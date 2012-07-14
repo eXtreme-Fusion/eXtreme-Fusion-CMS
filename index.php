@@ -223,6 +223,7 @@ try
 	$_tree = new Tree($_pdo, 'drzewko');
 	$_tree->add(0, 1);
 */
+
 	session_write_close();
 }
 catch(optException $exception)

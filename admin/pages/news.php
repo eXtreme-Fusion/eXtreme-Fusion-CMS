@@ -58,6 +58,7 @@ try
 			if ($count)
 			{
 				$_system->clearCache('news');
+				$_system->clearCache('news_cats');
 				$_tag->delTagFromSupplementAndSupplementID('NEWS', $_request->get('id')->show());
 				$_log->insertSuccess('delete', __('News has been deleted.'));
 				$_request->redirect(FILE_PATH, array('page' => 'news', 'act' => 'delete', 'status' => 'ok'));
@@ -112,6 +113,7 @@ try
 				if ($count)
 				{
 					$_system->clearCache('news');
+					$_system->clearCache('news_cats');
 					$_tag->updTagFromSupplementAndSupplementID('NEWS', $_request->get('id')->show(), $keyword, $access);
 					$_log->insertSuccess('edit', __('News has been edited.'));
 					$_request->redirect(FILE_PATH, array('page' => 'news', 'act' => 'edit', 'status' => 'ok'));
@@ -157,6 +159,7 @@ try
 					if ($count)
 					{
 						$_system->clearCache('news');
+						$_system->clearCache('news_cats');
 						$_tag->addTag('NEWS', $_pdo->lastInsertId(), $keyword, $access);
 						$_log->insertSuccess('add', __('News has been added.'));
 						$_request->redirect(FILE_PATH, array('page' => 'news', 'act' => 'add', 'status' => 'ok'));
@@ -318,7 +321,7 @@ try
 				
 				if ($count)
 				{
-					$_system->clearCache('news');
+					$_system->clearCache('news_cats');
 					$_log->insertSuccess('delete', __('News category has been deleted.'));
 					$_request->redirect(FILE_PATH, array('page' => 'cats', 'act' => 'delete', 'status' => 'ok'));
 				}
@@ -352,7 +355,7 @@ try
 				
 					if ($count)
 					{
-						$_system->clearCache('news');
+						$_system->clearCache('news_cats');
 						$_log->insertSuccess('edit', __('News category has been edited.'));
 						$_request->redirect(FILE_PATH, array('page' => 'cats', 'act' => 'edit', 'status' => 'ok'));
 					}
@@ -372,7 +375,7 @@ try
 				
 					if ($count)
 					{
-						$_system->clearCache('news');
+						$_system->clearCache('news_cats');
 						$_log->insertSuccess('add', __('News category has been added.'));
 						$_request->redirect(FILE_PATH, array('page' => 'cats', 'act' => 'add', 'status' => 'ok'));
 					}

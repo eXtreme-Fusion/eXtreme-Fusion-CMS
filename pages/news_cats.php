@@ -34,7 +34,7 @@ if ($_route->getAction())
 			'cat_id'    => $rows['id'],
 			'cat_name'  => $rows['name'],
 			'cat_image' => $rows['image'],
-			'cat_news_count'  => $_pdo->getSelectCount('SELECT COUNT(`id`) FROM [news] WHERE `category` = :category',
+			'cat_news_count'  => $_pdo->getSelectCount('SELECT COUNT(`id`) FROM [news] WHERE `category` = :category AND `access` IN ('.$_user->listRoles().')',
 				array(
 					array(':category', $_route->getAction(), PDO::PARAM_INT)
 				)
@@ -48,7 +48,7 @@ if ($_route->getAction())
 	$cache = $_system->cache('news,cat-'.$_route->getAction().','.$_user->getCacheName(), NULL, 'news_cats', 60);
 	if ($cache === NULL)
 	{
-		$row = $_pdo->getSelectCount('SELECT COUNT(`id`) FROM [news] WHERE `category` = :category',
+		$row = $_pdo->getSelectCount('SELECT COUNT(`id`) FROM [news] WHERE `category` = :category  AND `access` IN ('.$_user->listRoles().')',
 			array(
 				array(':category', $_route->getAction(), PDO::PARAM_INT)
 			)
@@ -57,10 +57,10 @@ if ($_route->getAction())
 		if ($row)
 		{
 			$query = $_pdo->getData('
-				SELECT tn.`id`, tn.`title`, tn.`link`, tn.`content`, tn.`author`, tn.`reads`, tn.`datestamp`, tu.`id` AS `user_id`, tu.`username`
+				SELECT tn.`id`, tn.`title`, tn.`access`, tn.`link`, tn.`content`, tn.`author`, tn.`reads`, tn.`datestamp`, tu.`id` AS `user_id`, tu.`username`
 				FROM [news] tn
 				LEFT JOIN [users] tu ON tn.`author`= tu.`id`
-				WHERE `category` = :category
+				WHERE tn.`category` = :category AND tn.`access` IN ('.$_user->listRoles().')
 				ORDER BY tn.`datestamp` ASC, tn.`title`',
 				array(
 					array(':category', $_route->getAction(), PDO::PARAM_INT)
@@ -73,16 +73,16 @@ if ($_route->getAction())
 				foreach($query as $data)
 				{
 					$cache[] = array(
-						'row_color'      => $i % 2 == 0 ? 'tbl1' : 'tbl2',
-						'news_title_id'   => $data['id'],
-						'news_title_name' => $data['title'],
-						'news_content'   => substr($data['content'], 0, 85).'...',
-						'news_author_id'   => $data['user_id'],
-						'news_author_name' => $_user->getUsername($data['user_id']),
-						'news_reads'     => $data['reads'],
-						'news_datestamp' => HELP::showDate('shortdate', $data['datestamp']),
-						'news_url'		=> $_route->path(array('controller' => 'news', 'action' => $data['id'], HELP::Title2Link($data['title']))),
-						'profile_url'	=> $_route->path(array('controller' => 'profile', 'action' => $data['user_id'], HELP::Title2Link($data['username'])))
+						'row_color'         => $i % 2 == 0 ? 'tbl1' : 'tbl2',
+						'news_title_id'     => $data['id'],
+						'news_title_name'   => $data['title'],
+						'news_content'      => substr($data['content'], 0, 85).'...',
+						'news_author_id'    => $data['user_id'],
+						'news_author_name'  => $_user->getUsername($data['user_id']),
+						'news_reads'        => $data['reads'],
+						'news_datestamp'    => HELP::showDate('shortdate', $data['datestamp']),
+						'news_url'          => $_route->path(array('controller' => 'news', 'action' => $data['id'], HELP::Title2Link($data['title']))),
+						'profile_url'       => $_route->path(array('controller' => 'profile', 'action' => $data['user_id'], HELP::Title2Link($data['username'])))
 					);
 					$i++;
 				}
@@ -157,7 +157,7 @@ else
 			'cat_title_name' 	=> $data['name'],
 			'cat_image'    		=> $data['image'],
 			'cat_count_news' 	=> isset($array[$data['id']]) ? $array[$data['id']] : 0,
-			'url'		   		=> $_route->path(array('controller' => 'news_cats', 'action' => $data['id'], HELP::Title2Link($data['name'])))
+			'url'		   	=> $_route->path(array('controller' => 'news_cats', 'action' => $data['id'], HELP::Title2Link($data['name'])))
 		);
 		$i++;
 	}
