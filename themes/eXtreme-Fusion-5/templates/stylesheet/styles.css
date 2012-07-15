@@ -208,8 +208,13 @@ pre {
 	-o-border-radius:4px;
 	margin:4 px;
 	}
-.button:hover {background-position:0 -25px;}
 
+.button:hover {
+	background-position:0 -25px;
+	text-decoration: none;
+	color: #3a3a3a;
+	}
+	
 .buttone {
 	cursor:pointer;
 	font-size:11px;
@@ -239,7 +244,7 @@ pre {
 .textbox {
 	font-size: 11px;
 	color:#ccc;
-	margin:2px 0 0;
+	margin:2px 0 6px;
 	padding:3px;
 	border:1px solid #444;
 	background:#383838;
@@ -731,3 +736,43 @@ pre {
 .orange .bg.right, .green .bg.right, .blue .bg.right {background:url(../images/clock.png) no-repeat right top;}
 
 .clock .front.left{left:0;z-index:10;}
+
+/* User Control Panel */	
+#user_panel {
+	text-align: center;
+	}
+
+#user_panel .textbox {
+	width:100px;
+	}
+	
+#user_panel ul {
+	list-style-type: none;
+	margin: 7px 0px;
+	float:left
+	}
+	
+#user_panel ul li{
+	background: #3a3a3a;
+	margin: 2px 0px;
+	border: 2px #3a3a3a solid;
+	border-radius: 0px 5px 5px 0px;
+	-webkit-border-radius: 0px 5px 5px 0px;
+	-moz-border-radius: 0px 5px 5px 0px;
+	padding: 0 1px 0 3px;
+	}
+	
+#user_panel .avatar {
+	position: relative;
+ 	float:left;
+	width: 80px;
+	height: 80px;
+	margin: 5px 0px 5px 4px;
+	border: 7px #3a3a3a solid;
+	border-radius:5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-moz-box-shadow: 6px 0px 5px -2px #2e2e2e;
+ 	-webkit-box-shadow: 6px 0px 5px -2px #2e2e2e;
+ 	box-shadow: 6px 0px 5px -2px #2e2e2e;
+	}

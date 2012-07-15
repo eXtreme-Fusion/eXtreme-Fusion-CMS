@@ -113,6 +113,26 @@ h1 {
 	border-top:1px #eee solid;
 }
 
+.button {
+	cursor:pointer;
+	font-size:11px;
+	font-weight:bold;
+	color:#000;
+	padding:3px 6px;
+	background:#FFFFFF;
+	border:0px;
+	border-radius:4px;
+	-moz-border-radius:4px;
+	-webkit-border-radius:4px;
+	-o-border-radius:4px;
+	margin: 4px;
+	}
+	
+.button:hover {
+	text-decoration: none;
+	color: #3a3a3a;
+	}
+
 /* Zaokrąglony kontener */
 .corner4px .ctl {
 	height:4px;

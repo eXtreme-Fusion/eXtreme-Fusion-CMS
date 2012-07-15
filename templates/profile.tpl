@@ -5,7 +5,7 @@
                 {if $user.avatar}
                     <img src="{$ADDR_IMAGES}avatars/{$user.avatar}" class="avatar" alt="Avatar">
                 {else}
-                    <img src="{$ADDR_IMAGES}avatars/none.jpg" class="avatar" alt="No Avatar">
+                    <img src="{$ADDR_IMAGES}avatars/none.gif" class="avatar" alt="No Avatar">
                 {/if}
                 <p>{if $user.is_online == 1}<img src="{$ADDR_IMAGES}online.png" alt="{i18n('Online')}"><span class="online">{i18n('Online')}</span>{else}<img src="{$ADDR_IMAGES}offline.png" alt="{i18n('Offline')}">{$user.last_visit_time}{/if}</p>
             </div>
