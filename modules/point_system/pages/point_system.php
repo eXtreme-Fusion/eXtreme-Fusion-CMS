@@ -30,7 +30,7 @@ if($_user->isLoggedIn())
 	if ($rows !== '0')
 	{
 		$count = $_pdo->getMatchRowsCount('SELECT `id` FROM [points_history] WHERE `user_id` = '.$_user->get('id'));
-		$per_page = 2;
+		$per_page = 25;
 	
 		if ( ! $_route->getByID(2))
 		{
