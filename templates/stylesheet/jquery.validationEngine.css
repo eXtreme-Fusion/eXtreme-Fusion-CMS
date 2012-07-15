@@ -21,7 +21,7 @@
 
 .formError .formErrorContent {
 	width: 100%;
-	background:url(../admin/templates/images/shared/nav/repeat.jpg) repeat-x 0 -38px;
+	background:url(../../admin/templates/images/shared/nav/repeat.jpg) repeat-x 0 -38px;
 	position:relative;
 	z-index:5001;
 	color: #fff;

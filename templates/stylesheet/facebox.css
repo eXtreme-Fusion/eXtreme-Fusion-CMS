@@ -46,7 +46,7 @@
 }
 #facebox .close-image{
   opacity:0.3;
-  background: url(../templates/images/closelabel.png) no-repeat scroll 0 0 transparent;
+  background: url(../images/closelabel.png) no-repeat scroll 0 0 transparent;
   width:8px;
   height:8px;
 }

@@ -47,7 +47,7 @@ a:hover {color:#000}
 
 #TableOPT th,
 #listStandard th {
-  background: #F1F1F1 url(../admin/templates/images/ui/bg-panel-header.gif) repeat-x scroll 0 0;
+  background: #F1F1F1 url(../../admin/templates/images/ui/bg-panel-header.gif) repeat-x scroll 0 0;
   padding:8px 0 10px 0;
   font-size:12px;
   font-weight:bold;
@@ -68,7 +68,7 @@ a:hover {color:#000}
 }
 
 #TableOPT th.stats {
-  background: #F1F1F1 url(../admin/templates/images/ui/bg-panel-header.gif) repeat-x scroll 0 0;
+  background: #F1F1F1 url(../../admin/templates/images/ui/bg-panel-header.gif) repeat-x scroll 0 0;
   padding: 0.2em;
   font-size:11px;
   color: #999;
@@ -240,19 +240,19 @@ table.dataTable tbody, table.logTable tbody {
 }
 
 .paginate_disabled_previous {
-	background-image: url('../admin/templates/images/ui/back_disabled.jpg');
+	background-image: url('../../admin/templates/images/ui/back_disabled.jpg');
 }
 
 .paginate_enabled_previous {
-	background-image: url('../admin/templates/images/ui/back_enabled.jpg');
+	background-image: url('../../admin/templates/images/ui/back_enabled.jpg');
 }
 
 .paginate_disabled_next {
-	background-image: url('../admin/templates/images/ui/forward_disabled.jpg');
+	background-image: url('../../admin/templates/images/ui/forward_disabled.jpg');
 }
 
 .paginate_enabled_next {
-	background-image: url('../admin/templates/images/ui/forward_enabled.jpg');
+	background-image: url('../../admin/templates/images/ui/forward_enabled.jpg');
 }
 
 
@@ -291,15 +291,15 @@ table.dataTable td.center, table.logTable td.center {
  */
 
 .sorting_asc {
-	background: url('../admin/templates/images/ui/sort_asc.jpg') no-repeat center right;
+	background: url('../../admin/templates/images/ui/sort_asc.jpg') no-repeat center right;
 }
 
 .sorting_desc {
-	background: url('../admin/templates/images/ui/sort_desc.jpg') no-repeat center right;
+	background: url('../../admin/templates/images/ui/sort_desc.jpg') no-repeat center right;
 }
 
 .sorting {
-	background: url('../admin/templates/images/ui/sort_both.jpg') no-repeat center right;
+	background: url('../../admin/templates/images/ui/sort_both.jpg') no-repeat center right;
 }
 
 
@@ -473,9 +473,9 @@ h3 strong {
 	height:24px;
 	text-indent:-5000px;
 }
-h3 strong.close {background-image:url(../admin/templates/images/ui/ui-icons.png);background-position:-216px 0;}
+h3 strong.close {background-image:url(../../admin/templates/images/ui/ui-icons.png);background-position:-216px 0;}
 h3 strong.close:hover {background-position:-216px -24px;}
-h3 strong.open {background-image:url(../admin/templates/images/ui/ui-icons.png);background-position:-192px 0;}
+h3 strong.open {background-image:url(../../admin/templates/images/ui/ui-icons.png);background-position:-192px 0;}
 h3 strong.open:hover {background-position:-192px -24px;}
 
 h4 {

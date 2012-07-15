@@ -23,7 +23,7 @@ div.uploader,
 div.uploader span.action,
 div.button,
 div.button span {
-  background-image: url(../admin/templates/images/ui/form-sprite.png);
+  background-image: url(../../admin/templates/images/ui/form-sprite.png);
   background-repeat: no-repeat;
   -webkit-font-smoothing: antialiased;
 }
@@ -51,8 +51,8 @@ textarea.uniform {
   font-weight: normal;
   padding: 3px;
   color: #777;
-  background: url('../admin/templates/images/ui/bg-input-focus.png') repeat-x 0 0;
-  background: url('../admin/templates/images/ui/bg-input.png') repeat-x 0 0;
+  background: url('../../admin/templates/images/ui/bg-input-focus.png') repeat-x 0 0;
+  background: url('../../admin/templates/images/ui/bg-input.png') repeat-x 0 0;
   border-top: solid 1px #aaa;
   border-left: solid 1px #aaa;
   border-bottom: solid 1px #ccc;
@@ -71,7 +71,7 @@ textarea.uniform:focus {
   -moz-box-shadow: 0 0 4px rgba(0,0,0,0.3);
   box-shadow: 0 0 4px rgba(0,0,0,0.3);
   border-color: #999;
-  background: url('../admin/templates/images/ui/bg-input-focus.png') repeat-x 0 0;
+  background: url('../../admin/templates/images/ui/bg-input-focus.png') repeat-x 0 0;
 }
 
 /* SPRITES */

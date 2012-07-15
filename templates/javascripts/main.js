@@ -126,6 +126,7 @@ jQuery(function() {
 	// PL: Funkcja pobieraj¹ca nazwe buttona i zmieniaj¹ca treœæ w textarea
 	// EN: Function grabbing button name and add text in textarea
 	// ============================
+	
 	function ReplaceText(Button, To, Before, After) {
 		$("input[name=" +Button+ "]").click(function() {
 			addText(To, Before, After);
