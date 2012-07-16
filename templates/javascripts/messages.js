@@ -96,9 +96,10 @@ $(function() {
 		var username = $(this).text();
 		
 		$('#message_to').val(id);
-		$('#send_to').hide();
 		$('#defenders').before(username);
+		
 		$('#defenders').html('');
+		$('#send_to').hide();
 	});
 	
 });

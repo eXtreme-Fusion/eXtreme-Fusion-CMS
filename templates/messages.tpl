@@ -1,5 +1,5 @@
 {php} opentable(__('Messages')) {/php}
-
+PODSTRONA W TRAKCIE PRZYGOTOWANIA, PROSIMY NIE ZGŁASZAC BLEDOW JEJ DOTYCZACYCH ZA TO SLEDZIC AKTUALIZACJE SYSTEMU
 {if $action == ''}
 	{if $data}
 		<div class="status" style="width: 70%;">{i18n('Messages are deleted automatically after 60 days from the time they were sent.')}</div>
