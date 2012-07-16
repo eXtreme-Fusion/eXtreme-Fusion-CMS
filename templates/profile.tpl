@@ -1,23 +1,25 @@
 {if $rows}
     {php} opentable(__('Member Profile')) {/php}
-        <div class="profile">
-            <div class="profile-avatar">
+        <div id="profile">
+            <div class="profile_avatar">
                 {if $user.avatar}
-                    <img src="{$ADDR_IMAGES}avatars/{$user.avatar}" class="avatar" alt="Avatar">
+                    <img src="{$ADDR_IMAGES}avatars/{$user.avatar}" alt="Avatar">
                 {else}
-                    <img src="{$ADDR_IMAGES}avatars/none.gif" class="avatar" alt="No Avatar">
+                    <img src="{$ADDR_IMAGES}avatars/none.gif" alt="No Avatar">
                 {/if}
                 <p>{if $user.is_online == 1}<img src="{$ADDR_IMAGES}online.png" alt="{i18n('Online')}"><span class="online">{i18n('Online')}</span>{else}<img src="{$ADDR_IMAGES}offline.png" alt="{i18n('Offline')}">{$user.last_visit_time}{/if}</p>
             </div>
-            <div class="profile-title"><img src="{$ADDR_IMAGES}profile/info.png" alt="Profile"><span id="profile-username">{i18n('Member Profile :Username', array(':Username' => $user.username))}</span>{if $user.myid > 0 && $user.id != $user.myid}<a href="{$user.pm_link}" title="Wyślij wiadomość">[ Wyślij wiadomość ]</a>{/if}<span id="profile-status">{$user.role}</span></div>
-            <div class="profile-info tbl2">
-                <p><strong>{i18n('e-Mail')}:</strong><span>{$user.email}</span></p>
-                <p><strong>{i18n('Joined')}:</strong><span>{$user.joined}</span></p>
-                <p><strong>{i18n('Groups')}:</strong><span>{$user.roles}</span></p>
-            </div>
+            <div class="profile_title">
+				<img src="{$ADDR_IMAGES}profile/info.png" alt="Profile"><span id="profile_username">{i18n('Member Profile :Username', array(':Username' => $user.username))}</span>{if $user.myid > 0 && $user.id != $user.myid}<a href="{$user.pm_link}" title="Wyślij wiadomość">[ Wyślij wiadomość ]</a>{/if}<span id="profile_status">{$user.role}</span>
+			</div>
+            <ul>
+                <li><strong>{i18n('e-Mail')}:</strong><span>{$user.email}</span></li>
+                <li><strong>{i18n('Joined')}:</strong><span>{$user.joined}</span></li>
+                <li><strong>{i18n('Groups')}:</strong><span>{$user.roles}</span></li>
+            </ul>
         </div>
         
-        <div id='pettabs' class='indentmenu'>
+        <nav id="profile_menu">
             <ul>
                 <li><a href="javascript:void(0)" id="tab_stats" class="tab">Statystyki</a></li>
                 {section=cats}
@@ -26,57 +28,50 @@
                     {/if}
                 {/section}
             </ul>
-        </div>
+        </nav>
 
-        <div class="tab_cont profile-fields" id="tab_cont_stats">
-            <div class="element">
+        <div class="tab_cont" id="tab_cont_stats">
+            <p class="element clearfix">
                 <strong>Dodane newsy</strong>
-                <p>{$user.news}</p>
-                <div class="clear"></div>
-            </div>
-            <div class="element">
+                <span>{$user.news}</span>
+            </p>
+            <p class="element clearfix">
                 <strong>Napisane komentarze</strong>
-                <p>{$user.comment}</p>
-                <div class="clear"></div>
-            </div>
+                <span>{$user.comment}</span>
+            </p>
             {if $chat != 0}
-                <div class="element">
+                <p class="element clearfix">
                     <strong>Posty w chacie</strong>
-                    <p>{$chat}</p>
-                    <div class="clear"></div>
-                </div>
+                    <span>{$chat}</span>
+                </p>
             {/if}
             {if $cautions != 0}
-                <div class="element">
+                <p class="element clearfix">
                     <strong><a href="{$cautions.link}">Ostrzeżenia</a></strong>
-                    <p>{$cautions.cautions}</p>
-                    <div class="clear"></div>
-                </div>
+                    <span>{$cautions.cautions}</span>
+                </p>
             {/if}
             {if $points_stat}
-                <div class="element">
+                <p class="element clearfix">
                     <strong>Punkty</strong>
-                    <p>{$points_stat.points}</p>
-                    <div class="clear"></div>
-                </div>
-                <div class="element">
+                    <span>{$points_stat.points}</span>
+                </p>
+                <p class="element clearfix">
                     <strong>Ranga</strong>
-                    <p>{$points_stat.rank}</p>
-                    <div class="clear"></div>
-                </div>
+                    <span>{$points_stat.rank}</span>
+                </p>
             {/if}
         </div>
         
         {section=cats}
             {if $cats.has_fields == 1}
-                <div class="tab_cont profile-fields" id="tab_cont_{$cats.id}">
+                <div class="tab_cont" id="tab_cont_{$cats.id}">
                     {section=fields}
                         {if $fields.value && ($fields.type != 2)}
-                            <div class="element">
+                            <p class="element clearfix">
                                 <strong>{i18n($fields.name)}</strong>
-                                <p>{$fields.value}</p>
-                                <div class="clear"></div>
-                            </div>
+                                <span>{$fields.value}</span>
+                            </p>
                         {/if}
                     {/section}
                     {section=fields}
@@ -84,7 +79,6 @@
                             <div class="element_big">
                                 <strong>{i18n($fields.name)}</strong>
                                 <p>{$fields.value}</p>
-                                <div class="clear"></div>
                             </div>
                         {/if}
                     {/section}
@@ -141,6 +135,6 @@
     {/if}
 {else}
     {php} opentable(__('Error 404')) {/php}
-        <div class='status'>{i18n('Nie znaleziono profilu.')}</div>
+        <p class="status">{i18n('Nie znaleziono profilu.')}</p>
     {php} closetable() {/php}
 {/if}

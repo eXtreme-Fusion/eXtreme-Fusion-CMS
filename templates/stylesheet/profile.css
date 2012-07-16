@@ -1,108 +1,112 @@
-/*Profile header*/
-.profile {
+/* Profile header ------------------------------------------------------------------- */
+#profile {
 	width:100%;
 	background:#2e2e2e;
 	margin-bottom: 20px;
-	border-radius:5px;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
 	overflow:hidden;
+	border-radius:5px;
 }
-.profile-avatar {
+
+/* Avatar */
+#profile .profile_avatar {
 	float:left;
 	width:120px;
 	margin:10px 20px;
-}
-.profile-avatar .avatar {
-	width:100px;
-	height:100px;
-	border: 10px #3a3a3a solid;
-	border-radius:5px;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-}
-.profile-avatar p {
 	text-align: center;
 }
-.profile-avatar p img {
+#profile .profile_avatar > img {
+	max-width:100px;
+	max-height:100px;
+	border: 10px #3a3a3a solid;
+	border-radius:5px;
+}
+#profile .profile_avatar p {
+	text-align: center;
+}
+#profile .profile_avatar p img {
 	margin-right:5px;
 	vertical-align: middle;
 }
-.profile-avatar p span.online {
+#profile .profile_avatar p span.online {
 	color: #9fd10f;
 	font-size: 16px;
 }
-.profile-title {
+
+/* User name and status */
+#profile .profile_title {
 	margin-right: 30px;
 	padding-top: 15px;
 }
-.profile-title img {
+#profile .profile_title img {
 	margin-right:5px;
 	padding-top:3px;
 }
-.profile-title span {
+#profile .profile_title span {
 	color:#fff;
 	font-size:16px;
 	padding-top:5px;
 }
-.profile-title #profile-username,.profile-title #profile-status {
+#profile .profile_title #profile_username,
+#profile .profile_title #profile_status {
 	position:relative;
 	bottom: 2px;
 }
-.profile-title #profile-status {
+#profile .profile_title #profile_status {
 	color: #515151;
 	font-size: 12px;
 	float: right;
 }
-.profile-title a {
+#profile .profile_title a {
 	position:relative;
 	bottom: 4px;
 	margin: 0 7px;
 	color: #515151;
 }
-.profile-info {
+
+/* Main info about user */
+#profile ul {
+	background-color: #3a3a3a;
+	overflow:hidden;
 	margin: 10px 20px 10px 0;
 	padding:15px 0;
 	border-top: 2px #9fd10f solid;
 	border-radius:5px;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
 }
-.profile-info p {
+#profile ul li {
+	list-style: none;
+	display: block;
 	font-size: 12px;
 	line-height: 23px;
 	padding: 0 15px 0 30px;
+	margin: 0;
 }
-.profile-info strong {
+#profile ul li strong {
 	width:40%;
 	display:inline-block;
 	vertical-align: top;
 }
-.profile-info p span {
+#profile ul li span {
 	width: 60%;
 	display:inline-block;
 }
 
-/* Tab menu */
-.indentmenu {
-	font: bold 13px Arial;
-	width: 100%;
-}
-
-.indentmenu ul {
+/* Tab menu ----------------------------------------------------------- */
+#profile_menu ul {
     float: left;
     padding: 0;
 }
 
-.indentmenu ul li {
+#profile_menu ul li {
 	display: inline;
 }
 
-.indentmenu ul li a {
-    background: none repeat scroll 0 0 #3A3A3A;
+#profile_menu ul li a {
+    background: #3A3A3A;
     border-radius: 5px 5px 0 0;
     border-top: 2px solid #9FD10F;
     color: #FAFAFA;
+	font-size: 12px;
+	font-weight: bold;
     float: left;
     margin-right: 5px;
     padding: 4px 15px;
@@ -110,64 +114,61 @@
     text-shadow: 1px 1px 1px #000000;
 }
 
-.indentmenu ul li a:visited {
+#profile_menu ul li a:visited {
 	color: #fafafa;
 }
 
-.indentmenu ul li a.selected {
+#profile_menu ul li a.selected {
     background-color: #2E2E2E;
     color: #FAFAFA !important;
 }
 
-/* Tab content */
-.profile-fields {
-    background: none repeat scroll 0 0 #2E2E2E;
+/* Tab content -------------------------------------------------------------------- */
+.tab_cont {
+    background: #2E2E2E;
     border-radius: 0 5px 5px 5px;
     float: left;
     padding: 7px;
     width: 98%;
 }
-.profile-fields .element {
+.tab_cont .element {
 	padding: 5px 15px;
 	margin:5px 10px;
 	background: #3a3a3a;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
 	border-radius: 5px;
 }
-.profile-fields .element:nth-child(odd) {
+.tab_cont .element:nth-child(odd) {
 	width: 42%;
 	float: left;
 	margin: 5px 0 5px 10px;
 }
-.profile-fields .element:nth-child(even) {
+.tab_cont .element:nth-child(even) {
 	width: 42%;
 	float: right;
 	margin: 5px 10px 5px 0;
 }
-.profile-fields .element strong{
+.tab_cont .element strong{
 	width: auto;
 	float: left;
 	color: #9fd10f;
 }
-.profile-fields .element p {
+.tab_cont .element span {
+	display: block;
 	width: auto;
 	float: right;
 }
-.profile-fields .element_big {
+.tab_cont .element_big {
 	clear: both;
 	float: left;
 	margin:5px 10px;
 }
-.profile-fields .element_big strong {
+.tab_cont .element_big strong {
 	color: #9fd10f;
 	background: #3a3a3a;
 	display: block;
 	padding: 5px 15px;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
 	border-radius: 5px;
 }
-.profile-fields .element_big p {
+.tab_cont .element_big p {
 	padding: 5px 15px;
 }

@@ -167,7 +167,7 @@ if ($row)
 			'news' => $news,
 			'comment' => $comment,
 			'myid' => $_user->get('id'),
-			'pm_link' => ''
+			'pm_link' => $_route->path(array('controller' => 'messages', 'action' => 'new', $row['id']))
 		);
 		//var_dump(inArray($row['id'], $_user->getOnline(), 'id'));exit;
 		if ($_pdo->tableExists('chat_messages'))
