@@ -1,6 +1,6 @@
 {php} opentable(__('Messages')) {/php}
 PODSTRONA W TRAKCIE PRZYGOTOWANIA, PROSIMY NIE ZGŁASZAC BLEDOW JEJ DOTYCZACYCH ZA TO SLEDZIC AKTUALIZACJE SYSTEMU
-{if $action == ''}
+{if $section == 'overview'}
 	{if $data}
 		<div class="status" style="width: 70%;">{i18n('Messages are deleted automatically after 60 days from the time they were sent.')}</div>
 			<a href="{$url_new_message}" class="button" id="button">{i18n('Write a message')}</a><br /><br />
@@ -32,30 +32,38 @@ PODSTRONA W TRAKCIE PRZYGOTOWANIA, PROSIMY NIE ZGŁASZAC BLEDOW JEJ DOTYCZACYCH 
 		<div class="status">{i18n('There are no messages.')}</div>
 		<a href="{$url_new_message}" class="button" id="button">{i18n('Write a message')}</a>
 	{/if}
-{elseif $action == 'view' || $action == 'new'}
+{elseif $section == 'new-by-search' || $section == 'new-by-user' || $section == 'entry'}
 	<div id="messages_frame">
-		{if !$new_discuss}
-			<div class="tbl1">{i18n('Chat:')}</div>
-		{/if}  
+
+		{* Tutaj treść wiadomości ładowana przez Ajax *}
 		<section></section>
 
-		{*Odpowiedź po wysłaniu wiadomości*}
+		{*Odpowiedź po wysłaniu wiadomości - co to?*}
 		<div id="form_request"></div>
-		{*}	{*} <div id="messages_form">
+
+		<div id="messages_form">
 			<form action="{$URL_REQUEST}" method="post" style="width: 100%;">
-				{if $new_discuss}
+				{if $section == 'new-by-search' || $section == 'new-by-user'}
 					<div class="tbl1">
-						<label for="message_to">{i18n('To:')}</label>  
-						<input type="hidden" name="to" id="message_to" required>   
-						<input type="text" name="jQTo" id="send_to" required>                            
-					</div>                            
+						<label for="message_to">{i18n('To:')}</label>
+
+						{if $section == 'new-by-user'}
+							{$user.username}
+							<input type="hidden" name="to" id="message_to" value={$user.id}>
+						{else}
+							<input type="hidden" name="to" id="message_to">
+							<input type="text" name="jQTo" id="send_to" required>
+						{/if}
+					</div>
 					<div class="tbl2">
 						<div>{i18n('Subject:')}</div> <input type="text" name="subject"  style="width: 70%;" value='{i18n('Enter a topic name')}...' onfocus="if(this.value=='{i18n('Enter a topic name')}...') this.value='' ; " onblur="if(this.value=='') this.value='{i18n('Enter a topic name')}...';"  id="message_subject" required /><br />
 					</div>
+				{else}
+					<p>{i18n('To:')} {$user.username}</p>
+					<input type="hidden" name="to" id="message_to" value={$user.id}>
 				{/if}
 				<div class="tbl1">
 					<div>{i18n('Message:')}</div> <input type="text" name="message" style="width: 70%;"  value='{i18n('Enter your message')}...' onfocus="if(this.value=='{i18n('Enter your message')}...') this.value='' ; " onblur="if(this.value=='') this.value='{i18n('Enter your message')}...';" wrap="phisical" id="message" autocomplete="off" />
-					{*}<textarea cols="70" rows="20" id="message" name="message" style="width: 70%;"  value='{i18n('Enter your message')}...' onfocus="if(this.value=='{i18n('Enter your message')}...') this.value='' ; " onblur="if(this.value=='') this.value='{i18n('Enter your message')}...';" > </textarea>{*}
 				</div>
 				<div class="tbl1">
 					{section=bbcode}
@@ -68,9 +76,6 @@ PODSTRONA W TRAKCIE PRZYGOTOWANIA, PROSIMY NIE ZGŁASZAC BLEDOW JEJ DOTYCZACYCH 
 						<input type="submit" name="send" class="button" value="{i18n('Send')}" />
 					</div>
 					<input type="hidden" value="{$get_item_id}" name="item_id" />
-					{if !$new_discuss}        				  
-						<input type="hidden" value="{$to}" name="to"/></div>
-					{/if}
 				</div>
 			</form>
 		</div>

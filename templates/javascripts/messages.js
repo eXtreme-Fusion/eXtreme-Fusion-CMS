@@ -1,7 +1,5 @@
 $(function() {
 
-	refresh_pw();
-
 	$('#messages_form form').submit(function() {
 
 		var new_message = $('#message_subject').length;
@@ -15,11 +13,9 @@ $(function() {
 		} else {
 			new_message = '';
 		}
-		
-		var to_user = $('input[name*="to"]', this).val();
-		
 
-		
+		var to_user = $('input[name*="to"]', this).val();
+
 		$.post(addr_site+'pages/ajax/messages.php', {
 			message: $('input[name*="message"]', this).val(),
 			to: to_user,
@@ -44,23 +40,9 @@ $(function() {
 		return false;
 	});
 
-	var refresh = false;
-	$('#messages_frame').hover(function() {
-		if (!refresh) {
-			refresh_pw();
-			refresh = true;
-		}
-	}, function() {
-		refresh = false;
-	});
-
-	setInterval(function() {
-		refresh_pw();
-	}, 30000);
-	
-	
+	// Wyszukiwanie adresata wiadomości
 	$('#send_to').after('<div id="defenders"></div>');
-	
+
 	$('#send_to').keyup(function() {
 		var value = $(this).val();
 		var $object = $(this);
@@ -79,7 +61,7 @@ $(function() {
 					var users = users + '</ul>';
 					$('#defenders').html(users);
 				} else if (parseInt(oJsonObject.status) == 1) {
-				
+
 					alert('Brak wyników wyszukiwania');
 				} else {
 					alert(oJsonObject.error_msg);
@@ -87,40 +69,61 @@ $(function() {
 			},
 			error: function(oXMLHttpRequest, sTextstatus, oErrorThrown) {
 				alert(sTextstatus);
-			}, 
+			},
 		});
 	});
+	// end of Wyszukiwanie adresata wiadomości
 
+	// Wybieranie adresata wiadomości
 	$('body').on('click', '.defender', function() {
 		var id = $(this).attr('id').split('-')[1];
 		var username = $(this).text();
-		
+
 		$('#message_to').val(id);
 		$('#defenders').before(username);
-		
+
 		$('#defenders').html('');
 		$('#send_to').hide();
 	});
-	
-});
+	// end of Wybieranie adresata wiadomości
 
-function refresh_pw() {
+	// Odświeżanie okna rozmowy
 
-	var posts = $('.pw_message_item').length;
-	var item_id = $('input[name*="item_id"]').val();
+	function refresh_pw() {
+		var posts = $('.pw_message_item').length;
+		var item_id = $('input[name*="item_id"]').val();
 
-	$.ajax({
-		url: addr_site+'pages/ajax/messages.php', data: 'item_id='+item_id, type: 'GET', success: function (html) {
-			$('#messages_frame section').html(html);
-			setTimeout(function(){
-				var posts2 = $('.pw_message_item').length;
-				if (posts != posts2) {
-					var scrollh = $('#messages_frame section').height();
-					$('#messages_frame').animate({ scrollTop: scrollh }, 800);
-				}
-			}, 400);
-		}, error: function(){
-			$('#messages_frame section').html('Wystąpił błąd! Odśwież stronę.');
+		$.ajax({
+			url: addr_site+'pages/ajax/messages.php', data: 'item_id='+item_id, type: 'GET', success: function (html) {
+				$('#messages_frame section').html(html);
+				setTimeout(function(){
+					var posts2 = $('.pw_message_item').length;
+					if (posts != posts2) {
+						var scrollh = $('#messages_frame section').height();
+						$('#messages_frame').animate({ scrollTop: scrollh }, 800);
+					}
+				}, 400);
+			}, error: function(){
+				$('#messages_frame section').html('Wystąpił błąd! Odśwież stronę.');
+			}
+		});
+	}
+
+	var refresh = false;
+	$('#messages_frame').hover(function() {
+		if (!refresh) {
+			refresh_pw();
+			refresh = true;
 		}
+	}, function() {
+		refresh = false;
 	});
-}
+
+	setInterval(function() {
+		refresh_pw();
+	}, 30000);
+
+	refresh_pw();
+
+	// end of Odświeżania okna rozmowy
+});
