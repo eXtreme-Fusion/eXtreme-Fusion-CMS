@@ -12,11 +12,11 @@ $(function() {
 				alert('Nie podano tematu wiadomości');
 				return false;
 			}
-			var to_user = $('select#message_to').val();
 		} else {
-			var to_user = $('input[name*="to"]', this).val();
 			new_message = '';
 		}
+		
+		var to_user = $('input[name*="to"]', this).val();
 		
 
 		
