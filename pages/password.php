@@ -10,7 +10,7 @@
 | http://extreme-fusion.org/ef5/license/						 
 ***********************************************************/
 $_locale->load('password');
-$_head->set('<link href="'.ADDR_TEMPLATES.'stylesheet/password.css" media="screen" rel="stylesheet" />');
+$_head->set('<link href="'.ADDR_TEMPLATES.'stylesheet/password.css" media="screen" rel="stylesheet">');
 
 $theme = array(
 		'Title' => __('Odzyskaj swoje hasło').' &raquo; '.$_sett->get('site_name'),

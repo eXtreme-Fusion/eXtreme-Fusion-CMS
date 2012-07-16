@@ -10,8 +10,8 @@
 | http://extreme-fusion.org/ef5/license/						 
 ***********************************************************/
 $_locale->load('profile');
-$_head->set('<link href="'.ADDR_TEMPLATES.'stylesheet/profile.css" media="screen" rel="stylesheet" />');
-$_head->set('<script type="text/javascript" src="'.ADDR_TEMPLATES.'javascripts/jquery.tabs.js"></script>');
+$_head->set('<link href="'.ADDR_TEMPLATES.'stylesheet/profile.css" media="screen" rel="stylesheet">');
+$_head->set('<script src="'.ADDR_TEMPLATES.'javascripts/jquery.tabs.js"></script>');
 
 $username = $_route->getByID(1);
 
