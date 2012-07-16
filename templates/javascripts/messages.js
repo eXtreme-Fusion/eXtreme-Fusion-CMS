@@ -57,7 +57,50 @@ $(function() {
 	setInterval(function() {
 		refresh_pw();
 	}, 30000);
+	
+	
+	$('#send_to').after('<div id="defenders"></div>');
+	
+	$('#send_to').keyup(function() {
+		var value = $(this).val();
+		var $object = $(this);
+		$.ajax({
+			url: addr_site+'ajax/search_users.php',
+			type: 'POST',
+			dataType: 'json',
+			data: {to: value},
+			success: function(oJsonObject, sTextstatus, oXMLHttpRequest){
+				if (parseInt(oJsonObject.status) == 0) {
+					var users = '<ul>';
+					for (i = 0; i < oJsonObject.users.length; i++)
+					{
+						var users = users + '<li class=defender id=def-'+ oJsonObject.users[i].id +'>' + oJsonObject.users[i].username + '</li>';
+					}
+					var users = users + '</ul>';
+					$('#defenders').html(users);
+				} else if (parseInt(oJsonObject.status) == 1) {
+				
+					alert('Brak wyników wyszukiwania');
+				} else {
+					alert(oJsonObject.error_msg);
+				}
+			},
+			error: function(oXMLHttpRequest, sTextstatus, oErrorThrown) {
+				alert(sTextstatus);
+			}, 
+		});
+	});
 
+	$('body').on('click', '.defender', function() {
+		var id = $(this).attr('id').split('-')[1];
+		var username = $(this).text();
+		
+		$('#message_to').val(id);
+		$('#send_to').hide();
+		$('#defenders').before(username);
+		$('#defenders').html('');
+	});
+	
 });
 
 function refresh_pw() {

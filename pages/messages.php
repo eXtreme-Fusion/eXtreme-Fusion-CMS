@@ -16,7 +16,7 @@ $_user->onlyForUsers($_route);
 $_locale->load('messages');
 
 //Initiation of Smiley & BBCode parser
-$_sbb = SmileyBBcode::getInstance($_sett, $_pdo, $_locale, $_head, $_user);
+$_sbb = $ec->getService('sbb');
 
 $_tpl->assign('bbcode', $_sbb->bbcodes());
 

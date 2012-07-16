@@ -45,14 +45,9 @@
 			<form action="{$URL_REQUEST}" method="post" style="width: 100%;">
 				{if $new_discuss}
 					<div class="tbl1">
-						<div>{i18n('To:')}</div>
-						<label>
-							<select name="to" class="textbox" id="message_to" required>
-								{section=data}
-									<option value="{$data.id}">{$data.username}</option>
-								{/section}
-							</select>
-						</label>                               
+						<label for="message_to">{i18n('To:')}</label>  
+						<input type="hidden" name="to" id="message_to" required>   
+						<input type="text" name="jQTo" id="send_to" required>                            
 					</div>                            
 					<div class="tbl2">
 						<div>{i18n('Subject:')}</div> <input type="text" name="subject"  style="width: 70%;" value='{i18n('Enter a topic name')}...' onfocus="if(this.value=='{i18n('Enter a topic name')}...') this.value='' ; " onblur="if(this.value=='') this.value='{i18n('Enter a topic name')}...';"  id="message_subject" required /><br />
