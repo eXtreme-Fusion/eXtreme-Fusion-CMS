@@ -30,10 +30,11 @@ $(function() {
 				$('#message_subject').parent().remove();
 				$('input[name*="item_id"]').val(data);
 			}
-			else
-			{
-				$('#form_request').html(data);
-			}
+			// co to? zakomentować
+			//else
+			//{
+			//	$('#form_request').html(data);
+			//}
 			refresh_pw();
 		});
 

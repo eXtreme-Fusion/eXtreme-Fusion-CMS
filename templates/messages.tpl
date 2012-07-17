@@ -1,10 +1,14 @@
 {php} opentable(__('Messages')) {/php}
+
 PODSTRONA W TRAKCIE PRZYGOTOWANIA, PROSIMY NIE ZGŁASZAC BLEDOW JEJ DOTYCZACYCH ZA TO SLEDZIC AKTUALIZACJE SYSTEMU
+
 {if $section == 'overview'}
+	<a href="{$url_new_message}" class="button" id="button">{i18n('Write a message')}</a>
+	
 	{if $data}
-		<div class="status" style="width: 70%;">{i18n('Messages are deleted automatically after 60 days from the time they were sent.')}</div>
-			<a href="{$url_new_message}" class="button" id="button">{i18n('Write a message')}</a><br /><br />
-		<div class="tbl1" style="clear:both">
+		<p class="status" style="width: 70%">{i18n('Messages are deleted automatically after 60 days from the time they were sent.')}</p>
+		
+		<div class="tbl1">
 			<div class="grid_2 bold">{i18n('Rozmówca:')}</div>
 			<div class="grid_4 bold">{i18n('Temat:')}</div>
 			<div class="grid_2 bold">{i18n('Status:')}</div>
@@ -30,19 +34,18 @@ PODSTRONA W TRAKCIE PRZYGOTOWANIA, PROSIMY NIE ZGŁASZAC BLEDOW JEJ DOTYCZACYCH 
 		{/section}
 	{else}
 		<div class="status">{i18n('There are no messages.')}</div>
-		<a href="{$url_new_message}" class="button" id="button">{i18n('Write a message')}</a>
 	{/if}
 {elseif $section == 'new-by-search' || $section == 'new-by-user' || $section == 'entry'}
 	<div id="messages_frame">
 
-		{* Tutaj treść wiadomości ładowana przez Ajax *}
+		{* Tutaj będzie wczytana przez Ajax treść wiadomości *}
 		<section></section>
 
-		{*Odpowiedź po wysłaniu wiadomości - co to?*}
-		<div id="form_request"></div>
+		{*Odpowiedź po wysłaniu wiadomości - co to? nie wiadomo więc xakomentuję ~Inscure*}
+		{*<div id="form_request"></div>*}
 
 		<div id="messages_form">
-			<form action="{$URL_REQUEST}" method="post" style="width: 100%;">
+			<form action="{$URL_REQUEST}" method="post">
 				{if $section == 'new-by-search' || $section == 'new-by-user'}
 					<div class="tbl1">
 						<label for="message_to">{i18n('To:')}</label>
@@ -56,14 +59,16 @@ PODSTRONA W TRAKCIE PRZYGOTOWANIA, PROSIMY NIE ZGŁASZAC BLEDOW JEJ DOTYCZACYCH 
 						{/if}
 					</div>
 					<div class="tbl2">
-						<div>{i18n('Subject:')}</div> <input type="text" name="subject"  style="width: 70%;" value='{i18n('Enter a topic name')}...' onfocus="if(this.value=='{i18n('Enter a topic name')}...') this.value='' ; " onblur="if(this.value=='') this.value='{i18n('Enter a topic name')}...';"  id="message_subject" required /><br />
+						<div>{i18n('Subject:')}</div> 
+						<input type="text" name="subject" value='{i18n('Enter a topic name')}...' onfocus="if(this.value=='{i18n('Enter a topic name')}...') this.value='' ; " onblur="if(this.value=='') this.value='{i18n('Enter a topic name')}...';"  id="message_subject" required /><br />
 					</div>
 				{else}
 					<p>{i18n('To:')} {$user.username}</p>
 					<input type="hidden" name="to" id="message_to" value={$user.id}>
 				{/if}
 				<div class="tbl1">
-					<div>{i18n('Message:')}</div> <input type="text" name="message" style="width: 70%;"  value='{i18n('Enter your message')}...' onfocus="if(this.value=='{i18n('Enter your message')}...') this.value='' ; " onblur="if(this.value=='') this.value='{i18n('Enter your message')}...';" wrap="phisical" id="message" autocomplete="off" />
+					<div>{i18n('Message:')}</div> 
+					<input type="text" name="message" style="width: 70%;"  value='{i18n('Enter your message')}...' onfocus="if(this.value=='{i18n('Enter your message')}...') this.value='' ; " onblur="if(this.value=='') this.value='{i18n('Enter your message')}...';" wrap="phisical" id="message" autocomplete="off" />
 				</div>
 				<div class="tbl1">
 					{section=bbcode}
@@ -75,7 +80,8 @@ PODSTRONA W TRAKCIE PRZYGOTOWANIA, PROSIMY NIE ZGŁASZAC BLEDOW JEJ DOTYCZACYCH 
 						<a href="{$ADDR_SITE}messages.html" class="button">{i18n('Back')}</a>
 						<input type="submit" name="send" class="button" value="{i18n('Send')}" />
 					</div>
-					<input type="hidden" value="{$get_item_id}" name="item_id" />
+					{* Zmienna item_id istnieje tylko dla podstrony `entry`. Przy nowej konwersacji jest otrzymywane przez żądanie Ajax. *}
+					<input type="hidden" value="{$item_id}" name="item_id" />
 				</div>
 			</form>
 		</div>
