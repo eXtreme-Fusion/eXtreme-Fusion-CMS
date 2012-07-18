@@ -6,7 +6,7 @@ PODSTRONA W TRAKCIE PRZYGOTOWANIA, PROSIMY NIE ZGŁASZAC BLEDOW JEJ DOTYCZACYCH 
 	<a href="{$url_new_message}" class="button" id="button">{i18n('Write a message')}</a>
 	
 	{if $data}
-		<p class="status" style="width: 70%">{i18n('Messages are deleted automatically after 60 days from the time they were sent.')}</p>
+		<p class="status">{i18n('Messages are deleted automatically after 60 days from the time they were sent.')}</p>
 		
 		<div class="tbl1">
 			<div class="grid_2 bold">{i18n('Rozmówca:')}</div>
@@ -54,8 +54,10 @@ PODSTRONA W TRAKCIE PRZYGOTOWANIA, PROSIMY NIE ZGŁASZAC BLEDOW JEJ DOTYCZACYCH 
 							{$user.username}
 							<input type="hidden" name="to" id="message_to" value={$user.id}>
 						{else}
-							<input type="hidden" name="to" id="message_to">
-							<input type="text" name="jQTo" id="send_to" required>
+							<div class="message_to_menu">
+								<input type="hidden" name="to" id="message_to">
+								<input type="text" name="jQTo" id="send_to" required>
+							</div>
 						{/if}
 					</div>
 					<div class="tbl2">

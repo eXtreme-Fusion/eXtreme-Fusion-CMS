@@ -53,19 +53,19 @@ $(function() {
 			dataType: 'json',
 			data: {to: value},
 			success: function(oJsonObject, sTextstatus, oXMLHttpRequest){
+				$('#send_to').css({'borderRadius':'5px 5px 0 0','border-bottom-width':'0'});
 				if (parseInt(oJsonObject.status) == 0) {
 					var users = '<ul>';
 					for (i = 0; i < oJsonObject.users.length; i++)
 					{
-						var users = users + '<li class=defender id=def-'+ oJsonObject.users[i].id +'>' + oJsonObject.users[i].username + '</li>';
+						var users = users + '<li class="defender" id="def-'+ oJsonObject.users[i].id +'">' + oJsonObject.users[i].username + '</li>';
 					}
 					var users = users + '</ul>';
 					$('#defenders').html(users);
 				} else if (parseInt(oJsonObject.status) == 1) {
-
-					alert('Brak wyników wyszukiwania');
+					$('#defenders').html('<div class="defender_error">Brak wyników wyszukiwania</div>');
 				} else {
-					alert(oJsonObject.error_msg);
+					$('#defenders').html('<div class="defender_error">'+oJsonObject.error_msg+'</div>');
 				}
 			},
 			error: function(oXMLHttpRequest, sTextstatus, oErrorThrown) {
@@ -81,7 +81,7 @@ $(function() {
 		var username = $(this).text();
 
 		$('#message_to').val(id);
-		$('#defenders').before(username);
+		$('#defenders').before('<div id="defender_user">'+username+' <img src="../admin/templates/images/icons/cross.png" alt="Cross"></div>');
 
 		$('#defenders').html('');
 		$('#send_to').hide();
