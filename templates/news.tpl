@@ -65,37 +65,41 @@
 	{php} opentable(__('News')); {/php}
 		{if $news}
 			{section=news}
-				<div class="news-content">
-					<div class="news">
-						<h4><a href="{$news.url}">{$news.title_name}</a> <span class="right small">{i18n('Date:')} {$news.date}</span></h4>
-						<div class="left small">
-							<div>{if $news.category_id}{i18n('Category:')} <a href="{$news.category_link}">{$news.category_name}</a>, {/if}{i18n('Author:')} <a href="{$news.author_link}">{$news.author_name}</a> {i18n('Language:')} {$news.language}</div>
-							<div>
-								{if $news.source}
-									<a href="{$news.source}" target="_blank">{i18n('Source')}</a>,
-								{/if}
-								{if $news.keyword}
-									{i18n('Tags:')}
-									{foreach=$news.keyword; value}
-										<a href="{@value.tag_url}">{@value.keyword_name}</a>,
-									{/foreach}
-								{/if}
-							</div>
-						</div>
-						<div class="right small">{i18n('Reads:')} {$news.reads}, {if $news.allow_comments} <a href="{$news.url}#comments">{i18n('Comments:')} {$news.num_comments}</a>{/if}</div>
-					</div>
+				<article class="news">
+					<header>
+						<h3><a href="{$news.url}" title="{$news.title_name}" class="tip">{$news.title_name}</a></h3>
+						<p>{i18n('Date:')} <time pubdate="pubdate">{$news.date}</time></p>
+						<p>
+							{if $news.category_id}{i18n('Category:')}<a href="{$news.category_link}" rel="tag">{$news.category_name}</a>,{/if}
+							{i18n('Author:')} <a href="{$news.author_link}" rel="author">{$news.author_name}</a>,
+							{i18n('Language:')} {$news.language}
+						</p>
+						<p>
+							{if $news.source}
+								<a href="{$news.source}" target="_blank">{i18n('Source')}</a>,
+							{/if}
+							{if $news.keyword}
+								{i18n('Tags:')}
+								{foreach=$news.keyword; value}
+									<a href="{@value.tag_url}" rel="tag">{@value.keyword_name}</a>,
+								{/foreach}
+							{/if}
+						</p>
+						<p>{i18n('Reads:')} {$news.reads}, {if $news.allow_comments} <a href="{$news.url}#comments">{i18n('Comments:')} {$news.num_comments}</a>{/if}</p>
+					</header>
+					<div class="news_content">
 						{$news.content}
-					<hr />
+					</div>
 					{if $news.content_ext}
-						<div class="right">
-							<a href="{$news.url}{if $news.content_ext}#content_extended{else}#content{/if}" class="tip" title="{i18n('Read more...')}">{i18n('Read more...')}</a>
-						</div>
+						<footer>
+							<a href="{$news.url}{if $news.content_ext}#content_extended{else}#content{/if}" class="button">{i18n('Read more...')}</a>
+						</footer>
 					{/if}
-				</div>
+				</article>
 			{/section}	
 			{$page_nav}
 		{else}
-			<div class="status">{i18n('No News has been posted yet')}</div>
+			<p class="status">{i18n('No News has been posted yet')}</p>
 		{/if}
 	{php} closetable(); {/php}
 {/if}
