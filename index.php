@@ -9,6 +9,7 @@
 | This product is licensed under the BSD License.
 | http://extreme-fusion.org/ef5/license/
 ***********************************************************/
+
 try
 {
 	// Czy dla podstrony musi istnieć plik TPL?
