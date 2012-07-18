@@ -9,9 +9,9 @@
 | This product is licensed under the BSD License.
 | http://extreme-fusion.org/ef5/license/
 ***********************************************************/
-$_head->set('<meta name="robots" content="noindex" />');
-
 $_user->onlyForUsers($_route);
+
+$_head->set('<meta name="robots" content="noindex" />');
 
 $_locale->load('messages');
 
@@ -20,7 +20,11 @@ $_sbb = $ec->getService('sbb');
 
 $_tpl->assign('bbcode', $_sbb->bbcodes());
 
-$_head->set('<script src="'.ADDR_TEMPLATES.'javascripts/messages.js"></script>');
+if ($_route->getAction() !== NULL)
+{
+	$_head->set('<script src="'.ADDR_TEMPLATES.'javascripts/messages.js"></script>');
+}
+
 $_head->set('<link href="'.ADDR_TEMPLATES.'stylesheet/messages.css" media="screen" rel="stylesheet" />');
 
 // Przegląd wszystkich wiadomości
@@ -55,7 +59,7 @@ if ($_route->getAction() === NULL)
 				'subject' => $row['subject'],
 				'datestamp' => HELP::showDate('shortdate', $row['datestamp']),
 				'item_id' => $row['item_id'],
-				'msg_link' => $_route->path(array('controller' => 'messages', 'action' => 'view', $userid, $row['item_id'], HELP::Title2Link($row['subject'])))
+				'msg_link' => $_route->path(array('controller' => 'messages', 'action' => 'view', $userid, $row['item_id'], $row['subject'] ? HELP::Title2Link($row['subject']) : HELP::Title2Link('no subject')))
 			);
 
 			// Czy wiadomość wysłao do mnie?
