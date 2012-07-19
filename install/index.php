@@ -435,6 +435,7 @@ $collate = 'utf8_general_ci';
 							$cookie_prefix = isset($_POST['cookie_prefix']) ? stripinput(trim($_POST['cookie_prefix'])) : $cookie_prefix;
 							$cache_prefix = isset($_POST['cache_prefix']) ? stripinput(trim($_POST['cache_prefix'])) : $cache_prefix;
 							$db_error = isset($_POST['db_error']) && isnum($_POST['db_error']) ? $_POST['db_error'] : '0';
+							
 
 							$field_class = array('', '', '', '', '');
 							if ($db_error > '0') 
@@ -608,6 +609,8 @@ $collate = 'utf8_general_ci';
 										if (!$result) { $can_write = FALSE; }
 										if ($can_write) {
 
+											$result = dbquery("ALTER DATABASE  `".$db_name."` DEFAULT CHARACTER SET ".$charset." COLLATE ".$collate);
+											
 											include_once 'create_config.php';
 
 											$temp = fopen('..'.DS.'config.php','w');
