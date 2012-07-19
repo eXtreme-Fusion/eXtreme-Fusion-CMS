@@ -30,13 +30,10 @@ require_once OPT_DIR.'opt.class.php';
 
 $_tpl = new optClass;
 $_tpl->compile = DIR_CACHE;
-$_tpl->root = DIR_BASE.DS.'templates';
-/***/
+$_tpl->root = DIR_BASE.'templates'.DS;
 
-if (isset($_POST['step']) && $_POST['step'] == '6')
-{
-	require_once DIR_SITE.'config.php';
-}
+
+/***/
 
 require DIR_SITE.'system'.DS.'helpers'.DS.'main.php';
 require DIR_SITE.'system'.DS.'class'.DS.'system.php';
@@ -90,838 +87,527 @@ if (isset($_POST['step']) && $_POST['step'] == '7')
 
 $charset = 'utf8';
 $collate = 'utf8_general_ci';
-?>
 
-<!DOCTYPE html>
-<html>
-<head>
-	<title><?php echo(__('eXtreme-Fusion :version - Setup', array(':version' => VERSION))) ?></title>
-	<meta http-equiv='Content-Type' content='text/html; charset=<?php echo __('Charset') ?>' />
-	<link rel="stylesheet" type="text/css" href="<?php echo ADDR_SITE ?>admin/templates/stylesheet/grid.reset.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="<?php echo ADDR_SITE ?>admin/templates/stylesheet/grid.text.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="<?php echo ADDR_SITE ?>admin/templates/stylesheet/grid.960.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="<?php echo ADDR_SITE ?>install/stylesheet/jquery.ui.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="<?php echo ADDR_SITE ?>install/stylesheet/jquery.uniform.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="<?php echo ADDR_SITE ?>install/stylesheet/jquery.table.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="<?php echo ADDR_SITE ?>install/stylesheet/main.css" media="screen" />
-	<script type="text/javascript" src="<?php echo ADDR_SITE ?>admin/templates/javascripts/jquery.js"></script>
-	<script type="text/javascript" src="<?php echo ADDR_SITE ?>admin/templates/javascripts/jquery.uniform.js"></script>
-	<script type="text/javascript" src="<?php echo ADDR_SITE ?>install/javascripts/passwordStrengthMeter.js"></script>
-	<script type="text/javascript" src="<?php echo ADDR_SITE ?>install/javascripts/main.js"></script>
-</head>
-<body>
+$_tpl->assignGroup(array(
+	'title' => __('eXtreme-Fusion :version - Setup', array(':version' => VERSION)),
+	'charset' => __('Charset'),
+	'ADDR_ADMIN' => ADDR_SITE.'admin/',
+	'ADDR_INSTALL' =>  ADDR_SITE.'install/',
+	'step_header' => __('eXtreme-Fusion :version - Setup', array(':version' => VERSION)).' &raquo; '.getStepHeader(),
+	'step_menu' => getStepMenu(),
+	'step' => getStepNum(),
+));
 
-	<div style="background:#121212;height:60px;margin-bottom:16px;padding:10px 0;">
-		<div class="container_12">
-			<img src='<?php echo ADDR_SITE ?>admin/templates/images/shared/extreme-fusion-logo.png' alt=''/>
-		</div>
-	</div>
+function getStepHeader()
+{
+	if (getStepNum() === 1) {
+		return __('Step 1: Locale');
+	} elseif (getStepNum() === 2) {
+		return __('Step 2: File and Folder Permissions Test');
+	} elseif (getStepNum() === 3) {
+		return __('Step 3: Database Settings');
+	} elseif (getStepNum() === 4) {
+		return __('Step 4: Database Config / Setup');
+	} elseif (getStepNum() === 5) {
+		return __('Step 5: Head Admin Datails');
+	} elseif (getStepNum() === 6) {
+		return __('Step 6: Final Settings');
+	} else {
+		return '';
+	}
+}
 
-	<div id="Content">
-		<div class='corner4px'><div class='ctl'><div class='ctr'><div class='ctc'></div></div></div><div class='cc'>
-			<div id="IframeOPT" class="container_12">
+// Zwraca numerycznie aktualny etap instalacji
+function getStepNum()
+{
+	static $step;
 
-				<?php
-					if (!isset($_POST['step']) || $_POST['step'] == '' || $_POST['step'] == '1') {
-						$StepHeader = __('Step 1: Locale');
-					} elseif (isset($_POST['step']) && $_POST['step'] == '2') {
-						$StepHeader = __('Step 2: File and Folder Permissions Test');
-					} elseif (isset($_POST['step']) && $_POST['step'] == '3') {
-						$StepHeader = __('Step 3: Database Settings');
-					} elseif (isset($_POST['step']) && $_POST['step'] == '4') {
-						$StepHeader = __('Step 4: Database Config / Setup');
-					} elseif (isset($_POST['step']) && $_POST['step'] == '5') {
-						$StepHeader = __('Step 5: Head Admin Datails');
-					} elseif (isset($_POST['step']) && $_POST['step'] == '6') {
-						$StepHeader = __('Step 6: Final Settings');
-					} else {
-                        $StepHeader = '';
-                    }
-					$StepMenu1 = explode(':', __('Step 1: Locale'));
-					$StepMenu2 = explode(':', __('Step 2: File and Folder Permissions Test'));
-					$StepMenu3 = explode(':', __('Step 3: Database Settings'));
-					$StepMenu4 = explode(':', __('Step 4: Database Config / Setup'));
-					$StepMenu5 = explode(':', __('Step 5: Head Admin Datails'));
-					$StepMenu6 = explode(':', __('Step 6: Final Settings'));
-					$GetStep = (isset($_POST['step']) ? $_POST['step'] : '');
+	if (!$step)
+	{
+		/*if (isset($_POST['step']) && is_numeric($_POST['step']) && $_POST['step'])
+		{
+			$step = $_SESSION['step'] = intval($_POST['step']);
+		}
+		else */if (isset($_SESSION['step']) && is_numeric($_SESSION['step']) && $_SESSION['step'])
+		{
+			$step = /*$_POST['step'] =*/ intval($_SESSION['step']);
+		}
+		else
+		{
+			$step = /*$_POST['step'] =*/ $_SESSION['step'] = 1;
+		}
+	}
 
-				?>
+	return $step;
+}
 
-				<div class="clear"></div>
-				<h3 class="ui-corner-all">
-					<?php echo(__('eXtreme-Fusion :version - Setup', array(':version' => VERSION))) ?> &raquo; <?php echo($StepHeader) ?>
-				</h3>
-				<ul id="InstalationSteps">
-					<li class='<?php if($GetStep=='') echo("bold"); elseif($GetStep>1) echo("done");?>'><?php echo($StepMenu1[0]) ?></li>
-					<li class='<?php if($GetStep==2) echo("bold"); elseif($GetStep>2) echo("done");?>'><?php echo($StepMenu2[0]) ?></li>
-					<li class='<?php if($GetStep==3) echo("bold"); elseif($GetStep>3) echo("done");?>'><?php echo($StepMenu3[0]) ?></li>
-					<li class='<?php if($GetStep==4) echo("bold"); elseif($GetStep>4) echo("done");?>'><?php echo($StepMenu4[0]) ?></li>
-					<li class='<?php if($GetStep==5) echo("bold"); elseif($GetStep>5) echo("done");?>'><?php echo($StepMenu5[0]) ?></li>
-					<li class='<?php if($GetStep==6) echo("bold"); elseif($GetStep>6) echo("done");?>'><?php echo($StepMenu6[0]) ?></li>
-				</ul>
+function getStepMenu()
+{
+	$steps = array(1 =>
+		explode(':', __('Step 1: Locale')),
+		explode(':', __('Step 2: File and Folder Permissions Test')),
+		explode(':', __('Step 3: Database Settings')),
+		explode(':', __('Step 4: Database Config / Setup')),
+		explode(':', __('Step 5: Head Admin Datails')),
+		explode(':', __('Step 6: Final Settings'))
+	);
 
+	$data = array(); $i = 0;
+	foreach($steps as $id => $name)
+	{
+		$data[$i] = array(
+			'id' => $id,
+			'name' => $name[0]
+		);
 
-				<form action="index.php" method="post" id="This" style="float:left;width:720px;" autocomplete="off">
-					<?php
-						if (!isset($_POST['step']) || $_POST['step'] == '' || $_POST['step'] == '1') {
-							$locale_list = makefileopts(makefilelist(DIR_SITE.'locale/', '.gitignore|.svn|.|..', TRUE, 'folders'), $language);
+		if (getStepNum() === $id)
+		{
+			$data[$i]['current'] = TRUE;
+		}
+		else if (getStepNum() > $id)
+		{
+			$data[$i]['done'] = TRUE;
+		}
 
-					?>
-						<div class="tbl1">
-							<div class="formLabel grid_4"><label for="01"><?php echo(__('Please select the required locale (language):')) ?></label></div>
-							<div class="formField grid_4"><select id="01" name='localeset'><?php echo($locale_list) ?></select></div>
-							<div class="clear"></div>
-						</div>
-						<div class="clear"></div><br />
+		$i++;
+	}
 
-						<!-- NIE USUWAĆ !!!-->
-						<!-- <br/><div class="status"><?php //echo(__('Download more locales from <a href="http://www.extreme-fusion.org/">extreme-fusion.org</a>')) ?></div><br />-->
-						<!-- NIE USUWAĆ !!!-->
+	return $data;
+}
 
-						<div class="center">
-							<label>
-								<input type="checkbox" name="AcceptCC" value="yes">
-								<a id="AcceptLink" href="http://extreme-fusion.org/ef5/license/" target="_blank">
-								<?php echo(__('I accept BSD License')) ?>
-								</a>
-							</label>
-						</div>
+function optLocale(optClass &$tpl, $key, array $values = array())
+{
+	return __($key, $values);
+}
 
-						<br /><hr /><br />
-						<div class="center">
-							<input type='hidden' name='step' value='2' />
-							<a id="SendForm_This" class="SendButton" style="width:100px;margin:0 auto;display:none;">
-								<strong class="o">
-									<strong class="m">
-										<strong><?php echo(__('Next')) ?></strong>
-									</strong>
-								</strong>
-							</a>
-						</div>
-						<div class="clear"></div>
+$_tpl->registerFunction('i18n', 'Locale');
 
-						<div class="tab-click" id="crew-list"><a href="javascript:void(0)">Twórcy eXtreme-Fusion CMS v5</a></div>
+function goToStep($step)
+{
+	if (is_numeric($step) && $step)
+	{
+		$_SESSION['step'] = intval($step);
+		header('Refresh: 0');
+		exit;
+	}
+}
 
+if (getStepNum() === 1)
+{
+	if ($_POST)
+	{
+		goToStep(2);
+	}
+	else
+	{
+		$_tpl->assign('languages', makefileopts(makefilelist(DIR_SITE.'locale/', '.gitignore|.svn|.|..', TRUE, 'folders'), $language));
+	}
 
-						<div id="tab-crew-list" class="tab-cont">
-							<div class="center">
-								<div id="leaders">
-									<div class="left"><span class="bold">Project founder:</span> Wojciech (zer0) Mycka</div>
-									<div class="right"><span class="bold">Project leader:</span> Paweł (Inscure) Zegardło</div>
-								</div>
-								<div class="clear"></div>
+}
+elseif (getStepNum() === 2)
+{
+	$config_error = FALSE;
 
-								<div id="team">
-									<div class="bold">Code Developers:</div>
+	if ( ! file_exists(DIR_SITE.'config.php'))
+	{
+		if (file_exists(DIR_SITE.'sample.config.php') && function_exists('rename'))
+		{
+			@rename(DIR_SITE.'sample.config.php', DIR_SITE.'config.php');
+		}
+		else
+		{
+			$handle = fopen(DIR_SITE.'config.php', 'w');
+			fclose($handle);
+		}
 
-									<p>Andrzej (Andrzejster) Sternal</p>
-									<p>Dominik (Domon) Barylski</p>
-									<p>Paweł (Inscure) Zegardło</p>
-									<p>Piotr (piotrex41) Krzysztofik</p>
-									<p>Rafał (Rafik89) Krupiński</p>
-									<p>Wojciech (zer0) Mycka</p>
+		if (! file_exists(DIR_SITE.'config.php'))
+		{
+			$config_error = TRUE;
+		}
+	}
 
-									<div class="bold">Design Developers:</div>
+	if ($config_error)
+	{
+		$_tpl->assign('config_error', TRUE);
+	}
 
-									<p>Andrzej (Andrzejster) Sternal </p>
-									<p>Piotr (piotrex41) Krzysztofik</p>
-									<p>Wojciech (zer0) Mycka </p>
+	$check_arr = array(
+		DIR_SITE.'cache'.DS => FALSE,
+		DIR_SITE.'upload'.DS => FALSE,
+		DIR_SITE.'upload'.DS.'archives'.DS => FALSE,
+		DIR_SITE.'upload'.DS.'documents'.DS => FALSE,
+		DIR_SITE.'upload'.DS.'images'.DS => FALSE,
+		DIR_SITE.'upload'.DS.'movies'.DS => FALSE,
+		DIR_SITE.'system'.DS.'opt'.DS.'plugins'.DS => FALSE,
+		DIR_SITE.'templates'.DS.'images'.DS => FALSE,
+		DIR_SITE.'templates'.DS.'images'.DS.'imagelist.js' => FALSE,
+		DIR_SITE.'templates'.DS.'images'.DS.'avatars'.DS => FALSE,
+		DIR_SITE.'templates'.DS.'images'.DS.'news'.DS => FALSE,
+		DIR_SITE.'templates'.DS.'images'.DS.'news'.DS.'thumbs'.DS => FALSE,
+		DIR_SITE.'templates'.DS.'images'.DS.'news_cats'.DS => FALSE,
+		DIR_SITE.'tmp'.DS => FALSE,
+		DIR_SITE.'config.php' => FALSE
+	);
 
-									<div class="bold">Language Team:</div>
+	$write_check = TRUE; $chmod_error = array(); $i = 0;
+	foreach ($check_arr as $key => $value)
+	{
+		if (file_exists($key))
+		{
+			if (is_writable($key))
+			{
+				$check_arr[$key] = TRUE;
+				$i++;
+			}
+			else
+			{
+				if (function_exists('chmod') && @chmod($key, 0777) && is_writable($key))
+				{
+					$check_arr[$key] = TRUE;
+					$i++;
+				}
+				else
+				{
+					$write_check = FALSE;
+				}
+			}
+		}
+		else
+		{
+			$write_check = NULL;
+		}
 
-									<p>Marcin (Tymcio) Tymków - English language files</p>
-									<p>Pavel (LynX) Laurenčík - Czech language files</p>
+		if (! $write_check)
+		{
+			$chmod_error[] = array(
+				'name' => str_replace(array(DIR_SITE, '\\'), array('', '/'), $key),
+				'status' => $write_check === NULL ? 1 : 2
+			);
+		}
 
-									<div class="bold">jQuery && Ajax Developers:</div>
+	}
 
-									<p>Dominik (Domon) Barylski</p>
-									<p>Paweł (Inscure) Zegardło </p>
-									<p>Wojciech (zer0) Mycka </p>
+	if ($chmod_error)
+	{
+		$_tpl->assign('chmod_error', $chmod_error);
+	}
 
-									<div class="bold">Beta testers:</div>
+	$extension_error = array();
 
-									<p>Dariusz (Chomik) Markiewicz</p>
-									<p>Mariusz (FoxNET) Bartoszewicz</p>
+	if ( ! extension_loaded('pdo'))
+	{
+		$extension_error[]['name'] = 'pdo';
+	}
 
-								</div>
-							</div>
-						</div>
-					<?php
+	if ( ! extension_loaded('pdo_mysql'))
+	{
+		$extension_error[]['name'] = 'pdo_mysql';
+	}
+
+	if ( ! extension_loaded('mcrypt'))
+	{
+
+		$extension_error[]['name'] = 'mcrypt';
+	}
+
+	if ($extension_error)
+	{
+		$_tpl->assign('extension_error', $extension_error);
+	}
+
+	if (!$config_error && ! $extension_error && ! $chmod_error)
+	{
+		goToStep(3);
+	}
+}
+else if (getStepNum() === 3)
+{
+	// Sprawdzanie danych w przypadku próby ich zapisania
+	if ($_POST)
+	{
+		function lastChar($string)
+		{
+			return $string[strlen($string)-1];
+		}
+
+		$db_host = (isset($_POST['db_host']) ? stripinput(trim($_POST['db_host'])) : '');
+		$db_port = (isset($_POST['db_port']) ? stripinput(trim($_POST['db_port'])) : '');
+		$db_user = (isset($_POST['db_user']) ? stripinput(trim($_POST['db_user'])) : '');
+		$db_pass = (isset($_POST['db_pass']) ? stripinput(trim($_POST['db_pass'])) : '');
+		$db_name = (isset($_POST['db_name']) ? stripinput(trim($_POST['db_name'])) : '');
+		$db_prefix = (isset($_POST['db_prefix']) ? stripinput(trim($_POST['db_prefix'])) : '');
+		$cookie_prefix = (isset($_POST['cookie_prefix']) ? stripinput(trim($_POST['cookie_prefix'])) : '');
+		$cache_prefix = (isset($_POST['cache_prefix']) ? stripinput(trim($_POST['cache_prefix'])) : '');
+		$site_url = (isset($_POST['site_url']) ? $_POST['site_url'] : '');
+
+		$custom_rewrite_choice = isset($_POST['custom_rewrite']) ? 'TRUE' : NULL;
+		$custom_furl_choice = isset($_POST['custom_furl']) ? 'TRUE' : NULL;
+
+		if ($db_prefix !== '' && lastChar($db_prefix) !== '_')
+		{
+			$db_prefix = $db_prefix.'_';
+		}
+
+		if ($cookie_prefix !== '' && lastChar($cookie_prefix) !== '_')
+		{
+			$cookie_prefix = $cookie_prefix.'_';
+		}
+
+		if ($cache_prefix !== '' && lastChar($cache_prefix) !== '_')
+		{
+			$cache_prefix = $cache_prefix.'_';
+		}
+
+		if ($db_host !== '' && $db_user !== '' && $db_name !== '' && $db_prefix !== '' && $site_url !== '')
+		{
+			$db_connect = @mysql_connect($db_host.':'.$db_port, $db_user, $db_pass);
+			if ($db_connect)
+			{
+				$db_select = @mysql_select_db($db_name);
+				if ($db_select)
+				{
+					if (dbrows(dbquery("SHOW TABLES LIKE '$db_prefix%'")) == '0')
+					{
+						$table_name = uniqid($db_prefix, FALSE);
+						$can_write = TRUE;
+
+						$result = dbquery('CREATE TABLE '.$table_name.' (test_field VARCHAR(10) NOT NULL) ENGINE=MyISAM;');
+						if (!$result)
+						{
+							$can_write = FALSE;
 						}
 
-						if (isset($_POST['step']) && $_POST['step'] == '2')
+						$result = dbquery('DROP TABLE '.$table_name);
+						if (!$result)
 						{
-							$check_rewrite = FALSE;
-							$check_display = '';
-							$config_prepared = FALSE;
+							$can_write = FALSE;
+						}
 
-							if ( ! file_exists(DIR_SITE.'config.php'))
+						if ($can_write)
+						{
+							include_once 'create_config.php';
+
+							$temp = fopen(DIR_SITE.'config.php','w');
+							if (fwrite($temp, $config))
 							{
-								if (file_exists(DIR_SITE.'sample.config.php') && function_exists('rename'))
+								fclose($temp);
+								$fail = FALSE;
+
+								include_once 'create_db.php';
+
+								if (!$fail)
 								{
-									@rename(DIR_SITE.'sample.config.php', DIR_SITE.'config.php');
+									$_tpl->assign('success_info', TRUE);
+
+									$success = TRUE;
+									$db_error = 6;
 								}
 								else
 								{
-									$handle = fopen(DIR_SITE.'config.php', 'w');
-									fclose($handle);
-								}
+									$_tpl->assign('table_creating_error', TRUE);
 
-								if (file_exists(DIR_SITE.'config.php'))
-								{
-									$config_prepared = TRUE;
+									$success = FALSE;
+									$db_error = 0;
 								}
 							}
 							else
 							{
-								$config_prepared = TRUE;
-							}
+								$_tpl->assign('config_write_error', TRUE);
 
-							if (! $config_prepared ): ?>
-
-								<div class="info">Nazwy poniższych plików proszę zmienić według instrukcji.</div><br />
-
-								<div class='grid_2'>&nbsp;</div>
-								<div class='grid_3'>&raquo; sample.config.php => config.php</div>
-								<div class='center grid_3'><span style='color:red;'>Nie zmieniono</span></div>
-								<div class='clear'></div>
-
-							<?php endif; ?>
-
-							<div class="info">Poniższym katalogom i plikom należy ustawić zapisywalność (chmod 777).</div><br />
-
-							<?php
-							$check_arr = array(
-								DIR_SITE.'cache'.DS => FALSE,
-								DIR_SITE.'upload'.DS => FALSE,
-								DIR_SITE.'upload'.DS.'archives'.DS => FALSE,
-								DIR_SITE.'upload'.DS.'documents'.DS => FALSE,
-								DIR_SITE.'upload'.DS.'images'.DS => FALSE,
-								DIR_SITE.'upload'.DS.'movies'.DS => FALSE,
-								DIR_SITE.'system'.DS.'opt'.DS.'plugins'.DS => FALSE,
-								DIR_SITE.'templates'.DS.'images'.DS => FALSE,
-								DIR_SITE.'templates'.DS.'images'.DS.'imagelist.js' => FALSE,
-								DIR_SITE.'templates'.DS.'images'.DS.'avatars'.DS => FALSE,
-								DIR_SITE.'templates'.DS.'images'.DS.'news'.DS => FALSE,
-								DIR_SITE.'templates'.DS.'images'.DS.'news'.DS.'thumbs'.DS => FALSE,
-								DIR_SITE.'templates'.DS.'images'.DS.'news_cats'.DS => FALSE,
-								DIR_SITE.'tmp'.DS => FALSE,
-								DIR_SITE.'config.php' => FALSE
-							);
-
-							$write_check = TRUE; $i = 0;
-							foreach ($check_arr as $key => $value)
-							{
-								if (file_exists($key))
-								{
-									if (is_writable($key))
-									{
-										$check_arr[$key] = TRUE;
-										$i++;
-									}
-									else
-									{
-										if (function_exists('chmod') && @chmod($key, 0777) && is_writable($key))
-										{
-											$check_arr[$key] = TRUE;
-											$i++;
-										}
-										else
-										{
-											$write_check = FALSE;
-										}
-									}
-								}
-								else
-								{
-									$write_check = FALSE;
-								}
-								
-								$check_display .= "<div class='grid_2'>&nbsp;</div>\n";
-								$check_display .= "<div class='grid_3'>&raquo; ".str_replace(array(DIR_SITE, '\\'), array('', '/'), $key)."</div>\n";
-								$check_display .= "<div class='center grid_3'>".($check_arr[$key] == TRUE ? "<span style='color:green;'>".__('Writeable')."</span>" : "<span style='color:red;'>".__('Unwriteable')."</span>")."</div>\n";
-								$check_display .= "<div class='clear'></div>\n";
-							}
-							$count = $i;
-
-							echo $check_display.'<br />';
-
-								if ( ! extension_loaded('pdo_mysql'))
-								{
-									$extension_error = TRUE; ?>
-									<div class='grid_1'>&nbsp;</div>
-									<div class='center grid_7'><span style='color:red;'>Nie znaleziono wymaganego rozszerzenia mysql_pdo. Należy je załadować przez odpowiednią konfigurację serwera.</span></div>
-									<div class='grid_1'>&nbsp;</div>
-									<div class='clear'></div>
-									<br />
-								<?php
-								}
-								if ( ! extension_loaded('mcrypt'))
-								{ 
-									$extension_error = TRUE;?>
-									<div class='grid_1'>&nbsp;</div>
-									<div class='center grid_7'><span style='color:red;'>Nie znaleziono wymaganego rozszerzenia mcrypt. Należy je załadować przez odpowiednią konfigurację serwera.</span></div>
-									<div class='grid_1'>&nbsp;</div>
-									<div class='clear'></div>
-									<br />
-								<?php
-								}
-
-								if (! $write_check)
-								{ 
-									$extension_error = TRUE;
-								 ?>
-										<br /><div class="valid"><?php echo(__('Write permissions check failed, please CHMOD files/folders marked Unwriteable.')) ?></div><br />
-								 <?php
-								}
-
-								if (!isset($extension_error))
-								{ ?>
-									<div class="center">
-										<input type='hidden' name='localeset' value='<?php echo(stripinput($_POST['localeset'])) ?>' />
-										<input type='hidden' name='step' value='3' />
-										<?php
-											if ($count == 9)
-											{
-										?>
-											<script language="javascript" type="text/javascript">
-												document.forms[0].submit();
-											</script>
-										<?php
-											}
-										?>
-										<a id="SendForm_This" class="SendButton" style="width:100px;margin:0 auto;">
-											<strong class="o">
-												<strong class="m">
-													<strong><?php echo(__('Next')) ?></strong>
-												</strong>
-											</strong>
-										</a>
-									</div>
-								<?php } else { ?>
-									<hr /><br />
-										<div class="center">
-											<input type='hidden' name='localeset' value='<?php echo(stripinput($_POST['localeset'])) ?>' />
-											<input type='hidden' name='step' value='2' />
-											<a id="SendForm_This" class="SendButton" style="width:100px;margin:0 auto;">
-												<strong class="o">
-													<strong class="m">
-														<strong><?php echo(__('Refresh')) ?> &raquo;</strong>
-													</strong>
-												</strong>
-											</a>
-										</div>
-								<?php } ?>
-							
-							<div class="clear"></div>
-						 <?php
-						}
-
-
-						if (isset($_POST['step']) && $_POST['step'] == '3') 
-						{
-							$db_prefix = 'extreme_'.substr(md5(uniqid('ef5_db', FALSE)), 13, 7).'_';
-							$cookie_prefix = 'extreme_'.substr(md5(uniqid('ef5_cookie', FALSE)), 13, 7).'_';
-							$cache_prefix = 'extreme_'.substr(md5(uniqid('ef5_cache', FALSE)), 13, 7).'_';
-
-							$db_host = isset($_POST['db_host']) ? stripinput(trim($_POST['db_host'])) : 'localhost';
-							
-							// The port may be required! So here we set the default.
-							$db_port = isset($_POST['db_port']) ? stripinput(trim($_POST['db_port'])) : '3306';
-							
-							$db_user = isset($_POST['db_user']) ? stripinput(trim($_POST['db_user'])) : '';
-							$db_name = isset($_POST['db_name']) ? stripinput(trim($_POST['db_name'])) : '';
-							$db_prefix = isset($_POST['db_prefix']) ? stripinput(trim($_POST['db_prefix'])) : $db_prefix;
-							$cookie_prefix = isset($_POST['cookie_prefix']) ? stripinput(trim($_POST['cookie_prefix'])) : $cookie_prefix;
-							$cache_prefix = isset($_POST['cache_prefix']) ? stripinput(trim($_POST['cache_prefix'])) : $cache_prefix;
-							$db_error = isset($_POST['db_error']) && isnum($_POST['db_error']) ? $_POST['db_error'] : '0';
-
-							$field_class = array('', '', '', '', '');
-							if ($db_error > '0') 
-							{
-								$field_class[2] = ' tbl-error';
-								if ($db_error == 1) 
-								{
-									$field_class[1] = ' tbl-error';
-									$field_class[2] = ' tbl-error';
-								} 
-								elseif ($db_error == 2) 
-								{
-									$field_class[3] = ' tbl-error';
-								} 
-								elseif ($db_error == 3) 
-								{
-									$field_class[4] = ' tbl-error';
-								} 
-								elseif ($db_error == 7) 
-								{
-									if ($db_host == '') { $field_class[0] = ' tbl-error'; }
-									if ($db_user == '') { $field_class[1] = ' tbl-error'; }
-									if ($db_name == '') { $field_class[3] = ' tbl-error'; }
-									if ($db_prefix == '') { $field_class[4] = ' tbl-error'; }
-									if ($cookie_prefix == '') { $field_class[4] = ' tbl-error'; }
-									if ($cache_prefix == '') { $field_class[4] = ' tbl-error'; }
-								}
-							}
-
-							if (isset($_POST['msg']))
-							{
-								echo($_POST['msg']);
-							}
-							?>
-							<div class="info"><?php echo(__('Please enter your MySQL database access settings.')) ?></div><br />
-
-							<div class="tbl1">
-								<div class="formLabel grid_4"><label for="04"><?php echo(__('Database Name:')) ?></label></div>
-								<div class="formField grid_3"><input id="04" type='text' value='<?php echo($db_name) ?>' name='db_name' /></div>
-								<div class="clear"></div>
-							</div>
-							<div class="tbl2">
-								<div class="formLabel grid_4"><label for="02"><?php echo(__('Database Username:')) ?></label></div>
-								<div class="formField grid_3"><input id="02" type='text' value='<?php echo($db_user) ?>' name='db_user' /></div>
-								<div class="clear"></div>
-							</div>
-							<div class="tbl1">
-								<div class="formLabel grid_4"><label for="03"><?php echo(__('Password:')) ?></label></div>
-								<div class="formField grid_3"><input id="03" type='password' name='db_pass' /></div>
-								<div class="clear"></div>
-							</div>
-
-							<div class="tab-click" id="url"><a href="javascript:void(0)">Zaawansowane</a></div>
-
-							<div id="tab-url" class="tab-cont">
-								<p id="CustomStep3" class="red">
-									UWAGA! Jeżeli po zakończeniu instalacji wystąpią problemy z linkami i adresami URL (błędy 404),
-									należy przeinstalować system nie zaznaczając poniższego pola lub zmienić ustawienia $_route w pliku config.php
-								</p>
-								<?php if ($_system->httpServerIs('Apache')):
-									if (!$_system->apacheModulesListingAvailable()): ?>
-										<div class="formWarning formMessage">
-											<input type="checkbox" name="custom_rewrite" value="true" id="CustomRewrite" />
-											<label for="CustomRewrite">
-												Instalator nie mógł ustalić, czy twój serwer obsługuje modRewrite.
-												Zaznacz to pole, jeżeli jesteś pewny, że wymieniony moduł jest dostępny.
-												Odpowiada on za tworzenie linków przyjaznych wyszukiwarkom.
-											</label>
-										</div>
-									<?php endif;
-								elseif (!$_system->serverPathInfoExists()): ?>
-									<div class="formWarning formMessage">
-										<input type="checkbox" name="custom_furl" value="true" id="CustomFurl" />
-										<label for="CustomFurl">
-											Instalator rozpoznał, że używasz innego serwera niż Apache.
-											Aby móc korzystać z linków przyjaznych wyszukiwarkom, serwer musi obsługiwać ścieżki PATH_INFO.
-											Po zakończeniu instalacji system spróbuje ustalić, czy są one dostępne, przy czym występuje ryzyko pomyłki.
-											Aby temu zapobiec, zaznacz poniższe pole, jeżeli masz pewność, iż twój serwer obsługuje PATH_INFO.
-										</label>
-									</div>
-								<?php endif; ?>
-
-								<div class="tbl1">
-									<div class="formLabel grid_4"><label for="01"><?php echo(__('Database Hostname:')) ?></label></div>
-									<div class="formField grid_3"><input id="01" type='text' value='<?php echo($db_host) ?>' name='db_host' /></div>
-									<div class="clear"></div>
-								</div>
-								<div class="tbl2">
-									<div class="formLabel grid_4"><label for="01"><?php echo(__('Database Port:')) ?></label></div>
-									<div class="formField grid_3"><input id="01" type='text' value='<?php echo($db_port) ?>' name='db_port' /></div>
-									<div class="clear"></div>
-								</div>
-								<div class="tbl1">
-									<div class="formLabel grid_4"><label for="05"><?php echo(__('Table Prefix:')) ?></label></div>
-									<div class="formField grid_3"><input id="05" type='text' value='<?php echo($db_prefix) ?>' name='db_prefix' /></div>
-									<div class="clear"></div>
-								</div>
-								<div class="tbl2">
-									<div class="formLabel grid_4"><label for="06"><?php echo(__('Cookie Prefix:')) ?></label></div>
-									<div class="formField grid_3"><input id="06" type='text' value='<?php echo($cookie_prefix) ?>' name='cookie_prefix' /></div>
-									<div class="clear"></div>
-								</div>
-								<div class="tbl1">
-									<div class="formLabel grid_4"><label for="06"><?php echo(__('Cache Prefix:')) ?></label></div>
-									<div class="formField grid_3"><input id="06" type='text' value='<?php echo($cache_prefix) ?>' name='cache_prefix' /></div>
-									<div class="clear"></div>
-								</div>
-								<div class="tbl2">
-									<div class="formLabel grid_4"><label for="06"><?php echo(__('URL:')) ?></label></div>
-									<div class="formField grid_3"><input id="06" type='text' value='<?php echo ADDR_SITE ?>' name='site_url' /></div>
-									<div class="clear"></div>
-								</div>
-							</div>
-
-							<br /><hr /><br />
-							<div class="center">
-								<input type='hidden' name='localeset' value='<?php echo(stripinput($_POST['localeset'])) ?>' />
-								<input type='hidden' name='step' value='5'>
-								<a id="SendForm_This" class="SendButton" style="width:100px;margin:0 auto;">
-									<strong class="o">
-										<strong class="m">
-											<strong><?php echo(__('Next')) ?> &raquo;</strong>
-										</strong>
-									</strong>
-								</a>
-							</div>
-							<div class="clear"></div>
-
-						<?php }
-
-
-					if (isset($_POST['step']) && $_POST['step'] == "5") 
-					{
-						$msg = '';
-						$db_host = (isset($_POST['db_host']) ? stripinput(trim($_POST['db_host'])) : '');
-						$db_port = (isset($_POST['db_port']) ? stripinput(trim($_POST['db_port'])) : '');
-						$db_user = (isset($_POST['db_user']) ? stripinput(trim($_POST['db_user'])) : '');
-						$db_pass = (isset($_POST['db_pass']) ? stripinput(trim($_POST['db_pass'])) : '');
-						$db_name = (isset($_POST['db_name']) ? stripinput(trim($_POST['db_name'])) : '');
-						$db_prefix = (isset($_POST['db_prefix']) ? stripinput(trim($_POST['db_prefix'])) : '');
-						$cookie_prefix = (isset($_POST['cookie_prefix']) ? stripinput(trim($_POST['cookie_prefix'])) : '');
-						$cache_prefix = (isset($_POST['cache_prefix']) ? stripinput(trim($_POST['cache_prefix'])) : '');
-						$site_url = (isset($_POST['site_url']) ? $_POST['site_url'] : '');
-
-						$custom_rewrite = isset($_POST['custom_rewrite']) ? 'TRUE' : 'FALSE';
-						$custom_furl = isset($_POST['custom_furl']) ? 'TRUE' : 'FALSE';
-
-						if ($db_prefix != '') {
-							$db_prefix_last = $db_prefix[strlen($db_prefix)-1];
-							if ($db_prefix_last != '_') { $db_prefix = $db_prefix.'_'; }
-						}
-						if ($cookie_prefix != '') {
-							$cookie_prefix_last = $cookie_prefix[strlen($cookie_prefix)-1];
-							if ($cookie_prefix_last != '_') { $cookie_prefix = $cookie_prefix.'_'; }
-						}
-						if ($cache_prefix != '') {
-							$cache_prefix_last = $cache_prefix[strlen($cache_prefix)-1];
-							if ($cache_prefix_last != '_') { $cache_prefix = $cache_prefix.'_'; }
-						}
-
-						if ($db_host != '' && $db_user != '' && $db_name != '' && $db_prefix != '') {
-							$db_connect = @mysql_connect($db_host.':'.$db_port, $db_user, $db_pass);
-							if ($db_connect) {
-								$db_select = @mysql_select_db($db_name);
-								if ($db_select) {
-									if (dbrows(dbquery("SHOW TABLES LIKE '$db_prefix%'")) == '0') {
-										$table_name = uniqid($db_prefix, FALSE); $can_write = TRUE;
-										$result = dbquery('CREATE TABLE '.$table_name.' (test_field VARCHAR(10) NOT NULL) ENGINE=MyISAM;');
-										if (!$result) { $can_write = FALSE; }
-										$result = dbquery('DROP TABLE '.$table_name);
-										if (!$result) { $can_write = FALSE; }
-										if ($can_write) {
-
-											include_once 'create_config.php';
-
-											$temp = fopen('..'.DS.'config.php','w');
-											if (fwrite($temp, $config)) {
-												fclose($temp);
-												$fail = FALSE;
-
-												include_once 'create_db.php';
-
-												if (!$fail) {
-													$msg .= "<div class='valid'>".__('Database connection established.')."</div><br />";
-													$msg .= "<div class='valid'>".__('Config file successfully written.')."</div><br />";
-													$msg .= "<div class='valid'>".__('Database tables created.')."</div>";
-													$success = TRUE;
-													$db_error = 6;
-												} else {
-													$msg .= "<div class='valid'>".__('Database connection established.')."</div><br />";
-													$msg .= "<div class='valid'>".__('Config file successfully written.')."</div><br />";
-													$msg .= "<div class='error'><strong>".__('Error:')."</strong> ".__('Unable to create database tables.')."</div>";
-													$success = FALSE;
-													$db_error = 0;
-												}
-											} else {
-												$msg .= "<div class='valid'>".__('Database connection established.')."</div><br />";
-												$msg .= "<div class='error'><strong>".__('Error:')."</strong> ".__('Unable to write config file.')."</div><br />";
-												$msg .= "<div class='status'>".__('Please ensure config.php is writable.')."</div>";
-												$success = FALSE;
-												$db_error = 5;
-											}
-										} else {
-											$msg .= "<div class='valid'>".__('Database connection established.')."</div><br />";
-											$msg .= "<div class='error'><strong>".__('Error:')."</strong> ".__('Could not write or delete MySQL tables.')."</div><br />";
-											$msg .= "<div class='status'>".__('Please make sure your MySQL user has read, write and delete permission for the selected database.')."</div>";
-											$success = FALSE;
-											$db_error = 4;
-										}
-									} else {
-										$msg .= "<div class='error'><strong>".__('Error:')."</strong> ".__('Table prefix error.')."</div><br />";
-										$msg .= "<div class='status'>".__('The specified table prefix is already in use.')."</div>";
-										$success = FALSE;
-										$db_error = 3;
-									}
-								} else {
-									$msg .= "<div class='error'><strong>".__('Error:')."</strong> ".__('Unable to connect with MySQL database.')."</div><br />";
-									$msg .= "<div class='status'>".__('The specified MySQL database does not exist.')."</div>";
-									$success = FALSE;
-									$db_error = 2;
-								}
-							} else {
-								$msg .= "<div class='error'><strong>".__('Error:')."</strong> ".__('Unable to connect with MySQL.')."</div><br />";
-								$msg .= "<div class='status'>".__('Please ensure your MySQL username and password are correct.')."</div>";
 								$success = FALSE;
-								$db_error = 1;
+								$db_error = 5;
 							}
-						} else {
-							$msg .= "<div class='error'><strong>".__('Error:')."</strong> ".__('Empty fields.')."</div><br />";
-							$msg .= "<div class='status'>".__('Please make sure you have filled out all the MySQL connection fields.')."</div>";
-							$success = FALSE;
-							$db_error = 7;
-						}
-
-						$username = isset($_POST['username']) ? stripinput(trim($_POST['username'])) : '';
-						$email = isset($_POST['email']) ? stripinput(trim($_POST['email'])) : '';
-						$error_pass = isset($_POST['error_pass']) && isnum($_POST['error_pass']) ? $_POST['error_pass'] : '0';
-						$error_name = isset($_POST['error_name']) && isnum($_POST['error_name']) ? $_POST['error_name'] : '0';
-						$error_mail = isset($_POST['error_mail']) && isnum($_POST['error_mail']) ? $_POST['error_mail'] : '0';
-                        $site_url = isset($_POST['site_url']) ? $_POST['site_url'] : '';
-
-						$field_class = array('', '', '', '', '', '');
-						if ($error_pass == '1' || $error_name == '1' || $error_mail == '1') 
-						{
-							$field_class = array('', ' tbl-error', ' tbl-error', ' tbl-error', ' tbl-error', '');
-							if ($error_name == 1) { $field_class[0] = ' tbl-error'; }
-							if ($error_mail == 1) { $field_class[5] = ' tbl-error'; }
-						}
-
-						if ($success)
-						{
-						?>
-
-						<div class="info"><?php echo(__('Primary Super Admin login details')) ?></div><br />
-						<div class="tbl1">
-							<div class="formLabel grid_4"><label for="username"><?php echo(__('Username:')) ?></label></div>
-							<div class="formField grid_3"><input id="username" type='text' value='<?php echo($username) ?>' name='username' maxlength='30' /></div>
-							<div class="clear"></div>
-						</div>
-						<div class="tbl2">
-							<div class="formLabel grid_4"><label for="password1"><?php echo(__('Login Password:')) ?></label></div>
-							<div class="formField grid_3">
-								<input id="password1" type='password' name='password1' maxlength='20' />
-								<div class="graybar" id="graybar"></div>
-								<div class="colorbar" id="colorbar"></div>
-							</div>
-							<div class="clear"></div>
-						</div>
-						<div class="tbl1">
-							<div class="formLabel grid_4"><label for="03"><?php echo(__('Repeat Login password:')) ?></label></div>
-							<div class="formField grid_3"><input id="03" type='password' name='password2' maxlength='20' /></div>
-							<div class="clear"></div>
-						</div>
-						<div class="tbl2">
-							<div class="formLabel grid_4"><label for="06"><?php echo(__('Email address:')) ?></label></div>
-							<div class="formField grid_3">
-                                <input id="06" type='text' value='<?php echo($email) ?>' name='email' maxlength='100' />
-                                <input type='hidden' name='site_url' value='<?php echo($site_url) ?>' /></div>
-							<div class="clear"></div>
-						</div>
-
-						<br /><hr /><br />
-						<div class="center">
-							<input type='hidden' name='step' value='6' />
-							<input type='hidden' name='localeset' value='<?php echo(stripinput($_POST['localeset'])) ?>' />
-                            <input type='hidden' name='site_url' value='<?php echo($site_url) ?>' />
-							<a id="SendForm_This" class="SendButton" style="width:100px;margin:0 auto;">
-								<strong class="o">
-									<strong class="m">
-										<strong><?php echo(__('Next')) ?> &raquo;</strong>
-									</strong>
-								</strong>
-							</a>
-						</div>
-
-						<?php
 						}
 						else
 						{
-						?>
-							<div class="info"><?php echo(__('Please enter your MySQL database access settings.')) ?></div><br />
-								<div class="tbl1">
-									<div class="formLabel grid_4"><label for="01"><?php echo(__('Database Hostname:')) ?></label></div>
-									<div class="formField grid_3"><input id="01" type='text' value='<?php echo($db_host) ?>' name='db_host' /></div>
-									<div class="clear"></div>
-								</div>
-								<div class="tbl2">
-									<div class="formLabel grid_4"><label for="01"><?php echo(__('Database Port:')) ?></label></div>
-									<div class="formField grid_3"><input id="01" type='text' value='<?php echo($db_port) ?>' name='db_port' /></div>
-									<div class="clear"></div>
-								</div>
-								<div class="tbl1">
-									<div class="formLabel grid_4"><label for="02"><?php echo(__('Database Username:')) ?></label></div>
-									<div class="formField grid_3"><input id="02" type='text' value='<?php echo($db_user) ?>' name='db_user' /></div>
-									<div class="clear"></div>
-								</div>
-								<div class="tbl2">
-									<div class="formLabel grid_4"><label for="03"><?php echo(__('Database Password:')) ?></label></div>
-									<div class="formField grid_3"><input id="03" type='password' name='db_pass' /></div>
-									<div class="clear"></div>
-								</div>
-								<div class="tbl1">
-									<div class="formLabel grid_4"><label for="04"><?php echo(__('Database Name:')) ?></label></div>
-									<div class="formField grid_3"><input id="04" type='text' value='<?php echo($db_name) ?>' name='db_name' /></div>
-									<div class="clear"></div>
-								</div>
-								<div class="tbl2">
-									<div class="formLabel grid_4"><label for="05"><?php echo(__('Table Prefix:')) ?></label></div>
-									<div class="formField grid_3"><input id="05" type='text' value='<?php echo($db_prefix) ?>' name='db_prefix' /></div>
-									<div class="clear"></div>
-								</div>
-								<div class="tbl1">
-									<div class="formLabel grid_4"><label for="06"><?php echo(__('Cookie Prefix:')) ?></label></div>
-									<div class="formField grid_3"><input id="06" type='text' value='<?php echo($cookie_prefix) ?>' name='cookie_prefix' /></div>
-									<div class="clear"></div>
-								</div>
-								<div class="tbl2">
-									<div class="formLabel grid_4"><label for="06"><?php echo(__('Cache Prefix:')) ?></label></div>
-									<div class="formField grid_3"><input id="06" type='text' value='<?php echo($cache_prefix) ?>' name='cache_prefix' /></div>
-									<div class="clear"></div>
-								</div>
-								<div class="tbl1">
-									<div class="formLabel grid_4"><label for="06"><?php echo(__('URL:')) ?></label></div>
-									<div class="formField grid_3"><input id="06" type='text' value='<?php echo($site_url) ?>' name='site_url' /></div>
-									<div class="clear"></div>
-								</div>
+							$tpl->assign('database_permission_error', TRUE);
 
-								<br /><hr /><br />
-								<div class="center">
-									<input type='hidden' name='localeset' value='<?php echo(stripinput($_POST['localeset'])) ?>' />
-									<input type='hidden' name='step' value='3' />
-									<input type='hidden' name='db_host' value='<?php echo($db_host) ?>' />
-									<input type='hidden' name='db_port' value='<?php echo($db_port) ?>' />
-									<input type='hidden' name='db_user' value='<?php echo($db_user) ?>' />
-									<input type='hidden' name='db_name' value='<?php echo($db_name) ?>' />
-									<input type='hidden' name='db_prefix' value='<?php echo($db_prefix) ?>' />
-									<input type='hidden' name='cookie_prefix' value='<?php echo($cookie_prefix) ?>' />
-									<input type='hidden' name='cache_prefix' value='<?php echo($cache_prefix) ?>' />
-									<input type='hidden' name='db_error' value='<?php echo($db_error) ?>' />
-									<input type='hidden' name='msg' value='<?php echo($msg) ?>' />
-									<input type='hidden' name='email' value='<?php echo($site_url) ?>' />
-									<a id="SendForm_This" class="SendButton" style="width:100px;margin:0 auto;">
-										<strong class="o">
-											<strong class="m">
-												<strong><?php echo(__('Next')) ?> &raquo;</strong>
-											</strong>
-										</strong>
-									</a>
-								</div>
-								<div class="clear"></div>
-						<?php
+							$success = FALSE;
+							$db_error = 4;
 						}
 					}
+					else
+					{
+						$_tpl->assign('table_prefix_error', TRUE);
 
-					if (isset($_POST['step']) && $_POST['step'] == '6') {
 
-						if (file_exists(DIR_SITE.'cache'.DS))
-						{
-							$_system->clearCache(NULL, array(), DIR_SITE.'cache'.DS);
-						}
-
-						$dbconnect = dbconnect($_dbconfig['host'].':'.$_dbconfig['port'], $_dbconfig['user'], $_dbconfig['password'], $_dbconfig['database']);
-
-						$username = (isset($_POST['username']) ? stripinput(trim($_POST['username'])) : '');
-						$password1 = (isset($_POST['password1']) ? stripinput(trim($_POST['password1'])) : '');
-						$password2 = (isset($_POST['password2']) ? stripinput(trim($_POST['password2'])) : '');
-						$email = (isset($_POST['email']) ? stripinput(trim($_POST['email'])) : '');
-                        $site_url = (isset($_POST['site_url']) ? $_POST['site_url'] : '');
-
-						$error = ''; $error_pass = '0'; $error_name = '0'; $error_mail = '0';
-
-						if ($username == '') {
-							$error .= __('User name field can not be left empty.').'<br /><br />\n';
-							$error_name = '1';
-						} elseif (!preg_match("/^[-0-9A-Z_@\s]+$/i", $username)) {
-							$error .= __('User name contains invalid characters.')."<br /><br />\n";
-							$error_name = '1';
-						}
-
-						if ($password1 == '' || $password2 == '') {
-							$error .= __('Login password fields can not be left empty').'<br /><br />\n';
-							$error_pass = '1';
-						} elseif (preg_match("/^[0-9A-Z@]{6,20}$/i", $password1)) {
-							if ($password1 != $password2) {
-								$error .= __('Your two login passwords do not match.').'<br /><br />\n';
-								$error_pass = '1';
-							}
-						} else {
-							$error .= __('Invalid login password, please use alpha numeric characters only.<br />Password must be a minimum of 6 characters long.').'<br /><br />\n';
-						}
-						if ($email == '') {
-							$error .= __('Email field can not be left empty.').'<br /><br />\n';
-							$error_mail = '1';
-						} elseif (!preg_match("/^[-0-9A-Z_\.]{1,50}@([-0-9A-Z_\.]+\.){1,50}([0-9A-Z]){2,4}$/i", $email)) {
-							$error .= __('Your email address does not appear to be valid.').'<br /><br />\n';
-							$error_mail = '1';
-						}
-
-						$rows = rowCount($_dbconfig['prefix'].'users', '`id`');
-
-						if ($error == '') {
-							if ($rows == 0) {
-								include_once 'create_settings.php';
-							}
-
-							if (function_exists('chmod')) { @chmod(DIR_SITE.'config.php', 0644); }
-							?>
-
-							<div class="center"><?php echo(__('Setup complete')) ?></div><br />
-							<input type='hidden' name='localeset' value='<?php echo(stripinput($_POST['localeset'])) ?>' />
-                            <input type='hidden' name='site_url' value='<?php echo($site_url) ?>' />
-							<input type='hidden' name='step' value='7' />
-							<br /><hr /><br />
-							<a id="SendForm_This" class="SendButton" style="width:110px;margin:0 auto;">
-								<strong class="o">
-									<strong class="m">
-										<strong><?php echo(__('Finish')) ?> &raquo;</strong>
-									</strong>
-								</strong>
-							</a>
-
-						<?php } elseif ($rows == 0) { ?>
-
-							<div class="error"><?php echo(__('Your user settings are not correct:')) ?></div><br />
-							<?php echo($error) ?>
-							<input type='hidden' name='localeset' value='<?php echo(stripinput($_POST['localeset'])) ?>' />
-							<input type='hidden' name='error_pass' value='<?php echo($error_pass) ?>' />
-							<input type='hidden' name='error_name' value='<?php echo($error_name) ?>' />
-							<input type='hidden' name='error_mail' value='<?php echo($error_mail) ?>' />
-							<input type='hidden' name='username' value='<?php echo($username) ?>' />
-							<input type='hidden' name='step' value='5' />
-							<br /><hr /><br />
-							<a id="SendForm_This" class="CancelButton" style="width:100px;margin:0 auto;">
-								<strong class="o">
-									<strong class="m">
-										<strong>&laquo; <?php echo(__('Back')) ?></strong>
-									</strong>
-								</strong>
-							</a>
-
-						<?php } else { ?>
-
-							<div class="center"><?php echo(__('Setup complete')) ?></div><br />
-							<input type='hidden' name='localeset' value='<?php echo(stripinput($_POST['localeset'])) ?>' />
-							<input type='hidden' name='step' value='7' />
-							<br /><hr /><br />
-							<a id="SendForm_This" class="SendButton" style="width:110px;margin:0 auto;">
-								<strong class="o">
-									<strong class="m">
-										<strong><?php echo(__('Finish')) ?> &raquo;</strong>
-									</strong>
-								</strong>
-							</a>
-
-						<?php }
+						$success = FALSE;
+						$db_error = 3;
 					}
-					?>
-				</form>
-				<div class="clear"></div>
-			</div>
-		</div><div class='cfl'><div class='cfr'><div class='cfc'></div></div></div></div>
-	</div>
-</body>
-</html>
+				}
+				else
+				{
+					$tpl->assign('database_connection_error', TRUE);
 
 
-<?php
+					$success = FALSE;
+					$db_error = 2;
+				}
+			}
+			else
+			{
+				$_tpl->assign('server_connection_error', TRUE);
+
+
+				$success = FALSE;
+				$db_error = 1;
+			}
+		}
+		else
+		{
+			$_tpl->assign('empty_form_error', TRUE);
+
+			$success = FALSE;
+			$db_error = 7;
+		}
+
+		if ($success)
+		{
+			goToStep(5);
+		}
+		else
+		{
+			$_tpl->assignGroup(array(
+				'db_name' => $db_name,
+				'db_user' => $db_user,
+				'db_host' => $db_host,
+				'db_port' => $db_port,
+				'db_prefix' => $db_prefix,
+				'cookie_prefix' => $cookie_prefix,
+				'cache_prefix' => $cache_prefix,
+				'site_url' => $site_url,
+				'db_error' => $db_error,
+				'custom_rewrite_choice' => $custom_rewrite_choice,
+				'custom_furl_choice' => $custom_furl_choice
+			));
+		}
+	}
+	// Przygotowanie formularza do uzupełniania
+	else
+	{
+		$db_host = 'localhost';
+
+		// The port may be required! So here we set the default.
+		$db_port = '3306';
+
+		$db_prefix = 'extreme_'.substr(md5(uniqid('ef5_db', FALSE)), 13, 7).'_';
+		$cookie_prefix = 'extreme_'.substr(md5(uniqid('ef5_cookie', FALSE)), 13, 7).'_';
+		$cache_prefix = 'extreme_'.substr(md5(uniqid('ef5_cache', FALSE)), 13, 7).'_';
+
+		$_tpl->assignGroup(array(
+			'db_host' => $db_host,
+			'db_port' => $db_port,
+			'db_prefix' => $db_prefix,
+			'cookie_prefix' => $cookie_prefix,
+			'cache_prefix' => $cache_prefix,
+			'site_url' => ADDR_SITE
+		));
+	}
+
+	if ($_system->httpServerIs('Apache'))
+	{
+		if (!$_system->apacheModulesListingAvailable())
+		{
+			$_tpl->assign('custom_rewrite', TRUE);
+		}
+	}
+	elseif (!$_system->serverPathInfoExists())
+	{
+		$_tpl->assign('custom_furl', TRUE);
+	}
+}
+else if (getStepNum() === 5)
+{
+	if ($_POST)
+	{
+		$username = (isset($_POST['username']) ? stripinput(trim($_POST['username'])) : '');
+		$password1 = (isset($_POST['password1']) ? stripinput(trim($_POST['password1'])) : '');
+		$password2 = (isset($_POST['password2']) ? stripinput(trim($_POST['password2'])) : '');
+		$email = (isset($_POST['email']) ? stripinput(trim($_POST['email'])) : '');
+
+
+		$error = FALSE;
+
+		if ($username === '' || $email === '' || $password1 === '' || $password2 === '')
+		{
+			$_tpl->assign('empty_form_error', TRUE);
+			$error = TRUE;
+		}
+		else
+		{
+			if (!preg_match("/^[-0-9A-Z_@\s]+$/i", $username))
+			{
+				$_tpl->assign('username_error', TRUE);
+				$error = TRUE;
+			}
+
+			if ($password1 != $password2)
+			{
+				$_tpl->assign('password_error', TRUE);
+				$error = TRUE;
+			}
+
+			if (!preg_match("/^[-0-9A-Z_\.]{1,50}@([-0-9A-Z_\.]+\.){1,50}([0-9A-Z]){2,4}$/i", $email))
+			{
+				$_tpl->assign('email_error', TRUE);
+				$error = TRUE;
+			}
+		}
+
+		if (!$error)
+		{
+			require DIR_SITE.'config.php';
+			if (file_exists(DIR_SITE.'cache'.DS))
+			{
+				$_system->clearCache(NULL, array(), DIR_SITE.'cache'.DS);
+			}
+
+			$dbconnect = dbconnect($_dbconfig['host'].':'.$_dbconfig['port'], $_dbconfig['user'], $_dbconfig['password'], $_dbconfig['database']);
+
+			$localeset = $_SESSION['localeset'];
+			include 'create_settings.php';
+
+			// Sprawdzanie, czy konto admina zostało utworzone
+			if ($rows = rowCount($_dbconfig['prefix'].'users', '`id`'))
+			{
+				// Nadawanie bezpie3cznych uprawnień dla pliku config.php
+				if (function_exists('chmod')) { @chmod(DIR_SITE.'config.php', 0644); }
+
+				goToStep(6);
+			}
+			else
+			{
+				$_tpl->assign('account_creating_error', TRUE);
+				$error = TRUE;
+			}
+		}
+
+		if ($error)
+		{
+			$_tpl->assignGroup(array(
+				'username' => $username,
+				'email' => $email
+			));
+		}
+	}
+	else
+	{
+		// Komunikat, że baza danych została skonfigurowana
+		$_tpl->assign('show_info', TRUE);
+	}
+}
+else if (getStepNum() === 6)
+{
+	if ($_POST)
+	{
+		header('Location: '.ADDR_SITE);
+		exit;
+	}
+
+}
+
+$_tpl->parse('index.tpl');
+
 // mySQL database functions
 function dbconnect($db_host, $db_user, $db_pass, $db_name) {
 	global $db_connect;

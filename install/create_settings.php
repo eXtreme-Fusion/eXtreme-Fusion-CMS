@@ -28,7 +28,7 @@ insert($_dbconfig['prefix'].'settings', array('key' => 'site_intro', 'value' => 
 insert($_dbconfig['prefix'].'settings', array('key' => 'footer', 'value' => 'Copyright &copy; 2005 - '.date('Y').' by the eXtreme-Fusion Crew'));
 insert($_dbconfig['prefix'].'settings', array('key' => 'opening_page', 'value' => 'news'));
 insert($_dbconfig['prefix'].'settings', array('key' => 'theme', 'value' => 'eXtreme-Fusion-5'));
-insert($_dbconfig['prefix'].'settings', array('key' => 'locale', 'value' => stripinput($_POST['localeset'])));
+insert($_dbconfig['prefix'].'settings', array('key' => 'locale', 'value' => $localeset));
 
 insert($_dbconfig['prefix'].'settings', array('key' => 'site_banner', 'value' => 'images/extreme-fusion-logo-light.png'));
 insert($_dbconfig['prefix'].'settings', array('key' => 'site_banner1', 'value' => ''));
