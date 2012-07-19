@@ -17,6 +17,10 @@ p {padding:10px 0;}
 #team .bold {
 	padding-top:10px;
 }
+#team p {
+	margin: 5px 0;
+	padding: 0;
+}
 .installFormLabel{
 	margin-bottom:5px;
 	font-family: "Myriad Pro",Verdana,sans-serif;
@@ -135,6 +139,11 @@ div.valid a {color:#6da827;}
 	font-size:16px;
 	color:#121212;
 	background: url(images/step.png) no-repeat 0 0;
+}
+
+#MainBox {
+	float:left;
+	width:720px;
 }
 
 .graybar { width:226px; background:#dddddd;height:3px;float:left; }
