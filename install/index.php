@@ -385,10 +385,32 @@ else if (getStepNum() === 3)
 
 						if ($can_write)
 						{
+<<<<<<< HEAD
 							include_once 'create_config.php';
 
 							$temp = fopen(DIR_SITE.'config.php','w');
 							if (fwrite($temp, $config))
+=======
+							$db_prefix = 'extreme_'.substr(md5(uniqid('ef5_db', FALSE)), 13, 7).'_';
+							$cookie_prefix = 'extreme_'.substr(md5(uniqid('ef5_cookie', FALSE)), 13, 7).'_';
+							$cache_prefix = 'extreme_'.substr(md5(uniqid('ef5_cache', FALSE)), 13, 7).'_';
+
+							$db_host = isset($_POST['db_host']) ? stripinput(trim($_POST['db_host'])) : 'localhost';
+							
+							// The port may be required! So here we set the default.
+							$db_port = isset($_POST['db_port']) ? stripinput(trim($_POST['db_port'])) : '3306';
+							
+							$db_user = isset($_POST['db_user']) ? stripinput(trim($_POST['db_user'])) : '';
+							$db_name = isset($_POST['db_name']) ? stripinput(trim($_POST['db_name'])) : '';
+							$db_prefix = isset($_POST['db_prefix']) ? stripinput(trim($_POST['db_prefix'])) : $db_prefix;
+							$cookie_prefix = isset($_POST['cookie_prefix']) ? stripinput(trim($_POST['cookie_prefix'])) : $cookie_prefix;
+							$cache_prefix = isset($_POST['cache_prefix']) ? stripinput(trim($_POST['cache_prefix'])) : $cache_prefix;
+							$db_error = isset($_POST['db_error']) && isnum($_POST['db_error']) ? $_POST['db_error'] : '0';
+							
+
+							$field_class = array('', '', '', '', '');
+							if ($db_error > '0') 
+>>>>>>> 5264be82a3fb541f2ba97b794f34bc461c50a773
 							{
 								fclose($temp);
 								$fail = FALSE;
@@ -414,6 +436,75 @@ else if (getStepNum() === 3)
 							{
 								$_tpl->assign('config_write_error', TRUE);
 
+<<<<<<< HEAD
+=======
+						if ($db_host != '' && $db_user != '' && $db_name != '' && $db_prefix != '') {
+							$db_connect = @mysql_connect($db_host.':'.$db_port, $db_user, $db_pass);
+							if ($db_connect) {
+								$db_select = @mysql_select_db($db_name);
+								if ($db_select) {
+									if (dbrows(dbquery("SHOW TABLES LIKE '$db_prefix%'")) == '0') {
+										$table_name = uniqid($db_prefix, FALSE); $can_write = TRUE;
+										$result = dbquery('CREATE TABLE '.$table_name.' (test_field VARCHAR(10) NOT NULL) ENGINE=MyISAM;');
+										if (!$result) { $can_write = FALSE; }
+										$result = dbquery('DROP TABLE '.$table_name);
+										if (!$result) { $can_write = FALSE; }
+										if ($can_write) {
+
+											$result = dbquery("ALTER DATABASE  `".$db_name."` DEFAULT CHARACTER SET ".$charset." COLLATE ".$collate);
+											
+											include_once 'create_config.php';
+
+											$temp = fopen('..'.DS.'config.php','w');
+											if (fwrite($temp, $config)) {
+												fclose($temp);
+												$fail = FALSE;
+
+												include_once 'create_db.php';
+
+												if (!$fail) {
+													$msg .= "<div class='valid'>".__('Database connection established.')."</div><br />";
+													$msg .= "<div class='valid'>".__('Config file successfully written.')."</div><br />";
+													$msg .= "<div class='valid'>".__('Database tables created.')."</div>";
+													$success = TRUE;
+													$db_error = 6;
+												} else {
+													$msg .= "<div class='valid'>".__('Database connection established.')."</div><br />";
+													$msg .= "<div class='valid'>".__('Config file successfully written.')."</div><br />";
+													$msg .= "<div class='error'><strong>".__('Error:')."</strong> ".__('Unable to create database tables.')."</div>";
+													$success = FALSE;
+													$db_error = 0;
+												}
+											} else {
+												$msg .= "<div class='valid'>".__('Database connection established.')."</div><br />";
+												$msg .= "<div class='error'><strong>".__('Error:')."</strong> ".__('Unable to write config file.')."</div><br />";
+												$msg .= "<div class='status'>".__('Please ensure config.php is writable.')."</div>";
+												$success = FALSE;
+												$db_error = 5;
+											}
+										} else {
+											$msg .= "<div class='valid'>".__('Database connection established.')."</div><br />";
+											$msg .= "<div class='error'><strong>".__('Error:')."</strong> ".__('Could not write or delete MySQL tables.')."</div><br />";
+											$msg .= "<div class='status'>".__('Please make sure your MySQL user has read, write and delete permission for the selected database.')."</div>";
+											$success = FALSE;
+											$db_error = 4;
+										}
+									} else {
+										$msg .= "<div class='error'><strong>".__('Error:')."</strong> ".__('Table prefix error.')."</div><br />";
+										$msg .= "<div class='status'>".__('The specified table prefix is already in use.')."</div>";
+										$success = FALSE;
+										$db_error = 3;
+									}
+								} else {
+									$msg .= "<div class='error'><strong>".__('Error:')."</strong> ".__('Unable to connect with MySQL database.')."</div><br />";
+									$msg .= "<div class='status'>".__('The specified MySQL database does not exist.')."</div>";
+									$success = FALSE;
+									$db_error = 2;
+								}
+							} else {
+								$msg .= "<div class='error'><strong>".__('Error:')."</strong> ".__('Unable to connect with MySQL.')."</div><br />";
+								$msg .= "<div class='status'>".__('Please ensure your MySQL username and password are correct.')."</div>";
+>>>>>>> 5264be82a3fb541f2ba97b794f34bc461c50a773
 								$success = FALSE;
 								$db_error = 5;
 							}
