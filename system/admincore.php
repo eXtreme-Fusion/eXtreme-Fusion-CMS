@@ -13,7 +13,7 @@ try
 {
 	error_reporting(E_ALL | E_NOTICE);
 
-	require_once DIR_CLASS.'exception.php';
+	require_once DIR_CLASS.'Exception.php';
 	
 	if( ! extension_loaded('pdo')) 
 	{
@@ -28,7 +28,7 @@ try
 	if ( ! isset($_GET['NoOPT']))
 	{
 		require_once OPT_DIR.'opt.class.php';
-		require_once DIR_CLASS.'parser.php';
+		require_once DIR_CLASS.'Parser.php';
 	}
 
 	require_once DIR_SYSTEM.'helpers/main.php';
@@ -39,7 +39,7 @@ try
     $_system = new System;
 
     # PHP Data Object
-    $_pdo = new PDO_EXT('mysql:host='.$_dbconfig['host'].';dbname='.$_dbconfig['database'].';port='.$_dbconfig['port'], $_dbconfig['user'], $_dbconfig['password'], array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES '.$_dbconfig['charset']));
+    $_pdo = new Data('mysql:host='.$_dbconfig['host'].';dbname='.$_dbconfig['database'].';port='.$_dbconfig['port'], $_dbconfig['user'], $_dbconfig['password'], array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES '.$_dbconfig['charset']));
     
 	$_pdo->config($_dbconfig['prefix']);
     unset($_dbconfig);
@@ -64,7 +64,7 @@ try
 	# Files class
 	$_files = new Files;
 
-	$_url = new URL($_sett->getUns('routing', 'url_ext'), $_sett->getUns('routing', 'main_sep'), $_sett->getUns('routing', 'param_sep'), $_system->rewriteAvailable(), $_system->pathInfoExists());
+	$_url = new Url($_sett->getUns('routing', 'url_ext'), $_sett->getUns('routing', 'main_sep'), $_sett->getUns('routing', 'param_sep'), $_system->rewriteAvailable(), $_system->pathInfoExists());
 		
 	HELP::init($_pdo, $_sett, $_user, $_url);
 

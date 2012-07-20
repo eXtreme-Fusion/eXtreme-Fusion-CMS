@@ -86,7 +86,7 @@ try
 		require DIR_SITE.'bootstrap.php';
 	}
 
-	require_once DIR_CLASS.'exception.php';
+	require_once DIR_CLASS.'Exception.php';
 
 	if( ! extension_loaded('pdo'))
 	{
@@ -100,8 +100,7 @@ try
 
 	require_once DIR_SYSTEM.'helpers/main.php';
 	require_once OPT_DIR.'opt.class.php';
-	require_once DIR_CLASS.'parser.php';
-	require_once DIR_CLASS.'robots.php';
+	require_once DIR_CLASS.'Parser.php';
 
     ob_start();
 
@@ -134,7 +133,7 @@ try
 	# Files class
 	$_files = new Files;
 
-	$_url = new URL($_sett->getUns('routing', 'url_ext'), $_sett->getUns('routing', 'main_sep'), $_sett->getUns('routing', 'param_sep'), $_system->rewriteAvailable(), $_system->pathInfoExists());
+	$_url = new Url($_sett->getUns('routing', 'url_ext'), $_sett->getUns('routing', 'main_sep'), $_sett->getUns('routing', 'param_sep'), $_system->rewriteAvailable(), $_system->pathInfoExists());
 
 	# Helper class
 	HELP::init($_pdo, $_sett, $_user, $_url);

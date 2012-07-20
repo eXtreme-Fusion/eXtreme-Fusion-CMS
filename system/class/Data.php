@@ -22,7 +22,7 @@
 
  Dla pozostałych metod wyłączanie nie ma sensu, dlatego nie zostało zaimplementowane.
 **/
-class PDO_EXT extends PDO
+class Data extends PDO
 {
 	private $_prefix;
 

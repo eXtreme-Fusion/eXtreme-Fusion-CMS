@@ -168,7 +168,7 @@ else
 			$_GET['current'] = $_route->getByID(2);
 		}
 
-		$_GET['rowstart'] = PAGING::getRowStart($_GET['current'], $items_per_page);
+		$_GET['rowstart'] = Paging::getRowStart($_GET['current'], $items_per_page);
 
 		# / STRONICOWANIE #
 		$cache = $_system->cache('news,'.$_user->getCacheName().',page-'.$_GET['current'], NULL, 'news', $_sett->getUns('cache', 'expire_news'));

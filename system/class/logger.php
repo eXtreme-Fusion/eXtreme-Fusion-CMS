@@ -25,7 +25,7 @@ class Logger
 	 * @return  void
 	 */
 
-	public function __construct(User $user, PDO_EXT $pdo, $active)
+	public function __construct(User $user, Data $pdo, $active)
 	{
 		$this->_user = $user;
 		$this->_pdo = $pdo;

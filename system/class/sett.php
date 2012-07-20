@@ -30,7 +30,7 @@ class Sett {
 	 * @param   Database  silnik bazy danych
 	 * @return  void
 	 */
-	public function __construct(System $system, PDO_EXT $pdo)
+	public function __construct(System $system, Data $pdo)
 	{
 		$this->_system = $system;
 		$this->_pdo = $pdo;

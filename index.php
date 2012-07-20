@@ -27,10 +27,8 @@ try
 	 * Szablon systemowy (theme)
 	 */
 
-	require_once DIR_CLASS.'header.php';
-
 	// Wczytywanie głównej klasy
-	require_once DIR_CLASS.'themes.php';
+	require_once DIR_CLASS.'Themes.php';
 
 	/******* Koniec sekcji szablonu systemowego */
 

@@ -28,7 +28,7 @@ class Modules
 	 * @param   User	  obiekt klasy użytkownika
 	 * @return  void
 	 */
-	public function __construct(PDO_EXT $pdo, Sett $sett, User $user, Tag $tag, Locales $locale)
+	public function __construct(Data $pdo, Sett $sett, User $user, Tag $tag, Locales $locale)
 	{
 		$this->_pdo   = $pdo;
 		$this->_sett  = $sett;

@@ -89,7 +89,7 @@ class User {
 	 * @param   Database  klasa bazy danych
 	 * @return  void
 	 */
-	public function __construct(Sett $sett, PDO_EXT $pdo)
+	public function __construct(Sett $sett, Data $pdo)
 	{		
 		$this->_sett = $sett;
 		$this->_pdo = $pdo;

@@ -22,7 +22,7 @@ class Panels
 		$panels = array(),
 		$panel = array();
 
-    public function __construct(PDO_EXT $pdo, $dir = './')
+    public function __construct(Data $pdo, $dir = './')
     {
         $this->_pdo = $pdo;
         $this->_dir = $dir;

@@ -24,7 +24,7 @@ class Parser extends optClass
 		throw new systemException('For Parser class object can not exists.');
 	}
 
-	public static function config(PDO_EXT $pdo, Sett $sett, User $user, $request, $log = '')
+	public static function config(Data $pdo, Sett $sett, User $user, $request, $log = '')
 	{
 		self::$_pdo = $pdo;
 		self::$_sett = $sett;
