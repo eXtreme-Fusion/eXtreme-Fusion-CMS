@@ -49,7 +49,9 @@ function isNum($var, $exception = TRUE, $return_value = TRUE)
 
 function __autoload($class_name)
 {
-	$path = DIR_CLASS.strtolower($class_name).'.php';
+	$class_name[0] = strtolower($class_name[0]);
+	
+	$path = DIR_CLASS.$class_name.'.php';
 
     if (file_exists($path))
 	{
