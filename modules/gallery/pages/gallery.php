@@ -122,7 +122,7 @@ if($_route->getByID(1) === 'cat')
 						),
 						'Breadcrumb' => array(
 							'index' => array(
-								'id' => FILE_SELF,
+								'id' => 'gallery'.$_sett->getUns('routing', 'url_ext'),
 								'title' => $_gallery_sett->get('title')
 							),
 							'cat' => array(
@@ -259,7 +259,7 @@ elseif($_route->getByID(1) === 'album')
 						),
 						'Breadcrumb' => array(
 							'index' => array(
-								'id' => FILE_SELF,
+								'id' => 'gallery'.$_sett->getUns('routing', 'url_ext'),
 								'title' => $_gallery_sett->get('title')
 							),
 							'cat' => array(
@@ -360,7 +360,7 @@ elseif($_route->getByID(1) === 'photo')
 					),
 					'Breadcrumb' => array(
 						'index' => array(
-							'id' => FILE_SELF,
+							'id' => 'gallery'.$_sett->getUns('routing', 'url_ext'),
 							'title' => $_gallery_sett->get('title')
 						),
 						'cat' => array(
@@ -509,7 +509,7 @@ else
 				),
 				'Breadcrumb' => array(
 					'index' => array(
-						'id' => FILE_SELF,
+						'id' => 'gallery'.$_sett->getUns('routing', 'url_ext'),
 						'title' => $_gallery_sett->get('title')
 					),
 					'cat' => FALSE,

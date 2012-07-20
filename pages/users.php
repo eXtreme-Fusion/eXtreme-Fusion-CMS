@@ -13,6 +13,12 @@ $_locale->load('users');
 
 define('THIS', FALSE);
 
+$theme = array(
+	'Title' => __('Lista użytkowników').' &raquo; '.$_sett->get('site_name'),
+	'Keys' => 'Użytkownicy '.$_sett->get('site_name').', konta '.$_sett->get('site_name').', profile',
+	'Desc' => 'Lista aktywnych kont na stronie '.$_sett->get('site_name')
+);
+
 $data = new Edit(
 	array(
 		'current' => $_route->getByID(1) ? $_route->getByID(1) : 1,
@@ -26,7 +32,7 @@ if ($rows)
 {
 	$rowstart = $data->arr('current')->isNum(TRUE, FALSE) ? PAGING::getRowStart($data->arr('current')->isNum(TRUE, FALSE), intval($_sett->get('users_per_page'))) : 0;
 
-	$cache = $_system->cache('users,'.$_user->getCacheName().',sort_by-'.$data->arr('sort')->filters('trim', 'strip').',page-'.$data->arr('current')->isNum(TRUE, FALSE), NULL, 'users', 60);
+	$cache = $_system->cache('users,'.$_user->getCacheName().',sort_by-'.$data->arr('sort')->filters('trim', 'strip').',page-'.$data->arr('current')->isNum(TRUE, FALSE), NULL, 'users', $_sett->getUns('cache', 'expire_pages'));
 	if ($cache === NULL)
 	{
 		$query = $_pdo->getData('
@@ -101,9 +107,3 @@ if ($data->arr('sort')->filters('trim', 'strip') !== 'all')
 		'link' => $_route->path(array('controller' => 'users', 'action' => $data->arr('current')->isNum(TRUE, FALSE)))
 	));
 }
-
-$theme = array(
-		'Title' => __('Lista użytkowników').' &raquo; '.$_sett->get('site_name'),
-		'Keys' => 'Użytkownicy '.$_sett->get('site_name').', konta '.$_sett->get('site_name').', profile',
-		'Desc' => 'Lista aktywnych kont na stronie '.$_sett->get('site_name')
-	);

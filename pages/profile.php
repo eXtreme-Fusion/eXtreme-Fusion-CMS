@@ -40,7 +40,7 @@ if ($row)
 	define('THIS', FALSE);
 	
 	// nazwa pliku bez rozszerzenia, dane do zapisu (jeśli brak to funkcja zwraca dane o ile plik istnieje), czas użyteczności pliku (nadpisanie w przypadku zbyt starej wersji)
-	$cats = $_system->cache('profile_id_'.$id.'_cats', NULL, 'profiles', 173400);
+	$cats = $_system->cache('profile_id_'.$id.'_cats', NULL, 'profiles', $_sett->getUns('cache', 'expire_profile'));
 	if ($cats === NULL)
 	{
 		// Pobieranie kategorii
@@ -56,7 +56,7 @@ if ($row)
 	}
 	
 	// nazwa pliku bez rozszerzenia, dane do zapisu (jeśli brak to funkcja zwraca dane o ile plik istnieje), czas użyteczności pliku (nadpisanie w przypadku zbyt starej wersji)
-	$fields = $_system->cache('profile_id_'.$id.'_user_fields', NULL, 'profiles', 173400);
+	$fields = $_system->cache('profile_id_'.$id.'_user_fields', NULL, 'profiles', $_sett->getUns('cache', 'expire_profile'));
 	if ($fields === NULL)
 	{
 		// Pobieranie pól
@@ -78,7 +78,7 @@ if ($row)
 
 	
 	// nazwa pliku bez rozszerzenia, dane do zapisu (jeśli brak to funkcja zwraca dane o ile plik istnieje), czas użyteczności pliku (nadpisanie w przypadku zbyt starej wersji)
-	$data = $_system->cache('profile_id_'.$id.'_user_data', NULL, 'profiles', 86700);
+	$data = $_system->cache('profile_id_'.$id.'_user_data', NULL, 'profiles', $_sett->getUns('cache', 'expire_profile'));
 	if ($data === NULL)
 	{
 		// Pobieranie wszystkich dodatkowych pól uzytkowników

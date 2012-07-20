@@ -328,7 +328,7 @@ class Modules
 				foreach($menu_link as $val)
 				{
 					$link_order = $this->_pdo->getMaxValue('SELECT MAX(`order`) FROM [navigation]');
-					$this->_pdo->exec("INSERT INTO [navigation] (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('{$val['title']}', '{$val['url']}', '{$val['visibility']}', '1', '0', '{$link_order}')");
+					$this->_pdo->exec("INSERT INTO [navigation] (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('{$val['title']}', '{$val['url']}".$this->_sett->getUns('routing', 'url_ext')."', '{$val['visibility']}', '1', '0', '{$link_order}')");
 				}
 			}
 

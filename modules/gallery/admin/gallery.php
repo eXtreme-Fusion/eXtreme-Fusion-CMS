@@ -726,7 +726,7 @@ try
 				// Walidacja dopuszczalnej wagi pliku
 				$_image->validSize($_FILES['file']['size']);
 				
-				$file_name = $file_name !== '' ? $_image->setPhotoName($file_name).$_image->getPhotoExt(strtolower($_FILES['file']['name'])) : $_image->setPhotoName($_image->getPhotoNameWithExtension(strtolower($_FILES['file']['title']))).$_image->getPhotoExt(strtolower($_FILES['file']['title']));
+				$file_name = $file_name !== '' ? $_image->setPhotoName($file_name).$_image->getPhotoExt(strtolower($_FILES['file']['name'])) : $_image->setPhotoName($_image->getPhotoNameWithExtension(strtolower($_FILES['file']['name']))).$_image->getPhotoExt(strtolower($_FILES['file']['name']));
 				
 				$path_upload = DIR_MODULES.'gallery'.DS.'templates'.DS.'images'.DS.'upload'.DS;
 				

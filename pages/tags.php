@@ -17,7 +17,7 @@ $_head->set($_tpl->getHeaders());
 
 if ($_route->getAction())
 {
-	$cache = $_system->cache('tags,supplement-'.$_route->getAction().','.$_user->getCacheName(), NULL, 'tags', 0);
+	$cache = $_system->cache('tags,supplement-'.$_route->getAction().','.$_user->getCacheName(), NULL, 'tags', $_sett->getUns('cache', 'expire_tags'));
 	if ($cache === NULL)
 	{
 		if ($keys = $_tag->getTagFromValueLink($_route->getAction()))
@@ -51,7 +51,7 @@ if ($_route->getAction())
 }
 else
 {
-	$cache = $_system->cache('tags,'.$_user->getCacheName(), NULL, 'tags', 30); $k = array();
+	$cache = $_system->cache('tags,'.$_user->getCacheName(), NULL, 'tags', $_sett->getUns('cache', 'expire_tags')); $k = array();
 	if ($cache === NULL)
 	{
 		

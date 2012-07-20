@@ -7,7 +7,7 @@
 	'Desc' => $data['description']
 );*/
 
-
+// TO DO Będziesz dodawać cache dla tej strony użyj: $_sett->getUns('cache', 'expire_pages') //
 
 
 if ($_user->isLoggedIn())

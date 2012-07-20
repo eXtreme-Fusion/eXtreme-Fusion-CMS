@@ -1,6 +1,6 @@
 <div class="tbl2 text-padding-h3">
 	<span class="bold">Jesteś tutaj: </span>
-	<a href="{$FILE_SELF}">{$Breadcrumb.index.title}</a>
+	<a href="{$ADDR_SITE}{$Breadcrumb.index.id}">{$Breadcrumb.index.title}</a>
 	{if $Breadcrumb.cat.title && $Breadcrumb.cat.id}
 	 &raquo; <a href="{$Breadcrumb.cat.link}">{$Breadcrumb.cat.title}</a>
 	{/if}

@@ -30,7 +30,7 @@ if ($_route->getAction())
 	{
 		# STRONICOWANIE #
 		//$items_per_page = 2;
-		$items_per_page = $_sett->get('news_cats_iteam_per_page');
+		$items_per_page = intval($_sett->get('news_cats_iteam_per_page'));
 
 		if ( ! $_route->getByID(3))
 		{
@@ -44,7 +44,7 @@ if ($_route->getAction())
 		$_GET['rowstart'] = PAGING::getRowStart($_GET['current'], $items_per_page);
 		
 		// Cache dla kategorii newsów opisu, miniaturek, id
-		$category = $_system->cache('news_cats,cat-'.$_route->getAction().','.$_user->getCacheName().',page-'.$_GET['current'], NULL, 'news_cats', 60);
+		$category = $_system->cache('news_cats,cat-'.$_route->getAction().','.$_user->getCacheName().',page-'.$_GET['current'], NULL, 'news_cats', $_sett->getUns('cache', 'expire_news_cats'));
 		if ($category === NULL)
 		{
 			$rows = $_pdo->getRow('SELECT * FROM [news_cats] WHERE `id` = :id', 
@@ -68,7 +68,7 @@ if ($_route->getAction())
 		}
 		
 		// Cache dla wystęujących newsów w danej kategorii
-		$cache = $_system->cache('news,cat-'.$_route->getAction().','.$_user->getCacheName().',page-'.$_GET['current'], NULL, 'news_cats', 60);
+		$cache = $_system->cache('news,cat-'.$_route->getAction().','.$_user->getCacheName().',page-'.$_GET['current'], NULL, 'news_cats', $_sett->getUns('cache', 'expire_news_cats'));
 		if ($cache === NULL)
 		{
 			$row = $_pdo->getSelectCount('SELECT COUNT(`id`) FROM [news] WHERE `category` = :category  AND `access` IN ('.$_user->listRoles().')',
@@ -142,7 +142,7 @@ if ($_route->getAction())
 }
 else
 {
-	$cache_count = $_system->cache('news_cats_count', NULL, 'news_cats', 60);
+	$cache_count = $_system->cache('news_cats_count', NULL, 'news_cats', $_sett->getUns('cache', 'expire_news_cats'));
 	if ($cache_count === NULL)
 	{
 		$count = $_pdo->getData('SELECT category, access FROM [news]');		
@@ -174,7 +174,7 @@ else
 		}
 	}
 	
-	$cache = $_system->cache('news_cats_list', NULL, 'news_cats', 60);
+	$cache = $_system->cache('news_cats_list', NULL, 'news_cats', $_sett->getUns('cache', 'expire_news_cats'));
 	if ($cache === NULL)
 	{
 		$query = $_pdo->getData('
@@ -202,7 +202,7 @@ else
 			'cat_title_name' 	=> $data['name'],
 			'cat_image'    		=> $data['image'],
 			'cat_count_news' 	=> isset($array[$data['id']]) ? $array[$data['id']] : 0,
-			'url'		   	=> $_route->path(array('controller' => 'news_cats', 'action' => $data['id'], HELP::Title2Link($data['name'])))
+			'url'		   		=> $_route->path(array('controller' => 'news_cats', 'action' => $data['id'], HELP::Title2Link($data['name'])))
 		);
 		$i++;
 	}

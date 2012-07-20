@@ -133,6 +133,17 @@ insert($_dbconfig['prefix'].'settings', array('key' => 'routing', 'value' => ser
 	'logic_ext' => '.php',
 	'ext_allowed' => '1'
 ))));
+insert($_dbconfig['prefix'].'settings', array('key' => 'cache', 'value' => serialize(array(
+	//'expire_contact' => '3600',
+	'expire_news' => '3600',
+	'expire_news_cats' => '3600',
+	'expire_pages' => '3600',
+	'expire_profile' => '3600',
+	//'expire_rules' => '3600',
+	'expire_tags' => '3600',
+	'expire_team' => '3600',
+	'expire_users' => '3600',
+))));
 
 /** Nie usuwac/Do not remove
 if ($_system->apachemoduleLoaded('mod_rewrite'))
@@ -164,6 +175,7 @@ $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `im
 $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.security', 'security.png', 'Security Politics', 'settings_security.php', '4')");
 $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.settings', 'settings.png', 'Main', 'settings_main.php', 4)");
 $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.settings_banners', 'settings_banners.png', 'Banners', 'settings_banners.php', 4)");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.settings_cache', 'settings_cache.png', 'Cache', 'settings_cache.php', 4)");
 $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.settings_time', 'settings_time.png', 'Time and Date', 'settings_time.php', 4)");
 $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.settings_registration', 'registration.png', 'Registration', 'settings_registration.php', 4)");
 $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.settings_misc', 'settings_misc.png', 'Miscellaneous', 'settings_misc.php', 4)");
@@ -297,6 +309,7 @@ $result = dbquery("INSERT INTO `".$_dbconfig['prefix']."permissions` (`name`, `s
 	('admin.security', 1, '".__('Perm: admin security')."', 1),
 	('admin.settings', 1, '".__('Perm: admin settings')."', 1),
 	('admin.settings_banners', 1, '".__('Perm: admin settings_banners')."', 1),
+	('admin.settings_cache', 1, '".__('Perm: admin settings_cache')."', 1),
 	('admin.settings_time', 1, '".__('Perm: admin settings_time')."', 1),
 	('admin.settings_registration', 1, '".__('Perm: admin settings_registration')."', 1),
 	('admin.settings_misc', 1, '".__('Perm: admin settings_misc')."', 1),

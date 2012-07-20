@@ -12,6 +12,8 @@
 $_locale->load('team');
 $_head->set('<link href="'.ADDR_TEMPLATES.'stylesheet/team.css" media="screen" rel="stylesheet" />');
 
+// TO DO Będziesz dodawać cache dla tej strony użyj: $_sett->getUns('cache', 'expire_team') //
+
 $theme = array(
 	'Title' => __('Site Team').' &raquo; '.$_sett->get('site_name'),
 	'Keys' => 'Ekipa '.$_sett->get('site_name').', skład, właściciele',

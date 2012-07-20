@@ -32,7 +32,7 @@ if ($_route->getAction())
 	if (isNum($item_id))
 	{
 		// nazwa pliku bez rozszerzenia, dane do zapisu (jeśli brak to funkcja zwraca dane o ile plik istnieje), czas użyteczności pliku (nadpisanie w przypadku zbyt starej wersji)
-		$data = $_system->cache('news_'.$item_id, NULL, 'news', 60);
+		$data = $_system->cache('news_'.$item_id, NULL, 'news', $_sett->getUns('cache', 'expire_news'));
 		if ($data === NULL)
 		{
 			$data = $_pdo->getRow('
@@ -171,7 +171,7 @@ else
 		$_GET['rowstart'] = PAGING::getRowStart($_GET['current'], $items_per_page);
 
 		# / STRONICOWANIE #
-		$cache = $_system->cache('news,'.$_user->getCacheName().',page-'.$_GET['current'], NULL, 'news', 60);
+		$cache = $_system->cache('news,'.$_user->getCacheName().',page-'.$_GET['current'], NULL, 'news', $_sett->getUns('cache', 'expire_news'));
 		if ($cache === NULL)
 		{
 			$query = $_pdo->getData('

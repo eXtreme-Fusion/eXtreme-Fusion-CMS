@@ -8,6 +8,7 @@ return array(
 	'Blacklist' => 'Černá listina',
 	'Comments' => 'Komentáře',
 	'Colors' => 'Barvy',
+	'Cache' => 'Pamięć podręczna',
 	'Images' => 'Obrázky',
 	'Logs' => 'Záznamy událostí',
 	'URLs Generator' => 'Generátor adres URL',
