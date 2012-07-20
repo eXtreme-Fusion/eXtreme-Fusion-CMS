@@ -399,7 +399,7 @@
 							<a id="SendForm_This" class="SendButton" style="width:110px;margin:0 auto;">
 								<strong class="o">
 									<strong class="m">
-										<strong><?php echo(__('Finish')) ?> &raquo;</strong>
+										<strong>{i18n('Finish')} &raquo;</strong>
 									</strong>
 								</strong>
 							</a>
