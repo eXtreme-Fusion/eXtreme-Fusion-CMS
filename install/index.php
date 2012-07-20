@@ -93,28 +93,35 @@ $_tpl->assignGroup(array(
 	'charset' => __('Charset'),
 	'ADDR_ADMIN' => ADDR_SITE.'admin/',
 	'ADDR_INSTALL' =>  ADDR_SITE.'install/',
-	'step_header' => __('eXtreme-Fusion :version - Setup', array(':version' => VERSION)).' &raquo; '.getStepHeader(),
+	'step_header' => __('eXtreme-Fusion :version - Setup', array(':version' => VERSION)).(getStepHeader() ? ' &raquo; '.getStepHeader() : ''),
 	'step_menu' => getStepMenu(),
 	'step' => getStepNum(),
 ));
 
 function getStepHeader()
 {
-	if (getStepNum() === 1) {
-		return __('Step 1: Locale');
-	} elseif (getStepNum() === 2) {
-		return __('Step 2: File and Folder Permissions Test');
-	} elseif (getStepNum() === 3) {
-		return __('Step 3: Database Settings');
-	} elseif (getStepNum() === 4) {
-		return __('Step 4: Database Config / Setup');
-	} elseif (getStepNum() === 5) {
-		return __('Step 5: Head Admin Datails');
-	} elseif (getStepNum() === 6) {
-		return __('Step 6: Final Settings');
-	} else {
-		return '';
+	static $header = NULL;
+
+	if ($header === NULL)
+	{
+		if (getStepNum() === 1) {
+			$header = __('Step 1: Locale');
+		} elseif (getStepNum() === 2) {
+			$header = __('Step 2: File and Folder Permissions Test');
+		} elseif (getStepNum() === 3) {
+			$header = __('Step 3: Database Settings');
+		} elseif (getStepNum() === 4) {
+			$header = __('Step 4: Database Config / Setup');
+		} elseif (getStepNum() === 5) {
+			$header = __('Step 5: Head Admin Datails');
+		} elseif (getStepNum() === 6) {
+			$header = __('Step 6: Final Settings');
+		} else {
+			$header = '';
+		}
 	}
+
+	return $header;
 }
 
 // Zwraca numerycznie aktualny etap instalacji
@@ -124,17 +131,27 @@ function getStepNum()
 
 	if (!$step)
 	{
-		/*if (isset($_POST['step']) && is_numeric($_POST['step']) && $_POST['step'])
+		if (isset($_SESSION['step']))
 		{
-			$step = $_SESSION['step'] = intval($_POST['step']);
-		}
-		else */if (isset($_SESSION['step']) && is_numeric($_SESSION['step']) && $_SESSION['step'])
-		{
-			$step = /*$_POST['step'] =*/ intval($_SESSION['step']);
+			if ($_SESSION['step'] === 'abort')
+			{
+				$step = 0;
+			}
+			else
+			{
+				if (isset($_SESSION['step']) && is_numeric($_SESSION['step']) && $_SESSION['step'])
+				{
+					$step = intval($_SESSION['step']);
+				}
+				else
+				{
+					$step = $_SESSION['step'] = 1;
+				}
+			}
 		}
 		else
 		{
-			$step = /*$_POST['step'] =*/ $_SESSION['step'] = 1;
+			$step = $_SESSION['step'] = 1;
 		}
 	}
 
@@ -143,39 +160,43 @@ function getStepNum()
 
 function getStepMenu()
 {
-	$steps = array(1 =>
-		explode(':', __('Step 1: Locale')),
-		explode(':', __('Step 2: File and Folder Permissions Test')),
-		explode(':', __('Step 3: Database Settings')),
-		explode(':', __('Step 4: Database Config / Setup')),
-		explode(':', __('Step 5: Head Admin Datails')),
-		explode(':', __('Step 6: Final Settings'))
-	);
-
-	$data = array(); $i = 0;
-	foreach($steps as $id => $name)
+	static $data = array();
+	if (!$data)
 	{
-		$data[$i] = array(
-			'id' => $id,
-			'name' => $name[0]
+		$steps = array(1 =>
+			explode(':', __('Step 1: Locale')),
+			explode(':', __('Step 2: File and Folder Permissions Test')),
+			explode(':', __('Step 3: Database Settings')),
+			explode(':', __('Step 4: Database Config / Setup')),
+			explode(':', __('Step 5: Head Admin Datails')),
+			explode(':', __('Step 6: Final Settings'))
 		);
 
-		if (getStepNum() === $id)
+		$data = array(); $i = 0;
+		foreach($steps as $id => $name)
 		{
-			$data[$i]['current'] = TRUE;
-		}
-		else if (getStepNum() > $id)
-		{
-			$data[$i]['done'] = TRUE;
-		}
+			$data[$i] = array(
+				'id' => $id,
+				'name' => $name[0]
+			);
 
-		$i++;
+			if (getStepNum() === $id)
+			{
+				$data[$i]['current'] = TRUE;
+			}
+			else if (getStepNum() > $id)
+			{
+				$data[$i]['done'] = TRUE;
+			}
+
+			$i++;
+		}
 	}
 
 	return $data;
 }
 
-function optLocale(optClass &$tpl, $key, array $values = array())
+function optLocale(optClass &$_tpl, $key, array $values = array())
 {
 	return __($key, $values);
 }
@@ -187,12 +208,41 @@ function goToStep($step)
 	if (is_numeric($step) && $step)
 	{
 		$_SESSION['step'] = intval($step);
-		header('Refresh: 0');
-		exit;
+
 	}
+	else
+	{
+		$_SESSION['step'] = 1;
+	}
+
+	header('Refresh: 0');
+	exit;
 }
 
-if (getStepNum() === 1)
+// Przerywa bieżącą instalację i zaczyna nową od początku
+function abortInstall()
+{
+	$_SESSION['step'] = 'abort';
+	header('Refresh: 0; url='.ADDR_SITE.'install/');
+	exit;
+}
+
+function restartInstall()
+{
+	unset($_SESSION['step']);
+}
+
+if (isset($_GET['abort']))
+{
+	abortInstall();
+}
+
+// Przerwanie instalacji
+if (getStepNum() === 0)
+{
+	restartInstall();
+}
+else if (getStepNum() === 1)
 {
 	if ($_POST)
 	{
@@ -358,7 +408,8 @@ else if (getStepNum() === 3)
 			$cache_prefix = $cache_prefix.'_';
 		}
 
-		if ($db_host !== '' && $db_user !== '' && $db_name !== '' && $db_prefix !== '' && $site_url !== '')
+		// db_prefix powinien być opcjonalny!
+		if ($db_host !== '' && $db_user !== '' && $db_name !== '' && $db_port !== '' && $site_url !== '')
 		{
 			$db_connect = @mysql_connect($db_host.':'.$db_port, $db_user, $db_pass);
 			if ($db_connect)
@@ -420,7 +471,7 @@ else if (getStepNum() === 3)
 						}
 						else
 						{
-							$tpl->assign('database_permission_error', TRUE);
+							$_tpl->assign('database_permission_error', TRUE);
 
 							$success = FALSE;
 							$db_error = 4;
@@ -437,7 +488,7 @@ else if (getStepNum() === 3)
 				}
 				else
 				{
-					$tpl->assign('database_connection_error', TRUE);
+					$_tpl->assign('database_connection_error', TRUE);
 
 
 					$success = FALSE;
@@ -600,6 +651,7 @@ else if (getStepNum() === 6)
 {
 	if ($_POST)
 	{
+		restartInstall();
 		header('Location: '.ADDR_SITE);
 		exit;
 	}

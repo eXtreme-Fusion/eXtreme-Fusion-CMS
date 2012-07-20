@@ -41,7 +41,11 @@
 				</ul>
 
 				<div id="MainBox">
-					{if $step == 1}
+				
+					{if $step == 0}
+						<p>Instalacja została przerwana. System może nie działać stabilnie.</p>
+						<p><a href={$ADDR_INSTALL} title={i18n('Zacznij instalację ponownie')}>{i18n('Zacznij instalację ponownie')}</a></p>
+					{elseif $step == 1}
 						<form action="index.php" method="post" id="This" autocomplete="off">
 
 							<div class="tbl1">
@@ -185,7 +189,7 @@
 								</a>
 							</div>
 						{/if}
-
+						<p><a href={$ADDR_INSTALL}?abort=true title={i18n('Przerwij instalację lub zacznij od nowa')}>{i18n('Przerwij instalację lub zacznij od nowa')}</a></p>
 						<div class="clear"></div>
 
 					{elseif $step == 3}
@@ -204,7 +208,7 @@
 								{else}
 									{if $table_prefix_error}
 										<div class='error'><strong>{i18n('Error:')}</strong> {i18n('Table prefix error.')}</div><br />
-										<div class='status'>{i18n('The specified table prefix is already in use.')}</div>
+										<div class='status'>{i18n('Prefiks tabel (Zaawansowane ustawienia) jest już w użyciu lub niepodano prefiksu, a w bazie istnieją tabele o takiej samej nazwie jak te, które system próbuje utworzyć. Należy podać inny prefiks dla tabel.')}</div>
 									{else}
 										{if $database_permission_error}
 											<div class='valid'>{i18n('Database connection established.')}</div><br />
@@ -231,12 +235,12 @@
 							<div class="info">{i18n('Please enter your MySQL database access settings.')}</div><br />
 
 							<div class="tbl1">
-								<div class="formLabel grid_4"><label for="04">{i18n('Database Name:')}</label></div>
+								<div class="formLabel grid_4"><label for="04">{i18n('Database Name:')}*</label></div>
 								<div class="formField grid_3"><input id="04" type='text' value='{$db_name}' name='db_name' /></div>
 								<div class="clear"></div>
 							</div>
 							<div class="tbl2">
-								<div class="formLabel grid_4"><label for="02">{i18n('Database Username:')}</label></div>
+								<div class="formLabel grid_4"><label for="02">{i18n('Database Username:')}*</label></div>
 								<div class="formField grid_3"><input id="02" type='text' value='{$db_user}' name='db_user' /></div>
 								<div class="clear"></div>
 							</div>
@@ -275,12 +279,12 @@
 								{/if}
 
 								<div class="tbl1">
-									<div class="formLabel grid_4"><label for="01">{i18n('Database Hostname:')}</label></div>
+									<div class="formLabel grid_4"><label for="01">{i18n('Database Hostname:')}*</label></div>
 									<div class="formField grid_3"><input id="01" type='text' value='{$db_host}' name='db_host' /></div>
 									<div class="clear"></div>
 								</div>
 								<div class="tbl2">
-									<div class="formLabel grid_4"><label for="01">{i18n('Database Port:')}</label></div>
+									<div class="formLabel grid_4"><label for="01">{i18n('Database Port:')}*</label></div>
 									<div class="formField grid_3"><input id="01" type='text' value='{$db_port}' name='db_port' /></div>
 									<div class="clear"></div>
 								</div>
@@ -300,7 +304,7 @@
 									<div class="clear"></div>
 								</div>
 								<div class="tbl2">
-									<div class="formLabel grid_4"><label for="06">{i18n('URL:')}</label></div>
+									<div class="formLabel grid_4"><label for="06">{i18n('URL:')}*</label></div>
 									<div class="formField grid_3"><input id="06" type='text' value='{$site_url}' name='site_url' /></div>
 									<div class="clear"></div>
 								</div>
@@ -319,6 +323,8 @@
 							</div>
 							<div class="clear"></div>
 						</form>
+						
+						<p><a href={$ADDR_INSTALL}?abort=true title={i18n('Przerwij instalację lub zacznij od nowa')}>{i18n('Przerwij instalację lub zacznij od nowa')}</a></p>
 					{elseif $step == 5}
 
 							{if $show_info}
@@ -350,12 +356,12 @@
 							<form action="index.php" method="post" id="This" autocomplete="off">
 								<div class="info">{i18n('Primary Super Admin login details')}</div><br />
 								<div class="tbl1">
-									<div class="formLabel grid_4"><label for="username">{i18n('Username:')}</label></div>
+									<div class="formLabel grid_4"><label for="username">{i18n('Username:')}*</label></div>
 									<div class="formField grid_3"><input id="username" type='text' value='{$username}' name='username' maxlength='30' /></div>
 									<div class="clear"></div>
 								</div>
 								<div class="tbl2">
-									<div class="formLabel grid_4"><label for="password1">{i18n('Login Password:')}</label></div>
+									<div class="formLabel grid_4"><label for="password1">{i18n('Login Password:')}*</label></div>
 									<div class="formField grid_3">
 										<input id="password1" type='password' name='password1' maxlength='20' />
 										<div class="graybar" id="graybar"></div>
@@ -364,12 +370,12 @@
 									<div class="clear"></div>
 								</div>
 								<div class="tbl1">
-									<div class="formLabel grid_4"><label for="03">{i18n('Repeat Login password:')}</label></div>
+									<div class="formLabel grid_4"><label for="03">{i18n('Repeat Login password:')}*</label></div>
 									<div class="formField grid_3"><input id="03" type='password' name='password2' maxlength='20' /></div>
 									<div class="clear"></div>
 								</div>
 								<div class="tbl2">
-									<div class="formLabel grid_4"><label for="06">{i18n('Email address:')}</label></div>
+									<div class="formLabel grid_4"><label for="06">{i18n('Email address:')}*</label></div>
 									<div class="formField grid_3">
 										<input id="06" type='text' value='{$email}' name='email' maxlength='100' />
 										<input type='hidden' name='site_url' value='{$ADDR_SITE}' /></div>
@@ -389,7 +395,7 @@
 								</div>
 							</form>
 
-
+							<p><a href={$ADDR_INSTALL}?abort=true title={i18n('Przerwij instalację lub zacznij od nowa')}>{i18n('Przerwij instalację lub zacznij od nowa')}</a></p>
 					{elseif $step == 6}
 
 						<div class="center">{i18n('Setup complete')}</div><br />
@@ -404,7 +410,6 @@
 								</strong>
 							</a>
 						</form>
-
 					{/if}
 				</div>
 				<div class="clear"></div>
