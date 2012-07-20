@@ -218,7 +218,7 @@ try
     define('iUSER', $_user->iUSER());
     define('iADMIN', $_user->iADMIN());
 
-	$_head  = new Header;
+	$_head  = $ec->header;
 
     // Zadania Cron
     // Cron-Jobs

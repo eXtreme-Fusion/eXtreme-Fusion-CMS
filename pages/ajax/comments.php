@@ -12,6 +12,8 @@
 require '../../config.php';
 require '../../system/sitecore.php';
 
+$_comment = $ec->comment;
+
 if ($_request->get('action')->show() === 'delete')
 {
 	if ($_request->get('id')->isNum())
