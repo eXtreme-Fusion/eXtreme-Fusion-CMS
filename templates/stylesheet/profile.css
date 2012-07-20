@@ -17,6 +17,7 @@
 #profile .profile_avatar > img {
 	max-width:100px;
 	max-height:100px;
+	background: #3a3a3a;
 	border: 10px #3a3a3a solid;
 	border-radius:5px;
 }
