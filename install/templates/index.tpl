@@ -39,7 +39,7 @@
 						<li class="{if $step_menu.done}done{elseif $step_menu.current}bold{/if}">{$step_menu.name}</li>
 					{/section}
 				</ul>
-				
+
 				<div id="MainBox">
 					{if $step == 1}
 						<form action="index.php" method="post" id="This" autocomplete="off">
@@ -331,7 +331,7 @@
 								<div class='error'><strong>{i18n('Error:')}</strong> {i18n('Empty fields.')}</div><br />
 							{else}
 								{if $username_error}
-									{i18n('Login password fields can not be left empty')}
+									{i18n('Your login does not appear to be valid.')}
 								{/if}
 
 								{if $password_error}

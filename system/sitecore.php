@@ -65,9 +65,9 @@ try
 	}
 
 	error_reporting(E_ALL | E_NOTICE);
-	
+
 	define('DIR_BASE', realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..').DIRECTORY_SEPARATOR);
-	
+
 	if ( ! file_exists(DIR_BASE.'config.php'))
 	{
 		if (file_exists(DIR_BASE.'install'.DIRECTORY_SEPARATOR))
@@ -107,7 +107,7 @@ try
 
     $ec = new Container(array('pdo.config' => $_dbconfig));
 
-	
+
 	# PHP Data Object
     $_pdo = $ec->pdo;
 
@@ -118,10 +118,10 @@ try
 	$_sett = $ec->sett;
 
 	require_once DIR_SYSTEM.'table_list.php';
-	
+
 	//1. way:
     $_user = $ec->register('user')->setArguments(array(new Reference('sett'), new Reference('pdo')))->get();
-	
+
     $_locale = new Locales($_sett->get('locale'), DIR_LOCALE);
 
 
