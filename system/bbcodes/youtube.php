@@ -19,6 +19,6 @@ $bbcode_info = array(
 
 if($bbcode_used)
 {
-	$text = preg_replace('#\[youtube\](.*?)\[/youtube\]#si', '<strong><img src="'.ADDR_BBCODE.'images/youtube.png" alt="'.__('YouTube').'">'.__('Film z YouTube').'</strong><br /><iframe width="480" height="360" src="http://www.youtube.com/embed/\1?rel=0" frameborder="0" allowfullscreen></iframe>', $text);
+	$text = preg_replace('#\[youtube\](.*?)\[/youtube\]#si', '<iframe width="480" height="360" style="display:block;margin:10px auto;" src="http://www.youtube.com/embed/\1?rel=0" frameborder="0" allowfullscreen></iframe>', $text);
 
 }
