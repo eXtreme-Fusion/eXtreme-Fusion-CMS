@@ -72,7 +72,7 @@ class Comment
 		
 				if ( ! $val['avatar'])
 				{
-					$val['avatar'] = 'none.jpg';
+					$val['avatar'] = 'none.gif';
 					$val['avatar_desc'] = __('None');
 				}
 

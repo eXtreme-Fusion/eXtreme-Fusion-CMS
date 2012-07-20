@@ -27,7 +27,7 @@ if ($row)
 	unset($row);
 	
 	// Sprawdzenie czy aktualnie znajdujemy siê w galerii
-	include DIR_MODULES.'point_system'.DS.'class'.DS.'points.php';
+	include DIR_MODULES.'point_system'.DS.'class'.DS.'Points.php';
 	
 	$_locale->moduleLoad('lang', 'point_system');
 	

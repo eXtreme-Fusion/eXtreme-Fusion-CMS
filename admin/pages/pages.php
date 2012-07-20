@@ -31,7 +31,7 @@ try
 	$_locale->load('pages');
 
 	/** Załączam model-klasę do obsługi Stron **/
-	require DIR_CLASS.'pages.php';
+	require DIR_CLASS.'Pages.php';
 
     $_tpl = new Iframe;
 
