@@ -34,7 +34,7 @@ $_tpl->root = DIR_BASE.'templates'.DS;
 /***/
 
 require DIR_SITE.'system'.DS.'helpers'.DS.'main.php';
-require DIR_SITE.'system'.DS.'class'.DS.'system.php';
+require DIR_SITE.'system'.DS.'class'.DS.'System.php';
 
 $_system = new System;
 
