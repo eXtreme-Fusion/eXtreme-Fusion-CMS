@@ -454,6 +454,8 @@ else if (getStepNum() === 3)
 								fclose($temp);
 								$fail = FALSE;
 
+								$result = dbquery("ALTER DATABASE  `".$db_name."` DEFAULT CHARACTER SET ".$charset." COLLATE ".$collate);
+								
 								include_once 'create_db.php';
 
 								if (!$fail)
