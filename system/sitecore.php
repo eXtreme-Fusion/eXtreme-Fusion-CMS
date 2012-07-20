@@ -90,7 +90,7 @@ try
 
 	if( ! extension_loaded('pdo'))
 	{
-		//throw new systemException('PDO "pdo" extension is required! Please turn it on in your php.ini.');
+		throw new systemException('PDO "pdo" extension is required! Please turn it on in your php.ini.');
 	}
 
 	if( ! extension_loaded('pdo_mysql'))
