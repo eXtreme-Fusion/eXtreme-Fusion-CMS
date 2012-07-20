@@ -27,7 +27,7 @@ return array(
 	'Perm: admin security' => 'Polityka bezpieczeństwa',
 	'Perm: admin settings' => 'Ustawienia główne systemu.',
 	'Perm: admin settings_banners' => 'Zarządzanie banerami',
-	'Perm: admin settings_banners' => 'Pamięć podręczna',
+	'Perm: admin settings_cache' => 'Pamięć podręczna',
 	'Perm: admin settings_time' => 'Zarządzanie datą i godziną.',
 	'Perm: admin settings_registration' => 'Dostęp do ustawień rejestracji.',
 	'Perm: admin settings_misc' => 'Dostęp do ustawień różnych.',
