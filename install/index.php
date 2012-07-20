@@ -31,8 +31,6 @@ require_once OPT_DIR.'opt.class.php';
 $_tpl = new optClass;
 $_tpl->compile = DIR_CACHE;
 $_tpl->root = DIR_BASE.'templates'.DS;
-
-
 /***/
 
 require DIR_SITE.'system'.DS.'helpers'.DS.'main.php';
@@ -203,6 +201,7 @@ function optLocale(optClass &$_tpl, $key, array $values = array())
 
 $_tpl->registerFunction('i18n', 'Locale');
 
+// Przechodzi do wybranego etapu instalacji z odświeżeniem strony
 function goToStep($step)
 {
 	if (is_numeric($step) && $step)
@@ -219,7 +218,7 @@ function goToStep($step)
 	exit;
 }
 
-// Przerywa bieżącą instalację i zaczyna nową od początku
+// Przerywa bieżącą instalację z informacją dla użytkownika
 function abortInstall()
 {
 	$_SESSION['step'] = 'abort';
@@ -227,11 +226,21 @@ function abortInstall()
 	exit;
 }
 
+// Restartuje instalację bez informacji dla użytkownika
 function restartInstall()
 {
 	unset($_SESSION['step']);
 }
 
+// Przechodzi do strony głównej
+function goToPage()
+{
+	header('Location: '.ADDR_SITE);
+	exit;
+}
+
+
+// Inicjacja przerwania instalacji
 if (isset($_GET['abort']))
 {
 	abortInstall();
@@ -652,8 +661,7 @@ else if (getStepNum() === 6)
 	if ($_POST)
 	{
 		restartInstall();
-		header('Location: '.ADDR_SITE);
-		exit;
+		goToPage();
 	}
 
 }
