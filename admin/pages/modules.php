@@ -17,7 +17,6 @@ try
 	// TODO:: Albo z require DIR_SITE.'bootstrap.php'; lecz bez zmodyfikwanego bootstrap.php podczas rozpoczynania sesji.
 	require DIR_SITE.'bootstrap.php';
 	require_once DIR_SYSTEM.'admincore.php';
-	require DIR_CLASS.'modules.php';
 	
 	$_locale->load('modules');
 
