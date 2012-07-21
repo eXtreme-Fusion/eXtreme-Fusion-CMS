@@ -46,6 +46,6 @@ class Container extends ServiceContainerBuilder
 
 	protected function getLocaleService()
 	{
-		return new Locales($this->getService('Sett')->get('Locale'), DIR_LOCALE);
+		return new Locales($this->getService('Sett')->get('locale'), DIR_LOCALE);
 	}
 }
