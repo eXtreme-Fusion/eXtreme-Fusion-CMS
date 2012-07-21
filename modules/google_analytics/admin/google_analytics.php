@@ -25,7 +25,7 @@ try
 		
 		$_tpl = new AdminModuleIframe('google_analytics');
 
-		include DIR_MODULES.'google_analytics'.DS.'class'.DS.'gapi.php';
+		include DIR_MODULES.'google_analytics'.DS.'class'.DS.'Gapi.php';
 		
 		$row = $_pdo->getRow('SELECT * FROM [google_analytics_sett]');
 		

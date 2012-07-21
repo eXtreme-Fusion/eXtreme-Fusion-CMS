@@ -144,6 +144,15 @@ class PageNav implements PageNavIntf
 	{
 		if ($paging)
 		{
+		
+			/* TO DO
+				Notice: Undefined index: route in C:\ef5gif\system\class\StaticContainer.php on line 14
+				Call Stack
+				#	Time	Memory	Function	Location
+				1	0.0020	965336	{main}( )	..\news.php:0
+				2	0.0447	4520680	PageNav->get( )	..\news.php:275
+				3	0.0451	4543680	StaticContainer->get( )	..\PageNav.php:147
+			*/
 			$_tpl = new pageNavParser(StaticContainer::get('route'));
 
 			$_tpl->assignGroup(array(

@@ -13,7 +13,7 @@
 /*
 Użycie:
 
-require DIR_CLASS.'paging.php';
+require DIR_CLASS.'Paging.php';
 
 $page = new PageNav(new Paging(100, 2, 5), $_tpl, 10);
 

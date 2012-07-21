@@ -22,7 +22,7 @@ try
         throw new userException(__('Access denied'));
     }
 
-	require DIR_CLASS.'panels.php';
+	require DIR_CLASS.'Panels.php';
 
     $_tpl = new Iframe;
 

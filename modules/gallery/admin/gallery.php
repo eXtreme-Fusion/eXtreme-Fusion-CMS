@@ -23,8 +23,8 @@ try
 
         $_tpl = new AdminModuleIframe('gallery');
 	
-	include DIR_MODULES.'gallery'.DS.'class'.DS.'sett.php';
-	include DIR_MODULES.'gallery'.DS.'class'.DS.'image.php';
+	include DIR_MODULES.'gallery'.DS.'class'.DS.'Sett.php';
+	include DIR_MODULES.'gallery'.DS.'class'.DS.'Image.php';
 	
 	// Inicjalizacja klas
 	! class_exists('GallerySett') || $_gallery_sett = New GallerySett($_system, $_pdo);

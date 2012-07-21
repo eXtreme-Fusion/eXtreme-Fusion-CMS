@@ -4,17 +4,17 @@ class Container extends ServiceContainerBuilder
 {
 	protected function getCommentService()
 	{
-		return new Comment(new Basic, $this->getService('pdo'), $this->getService('user'), $this->getService('sett'), $this->getService('sbb'), $this->getService('header'));
+		return new Comment(new Basic, $this->getService('Pdo'), $this->getService('User'), $this->getService('Sett'), $this->getService('Sbb'), $this->getService('Header'));
 	}
 
 	protected function getUserService()
 	{
-		return new User($this->getService('Sett'), $this->getService('pdo'));
+		return new User($this->getService('Sett'), $this->getService('Pdo'));
 	}
 
 	protected function getSettService()
 	{
-		return new Sett($this->getService('system'), $this->getService('pdo'));
+		return new Sett($this->getService('System'), $this->getService('Pdo'));
 	}
 
 	protected function getSystemService()
@@ -39,13 +39,13 @@ class Container extends ServiceContainerBuilder
 
 	protected function getSBBService()
 	{
-		include_once DIR_CLASS.'sbb.php';
+		include_once DIR_CLASS.'Sbb.php';
 
-		return SmileyBBcode::getInstance($this->getService('sett'), $this->getService('pdo'), $this->getService('locale'), $this->getService('header'), $this->getService('user'));
+		return SmileyBBcode::getInstance($this->getService('Sett'), $this->getService('Pdo'), $this->getService('Locale'), $this->getService('Header'), $this->getService('User'));
 	}
 
 	protected function getLocaleService()
 	{
-		return new Locales($this->getService('sett')->get('locale'), DIR_LOCALE);
+		return new Locales($this->getService('Sett')->get('Locale'), DIR_LOCALE);
 	}
 }

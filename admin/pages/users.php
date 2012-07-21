@@ -25,7 +25,7 @@ try
 	
 	$_tpl->assign('page', $_request->get('page')->show());
 	
-	require_once DIR_CLASS.'mailer.php';
+	require_once DIR_CLASS.'Mailer.php';
 	$_mail = new Mailer($_sett->get('smtp_username'), $_sett->get('smtp_password'), $_sett->get('smtp_host'));
 
 	if ($_request->get('page')->show() === 'users')

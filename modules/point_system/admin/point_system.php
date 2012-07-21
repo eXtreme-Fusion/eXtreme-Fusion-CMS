@@ -20,7 +20,7 @@ try
         throw new userException(__('Access denied'));
     }
 
-	include DIR_MODULES.'point_system'.DS.'class'.DS.'points.php';
+	include DIR_MODULES.'point_system'.DS.'class'.DS.'Points.php';
 	
 	$_points = new Points($_pdo, $_system);
 	
