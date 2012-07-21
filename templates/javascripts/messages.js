@@ -1,6 +1,6 @@
 $(function() {
 
-	$('#messages_form form').submit(function() {
+	$('#messages_page form').submit(function() {
 
 		var new_message = $('#message_subject').length;
 
@@ -17,7 +17,7 @@ $(function() {
 		var to_user = $('input[name*="to"]', this).val();
 
 		$.post(addr_site+'pages/ajax/messages.php', {
-			message: $('input[name*="message"]', this).val(),
+			message: $('#message', this).val(),
 			to: to_user,
 			item_id: $('input[name*="item_id"]', this).val(),
 			send: true,
@@ -25,7 +25,7 @@ $(function() {
 			action: 'send'
 		},
 		function(data) {
-			$('input[name*="message"]').val('');
+			$('#message').val('');
 			if (new_message) {
 				$('#message_subject').parent().remove();
 				$('input[name*="item_id"]').val(data);
@@ -91,27 +91,27 @@ $(function() {
 	// Odświeżanie okna rozmowy
 
 	function refresh_pw() {
-		var posts = $('.pw_message_item').length;
+		var posts = $('#ajax_messages article').length;
 		var item_id = $('input[name*="item_id"]').val();
 
 		$.ajax({
 			url: addr_site+'pages/ajax/messages.php', data: 'item_id='+item_id, type: 'GET', success: function (html) {
-				$('#messages_frame section').html(html);
+				$('#ajax_messages').html(html);
 				setTimeout(function(){
-					var posts2 = $('.pw_message_item').length;
+					var posts2 = $('#ajax_messages article').length;
 					if (posts != posts2) {
-						var scrollh = $('#messages_frame section').height();
-						$('#messages_frame').animate({ scrollTop: scrollh }, 800);
+						var scrollh = $('#ajax_messages').height();
+						$('#messages_page').animate({ scrollTop: scrollh }, 800);
 					}
 				}, 400);
 			}, error: function(){
-				$('#messages_frame section').html('Wystąpił błąd! Odśwież stronę.');
+				$('#ajax_messages').html('Wystąpił błąd! Odśwież stronę.');
 			}
 		});
 	}
 
 	var refresh = false;
-	$('#messages_frame').hover(function() {
+	$('#messages_page').hover(function() {
 		if (!refresh) {
 			refresh_pw();
 			refresh = true;

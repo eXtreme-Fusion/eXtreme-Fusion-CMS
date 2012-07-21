@@ -11,7 +11,7 @@
 ***********************************************************/
 $_user->onlyForUsers($_route);
 
-$_head->set('<meta name="robots" content="noindex" />');
+$_head->set('<meta name="robots" content="noindex">');
 
 $_locale->load('messages');
 
@@ -25,7 +25,7 @@ if ($_route->getAction() !== NULL)
 	$_head->set('<script src="'.ADDR_TEMPLATES.'javascripts/messages.js"></script>');
 }
 
-$_head->set('<link href="'.ADDR_TEMPLATES.'stylesheet/messages.css" media="screen" rel="stylesheet" />');
+$_head->set('<link href="'.ADDR_TEMPLATES.'stylesheet/messages.css" media="screen" rel="stylesheet">');
 
 // Przegląd wszystkich wiadomości
 if ($_route->getAction() === NULL)
@@ -56,8 +56,10 @@ if ($_route->getAction() === NULL)
 			$data[$i] = array(
 				'user_id' => $userid,
 				'user_link' => HELP::profileLink(NULL, $userid),
+				'user_avatar' => $_user->getByID($userid,'avatar'),
 				'subject' => $row['subject'],
 				'datestamp' => HELP::showDate('shortdate', $row['datestamp']),
+				'datetotime' => date('Y-m-d H:i', $row['datestamp']),
 				'item_id' => $row['item_id'],
 				'msg_link' => $_route->path(array('controller' => 'messages', 'action' => 'view', $userid, $row['item_id'], $row['subject'] ? HELP::Title2Link($row['subject']) : HELP::Title2Link('no subject')))
 			);
