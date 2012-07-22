@@ -9,30 +9,97 @@
 		{if $data}
 			<p class="info">{i18n('Messages are deleted automatically after 60 days from the time they were sent.')}</p>
 			
-			{section=data}
-				<article class="read_{if $data.read_status == 1}0{else}1{/if} clearfix">
-					<span class="arrow"></span>
-					{if $data.user_avatar}
-						<img src="{$ADDR_IMAGES}avatars/{$data.user_avatar}" alt="Avatar" class="avatar">
-					{else}
-						<img src="{$ADDR_IMAGES}avatars/none.gif" alt="No Avatar" class="avatar">
-					{/if}
-					<div class="pw_cont">
-						<span class="interlocutor">{$data.user_link}</span>
-						<h4><a href="{$data.msg_link}" title="{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}" class="tip">{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}</a></h4>
-						<time datetime="{$data.datetotime}">{$data.datestamp}</time>
-						{if $data.read_status == '1'}
-							<p class="new_mes">Nowa</p>
-						{elseif $data.read_status == '2'}
-							<p class="read_mes">Przeczytana</p>
-						{elseif $data.read_status == '3'}
-							<p class="sent_mes">Wysłana</p>
-						{elseif $data.read_status == '4'}
-							<p class="del_mes">Dostarczona</p>
+			<nav>
+				<ul>
+					<li><a href="javascript:void(0)" id="tab_all" class="tab">Wszystkie</a></li>
+					{if $has_messages.inbox}<li><a href="javascript:void(0)" id="tab_inbox" class="tab">Odebrane</a></li>{/if}
+					{if $has_messages.outbox}<li><a href="javascript:void(0)" id="tab_outbox" class="tab">Wysłane</a></li>{/if}
+					{if $has_messages.draft}<li><a href="javascript:void(0)" id="tab_draft" class="tab">Robocze</a></li>{/if}
+				</ul>
+			</nav>
+			
+			<div class="tab_cont" id="tab_cont_all">
+				{section=data}
+					<article class="read_{if $data.read_status == 1}0{else}1{/if} clearfix">
+						<span class="arrow"></span>
+						{if $data.user_avatar}
+							<img src="{$ADDR_IMAGES}avatars/{$data.user_avatar}" alt="Avatar" class="avatar">
+						{else}
+							<img src="{$ADDR_IMAGES}avatars/none.gif" alt="No Avatar" class="avatar">
 						{/if}
-					</div>
-				</article>
-			{/section}
+						<div class="pw_cont">
+							<span class="interlocutor">{$data.user_link}</span>
+							<h4><a href="{$data.msg_link}" title="{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}">{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}</a></h4>
+							<time datetime="{$data.datetotime}">{$data.datestamp}</time>
+							{if $data.read_status == '1'}
+								<p class="new_mes">Nowa</p>
+							{elseif $data.read_status == '2'}
+								<p class="read_mes">Przeczytana</p>
+							{elseif $data.read_status == '3'}
+								<p class="sent_mes">Wysłana</p>
+							{elseif $data.read_status == '4'}
+								<p class="del_mes">Dostarczona</p>
+							{/if}
+						</div>
+					</article>
+				{/section}
+			</div>
+			{if $has_messages.inbox}
+				<div class="tab_cont" id="tab_cont_inbox">
+					{section=data}
+						{if $data.read_status == '1' || $data.read_status == '2'}
+							<article class="read_{if $data.read_status == 1}0{else}1{/if} clearfix">
+								<span class="arrow"></span>
+								{if $data.user_avatar}
+									<img src="{$ADDR_IMAGES}avatars/{$data.user_avatar}" alt="Avatar" class="avatar">
+								{else}
+									<img src="{$ADDR_IMAGES}avatars/none.gif" alt="No Avatar" class="avatar">
+								{/if}
+								<div class="pw_cont">
+									<span class="interlocutor">{$data.user_link}</span>
+									<h4><a href="{$data.msg_link}" title="{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}">{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}</a></h4>
+									<time datetime="{$data.datetotime}">{$data.datestamp}</time>
+									{if $data.read_status == '1'}
+										<p class="new_mes">Nowa</p>
+									{elseif $data.read_status == '2'}
+										<p class="read_mes">Przeczytana</p>
+									{/if}
+								</div>
+							</article>
+						{/if}
+					{/section}
+				</div>
+			{/if}
+			{if $has_messages.outbox}
+				<div class="tab_cont" id="tab_cont_outbox">
+					{section=data}
+						{if $data.read_status == '3' || $data.read_status == '4'}
+							<article class="read_1 clearfix">
+								<span class="arrow"></span>
+								{if $data.user_avatar}
+									<img src="{$ADDR_IMAGES}avatars/{$data.user_avatar}" alt="Avatar" class="avatar">
+								{else}
+									<img src="{$ADDR_IMAGES}avatars/none.gif" alt="No Avatar" class="avatar">
+								{/if}
+								<div class="pw_cont">
+									<span class="interlocutor">{$data.user_link}</span>
+									<h4><a href="{$data.msg_link}" title="{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}">{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}</a></h4>
+									<time datetime="{$data.datetotime}">{$data.datestamp}</time>
+									{if $data.read_status == '3'}
+										<p class="sent_mes">Wysłana</p>
+									{elseif $data.read_status == '4'}
+										<p class="del_mes">Dostarczona</p>
+									{/if}
+								</div>
+							</article>
+						{/if}
+					{/section}
+				</div>
+			{/if}
+			{if $has_messages.draft}
+				<div class="tab_cont" id="tab_cont_draft">
+				</div>
+			{/if}
 		{else}
 			<p class="status">{i18n('There are no messages.')}</p>
 		{/if}
@@ -77,7 +144,7 @@
 			</div>
 			<div class="line center">
 				{section=bbcode}
-					<button type="button" onClick="addText('{$bbcode.textarea}', '[{$bbcode.value}]', '[/{$bbcode.value}]');"><img src="{$bbcode.image}" title="{$bbcode.description}" alt="{$bbcode.value}" class="tip"></button>
+					<button type="button" onClick="addText('{$bbcode.textarea}', '[{$bbcode.value}]', '[/{$bbcode.value}]');"><img src="{$bbcode.image}" title="{$bbcode.description}" alt="{$bbcode.value}"></button>
 				{/section}
 			</div>
 			<div class="line center">
