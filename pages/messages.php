@@ -16,7 +16,7 @@ $_head->set('<meta name="robots" content="noindex">');
 $_locale->load('messages');
 
 //Initiation of Smiley & BBCode parser
-$_sbb = $ec->getService('sbb');
+$_sbb = $ec->getService('Sbb');
 
 $_tpl->assign('bbcode', $_sbb->bbcodes());
 

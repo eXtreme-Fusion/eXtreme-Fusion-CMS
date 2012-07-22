@@ -88,6 +88,6 @@ $perm[1] = array(
 
 $menu_link[1] = array(
 	'title' => 'Historia punktów',
-	'url' => 'point_system.html',
+	'url' => 'point_system',
 	'visibility' => '2'
 );

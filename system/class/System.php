@@ -26,7 +26,7 @@ class System {
 		// Zabezpieczenie przed atakami XSS.
 		if ($cleaning && HELP::stripget($_GET))
 		{
-			throw new systemException(__('Podejrzewany atak XSS po zmiennej $_GET!'));
+			throw new systemException(die('Podejrzewany atak XSS po zmiennej $_GET!'));
 		}
 
 		if (file_exists(DIR_SITE.'config.php'))
