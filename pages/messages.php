@@ -26,6 +26,7 @@ if ($_route->getAction() !== NULL)
 }
 
 $_head->set('<link href="'.ADDR_TEMPLATES.'stylesheet/messages.css" media="screen" rel="stylesheet">');
+$_head->set('<script src="'.ADDR_TEMPLATES.'javascripts/jquery.tabs.js"></script>');
 
 // Przegląd wszystkich wiadomości
 if ($_route->getAction() === NULL)
@@ -97,6 +98,9 @@ if ($_route->getAction() === NULL)
 
 		$_tpl->assign('data', $data);
 	}
+	
+	// Sprawdzanie, czy są jakieś wiadomości w kategoriach "odebrane", "wysłane", "robocze" - do zrobienia :)
+	$_tpl->assign('has_messages', array('inbox' => TRUE, 'outbox' => TRUE, 'draft' => TRUE));
 
 	// Link do "Nowej wiadomości"
 	$_tpl->assign('url_new_message', $_route->path(array('controller' => 'messages', 'action' => 'new')));
