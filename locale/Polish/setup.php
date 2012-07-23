@@ -144,4 +144,9 @@ return array(
 	'Living place' => 'Miejscowość',
 	'Signature' => 'Podpis',
 	'Rewrite info' => 'Twój serwer umożliwia korzystanie z modułu mod_rewrite, lecz nie ma uprawnień do automatycznej zmiany nazwy pliku. Jeśli chcesz z niego skorzystać do tworzenia linków przyjaznych dla wyszukiwarek, zmień nazwę pliku "rewrite" na ".htaccess". W przeciwnym przypadku, po prostu zignoruj ten komunikat.',
+	// Example news
+	'Example news title' => 'Przykładowa treść',
+	'Example news content' => 'Witaj na swojej stronie.',
+	'Example news url' => 'przkladowa-tresc',
+	'Example news description' => 'Tresc podstawowa',
 );

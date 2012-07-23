@@ -16,4 +16,9 @@ return array(
 	'Group: user' => 'Grupa ta posiada podstawowe zezwolenia m.in. Mo¿liwoœæ logowania siê.',
 	'Group: guest' => 'Grupa o ograniczonych prawach korzystania ze strony',
 	'Rewrite info' => 'Your server is ready to work with rewrite module, but system does not have permission to change name of file. If you want to have SEO URLs, rename the file from "rewrite" to ".htaccess". Otherwise, just ignore this message.',
-);
+	// Example news
+	'Example news title' => 'Przyk³adowa treœæ',
+	'Example news content' => 'Witaj na swojej stronie.',
+	'Example news url' => 'przkladowa-tresc',
+	'Example news description' => 'Tresc podstawowa',
+	);
