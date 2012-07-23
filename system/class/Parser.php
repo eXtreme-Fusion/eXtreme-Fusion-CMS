@@ -780,7 +780,7 @@ class AdminModuleIframe extends Parser
 		$this->_module = $module;
 
 		// Local OPT configuration loader
-		$this->setConfig();
+		$this->setConfig($module);
 
 		if (isset($_GET['fromPage']))
 		{
