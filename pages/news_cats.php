@@ -34,17 +34,17 @@ if ($_route->getAction())
 
 		if ( ! $_route->getByID(3))
 		{
-			$_GET['current'] = 1;
+			$current = 1;
 		}
 		else
 		{
-			$_GET['current'] = $_route->getByID(3);
+			$current = $_route->getByID(3);
 		}
 
-		$_GET['rowstart'] = PAGING::getRowStart($_GET['current'], $items_per_page);
+		$_GET['rowstart'] = PAGING::getRowStart($current, $items_per_page);
 		
 		// Cache dla kategorii newsów opisu, miniaturek, id
-		$category = $_system->cache('news_cats,cat-'.$_route->getAction().','.$_user->getCacheName().',page-'.$_GET['current'], NULL, 'news_cats', $_sett->getUns('cache', 'expire_news_cats'));
+		$category = $_system->cache('news_cats,cat-'.$_route->getAction().','.$_user->getCacheName().',page-'.$current, NULL, 'news_cats', $_sett->getUns('cache', 'expire_news_cats'));
 		if ($category === NULL)
 		{
 			$rows = $_pdo->getRow('SELECT * FROM [news_cats] WHERE `id` = :id', 
@@ -64,11 +64,11 @@ if ($_route->getAction())
 				)
 			);
 
-			$_system->cache('news_cats,cat-'.$_route->getAction().','.$_user->getCacheName().',page-'.$_GET['current'], $category, 'news_cats');
+			$_system->cache('news_cats,cat-'.$_route->getAction().','.$_user->getCacheName().',page-'.$current, $category, 'news_cats');
 		}
 		
 		// Cache dla wystęujących newsów w danej kategorii
-		$cache = $_system->cache('news,cat-'.$_route->getAction().','.$_user->getCacheName().',page-'.$_GET['current'], NULL, 'news_cats', $_sett->getUns('cache', 'expire_news_cats'));
+		$cache = $_system->cache('news,cat-'.$_route->getAction().','.$_user->getCacheName().',page-'.$current, NULL, 'news_cats', $_sett->getUns('cache', 'expire_news_cats'));
 		if ($cache === NULL)
 		{
 			$row = $_pdo->getSelectCount('SELECT COUNT(`id`) FROM [news] WHERE `category` = :category  AND `access` IN ('.$_user->listRoles().')',
@@ -112,7 +112,7 @@ if ($_route->getAction())
 						$i++;
 					}
 				}
-				$_system->cache('news,cat-'.$_route->getAction().','.$_user->getCacheName().',page-'.$_GET['current'], $cache, 'news_cats');
+				$_system->cache('news,cat-'.$_route->getAction().','.$_user->getCacheName().',page-'.$current, $cache, 'news_cats');
 			}
 		}
 		
@@ -123,19 +123,17 @@ if ($_route->getAction())
 		if ($rowa)
 		{
 			// TO DO
-			// Nie wiem czy tak stworzone parametry odpowiadają naszemu stylowi 
+			// Nie wiem czy tak stworzone parametry odpowiadają naszemu stylowi ~Rafik89
 			// array($_route->getFileName(), $_route->getByID(1).$_sett->getUns('routing', 'main_sep').$_route->getByID(2), FALSE)
-			$_pagenav = new PageNav(new Paging($rowa, $_GET['current'], $items_per_page), $_tpl, 5, array($_route->getFileName(), $_route->getByID(1).$_sett->getUns('routing', 'main_sep').$_route->getByID(2), FALSE));
+			$_pagenav = new PageNav(new Paging($rowa, $current, $items_per_page), $_tpl, 5, array($_route->getFileName(), $_route->getByID(1).$_sett->getUns('routing', 'main_sep').$_route->getByID(2), FALSE));
 
-			if (file_exists(DIR_THEME.'templates'.DS.'paging'.DS.'news_cats_page_nav.tpl'))
+			if (file_exists(DIR_THEME.'templates'.DS.'paging'.DS.'news_cats_nav.tpl'))
 			{
-				$_pagenav->get($_pagenav->create(), 'news_cats_page_nav', DIR_THEME.'templates'.DS.'paging'.DS);
+				$_pagenav->get($_pagenav->create(), 'news_cats_nav', DIR_THEME.'templates'.DS.'paging'.DS);
 			}
 			else
 			{
 				$_pagenav->get($_pagenav->create(), 'news_cats_nav');
-				// or //
-				//$_pagenav->get($_pagenav->create(), 'news_page_nav');
 			}
 		}
 	}

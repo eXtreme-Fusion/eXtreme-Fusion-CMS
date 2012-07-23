@@ -780,7 +780,7 @@ class AdminModuleIframe extends Parser
 		$this->_module = $module;
 
 		// Local OPT configuration loader
-		$this->setConfig();
+		$this->setConfig($module);
 
 		if (isset($_GET['fromPage']))
 		{
@@ -814,7 +814,7 @@ class AdminModuleIframe extends Parser
 		$this->parse('pre'.DS.'iframe_header.tpl');
 
 		$this->root    = DIR_MODULES.$this->_module.DS.'templates'.DS;
-		$this->parse($iframe);
+		$this->parse($this->_module.'.'.$iframe);
 
 		$this->root    = DIR_ADMIN_TEMPLATES;
 		$this->parse('pre'.DS.'iframe_footer.tpl');
