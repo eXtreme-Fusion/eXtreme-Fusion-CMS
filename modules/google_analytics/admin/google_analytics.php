@@ -147,7 +147,7 @@ try
 		exit;
 	}
 	
-	$_tpl->template('google_analytics.tpl');
+	$_tpl->template('admin.tpl');
 }
 catch(optException $exception)
 {

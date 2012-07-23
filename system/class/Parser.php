@@ -793,7 +793,7 @@ class AdminModuleIframe extends Parser
 
 	protected function setConfig()
 	{
-		$this->setCompilePrefix('modules_');
+		$this->setCompilePrefix('modules_').$this->_module;
 		$this->compile         = DIR_CACHE;
 		$this->cache           = DIR_CACHE;
 	}
@@ -814,7 +814,7 @@ class AdminModuleIframe extends Parser
 		$this->parse('pre'.DS.'iframe_header.tpl');
 
 		$this->root    = DIR_MODULES.$this->_module.DS.'templates'.DS;
-		$this->parse($iframe);
+		$this->parse($this->_module.'.'.$iframe);
 
 		$this->root    = DIR_ADMIN_TEMPLATES;
 		$this->parse('pre'.DS.'iframe_footer.tpl');
