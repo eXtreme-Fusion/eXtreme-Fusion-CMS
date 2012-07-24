@@ -675,7 +675,7 @@ class User {
 		return $username;
 	}
 	
-	public function getAvatar($user = NULL, $default = "none.gif")
+	public function getAvatarFileName($user = NULL, $default = "none.gif")
 	{
 		if (file_exists(DIR_IMAGES.'avatars/'.$default))
 		{

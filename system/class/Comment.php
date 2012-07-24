@@ -61,19 +61,14 @@ class Comment
 						$val['author'] = HELP::profileLink($this->_user->getByID($id, 'username'), $id);
 						
 						$user_data = $this->_user->getByID($id, array('avatar', 'username'));
-						$val['avatar'] = $user_data['avatar'];
+						$val['avatar'] = $this->_user->getAvatarFileName($id);
 						$val['avatar_desc'] = $user_data['username'];
 					}
 					else
 					{
 						$val['author'] = $val['author'];
+						$val['avatar'] = $this->_user->getAvatarFileName();
 					}
-				}
-		
-				if ( ! $val['avatar'])
-				{
-					$val['avatar'] = 'none.gif';
-					$val['avatar_desc'] = __('None');
 				}
 
 				$val['post'] = $this->_sbb->parseBBCode(nl2br($val['post']));

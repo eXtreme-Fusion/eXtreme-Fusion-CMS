@@ -432,7 +432,7 @@ try
 						'email' => $data['email'],
 						'role' => $_user->getRoleName($data['role']),
 						'roles' => implode($_user->getUserRolesTitle($data['id']), ', '),
-						'avatar' => $_user->getAvatar($data['id']),
+						'avatar' => $_user->getAvatarFileName($data['id']),
 						'joined' => HELP::showDate('shortdate', $data['joined']),
 						'status' => $data['status'],
 						'visit' => ($data['lastvisit'] != 0 ? HELP::showDate('shortdate', $data['lastvisit']) : __('Nie był na stronie')),

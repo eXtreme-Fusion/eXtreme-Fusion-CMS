@@ -22,7 +22,7 @@ if($row)
 		'role' => $_user->getRoleName($row['role']),
 		'points' => $row['points'],
 		'rank' => $_points->showRank($row['id']),
-		'avatar' => $_user->getAvatar($row['id'])
+		'avatar' => $_user->getAvatarName($row['id'])
 	);
 }
 
