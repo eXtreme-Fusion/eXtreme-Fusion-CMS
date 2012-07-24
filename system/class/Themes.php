@@ -223,6 +223,7 @@ class Theme extends optClass
 			{
 				if ($sdata['url'] != "---" && $this->_user->hasAccess($sdata['visibility'])) 
 				{
+					/* selected do poprawy */
 					$menu[] = array(
 						'sep' => $sep,
 						'link' => HELP::createNaviLink($sdata['url']),
@@ -234,6 +235,7 @@ class Theme extends optClass
 					$i++;
 				}
 			}
+			
 			return $menu;
 		}
 	}
