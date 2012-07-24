@@ -1,10 +1,12 @@
+/** FUNKCJE WSPÓLNE DLA pANELU aDMINA I RESZTY STRONY **/
+
+
 // Wyszukiwanie u¿ytkownika po jego loginie
-
-
 function searchUser(is_here_admin_panel, self_search)
 {
 	window.self_search = self_search;
 	window.is_here_admin_panel = is_here_admin_panel;
+
 	$('#search_user').after('<div id="defenders"></div>');
 
 	$('#search_user').keyup(function() {
@@ -16,14 +18,14 @@ function searchUser(is_here_admin_panel, self_search)
 		} else {
 			var is_here_admin_panel = 1;
 		}
-		
+
 
 		if (window.self_search == false) {
 			var self_search = 0;
 		} else {
 			var self_search = 1;
 		}
-		
+
 		$.ajax({
 			url: addr_site+'ajax/search_users.php',
 			type: 'POST',
