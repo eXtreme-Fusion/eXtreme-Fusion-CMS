@@ -25,13 +25,14 @@ class Theme extends optClass
 	 * @param   Database  klasa bazy danych
 	 * @return  void
 	 */
-	public function __construct(Sett $sett, System $system, $user, $pdo, $request, $tpl_file_name = NULL)
+	public function __construct(Sett $sett, System $system, $user, $pdo, $request, $route, $tpl_file_name = NULL)
 	{
 		$this->_sett = $sett;
 		$this->_user = $user;
 		$this->_pdo = $pdo;
 		$this->_system = $system;
 		$this->_request = $request;
+		$this->_route = $route;
 		$this->_theme = $sett->get('theme');
 		$this->setConfig();
 		$this->_tpl_file_name = $tpl_file_name;
@@ -223,19 +224,17 @@ class Theme extends optClass
 			{
 				if ($sdata['url'] != "---" && $this->_user->hasAccess($sdata['visibility'])) 
 				{
-					/* selected do poprawy */
 					$menu[] = array(
 						'sep' => $sep,
 						'link' => HELP::createNaviLink($sdata['url']),
 						'name' => parseBBCode($sdata['name'], "b|i|u|color"),
 						'target' => $sdata['window'] == '1' ? TRUE : FALSE,
 						'class' => ($i == 0 ? 'first-link'.($class ? ' '.$class : '') : ($class ? $class : '')),
-						'selected' =>  basename($_SERVER['PHP_SELF']) == $sdata['url'] ? TRUE : FALSE
+						'selected' =>  $this->_route->getFileName() == pathinfo($sdata['url'], PATHINFO_FILENAME) ? TRUE : FALSE
 					);
 					$i++;
 				}
 			}
-			
 			return $menu;
 		}
 	}

@@ -41,7 +41,7 @@ a.menu, li.menu a {
 	-o-border-radius:6px;
 }
 
-a:hover.menu, li.menu a:hover {
+a:hover.menu, li.menu a:hover, li.menu.selected a {
 	color: #B4D400;
 	text-decoration: none;
 	color: #fff;
@@ -169,7 +169,6 @@ pre {
 .bottom {font-size:11px;text-align:center;color:#777;padding:10px 15px 10px 15px;}
 .bottom ul {margin: 0;padding: 0;list-style-type: none;width: auto;}
 .bottom ul li {display:inline;}
-
 
 /* Admin messages */
 .admin-message {
