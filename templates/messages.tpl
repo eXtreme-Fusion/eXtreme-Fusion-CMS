@@ -22,11 +22,7 @@
 				{section=data}
 					<article class="read_{if $data.read_status == 1}0{else}1{/if} clearfix">
 						<span class="arrow"></span>
-						{if $data.user_avatar}
-							<img src="{$ADDR_IMAGES}avatars/{$data.user_avatar}" alt="Avatar" class="avatar">
-						{else}
-							<img src="{$ADDR_IMAGES}avatars/none.gif" alt="No Avatar" class="avatar">
-						{/if}
+						<img src="{$ADDR_IMAGES}avatars/{$data.user_avatar}" alt="Avatar" class="avatar">
 						<div class="pw_cont">
 							<span class="interlocutor">{$data.user_link}</span>
 							<h4><a href="{$data.msg_link}" title="{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}">{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}</a></h4>
@@ -50,11 +46,7 @@
 						{if $data.read_status == '1' || $data.read_status == '2'}
 							<article class="read_{if $data.read_status == 1}0{else}1{/if} clearfix">
 								<span class="arrow"></span>
-								{if $data.user_avatar}
-									<img src="{$ADDR_IMAGES}avatars/{$data.user_avatar}" alt="Avatar" class="avatar">
-								{else}
-									<img src="{$ADDR_IMAGES}avatars/none.gif" alt="No Avatar" class="avatar">
-								{/if}
+								<img src="{$ADDR_IMAGES}avatars/{$data.user_avatar}" alt="Avatar" class="avatar">
 								<div class="pw_cont">
 									<span class="interlocutor">{$data.user_link}</span>
 									<h4><a href="{$data.msg_link}" title="{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}">{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}</a></h4>
@@ -76,11 +68,7 @@
 						{if $data.read_status == '3' || $data.read_status == '4'}
 							<article class="read_1 clearfix">
 								<span class="arrow"></span>
-								{if $data.user_avatar}
-									<img src="{$ADDR_IMAGES}avatars/{$data.user_avatar}" alt="Avatar" class="avatar">
-								{else}
-									<img src="{$ADDR_IMAGES}avatars/none.gif" alt="No Avatar" class="avatar">
-								{/if}
+								<img src="{$ADDR_IMAGES}avatars/{$data.user_avatar}" alt="Avatar" class="avatar">
 								<div class="pw_cont">
 									<span class="interlocutor">{$data.user_link}</span>
 									<h4><a href="{$data.msg_link}" title="{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}">{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}</a></h4>

@@ -2,11 +2,7 @@
     {php} opentable(__('Member Profile')) {/php}
         <div id="profile">
             <div class="profile_avatar">
-                {if $user.avatar}
-                    <img src="{$ADDR_IMAGES}avatars/{$user.avatar}" alt="Avatar">
-                {else}
-                    <img src="{$ADDR_IMAGES}avatars/none.gif" alt="No Avatar">
-                {/if}
+                <img src="{$ADDR_IMAGES}avatars/{$user.avatar}" alt="Avatar">
                 <p>{if $user.is_online == 1}<img src="{$ADDR_IMAGES}online.png" alt="{i18n('Online')}"><span class="online">{i18n('Online')}</span>{else}<img src="{$ADDR_IMAGES}offline.png" alt="{i18n('Offline')}">{$user.last_visit_time}{/if}</p>
             </div>
             <div class="profile_title">
