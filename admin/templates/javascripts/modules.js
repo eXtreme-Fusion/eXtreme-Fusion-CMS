@@ -28,8 +28,12 @@ function highlightLast5(periods) {
 
 $(function(){
 
-	/* Pobieranie prywatnych wiadomości */
-	$("#Navigation a").click(function() {
+	/** 
+	 * Pobieranie prywatnych wiadomości
+	 * Wyłaczone, bo zakomentowane jest pokazywanie wiadomości w PA.
+	 * Pliki framework.tpl i ajax/modules.php
+	 */
+	/*$("#Navigation a").click(function() {
 		var UserID = $("#GetMessages").attr("name").split("-");
 		$.ajax({
 			type: "POST",
@@ -44,7 +48,7 @@ $(function(){
 				}
 			}
 		});
-	});
+	});*/
 
 	/* Podliczanie ilości postów */
 	$("#CountPosts").click(function() {

@@ -9,7 +9,16 @@
 | This product is licensed under the BSD License.				 
 | http://extreme-fusion.org/ef5/license/						 
 ***********************************************************/
-require_once '../system/sitecore.php';
+if (isset($_POST['from_admin']) && $_POST['from_admin'])
+{
+	require_once '../config.php';
+	require DIR_SITE.'bootstrap.php';
+	require_once DIR_SYSTEM.'admincore.php';
+}
+else
+{
+	require_once '../system/sitecore.php';
+}
 
 if ($_user->isLoggedIn())
 {

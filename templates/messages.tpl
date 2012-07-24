@@ -120,9 +120,9 @@
 						<span id="defender_user">{$user.username}</span>
 						<input type="hidden" name="to" id="message_to" value="{$user.id}">
 					{else}
-						<label for="send_to">{i18n('To:')}</label>
+						<label for="search_user">{i18n('To:')}</label>
 						<div class="message_to_menu">
-							<input type="text" name="jQTo" id="send_to" autocomplete="off" required>
+							<input type="text" name="jQTo" id="search_user" autocomplete="off" required>
 							<input type="hidden" name="to" id="message_to">
 						</div>
 					{/if}

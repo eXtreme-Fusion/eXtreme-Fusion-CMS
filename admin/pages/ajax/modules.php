@@ -34,8 +34,9 @@ try
 	{
 		/**
 		 * Pobieranie prywatnych wiadomości - home.php
+		 * NIE USUWAĆ - informacje w pliku modules.js
 		 */
-		if ($_request->post('Action')->show() === 'GetMessages' && $_request->post('UserID')->isNum())
+		/*if ($_request->post('Action')->show() === 'GetMessages' && $_request->post('UserID')->isNum())
 		{
 			$count = $_pdo->getMatchRowsCount('SELECT `id` FROM [messages] WHERE `to` = :id AND `read` = 0 AND `folder` = 0',
 				array(
@@ -44,7 +45,7 @@ try
 			);
 
 			_e($count);
-		}
+		}*/
 
 		/**
 		 * Aktualizacja pozycji panelu - panels.php

@@ -458,6 +458,19 @@
 			<div class="tbl1">
 				<div class="formField sep_2 grid_9"><textarea name="email_message" id="Message" cols="80" rows="3"></textarea></div>
 			</div>
+			<script>
+				{literal}
+					var editor = CKEDITOR.replace('Message', {
+						toolbar : [
+							['Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
+							['NumberedList','BulletedList','-','Outdent','Indent','Blockquote','CreateDiv'],
+							['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
+							['Link','Unlink','Anchor'],
+							['Source','-','Preview']
+						]
+					});
+				{/literal}
+			</script>
 			<div class="tbl2">
 				<div class="sep_1 grid_2 formLabel">{i18n('Hide recipients?')}</div>
 				<div class="grid_1 formField"><label><input type="radio" name="hide" value="1" checked="checked" /> {i18n('Yes')}</label></div>
@@ -477,16 +490,3 @@
 
 	<script>var ADDR_SITE = '{$ADDR_SITE}';</script>
 	<script src="{$ADDR_ADMIN_PAGES_JS}users.js"></script>
-	<script>
-		{literal}
-			var editor = CKEDITOR.replace('Message', {
-				toolbar : [
-					['Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
-					['NumberedList','BulletedList','-','Outdent','Indent','Blockquote','CreateDiv'],
-					['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
-					['Link','Unlink','Anchor'],
-					['Source','-','Preview']
-				]
-			});
-		{/literal}
-	</script>

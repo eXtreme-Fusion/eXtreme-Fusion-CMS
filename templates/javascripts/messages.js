@@ -40,20 +40,26 @@ $(function() {
 
 		return false;
 	});
-
+	
 	// Wyszukiwanie adresata wiadomości
-	$('#send_to').after('<div id="defenders"></div>');
-
-	$('#send_to').keyup(function() {
+	$('#search_user').after('<div id="defenders"></div>');
+	
+	$('#search_user').keyup(function() {
 		var value = $(this).val();
 		var $object = $(this);
+		if (typeof here_is_admin_panel == 'undefined')
+		{
+			var is_here_admin_panel = 0;
+		} else {
+			var is_here_admin_panel = 1;
+		}
 		$.ajax({
 			url: addr_site+'ajax/search_users.php',
 			type: 'POST',
 			dataType: 'json',
-			data: {to: value},
+			data: {to: value, from_admin: is_here_admin_panel},
 			success: function(oJsonObject, sTextstatus, oXMLHttpRequest){
-				$('#send_to').css({'borderRadius':'5px 5px 0 0','border-bottom-width':'0'});
+				$object.css({'borderRadius':'5px 5px 0 0','border-bottom-width':'0'});
 				if (parseInt(oJsonObject.status) == 0) {
 					var users = '<ul>';
 					for (i = 0; i < oJsonObject.users.length; i++)
