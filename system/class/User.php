@@ -674,7 +674,58 @@ class User {
 
 		return $username;
 	}
+	
+	public function getAvatar($user = NULL, $default = "none.gif")
+	{
+		if (file_exists(DIR_IMAGES.'avatars/'.$default))
+		{
+			$default = $default;
+		}
+		else
+		{
+			$default = '../loading.gif';
+		}
+		
+		if ($user === NULL)
+		{
+			if ($this->get('avatar'))
+			{
+				if (file_exists(DIR_IMAGES.'avatars/'.$this->get('avatar')))
+				{
+					$avatar = $this->get('avatar');
+				}
+				else
+				{
+					$avatar = $default;
+				}
+			}
+			else
+			{
+				$avatar = $default;
+			}
+		}
+		else
+		{
+			if ($this->getByID($user, 'avatar'))
+			{
+				if (file_exists(DIR_IMAGES.'avatars/'.$this->getByID($user, 'avatar')))
+				{
+					$avatar = $this->getByID($user, 'avatar');
+				}
+				else
+				{
+					$avatar = $default;
+				}
+			}
+			else
+			{
+				$avatar = $default;
+			}
+		}
 
+		return $avatar;
+	}
+	
 	/**
 	 * Tworzy hash z użyciem soli użytkownika o danym indentyfikatorze
 	 *
