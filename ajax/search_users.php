@@ -26,7 +26,15 @@ if ($_user->isLoggedIn())
 
 	if ($username)
 	{
-		if ($data = $_pdo->getData('SELECT `id`, `username` FROM [users] WHERE `username` LIKE "%'.$username.'%" AND id != '.$_user->get('id').' ORDER BY `username` ASC LIMIT 0,10'))
+		if ($_request->post('self_search')->show())
+		{
+			$data = $_pdo->getData('SELECT `id`, `username` FROM [users] WHERE `username` LIKE "'.$username.'%" ORDER BY `username` ASC LIMIT 0,10');
+		}
+		else
+		{
+			$data = $_pdo->getData('SELECT `id`, `username` FROM [users] WHERE `username` LIKE "'.$username.'%" AND id != '.$_user->get('id').' ORDER BY `username` ASC LIMIT 0,10');
+		}
+		if ($data)
 		{ ?>
 			{
 				"status" : 0,
