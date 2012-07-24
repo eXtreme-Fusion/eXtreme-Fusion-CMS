@@ -34,11 +34,11 @@
 		<script src="{$ADDR_ADMIN_JS}jquery.Alert.js"></script>
 		<script src="{$ADDR_ADMIN_JS}main.js"></script>
 		<script src="{$ADDR_ADMIN_JS}ckeditor/ckeditor.js"></script>
+		<script src="{$ADDR_JS}common.js"></script>
 
 		<script>
 			{literal}
 				var addr_site = '{/literal}{$ADDR_SITE}{literal}';
-				var here_is_admin_panel = true;
 				
 				$(document).ready(function() {
 					$(".resize").TextAreaResizer();

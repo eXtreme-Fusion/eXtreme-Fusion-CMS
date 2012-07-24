@@ -32,6 +32,7 @@
 		<script src="{$ADDR_JS}admin-box.js"></script>
 		<script src="{$ADDR_JS}facebox.js"></script>
 		<script src="{$ADDR_JS}main.js"></script>
+		<script src="{$ADDR_JS}common.js"></script>
 		{literal}
 		<script> 
 			jQuery(function($){ 

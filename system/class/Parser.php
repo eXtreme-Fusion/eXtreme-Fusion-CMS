@@ -61,6 +61,7 @@ class Parser extends optClass
 		$this->assign('ADDR_IMAGES', ADDR_IMAGES);
 		$this->assign('ADDR_ADMIN_IMAGES', ADDR_ADMIN_IMAGES);
 		$this->assign('NEWS_CAT_IMAGES', ADDR_IMAGES.'news_cats/'.self::$_sett->get('locale').'/');
+		$this->assign('ADDR_JS', ADDR_JS);
 
 		if (file_exists(DIR_SITE.'themes'.DS.self::$_sett->get('theme').DS.'templates'.DS.'images'.DS.'favicon.ico'))
 		{
