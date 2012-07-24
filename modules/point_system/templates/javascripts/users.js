@@ -1,23 +1,5 @@
 $(function() {
-	$('#Avatar').change(function() {
-		var value = $(this).attr('value');
-		
-		if (value != '') {
-			$('#DelAvatarBox').remove();
-		} 
-	});
-	
-	/*
-	$('#search_user').on('keyup', function() {
-		var user = $(this).val();
-		$.ajax({
-			url: addr_site+'admin/pages/ajax/search_users.php?user='+user, type: 'GET', success: function (html){
-				$('#search_user_result').html(html);
-			}
-		});
-	});*/
-	
-	// Wyszukiwanie adresata wiadomo≈õci
+	// Wyszukiwanie adresata wiadomoúci
 	$('#search_user').after('<div id="defenders"></div>');
 
 	$('#search_user').keyup(function() {
@@ -46,7 +28,7 @@ $(function() {
 					var users = users + '</ul>';
 					$('#defenders').html(users);
 				} else if (parseInt(oJsonObject.status) == 1) {
-					$('#defenders').html('<div class="defender_error">Brak wynik√≥w wyszukiwania</div>');
+					$('#defenders').html('<div class="defender_error">Brak wynikÛw wyszukiwania</div>');
 				} else {
 					$('#defenders').html('<div class="defender_error">'+oJsonObject.error_msg+'</div>');
 				}
@@ -56,13 +38,13 @@ $(function() {
 			},
 		});
 	});
-	// end of Wyszukiwanie adresata wiadomo≈õci
+	// end of Wyszukiwanie adresata wiadomoúci
 	
-	// Wybieranie adresata wiadomo≈õci
+	// Wybieranie adresata wiadomoúci
 	$('body').on('click', '.defender', function() {
 		var id = $(this).attr('id').split('-')[1];
 
-		window.location.href = addr_site+'admin/pages/users.php?page=users&user='+id;
+		window.location.href = addr_site+'modules/point_system/admin/point_system.php?page=bonus&user='+id;
 	});
-	// end of Wybieranie adresata wiadomo≈õci
+	// end of Wybieranie adresata wiadomoúci
 });
