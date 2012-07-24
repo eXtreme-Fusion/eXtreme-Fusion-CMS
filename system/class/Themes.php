@@ -218,20 +218,23 @@ class Theme extends optClass
 		);
 		if ($this->_pdo->getRowsCount($query))
 		{
-			$i = 0;
-			$res = "<ul>\n";
+			$i = 0; $menu = array();
 			foreach($query as $sdata)
 			{
 				if ($sdata['url'] != "---" && $this->_user->hasAccess($sdata['visibility'])) 
 				{
-					$link_target = $sdata['window'] == '1' ? ' target="_blank"' : '';
-					$li_class = ($i == 0 ? ' class="first-link'.($class ? ' '.$class : '').'"' : ($class ? ' class="'.$class.'"': ''));
-					$res .= "<li".$li_class.">".$sep."<a href='".HELP::createNaviLink($sdata['url'])."'$link_target><span>".parseBBCode($sdata['name'], "b|i|u|color")."</span></a></li>\n";
+					$menu[] = array(
+						'sep' => $sep,
+						'link' => HELP::createNaviLink($sdata['url']),
+						'name' => parseBBCode($sdata['name'], "b|i|u|color"),
+						'target' => $sdata['window'] == '1' ? TRUE : FALSE,
+						'class' => ($i == 0 ? 'first-link'.($class ? ' '.$class : '') : ($class ? $class : '')),
+						'selected' =>  basename($_SERVER['PHP_SELF']) == $sdata['url'] ? TRUE : FALSE
+					);
 					$i++;
 				}
 			}
-			$res .= "</ul>\n";
-			return $res;
+			return $menu;
 		}
 	}
 }

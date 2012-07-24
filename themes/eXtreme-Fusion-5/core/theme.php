@@ -9,14 +9,15 @@
 | This product is licensed under the BSD License.				 
 | http://extreme-fusion.org/ef5/license/						 
 ***********************************************************/
-
-define('MainMenu', TPL::this()->showSubLinks('', 'menu'));
+/* Nie wiem czemu wyskakuje mi tutaj b³¹d o tym ¿e sta³e mog¹ zawieraæ tylko wartoœci skalarne
+//define('MainMenu', TPL::this()->showSubLinks('', 'menu'));
+*/
 
 function render_page($license = FALSE)
 {
 	// Header
 	TPL::this()->assign('Sitename', TPL::this()->_sett->get('site_name'));
-	TPL::this()->assign('Menu', MainMenu);
+	TPL::this()->assign('Menu', TPL::this()->showSubLinks('', 'menu'));
 
 	// Panels
 	if (LEFT)    TPL::this()->assign('LEFT', LEFT);

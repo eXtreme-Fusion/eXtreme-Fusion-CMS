@@ -11,7 +11,15 @@
 			</div>
 		</div>
 		<div class="sub-header floatfix">
-			<div class="left">{$Menu}</div>
+			<div class="left">
+				{if $Menu}
+					<ul>
+						{section=Menu}
+							<li class="{$Menu.class}{if $Menu.selected} selected{/if}">{$Menu.sep} <a href="{$Menu.link}"{if $Menu.target} target="_blank"{/if}><span>{$Menu.name}</span></a></li>
+						{/section}
+					</ul>
+				{/if}
+			</div>
 			<div id="fancyClock"></div>
 		</div>
 	</div>
