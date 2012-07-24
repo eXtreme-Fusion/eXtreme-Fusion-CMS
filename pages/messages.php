@@ -60,7 +60,7 @@ if ($_route->getAction() === NULL)
 				'user_avatar' => $_user->getAvatarFileName($userid),
 				'subject' => $row['subject'],
 				'datestamp' => HELP::showDate('shortdate', $row['datestamp']),
-				'datetotime' => date('Y-m-d H:i', $row['datestamp']),
+				'datetime' => date('Y-m-d H:i', $row['datestamp']),
 				'item_id' => $row['item_id'],
 				'msg_link' => $_route->path(array('controller' => 'messages', 'action' => 'view', $userid, $row['item_id'], $row['subject'] ? HELP::Title2Link($row['subject']) : HELP::Title2Link('no subject')))
 			);

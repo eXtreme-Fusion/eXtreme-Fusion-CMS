@@ -90,7 +90,7 @@ $(function() {
 		$('#defenders').before('<div id="defender_user">'+username+' <img src="../admin/templates/images/icons/cross.png" alt="Cross"></div>');
 
 		$('#defenders').html('');
-		$('#send_to').hide();
+		$('#search_user').hide();
 	});
 	// end of Wybieranie adresata wiadomości
 

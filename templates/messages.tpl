@@ -26,7 +26,7 @@
 						<div class="pw_cont">
 							<span class="interlocutor">{$data.user_link}</span>
 							<h4><a href="{$data.msg_link}" title="{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}">{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}</a></h4>
-							<time datetime="{$data.datetotime}">{$data.datestamp}</time>
+							<time datetime="{$data.datetime}">{$data.datestamp}</time>
 							{if $data.read_status == '1'}
 								<p class="new_mes">Nowa</p>
 							{elseif $data.read_status == '2'}
@@ -50,7 +50,7 @@
 								<div class="pw_cont">
 									<span class="interlocutor">{$data.user_link}</span>
 									<h4><a href="{$data.msg_link}" title="{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}">{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}</a></h4>
-									<time datetime="{$data.datetotime}">{$data.datestamp}</time>
+									<time datetime="{$data.datetime}">{$data.datestamp}</time>
 									{if $data.read_status == '1'}
 										<p class="new_mes">Nowa</p>
 									{elseif $data.read_status == '2'}
@@ -72,7 +72,7 @@
 								<div class="pw_cont">
 									<span class="interlocutor">{$data.user_link}</span>
 									<h4><a href="{$data.msg_link}" title="{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}">{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}</a></h4>
-									<time datetime="{$data.datetotime}">{$data.datestamp}</time>
+									<time datetime="{$data.datetime}">{$data.datestamp}</time>
 									{if $data.read_status == '3'}
 										<p class="sent_mes">Wysłana</p>
 									{elseif $data.read_status == '4'}

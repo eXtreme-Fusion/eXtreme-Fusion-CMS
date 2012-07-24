@@ -1,184 +1,3 @@
-/* Ajaxowe wiadomości-------------------------------------------------------------------------------- */
-#messages_page #ajax_messages article,
-#messages_page .read_0,
-#messages_page .read_1 {
-	margin: 10px 20px;
-	position: relative;
-}
-
-#messages_page #ajax_messages article .arrow,
-#messages_page .read_0 .arrow,
-#messages_page .read_1 .arrow {
-	display: block;
-	position: absolute;
-	z-index:99;
-	width: 20px;
-	height: 20px;
-	top: 5px;
-	left: 65px;
-    -webkit-transform: rotate(45deg);
-    -moz-transform: rotate(45deg);
-    -o-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
-}
-
-#messages_page #ajax_messages article.sb_post .arrow {background: #2e2e2e;}
-#messages_page .read_1 .arrow {background: #333;}
-#messages_page #ajax_messages article.my_post .arrow,
-#messages_page .read_0 .arrow {background: #3a3a3a;}
-
-#messages_page #ajax_messages article .avatar,
-#messages_page .read_0 .avatar,
-#messages_page .read_1 .avatar {
-	display: block;
-	float: left;
-	width: 40px;
-	background: #3a3a3a;
-	border: 5px #3a3a3a solid;
-	border-radius: 5px;
-}
-
-#messages_page #ajax_messages article .pw_cont,
-#messages_page .read_0 .pw_cont,
-#messages_page .read_1 .pw_cont {
-	position: relative;
-	font-size: 11px;
-	margin-left: 75px;
-	padding: 7px 20px;
-	border-radius: 0 5px 5px 5px;
-}
-
-#messages_page #ajax_messages article.sb_post .pw_cont {background: #2e2e2e;}
-#messages_page .read_1 .pw_cont {background: #333;}
-#messages_page #ajax_messages article.my_post .pw_cont,
-#messages_page .read_0 .pw_cont  {background: #3a3a3a;}
-#messages_page #ajax_messages article .pw_cont header {
-	padding-bottom: 5px;
-	margin-bottom: 5px;
-}
-#messages_page #ajax_messages article.sb_post .pw_cont header {border-bottom: 1px #373737 dashed;}
-#messages_page #ajax_messages article.my_post .pw_cont header {border-bottom: 1px #474747 dashed;}
-
-#messages_page #ajax_messages article .pw_cont header strong {
-	font-size: 12px;
-	color: #99aa17;
-}
-
-#messages_page #ajax_messages article .pw_cont header time {
-	width: auto;
-	float: right;
-	font-style: italic;
-	line-height: 12px;
-	color: #5f5f5f;
-}
-
-#messages_page #ajax_messages article .pw_cont div strong{font-weight: bold;}
-#messages_page #ajax_messages article .pw_cont div em{font-style: italic;}
-#messages_page #ajax_messages article .pw_cont div u{text-decoration: underline;}
-#messages_page #ajax_messages article .pw_cont div s{text-decoration: line-through;}
-#messages_page #ajax_messages article .pw_cont div blockquote {	
-	display: block;
-	font-family: inherit;
-	font-size: inherit;
-	font-style: italic;
-	font-weight: normal;
-	color: #d2d1d1;
-	padding: 10px;
-	margin: 10px;
-	border: 0;
-	border-radius: 5px;
-}
-#messages_page #ajax_messages article.sb_post .pw_cont div blockquote {background: #3a3a3a;}
-#messages_page #ajax_messages article.my_post .pw_cont div blockquote {background: #2e2e2e;}
-/* Lista wątków ------------------------------------------------------------------------------------------------------*/
-#messages_page .read_0 .pw_cont,
-#messages_page .read_1 .pw_cont {
-	padding: 10px 20px;
-}
-
-#messages_page .read_0 .pw_cont .interlocutor,
-#messages_page .read_1 .pw_cont .interlocutor {
-	display: inline-block;
-	text-align: center;
-	vertical-align: middle;
-	width: 18%;
-	height: 30px;
-	line-height: 30px;
-	overflow: hidden;
-	border-right: 1px #525252 dotted;
-}
-
-#messages_page .read_0 .pw_cont h4,
-#messages_page .read_1 .pw_cont h4 {
-	display: inline-block;
-	text-align: center;
-	vertical-align: middle;
-	width: 32%;
-	height: 30px;
-	overflow: hidden;
-	background: none;
-	border: 0;
-	border-right: 1px #525252 dotted;
-	padding: 0 10px;
-	margin: 0;
-	font: inherit;
-}
-
-#messages_page .read_0 .pw_cont h4 a,
-#messages_page .read_1 .pw_cont h4 a {
-	color: #fff;
-}
-
-#messages_page .read_0 .pw_cont time,
-#messages_page .read_1 .pw_cont time {
-	display: inline-block;
-	text-align: center;
-	vertical-align: middle;
-	width: 20%;
-	height: 30px;
-	line-height: 30px;
-	overflow: hidden;
-	border-right: 1px #525252 dotted;
-	font-style: italic;
-	color: #5f5f5f;
-}
-
-#messages_page .read_0 .pw_cont p,
-#messages_page .read_1 .pw_cont p {
-	display: inline-block;
-	vertical-align: middle;
-	height: 30px;
-	line-height: 30px;
-	overflow: hidden;
-	font-size: 14px;
-	margin-left: 15px;
-	padding-left: 20px;
-}
-
-#messages_page .read_0 .pw_cont .new_mes,
-#messages_page .read_1 .pw_cont .new_mes {
-	background: url(../images/messages/email.png) left center no-repeat;
-	color: #ffd0d0;
-}
-
-#messages_page .read_0 .pw_cont .read_mes,
-#messages_page .read_1 .pw_cont .read_mes {
-	background: url(../images/messages/email_open.png) left center no-repeat;
-}
-
-#messages_page .read_0 .pw_cont .sent_mes,
-#messages_page .read_1 .pw_cont .sent_mes {
-	background: url(../images/messages/email_go.png) left center no-repeat;
-	color: #d2def2;
-}
-
-#messages_page .read_0 .pw_cont .del_mes,
-#messages_page .read_1 .pw_cont .del_mes {
-	background: url(../images/messages/email_delivered.png) left center no-repeat;
-	color: #d7e8b5;
-}
-
 /* Tab menu ---------------------------------------------------------------------------------------------- */
 #messages_page nav ul {
     float: left;
@@ -218,6 +37,193 @@
     float: left;
 	padding: 10px 0;
     width: 100%;
+}
+
+/* Ajaxowe wiadomości-------------------------------------------------------------------------------- */
+#messages_page #ajax_messages article,
+#messages_page .tab_cont .read_0,
+#messages_page .tab_cont .read_1 {
+	margin: 10px 20px;
+	position: relative;
+}
+
+#messages_page #ajax_messages article .arrow,
+#messages_page .tab_cont .read_0 .arrow,
+#messages_page .tab_cont .read_1 .arrow {
+	display: block;
+	position: absolute;
+	z-index:99;
+	width: 20px;
+	height: 20px;
+	top: 5px;
+	left: 65px;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+#messages_page #ajax_messages article.sb_post .arrow {background: #2e2e2e;}
+#messages_page .tab_cont .read_1 .arrow {background: #333;}
+#messages_page #ajax_messages article.my_post .arrow,
+#messages_page .tab_cont .read_0 .arrow {background: #3a3a3a;}
+
+#messages_page #ajax_messages article .avatar,
+#messages_page .tab_cont .read_0 .avatar,
+#messages_page .tab_cont .read_1 .avatar {
+	display: block;
+	float: left;
+	width: 40px;
+	background: #3a3a3a;
+	border: 5px #3a3a3a solid;
+	border-radius: 5px;
+}
+
+#messages_page #ajax_messages article .pw_cont,
+#messages_page .tab_cont .read_0 .pw_cont,
+#messages_page .tab_cont .read_1 .pw_cont {
+	position: relative;
+	font-size: 11px;
+	margin-left: 75px;
+	padding: 7px 20px;
+	border-radius: 0 5px 5px 5px;
+}
+
+#messages_page #ajax_messages article.sb_post .pw_cont {background: #2e2e2e;}
+#messages_page .tab_cont .read_1 .pw_cont {background: #333;}
+#messages_page #ajax_messages article.my_post .pw_cont,
+#messages_page .tab_cont .read_0 .pw_cont  {background: #3a3a3a;}
+#messages_page #ajax_messages article .pw_cont header {
+	padding-bottom: 5px;
+	margin-bottom: 5px;
+}
+#messages_page #ajax_messages article.sb_post .pw_cont header {border-bottom: 1px #373737 dashed;}
+#messages_page #ajax_messages article.my_post .pw_cont header {border-bottom: 1px #474747 dashed;}
+
+#messages_page #ajax_messages article .pw_cont header strong {
+	font-size: 12px;
+	color: #99aa17;
+}
+
+#messages_page #ajax_messages article .pw_cont header time {
+	width: auto;
+	float: right;
+	font-style: italic;
+	line-height: 12px;
+	color: #5f5f5f;
+}
+
+#messages_page #ajax_messages article .pw_cont div strong{font-weight: bold;}
+#messages_page #ajax_messages article .pw_cont div em{font-style: italic;}
+#messages_page #ajax_messages article .pw_cont div u{text-decoration: underline;}
+#messages_page #ajax_messages article .pw_cont div s{text-decoration: line-through;}
+#messages_page #ajax_messages article .pw_cont div blockquote {	
+	display: block;
+	font-family: inherit;
+	font-size: inherit;
+	font-style: italic;
+	font-weight: normal;
+	color: #d2d1d1;
+	padding: 10px;
+	margin: 10px;
+	border: 0;
+	border-radius: 5px;
+}
+#messages_page #ajax_messages article.sb_post .pw_cont div blockquote {background: #3a3a3a;}
+#messages_page #ajax_messages article.my_post .pw_cont div blockquote {background: #2e2e2e;}
+/* Lista wątków ------------------------------------------------------------------------------------------------------*/
+#messages_page .info {
+	background: #3a3a3a;
+	color: #9fd10f;
+	margin: 10px 0 20px 0;
+}
+
+#messages_page .tab_cont .read_0 .pw_cont,
+#messages_page .tab_cont .read_1 .pw_cont {
+	padding: 10px 20px;
+}
+
+#messages_page .tab_cont .read_0 .pw_cont .interlocutor,
+#messages_page .tab_cont .read_1 .pw_cont .interlocutor {
+	display: inline-block;
+	text-align: center;
+	vertical-align: middle;
+	width: 18%;
+	height: 30px;
+	line-height: 30px;
+	overflow: hidden;
+	border-right: 1px #525252 dotted;
+}
+
+#messages_page .tab_cont .read_0 .pw_cont h4,
+#messages_page .tab_cont .read_1 .pw_cont h4 {
+	display: inline-block;
+	text-align: center;
+	vertical-align: middle;
+	width: 32%;
+	height: 30px;
+	overflow: hidden;
+	background: none;
+	border: 0;
+	border-right: 1px #525252 dotted;
+	padding: 0 10px;
+	margin: 0;
+	font: inherit;
+}
+
+#messages_page .tab_cont .read_0 .pw_cont h4 a,
+#messages_page .tab_cont .read_1 .pw_cont h4 a {
+	color: #fff;
+}
+
+#messages_page .tab_cont .read_0 .pw_cont time,
+#messages_page .tab_cont .read_1 .pw_cont time {
+	display: inline-block;
+	text-align: center;
+	vertical-align: middle;
+	width: 20%;
+	height: 30px;
+	line-height: 30px;
+	overflow: hidden;
+	border-right: 1px #525252 dotted;
+	font-style: italic;
+	color: #5f5f5f;
+}
+
+#messages_page .tab_cont .read_0 .pw_cont p,
+#messages_page .tab_cont .read_1 .pw_cont p {
+	display: inline-block;
+	vertical-align: middle;
+	height: 30px;
+	line-height: 30px;
+	overflow: hidden;
+	font-size: 14px;
+	margin-left: 15px;
+	padding-left: 20px;
+}
+
+#messages_page .tab_cont .read_0 .pw_cont .new_mes,
+#messages_page .tab_cont .read_1 .pw_cont .new_mes {
+	background: url(../images/messages/email.png) left center no-repeat;
+	color: #ffd0d0;
+}
+
+#messages_page .tab_cont .read_0 .pw_cont .read_mes,
+#messages_page .tab_cont .read_1 .pw_cont .read_mes {
+	background: url(../images/messages/email_open.png) left center no-repeat;
+}
+
+#messages_page .tab_cont .read_0 .pw_cont .sent_mes,
+#messages_page .tab_cont .read_1 .pw_cont .sent_mes {
+	background: url(../images/messages/email_go.png) left center no-repeat;
+	color: #d2def2;
+}
+
+#messages_page .tab_cont .read_0 .pw_cont .del_mes,
+#messages_page .tab_cont .read_1 .pw_cont .del_mes {
+	background: url(../images/messages/email_delivered.png) left center no-repeat;
+	color: #d7e8b5;
 }
 
 /* Formularz -------------------------------------------------------------------------------------------------------- */
