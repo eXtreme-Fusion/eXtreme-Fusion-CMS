@@ -14,8 +14,8 @@
 - edycja ustawień routera (możliwość wyboru rozszerzenia dla adresów URL)
 
 - nowy wygląd podstrony Profil użytkownika
-- wyeliminowano błąd z niewyświetlaniem się newsów osobom niezalogowanym
 
+- wyeliminowano błąd z niewyświetlaniem się newsów osobom niezalogowanym
 - wprowadzono poprawkę do czyszczenia cache podczas edycji newsa lub kategorii
 
 - ZMIANA WYMAGANEJ WERSJI PHP Z 5.2.17 NA 5.2.2 ze względu na to, że znaczące
