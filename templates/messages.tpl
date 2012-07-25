@@ -20,7 +20,7 @@
 			
 			<div class="tab_cont" id="tab_cont_all">
 				{section=data}
-					<article class="read_{if $data.read_status == 1}0{else}1{/if} clearfix">
+					<article class="short_post {if $data.read_status == 1}light{else}dark{/if} clearfix">
 						<span class="arrow"></span>
 						<img src="{$ADDR_IMAGES}avatars/{$data.user_avatar}" alt="Avatar" class="avatar">
 						<div class="pw_cont">
@@ -44,7 +44,7 @@
 				<div class="tab_cont" id="tab_cont_inbox">
 					{section=data}
 						{if $data.read_status == '1' || $data.read_status == '2'}
-							<article class="read_{if $data.read_status == 1}0{else}1{/if} clearfix">
+							<article class="short_post {if $data.read_status == 1}light{else}dark{/if} clearfix">
 								<span class="arrow"></span>
 								<img src="{$ADDR_IMAGES}avatars/{$data.user_avatar}" alt="Avatar" class="avatar">
 								<div class="pw_cont">
@@ -66,7 +66,7 @@
 				<div class="tab_cont" id="tab_cont_outbox">
 					{section=data}
 						{if $data.read_status == '3' || $data.read_status == '4'}
-							<article class="read_1 clearfix">
+							<article class="short_post dark clearfix">
 								<span class="arrow"></span>
 								<img src="{$ADDR_IMAGES}avatars/{$data.user_avatar}" alt="Avatar" class="avatar">
 								<div class="pw_cont">
