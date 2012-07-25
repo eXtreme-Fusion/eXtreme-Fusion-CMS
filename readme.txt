@@ -1,1 +1,1 @@
-eXtreme-Fusion 5 - Content Management System, test
+eXtreme-Fusion 5 - Content Management System
