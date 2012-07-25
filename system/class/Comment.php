@@ -61,13 +61,13 @@ class Comment
 						$val['author'] = HELP::profileLink($this->_user->getByID($id, 'username'), $id);
 						
 						$user_data = $this->_user->getByID($id, array('avatar', 'username'));
-						$val['avatar'] = $this->_user->getAvatarFileName($id);
+						$val['avatar'] = $this->_user->getAvatarAddr($id);
 						$val['avatar_desc'] = $user_data['username'];
 					}
 					else
 					{
 						$val['author'] = $val['author'];
-						$val['avatar'] = $this->_user->getAvatarFileName();
+						$val['avatar'] = $this->_user->getAvatarAddr();
 					}
 				}
 

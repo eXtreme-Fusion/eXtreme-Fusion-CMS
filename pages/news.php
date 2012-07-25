@@ -10,7 +10,7 @@
 | http://extreme-fusion.org/ef5/license/						 
 ***********************************************************/
 
-if ($_route->getAction())
+if ($_route->getAction() && $_route->getAction() !== 'page')
 {
 	$_locale->load('news');
 
@@ -169,6 +169,8 @@ else
 		}
 
 		$_GET['rowstart'] = Paging::getRowStart($_GET['current'], $items_per_page);
+		
+		print_r($_GET['rowstart']);
 
 		# / STRONICOWANIE #
 		$cache = $_system->cache('news,'.$_user->getCacheName().',page-'.$_GET['current'], NULL, 'news', $_sett->getUns('cache', 'expire_news'));
@@ -245,7 +247,8 @@ else
 			}
 		}
 
-		$_pagenav = new PageNav(new Paging($rows, $_GET['current'], $items_per_page), $_tpl, 5, array($_route->getFileName(), 'page', FALSE));
+		//$_pagenav = new PageNav(new Paging($rows, $_GET['current'], $items_per_page), $_tpl, 5, array($_route->getFileName(), 'page', FALSE));
+		$_pagenav = new PageNav(new Paging($rows, $_GET['current'], $items_per_page), $_tpl, 5, array($_route->getFileName(), 'page'.$_route->getByID(2), FALSE));
 
 		if (file_exists(DIR_THEME.'templates'.DS.'paging'.DS.'news_page_nav.tpl'))
 		{

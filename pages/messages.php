@@ -57,7 +57,7 @@ if ($_route->getAction() === NULL)
 			$data[$i] = array(
 				'user_id' => $userid,
 				'user_link' => HELP::profileLink(NULL, $userid),
-				'user_avatar' => $_user->getAvatarFileName($userid),
+				'user_avatar' => $_user->getAvatarAddr($userid),
 				'subject' => $row['subject'],
 				'datestamp' => HELP::showDate('shortdate', $row['datestamp']),
 				'datetime' => date('Y-m-d H:i', $row['datestamp']),
