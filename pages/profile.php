@@ -161,6 +161,7 @@ if ($row)
 			'avatar' => $_user->getAvatarAddr($row['id']),
 			'email' => $row['email'],
 			'joined' => HELP::showDate('shortdate', $row['joined']),
+			'joined_datetime' => date('c', $row['joined']),
 			'last_visit_time' => $row['lastvisit'] ? HELP::showDate('longdate', $row['lastvisit']) : NULL,
 			'is_online' => inArray($row['id'], $_user->getOnline(), 'id') ? 1 : 0,
 			'time' => time(),

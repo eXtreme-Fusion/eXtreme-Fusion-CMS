@@ -54,11 +54,11 @@
 		</div>
 		
 	{php} closetable() {/php}
-	<a name='comments'></a>
+	<div id="comments"></div>
 	{$comments}
 	{else}
 	{php} opentable(__('Error')) {/php}
-		<div class="status">{i18n('No data!')}</div>
+		<p class="status">{i18n('No data!')}</p>
 	{php} closetable() {/php}
 	{/if}
 {else}
@@ -67,8 +67,8 @@
 			{section=news}
 				<article class="news">
 					<header>
-						<h3><a href="{$news.url}" title="{$news.title_name}" class="tip">{$news.title_name}</a></h3>
-						<p>{i18n('Date:')} <time pubdate="pubdate">{$news.date}</time></p>
+						<h3><a href="{$news.url}" title="{$news.title_name}">{$news.title_name}</a></h3>
+						<p>{i18n('Date:')} <time datetime="{$news.datetime}" pubdate="pubdate">{$news.date}</time></p>
 						<p>
 							{if $news.category_id}{i18n('Category:')}<a href="{$news.category_link}" rel="tag">{$news.category_name}</a>,{/if}
 							{i18n('Author:')} <a href="{$news.author_link}" rel="author">{$news.author_name}</a>,

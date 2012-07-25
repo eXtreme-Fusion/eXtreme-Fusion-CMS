@@ -86,7 +86,8 @@
 	display:inline-block;
 	vertical-align: top;
 }
-#profile ul li span {
+#profile ul li span,
+#profile ul li time {
 	width: 60%;
 	display:inline-block;
 }

@@ -10,7 +10,7 @@
 			</div>
             <ul>
                 <li><strong>{i18n('e-Mail')}:</strong><span>{$user.email}</span></li>
-                <li><strong>{i18n('Joined')}:</strong><span>{$user.joined}</span></li>
+                <li><strong>{i18n('Joined')}:</strong><time datetime="{$user.joined_datetime}">{$user.joined}</time></li>
                 <li><strong>{i18n('Groups')}:</strong><span>{$user.roles}</span></li>
             </ul>
         </div>

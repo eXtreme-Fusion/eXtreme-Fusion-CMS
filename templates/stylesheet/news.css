@@ -15,6 +15,7 @@
 .news .news_content audio, .news_ext .news_content audio,
 .news .news_content embed, .news_ext .news_content embed,
 .news .news_content object, .news_ext .news_content object,
+.news .news_content iframe, .news_ext .news_content iframe,
 .news .news_content address, .news_ext .news_content address,
 .news .news_content h1, .news_ext .news_content h1,
 .news .news_content h2, .news_ext .news_content h2,
@@ -31,7 +32,8 @@
 }
 
 .news .news_content sub, .news_ext .news_content sub,
-.news .news_content sup, .news_ext .news_content sup {
+.news .news_content sup, .news_ext .news_content sup,
+.news .news_content small, .news_ext .news_content small {
 	font-size: 10px;
 	font-weight: normal;
 	color: inherit;
@@ -60,7 +62,8 @@
 	text-decoration: underline;
 }
 
-.news .news_content strike, .news_ext .news_content strike {
+.news .news_content strike, .news_ext .news_content strike,
+.news .news_content s, .news_ext .news_content s {
 	text-decoration: line-through;
 }
 
@@ -73,6 +76,8 @@
 	padding: 0;
 	font-size: 16px;
 	font-weight: bold;
+	border: 0;
+	background: none;
 }
 
 .news .news_content ul li, .news_ext .news_content ul li,
