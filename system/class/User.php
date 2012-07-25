@@ -675,55 +675,37 @@ class User {
 		return $username;
 	}
 	
-	public function getAvatarFileName($user = NULL, $default = "none.gif")
+	/**
+	 * Zwraca ścieżkę do avataru użytkownika lub obrazków zastępczych jeśli avataru brak.
+	 *
+	 * @param   integer  ID użytkownika
+	 * @param   string   domyślny avatar systemowy
+	 * @return  string
+	 */
+	public function getAvatarAddr($user = NULL, $default = "none.gif")
 	{
-		if (file_exists(DIR_IMAGES.'avatars/'.$default))
-		{
-			$default = $default;
-		}
-		else
-		{
-			$default = '../loading.gif';
-		}
-		
+		$dir = ADDR_IMAGES.'avatars'.DS;
 		if ($user === NULL)
 		{
-			if ($this->get('avatar'))
-			{
-				if (file_exists(DIR_IMAGES.'avatars/'.$this->get('avatar')))
-				{
-					$avatar = $this->get('avatar');
-				}
-				else
-				{
-					$avatar = $default;
-				}
-			}
-			else
-			{
-				$avatar = $default;
-			}
+			$avatar_file = $this->get('avatar');
 		}
 		else
 		{
-			if ($this->getByID($user, 'avatar'))
-			{
-				if (file_exists(DIR_IMAGES.'avatars/'.$this->getByID($user, 'avatar')))
-				{
-					$avatar = $this->getByID($user, 'avatar');
-				}
-				else
-				{
-					$avatar = $default;
-				}
-			}
-			else
-			{
-				$avatar = $default;
-			}
+			$avatar_file = $this->getByID($user, 'avatar');
 		}
-
-		return $avatar;
+		
+		if ($avatar_file && file_exists(DIR_IMAGES.'avatars'.DS.$avatar_file))
+		{
+			return $dir.$avatar_file;
+		}
+		elseif (file_exists(DIR_IMAGES.'avatars'.DS.$default))
+		{
+			return $dir.$default;
+		}
+		else
+		{
+			return ADDR_IMAGES.'loading.gif';
+		}
 	}
 	
 	/**

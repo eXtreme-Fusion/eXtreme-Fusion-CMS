@@ -158,7 +158,7 @@ if ($row)
 			'hide_email' => $row['hide_email'],
 			'role' => $_user->getRoleName($row['role']),
 			'roles' => implode($_user->getUserRolesTitle($row['id']), ', '),
-			'avatar' => $_user->getAvatarFileName($row['id']),
+			'avatar' => $_user->getAvatarAddr($row['id']),
 			'email' => $row['email'],
 			'joined' => HELP::showDate('shortdate', $row['joined']),
 			'last_visit_time' => $row['lastvisit'] ? HELP::showDate('longdate', $row['lastvisit']) : NULL,

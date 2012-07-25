@@ -2,7 +2,7 @@
 	<div class="points tbl2">
 		<div>{i18n('On the <strong>1st</strong> place is')}: <a href="{$user.link}">{$user.username}</a></div>
 		<div>
-			<div class="left"><img src="{$ADDR_IMAGES}avatars/{$user.avatar}"></div>
+			<div class="left"><img src="{$user.avatar}"></div>
 			<div><small>{$user.role}</small></div>
 			<div>{i18n('Scored <strong>:point</strong> points', array(':point' => $user.points))}</div>
 		</div>

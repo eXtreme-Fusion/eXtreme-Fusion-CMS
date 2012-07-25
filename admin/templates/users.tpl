@@ -197,7 +197,7 @@
 				<h4>Profil - {$account.username}<span class="box-right">{i18n('Main group: ')}{$account.role}</span></h4>
 				<div class="tbl">
 					<div class="avatar">
-						<img src="{$ADDR_IMAGES}avatars/{$account.avatar}">
+						<img src="{$account.avatar}">
 					</div>
 					<div class="data">
 						<div>{i18n('User ID: ')}{$account.id}</div>
