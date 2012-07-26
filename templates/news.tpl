@@ -25,7 +25,7 @@
 						{$news.content_ext}
 					{/if}
 				</div>
-				<footer class="clearfix">
+				<footer>
 					{if $news.keyword}
 						<p>
 							<strong>{i18n('Tags:')}</strong>
