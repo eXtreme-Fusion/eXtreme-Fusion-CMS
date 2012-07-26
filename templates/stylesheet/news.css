@@ -116,6 +116,7 @@
 .news {
 	margin: 10px;
 	background:#2e2e2e;
+	border-top: 2px #9fd10f solid;
 	border-radius: 5px;
 }
 
@@ -163,6 +164,7 @@
 	margin: 0 -5px 20px -5px;
 	padding: 0 10px;
 	background:#3a3a3a;
+	border-top: 2px #525252 solid;
 	border-radius: 5px;
 	-webkit-box-shadow: 0px 10px 17px rgba(0, 0, 0, 0.15);
 	-moz-box-shadow: 0px 10px 17px rgba(0, 0, 0, 0.15);
