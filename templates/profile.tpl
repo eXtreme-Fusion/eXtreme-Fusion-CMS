@@ -3,7 +3,7 @@
         <div id="profile">
             <div class="profile_avatar">
                 <img src="{$user.avatar}" alt="Avatar">
-                <p>{if $user.is_online == 1}<img src="{$ADDR_IMAGES}online.png" alt="{i18n('Online')}"><span class="online">{i18n('Online')}</span>{else}<img src="{$ADDR_IMAGES}offline.png" alt="{i18n('Offline')}">{$user.last_visit_time}{/if}</p>
+                <p>{if $user.is_online == 1}<img src="{$ADDR_IMAGES}profile/online.png" alt="{i18n('Online')}"><span class="online">{i18n('Online')}</span>{else}<img src="{$ADDR_IMAGES}profile/offline.png" alt="{i18n('Offline')}">{$user.last_visit_time}{/if}</p>
             </div>
             <div class="profile_title">
 				<img src="{$ADDR_IMAGES}profile/info.png" alt="Profile"><span id="profile_username">{i18n('Member Profile :Username', array(':Username' => $user.username))}</span>{if $user.myid > 0 && $user.id != $user.myid}<a href="{$user.pm_link}" title="Wyślij wiadomość">[ Wyślij wiadomość ]</a>{/if}<span id="profile_status">{$user.role}</span>
