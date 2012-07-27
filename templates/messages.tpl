@@ -4,12 +4,11 @@
 
 {if $section == 'overview'}
 	<div id="messages_page">
-		<p><a href="{$url_new_message}" class="button">{i18n('Write a message')}</a></p>
-		
 		{if $data}
 			<p class="info">{i18n('Messages are deleted automatically after 60 days from the time they were sent.')}</p>
 			
 			<nav>
+				<p><a href="{$url_new_message}" class="button">{i18n('Write a message')}</a></p>
 				<ul>
 					<li><a href="javascript:void(0)" id="tab_all" class="tab">Wszystkie</a></li>
 					{if $has_messages.inbox}<li><a href="javascript:void(0)" id="tab_inbox" class="tab">Odebrane</a></li>{/if}

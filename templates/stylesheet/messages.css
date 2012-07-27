@@ -1,4 +1,14 @@
 /* Tab menu ---------------------------------------------------------------------------------------------- */
+#messages_page nav {
+	position: relative;
+}
+
+#messages_page nav p {
+	position: absolute;
+	right: 0;
+	top: -6px;
+}
+
 #messages_page nav ul {
     float: left;
     padding: 0;
