@@ -34,9 +34,10 @@ $_tpl->root = DIR_BASE.'templates'.DS;
 /***/
 
 require DIR_SITE.'system'.DS.'helpers'.DS.'main.php';
-require DIR_SITE.'system'.DS.'class'.DS.'System.php';
 
 $_system = new System;
+
+define('PHP_REQUIRED', Server::getRequiredPHPVersion());
 
 // Zapisywanie języka zapamiętanego dzięki sesji
 if (isset($_SESSION['localeset']))
@@ -94,6 +95,7 @@ $_tpl->assignGroup(array(
 	'step_header' => __('eXtreme-Fusion :version - Setup', array(':version' => VERSION)).(getStepHeader() ? ' &raquo; '.getStepHeader() : ''),
 	'step_menu' => getStepMenu(),
 	'step' => getStepNum(),
+	'php_required' => PHP_REQUIRED
 ));
 
 function getStepHeader()
@@ -105,11 +107,11 @@ function getStepHeader()
 		if (getStepNum() === 1) {
 			$header = __('Step 1: Locale');
 		} elseif (getStepNum() === 2) {
-			$header = __('Step 2: File and Folder Permissions Test');
+			$header = __('Step 2: Checking server configuration');
 		} elseif (getStepNum() === 3) {
-			$header = __('Step 3: Database Settings');
+			$header = __('Step 3: File and Folder Permissions Test');
 		} elseif (getStepNum() === 4) {
-			$header = __('Step 4: Database Config / Setup');
+			$header = __('Step 4: Database Settings');
 		} elseif (getStepNum() === 5) {
 			$header = __('Step 5: Head Admin Datails');
 		} elseif (getStepNum() === 6) {
@@ -163,9 +165,9 @@ function getStepMenu()
 	{
 		$steps = array(1 =>
 			explode(':', __('Step 1: Locale')),
-			explode(':', __('Step 2: File and Folder Permissions Test')),
-			explode(':', __('Step 3: Database Settings')),
-			explode(':', __('Step 4: Database Config / Setup')),
+			explode(':', __('Step 2: Checking server configuration')),
+			explode(':', __('Step 3: File and Folder Permissions Test')),
+			explode(':', __('Step 4: Database Settings')),
 			explode(':', __('Step 5: Head Admin Datails')),
 			explode(':', __('Step 6: Final Settings'))
 		);
@@ -265,6 +267,42 @@ else if (getStepNum() === 1)
 }
 elseif (getStepNum() === 2)
 {
+	if (Server::getPHPVersionID() < Server::createPHPVersionID(PHP_REQUIRED))
+	{
+		$_tpl->assign('php_version_error', TRUE);
+	}
+	else
+	{
+		$extension_error = array();
+
+		if ( ! extension_loaded('pdo'))
+		{
+			$extension_error[]['name'] = 'pdo';
+		}
+
+		if ( ! extension_loaded('pdo_mysql'))
+		{
+			$extension_error[]['name'] = 'pdo_mysql';
+		}
+
+		if ( ! extension_loaded('mcrypt'))
+		{
+
+			$extension_error[]['name'] = 'mcrypt';
+		}
+
+		if ($extension_error)
+		{
+			$_tpl->assign('extension_error', $extension_error);
+		}
+		else
+		{
+			goToStep(3);
+		}
+	}
+}
+else if (getStepNum() === 3)
+{
 	$config_error = FALSE;
 
 	if ( ! file_exists(DIR_SITE.'config.php'))
@@ -351,35 +389,12 @@ elseif (getStepNum() === 2)
 		$_tpl->assign('chmod_error', $chmod_error);
 	}
 
-	$extension_error = array();
-
-	if ( ! extension_loaded('pdo'))
+	if (!$config_error && ! $chmod_error)
 	{
-		$extension_error[]['name'] = 'pdo';
-	}
-
-	if ( ! extension_loaded('pdo_mysql'))
-	{
-		$extension_error[]['name'] = 'pdo_mysql';
-	}
-
-	if ( ! extension_loaded('mcrypt'))
-	{
-
-		$extension_error[]['name'] = 'mcrypt';
-	}
-
-	if ($extension_error)
-	{
-		$_tpl->assign('extension_error', $extension_error);
-	}
-
-	if (!$config_error && ! $extension_error && ! $chmod_error)
-	{
-		goToStep(3);
+		goToStep(4);
 	}
 }
-else if (getStepNum() === 3)
+else if (getStepNum() === 4)
 {
 	// Sprawdzanie danych w przypadku próby ich zapisania
 	if ($_POST)
@@ -455,7 +470,7 @@ else if (getStepNum() === 3)
 								$fail = FALSE;
 
 								$result = dbquery("ALTER DATABASE  `".$db_name."` DEFAULT CHARACTER SET ".$charset." COLLATE ".$collate);
-								
+
 								include_once 'create_db.php';
 
 								if (!$fail)

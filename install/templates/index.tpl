@@ -41,7 +41,7 @@
 				</ul>
 
 				<div id="MainBox">
-				
+
 					{if $step == 0}
 						<p>Instalacja została przerwana. System może nie działać stabilnie.</p>
 						<p><a href={$ADDR_INSTALL} title={i18n('Zacznij instalację ponownie')}>{i18n('Zacznij instalację ponownie')}</a></p>
@@ -129,8 +129,63 @@
 							</div>
 						</form>
 					{elseif $step == 2}
+							{if $extension_error || $php_version_error}
+								{if $php_version_error}
+									<div class='grid_1'>&nbsp;</div>
+									<div class='center grid_7'>
+										<p style='color:red;'>
+											Twój serwer nie spełnia wymagań systemu: posiada interpreter PHP starszy od wersji {$php_required}.<br />
+											Co możesz zrobić:
+											<ul>
+												<li>Skorzystaj z Panelu Zarządzania Serwerem i opcji "wybór interpretera PHP", by użyć nowszego - uwaga: nie każdy usługodawca hostingowy udostępnia takie narzędzia</li>
+												<li>Zainstaluj nowszą wersje PHP z pakietów dostępnych na stronie producenta - dla zaawansowanych</li>
+												<li>Skontaktuj się z Działem Pomocy Technicznej twojego serwera, by uzyskać pomoc</li>
+											</ul>
+										</p>
+									</div>
+									<div class='grid_1'>&nbsp;</div>
+									<div class='clear'></div>
+									<br />
+								{else}
+									{section=extension_error}
+										<div class='grid_1'>&nbsp;</div>
+										<div class='center grid_7'><span style='color:red;'>Nie znaleziono wymaganego rozszerzenia {$extension_error.name}. Należy je załadować przez odpowiednią konfigurację serwera.</span></div>
+										<div class='grid_1'>&nbsp;</div>
+										<div class='clear'></div>
+										<br />
+									{/section}
+									<br />
+								{/if}
 
-						{if $config_error || $chmod_error || $extension_error || $write_error}
+
+								<hr /><br />
+								<div class="center">
+									<a class="SendButton refresh" style="width:100px;margin:0 auto;">
+										<strong class="o">
+											<strong class="m">
+												<strong>{i18n('Refresh')} &raquo;</strong>
+											</strong>
+										</strong>
+									</a>
+								</div>
+							{else}
+								<div class="center">
+									<a id="SendForm_This" class="SendButton" style="width:100px;margin:0 auto;">
+										<strong class="o">
+											<strong class="m">
+												<strong>{i18n('Next')}</strong>
+											</strong>
+										</strong>
+									</a>
+								</div>
+							{/if}
+							<p><a href={$ADDR_INSTALL}?abort=true title={i18n('Przerwij instalację lub zacznij od nowa')}>{i18n('Przerwij instalację lub zacznij od nowa')}</a></p>
+							<div class="clear"></div>
+					{elseif $step == 3}
+
+						<input type='hidden' name='step' value='3' />
+
+						{if $config_error || $chmod_error}
 							{if $config_error}
 								<div class="info">Nazwy poniższych plików proszę zmienić według instrukcji.</div><br />
 
@@ -152,20 +207,8 @@
 
 							<br />
 
-							{if $extension_error}
-								{section=extension_error}
-									<div class='grid_1'>&nbsp;</div>
-									<div class='center grid_7'><span style='color:red;'>Nie znaleziono wymaganego rozszerzenia {$extension_error.name}. Należy je załadować przez odpowiednią konfigurację serwera.</span></div>
-									<div class='grid_1'>&nbsp;</div>
-									<div class='clear'></div>
-									<br />
-								{/section}
-							{/if}
-
-
 							<hr /><br />
 							<div class="center">
-								<input type='hidden' name='step' value='2' />
 								<a id="SendForm_This" class="SendButton" style="width:100px;margin:0 auto;">
 									<strong class="o">
 										<strong class="m">
@@ -175,11 +218,7 @@
 								</a>
 							</div>
 						{else}
-
 							<div class="center">
-
-								<input type='hidden' name='step' value='2' />
-
 								<a id="SendForm_This" class="SendButton" style="width:100px;margin:0 auto;">
 									<strong class="o">
 										<strong class="m">
@@ -192,7 +231,7 @@
 						<p><a href={$ADDR_INSTALL}?abort=true title={i18n('Przerwij instalację lub zacznij od nowa')}>{i18n('Przerwij instalację lub zacznij od nowa')}</a></p>
 						<div class="clear"></div>
 
-					{elseif $step == 3}
+					{elseif $step == 4}
 
 						{if $empty_form_error}
 							<div class='error'><strong>{i18n('Error:')}</strong> {i18n('Empty fields.')}</div><br />
@@ -312,7 +351,7 @@
 
 							<br /><hr /><br />
 							<div class="center">
-								<input type='hidden' name='step' value='3'>
+								<input type='hidden' name='step' value='4'>
 								<a id="SendForm_This" class="SendButton" style="width:100px;margin:0 auto;">
 									<strong class="o">
 										<strong class="m">
@@ -323,8 +362,9 @@
 							</div>
 							<div class="clear"></div>
 						</form>
-						
+
 						<p><a href={$ADDR_INSTALL}?abort=true title={i18n('Przerwij instalację lub zacznij od nowa')}>{i18n('Przerwij instalację lub zacznij od nowa')}</a></p>
+
 					{elseif $step == 5}
 
 							{if $show_info}
