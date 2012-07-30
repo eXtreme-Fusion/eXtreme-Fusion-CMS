@@ -66,8 +66,6 @@ try
 		$_sett->update(array(
 			'logger_save_removal_action' => $_request->post('save_removal_action')->show() === '1' ? '1' : '0'
 		));
-		
-		$_files->rmDirRecursive(DIR_CACHE);
 
 		if ($active === 1)
 		{

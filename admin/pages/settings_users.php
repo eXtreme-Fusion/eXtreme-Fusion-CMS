@@ -45,8 +45,6 @@ try
 			'change_name' => $_request->post('change_name')->isNum(TRUE)
 		));
 
-		$_files->rmDirRecursive(DIR_CACHE);
-		
 		$_tpl->printMessage('valid', $_log->insertSuccess('edit', __('Data has been saved.')));
 	}
 

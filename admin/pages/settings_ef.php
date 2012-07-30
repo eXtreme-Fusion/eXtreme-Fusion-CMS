@@ -34,8 +34,6 @@ try
 			'cache_expire' => $_request->post('cache_expire')->isNum() ? HELP::DayExport($_request->post('cache_expire')->show()) : $_sett->get('cache_expire')
 		));
 		
-		$_files->rmDirRecursive(DIR_CACHE);
-
 		$_tpl->printMessage('valid', $_log->insertSuccess('edit', __('Data has been saved.')));
 	}
 

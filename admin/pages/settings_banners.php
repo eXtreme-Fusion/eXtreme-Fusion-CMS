@@ -31,8 +31,6 @@ try
 			'site_banner2' => $_request->post('site_banner2')->show()
 		));
 		
-		$_files->rmDirRecursive(DIR_CACHE);
-		
 		$_tpl->printMessage('valid', $_log->insertSuccess('edit', __('Data has been saved.')));
 	}
 

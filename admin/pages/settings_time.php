@@ -44,8 +44,6 @@ try
 			'user_custom_offset_timezone' => $_request->post('user_custom_offset_timezone')->isNum(TRUE)
 		));
 		
-		$_files->rmDirRecursive(DIR_CACHE);
-
 		$_tpl->printMessage('valid', $_log->insertSuccess('edit', __('Data has been saved.')));
 		$_tpl->assign('view', 'settings');
 	}

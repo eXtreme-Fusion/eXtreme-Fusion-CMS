@@ -35,8 +35,6 @@ try
 			))
 		));
 		
-		$_files->rmDirRecursive(DIR_CACHE);
-		
 		$_tpl->printMessage('valid', $_log->insertSuccess('edit', __('Data has been saved.')));
 	}
 
