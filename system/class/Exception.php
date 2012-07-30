@@ -12,6 +12,7 @@
 
 class systemException extends Exception{}
 class userException extends Exception{}
+class argumentException extends Exception{};
 
 class uploadException extends Exception
 {
@@ -79,6 +80,55 @@ function systemErrorHandler(systemException $exc)
 	echo replaceException($getHeader);
 	echo '<h3>System error</h3>
 	<div class="error">'.$exc->getMessage().'</div>';
+	$trace = array_reverse($exc->getTrace()); ?>
+	<div class="debug opt">
+		<h3>Error path:</h3>
+		<table id="TableOPT" class="dataTable">
+			<thead>
+				<tr>
+					<th style="width:5%">#</th>
+					<th style="width:40%">W pliku</th>
+					<th style="width:45%">Funkcja</th>
+					<th style="width:10%">Linia</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php foreach($trace as $number => $item) {
+					if(isset($item['class'])) {
+						$callback = $item['class'].$item['type'].$item['function'];
+					} else {
+						$callback = $item['function'];
+					}
+					echo '<tr class="tbl1 border_bottom">
+					<td style="padding:6px;width:5%" class="center">'.$number.'</td>
+					<td style="width:40%">'.(isset($item['file']) ? basename($item['file']) : '----').'</td>
+					<td style="width:45%">'.$callback.'</td>
+					<td style="width:10%" class="center">'.(isset($item['line']) ? basename($item['line']) : '----').'</td>
+					</tr>';
+				} ?>
+			</tbody>
+		</table>
+		<div class="center" style="width:200px;margin:10px auto;">
+			<span class="CancelButton" style="width:150px;"><strong class="o"><strong class="m"><strong>Back<img alt="" src="<?php ADDR_SITE ?>/templates/images/icons/pixel/undo.png"></strong></strong></strong></span>
+		</div>
+	</div>
+	<?php
+	ob_start();
+		include DIR_ADMIN_TEMPLATES."pre".DS."exception_footer.tpl";
+		$getFooter = ob_get_contents();
+	ob_end_clean();
+	echo replaceException($getFooter);
+}
+
+function argumentErrorHandler(argumentException $exc)
+{
+	ob_start();
+		include DIR_ADMIN_TEMPLATES."pre".DS."exception_header.tpl";
+		$getHeader = ob_get_contents();
+	ob_end_clean();
+	echo replaceException($getHeader);
+	echo '<h3>Function argument error</h3>
+	<div class="error">Parameter of '.$exc->getMessage().' is wrong.</div>';
 	$trace = array_reverse($exc->getTrace()); ?>
 	<div class="debug opt">
 		<h3>Error path:</h3>

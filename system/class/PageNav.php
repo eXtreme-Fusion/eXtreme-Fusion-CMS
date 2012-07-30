@@ -153,7 +153,7 @@ class PageNav implements PageNavIntf
 				2	0.0447	4520680	PageNav->get( )	..\news.php:275
 				3	0.0451	4543680	StaticContainer->get( )	..\PageNav.php:147
 			*/
-			$_tpl = new pageNavParser(StaticContainer::get('route'));
+			$_tpl = new pageNavParser(StaticContainer::has('route') ? StaticContainer::get('route') : NULL);
 
 			$_tpl->assignGroup(array(
 				'nums' => count($paging['nums']) > 1 ? $paging['nums'] : NULL,

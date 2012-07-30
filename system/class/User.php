@@ -1,13 +1,13 @@
 <?php
 /***********************************************************
 | eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
+| This product is licensed under the BSD License.
+| http://extreme-fusion.org/ef5/license/
 ***********************************************************/
 
 /**
@@ -40,7 +40,7 @@ class User {
 
 	// Przechowuje adres IP użytkownika
 	protected $_ip;
-	
+
 	/**
 	 * Czas ważności ciasteczka.
 	 * Wartość tej zmiennej jest trzecim paramtrem funkcji setcookie();
@@ -90,7 +90,7 @@ class User {
 	 * @return  void
 	 */
 	public function __construct(Sett $sett, Data $pdo)
-	{		
+	{
 		$this->_sett = $sett;
 		$this->_pdo = $pdo;
 		$this->setAllRolesCache();
@@ -102,16 +102,16 @@ class User {
 
 		// Przed edycją należy przeczytać opis przy deklaracji zmiennej
 		$this->_cookie_life_time = time() + 60*60*24*31;
-		
+
 		if (filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP))
 		{
 			$this->_ip = $_SERVER['REMOTE_ADDR'];
-		} 
+		}
 		else
 		{
 			throw new systemException('Twój adres IP: '.$_SERVER['REMOTE_ADDR'].' jest nie prawidłowy!!!');
 		}
-		
+
 	}
 
 	public function __destruct()
@@ -120,7 +120,7 @@ class User {
 		$this->onlineCleanTable();
 	}
 
-	
+
 	/************* metody do testów */
 
 	public function getLang()
@@ -129,9 +129,9 @@ class User {
 		{
 			return $this->get('lang');
 		}
-		
+
 		return System::detectBrowserLanguage(TRUE);
-		
+
 	}
 	// Sprawdzanie dostępności nazwy użytkownika i ewentualna zmiana
 	// aby zmienić nazwę usera, nalezy podać ID
@@ -367,6 +367,7 @@ class User {
 	//Aktualizuje dane pól użytkowników
 	public function updateField($field, $id = NULL, $index_val = NULL, $field_val = NULL)
 	{
+		echo 'depr';
 		if($id === NULL)
 		{
 			$this->_pdo->exec('UPDATE [users_data] SET '.$field);
@@ -674,7 +675,7 @@ class User {
 
 		return $username;
 	}
-	
+
 	/**
 	 * Zwraca ścieżkę do avataru użytkownika lub obrazków zastępczych jeśli avataru brak.
 	 *
@@ -693,7 +694,7 @@ class User {
 		{
 			$avatar_file = $this->getByID($user, 'avatar');
 		}
-		
+
 		if ($avatar_file && file_exists(DIR_IMAGES.'avatars'.DS.$avatar_file))
 		{
 			return $dir.$avatar_file;
@@ -707,7 +708,7 @@ class User {
 			return ADDR_IMAGES.'loading.gif';
 		}
 	}
-	
+
 	/**
 	 * Tworzy hash z użyciem soli użytkownika o danym indentyfikatorze
 	 *
@@ -1720,11 +1721,13 @@ class User {
 	}
 
 	/**
-	 * Sprawdza poprawność wpisanych w formularzu haseł
+	 * Sprawdza poprawność formatu podanych haseł
 	 */
 	public function validPassword($pass1, $pass2)
 	{
-		return $pass1 === $pass2 && $pass1;
+		$strlen = strlen($pass1);
+
+		return $pass1 === $pass2 && $strlen > 5 && $strlen < 21 && $pass1;
 	}
 
 	public function getEmailHost($email)
@@ -1760,5 +1763,56 @@ class User {
 		{
 			HELP::redirect($_route->path(array('controller' => 'login', 'action' => base64_encode($_SERVER['REQUEST_URI']))));
 		}
+	}
+
+	public function customData()
+	{
+		if ($this->_custom_fields)
+		{
+			return $this->_user_custom_data;
+		}
+		else
+		{
+			return $this->_user_custom_data = new UserCustomData($this);
+		}
+	}
+}
+
+class UserCustomData
+{
+	protected $_user;
+
+	public function __construct(User $_user)
+	{
+		$this->_user = $_user;
+	}
+
+	public function update($data, $user_id = NULL)
+	{
+		$field = array(); $value = array(); $index = array();
+
+		foreach($data as $key => $val)
+		{
+			$field[] = '`'.$key.'` = "'.$val.'"';
+			$value[] = '"'.$val.'"';
+			$index[] = '`'.$key.'`';
+		}
+
+		$field = implode(', ', $field);
+		$value = implode(', ', $value);
+		$index = implode(', ', $index);
+
+		// Aktualizacja danych wszystkich użytkowników
+		if ($id === NULL)
+		{
+			$this->_pdo->exec('UPDATE [users_data] SET '.$field);
+		}
+		// Aktualizacja danych konkrtetnego użytkownika
+		else
+		{
+			$this->_pdo->exec('INSERT INTO [users_data] (`user_id`, '.$index.') VALUES ('.$user_id.', '.$value.') ON DUPLICATE KEY UPDATE '.$field.'');
+		}
+
+		return TRUE;
 	}
 }

@@ -11,6 +11,16 @@ class StaticContainer
 
 	function get($name)
 	{
-		return self::$shared[$name];
+		if (isset(self::$shared[$name]))
+		{
+			return self::$shared[$name];
+		}
+		
+		throw new argumentException('StaticContainer::get()');
+	}
+	
+	function has($name)
+	{
+		return isset(self::$shared[$name]);
 	}
 }
