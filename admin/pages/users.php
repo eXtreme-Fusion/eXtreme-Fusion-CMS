@@ -762,6 +762,11 @@ try
 			}
 			$_tpl->assign('data', $data);
 		}
+		
+		if ($_sett->get('email_verification') === '1' || $_sett->get('admin_activation') === '1')
+		{
+			$_tpl->assign('active', TRUE);
+		}
 	}
 	elseif ($_request->get('page')->show() === 'mail')
 	{
