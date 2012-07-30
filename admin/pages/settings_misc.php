@@ -36,6 +36,8 @@ try
 			'ratings_enabled' => $_request->post('ratings_enabled')->isNum(TRUE),
 			'visitorcounter_enabled' => $_request->post('visitorcounter_enabled')->isNum(TRUE),
 		));
+		
+		$_files->rmDirRecursive(DIR_CACHE);
 
 		$_tpl->printMessage('valid', $_log->insertSuccess('edit', __('Data has been saved.')));
 	}

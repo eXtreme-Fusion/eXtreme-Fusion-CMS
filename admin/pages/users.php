@@ -647,23 +647,21 @@ try
 				$salt = substr(sha512(uniqid(rand(), true)), 0, 5);
 				$password = sha512($salt.'^'.$_request->post('user_pass')->show());
 
+				$status = 0;
+				$valid = '';
+				
 				if ( ! $_request->post('active')->show())
 				{
-					if ($_sett->get('email_verification'))
+					if ($_sett->get('email_verification') === '1')
 					{
 						$status = 1;
 						$valid = md5(uniqid(time()));
 					}
-					elseif ($_sett->get('admin_activation'))
+					elseif ($_sett->get('admin_activation') === '1')
 					{
 						$status = 2;
 						$valid = md5(uniqid(time()));
 					}
-				}
-				else
-				{
-					$status = 0;
-					$valid = '';
 				}
 
 				$count = $_pdo->exec("INSERT INTO [users] (`username`, `password`, `salt`, `link`, `email`, `hide_email`, `valid`, `valid_code`, `offset`, `avatar`, `joined`, `lastvisit`, `ip`, `status`, `theme`, `role`, `roles`) VALUES (:username, :password, :salt, :link, :email, :hidemail, '1', :valid, '0', '', '".time()."', '0', '0.0.0.0', :status, 'Default', :role, :roles)",
@@ -695,7 +693,7 @@ try
 					$count = $_user->customData()->update($custom_data, $last_user_id);
 				}
 
-				if ($_request->post('active')->show() === '1' && $_sett->get('email_verification'))
+				if ($_request->post('active')->show() !== 'yes' && $_sett->get('email_verification'))
 				{
 					$message = __('Welcome!').'<br /><br />'.
 						__('Administrator has created an account with this e-mail on website :portal.', array(':portal' => $_sett->get('site_name'))).'<br />

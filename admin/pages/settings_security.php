@@ -36,6 +36,8 @@ try
 			'maintenance' => $_request->post('maintenance')->isNum(TRUE),
 			'maintenance_message' => $_request->post('maintenance_message')->show()
 		));
+		
+		$_files->rmDirRecursive(DIR_CACHE);
 
 		$_tpl->printMessage('valid', $_log->insertSuccess('edit', __('Data has been saved.')));
 	}

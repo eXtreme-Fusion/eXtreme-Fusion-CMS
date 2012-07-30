@@ -33,6 +33,8 @@ try
 			'users_per_page' => $_request->post('users_per_page')->isNum(TRUE),
 			'notes_per_page' => $_request->post('notes_per_page')->isNum(TRUE)
 		));
+		
+		$_files->rmDirRecursive(DIR_CACHE);
 
 		$_tpl->printMessage('valid', $_log->insertSuccess('edit', __('Data has been saved.')));
 	}

@@ -39,6 +39,8 @@ try
 				'expire_users' => $_request->post('expire_users')->isNum() ? $_request->post('expire_users')->show() : $_sett->get('expire_users')
 			))
 		));
+		
+		$_files->rmDirRecursive(DIR_CACHE);
 
 		$_tpl->printMessage('valid', $_log->insertSuccess('edit', __('Data has been saved.')));
 	}
