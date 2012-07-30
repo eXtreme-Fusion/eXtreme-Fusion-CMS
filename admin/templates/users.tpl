@@ -379,6 +379,10 @@
 					</select>
 				</div>
 			</div>
+			<div class="tbl2">
+				<div class="formLabel sep_1 grid_3">Aktywuj konto od razu</div>
+				<div class="formField grid_7"><input type="checkbox" name="active" value="1" /> {i18n('Yes')}</div>
+			</div>
 			{if $data}
 				<h4>{i18n('Additional informations')}</h4>
 				{section=data}

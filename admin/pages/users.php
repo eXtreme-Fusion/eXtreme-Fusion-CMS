@@ -647,15 +647,18 @@ try
 				$salt = substr(sha512(uniqid(rand(), true)), 0, 5);
 				$password = sha512($salt.'^'.$_request->post('user_pass')->show());
 
-				if ($_sett->get('email_verification'))
+				if ( ! $_request->post('active')->show())
 				{
-					$status = 1;
-					$valid = md5(uniqid(time()));
-				}
-				elseif ($_sett->get('admin_activation'))
-				{
-					$status = 2;
-					$valid = md5(uniqid(time()));
+					if ($_sett->get('email_verification'))
+					{
+						$status = 1;
+						$valid = md5(uniqid(time()));
+					}
+					elseif ($_sett->get('admin_activation'))
+					{
+						$status = 2;
+						$valid = md5(uniqid(time()));
+					}
 				}
 				else
 				{
@@ -692,7 +695,7 @@ try
 					$count = $_user->customData()->update($custom_data, $last_user_id);
 				}
 
-				if ($_sett->get('email_verification'))
+				if ($_request->post('active')->show() === '1' && $_sett->get('email_verification'))
 				{
 					$message = __('Welcome!').'<br /><br />'.
 						__('Administrator has created an account with this e-mail on website :portal.', array(':portal' => $_sett->get('site_name'))).'<br />
