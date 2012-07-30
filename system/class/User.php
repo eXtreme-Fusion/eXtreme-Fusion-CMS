@@ -40,6 +40,8 @@ class User {
 
 	// Przechowuje adres IP użytkownika
 	protected $_ip;
+	
+	protected $_custom_data;
 
 	/**
 	 * Czas ważności ciasteczka.
@@ -1679,7 +1681,7 @@ class User {
 	 */
 	public function validLogin($var)
 	{
-		return preg_match('/^[a-z]+[\w-]*$/i', $var);
+		return !preg_match("#[^\w\d-]+#i", $var);
 	}
 
 	/**
@@ -1767,13 +1769,13 @@ class User {
 
 	public function customData()
 	{
-		if ($this->_custom_fields)
+		if ($this->_custom_data)
 		{
 			return $this->_user_custom_data;
 		}
 		else
 		{
-			return $this->_user_custom_data = new UserCustomData($this);
+			return $this->_user_custom_data = new UserCustomData($this, $this->_pdo);
 		}
 	}
 }
@@ -1781,10 +1783,12 @@ class User {
 class UserCustomData
 {
 	protected $_user;
+	protected $_pdo;
 
-	public function __construct(User $_user)
+	public function __construct(User $_user, Data $_pdo)
 	{
 		$this->_user = $_user;
+		$this->_pdo = $_pdo;
 	}
 
 	public function update($data, $user_id = NULL)
@@ -1803,7 +1807,7 @@ class UserCustomData
 		$index = implode(', ', $index);
 
 		// Aktualizacja danych wszystkich użytkowników
-		if ($id === NULL)
+		if ($user_id === NULL)
 		{
 			$this->_pdo->exec('UPDATE [users_data] SET '.$field);
 		}

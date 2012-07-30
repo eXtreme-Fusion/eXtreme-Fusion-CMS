@@ -356,7 +356,7 @@
 			<input type="hidden" name="roles[]" value="3" />
 			
 			<div class="tbl2">
-				<div class="formLabel sep_1 grid_3">{i18n('Uprawnienia grup:')}</div>
+				<div class="formLabel sep_1 grid_3">{i18n('Uprawnienia grup:')}<small>{i18n('Przytrzymaj klawisz Ctrl, aby wybrać kilka opcji z listy.')}</small></div>
 				<div class="formField grid_7">
 					<select name="roles[]" multiple id="InsightGroups" class="select-multi" size="5" >
 						{section=insight_groups}

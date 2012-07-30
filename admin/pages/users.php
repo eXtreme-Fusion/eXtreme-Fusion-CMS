@@ -94,7 +94,7 @@ try
 
 						$username = trim($_request->post('username')->show());
 
-						if ( ! $_user->isValidLogin($username))
+						if ( ! $_user->validLogin($username))
 						{
 							$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error2'));
 						}
@@ -519,7 +519,7 @@ try
 				$status = 0;
 			}
 
-			$_GET['current'] = intval($_request->get('current')->show() ? $_request->get('current')->show() : 1);
+			$current = intval($_request->get('current')->show() ? $_request->get('current')->show() : 1);
 
 			$rows = $_pdo->getMatchRowsCount('SELECT * FROM [users] WHERE `status` = :status ORDER BY `username` ASC',
 				array(':status', $status, PDO::PARAM_INT)
@@ -528,7 +528,7 @@ try
 			$user = array();
 			if ($rows)
 			{
-				$rowstart = isset($_GET['current']) ? PAGING::getRowStart($_GET['current'], intval($_sett->get('users_per_page'))) : 0;
+				$rowstart = PAGING::getRowStart($current, intval($_sett->get('users_per_page')));
 
 				$query = $_pdo->getData('SELECT * FROM [users] WHERE `status` = :status ORDER BY `username` ASC LIMIT :rowstart,:items_per_page',
 					array(
@@ -552,7 +552,8 @@ try
 					}
 				}
 
-				$_pagenav = new PageNav(new Paging($rows, $_GET['current'], intval($_sett->get('users_per_page'))), $_tpl, 10, array('page=users', 'current=', FALSE));
+				
+				$_pagenav = new PageNav(new Paging($rows, $current, intval($_sett->get('users_per_page'))), $_tpl, 10, array('page=users', 'current=', FALSE));
 
 				$_pagenav->get($_pagenav->create(), 'page_nav', DIR_ADMIN_TEMPLATES.'paging'.DS);
 			}
@@ -605,7 +606,7 @@ try
 
 				$username = $_request->post('username')->trim();
 
-				if ( ! $_user->isValidLogin($username))
+				if ( ! $_user->validLogin($username))
 				{
 					$_request->redirect(FILE_PATH, array('page' => 'add', 'act' => 'error1'));
 				}
