@@ -46,7 +46,7 @@ if ($_request->post('search')->show() && $_request->post('search_type')->show())
 
 if ($_route->getByID(1) === 'news' || $_route->getByID(1) === 'all')
 {
-	$text = $_route->getByID(2);
+	$text = HELP::decodingURL($_route->getByID(2));
 
 	$query = $_pdo->getData('
 		SELECT tn.`id` AS `news_id`, tn.`title`, tn.`link`, tn.`category`, tn.`language`, tn.`content`, tn.`content_extended`, tn.`author`, tn.`datestamp`, tc.`name` AS `category_name`, tu.`id` AS `user_id`,  tu.`username` AS `username`  FROM [news] tn
@@ -82,7 +82,7 @@ if ($_route->getByID(1) === 'news' || $_route->getByID(1) === 'all')
 
 if ($_route->getByID(1) === 'tags' || $_route->getByID(1) === 'all')
 {
-	$tag = $_route->getByID(2);
+	$tag = HELP::decodingURL($_route->getByID(2));
 	
 	$query = $_pdo->getData('SELECT * FROM [tags] WHERE `value` LIKE "%":value"%" ORDER BY `value` ASC',
 		array(':value', $tag, PDO::PARAM_STR)
@@ -105,7 +105,7 @@ if ($_route->getByID(1) === 'tags' || $_route->getByID(1) === 'all')
 
 if ($_route->getByID(1) === 'users' || $_route->getByID(1) === 'all')
 {
-	$username = $_route->getByID(2);
+	$username = HELP::decodingURL($_route->getByID(2));
 	
 	$query = $_pdo->getData('SELECT * FROM [users] WHERE `status` = 0 AND `username` LIKE "%":username"%" ORDER BY `username` ASC',
 		array(':username', $username, PDO::PARAM_STR)
@@ -139,6 +139,6 @@ if ($_route->getByID(1) === 'error')
 }
 
 $_tpl->assignGroup(array(
-	'search_text' => $_route->getByID(2) ? $_route->getByID(2) : '',
+	'search_text' => $_route->getByID(2) ? HELP::decodingURL($_route->getByID(2)) : '',
 	'search_type' => $_route->getByID(1) ? $_route->getByID(1) : ''
 ));

@@ -279,10 +279,37 @@ Class HELP
 		return rand(0, count($array)-1);
 	}
 	
+	//==================================
+	//PL: Oznaczenie kolorem znalezionego wyrażenia w ciągu
+	//==================================
 	public static function highlight($text, $search, $color = '#99bb00')
 	{
 		$txt = str_ireplace($search, '<span style="background: '.$color.'; font-weight: bold;">'.$search.'</span>', $text);
  
+		return $txt;
+	}
+	
+	//==================================
+	//PL: Rozkodowywanie adresów URL
+	//EN: Decoding URL
+	//==================================
+	public static function decodingURL($text)
+	{
+		$coding = array(
+			'%C4%85', '%C4%84', '%C4%87', '%C4%86', '%C4%99', '%C4%98', '%C5%82', '%C5%81', '%C5%84', '%C5%83',
+			'%C3%B3', '%C3%93', '%C5%9B', '%C5%9A', '%C5%BA', '%C5%B9', '%C5%BC', '%C5%BB', '%20', '%22',
+			'%3C', '%3E', '%7B', '%7D', '%7C', '%60', '%5E', '%E2%82%AC', '%E2%80%B0', '%C6%92',
+			'%CE%94', '%CE%A0', '%CE%A9', '%CE%B1', '%CE%B2', '%C2%A3', '%C2%A7', '%C2%A9', '%C2%B5', '%E2%88%9E'
+		);
+		$encoding = array(
+			'ą', 'Ą', 'ć', 'Ć', 'ę', 'Ę', 'ł', 'Ł', 'ń', 'Ń',
+			'ó', 'Ó', 'ś', 'Ś', 'ź', 'Ź', 'ż', 'Ż', ' ', '"',
+			'<', '>', '{', '}', '|', '`', '^', '€', '‰', 'ƒ',
+			'Δ', 'Π', 'Ω', 'α', 'β', '£', '§', '©', 'µ', '∞'
+		);
+		
+		$txt = str_replace($coding, $encoding, $text);
+		
 		return $txt;
 	}
 

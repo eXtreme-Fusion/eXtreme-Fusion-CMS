@@ -51,13 +51,13 @@
 			</div>
 		{/section}
 	{elseif $search_type === "news" || ($all && $news === array())}
-		<div class="info">Nie znaleziono newsów pasujących do następującego kryterium <strong>{$search_text}</strong></div>
+		<div class="info">Nie znaleziono newsów pasujących do następującego kryterium "<strong>{$search_text}</strong>"</div>
 	{/if}
 	
 	{if $all}
 		<h4>Tagi</h4>
 	{/if}
-	{if $search_type === "tags" && $tags || ($all && $tags !== NULL)}
+	{if $search_type === "tags" && $tags || ($all && $tags !== array())}
 		<div class="tbl">
 			<div class="grid_10 bold">Tag</div>
 		</div>
@@ -67,14 +67,14 @@
 				<div class="grid_9"><a href="{$tags.link}">{$tags.value}</a></div>
 			</div>
 		{/section}
-	{elseif $search_type === "tags" || ($all && $users === NULL)}
-		<div class="info">Nie znaleziono tagów pasujących do następującego kryterium <strong>{$search_text}</strong></div>
+	{elseif $search_type === "tags" || ($all && $users === array())}
+		<div class="info">Nie znaleziono tagów pasujących do następującego kryterium "<strong>{$search_text}</strong>"</div>
 	{/if}
 	
 	{if $all}
 		<h4>Użytkownicy</h4>
 	{/if}
-	{if $search_type === "users" && $users || ($all && $users !== NULL)}
+	{if $search_type === "users" && $users || ($all && $users !== array())}
 		<div class="tbl">
 			<div class="grid_5 bold">Nazwa użytkownika</div>
 			<div class="grid_2 bold">Grupa</div>
@@ -88,7 +88,7 @@
 				<div class="grid_3">{$users.visit}</div>
 			</div>
 		{/section}
-	{elseif $search_type === "users" || ($all && $users === NULL)}
-		<div class="info">Nie znaleziono użytkowników pasujących do następującego kryterium <strong>{$search_text}</strong></div>
+	{elseif $search_type === "users" || ($all && $users === array())}
+		<div class="info">Nie znaleziono użytkowników pasujących do następującego kryterium "<strong>{$search_text}</strong>"</div>
 	{/if}
 {php} closetable() {/php}
