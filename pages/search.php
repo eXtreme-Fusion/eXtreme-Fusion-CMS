@@ -22,18 +22,26 @@ if ($_request->post('search')->show() && $_request->post('search_type')->show())
 	$search_type = $_request->post('search_type')->show();
 	$search_text = $_request->post('search_text')->show();
 	
-	if ($search_type === 'news')
+	if ($search_text)
 	{
-		$_request->redirect($_route->path(array('controller' => 'search', 'action' => $search_type, $search_text)));
+		if ($search_type === 'news')
+		{
+			$_request->redirect($_route->path(array('controller' => 'search', 'action' => $search_type, $search_text)));
+		}
+		elseif ($search_type === 'tags')
+		{
+			$_request->redirect($_route->path(array('controller' => 'search', 'action' => $search_type, $search_text)));
+		}
+		elseif ($search_type === 'users')
+		{
+			$_request->redirect($_route->path(array('controller' => 'search', 'action' => $search_type, $search_text)));
+		}
+		elseif ($search_type === 'all')
+		{
+			$_request->redirect($_route->path(array('controller' => 'search', 'action' => $search_type, $search_text)));
+		}
 	}
-	elseif ($search_type === 'users')
-	{
-		$_request->redirect($_route->path(array('controller' => 'search', 'action' => $search_type, $search_text)));
-	}
-	elseif ($search_type === 'all')
-	{
-		$_request->redirect($_route->path(array('controller' => 'search', 'action' => $search_type, $search_text)));
-	}
+	$_request->redirect($_route->path(array('controller' => 'search', 'action' => 'error')));
 }
 
 if ($_route->getByID(1) === 'news' || $_route->getByID(1) === 'all')
@@ -56,10 +64,10 @@ if ($_route->getByID(1) === 'news' || $_route->getByID(1) === 'all')
 		$news[] = array(
 			'row_color' => $i % 2 == 0 ? 'tbl1' : 'tbl2',
 			'i' => $i+1,
-			'title' => $row['title'],
+			'title' => HELP::highlight($row['title'], $text),
 			'news_link' => $_route->path(array('controller' => 'news', 'action' => $row['news_id'], HELP::Title2Link($row['title']))),
-			'content' => substr($row['content'], 0, 350).'...',
-			'content_extended' => substr($row['content_extended'], 0, 350).'...',
+			'content' => HELP::highlight(substr($row['content'], 0, 350), $text).'...',
+			'content_extended' => HELP::highlight(substr($row['content_extended'], 0, 350), $text).'...',
 			'date' => HELP::showDate('shortdate', $row['datestamp']),
 			'author' => $_user->getUsername($row['user_id']),
 			'author_link' => $_route->path(array('controller' => 'profile', 'action' => $row['user_id'], HELP::Title2Link($row['username']))),
@@ -70,6 +78,29 @@ if ($_route->getByID(1) === 'news' || $_route->getByID(1) === 'all')
 	}
 
 	$_tpl->assign('news', $news);
+}
+
+if ($_route->getByID(1) === 'tags' || $_route->getByID(1) === 'all')
+{
+	$tag = $_route->getByID(2);
+	
+	$query = $_pdo->getData('SELECT * FROM [tags] WHERE `value` LIKE "%":value"%" ORDER BY `value` ASC',
+		array(':value', $tag, PDO::PARAM_STR)
+	);
+	
+	$i = 0; $tags = array();
+	foreach ($query as $row)
+	{
+		$tags[] = array(
+			'row_color' => $i % 2 == 0 ? 'tbl1' : 'tbl2',
+			'i' => $i+1,
+			'value' => HELP::highlight($row['value'], $tag),
+			'link' => $_route->path(array('controller' => 'tags', 'action' => $row['value_for_link']))
+		);
+		$i++;
+	}
+
+	$_tpl->assign('tags', $tags);
 }
 
 if ($_route->getByID(1) === 'users' || $_route->getByID(1) === 'all')
@@ -100,6 +131,11 @@ if ($_route->getByID(1) === 'users' || $_route->getByID(1) === 'all')
 if ($_route->getByID(1) === 'all')
 {
 	$_tpl->assign('all', TRUE);
+}
+
+if ($_route->getByID(1) === 'error')
+{
+	$_tpl->printMessage('error', 'Nie wpisano tekstu do wyszukiwarki');
 }
 
 $_tpl->assignGroup(array(

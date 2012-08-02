@@ -278,6 +278,13 @@ Class HELP
 	{
 		return rand(0, count($array)-1);
 	}
+	
+	public static function highlight($text, $search, $color = '#99bb00')
+	{
+		$txt = str_ireplace($search, '<span style="background: '.$color.'; font-weight: bold;">'.$search.'</span>', $text);
+ 
+		return $txt;
+	}
 
 	/** koniec METODY NAPISANE PRZEZ EF TEAM **/
 

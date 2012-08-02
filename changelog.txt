@@ -23,3 +23,5 @@
   do wersji PHP 5.3 ustawiając ją jako domyślną, więc nie ma sensu
   testować systemu na coraz mniej używanym PHP < 5.2.2
 - przepisano instalator na system szablonów OPT
+
+- dodanie wyszukiwarki

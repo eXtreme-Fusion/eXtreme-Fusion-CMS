@@ -1,5 +1,4 @@
 {php} opentable(__('Wyszukiwarka')) {/php}
-{if $message}<div class="{$class}">{$message}</div>{/if}
 	<form id="This" action="{$URL_REQUEST}" method="post" />
 		<div class="tbl1">
 			<div class="formLabel sep_1 grid_3"><label for="search_text">{i18n('Wpisz szukaną frazę:')}</label></div>
@@ -10,7 +9,7 @@
 			<div class="formField grid_7">
 				<label for="news"><input type="radio" id="news" name="search_type" value="news"{if $search_type === "news"} checked="checked"{/if}>{i18n('Newsy')}</label>
 				<label for="users"><input type="radio" id="users" name="search_type" value="users"{if $search_type === "users"} checked="checked"{/if}>{i18n('Użytkownicy')}</label>
-				<label for="tags"><input type="radio" id="tags" name="search_type" value="tags"{if $search_type === "tags"} checked="checked"{/if} disabled="disabled">{i18n('Tagi')}</label>
+				<label for="tags"><input type="radio" id="tags" name="search_type" value="tags"{if $search_type === "tags"} checked="checked"{/if}>{i18n('Tagi')}</label>
 				<label for="all"><input type="radio" id="all" name="search_type" value="all"{if $search_type === "all"} checked="checked"{/if}>{i18n('Cała strona')}</label>
 			</div>
 		</div>
@@ -22,6 +21,8 @@
 			</div>
 		</div>
 	</form>
+	
+	{if $message}<div class="{$class}">{$message}</div>{/if}
 	
 	{if $all}
 		<h4>Newsy</h4>
@@ -51,6 +52,23 @@
 		{/section}
 	{elseif $search_type === "news" || ($all && $news === array())}
 		<div class="info">Nie znaleziono newsów pasujących do następującego kryterium <strong>{$search_text}</strong></div>
+	{/if}
+	
+	{if $all}
+		<h4>Tagi</h4>
+	{/if}
+	{if $search_type === "tags" && $tags || ($all && $tags !== NULL)}
+		<div class="tbl">
+			<div class="grid_10 bold">Tag</div>
+		</div>
+		{section=tags}
+			<div class="{$tags.row_color}">
+				<div class="grid_1">{$tags.i}.</div>
+				<div class="grid_9"><a href="{$tags.link}">{$tags.value}</a></div>
+			</div>
+		{/section}
+	{elseif $search_type === "tags" || ($all && $users === NULL)}
+		<div class="info">Nie znaleziono tagów pasujących do następującego kryterium <strong>{$search_text}</strong></div>
 	{/if}
 	
 	{if $all}
