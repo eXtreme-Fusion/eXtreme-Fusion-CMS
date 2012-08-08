@@ -702,7 +702,7 @@ try
 						<strong>'.__('Password:').'</strong> '.$_request->post('user_pass')->show().'<br />
 						<br />'.__('To get full access to this website you have to activate your account with link below:').'<br />
 						<br />
-						<a href="'.ADDR_SITE.'register,active,'.$valid.'.html">'.ADDR_SITE.'register,active,'.$valid.'.html</a><br />
+						<a href="'.$_route->path(array('controller' => 'register', 'action' => 'active', $valid)).'">'.$_route->path(array('controller' => 'register', 'action' => 'active', $valid)).'</a><br />
 						<br />
 						<strong>'.__('Greetings').'</strong><br />
 						<em>'.$_sett->get('site_username').'</em><br />
