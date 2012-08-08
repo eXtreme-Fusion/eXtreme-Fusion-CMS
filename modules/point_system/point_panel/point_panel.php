@@ -11,7 +11,7 @@
 $_locale->moduleLoad('point_panel', 'point_system');
 $_head->set('<link href="'.ADDR_MODULES.'point_system'.DS.'templates'.DS.'stylesheet'.DS.'point_system.css" media="screen" rel="stylesheet" />');
 
-$row = $_pdo->getRow('SELECT * FROM [users] ORDER BY `points` DESC LIMIT 1');
+$row = $_pdo->getRow('SELECT `id`, `username`, `role`, `points` FROM [users] WHERE `role` != 1 ORDER BY `points` DESC LIMIT 1');
 
 if($row)
 {
@@ -29,7 +29,7 @@ if($row)
 $_panel->assign('user', $data);
 
 $user = array();
-$query = $_pdo->getData('SELECT * FROM [users] ORDER BY `points` DESC, `username` ASC LIMIT 1,6');
+$query = $_pdo->getData('SELECT `id`, `username`, `points` FROM [users] WHERE `role` != 1 ORDER BY `points` DESC, `username` ASC LIMIT 1,6');
 
 $i = 2;
 foreach($query as $row)
