@@ -483,7 +483,7 @@ class Modules
 			{
 				foreach($menu_link as $val)
 				{
-					$data = $this->_pdo->getRow("SELECT `id`, `order` FROM [navigation] WHERE `url`='".$val['url']."'");
+					$data = $this->_pdo->getRow("SELECT `id`, `order` FROM [navigation] WHERE `url`='".$val['url'].$this->_sett->getUns('routing', 'url_ext')."'");
 					if ($data)
 					{
 						$result = $this->_pdo->exec("UPDATE [navigation] SET `order`=`order`-1 WHERE `order`>{$data['order']}");
