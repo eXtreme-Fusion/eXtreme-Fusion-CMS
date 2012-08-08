@@ -97,9 +97,11 @@ try
 				{
 					$subject = __('Received Warning');
 					$message = __('Administrator punish you a warning. Read the rules.');
+					$item_id = $_pdo->getField('SELECT max(`item_id`) FROM [messages]') + 1;
 
-					$count = $_pdo->exec('INSERT INTO [messages] (`to`, `from`, `subject`, `message`, `datestamp`) VALUES (:user, :admin, :subject, :message, '.time().')',
+					$count = $_pdo->exec('INSERT INTO [messages] (`item_id`, `to`, `from`, `subject`, `message`, `datestamp`) VALUES (:item, :user, :admin, :subject, :message, '.time().')',
 						array(
+							array(':item', $item_id, PDO::PARAM_INT),
 							array(':user', $_request->get('user')->show(), PDO::PARAM_INT),
 							array(':admin', $_user->get('id'), PDO::PARAM_INT),
 							array(':subject', $subject, PDO::PARAM_STR),
