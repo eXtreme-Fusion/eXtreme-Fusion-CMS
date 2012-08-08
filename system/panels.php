@@ -53,7 +53,18 @@ foreach($_panels->getPanelsList($_user) as $id => $data)
 	}
 	else
 	{
-		eval($_panels->closePHPSet($data['content'], TRUE));
+		if ($data['side'] === '2' || $data['side'] === '3')
+		{
+			opentable($data['name']);
+				eval($_panels->closePHPSet($data['content'], TRUE));
+			closetable();
+		}
+		else
+		{
+			openside($data['name']);
+				eval($_panels->closePHPSet($data['content'], TRUE));
+			closeside();
+		}
 	}
 }
 

@@ -210,14 +210,14 @@ class Panels
 	
 	public function getPanelsList($_user)
 	{
-		$data = $this->_pdo->getData('SELECT `id`, `filename`, `side`, `access`, `type`, `content` FROM [panels] WHERE `status` = 1 ORDER BY `side`, `order` ASC');
+		$data = $this->_pdo->getData('SELECT `id`, `name`, `filename`, `side`, `access`, `type`, `content` FROM [panels] WHERE `status` = 1 ORDER BY `side`, `order` ASC');
 		
 		$panels = array();
 		foreach($data as $panel)
 		{
 			if ($_user->hasAccess($panel['access']))
 			{
-				$panels[$panel['id']] = array('filename' => $panel['filename'], 'side' => $panel['side'], 'type' => $panel['type'], 'content' => $panel['content']);
+				$panels[$panel['id']] = array('name' => $panel['name'], 'filename' => $panel['filename'], 'side' => $panel['side'], 'type' => $panel['type'], 'content' => $panel['content']);
 			}
 		}
 		
