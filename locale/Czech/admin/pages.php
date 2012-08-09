@@ -9,6 +9,7 @@ return array(
 	'Comments' => 'Komentáře',
 	'Colors' => 'Barvy',
 	'Cache' => 'Pamięć podręczna',
+	'Gallery' => 'Galeria',
 	'Images' => 'Obrázky',
 	'Logs' => 'Záznamy událostí',
 	'URLs Generator' => 'Generátor adres URL',

@@ -1,14 +1,15 @@
 <?php defined('EF5_SYSTEM') || exit;
 
 return array(
-	'Cache contact:' => 'Czas przechowywania w pamięci elementów formularza kontaktowego:',
-	'Cache news:' => 'Czas przechowywania w pamięci elementów z newsów:',
-	'Cache news cats:' => 'Czas przechowywania w pamięci elementów z kategorii newsów:',
-	'Cache profile:' => 'Czas przechowywania w pamięci elementów z profili:',
-	'Cache pages:' => 'Czas przechowywania w pamięci elementów z materiałów i wpisów:',
-	'Cache rules:' => 'Czas przechowywania w pamięci elementów z regulaminu:',
-	'Cache tags:' => 'Czas przechowywania w pamięci elementów z tagów:',
-	'Cache team:' => 'Czas przechowywania w pamięci elementów z ekipy:',
-	'Cache users:' => 'Czas przechowywania w pamięci elementów z listy użytkowników:',
-	'in seconds.' => 'w sekundach.'
+	'Cache contact:' => 'Doba uchování prvků v paměti pro kontaktní formulář:',
+	'Cache news:' => 'Doba uchování prvků v paměti pro novinky:',
+	'Cache news cats:' => 'Doba uchování prvků v paměti pro kategorie novinek:',
+	'Cache profile:' => 'Doba uchování prvků v paměti pro profil:',
+	'Cache pages:' => 'Doba uchování prvků v paměti pro vlastní stránky:',
+	'Cache rules:' => 'Doba uchování prvků v paměti pro pravidla:',
+	'Cache tags:' => 'Doba uchování prvků v paměti pro štítky:',
+	'Cache team:' => 'Doba uchování prvků v paměti pro team:',
+	'Cache users:' => 'Doba uchování prvků v paměti pro seznam uživatelů:',
+	'Settings cache' => 'Nastavení vyrovnávací paměti',
+	'in seconds.' => 'v sekundách.'
 );
