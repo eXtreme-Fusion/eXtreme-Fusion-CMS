@@ -315,9 +315,9 @@ return array(
 	//Czas sesji
 	
 	// Function showCopyrights()
-	'Powered by :system' => 'Strona oparta na systemie CMS :system',
+	'Powered by :system' => 'Stránka založena na systému CMS :system',
 
-	'Powered by :system under :license License' => 'Strona oparta na systemie CMS :system na licencji :license',
+	'Powered by :system under :license License' => 'Stránka založena na systému CMS :system na licenci :license',
 
 	'Yes' => 'Ano',
 	'No' => 'Ne',
