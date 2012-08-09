@@ -312,6 +312,30 @@ Class HELP
 		
 		return $txt;
 	}
+	
+	//==================================
+	//PL: Aliasy dla klas parsującej BBCode
+	//==================================
+	public static function parseBBCode($text)
+	{
+		return self::$_sbb->parseBBCode($text);
+	}
+	
+	//==================================
+	//PL: Aliasy dla klas parsującej Uśmieszki
+	//==================================
+	public static function parseSmiley($text)
+	{
+		return self::$_sbb->parseSmiley($text);
+	}
+	
+	//==================================
+	//PL: Aliasy dla klas parsującej BBCode i Uśmieszki
+	//==================================
+	public static function parseAllTags($text)
+	{
+		return self::$_sbb->parseAllTags($text);
+	}
 
 	/** koniec METODY NAPISANE PRZEZ EF TEAM **/
 
@@ -872,95 +896,4 @@ function showdate($format, $val) {
     } else {
         return strftime($format, $val + ($offset * 3600));
     }
-}
-
-function bbcodes($textarea = 'message')
-{
-	global $_pdo, $_sett, $_locale;
-	$bbcode_used = FALSE;
-	$_locale->setSubDir('bbcodes');
-
-	$query = $_pdo->getData('SELECT `name` FROM [bbcodes] WHERE `name` != \'autolink\' ORDER BY `order` ASC');
-	if ($_pdo->getRowsCount($query))
-	{
-		$bbcodes = array();
-		foreach ($query as $row)
-		{
-			$bbcode_name[] = $row['name'];
-		}
-	}
-	else
-	{
-		return FALSE;
-	}
-
-	$bbcode_info = array();
-	foreach ($bbcode_name as $bbcode)
-	{
-		include DIR_SYSTEM.'bbcodes'.DS.$bbcode.'.php';
-
-		if ($bbcode_info)
-		{
-			if (file_exists(DIR_SYSTEM."bbcodes/images/".$bbcode_info['value'].".png"))
-			{
-				$image = ADDR_BBCODE.'images/'.$bbcode_info['value'].'.png';
-			}
-			elseif (file_exists(DIR_SYSTEM."bbcodes/images/".$bbcode_info['value'].".gif"))
-			{
-				$image = ADDR_BBCODE.'images/'.$bbcode_info['value'].'.gif';
-			}
-			elseif (file_exists(DIR_SYSTEM."bbcodes/images/".$bbcode_info['value'].".jpg"))
-			{
-				$image = ADDR_BBCODE.'images/'.$bbcode_info['value'].'.jpg';
-			}
-			else
-			{
-				$image = FALSE;
-			}
-
-			$bbcodes[] = array(
-				'textarea' => $textarea,
-				'value' => $bbcode_info['value'],
-				'description' => $bbcode_info['description'],
-				'image' => $image,
-			);
-		}
-		unset ($bbcode_info);
-	}
-
-	$_locale->setSubDir('');
-	return $bbcodes;
-}
-
-function parseBBCode($text, $parse = TRUE)
-{
-	global $_pdo, $_locale, $_head, $_user;
-	$bbcode_used = $parse;
-	$_locale->setSubDir('bbcodes');
-
-	$query = $_pdo->getData('SELECT `name` FROM [bbcodes] ORDER BY `order` ASC');
-	if ($_pdo->getRowsCount($query))
-	{
-		$bbcodes = array();
-		foreach ($query as $row)
-		{
-			$bbcode_name[] = $row['name'];
-		}
-	}
-	else
-	{
-		return FALSE;
-	}
-
-	foreach ($bbcode_name as $bbcode)
-	{
-		if (file_exists(DIR_SYSTEM.'bbcodes'.DS.$bbcode.'.php'))
-		{
-			include DIR_SYSTEM.'bbcodes'.DS.$bbcode.'.php';
-		}
-	}
-
-	$text = HELP::descript($text, FALSE);
-	$_locale->setSubDir('');
-    return $text;
 }

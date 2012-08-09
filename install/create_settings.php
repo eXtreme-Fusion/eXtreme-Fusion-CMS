@@ -206,28 +206,32 @@ $hashedpwd = sha512($salt.'^'.$password1);
 
 $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."users (`username`, `password`, `salt`,  `link`, `email`, `hide_email`, `valid`, `offset`, `avatar`, `joined`, `lastvisit`, `ip`, `status`, `theme`, `roles`, `role`) VALUES ('".$username."', '".($hashedpwd)."', '".($salt)."', '".HELP::Title2Link($username)."', '".$email."', '1', '1', '0', '', '".time()."', '0', '0.0.0.0', '0', 'Default', '".serialize(array(1, 2, 3))."', '1')");
 
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('smiley', '1')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('b', '2')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('i', '3')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('u', '4')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('url', '5')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('mail', '6')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('img', '7')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('center', '8')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('small', '9')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('code', '10')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('quote', '11')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('spo', 12)");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('b', '1')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('i', '2')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('u', '3')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('url', '4')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('mail', '5')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('img', '6')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('center', '7')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('small', '8')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('code', '9')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('quote', '10')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('spo', '11')");
 
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (':)', 'smile.gif', 'Smile')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (';)', 'wink.gif', 'Wink')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (':(', 'sad.gif', 'Sad')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (':|', 'frown.gif', 'Frown')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (':o', 'shock.gif', 'Shock')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (':P', 'pfft.gif', 'Pfft')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES ('B)', 'cool.gif', 'Cool')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (':D', 'grin.gif', 'Grin')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (':@', 'angry.gif', 'Angry')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (':)', 'smile.png', 'Smile')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (';)', 'wink.png', 'Wink')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (':(', 'sad.png', 'Sad')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (';(', 'cry.png', 'Cry')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (':|', 'frown.png', 'Frown')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (':o', 'shock.png', 'Shock')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES ('Oo', 'blink.png', 'Blink')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (':P', 'pfft.png', 'Pfft')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES ('B)', 'cool.png', 'Cool')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (';/', 'annoyed.png', 'Annoyed')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (':D', 'grin.png', 'Grin')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (':@', 'angry.png', 'Angry')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES ('^^', 'joyful.png', 'Joyful')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES ('><', 'pinch.png', 'Pinch')");
 
 $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('".__('Bugs')."', '".HELP::Title2Link(__('Bugs'))."', 'bugs.png')");
 $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('".__('Downloads')."', '".HELP::Title2Link(__('Downloads'))."', 'downloads.png')");
@@ -261,8 +265,8 @@ $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`
 $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('News Cats')."', 'news_cats.html', '3', '2', '0', '2')");
 $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('Users')."', 'users.html', '3', '2', '0', '3')");
 //$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('Login')."', 'login', '3', '1', '0', '4')");
-//$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('Search')."', 'search', '3', '0', '0', '5')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('Materiały i wpisy')."', 'pages.html', '3', '2', '0', '3')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('Materiały i wpisy')."', 'pages.html', '3', '2', '0', '4')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('Search')."', 'search.html', '3', '0', '0', '5')");
 
 
 $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."user_field_cats (`name`, `order`) VALUES ('".__('Information')."', 1)");

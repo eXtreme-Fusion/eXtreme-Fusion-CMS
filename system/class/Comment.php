@@ -71,7 +71,7 @@ class Comment
 					}
 				}
 
-				$val['post'] = $this->_sbb->parseBBCode(nl2br($val['post']));
+				$val['post'] = $this->_sbb->parseAllTags(nl2br($val['post']));
 			}
 		}
 

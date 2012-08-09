@@ -11,6 +11,7 @@
 require_once '../../../../system/sitecore.php';
 
 $_ajax = new Ajax(DIR_MODULES.DS.'chat'.DS.'shoutbox_panel'.DS.'ajax'.DS);
+$_sbb =  $ec->sbb;
 
 
 	$rows = $_pdo->getMatchRowsCount('SELECT * FROM [chat_messages]');
@@ -34,8 +35,8 @@ $_ajax = new Ajax(DIR_MODULES.DS.'chat'.DS.'shoutbox_panel'.DS.'ajax'.DS);
 		{
 			$posts[] = array(
 				'id' => $row['id'],
-				'user' => $_user->getusername($row['user_id']),
-				'content' => $_sbb->parseBBCode($row['content']),
+				'user' => HELP::profileLink(NULL, $row['user_id']),
+				'content' => $_sbb->parseAllTags($row['content']),
 				'date' => HELP::showDate('longdate', $row['datestamp'])
 			);
 		}

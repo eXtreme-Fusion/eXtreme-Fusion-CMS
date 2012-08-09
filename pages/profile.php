@@ -107,7 +107,7 @@ if ($row)
 					
 					if (isset($data[$field['index']]) && $data[$field['index']])
 					{
-						$new_fields[$key][$i]['value'] = $ec->sbb->parseBBCode($data[$field['index']]);
+						$new_fields[$key][$i]['value'] = $field['type'] === '2' ? $ec->sbb->parseAllTags($data[$field['index']]) : $data[$field['index']];
 						$field_exists = TRUE;
 					}
 					else

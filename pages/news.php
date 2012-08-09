@@ -131,7 +131,8 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 	$_sbb = $ec->sbb;
 	
 	$_tpl->assignGroup(array(
-		'bbcode' => $_sbb->bbcodes()
+		'bbcode' => $_sbb->bbcodes('post'),
+		'smiley' => $_sbb->smileys('post')
 	));
 }
 else

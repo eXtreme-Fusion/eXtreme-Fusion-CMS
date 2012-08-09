@@ -2,7 +2,7 @@
 {if $message}<div class="{$class}">{$message}</div>{/if}
 	<h4>{i18n('Edit account')}</h4>
 	
-	<form id="This" action="{$URL_REQUEST}" method="post" enctype="multipart/form-data">
+	<form id="This" action="{$URL_REQUEST}" method="post" enctype="multipart/form-data" name="account">
 		{if $ChangeName == 1}
 			<div class="tbl1">
 				<div class="formLabel sep_1 grid_3"><label for="UserName">{i18n('Username:')}</label></div>
@@ -86,7 +86,13 @@
 							<div><textarea name="{$Fields.index}" id="{$Fields.name}" rows="3" class="resize">{$Fields.value}</textarea></div>
 							<div>
 								{section=bbcode}
-									<button type="button" onClick="addText('{$Fields.index}', '[{$bbcode.value}]', '[/{$bbcode.value}]');"><img src="{$bbcode.image}" title="{$bbcode.description}" class="tip"></button>
+									<button type="button" onClick="addText('{$Fields.index}', '[{$bbcode.value}]', '[/{$bbcode.value}]', 'account');"><img src="{$bbcode.image}" title="{$bbcode.description}" class="tip"></button>
+								{/section}
+							</div>
+							<div>
+								{section=smiley}
+									<img src="{$ADDR_IMAGES}smiley/{$smiley.image}" title="{$smiley.text}" class="tip" onclick="insertText('{$Fields.index}', '{$smiley.code}', 'account');">
+									{if $smiley.i % 10 == 0}</div><div">{/if}
 								{/section}
 							</div>
 						</div>
