@@ -33,7 +33,7 @@ if ($_pdo->getRowsCount($query))
 			else
 			{
 				$link_target = ($data['window'] == '1' ? ' target="_blank"' : '');
-				$name = parseBBCode($data['name'], "b|i|u|color");
+				$name = $ec->sbb->parseBBCode($data['name'], "b|i|u|color");
 				$bullet = THEME_IMAGES.'bullet.gif';
 			}
 			

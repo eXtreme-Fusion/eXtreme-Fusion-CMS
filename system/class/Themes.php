@@ -227,7 +227,8 @@ class Theme extends optClass
 					$menu[] = array(
 						'sep' => $sep,
 						'link' => HELP::createNaviLink($sdata['url']),
-						'name' => parseBBCode($sdata['name'], "b|i|u|color"),
+						//'name' => HELP::parseBBCode($sdata['name'], "b|i|u|color"),
+						'name' => $sdata['name'],
 						'target' => $sdata['window'] == '1' ? TRUE : FALSE,
 						'class' => ($i == 0 ? 'first-link'.($class ? ' '.$class : '') : ($class ? $class : '')),
 						'selected' =>  $this->_route->getFileName() == pathinfo($sdata['url'], PATHINFO_FILENAME) ? TRUE : FALSE

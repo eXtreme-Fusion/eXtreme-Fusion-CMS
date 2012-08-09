@@ -312,6 +312,30 @@ Class HELP
 		
 		return $txt;
 	}
+	
+	//==================================
+	//PL: Aliasy dla klas parsującej BBCode
+	//==================================
+	public static function parseBBCode($text)
+	{
+		return self::$_sbb->parseBBCode($text);
+	}
+	
+	//==================================
+	//PL: Aliasy dla klas parsującej Uśmieszki
+	//==================================
+	public static function parseSmiley($text)
+	{
+		return self::$_sbb->parseSmiley($text);
+	}
+	
+	//==================================
+	//PL: Aliasy dla klas parsującej BBCode i Uśmieszki
+	//==================================
+	public static function parseAllTags($text)
+	{
+		return self::$_sbb->parseAllTags($text);
+	}
 
 	/** koniec METODY NAPISANE PRZEZ EF TEAM **/
 
