@@ -256,9 +256,13 @@ if ($_request->post('save')->show() && $_request->post('email')->show())
 				$cat['has_fields'] = '0';
 			}
 		}
-		$_tpl->assign('bbcode', $ec->sbb->bbcodes());
 		$_tpl->assign('Fields', $new_fields);
 	}
 
 	$_tpl->assign('Cats', $cats);
 	#************
+
+	$_tpl->assignGroup(array(
+		'bbcode' => $ec->sbb->bbcodes(),
+		'smiley' => $ec->sbb->smileys()
+	));

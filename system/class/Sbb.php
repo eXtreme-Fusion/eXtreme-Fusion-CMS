@@ -97,6 +97,33 @@ class SmileyBBcode
 		$this->_locale->setSubDir('');
 		return $bbcodes;
 	}
+	
+	public function smileys($textarea = 'message')
+	{
+		$query = $this->_pdo->getData('SELECT * FROM [smileys] ORDER BY `id` ASC');
+		if ($this->_pdo->getRowsCount($query))
+		{
+			$i = 1; $smileys = array();
+			foreach ($query as $row)
+			{
+				$smileys[] = array(
+					'i' => $i,
+					'text' => $row['text'],
+					'code' => $row['code'],
+					'image' => $row['image'],
+					'textarea' => $textarea
+				);
+				
+				$i++;
+			}
+		}
+		else
+		{
+			return FALSE;
+		}
+
+		return $smileys;
+	}
 
 	public function parseBBCode($text, $parse = TRUE)
 	{
@@ -130,6 +157,47 @@ class SmileyBBcode
 
 		$text = HELP::descript($text, FALSE);
 		$this->_locale->setSubDir('');
+		return $text;
+	}
+	
+	public function parseSmiley($text)
+	{
+		if ( ! preg_match("#\[code\]#sie", $text)) 
+		{
+			$query = $this->_pdo->getData('SELECT * FROM [smileys] ORDER BY `id` ASC');
+			if ($this->_pdo->getRowsCount($query))
+			{
+				$smiley = array();
+				foreach ($query as $row)
+				{
+					$smiley[] = array(
+						'text' => $row['text'],
+						'code' => $row['code'],
+						'image' => $row['image']
+					);
+				}
+
+				foreach($smiley as $smileys)
+				{
+					$code = preg_quote($smileys['code'], '#');
+					$image = '<img src="'.ADDR_IMAGES.'smiley'.DS.$smileys['image'].'" alt="'.$smileys['text'].'">';
+					$text = preg_replace("#{$code}#si", $image, $text);
+				}
+			}
+			else
+			{
+				return FALSE;
+			}
+		}
+		
+		return $text;
+	}
+	
+	public function parseAllTags($text)
+	{
+		$text = $this->parseBBCode($text);
+		$text = $this->parseSmiley($text);
+		
 		return $text;
 	}
 }

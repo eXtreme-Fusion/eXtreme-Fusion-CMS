@@ -99,7 +99,7 @@
 		{*Odpowiedź po wysłaniu wiadomości - co to? nie wiadomo więc zakomentuję ~Inscure*}
 		{*<div id="form_request"></div>*}
 
-		<form action="{$URL_REQUEST}" method="post">
+		<form name="message" action="{$URL_REQUEST}" method="post">
 			{if $section == 'new-by-search' || $section == 'new-by-user'}
 				<div class="line">
 					{if $section == 'new-by-user'}
@@ -131,7 +131,13 @@
 			</div>
 			<div class="line center">
 				{section=bbcode}
-					<button type="button" onClick="addText('{$bbcode.textarea}', '[{$bbcode.value}]', '[/{$bbcode.value}]');"><img src="{$bbcode.image}" title="{$bbcode.description}" alt="{$bbcode.value}"></button>
+					<button type="button" onClick="addText('{$bbcode.textarea}', '[{$bbcode.value}]', '[/{$bbcode.value}]', 'message');"><img src="{$bbcode.image}" title="{$bbcode.description}" alt="{$bbcode.value}"></button>
+				{/section}
+			</div>
+			<div class="line center">
+				{section=smiley}
+					<img src="{$ADDR_IMAGES}smiley/{$smiley.image}" title="{$smiley.text}" class="tip" onclick="insertText('{$smiley.textarea}', '{$smiley.code}', 'message');">
+					{if $smiley.i % 10 == 0}</div><div class="line center">{/if}
 				{/section}
 			</div>
 			<div class="line center">

@@ -2,14 +2,22 @@
 	{php} opentable(__('Add Comments')) {/php}
 	{if $can_comment}
 		<div id="comment_form">
-			<form method="post" action="{$URL_REQUEST}" class="center">
+			<form method="post" action="{$URL_REQUEST}" class="center" name="comment">
 				{if $iGUEST}
 					<div><input id="author" type="text" name="author" value="Your nick" /></div>
 				{/if}
-				<textarea id="post" rows="4" class="cm_textarea" name="post"></textarea><br />
+				<div><textarea id="post" rows="4" class="cm_textarea" name="post"></textarea></div>
+				<div>
 					{section=bbcode}
-						<button type="button" onClick="addText('{$bbcode.textarea}', '[{$bbcode.value}]', '[/{$bbcode.value}]');"><img src="{$bbcode.image}" title="{$bbcode.description}" class="tip"></button>
+						<button type="button" onClick="addText('{$bbcode.textarea}', '[{$bbcode.value}]', '[/{$bbcode.value}]', 'comment');"><img src="{$bbcode.image}" title="{$bbcode.description}" class="tip"></button>
 					{/section}
+				</div>
+				<div>
+					{section=smiley}
+						<img src="{$ADDR_IMAGES}smiley/{$smiley.image}" title="{$smiley.text}" class="tip" onclick="insertText('{$smiley.textarea}', '{$smiley.code}', 'comment');">
+						{if $smiley.i % 10 == 0}</div><div>{/if}
+					{/section}
+				</div>
 				<input id="item" type="hidden" name="item" value="{$item}" />
 				<input id="type" type="hidden" name="type" value="{$type}" />
 				<div class="center"><span id="send" class="pointer underline">{i18n('Save')}</span></div>

@@ -20,6 +20,8 @@ if(iUSER) {
 
 }
 
+$_sbb = $ec->sbb;
+
 #*********** Settings 
 $theme = array(
 	'Title' => __('Chat'),
@@ -32,7 +34,10 @@ $_tpl->assign('Theme', $theme);
 // Blokuje wykonywanie pliku TPL z katalogu szablonu
 define('THIS', TRUE);
 
-$_tpl->assign('bbcode', $_sbb->bbcodes('content'));
+$_tpl->assignGroup(array(
+	'bbcode' => $_sbb->bbcodes('content'),
+	'smiley' => $_sbb->smileys('content')
+));
 
 // Definiowanie katalogu templatek modu³u
 $_tpl->setPageCompileDir(DIR_MODULES.'chat'.DS.'templates'.DS);

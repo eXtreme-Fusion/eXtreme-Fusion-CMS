@@ -133,54 +133,53 @@ jQuery(function() {
 		});
 	}
 	
-	function addText(elname, strFore, strAft, formname) {
-	   if (formname == undefined) formname = 'inputform';
-	   if (elname == undefined) elname = 'message';
-	   element = document.forms[formname].elements[elname];
-	   element.focus();
-	   // for IE 
-	   if (document.selection) {
-		   var oRange = document.selection.createRange();
-		   var numLen = oRange.text.length;
-		   oRange.text = strFore + oRange.text + strAft;
-		   return false;
-	   // for FF and Opera
-	   } else if (element.setSelectionRange) {
-		  var selStart = element.selectionStart, selEnd = element.selectionEnd;
-				var oldScrollTop = element.scrollTop;
-		  element.value = element.value.substring(0, selStart) + strFore + element.value.substring(selStart, selEnd) + strAft + element.value.substring(selEnd);
-		  element.setSelectionRange(selStart + strFore.length, selEnd + strFore.length);
-				element.scrollTop = oldScrollTop;      
-		  element.focus();
-	   } else {
-				var oldScrollTop = element.scrollTop;
-		  element.value += strFore + strAft;
-				element.scrollTop = oldScrollTop;      
-		  element.focus();
+	function addText(elname, wrap1, wrap2, form) {
+		if (document.selection) { // for IE 
+			var str = document.selection.createRange().text;
+			document.forms[form].elements[elname].focus();
+			var sel = document.selection.createRange();
+			sel.text = wrap1 + str + wrap2;
+			return;
+		} else if ((typeof document.forms[form].elements[elname].selectionStart) != 'undefined') { // for Mozilla
+			var txtarea = document.forms[form].elements[elname];
+			var selLength = txtarea.textLength;
+			var selStart = txtarea.selectionStart;
+			var selEnd = txtarea.selectionEnd;
+			var oldScrollTop = txtarea.scrollTop;
+			//if (selEnd == 1 || selEnd == 2)
+			//selEnd = selLength;
+			var s1 = (txtarea.value).substring(0,selStart);
+			var s2 = (txtarea.value).substring(selStart, selEnd)
+			var s3 = (txtarea.value).substring(selEnd, selLength);
+			txtarea.value = s1 + wrap1 + s2 + wrap2 + s3;
+			txtarea.selectionStart = s1.length;
+			txtarea.selectionEnd = s1.length + s2.length + wrap1.length + wrap2.length;
+			txtarea.scrollTop = oldScrollTop;
+			txtarea.focus();
+			return;
+		} else {
+			insertText(elname, wrap1 + wrap2, form);
 		}
-		return false;
 	}
 
-	function insertText(elname, what, formname) {
-	   if (formname == undefined) formname = 'inputform';
-	   if (document.forms[formname].elements[elname].createTextRange) {
-		   document.forms[formname].elements[elname].focus();
-		   document.selection.createRange().duplicate().text = what;
-	   } else if ((typeof document.forms[formname].elements[elname].selectionStart) != 'undefined') {
-		   // for Mozilla
-		   var tarea = document.forms[formname].elements[elname];
-		   var selEnd = tarea.selectionEnd;
-		   var txtLen = tarea.value.length;
-		   var txtbefore = tarea.value.substring(0,selEnd);
-		   var txtafter =  tarea.value.substring(selEnd, txtLen);
-		   var oldScrollTop = tarea.scrollTop;
-		   tarea.value = txtbefore + what + txtafter;
-		   tarea.selectionStart = txtbefore.length + what.length;
-		   tarea.selectionEnd = txtbefore.length + what.length;
-		   tarea.scrollTop = oldScrollTop;
-		   tarea.focus();
-	   } else {
-		   document.forms[formname].elements[elname].value += what;
-		   document.forms[formname].elements[elname].focus();
-	   }
+	function insertText(elname, what, form) {
+		if (document.forms[form].elements[elname].createTextRange) {
+			document.forms[form].elements[elname].focus();
+			document.selection.createRange().duplicate().text = what;
+		} else if ((typeof document.forms[form].elements[elname].selectionStart) != 'undefined') { // for Mozilla
+			var tarea = document.forms[form].elements[elname];
+			var selEnd = tarea.selectionEnd;
+			var txtLen = tarea.value.length;
+			var txtbefore = tarea.value.substring(0,selEnd);
+			var txtafter =  tarea.value.substring(selEnd, txtLen);
+			var oldScrollTop = tarea.scrollTop;
+			tarea.value = txtbefore + what + txtafter;
+			tarea.selectionStart = txtbefore.length + what.length;
+			tarea.selectionEnd = txtbefore.length + what.length;
+			tarea.scrollTop = oldScrollTop;
+			tarea.focus();
+		} else {
+			document.forms[form].elements[elname].value += what;
+			document.forms[form].elements[elname].focus();
+		}
 	}

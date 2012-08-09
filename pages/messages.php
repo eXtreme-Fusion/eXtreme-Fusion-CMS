@@ -18,7 +18,10 @@ $_locale->load('messages');
 //Initiation of Smiley & BBCode parser
 $_sbb = $ec->getService('Sbb');
 
-$_tpl->assign('bbcode', $_sbb->bbcodes());
+$_tpl->assignGroup(array(
+	'bbcode' => $_sbb->bbcodes(),
+	'smiley' => $_sbb->smileys()
+));
 
 if ($_route->getAction() !== NULL)
 {
