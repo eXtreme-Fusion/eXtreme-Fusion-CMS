@@ -1,9 +1,9 @@
 <?php defined('EF5_SYSTEM') || exit;
 
 return array(
-	'Top Users' => 'Najaktywniejsi',
-	'On the <strong>1st</strong> place is' => 'Na <strong>1.</strong> miejscu jest',
-	'Scored <strong>:point</strong> points' => 'Zdobył <strong>:point</strong> punktów',
-	'Rank' => 'Ranga',
-	'points' => 'pkt'
+	'Top Users' => 'Nejaktivnější',
+	'On the <strong>1st</strong> place is' => 'Na <strong>1.</strong> místě je',
+	'Scored <strong>:point</strong> points' => 'Získal <strong>:point</strong> bodů',
+	'Rank' => 'Úroveň',
+	'points' => 'bodů'
 );
