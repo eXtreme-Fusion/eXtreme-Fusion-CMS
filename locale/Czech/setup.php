@@ -27,6 +27,7 @@ return array(
 	'Perm: admin security' => 'Bezpečnostní nastavení',
 	'Perm: admin settings' => 'Nastavení hlavního systému.',
 	'Perm: admin settings_banners' => 'Správa bannerů',
+	'Perm: admin settings_cache' => 'Nastavení paměti cache',
 	'Perm: admin settings_time' => 'Nastavení datumu a času.',
 	'Perm: admin settings_registration' => 'Přístup do nastavení registrace.',
 	'Perm: admin settings_misc' => 'Přístup do nastavení sekce ostatní.',
@@ -142,10 +143,10 @@ return array(
 	'Website' => 'Webová stránka',
 	'Living place' => 'Bydliště',
 	'Signature' => 'Podpis',
-	'Rewrite info' => 'Your server is ready to work with rewrite module, but system does not have permission to change name of file. If you want to have SEO URLs, rename the file from "rewrite" to ".htaccess". Otherwise, just ignore this message.',
+	'Rewrite info' => 'Váš server je připraven spolupracovat s rewrite modulem, ale systém nemá oprávnění ke změně názvu souboru. Pokud chcete mít SEO URLs, přejmenujte soubor z "rewrite" na ".htaccess". V opačném případě tuto zprávu ignorujte.',
 	// Example news
-	'Example news title' => 'Przykładowa treść',
+	'Example news title' => 'Příklad názvu novinky',
 	'Example news content' => 'Witaj na swojej stronie.',
-	'Example news url' => 'przkladowa-tresc',
-	'Example news description' => 'Tresc podstawowa',
+	'Example news url' => 'příklad adresy novinky',
+	'Example news description' => 'Příklad popisu novinky',
 	);
