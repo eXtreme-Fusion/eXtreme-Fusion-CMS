@@ -1,6 +1,6 @@
 {if $rows}
 	{php} opentable(__('News categories')) {/php}
-		<div class="cat-info">
+		<div class="cat_info">
 			<div class="center">
 				<strong>{$category.cat_name}</strong> <br /> <small>{i18n('News:')} {$category.cat_news_count}</small>
 			</div>
@@ -28,27 +28,26 @@
 				{$page_nav}
 		{else}
 			<div class="tbl">
-				<div class="status">{i18n('There are no news in the specified category.')}</div>
+				<p class="status">{i18n('There are no news in the specified category.')}</p>
 			</div>
 		{/if}
 	{php} closetable() {/php}
 {elseif $i}
 	{php} opentable(__('News categories')) {/php}
+		<ul class="cat_info">
 		{section=i}
-			<div class="cat-info">
-				<div class="center">
-					<a href="{$i.url}">
-						<strong>{$i.cat_title_name}</strong> <br /> <small>{i18n('News:')} {$i.cat_count_news}</small>
-					</div>
-					<div class="center">
-						<img src="{$NEWS_CAT_IMAGES}{$i.cat_image}" alt="{$i.cat_title_name}" title="{$i.cat_title_name}" class="tip">
-						</a>
-				</div>
-			</div>
+			<li>
+				<a href="{$i.url}" title="{$i.cat_title_name}">
+					<strong>{$i.cat_title_name}</strong>
+					<img src="{$NEWS_CAT_IMAGES}{$i.cat_image}" alt="{$i.cat_title_name}">
+					<small>{i18n('News:')} {$i.cat_count_news}</small>
+				</a>
+			</li>
 		{/section}
+		</ul>
 	{php} closetable() {/php}
 {else}
 	{php} opentable(__('There are no news categories')) {/php}
-		<div class='status'>{i18n('There are no news categories.')}</div>
+		<p class="status">{i18n('There are no news categories.')}</p>
 	{php} closetable() {/php}
 {/if}

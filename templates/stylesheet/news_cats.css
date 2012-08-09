@@ -1,20 +1,43 @@
-.cat-info {
-	float:left;
-	width:150px;
-	height:120px;
-	border-radius:10px;
-	padding-top:10px;
-	margin:0px 10px 10px 10px;
-	background:#2E2E2E;
+/* Strona z listą kategorii */
+.cat_info li {
+	display: inline;
+	list-style: none;
 }
-.cat-info:hover {
-	background:#3a3a3a;
+
+.cat_info li a  {
+	display: block;
+	text-align: center;
+	overflow: hidden;
+	float: left;
+	width: 27%;
+	height: 118px;
+	margin: 0 10px 10px 10px;
+	padding: 10px 10px 0 10px;
+	background: #2e2e2e;
+	border-radius: 5px;
 }
-.cat-info a:hover {
-	text-decoration:none;
+
+.cat_info li a:hover {
+	text-decoration: none;
 }
-.cat-info img {
-	min-width:5px;
-	margin:auto;
-	position:relative;
+
+.cat_info li a strong {
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.cat_info li a img {
+	display: block;
+	border: 0;
+	margin: 5px auto;
+	opacity: 0.5;
+}
+
+.cat_info li a:hover img {
+	opacity: 1;
+}
+
+.cat_info li a small {
+	font-size: 10px;
+	color: #5d5d5d;
 }

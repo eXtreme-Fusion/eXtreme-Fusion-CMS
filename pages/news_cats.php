@@ -15,7 +15,7 @@ $_head->set($_tpl->getHeaders());
 
 if ( ! $_theme->tplExists())
 {
-	$_head->set('<link href="'.ADDR_TEMPLATES.'stylesheet/news_cats.css" media="screen" rel="stylesheet" />');
+	$_head->set('<link href="'.ADDR_TEMPLATES.'stylesheet/news_cats.css" media="screen" rel="stylesheet">');
 }
 
 if ($_route->getAction())

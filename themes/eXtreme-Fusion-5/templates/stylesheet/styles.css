@@ -775,3 +775,67 @@ pre {
  	-webkit-box-shadow: 6px 0px 5px -2px #2e2e2e;
  	box-shadow: 6px 0px 5px -2px #2e2e2e;
 	}
+	
+/* Klasy określające kolory */
+	/* Główne schematy */
+	.light {background: #3a3a3a;border-color: #525252;}
+		.light_child > * {background: #3a3a3a;border-color: #525252;}
+		.light_all_child * {background: #3a3a3a;border-color: #525252;}
+	.dark {background: #2e2e2e;border-color: #363636;}
+		.dark_child > * {background: #3a3a3a;border-color: #525252;}
+		.dark_all_child * {background: #3a3a3a;border-color: #525252;}
+	/* Obramowania */
+		/* Obramowania jasne */
+		.border_light {border-color: #3a3a3a;}
+			.border_top_light {border-top-color: #3a3a3a;}
+			.border_right_light {border-right-color: #3a3a3a;}
+			.border_bottom_light {border-bottom-color: #3a3a3a;}
+			.border_left_light {border-left-color: #3a3a3a;}
+			/* Obramowania jasne dzieci */
+			.border_light_child > * {border-color: #3a3a3a;}
+				.border_top_light_child > * {border-top-color: #3a3a3a;}
+				.border_right_light_child > * {border-right-color: #3a3a3a;}
+				.border_bottom_light_child > * {border-bottom-color: #3a3a3a;}
+				.border_left_light_child > * {border-left-color: #3a3a3a;}
+			/* Obramowania jasne dla wszystkich dzieci */
+			.border_light_all_child * {border-color: #3a3a3a;}
+				.border_top_light_all_child * {border-top-color: #3a3a3a;}
+				.border_right_light_all_child * {border-right-color: #3a3a3a;}
+				.border_bottom_light_all_child * {border-bottom-color: #3a3a3a;}
+				.border_left_light_all_child * {border-left-color: #3a3a3a;}
+		/* Obramowania ciemne */
+		.border_dark {border-color: #2e2e2e;}
+			.border_top_dark {border-top-color: #2e2e2e;}
+			.border_right_dark {border-right-color: #2e2e2e;}
+			.border_bottom_dark {border-bottom-color: #2e2e2e;}
+			.border_left_dark {border-left-color: #2e2e2e;}
+			/* Obramowania ciemne dzieci */
+			.border_dark_child > * {border-color: #2e2e2e;}
+				.border_top_dark_child > * {border-top-color: #2e2e2e;}
+				.border_right_dark_child > * {border-right-color: #2e2e2e;}
+				.border_bottom_dark_child > * {border-bottom-color: #2e2e2e;}
+				.border_left_dark_child > * {border-left-color: #2e2e2e;}
+			/* Obramowania ciemne dla wszystkich dzieci */
+			.border_dark_all_child * {border-color: #2e2e2e;}
+				.border_top_dark_all_child * {border-top-color: #2e2e2e;}
+				.border_right_dark_all_child * {border-right-color: #2e2e2e;}
+				.border_bottom_dark_all_child * {border-bottom-color: #2e2e2e;}
+				.border_left_dark_all_child * {border-left-color: #2e2e2e;}
+		/* Obramowania inne */
+		.border_other {border-color: #9fd10f;}
+			.border_top_other {border-top-color: #9fd10f;}
+			.border_right_other {border-right-color: #9fd10f;}
+			.border_bottom_other {border-bottom-color: #9fd10f;}
+			.border_left_other {border-left-color: #9fd10f;}
+			/* Obramowania inne dzieci */
+			.border_other_child > * {border-color: #9fd10f;}
+				.border_top_other_child > * {border-top-color: #9fd10f;}
+				.border_right_other_child > * {border-right-color: #9fd10f;}
+				.border_bottom_other_child > * {border-bottom-color: #9fd10f;}
+				.border_left_other_child > * {border-left-color: #9fd10f;}
+			/* Obramowania inne dla wszystkich dzieci */
+			.border_other_all_child * {border-color: #9fd10f;}
+				.border_top_other_all_child * {border-top-color: #9fd10f;}
+				.border_right_other_all_child * {border-right-color: #9fd10f;}
+				.border_bottom_other_all_child * {border-bottom-color: #9fd10f;}
+				.border_left_other_all_child * {border-left-color: #9fd10f;}
