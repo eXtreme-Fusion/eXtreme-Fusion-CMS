@@ -315,8 +315,9 @@ return array(
 	//Czas sesji
 	
 	// Function showCopyrights()
-	'Powered by :link' => 'Zasilany przez :link',
-	'Under BSD License' => 'Na licencji BSD',
+	'Powered by :system' => 'Strona oparta na systemie CMS :system',
+
+	'Powered by :system under :license License' => 'Strona oparta na systemie CMS :system na licencji :license',
 
 	'Yes' => 'Ano',
 	'No' => 'Ne',
@@ -351,4 +352,10 @@ return array(
 	'Confirm new password:' => 'Potvrdit nové heslo:',
 	'Avatar:' => 'Avatar:',
 	'Edit account' => 'Upravit účet',
+	'Language:' => 'Jazyk:',
+
+	'Polish' => 'Polský',
+	'English' => 'Anglický',
+	'Czech' => 'Český'
+
 );
