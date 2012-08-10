@@ -246,7 +246,7 @@ try
 						'url' => $row['url'] !== '' ? $row['url'] : ADDR_SITE,
 						'perse_url' => ((strstr($row['url'], "http://") || strstr($row['url'], "https://")) ? TRUE : FALSE),
 						'order' => $row['order'],
-						'visibility' => $_user->getRoleName($row['visibility']),
+						'visibility' => $_user->groupArrIDsToNames(HELP::explode($row['visibility'])),
 						'position' => $row['position']
 					);
 				}
