@@ -16,24 +16,26 @@ class SmileyBBcode
 	protected $_locale;
 	protected $_head;
 	protected $_user;
+	protected $_system;
 
 	//** Singleton pattern implementation **/
 	private static $_inst;
 	
-	private function __construct($_sett, $_pdo, $_locale, $_head, $_user)
+	private function __construct($_sett, $_pdo, $_locale, $_head, $_user, $_system)
 	{
 		$this->_pdo = $_pdo;
 		$this->_user = $_user;
 		$this->_locale = $_locale;
 		$this->_head = $_head;
 		$this->_sett = $_sett;
+		$this->_system = $_system;
 	}
 	
-	public static function getInstance($_sett, $_pdo, $_locale, $_head, $_user)
+	public static function getInstance($_sett, $_pdo, $_locale, $_head, $_user, $_system)
 	{
 		if (!self::$_inst)
 		{
-			self::$_inst = new SmileyBBcode($_sett, $_pdo, $_locale, $_head, $_user);
+			self::$_inst = new SmileyBBcode($_sett, $_pdo, $_locale, $_head, $_user, $_system);
 		}
 		
 		return self::$_inst;
@@ -147,6 +149,7 @@ class SmileyBBcode
 		$_locale = $this->_locale;
 		$_user = $this->_user;
 		$_head = $this->_head;
+		$_system = $this->_system;
 		foreach ($bbcode_name as $bbcode)
 		{
 			if (file_exists(DIR_SYSTEM.'bbcodes'.DS.$bbcode.'.php'))

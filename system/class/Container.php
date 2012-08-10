@@ -41,7 +41,7 @@ class Container extends ServiceContainerBuilder
 	{
 		include_once DIR_CLASS.'Sbb.php';
 
-		return SmileyBBcode::getInstance($this->getService('Sett'), $this->getService('Pdo'), $this->getService('Locale'), $this->getService('Header'), $this->getService('User'));
+		return SmileyBBcode::getInstance($this->getService('Sett'), $this->getService('Pdo'), $this->getService('Locale'), $this->getService('Header'), $this->getService('User'), $this->getService('System'));
 	}
 
 	protected function getLocaleService()
