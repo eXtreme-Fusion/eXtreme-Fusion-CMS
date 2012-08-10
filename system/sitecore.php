@@ -136,7 +136,7 @@ try
 	$_url = new Url($_sett->getUns('routing', 'url_ext'), $_sett->getUns('routing', 'main_sep'), $_sett->getUns('routing', 'param_sep'), $_system->rewriteAvailable(), $_system->pathInfoExists());
 
 	# Helper class
-	HELP::init($_pdo, $_sett, $_user, $_url, $ec->sbb);
+	HELP::init($_pdo, $_sett, $_user, $_url);
 
 	if ($_request->post('login')->show() && $_request->post('username')->show() && $_request->post('password')->show())
 	{
