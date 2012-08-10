@@ -1,3 +1,193 @@
+/* Klasy określające kolory -------------------------------------------------------------------------*/
+	/* Główne schematy */
+	.light {background: #3a3a3a;border-color: #525252;}
+		.light_child > * {background: #3a3a3a;border-color: #525252;}
+		.light_all_child * {background: #3a3a3a;border-color: #525252;}
+	.dark {background: #2e2e2e;border-color: #363636;}
+		.dark_child > * {background: #3a3a3a;border-color: #525252;}
+		.dark_all_child * {background: #3a3a3a;border-color: #525252;}
+	/* Kolory tekstów */
+	.text_light {color: #626262;}
+		.text_light a {color: #626262;text-decoration:none;}
+			.text_light a:hover {color: #626262;text-decoration:underline;}
+	.text_dark {color: #525252;}
+		.text_dark a {color: #525252;text-decoration:none;}
+			.text_dark a:hover {color: #525252;text-decoration:underline;}
+	/* Obramowania */
+		/* Obramowania jasne */
+		.border_light {border-color: #3a3a3a;}
+			.border_top_light {border-top-color: #3a3a3a;}
+			.border_right_light {border-right-color: #3a3a3a;}
+			.border_bottom_light {border-bottom-color: #3a3a3a;}
+			.border_left_light {border-left-color: #3a3a3a;}
+			/* Obramowania jasne dzieci */
+			.border_light_child > * {border-color: #3a3a3a;}
+				.border_top_light_child > * {border-top-color: #3a3a3a;}
+				.border_right_light_child > * {border-right-color: #3a3a3a;}
+				.border_bottom_light_child > * {border-bottom-color: #3a3a3a;}
+				.border_left_light_child > * {border-left-color: #3a3a3a;}
+			/* Obramowania jasne dla wszystkich dzieci */
+			.border_light_all_child * {border-color: #3a3a3a;}
+				.border_top_light_all_child * {border-top-color: #3a3a3a;}
+				.border_right_light_all_child * {border-right-color: #3a3a3a;}
+				.border_bottom_light_all_child * {border-bottom-color: #3a3a3a;}
+				.border_left_light_all_child * {border-left-color: #3a3a3a;}
+		/* Obramowania ciemne */
+		.border_dark {border-color: #2e2e2e;}
+			.border_top_dark {border-top-color: #2e2e2e;}
+			.border_right_dark {border-right-color: #2e2e2e;}
+			.border_bottom_dark {border-bottom-color: #2e2e2e;}
+			.border_left_dark {border-left-color: #2e2e2e;}
+			/* Obramowania ciemne dzieci */
+			.border_dark_child > * {border-color: #2e2e2e;}
+				.border_top_dark_child > * {border-top-color: #2e2e2e;}
+				.border_right_dark_child > * {border-right-color: #2e2e2e;}
+				.border_bottom_dark_child > * {border-bottom-color: #2e2e2e;}
+				.border_left_dark_child > * {border-left-color: #2e2e2e;}
+			/* Obramowania ciemne dla wszystkich dzieci */
+			.border_dark_all_child * {border-color: #2e2e2e;}
+				.border_top_dark_all_child * {border-top-color: #2e2e2e;}
+				.border_right_dark_all_child * {border-right-color: #2e2e2e;}
+				.border_bottom_dark_all_child * {border-bottom-color: #2e2e2e;}
+				.border_left_dark_all_child * {border-left-color: #2e2e2e;}
+		/* Obramowania inne */
+		.border_other {border-color: #9fd10f;}
+			.border_top_other {border-top-color: #9fd10f;}
+			.border_right_other {border-right-color: #9fd10f;}
+			.border_bottom_other {border-bottom-color: #9fd10f;}
+			.border_left_other {border-left-color: #9fd10f;}
+			/* Obramowania inne dzieci */
+			.border_other_child > * {border-color: #9fd10f;}
+				.border_top_other_child > * {border-top-color: #9fd10f;}
+				.border_right_other_child > * {border-right-color: #9fd10f;}
+				.border_bottom_other_child > * {border-bottom-color: #9fd10f;}
+				.border_left_other_child > * {border-left-color: #9fd10f;}
+			/* Obramowania inne dla wszystkich dzieci */
+			.border_other_all_child * {border-color: #9fd10f;}
+				.border_top_other_all_child * {border-top-color: #9fd10f;}
+				.border_right_other_all_child * {border-right-color: #9fd10f;}
+				.border_bottom_other_all_child * {border-bottom-color: #9fd10f;}
+				.border_left_other_all_child * {border-left-color: #9fd10f;}
+	/* Cienie elementów blokowych */
+	.box_shadow1 {
+		-webkit-box-shadow: 0px 10px 17px rgba(0, 0, 0, 0.15);
+		-moz-box-shadow: 0px 10px 17px rgba(0, 0, 0, 0.15);
+		box-shadow: 0px 10px 17px rgba(0, 0, 0, 0.15);
+	}
+				
+/* Tekst sformatowany ----------------------------------------------------------------------------------- */
+.formated_text hr,
+.formated_text p,
+.formated_text pre,
+.formated_text div,
+.formated_text table,
+.formated_text ul,
+.formated_text ol,
+.formated_text blockquote,
+.formated_text form,
+.formated_text section,
+.formated_text aside,
+.formated_text video,
+.formated_text audio,
+.formated_text embed,
+.formated_text object,
+.formated_text iframe,
+.formated_text address,
+.formated_text h1,
+.formated_text h2,
+.formated_text h3,
+.formated_text h4,
+.formated_text h5,
+.formated_text h6 {
+	margin:10px 0;
+}
+
+.formated_text img,
+.formated_text canvas {
+	margin: 10px;
+}
+
+.formated_text sub,
+.formated_text sup,
+.formated_text small {
+	font-size: 10px;
+	font-weight: normal;
+	color: inherit;
+}
+
+.formated_text sub {
+	vertical-align: sub;
+}
+
+.formated_text sup {
+	vertical-align: super;
+}
+
+.formated_text strong,
+.formated_text b {
+	font-weight: bold;
+}
+
+.formated_text em,
+.formated_text i,
+.formated_text q {
+	font-style: italic;
+}
+
+.formated_text u {
+	text-decoration: underline;
+}
+
+.formated_text strike,
+.formated_text s {
+	text-decoration: line-through;
+}
+
+.formated_text h1,
+.formated_text h2,
+.formated_text h3,
+.formated_text h4,
+.formated_text h5,
+.formated_text h6 {
+	padding: 0;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.formated_text ul li,
+.formated_text ol li {
+	margin-left: 30px;
+}
+
+.formated_text ul li {list-style:disc outside none;}
+.formated_text ol li {list-style:decimal outside none;}
+
+.formated_text table td,
+.formated_text table th {
+	border-width:1px #3a3a3a solid;
+	padding:5px;
+}
+
+.formated_text table th {
+	text-align: center;
+	font-weight: bold;
+	background:#3a3a3a;
+}
+
+.formated_text blockquote {
+	font-family: inherit;
+	font-size: inherit;
+	font-style: italic;
+	font-weight: normal;
+	color: #d2d1d1;
+	background: #3a3a3a;
+	padding: 10px;
+	margin: 10px;
+	border-radius: 5px;
+}
+
+/* KONIEC --------------------------------------------------------------------------------------------- */
+
 a {
 	color: #D0EF00;
 	text-decoration: none;
@@ -196,7 +386,7 @@ pre {
 	cursor:pointer;
 	font-size:11px;
 	font-weight:bold;
-	color:#000;
+	color:#000 !important;
 	padding:3px 6px;
 	background:#BADB00 url(../images/button-bg.gif) repeat-x 0 0;
 	border:1px solid #CBEF00;
@@ -775,67 +965,3 @@ pre {
  	-webkit-box-shadow: 6px 0px 5px -2px #2e2e2e;
  	box-shadow: 6px 0px 5px -2px #2e2e2e;
 	}
-	
-/* Klasy określające kolory */
-	/* Główne schematy */
-	.light {background: #3a3a3a;border-color: #525252;}
-		.light_child > * {background: #3a3a3a;border-color: #525252;}
-		.light_all_child * {background: #3a3a3a;border-color: #525252;}
-	.dark {background: #2e2e2e;border-color: #363636;}
-		.dark_child > * {background: #3a3a3a;border-color: #525252;}
-		.dark_all_child * {background: #3a3a3a;border-color: #525252;}
-	/* Obramowania */
-		/* Obramowania jasne */
-		.border_light {border-color: #3a3a3a;}
-			.border_top_light {border-top-color: #3a3a3a;}
-			.border_right_light {border-right-color: #3a3a3a;}
-			.border_bottom_light {border-bottom-color: #3a3a3a;}
-			.border_left_light {border-left-color: #3a3a3a;}
-			/* Obramowania jasne dzieci */
-			.border_light_child > * {border-color: #3a3a3a;}
-				.border_top_light_child > * {border-top-color: #3a3a3a;}
-				.border_right_light_child > * {border-right-color: #3a3a3a;}
-				.border_bottom_light_child > * {border-bottom-color: #3a3a3a;}
-				.border_left_light_child > * {border-left-color: #3a3a3a;}
-			/* Obramowania jasne dla wszystkich dzieci */
-			.border_light_all_child * {border-color: #3a3a3a;}
-				.border_top_light_all_child * {border-top-color: #3a3a3a;}
-				.border_right_light_all_child * {border-right-color: #3a3a3a;}
-				.border_bottom_light_all_child * {border-bottom-color: #3a3a3a;}
-				.border_left_light_all_child * {border-left-color: #3a3a3a;}
-		/* Obramowania ciemne */
-		.border_dark {border-color: #2e2e2e;}
-			.border_top_dark {border-top-color: #2e2e2e;}
-			.border_right_dark {border-right-color: #2e2e2e;}
-			.border_bottom_dark {border-bottom-color: #2e2e2e;}
-			.border_left_dark {border-left-color: #2e2e2e;}
-			/* Obramowania ciemne dzieci */
-			.border_dark_child > * {border-color: #2e2e2e;}
-				.border_top_dark_child > * {border-top-color: #2e2e2e;}
-				.border_right_dark_child > * {border-right-color: #2e2e2e;}
-				.border_bottom_dark_child > * {border-bottom-color: #2e2e2e;}
-				.border_left_dark_child > * {border-left-color: #2e2e2e;}
-			/* Obramowania ciemne dla wszystkich dzieci */
-			.border_dark_all_child * {border-color: #2e2e2e;}
-				.border_top_dark_all_child * {border-top-color: #2e2e2e;}
-				.border_right_dark_all_child * {border-right-color: #2e2e2e;}
-				.border_bottom_dark_all_child * {border-bottom-color: #2e2e2e;}
-				.border_left_dark_all_child * {border-left-color: #2e2e2e;}
-		/* Obramowania inne */
-		.border_other {border-color: #9fd10f;}
-			.border_top_other {border-top-color: #9fd10f;}
-			.border_right_other {border-right-color: #9fd10f;}
-			.border_bottom_other {border-bottom-color: #9fd10f;}
-			.border_left_other {border-left-color: #9fd10f;}
-			/* Obramowania inne dzieci */
-			.border_other_child > * {border-color: #9fd10f;}
-				.border_top_other_child > * {border-top-color: #9fd10f;}
-				.border_right_other_child > * {border-right-color: #9fd10f;}
-				.border_bottom_other_child > * {border-bottom-color: #9fd10f;}
-				.border_left_other_child > * {border-left-color: #9fd10f;}
-			/* Obramowania inne dla wszystkich dzieci */
-			.border_other_all_child * {border-color: #9fd10f;}
-				.border_top_other_all_child * {border-top-color: #9fd10f;}
-				.border_right_other_all_child * {border-right-color: #9fd10f;}
-				.border_bottom_other_all_child * {border-bottom-color: #9fd10f;}
-				.border_left_other_all_child * {border-left-color: #9fd10f;}
