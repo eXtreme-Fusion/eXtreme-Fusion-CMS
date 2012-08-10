@@ -218,19 +218,7 @@ try
 			'position' => $position,
 			'window' => $window
 		));
-		/*$_tpl->assign('navigations',
-			array(
-				'name' => $name,
-				'url' => $url,
-				'access' => $_tpl->getMultiSelect($_user->getViewGroups(), HELP::explode($visibility), TRUE),
-				'order' => $order,
-				'pos1_check' => $pos1_check,
-				'pos2_check' => $pos2_check,
-				'pos3_check' => $pos3_check,
-				'window_check' => $window_check
-			)
-		);*/
-
+		
 		$query = $_pdo->getData('SELECT * FROM [navigation] ORDER BY `order`');
 		
 		if ($_pdo->getRowsCount($query))
