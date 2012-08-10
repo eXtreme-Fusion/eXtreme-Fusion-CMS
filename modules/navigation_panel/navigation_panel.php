@@ -12,7 +12,7 @@ $_locale->moduleLoad('lang', 'navigation_panel');
 
 $query = $_pdo->getData("
 	SELECT `name`, `url`, `window`, `visibility` FROM [navigation]
-	WHERE `position`=1 OR `position`=2 ORDER BY `order`
+	WHERE `position` = 1 OR `position` = 3 ORDER BY `order`
 ");
 
 if ($_pdo->getRowsCount($query))

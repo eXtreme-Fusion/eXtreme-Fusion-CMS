@@ -4,18 +4,18 @@
 <form id="This" action="{$URL_REQUEST}" method="post">
 	<div class="tbl1">
 		<div class="formLabel sep_1 grid_3"><label for="Name">{i18n('Name:')}</label></div>
-		<div class="formField grid_7"><input type="text" name="name" value="{$navigations.name}" id="Name" rows="1" /></div>
+		<div class="formField grid_7"><input type="text" name="name" value="{$name}" id="Name" rows="1" /></div>
 	</div>
 	<div class="tbl2">
 		<div class="formLabel sep_1 grid_3"><label for="Url">{i18n('URL:')}</label></div>
-		<div class="formField grid_7"><input type="text" name="url" value="{$navigations.url}" id="Url" rows="1" /></div>
+		<div class="formField grid_7"><input type="text" name="url" value="{$url}" id="Url" rows="1" /></div>
 	</div>
 	<div class="tbl1">
 		<div class="formLabel sep_1 grid_3"><label for="Visibility">{i18n('Visible for:')}</label></div>
 		<div class="formField grid_7">
-			<select name="visibility" id="Visibility">
+			<select name="visibility[]" id="Visibility" multiple class="select-multi" size="5">
 				{section=access}
-					<option value="{$access.ID}"{if $navigations.visibility == $access.ID} selected="selected"{/if}>{$access.Title}</option>
+					<option value="{$access.value}"{if $access.selected} selected="selected"{/if}>{$access.display}</option>
 				{/section}
 			</select>
 			
@@ -23,21 +23,21 @@
 	</div>
 	<div class="tbl2">
 		<div class="formLabel sep_1 grid_3"><label for="Order">{i18n('Order:')}</label></div>
-		<div class="formField grid_7"><input type="text" name="order" value="{$navigations.order}" id="Order" /></div>
+		<div class="formField grid_7"><input type="text" name="order" value="{$order}" id="Order" /></div>
 	</div>
 	<div class="tbl1">
 		<div class="formLabel sep_1 grid_3"><label for="Position">{i18n('Position:')}</label></div>
 		<div class="formField grid_7">
-			{i18n('Vertical menu')}<input type="radio" name="position" value="1" {if $navigations.pos1_check} checked='checked'{/if} id="Position" />
-			{i18n('Horizontal menu')}<input type="radio" name="position" value="2" {if $navigations.pos2_check} checked='checked'{/if} id="Position" />
-			{i18n('Vertical and horizontal menu')}<input type="radio" name="position" value="3" {if $navigations.pos3_check} checked='checked'{/if} id="Position" />
+			<input type="radio" name="position" value="1" {if $position == 1} checked='checked'{/if} id="Position" /> {i18n('Vertical menu')}
+			<input type="radio" name="position" value="2" {if $position == 2} checked='checked'{/if} id="Position" /> {i18n('Horizontal menu')}
+			<input type="radio" name="position" value="3" {if $position == 3} checked='checked'{/if} id="Position" /> {i18n('Vertical and horizontal menu')}
 		</div>
 	</div>
 	<div class="tbl2">
 		<div class="formLabel sep_1 grid_3"><label for="Window">{i18n('Open in new window:')}</label></div>
 		<div class="formField grid_7">
-			{i18n('Yes')}<input type="radio" name="window" value="1" {if $navigations.window_check} checked='checked'{/if} id="Window" />
-			{i18n('No')}<input type="radio" name="window" value="0" {if ! $navigations.window_check} checked='checked'{/if} id="Window" />
+			<input type="radio" name="window" value="1" {if $window == 1} checked='checked'{/if} id="Window" /> {i18n('Yes')}
+			<input type="radio" name="window" value="0" {if $window == 0} checked='checked'{/if} id="Window" /> {i18n('No')}
 		</div>
 	</div>
 	<div class="tbl AdminButtons">
@@ -64,15 +64,15 @@
 			{section=data}
 				<li class='sort' id='ArrayOrderNavigation_{$data.id}'>
 					<div class="tbl2">
-						<div class="sep_1 grid_2">{if $data.position == 3} <i> {/if} {$data.name} {if $data.position == 3} </i> {/if}</div>
+						<div class="sep_1 grid_2">{if $data.position == 2} <em> {/if} {$data.name} {if $data.position == 2} </em> {/if}</div>
 						<div class="grid_3">
 							{if $data.name != "---" && $data.url == "---"}
 								<strong>[{$data.name}]</strong>
 							{else}
 								{if $data.perse_url}
-									<a href='{$data.url}'>{$data.url}</a>
+									<a href="{$ADDR_SITE}/{$data.url}">{$data.url}</a>
 								{else}
-									<a href='{$data.url}'><small>{$data.url}</small></a>
+									<a href="{$ADDR_SITE}/{$data.url}"><small>{$data.url}</small></a>
 								{/if}
 							{/if}
 						</div>

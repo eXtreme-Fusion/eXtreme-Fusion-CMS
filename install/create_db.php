@@ -193,6 +193,19 @@ $result = dbquery("CREATE TABLE ".$db_prefix."messages (
 ) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";");
 if ( ! $result) $fail = TRUE;
 
+$result = dbquery("DROP TABLE IF EXISTS ".$db_prefix."navigation");
+$result = dbquery("CREATE TABLE ".$db_prefix."navigation (
+	`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(100) NOT NULL DEFAULT '',
+	`url` VARCHAR(200) NOT NULL DEFAULT '',
+	`visibility` VARCHAR(255) NOT NULL DEFAULT '',
+	`position` TINYINT(1) UNSIGNED NOT NULL DEFAULT '1',
+	`window` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
+	`order` SMALLINT(2) UNSIGNED NOT NULL DEFAULT '0',
+	PRIMARY KEY (`id`)
+) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";");
+if ( ! $result) $fail = TRUE;
+
 $result = dbquery("DROP TABLE IF EXISTS ".$db_prefix."news");
 $result = dbquery("CREATE TABLE ".$db_prefix."news (
 	`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -330,19 +343,6 @@ $result = dbquery("CREATE TABLE ".$db_prefix."settings_inf (
 	`inf` VARCHAR(200) NOT NULL DEFAULT '',
 	PRIMARY KEY (`name`)
 ) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate."");
-if ( ! $result) $fail = TRUE;
-
-$result = dbquery("DROP TABLE IF EXISTS ".$db_prefix."navigation");
-$result = dbquery("CREATE TABLE ".$db_prefix."navigation (
-	`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`name` VARCHAR(100) NOT NULL DEFAULT '',
-	`url` VARCHAR(200) NOT NULL DEFAULT '',
-	`visibility` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
-	`position` TINYINT(1) UNSIGNED NOT NULL DEFAULT '1',
-	`window` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
-	`order` SMALLINT(2) UNSIGNED NOT NULL DEFAULT '0',
-	PRIMARY KEY (`id`)
-) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";");
 if ( ! $result) $fail = TRUE;
 
 $result = dbquery("DROP TABLE IF EXISTS ".$db_prefix."smileys");

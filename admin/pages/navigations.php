@@ -80,9 +80,9 @@ try
 		{
 			$name = $_request->post('name')->strip();
 			$url = $_request->post('url')->strip();
-			$visibility = $_request->post('visibility')->isNum() ? $_request->post('visibility')->show() : '0';
-			$position =  $_request->post('oosition')->show() ? $_request->post('position')->show() : '0';
-			$window =  $_request->post('window')->show() ? $_request->post('window')->show() : '0';
+			$visibility = $_request->post('visibility')->show() ? $_request->post('visibility')->getNumArray() : array(0 => '0');
+			$position =  $_request->post('position')->isNum() ? $_request->post('position')->show() : '1';
+			$window =  $_request->post('window')->isNum() ? $_request->post('window')->show() : '0';
 			$order = $_request->post('order')->isNum() ? $_request->post('order')->show() : '0';
 			if ($name && $url) 
 			{
@@ -121,7 +121,7 @@ try
 							array(':id', $_request->get('id')->show(), PDO::PARAM_INT),
 							array(':name', $name, PDO::PARAM_STR),
 							array(':url', $url, PDO::PARAM_STR),
-							array(':visibility', $visibility, PDO::PARAM_INT),
+							array(':visibility', HELP::implode($visibility), PDO::PARAM_STR),
 							array(':position', $position, PDO::PARAM_INT),
 							array(':window', $window, PDO::PARAM_STR),
 							array(':order', $order, PDO::PARAM_INT)
@@ -155,7 +155,7 @@ try
 						array(
 							array(':name', $name, PDO::PARAM_STR),
 							array(':url', $url, PDO::PARAM_STR),
-							array(':visibility', $visibility, PDO::PARAM_INT),
+							array(':visibility', HELP::implode($visibility), PDO::PARAM_STR),
 							array(':position', $position, PDO::PARAM_INT),
 							array(':window', $window, PDO::PARAM_STR),
 							array(':order', $order, PDO::PARAM_INT)
@@ -192,10 +192,8 @@ try
 				$url = $row['url'];
 				$visibility = $row['visibility'];
 				$order = $row['order'];
-				$pos1_check = $row['position']=="1" ? TRUE : FALSE;
-				$pos2_check = $row['position']=="2" ? TRUE : FALSE;
-				$pos3_check = $row['position']=="3" ? TRUE : FALSE;
-				$window_check = $row['window']=="1" ? TRUE : FALSE;
+				$position = $row['position'];
+				$window = $row['window'];
 			} 
 			else
 			{
@@ -208,27 +206,30 @@ try
 			$url = '';
 			$visibility = '';
 			$order = '';
-			$pos1_check = TRUE;
-			$pos2_check = '';
-			$pos3_check = '';
-			$window_check = '';
+			$position = '';
+			$window = '';
 		}
 
-		$_tpl->assign('navigations',
+		$_tpl->assignGroup(array(
+			'name' => $name,
+			'url' => $url,
+			'access' => $_tpl->getMultiSelect($_user->getViewGroups(), HELP::explode($visibility), TRUE),
+			'order' => $order,
+			'position' => $position,
+			'window' => $window
+		));
+		/*$_tpl->assign('navigations',
 			array(
 				'name' => $name,
 				'url' => $url,
-				'visibility' => $visibility,
+				'access' => $_tpl->getMultiSelect($_user->getViewGroups(), HELP::explode($visibility), TRUE),
 				'order' => $order,
 				'pos1_check' => $pos1_check,
 				'pos2_check' => $pos2_check,
 				'pos3_check' => $pos3_check,
-				'window_check' => $window_check,
-				'access' => $_user->getViewRoles(),
+				'window_check' => $window_check
 			)
-		);
-		
-		$_tpl->assign('access', $_user->getViewRoles());
+		);*/
 
 		$query = $_pdo->getData('SELECT * FROM [navigation] ORDER BY `order`');
 		
