@@ -100,7 +100,7 @@ class SmileyBBcode
 	
 	public function smileys($textarea = 'message')
 	{
-		$query = $this->_pdo->getData('SELECT * FROM [smileys] ORDER BY `id` ASC');
+		$query = $this->_pdo->getData('SELECT * FROM [smileys] WHERE `id` != 15 ORDER BY `id` ASC');
 		if ($this->_pdo->getRowsCount($query))
 		{
 			$i = 1; $smileys = array();

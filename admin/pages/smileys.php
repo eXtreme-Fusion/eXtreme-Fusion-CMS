@@ -56,20 +56,20 @@ try
 		$_log->insertFail('delete',  __('Error! Smiley has not been deleted.'));
 		$_request->redirect(FILE_PATH, array('act' => 'delete', 'status' => 'error'));
     }
-    elseif ($_request->post('save')->show() && $_request->post('smiley_text')->show() && $_request->post('smiley_image')->show() && $_request->post('smiley_code')->show())
+    elseif ($_request->post('save')->show() && $_request->post('text')->show() && $_request->post('image')->show() && $_request->post('code')->show())
     {
-        $smiley_code = str_replace(array("\"", "'", "\\", '\"', "\'", "<", ">"), "", $_request->post('smiley_code')->show());
-        $smiley_image = $_request->post('smiley_image')->filters('trim', 'strip');
-        $smiley_text = $_request->post('smiley_text')->filters('trim', 'strip');
+        $code = str_replace(array("\"", "'", "\\", '\"', "\'", "<", ">"), "", $_request->post('code')->show());
+        $image = $_request->post('image')->filters('trim', 'strip');
+        $text = $_request->post('text')->filters('trim', 'strip');
 
 		if ($_request->get('action')->show() === 'edit' && $_request->get('id')->isNum())
 		{
 			$count = $_pdo->exec('UPDATE [smileys] SET `code` = :code, `image` = :image, `text` = :text WHERE `id` = :id',
 				array(
 					array(':id', $_request->get('id')->show(), PDO::PARAM_INT),
-					array(':code', $smiley_code, PDO::PARAM_STR),
-					array(':image', $smiley_image, PDO::PARAM_STR),
-					array(':text', $smiley_text, PDO::PARAM_STR)
+					array(':code', $code, PDO::PARAM_STR),
+					array(':image', $image, PDO::PARAM_STR),
+					array(':text', $text, PDO::PARAM_STR)
 				)
 			);
 	
@@ -86,9 +86,9 @@ try
 		{
 			$count = $_pdo->exec('INSERT INTO [smileys] (code, image, text) VALUES (:code, :image, :text)',
 				array(
-					array(':code', $smiley_code, PDO::PARAM_STR),
-					array(':image', $smiley_image, PDO::PARAM_STR),
-					array(':text', $smiley_text, PDO::PARAM_STR)
+					array(':code', $code, PDO::PARAM_STR),
+					array(':image', $image, PDO::PARAM_STR),
+					array(':text', $text, PDO::PARAM_STR)
 				)
 			);
 
@@ -102,7 +102,7 @@ try
 			$_request->redirect(FILE_PATH, array('act' => 'add', 'status' => 'error'));
         }
     }
-    elseif ($_request->get('action')->show() === 'edit' && $_request->get('id')->isNum())
+    elseif ($_request->get('action')->show() === 'edit' && $_request->get('id')->isNum() && $_request->get('id') !== '15')
     {
 		$row = $_pdo->getRow('SELECT * FROM [smileys] WHERE `id` = :id', 
 			array(':id', $_request->get('id')->show(), PDO::PARAM_INT)
@@ -110,23 +110,28 @@ try
 
 		if ($row)
 		{
-			$smiley_code = $row['code'];
-			$smiley_image = $row['image'];
-			$smiley_text = $row['text'];        
+			$code = $row['code'];
+			$image = $row['image'];
+			$text = $row['text'];        
 		}
     }
     else
     {
-        $smiley_code = '';
-        $smiley_image = '';
-        $smiley_text = '';
+        $code = '';
+        $image = '';
+        $text = '';
     }
 	
-    $_tpl->assign('smiley_code', $smiley_code);
-    $_tpl->assign('smiley_text', $smiley_text);
-    $_tpl->assign('smiley_image', $_tpl->createSelectOpts($_files->createFileList(DIR_IMAGES.'smiley', array('.', '..', 'index.php', 'Thumbs.db', '.svn', '.gitignore'), TRUE, 'files'), $smiley_code, FALSE));
-
-	$query = $_pdo->getData('SELECT * FROM [smileys] ORDER by `id`');
+	print_r($image);
+	print_r($_files->createFileList(DIR_IMAGES.'smiley', array('.', '..', 'index.php', 'Thumbs.db', '.svn', '.gitignore')));
+	
+	$_tpl->assignGroup(array(
+		'code' => $code,
+		'text' => $text,
+		'image' => $_tpl->createSelectOpts($_files->createFileList(DIR_IMAGES.'smiley', array('.', '..', 'index.php', 'Thumbs.db', '.svn', '.gitignore'), TRUE, 'files'), $image)
+	));
+	
+	$query = $_pdo->getData('SELECT * FROM [smileys] WHERE `id` != 15 ORDER by `id`');
     if ($query)
 	{
         $i = 0; $data = array();
