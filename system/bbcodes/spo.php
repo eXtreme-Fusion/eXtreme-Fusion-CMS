@@ -19,7 +19,7 @@ $bbcode_info = array(
 
 if($bbcode_used)
 {
-	/*$this->_head->set("<script>
+	$_head->set("<script>
 		$(document).ready(function(){
 			$('#spoilercontent').hide();
 			$('#spoilerhead').click(function () {
@@ -31,14 +31,14 @@ if($bbcode_used)
 				return false;
 			});
 		});
-	</script>");*/
+	</script>");
 	
 	if ($_user->iUSER()) 
 	{
-		$text = preg_replace('#\[spo\](.*?)\[/spo\]#si', '<button id=\'spoilerhead\' class=\'thead\'>'.__('Pokaż tekst').'</button><div id=\'spoilercontent\' class=\'alt1\'>\1</div>', $text);
+		$text = preg_replace('#\[spo\](.*?)\[/spo\]#si', '<button id="spoilerhead" class="thead">'.__('Pokaż tekst').'</button><div id="spoilercontent" class="alt1">\1</div>', $text);
 	}
 	else 
 	{
-		$text = preg_replace('#\[spo\](.*?)\[/spo\]#si', '<button id=\'spoilerhead\' class=\'thead\'>'.__('Pokaż tekst').'</button><div id=\'spoilercontent\' class=\'alt1\'>'.__('Zaloguj się, żeby zobaczyć zawartość').'</div>', $text);
+		$text = preg_replace('#\[spo\](.*?)\[/spo\]#si', '<button id="spoilerhead" class="thead">'.__('Pokaż tekst').'</button><div id="spoilercontent" class="alt1">'.__('Zaloguj się, żeby zobaczyć zawartość').'</div>', $text);
 	}
 }

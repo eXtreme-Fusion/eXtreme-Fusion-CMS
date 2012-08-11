@@ -165,7 +165,7 @@ class SmileyBBcode
 	
 	public function parseSmiley($text)
 	{
-		if ( ! preg_match("#\[code\]#sie", $text)) 
+		if ( ! preg_match("#\[code\]#sie", $text) && ! preg_match("#\<a href=#sie", $text)) 
 		{
 			$query = $this->_pdo->getData('SELECT * FROM [smileys] ORDER BY `id` ASC');
 			if ($this->_pdo->getRowsCount($query))

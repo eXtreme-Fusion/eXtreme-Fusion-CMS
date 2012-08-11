@@ -19,5 +19,5 @@ $bbcode_info = array(
 
 if($bbcode_used)
 {
-	$text = preg_replace('#\[center\](.*?)\[/center\]#si', '<div style=\'text-align:center\'>\1</div>', $text);
+	$text = preg_replace('#\[center\](.*?)\[/center\]#si', '<div style="text-align:center">\1</div>', $text);
 }
