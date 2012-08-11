@@ -105,6 +105,7 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 			$r = $_pdo->exec('UPDATE [news] SET `reads` = `reads`+1 WHERE `id`= :id', array(array(':id', $item_id, PDO::PARAM_INT)));
 
 			$_tpl->assign('news', $d);
+			print_r($data['allow_comments']);
 			if ($data['allow_comments'] === '1')
 			{
 				$_comment = $ec->comment;
@@ -152,7 +153,8 @@ else
 	! class_exists('Tag') || $_tag = New Tag($_system, $_pdo);
 
 	// Sprawdzanie, czy użytkownik ma prawo do zobaczenia jakiegokolwiek newsa
-	$rows = $_pdo->getMatchRowsCount('SELECT `id` FROM [news] WHERE `access` IN ('.$_user->listRoles().') AND `draft` = 0 AND `language` = :lang', 
+	$rows = $_pdo->getMatchRowsCount('SELECT `id` FROM [news] WHERE `access` IN ('.$_user->listRoles().') AND `draft` = 0', 
+	//$rows = $_pdo->getMatchRowsCount('SELECT `id` FROM [news] WHERE `access` IN ('.$_user->listRoles().') AND `draft` = 0 AND `language` = :lang', 
 		array(':lang', $_user->getLang(), PDO::PARAM_STR)
 	);
 

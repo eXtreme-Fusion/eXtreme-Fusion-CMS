@@ -326,6 +326,6 @@ $result = dbquery("INSERT INTO `".$_dbconfig['prefix']."permissions` (`name`, `s
 	('admin.users', 1, '".__('Perm: admin users')."', 1)
 ");
 $result = dbquery("INSERT INTO `".$_dbconfig['prefix']."permissions_sections` (`name`, `description`, `is_system`) VALUES ('admin', '".__('Administration')."', 1), ('site', '".__('Site')."', 1)");
-$result = dbquery("INSERT INTO `".$_dbconfig['prefix']."groups` (`title`, `description`, `format`, `permissions`) VALUES ('".__('Admin')."', '".__('Group: admin')."', '<span style=\"color:#99bb00\">{username}</span>', '".serialize(array('*'))."'), ('".__('User')."', '".__('Group: user')."', '{username}', '".serialize(array('site.login', 'site.comment', 'site.comment.edit'))."'), ('".__('Guest')."', '".__('Group: guest')."', '{username}', '".serialize(array())."')");
+$result = dbquery("INSERT INTO `".$_dbconfig['prefix']."groups` (`title`, `description`, `format`, `permissions`) VALUES ('".__('Admin')."', '".__('Group: admin')."', '<span style=\"color:#99bb00\">{username}</span>', '".serialize(array('*'))."'), ('".__('User')."', '".__('Group: user')."', '{username}', '".serialize(array('site.login', 'site.comment', 'site.comment.add', 'site.comment.edit'))."'), ('".__('Guest')."', '".__('Group: guest')."', '{username}', '".serialize(array())."')");
 
 $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."users_data (`user_id`, `lang`) VALUES ('1', '".$language."')");

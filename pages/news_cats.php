@@ -22,7 +22,8 @@ if ($_route->getAction())
 {
 
 	// Sprawdzanie, czy użytkownik ma prawo do zobaczenia jakiegokolwiek newsa
-	$rowa = $_pdo->getMatchRowsCount('SELECT `id` FROM [news] WHERE `access` IN ('.$_user->listRoles().') AND `draft` = 0 AND `language` = :lang', 
+	$rowa = $_pdo->getMatchRowsCount('SELECT `id` FROM [news] WHERE `access` IN ('.$_user->listRoles().') AND `draft` = 0', 
+	//$rowa = $_pdo->getMatchRowsCount('SELECT `id` FROM [news] WHERE `access` IN ('.$_user->listRoles().') AND `draft` = 0 AND `language` = :lang', 
 		array(':lang', $_user->getLang(), PDO::PARAM_STR)
 	);
 
