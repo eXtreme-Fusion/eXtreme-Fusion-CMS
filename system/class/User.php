@@ -687,7 +687,7 @@ class User {
 	 */
 	public function getAvatarAddr($user = NULL, $default = "none.gif")
 	{
-		$dir = ADDR_IMAGES.'avatars'.DS;
+		$dir = ADDR_IMAGES.'avatars/';
 		if ($user === NULL)
 		{
 			$avatar_file = $this->get('avatar');
