@@ -145,8 +145,8 @@ return array(
 	'Signature' => 'Podpis',
 	'Rewrite info' => 'Váš server je připraven spolupracovat s rewrite modulem, ale systém nemá oprávnění ke změně názvu souboru. Pokud chcete mít SEO URLs, přejmenujte soubor z "rewrite" na ".htaccess". V opačném případě tuto zprávu ignorujte.',
 	// Example news
-	'Example news title' => 'Příklad názvu novinky',
-	'Example news content' => 'Witaj na swojej stronie.',
+	'Example news title' => 'Příklad novinky',
+	'Example news content' => 'Vítejte na své webové stránce.',
 	'Example news url' => 'příklad adresy novinky',
 	'Example news description' => 'Příklad popisu novinky',
 	);
