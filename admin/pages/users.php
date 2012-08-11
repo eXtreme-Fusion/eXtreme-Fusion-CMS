@@ -130,7 +130,9 @@ try
 							$_user->newEmail($_request->post('user_email')->show(), $_request->get('user')->show());
 						}
 
-						$_user->setRoles($_request->post('roles')->show(), $_request->post('role')->show(), $_request->get('user')->show());
+						$role = $_request->post('roles')->show();
+						asort ($role);
+						$_user->setRoles($role, $_request->post('role')->show(), $_request->get('user')->show());
 
 						if ($_request->post('del_avatar')->show())
 						{
@@ -181,7 +183,7 @@ try
 						'role' => $data['role']
 					);
 
-					$_tpl->assign('insight_groups', $_tpl->createSelectOpts($_user->getViewGroups(), NULL, TRUE));
+					$_tpl->assign('insight_groups', $_tpl->createSelectOpts($_user->getViewGroups(), unserialize($data['roles']), TRUE));
 
 					$_tpl->assignGroup(array(
 						'user' => $user,
@@ -664,6 +666,8 @@ try
 					}
 				}
 
+				$role = $_request->post('roles')->show();
+				asort ($role);
 				$count = $_pdo->exec("INSERT INTO [users] (`username`, `password`, `salt`, `link`, `email`, `hide_email`, `valid`, `valid_code`, `offset`, `avatar`, `joined`, `lastvisit`, `ip`, `status`, `theme`, `role`, `roles`) VALUES (:username, :password, :salt, :link, :email, :hidemail, '1', :valid, '0', '', '".time()."', '0', '0.0.0.0', :status, 'Default', :role, :roles)",
 					array(
 						array(':username', $username, PDO::PARAM_STR),
@@ -675,7 +679,7 @@ try
 						array(':valid', $valid, PDO::PARAM_STR),
 						array(':status', $status, PDO::PARAM_INT),
 						array(':role', $_request->post('role')->show(), PDO::PARAM_INT),
-						array(':roles', serialize(array_keys($_request->post('roles')->show())), PDO::PARAM_STR)
+						array(':roles', serialize($role), PDO::PARAM_STR)
 					)
 				);
 

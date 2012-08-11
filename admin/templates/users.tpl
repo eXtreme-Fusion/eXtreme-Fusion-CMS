@@ -133,18 +133,16 @@
 						</select>
 					</div>
 				</div>
-				<div class="tbl2">
-					<div class="formLabel sep_1 grid_3">Administrator:</div>
-					<div class="formField grid_7"><input type="checkbox" name="roles[]" value="1" /> {i18n('Yes')}</div>
-				</div>
+
 					<input type="hidden" name="roles[]" value="2" />
 					<input type="hidden" name="roles[]" value="3" />
+				
 				<div class="tbl2">
 					<div class="formLabel sep_1 grid_3">{i18n('Roles:')}{i18n('Default roles')}</div>
 					<div class="formField grid_7">
 						<select name="roles[]" multiple id="InsightGroups" class="select-multi" size="5" >
 							{section=insight_groups}
-								{if $insight_groups.value != 1 && $insight_groups.value != 2 && $insight_groups.value != 3}
+								{if $insight_groups.value != 2 && $insight_groups.value != 3}
 									<option value="{$insight_groups.value}"{if $insight_groups.value == $user.roles} selected="selected"{/if}>{$insight_groups.display}</option>
 								{/if}
 							{/section}
@@ -351,11 +349,15 @@
 					<label for="HideEmail_0"><input type="radio" id="hide_email_0" name="hide_email" value="0"{if $hide_email == 0} checked="checked"{/if}>{i18n('No')}</label>
 				</div>
 			</div>
+			<!--<div class="tbl2">
+				<div class="formLabel sep_1 grid_3">Administrator:</div>
+				<div class="formField grid_7"><input type="checkbox" name="roles[]" value="1" /> {i18n('Yes')}</div>
+			</div>-->
 
 			<input type="hidden" name="roles[]" value="2" />
 			<input type="hidden" name="roles[]" value="3" />
 			
-			<div class="tbl2">
+			<div class="tbl1">
 				<div class="formLabel sep_1 grid_3">{i18n('Uprawnienia grup:')}<small>{i18n('Przytrzymaj klawisz Ctrl, aby wybrać kilka opcji z listy.')}</small></div>
 				<div class="formField grid_7">
 					<select name="roles[]" multiple id="InsightGroups" class="select-multi" size="5" >
@@ -367,7 +369,7 @@
 					</select>
 				</div>
 			</div>
-			<div class="tbl1">
+			<div class="tbl2">
 				<div class="formLabel sep_1 grid_3"><label for="role">{i18n('Główna grupa:')}</label></div>
 				<div class="formField grid_7">
 					<select name="role" id="user_groups">
@@ -380,7 +382,7 @@
 				</div>
 			</div>
 			{if $active}
-				<div class="tbl2">
+				<div class="tbl1">
 					<div class="formLabel sep_1 grid_3">Aktywuj konto od razu</div>
 					<div class="formField grid_7"><input type="checkbox" name="active" value="yes" /> {i18n('Yes')}</div>
 				</div>
