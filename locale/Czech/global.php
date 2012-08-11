@@ -84,7 +84,7 @@ return array(
 	'User Panel' => 'Panel uživatele',
 	'Admin Panel' => 'Panel administrátora',
 
-	'Private messages' => 'Soukromé zprávy',
+	'Private messages' => 'Soukr. zprávy',
 
 	'Failed to request account data. Error:' => 'Nelze získat informace o účtu. Chyba:',
 	'Failed to request report data. Error:' => 'Nepodařilo se získat data reportu. Chyba:',
@@ -184,7 +184,7 @@ return array(
 
 		// Member User Menu
 	'Edit profile' => 'Upravit profil',//120
-	'Messages' => 'Soukromé zprávy',
+	'Messages' => 'Zprávy',
 	'Users' => 'Uživatelé',
 	'Logout' => 'Odhlásit',
 
