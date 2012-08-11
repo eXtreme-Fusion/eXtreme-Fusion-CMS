@@ -183,7 +183,7 @@ class SmileyBBcode
 				foreach($smiley as $smileys)
 				{
 					$code = preg_quote($smileys['code'], '#');
-					$image = '<img src="'.ADDR_IMAGES.'smiley'.DS.$smileys['image'].'" alt="'.$smileys['text'].'">';
+					$image = '<img src="'.ADDR_IMAGES.'smiley/'.$smileys['image'].'" alt="'.$smileys['text'].'">';
 					$text = preg_replace("#{$code}#si", $image, $text);
 				}
 			}
