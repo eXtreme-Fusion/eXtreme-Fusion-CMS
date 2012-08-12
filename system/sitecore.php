@@ -120,7 +120,7 @@ try
 
 	//1. way:
     $_user = $ec->register('user')->setArguments(array(new Reference('sett'), new Reference('pdo')))->get();
-
+	
     $_locale = new Locales($_sett->get('locale'), DIR_LOCALE);
 
 
@@ -213,7 +213,7 @@ try
 
 	// Aktualizacja czasu ostatniej wizyty
 	$_user->updateActivity();
-
+	
     define('iGUEST', $_user->iGUEST());
     define('iUSER', $_user->iUSER());
     define('iADMIN', $_user->iADMIN());

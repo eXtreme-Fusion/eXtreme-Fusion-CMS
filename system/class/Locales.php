@@ -177,7 +177,7 @@ class Locales
 	{
 		if (is_string($lang))
 		{
-			$this->_lang = HELP::stripinput($lang);
+			$this->_lang = HELP::strip($lang);
 			if ($this->_locales)
 			{
 				Locales::$_strings = array();

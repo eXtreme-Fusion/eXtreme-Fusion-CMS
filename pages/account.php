@@ -130,7 +130,8 @@ if ($_request->post('save')->show() && $_request->post('email')->show())
 
 	$count = $_user->update(array(
 		'hide_email' => $_request->post('hideemail')->isNum(TRUE),
-		'theme' => $_request->post('theme')->strip()
+		'theme' => $_request->post('theme')->strip(),
+		'lang' => $_request->post('language')->strip()
 		), $_user->get('id')
 	);
 
@@ -181,10 +182,12 @@ if ($_request->post('save')->show() && $_request->post('email')->show())
 
 	$_tpl->assignGroup(array(
 		'theme_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'themes', array('templates'), TRUE, 'folders'), $_user->get('theme')),
+		'locale_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'locale', array(), TRUE, 'folders'), $_user->get('lang')),
 		'User' => $user,
 		'ChangeName' => $_sett->get('change_name')
 	));
 
+	print_r($_user->getLang());
 	// Pobieranie kategorii
 	$query = $_pdo->getData('SELECT * FROM [user_field_cats] ORDER BY `order` ASC');
 	$cats = array();

@@ -446,6 +446,7 @@ $result = dbquery("CREATE TABLE ".$db_prefix."users (
 	`roles` TEXT NOT NULL DEFAULT '',
 	`role` INT(11) NOT NULL DEFAULT '2',
 	`lastupdate` INT(10) NOT NULL DEFAULT '0',
+	`lang` VARCHAR(20) NOT NULL,
 	PRIMARY KEY (`id`),
 	KEY name (username),
 	KEY joined (joined),

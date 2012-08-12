@@ -150,16 +150,19 @@ if ($_request->post('create_account')->show())
 
 		$salt = substr(sha512(uniqid(rand(), true)), 0, 5);
 		$password = sha512($salt.'^'.$_request->post('user_pass')->show());
+		
+		$language = $_request->post('language')->show() ? $_request->post('language')->show() : $_sett->get('locale');
 
 		$query = $_pdo->exec('
-			INSERT INTO [users] (`username`, `password`, `salt`, `link`, `email`, `hide_email`, `valid_code`, `joined`, `status`, `role`, `roles`)
-			VALUES (:username, \''.$password.'\', \''.$salt.'\', :link, :email, :hidemail, :valid, '.time().', \''.$status.'\', 2, \''.serialize(array(2, 3)).'\')',
+			INSERT INTO [users] (`username`, `password`, `salt`, `link`, `email`, `hide_email`, `valid_code`, `joined`, `status`, `role`, `roles`, `lang`)
+			VALUES (:username, \''.$password.'\', \''.$salt.'\', :link, :email, :hidemail, :valid, '.time().', \''.$status.'\', 2, \''.serialize(array(2, 3)).'\', :lang)',
 			array(
 				array(':username', $_request->post('username')->show(), PDO::PARAM_STR),
 				array(':link', HELP::Title2Link($_request->post('username')->show()), PDO::PARAM_STR),
 				array(':email', $_request->post('user_email')->show(), PDO::PARAM_STR),
 				array(':hidemail', $_request->post('hide_email')->show(), PDO::PARAM_STR),
-				array(':valid', $valid, PDO::PARAM_STR)
+				array(':valid', $valid, PDO::PARAM_STR),
+				array(':lang', $language, PDO::PARAM_STR)
 			)
 		);
 		
@@ -281,7 +284,8 @@ if ($_sett->get('enable_terms') == 1)
 $_tpl->assignGroup(array(
 	'portal' => $_sett->get('site_name'),
 	'validation' => (bool) $_protection,
-	'enable_terms' => $_sett->get('enable_terms')
+	'enable_terms' => $_sett->get('enable_terms'),
+	'locale_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'locale', array(), TRUE, 'folders'), NULL, FALSE, TRUE)
 ));
 
 if ($_protection)

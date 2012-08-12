@@ -204,7 +204,7 @@ $salt = substr(sha512(uniqid(rand(), true)), 0, 5);
 //Store hash of salt plus a random symbol plus original password.
 $hashedpwd = sha512($salt.'^'.$password1);
 
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."users (`username`, `password`, `salt`,  `link`, `email`, `hide_email`, `valid`, `offset`, `avatar`, `joined`, `lastvisit`, `ip`, `status`, `theme`, `roles`, `role`) VALUES ('".$username."', '".($hashedpwd)."', '".($salt)."', '".HELP::Title2Link($username)."', '".$email."', '1', '1', '0', '', '".time()."', '0', '0.0.0.0', '0', 'Default', '".serialize(array(1, 2, 3))."', '1')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."users (`username`, `password`, `salt`,  `link`, `email`, `hide_email`, `valid`, `offset`, `avatar`, `joined`, `lastvisit`, `ip`, `status`, `theme`, `roles`, `role`, `lang`) VALUES ('".$username."', '".($hashedpwd)."', '".($salt)."', '".HELP::Title2Link($username)."', '".$email."', '1', '1', '0', '', '".time()."', '0', '0.0.0.0', '0', 'Default', '".serialize(array(1, 2, 3))."', '1', '".$language."')");
 
 $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('b', '1')");
 $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('i', '2')");
@@ -328,4 +328,4 @@ $result = dbquery("INSERT INTO `".$_dbconfig['prefix']."permissions` (`name`, `s
 $result = dbquery("INSERT INTO `".$_dbconfig['prefix']."permissions_sections` (`name`, `description`, `is_system`) VALUES ('admin', '".__('Administration')."', 1), ('site', '".__('Site')."', 1)");
 $result = dbquery("INSERT INTO `".$_dbconfig['prefix']."groups` (`title`, `description`, `format`, `permissions`) VALUES ('".__('Admin')."', '".__('Group: admin')."', '<span style=\"color:#99bb00\">{username}</span>', '".serialize(array('*'))."'), ('".__('User')."', '".__('Group: user')."', '{username}', '".serialize(array('site.login', 'site.comment', 'site.comment.add', 'site.comment.edit'))."'), ('".__('Guest')."', '".__('Group: guest')."', '{username}', '".serialize(array())."')");
 
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."users_data (`user_id`, `lang`) VALUES ('1', '".$language."')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."users_data (`user_id`) VALUES ('1')");

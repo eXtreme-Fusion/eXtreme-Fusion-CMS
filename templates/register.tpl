@@ -62,6 +62,16 @@
 					<label for="HideEmail_0"><input type="radio" id="HideEmail_0" name="hide_email" value="0"{if $hide_email != 1} checked="checked"{/if}>{i18n('No')}</label>
 				</div>
 			</div>
+			<div class="tbl2">
+				<div class="formLabel sep_1 grid_3"><label for="language">{i18n('Language:')}</label></div>
+				<div class="formField grid_7">
+					<select name="language" class="textbox" id="language">
+						{section=locale_set}
+							<option value="{$locale_set.value}" {if $locale_set.selected}selected="selected"{/if}>{$locale_set.display}</option>
+						{/section}
+					</select>
+				</div>
+			</div>
 			
 			{if $enable_terms == '1'}
 				<hr />
