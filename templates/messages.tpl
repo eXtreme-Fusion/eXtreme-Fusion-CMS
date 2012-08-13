@@ -99,7 +99,7 @@
 		{*Odpowiedź po wysłaniu wiadomości - co to? nie wiadomo więc zakomentuję ~Inscure*}
 		{*<div id="form_request"></div>*}
 
-		<form name="message" action="{$URL_REQUEST}" method="post">
+		<form action="{$URL_REQUEST}" method="post" name="message">
 			{if $section == 'new-by-search' || $section == 'new-by-user'}
 				<div class="line">
 					{if $section == 'new-by-user'}
