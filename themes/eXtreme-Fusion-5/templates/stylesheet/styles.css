@@ -8,11 +8,17 @@
 		.dark_all_child * {background: #3a3a3a;border-color: #525252;}
 	/* Kolory tekstów */
 	.text_light {color: #626262;}
+		a.text_light:hover {color: #626262;text-decoration:underline;}
 		.text_light a {color: #626262;text-decoration:none;}
 			.text_light a:hover {color: #626262;text-decoration:underline;}
 	.text_dark {color: #525252;}
+		a.text_dark:hover {color: #525252;text-decoration:underline;}
 		.text_dark a {color: #525252;text-decoration:none;}
 			.text_dark a:hover {color: #525252;text-decoration:underline;}
+	.text_other {color: #9fd10f;}
+		a.text_other:hover {color: #9fd10f;text-decoration:underline;}
+		.text_other a {color: #9fd10f;text-decoration:none;}
+			.text_other a:hover {color: #9fd10f;text-decoration:underline;}
 	/* Obramowania */
 		/* Obramowania jasne */
 		.border_light {border-color: #3a3a3a;}
@@ -184,6 +190,45 @@
 	padding: 10px;
 	margin: 10px;
 	border-radius: 5px;
+}
+
+/* Menu zakładek ----------------------------------------------------------------------------------------------- */
+.tab_menu ul {
+    float: left;
+    padding: 0;
+}
+
+.tab_menu ul li {
+	display: inline;
+}
+
+.tab_menu ul li a {
+    background: #3a3a3a;
+    border-top: 2px solid #9fd10f;
+    color: #fafafa;
+	font-size: 12px;
+	font-weight: bold;
+    float: left;
+    margin-right: 5px;
+    padding: 4px 15px;
+    text-decoration: none;
+    text-shadow: 1px 1px 1px #000;
+	border-radius: 5px 5px 0 0;
+}
+
+.tab_menu ul li a.selected {
+    background-color: #2e2e2e;
+    color: #fafafa !important;
+}
+
+/* Zawartość zakładek --------------------------------------------------------------------------------------- */
+.tab_cont {
+	position: relative;
+    background: #2e2e2e;
+    float: left;
+	padding: 7px 0;
+    width: 100%;
+	border-radius: 0 5px 5px 5px;
 }
 
 /* KONIEC --------------------------------------------------------------------------------------------- */
