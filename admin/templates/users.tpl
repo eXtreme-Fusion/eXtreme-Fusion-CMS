@@ -141,9 +141,9 @@
 					<div class="formLabel sep_1 grid_3">{i18n('Roles:')}{i18n('Default roles')}</div>
 					<div class="formField grid_7">
 						<select name="roles[]" multiple id="InsightGroups" class="select-multi" size="5" >
-							{section=insight_groups}
-								{if $insight_groups.value != 2 && $insight_groups.value != 3}
-									<option value="{$insight_groups.value}"{if $insight_groups.value == $user.roles} selected="selected"{/if}>{$insight_groups.display}</option>
+							{section=all_groups}
+								{if $all_groups.value != 2 && $all_groups.value != 3}
+									<option value="{$all_groups.value}"{if $all_groups.value == $user.roles} selected="selected"{/if}>{$all_groups.display}</option>
 								{/if}
 							{/section}
 						</select>
