@@ -9,56 +9,9 @@
 	top: -6px;
 }
 
-#messages_page nav ul {
-    float: left;
-    padding: 0;
-}
-
-#messages_page nav ul li {
-	display: inline;
-}
-
-#messages_page nav ul li a {
-    background: #3A3A3A;
-    border-radius: 5px 5px 0 0;
-    border-top: 2px solid #9FD10F;
-    color: #FAFAFA;
-	font-size: 12px;
-	font-weight: bold;
-    float: left;
-    margin-right: 5px;
-    padding: 4px 15px;
-    text-decoration: none;
-    text-shadow: 1px 1px 1px #000000;
-}
-
-#messages_page nav ul li a:visited {
-	color: #fafafa;
-}
-
-#messages_page nav ul li a.selected {
-    background-color: #2E2E2E;
-    color: #FAFAFA !important;
-}
-/* Tab content ------------------------------------------------------------------------------------------------------- */
-#messages_page .tab_cont {
-    background: #2E2E2E;
-    border-radius: 0 5px 5px 5px;
-    float: left;
-	padding: 10px 0;
-    width: 100%;
-}
-
 /* Lista wątków ------------------------------------------------------------------------------------------------------*/
 #messages_page .info {
-	background: #3a3a3a;
-	color: #9fd10f;
 	margin: 10px 0 20px 0;
-}
-
-#messages_page .tab_cont .short_post.dark .arrow,
-#messages_page .tab_cont .short_post.dark .pw_cont {
-	background: #333;
 }
 
 #messages_page .tab_cont .short_post .pw_cont {
@@ -73,7 +26,8 @@
 	height: 30px;
 	line-height: 30px;
 	overflow: hidden;
-	border-right: 1px #525252 dotted;
+	border-right-width: 1px;
+	border-right-style: dotted;
 }
 
 #messages_page .tab_cont .short_post .pw_cont h4 {
@@ -84,15 +38,12 @@
 	height: 30px;
 	overflow: hidden;
 	background: none;
-	border: 0;
-	border-right: 1px #525252 dotted;
+	border-bottom: 0;
+	border-right-width: 1px;
+	border-right-style: dotted;
 	padding: 0 10px;
 	margin: 0;
 	font: inherit;
-}
-
-#messages_page .tab_cont .short_post .pw_cont h4 a {
-	color: #fff;
 }
 
 #messages_page .tab_cont .short_post .pw_cont time {
@@ -103,9 +54,9 @@
 	height: 30px;
 	line-height: 30px;
 	overflow: hidden;
-	border-right: 1px #525252 dotted;
+	border-right-width: 1px;
+	border-right-style: dotted;
 	font-style: italic;
-	color: #5f5f5f;
 }
 
 #messages_page .tab_cont .short_post .pw_cont p {
@@ -121,7 +72,6 @@
 
 #messages_page .tab_cont .short_post .pw_cont .new_mes {
 	background: url(../images/messages/email.png) left center no-repeat;
-	color: #ffd0d0;
 }
 
 #messages_page .tab_cont .short_post .pw_cont .read_mes {
@@ -130,19 +80,16 @@
 
 #messages_page .tab_cont .short_post .pw_cont .sent_mes {
 	background: url(../images/messages/email_go.png) left center no-repeat;
-	color: #d2def2;
 }
 
 #messages_page .tab_cont .short_post .pw_cont .del_mes {
 	background: url(../images/messages/email_delivered.png) left center no-repeat;
-	color: #d7e8b5;
 }
 
 /* Formularz -------------------------------------------------------------------------------------------------------- */
 #messages_page form {
 	margin: 10px 20px;
 	padding: 10px 30px;
-	background: #2e2e2e;
 	border-radius: 5px;
 }
 
@@ -174,65 +121,4 @@
 
 #messages_page form .line #message {
 	resize: vertical;
-}
-
-/* Wybrany adresat-------------------------------------------------------------------------------------------------------- */
-#defender_user {
-	display: inline-block;
-	padding: 3px 8px;
-	background: #fff;
-	font-size: 11px;
-	color: #333;
-	border-radius: 5px;
-}
-
-#defender_user img {
-	width: 7px;
-	height: 7px;
-	cursor: pointer;
-}
-
-/* Lista userów----------------------------------------------------------------------------------------------- */
-#defenders ul,
-#defenders .defender_error {
-	display: block;
-	position: absolute;
-	width: 200px;
-	background: #fff;
-	font-size: 11px;
-	color: #333;
-	margin: 0;
-	padding: 2px 10px;
-	border: 0;
-	border-radius: 0 5px 5px 5px;
-	-webkit-box-shadow: 0px 3px 21px rgba(50, 50, 50, 0.75);
-	-moz-box-shadow: 0px 3px 21px rgba(50, 50, 50, 0.75);
-	box-shadow: 0px 3px 21px rgba(50, 50, 50, 0.75);
-}
-
-#defenders ul {
-	list-style: none;
-}
-
-#defenders .defender_error {
-	text-align: center;
-	padding: 5px 10px;
-}
-
-#defenders ul li {
-	margin: 0;
-	padding: 0;
-	cursor: pointer;
-	list-style: none;
-	line-height: 180%;
-	border-bottom: 1px #e5e5e5 dashed;
-}
-
-#defenders ul li:last-child {
-	border: 0;
-}
-
-#defenders ul li:hover {
-	color: #000;
-	text-decoration: underline;
 }

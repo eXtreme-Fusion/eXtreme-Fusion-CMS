@@ -368,17 +368,12 @@ h1 {
     transform: rotate(45deg);
 }
 
-.short_post.dark .arrow,
-.short_post.dark .pw_cont {background: #2e2e2e;}
-.short_post.light .arrow,
-.short_post.light .pw_cont {background: #3a3a3a;}
-
 .short_post .avatar {
 	display: block;
 	float: left;
 	width: 40px;
-	background: #3a3a3a;
-	border: 5px #3a3a3a solid;
+	border-width: 5px;
+	border-style: solid;
 	border-radius: 5px;
 }
 
@@ -394,12 +389,10 @@ h1 {
 	padding-bottom: 5px;
 	margin-bottom: 5px;
 }
-.short_post.dark .pw_cont header {border-bottom: 1px #373737 dashed;}
-.short_post.light .pw_cont header {border-bottom: 1px #474747 dashed;}
+.short_post .pw_cont header {border-bottom-width: 1px; border-bottom-style: dashed;}
 
 .short_post .pw_cont header strong {
 	font-size: 12px;
-	color: #99aa17;
 }
 
 .short_post .pw_cont header time {
@@ -407,24 +400,4 @@ h1 {
 	float: right;
 	font-style: italic;
 	line-height: 12px;
-	color: #5f5f5f;
 }
-
-.short_post .pw_cont div strong{font-weight: bold;}
-.short_post .pw_cont div em{font-style: italic;}
-.short_post .pw_cont div u{text-decoration: underline;}
-.short_post .pw_cont div s{text-decoration: line-through;}
-.short_post .pw_cont div blockquote {	
-	display: block;
-	font-family: inherit;
-	font-size: inherit;
-	font-style: italic;
-	font-weight: normal;
-	color: #d2d1d1;
-	padding: 10px;
-	margin: 10px;
-	border: 0;
-	border-radius: 5px;
-}
-.short_post.dark .pw_cont div blockquote {background: #3a3a3a;}
-.short_post.light .pw_cont div blockquote {background: #2e2e2e;}

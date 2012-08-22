@@ -5,9 +5,9 @@
 {if $section == 'overview'}
 	<div id="messages_page">
 		{if $data}
-			<p class="info">{i18n('Messages are deleted automatically after 60 days from the time they were sent.')}</p>
+			<p class="info light text_other">{i18n('Messages are deleted automatically after 60 days from the time they were sent.')}</p>
 			
-			<nav>
+			<nav class="tab_menu">
 				<p><a href="{$url_new_message}" class="button">{i18n('Write a message')}</a></p>
 				<ul>
 					<li><a href="javascript:void(0)" id="tab_all" class="tab">Wszystkie</a></li>
@@ -19,13 +19,13 @@
 			
 			<div class="tab_cont" id="tab_cont_all">
 				{section=data}
-					<article class="short_post {if $data.read_status == 1}light{else}dark{/if} clearfix">
+					<article class="short_post light_all_child clearfix">
 						<span class="arrow"></span>
-						<img src="{$data.user_avatar}" alt="Avatar" class="avatar">
+						<img src="{$data.user_avatar}" alt="Avatar" class="avatar border_light">
 						<div class="pw_cont">
 							<span class="interlocutor">{$data.user_link}</span>
-							<h4><a href="{$data.msg_link}" title="{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}">{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}</a></h4>
-							<time datetime="{$data.datetime}">{$data.datestamp}</time>
+							<h4><a href="{$data.msg_link}" title="{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}" class="white">{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}</a></h4>
+							<time datetime="{$data.datetime}" class="text_light">{$data.datestamp}</time>
 							{if $data.read_status == '1'}
 								<p class="new_mes">Nowa</p>
 							{elseif $data.read_status == '2'}
@@ -43,13 +43,13 @@
 				<div class="tab_cont" id="tab_cont_inbox">
 					{section=data}
 						{if $data.read_status == '1' || $data.read_status == '2'}
-							<article class="short_post {if $data.read_status == 1}light{else}dark{/if} clearfix">
+							<article class="short_post light_all_child clearfix">
 								<span class="arrow"></span>
-								<img src="{$data.user_avatar}" alt="Avatar" class="avatar">
+								<img src="{$data.user_avatar}" alt="Avatar" class="avatar border_light">
 								<div class="pw_cont">
 									<span class="interlocutor">{$data.user_link}</span>
-									<h4><a href="{$data.msg_link}" title="{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}">{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}</a></h4>
-									<time datetime="{$data.datetime}">{$data.datestamp}</time>
+									<h4><a href="{$data.msg_link}" title="{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}" class="white">{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}</a></h4>
+									<time datetime="{$data.datetime}" class="text_light">{$data.datestamp}</time>
 									{if $data.read_status == '1'}
 										<p class="new_mes">Nowa</p>
 									{elseif $data.read_status == '2'}
@@ -65,13 +65,13 @@
 				<div class="tab_cont" id="tab_cont_outbox">
 					{section=data}
 						{if $data.read_status == '3' || $data.read_status == '4'}
-							<article class="short_post dark clearfix">
+							<article class="short_post light_all_child clearfix">
 								<span class="arrow"></span>
-								<img src="{$data.user_avatar}" alt="Avatar" class="avatar">
+								<img src="{$data.user_avatar}" alt="Avatar" class="avatar border_light">
 								<div class="pw_cont">
 									<span class="interlocutor">{$data.user_link}</span>
-									<h4><a href="{$data.msg_link}" title="{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}">{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}</a></h4>
-									<time datetime="{$data.datetime}">{$data.datestamp}</time>
+									<h4><a href="{$data.msg_link}" title="{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}" class="white">{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}</a></h4>
+									<time datetime="{$data.datetime}" class="text_light">{$data.datestamp}</time>
 									{if $data.read_status == '3'}
 										<p class="sent_mes">Wysłana</p>
 									{elseif $data.read_status == '4'}
@@ -99,7 +99,7 @@
 		{*Odpowiedź po wysłaniu wiadomości - co to? nie wiadomo więc zakomentuję ~Inscure*}
 		{*<div id="form_request"></div>*}
 
-		<form action="{$URL_REQUEST}" method="post" name="message">
+		<form action="{$URL_REQUEST}" method="post" name="message" class="dark">
 			{if $section == 'new-by-search' || $section == 'new-by-user'}
 				<div class="line">
 					{if $section == 'new-by-user'}
