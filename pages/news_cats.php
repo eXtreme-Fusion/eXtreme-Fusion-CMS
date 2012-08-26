@@ -84,7 +84,7 @@ if ($_route->getAction())
 			if ($row)
 			{
 				$query = $_pdo->getData('
-					SELECT tn.`id`, tn.`title`, tn.`access`, tn.`link`, tn.`content`, tn.`author`, tn.`reads`, tn.`datestamp`, tn.`source`, tn.`allow_comments`, tn.`language`, tn.`content_extended`, tu.`id` AS `user_id`, tu.`username`
+					SELECT tn.`id`, tn.`title`, tn.`access`, tn.`link`, tn.`content`, tn.`author`, tn.`reads`, tn.`datestamp`, tu.`id` AS `user_id`, tu.`username`
 					FROM [news] tn
 					LEFT JOIN [users] tu ON tn.`author`= tu.`id`
 					WHERE tn.`category` = :category AND tn.`access` IN ('.$_user->listRoles().')
