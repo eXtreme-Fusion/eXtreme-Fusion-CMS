@@ -12,9 +12,12 @@
 $_locale->load('news_cats');
 
 $_head->set($_tpl->getHeaders());
+$_tpl->assign('all_news_url', $_route->path(array('controller' => 'news')));
+$_tpl->assign('all_news_cats_url', $_route->path(array('controller' => 'news_cats')));
 
 if ( ! $_theme->tplExists())
 {
+	$_head->set('<link href="'.ADDR_TEMPLATES.'stylesheet/news.css" media="screen" rel="stylesheet">');
 	$_head->set('<link href="'.ADDR_TEMPLATES.'stylesheet/news_cats.css" media="screen" rel="stylesheet">');
 }
 
@@ -81,7 +84,7 @@ if ($_route->getAction())
 			if ($row)
 			{
 				$query = $_pdo->getData('
-					SELECT tn.`id`, tn.`title`, tn.`access`, tn.`link`, tn.`content`, tn.`author`, tn.`reads`, tn.`datestamp`, tu.`id` AS `user_id`, tu.`username`
+					SELECT tn.`id`, tn.`title`, tn.`access`, tn.`link`, tn.`content`, tn.`author`, tn.`reads`, tn.`datestamp`, tn.`source`, tn.`allow_comments`, tn.`language`, tn.`content_extended`, tu.`id` AS `user_id`, tu.`username`
 					FROM [news] tn
 					LEFT JOIN [users] tu ON tn.`author`= tu.`id`
 					WHERE tn.`category` = :category AND tn.`access` IN ('.$_user->listRoles().')
@@ -98,17 +101,32 @@ if ($_route->getAction())
 					$i = 0;
 					foreach($query as $data)
 					{
+						// Przycinanie treści (nie wiem czy tu ma to być, czy gdzieś indziej - ~Lisu)
+						  $count = str_word_count(stripslashes($data['content']));
+						  $words = 20;
+						  if ($count>$words) {
+							$body = explode(" ", stripslashes($data['content']));
+							$short_content = $body['0']." ";
+							for ($n=1; $n < $words; $n++) {
+								$short_content .= $body[$n]." ";
+							}
+							$short_content .= "&#8230;";
+						  } else {
+							$short_content = stripslashes($data['content']);
+						  }
+						// KONIEC
+						
 						$cache[] = array(
-							'row_color'         => $i % 2 == 0 ? 'tbl1' : 'tbl2',
 							'news_title_id'     => $data['id'],
 							'news_title_name'   => $data['title'],
-							'news_content'      => substr($data['content'], 0, 85).'...',
+							'news_content'      => $short_content,
 							'news_author_id'    => $data['user_id'],
 							'news_author_name'  => $_user->getUsername($data['user_id']),
 							'news_reads'        => $data['reads'],
 							'news_datestamp'    => HELP::showDate('shortdate', $data['datestamp']),
 							'news_url'          => $_route->path(array('controller' => 'news', 'action' => $data['id'], HELP::Title2Link($data['title']))),
-							'profile_url'       => $_route->path(array('controller' => 'profile', 'action' => $data['user_id'], HELP::Title2Link($data['username'])))
+							'profile_url'       => $_route->path(array('controller' => 'profile', 'action' => $data['user_id'], HELP::Title2Link($data['username']))),
+							'news_datetime' 	=> date('c', $data['datestamp'])
 						);
 						$i++;
 					}
@@ -116,7 +134,6 @@ if ($_route->getAction())
 				$_system->cache('news,cat-'.$_route->getAction().','.$_user->getCacheName().',page-'.$current, $cache, 'news_cats');
 			}
 		}
-		
 		$_tpl->assign('rows', $cache);
 		
 		$_tpl->assign('category', $category);
@@ -196,7 +213,6 @@ else
 	foreach($cache as $data)
 	{
 		$d[] = array(
-			'row_color'     	=> $i % 2 == 0 ? 'tbl1' : 'tbl2',
 			'cat_id'        	=> $data['id'],
 			'cat_title_name' 	=> $data['name'],
 			'cat_image'    		=> $data['image'],

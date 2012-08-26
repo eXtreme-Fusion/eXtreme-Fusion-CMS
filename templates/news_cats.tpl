@@ -1,46 +1,44 @@
 {if $rows}
 	{php} opentable(__('News categories')) {/php}
-		<div class="cat_info">
-			<div class="center">
-				<strong>{$category.cat_name}</strong> <br /> <small>{i18n('News:')} {$category.cat_news_count}</small>
-			</div>
-			<div class="center">
-				<img src="{$NEWS_CAT_IMAGES}{$category.cat_image}" alt="{$category.cat_name}" title="{$category.cat_name}" class="tip">
-			</div>
-		</div>
+		<p class="cat_top dark text_dark">
+			<a href="{$all_news_url}">Newsy</a> <img src="{$THEME_IMAGES}bullet.gif" alt=""> <a href="{$all_news_cats_url}">Kategorie newsów</a> <img src="{$THEME_IMAGES}bullet.gif" alt=""> <strong>{$category.cat_name}</strong> ({$category.cat_news_count})
+		</p>
 		{if $rows}
-			<div class="tbl2">
-				<div class="grid_2 bold">{i18n('Title:')}</div>
-				<div class="grid_3 bold">{i18n('Fragment:')}</div>
-				<div class="grid_1 bold">{i18n('Author:')}</div>
-				<div class="grid_1 bold">{i18n('Reads')}</div>
-				<div class="grid_2 bold">{i18n('Date')}</div>
-			</div>
+			<div class="clearfix">
 				{section=rows}
-					<div class="tbl {$rows.row_color}">
-						<div class="grid_2"><a href="{$rows.news_url}">{$rows.news_title_name}</a></div>
-						<div class="grid_3">{$rows.news_content}</div>
-						<div class="grid_1"><a href="{$rows.profile_url}">{$rows.news_author_name}</a></div>
-						<div class="grid_1">{$rows.news_reads}</div>
-						<div class="grid_2">{$rows.news_datestamp}</div>
-					</div>
+					<article class="news dark border_top_other">
+						<header class="clearfix">
+							<p class="text_dark">{i18n('Date:')} <time datetime="{$rows.news_datetime}" pubdate="pubdate">{$rows.news_datestamp}</time> | {i18n('Author:')} <a href="{$rows.profile_url}" rel="author">{$rows.news_author_name}</a></p>
+							<h3><a href="{$rows.news_url}" title="{$rows.news_title_name}">{$rows.news_title_name}</a></h3>
+						</header>
+						<div class="formated_text clearfix">
+							{$rows.news_content}
+						</div>
+						<footer class="clearfix">
+							<a href="{$rows.news_url}#content_extended" class="button more">{i18n('Read more...')}</a>
+						</footer>
+					</article>
 				{/section}
-				{$page_nav}
-		{else}
-			<div class="tbl">
-				<p class="status">{i18n('There are no news in the specified category.')}</p>
 			</div>
+			{$page_nav}
+		{else}
+			<p class="status">{i18n('There are no news in the specified category.')}</p>
 		{/if}
 	{php} closetable() {/php}
 {elseif $i}
 	{php} opentable(__('News categories')) {/php}
-		<ul class="cat_info">
+		<p class="cat_top dark text_dark">
+			<a href="{$all_news_url}">Newsy</a> <img src="{$THEME_IMAGES}bullet.gif" alt=""> <strong>Kategorie newsów</strong>
+		</p>
+		<ul class="cat_list">
 		{section=i}
 			<li>
-				<a href="{$i.url}" title="{$i.cat_title_name}">
-					<strong>{$i.cat_title_name}</strong>
-					<img src="{$NEWS_CAT_IMAGES}{$i.cat_image}" alt="{$i.cat_title_name}">
-					<small>{i18n('News:')} {$i.cat_count_news}</small>
+				<a href="{$i.url}" title="{$i.cat_title_name}" class="dark">
+					<span>
+						<strong>{$i.cat_title_name}</strong>
+						<img src="{$NEWS_CAT_IMAGES}{$i.cat_image}" alt="{$i.cat_title_name}">
+						<small class="text_dark">{i18n('News:')} {$i.cat_count_news}</small>
+					</span>
 				</a>
 			</li>
 		{/section}
