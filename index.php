@@ -32,7 +32,7 @@ try
 
 	/******* Koniec sekcji szablonu systemowego */
 
-	# Routing class
+	// Routing class
 	$_route = new Router($_request, $_sett, $_system->rewriteAvailable(), 'page', $_system->pathInfoExists(), $_sett->get('opening_page'), TRUE, TRUE, FALSE, 'admin');
 
 	StaticContainer::register('route', $_route);
@@ -41,8 +41,6 @@ try
 	$_tpl   = new Site($_route);
 
 	//$_tpl->registerFunction('url', 'Url');
-
-	/*****/
 
 	/**
 	 * Pobieranie linków definiowanych przez administratora
@@ -188,6 +186,7 @@ try
 
 		$_tpl->setDefaultRoot();
 	}
+
 	// Wyświetlanie komunikatu o błędzie w pliku PHP
 	else
 	{
@@ -218,10 +217,10 @@ try
 	// Usuwanie niepotrzebnych wpisów z tabeli użytkowników online.
 	$_pdo->exec('DELETE FROM [users_online] WHERE `last_activity` < '.(time()-60*60*2));
 
-/*
+	/*
 	$_tree = new Tree($_pdo, 'drzewko');
 	$_tree->add(0, 1);
-*/
+	*/
 
 	session_write_close();
 }
