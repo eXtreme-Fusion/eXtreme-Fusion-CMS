@@ -1,27 +1,26 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>{$title}</title>
-	<meta http-equiv='Content-Type' content='text/html; charset={$charset}' />
-	<link rel="stylesheet" type="text/css" href="{$ADDR_ADMIN}templates/stylesheet/grid.reset.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="{$ADDR_ADMIN}templates/stylesheet/grid.text.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="{$ADDR_ADMIN}templates/stylesheet/grid.960.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="{$ADDR_INSTALL}stylesheet/jquery.ui.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="{$ADDR_INSTALL}stylesheet/jquery.uniform.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="{$ADDR_INSTALL}stylesheet/jquery.table.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="{$ADDR_INSTALL}stylesheet/main.css" media="screen" />
-	<script type="text/javascript" src="{$ADDR_ADMIN}templates/javascripts/jquery.js"></script>
-	<script type="text/javascript" src="{$ADDR_ADMIN}templates/javascripts/jquery.uniform.js"></script>
-	<script type="text/javascript" src="{$ADDR_INSTALL}javascripts/passwordStrengthMeter.js"></script>
-	<script type="text/javascript" src="{$ADDR_INSTALL}javascripts/main.js"></script>
-</head>
-<body>
-
-	<div style="background:#121212;height:60px;margin-bottom:16px;padding:10px 0;">
-		<div class="container_12">
-			<img src='{$ADDR_ADMIN}templates/images/shared/extreme-fusion-logo.png' alt=''/>
+	<head>
+		<meta charset="{$charset}">
+		<title>{$title}</title>
+		<link rel="stylesheet" href="{$ADDR_ADMIN}templates/stylesheet/grid.reset.css">
+		<link rel="stylesheet" href="{$ADDR_ADMIN}templates/stylesheet/grid.text.css">
+		<link rel="stylesheet" href="{$ADDR_ADMIN}templates/stylesheet/grid.960.css">
+		<link rel="stylesheet" href="{$ADDR_INSTALL}stylesheet/jquery.ui.css">
+		<link rel="stylesheet" href="{$ADDR_INSTALL}stylesheet/jquery.uniform.css">
+		<link rel="stylesheet" href="{$ADDR_INSTALL}stylesheet/jquery.table.css">
+		<link rel="stylesheet" href="{$ADDR_INSTALL}stylesheet/main.css">
+		<script src="{$ADDR_ADMIN}templates/javascripts/jquery.js"></script>
+		<script src="{$ADDR_ADMIN}templates/javascripts/jquery.uniform.js"></script>
+		<script src="{$ADDR_INSTALL}javascripts/passwordStrengthMeter.js"></script>
+		<script src="{$ADDR_INSTALL}javascripts/main.js"></script>
+	</head>
+	<body>
+		<div style="background: #121212; height: 60px; margin-bottom: 16px; padding: 10px 0;">
+			<div class="container_12">
+				<img src="{$ADDR_ADMIN}templates/images/shared/extreme-fusion-logo.png" alt="{$title}">
+			</div>
 		</div>
-	</div>
 
 	<div id="Content">
 		<div class='corner4px'><div class='ctl'><div class='ctr'><div class='ctc'></div></div></div><div class='cc'>
