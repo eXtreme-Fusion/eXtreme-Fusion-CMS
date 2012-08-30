@@ -9,7 +9,7 @@
 | http://extreme-fusion.org/ef5/license/						 |
 +---------------------------------------------------------------*/
 $_locale->moduleLoad('lang', 'user_info_panel');
-$_head->set('<link href="'.ADDR_MODULES.'user_info_panel/stylesheet/user_info_panel.css" media="screen" rel="stylesheet">');
+$_head->set('	<link href="'.ADDR_MODULES.'user_info_panel/templates/stylesheet/user_info_panel.css" rel="stylesheet">');
 
 if ($_user->isLoggedIn())
 {

@@ -81,11 +81,11 @@
 							<p><strong>{i18n('Source')}:</strong> <a href="{$news.source}" target="_blank">{$news.source}</a></p>
 						{/if}
 					</footer>
-				</article>
-			{/section}	
-			{$page_nav}
-		{else}
-			<p class="status">{i18n('No News has been posted yet')}</p>
-		{/if}
-	{php} closetable(); {/php}
+					</article>
+{/section}
+{$page_nav}
+{else}
+<p class="status">{i18n('No News has been posted yet')}</p>
+{/if}
+{php} closetable(); {/php}
 {/if}

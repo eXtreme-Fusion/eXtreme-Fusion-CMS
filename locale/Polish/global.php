@@ -55,8 +55,8 @@ return array(
 	'Group' => 'Grupa',
 	'Name:' => 'Nazwa:',
 	'Login' => 'Zaloguj się',
-	'Username:' => 'Nazwa użytkownika:',
-	'Password:' => 'Hasło:',
+	'Username:' => 'nazwa użytkownika',
+	'Password:' => 'hasło......',
 	'Confirm password:' => 'Powtórz hasło:',
 	'E-mail address:' => 'Adres e-mail:',
 	'Hide e-mail:' => 'Ukryć e-mail:',
@@ -82,7 +82,7 @@ return array(
 	'Message:' => 'Wiadomość:',
 
 	'User Panel' => 'Panel użytkownika',
-	'Admin Panel' => 'Panel administratora',
+	'Admin Panel' => 'Administracja',
 
 	'Private messages' => 'Prywatne wiadomości',
 
