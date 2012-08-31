@@ -25,6 +25,7 @@
 	<script src="{$THEME_JS}jquery.tools.min.js"></script>
 	<script src="{$THEME_JS}jquery.uniform.min.js"></script>
 	<script src="{$THEME_JS}jquery.qtip.min.js"></script>
+    
 	{$Theme.Tags}
 </head>
 <body>
