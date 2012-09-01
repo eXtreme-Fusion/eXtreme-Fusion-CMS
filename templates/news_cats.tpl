@@ -15,7 +15,7 @@
 							{$rows.news_content}
 						</div>
 						<footer class="clearfix">
-							<a href="{$rows.news_url}#content_extended" class="button more">{i18n('Read more...')}</a>
+							<a href="{$rows.news_url}" class="button more">{i18n('Read more...')}</a>
 						</footer>
 					</article>
 				{/section}
