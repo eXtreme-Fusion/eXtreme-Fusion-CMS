@@ -123,6 +123,19 @@ $new_table[5] = array(
 	) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;"
 );
 
+$new_table[6] = array(
+	"forum_drzewko",
+	"(
+		`id` int(8) NOT NULL AUTO_INCREMENT,
+		`name` varchar(32) NOT NULL DEFAULT '',
+		`left` int(8) NOT NULL DEFAULT '0',
+		`right` int(8) NOT NULL DEFAULT '0',
+		PRIMARY KEY (`id`),
+		KEY `parent` (`left`),
+		KEY `right` (`right`)
+	) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;"
+);
+
 $new_row[1] = array(
 	"forum_sett", 
 	"(`key`, `value`) VALUES ('forum_title', '')"
@@ -138,11 +151,67 @@ $new_row[3] = array(
 	"(`key`, `value`) VALUES ('forum_keywords', '')"
 );
 
+$new_row[4] = array(
+	"forum_drzewko", 
+	"(`id`, `name`, `left`, `right`) VALUES (1, 'Budynki', 1, 22)"
+);
+
+$new_row[5] = array(
+	"forum_drzewko", 
+	"(`id`, `name`, `left`, `right`) VALUES (2, 'Przemyslowe', 2, 5)"
+);
+
+$new_row[6] = array(
+	"forum_drzewko", 
+	"(`id`, `name`, `left`, `right`) VALUES (3, 'Publiczne', 6, 11)"
+);
+
+$new_row[7] = array(
+	"forum_drzewko", 
+	"(`id`, `name`, `left`, `right`) VALUES (4, 'Mieszkalne', 12, 21)"
+);
+
+$new_row[8] = array(
+	"forum_drzewko", 
+	"(`id`, `name`, `left`, `right`) VALUES (5, 'Fabryka', 3, 4)"
+);
+
+$new_row[9] = array(
+	"forum_drzewko", 
+	"(`id`, `name`, `left`, `right`) VALUES (6, 'Biblioteka', 7, 8)"
+);
+
+$new_row[10] = array(
+	"forum_drzewko", 
+	"(`id`, `name`, `left`, `right`) VALUES (7, 'Kosciol', 9, 10)"
+);
+
+$new_row[11] = array(
+	"forum_drzewko", 
+	"(`id`, `name`, `left`, `right`) VALUES (8, 'Domy', 13, 18)"
+);
+
+$new_row[12] = array(
+	"forum_drzewko", 
+	"(`id`, `name`, `left`, `right`) VALUES (9, 'Blok mieszkalny', 19, 20)"
+);
+
+$new_row[13] = array(
+	"forum_drzewko", 
+	"(`id`, `name`, `left`, `right`) VALUES (10, 'Dom jednorodzinny', 14, 15)"
+);
+
+$new_row[14] = array(
+	"forum_drzewko", 
+	"(`id`, `name`, `left`, `right`) VALUES (11, 'Dom wielorodzinny', 16, 17)"
+);
+
 $drop_table[1] = "forum_sett";
 $drop_table[2] = "forum_forums";
 $drop_table[3] = "forum_cats";
 $drop_table[4] = "forum_threads";
 $drop_table[5] = "forum_posts";
+$drop_table[6] = "forum_drzewko";
 
 $tag_supplement[1] = "FORUM_FORUMS";
 $tag_supplement[2] = "FORUM_CATS";

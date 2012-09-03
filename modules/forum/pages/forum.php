@@ -10,6 +10,12 @@
 +---------------------------------------------------------------*/
 $_locale->moduleLoad('lang', 'forum');
 
-! class_exists('Tag') || $_tag = New Tag($_system, $_pdo);
+! class_exists('Tree') || $_tree = New Tree($_pdo, 'forum_drzewko');
+
+$id = 1;
+
+//var_dump($_tree->get($id));
+
+$_tpl->assign('drzewko', $_tree->get($id));
 
 $_tpl->setPageCompileDir(DIR_MODULES.'forum'.DS.'templates'.DS);
