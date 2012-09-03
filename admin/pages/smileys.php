@@ -122,8 +122,8 @@ try
         $text = '';
     }
 	
-	print_r($image);
-	print_r($_files->createFileList(DIR_IMAGES.'smiley', array('.', '..', 'index.php', 'Thumbs.db', '.svn', '.gitignore')));
+	//print_r($image);
+	//print_r($_files->createFileList(DIR_IMAGES.'smiley', array('.', '..', 'index.php', 'Thumbs.db', '.svn', '.gitignore')));
 	
 	$_tpl->assignGroup(array(
 		'code' => $code,

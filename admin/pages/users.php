@@ -183,7 +183,7 @@ try
 						'role' => $data['role']
 					);
 
-					print_r(unserialize($data['roles']));
+					//print_r(unserialize($data['roles']));
 					$_tpl->assign('all_groups', $_tpl->getMultiSelect($_user->getViewGroups(), unserialize($data['roles']), TRUE));
 					$_tpl->assign('insight_groups', $_tpl->createSelectOpts($_user->getViewGroups(), unserialize($data['roles']), TRUE));
 

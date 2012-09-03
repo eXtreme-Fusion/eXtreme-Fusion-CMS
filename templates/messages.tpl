@@ -89,6 +89,7 @@
 			{/if}
 		{else}
 			<p class="status">{i18n('There are no messages.')}</p>
+			<p><a href="{$url_new_message}" class="button">{i18n('Write a message')}</a></p>
 		{/if}
 	</div>
 {elseif $section == 'new-by-search' || $section == 'new-by-user' || $section == 'entry'}

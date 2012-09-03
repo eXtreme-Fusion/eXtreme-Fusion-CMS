@@ -105,7 +105,7 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 			$r = $_pdo->exec('UPDATE [news] SET `reads` = `reads`+1 WHERE `id`= :id', array(array(':id', $item_id, PDO::PARAM_INT)));
 
 			$_tpl->assign('news', $d);
-			print_r($data['allow_comments']);
+			//print_r($data['allow_comments']);
 			if ($data['allow_comments'] === '1')
 			{
 				$_comment = $ec->comment;
@@ -174,7 +174,7 @@ else
 
 		$_GET['rowstart'] = Paging::getRowStart($_GET['current'], $items_per_page);
 		
-		print_r($_GET['rowstart']);
+		//print_r($_GET['rowstart']);
 
 		# / STRONICOWANIE #
 		$cache = $_system->cache('news,'.$_user->getCacheName().',page-'.$_GET['current'], NULL, 'news', $_sett->getUns('cache', 'expire_news'));

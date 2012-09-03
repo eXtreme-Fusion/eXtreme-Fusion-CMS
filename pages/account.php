@@ -187,7 +187,7 @@ if ($_request->post('save')->show() && $_request->post('email')->show())
 		'ChangeName' => $_sett->get('change_name')
 	));
 
-	print_r($_user->getLang());
+	//print_r($_user->getLang());
 	// Pobieranie kategorii
 	$query = $_pdo->getData('SELECT * FROM [user_field_cats] ORDER BY `order` ASC');
 	$cats = array();
