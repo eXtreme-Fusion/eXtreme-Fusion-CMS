@@ -29,7 +29,7 @@ if ($row)
 	// Sprawdzenie czy aktualnie znajdujemy się na podstronie rejestracji
 	if ($_route->getFileName() === 'register')
 	{
-		include DIR_MODULES.'bridge_phpbb'.DS.'class'.DS.'Phpbb.php';
+		include DIR_MODULES.'bridge_phpbb'.DS.'class'.DS.'PhpBB.php';
 		
 		! class_exists('PhpBB') || $_phpbb = new PhpBB($_pdo, $_system, $_user);
 	}
