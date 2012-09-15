@@ -12,8 +12,8 @@
 		</script>
 	{/literal}
 	<link href="{$ADDR_FAVICON}" rel="shortcut icon">
-	<link href="{$THEME_CSS}styles.css" rel="stylesheet">
 	<link href="{$THEME_CSS}main.css" rel="stylesheet">
+	<link href="{$THEME_CSS}styles.css" rel="stylesheet">
 	<link href="{$THEME_CSS}jquery/jquery.uniform.min.css" rel="stylesheet">
 	<link href="{$THEME_CSS}jquery/jquery.qtip.min.css" rel="stylesheet">
 	<link href="{$ADDR_CSS}grid.960.css" rel="stylesheet">
