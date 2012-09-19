@@ -1,4 +1,4 @@
-{if $action !== 'page'}
+{if $action && $action !== 'page'}
 	{if $rows}
 		{php} opentable(__('News preview')) {/php}
 			<article class="news dark border_top_other">
