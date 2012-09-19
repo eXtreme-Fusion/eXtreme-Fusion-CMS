@@ -1,4 +1,4 @@
-{if $action}
+{if $action !== 'page'}
 	{if $rows}
 		{php} opentable(__('News preview')) {/php}
 			<article class="news dark border_top_other">
@@ -82,10 +82,10 @@
 						{/if}
 					</footer>
 					</article>
-{/section}
-{$page_nav}
-{else}
-<p class="status">{i18n('No News has been posted yet')}</p>
-{/if}
+			{/section}
+		{$page_nav}
+	{else}
+		<p class="status">{i18n('No News has been posted yet')}</p>
+	{/if}
 {php} closetable(); {/php}
 {/if}
