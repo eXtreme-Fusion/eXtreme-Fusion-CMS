@@ -66,6 +66,8 @@ class Tree
 		{
 			if ($data = $this->_pdo->getRow('SELECT `left`, `right` FROM ['.$this->table.'] WHERE id = :id', array('id', $id, PDO::PARAM_INT)))
 			{
+				$lock = $this->_pdo->query('LOCK TABLE ['.$this->table.'] WRITE');
+
 				if ($del_sub)
 				{
 					// Ilośc elementów podzbioru
@@ -87,13 +89,13 @@ class Tree
 
 					$this->_pdo->exec('UPDATE ['.$this->table.'] SET `left` = `left`-2 WHERE `right` > '.$data['right'].' AND `left` > '.$data['left']);
 					$this->_pdo->exec('UPDATE ['.$this->table.'] SET `right` = `right`-2 WHERE `right` > '.$data['right']);
-
-
 				}
 
 				$this->_pdo->exec('DELETE FROM ['.$this->table.'] WHERE `id` = '.$id);
 
 				return TRUE;
+
+				$lock = $this->_pdo->query('UNLOCK TABLES');
 			}
 		}
 
@@ -105,6 +107,8 @@ class Tree
 	{
 		if ($data = $this->_pdo->getData('SELECT `left`, `right` FROM ['.$this->table.']'))
 		{
+			$lock = $this->_pdo->query('LOCK TABLE ['.$this->table.'] WRITE');
+
 			$order = intval($order);
 
 			$max_right = 0; $i = 1;
@@ -137,30 +141,35 @@ class Tree
 				$this->_pdo->exec('UPDATE ['.$this->table.'] SET `left` = `left`+2, `right` = `right`+2 WHERE `left` >= '.$new_left);
 				return $this->_pdo->exec('INSERT INTO ['.$this->table.'] (`left`, `right`) VALUES ('.($new_left).', '.($new_left+1).')');
 			}
+
+			$lock = $this->_pdo->query('UNLOCK TABLES');
 		}
 		else
 		{
+			$lock = $this->_pdo->query('LOCK TABLE ['.$this->table.'] WRITE');
+
 			return $this->_pdo->exec('INSERT INTO ['.$this->table.'] (`left`, `right`) VALUES (1, 2)');
+
+			$lock = $this->_pdo->query('UNLOCK TABLES');
 		}
 	}
 
 	// Dodawanie elementu do ogrodu: sadzenie drzewka lub nowy liść
 	public function add($id, $order = NULL)
 	{
-
 		if (isNum($id, TRUE, FALSE))
 		{
 			// NOWE DRZEWKO:
-
 			if (intval($id) === 0)
 			{
 				return $this->create($order);
 			}
 
 			// NOWY LIŚĆ:
-
 			if ($data = $this->_pdo->getRow('SELECT `left`, `right` FROM ['.$this->table.'] WHERE `id` = '.$id))
 			{
+				$lock = $this->_pdo->query('LOCK TABLE ['.$this->table.'] WRITE');
+
 				if ($order && isNum($order))
 				{
 					if ($sub = $this->_pdo->getData('SELECT `left`, `right` FROM ['.$this->table.'] WHERE `left` BETWEEN '.($data['left']+1).' AND '.($data['right']-1).' ORDER BY `left`'))
@@ -170,7 +179,6 @@ class Tree
 						// Wychwytywanie elementu, który obecnie zajmuje pozycję $order
 						foreach($sub as $val)
 						{
-
 							// Zapisywanie maksymalnej wartości `right`. W przypadku gdyby żaden element nie był na pozycji $order,
 							// nowy rekord znajdzie się na końcu poziomu, a jego `left` wyniesie $last+1.
 							if ($val['right'] > $last)
@@ -185,8 +193,6 @@ class Tree
 							}
 
 							$i++;
-
-
 						}
 					}
 
@@ -194,7 +200,6 @@ class Tree
 					{
 						$left = $last+1;
 					}
-
 				}
 				else
 				{
@@ -205,11 +210,59 @@ class Tree
 				$this->_pdo->exec('UPDATE ['.$this->table.'] SET `right` = `right`+2 WHERE `left` <= '.$data['left'].' AND `right` >= '.$data['right']);
 
 				return $this->_pdo->exec('INSERT INTO ['.$this->table.'] (`left`, `right`) VALUES ('.($left).', '.($left+1).')');
+
+				$lock = $this->_pdo->query('UNLOCK TABLES');
 			}
 		}
 
 		return FALSE;
 	}
+
+
+/***** BEGIN OF TESTY by piotrex41 - nie usuwać! *****/
+
+	/**
+	 *	Metoda do sprawdzania czy dany element posiada 'potomstwo'
+	 */
+	public function haveChild($elem)
+	{
+		if (isNum($elem))
+		{
+			$row = $this->_pdo->getRow('SELECT `left`, `right` FROM ['.$this->table.'] WHERE `left` = '.$elem.' OR `right` = '.$elem);
+
+			if (($row['left'] + 1) == $row['right'])
+			{
+				return FALSE;
+			}
+		}
+
+		return TRUE;
+	}
+
+	/**
+	 *	Metoda pobiera listę potomków
+	 *	! UWAGA ! - metoda sama sprawdza czy element ma potomstwo do pobrania!
+	 */
+	public function getChildren($elem)
+	{
+		if (isNum($elem))
+		{
+			if ($this->haveChild($elem))
+			{
+				$row = $this->_pdo->getRow('SELECT `left`, `right` FROM ['.$this->table.'] WHERE `left` = '.$elem.' OR `right` = '.$elem);
+
+				$data = $this->_pdo->getData('SELECT `name`, `right`, `left` FROM ['.$this->table.'] WHERE `left` BETWEEN '.$row['left'].'+1 AND '.$row['right'].' ORDER BY `left`');
+
+				return $data;
+			}
+			
+			return FALSE;
+		}
+
+		return FALSE;
+	}
+
+/***** END OF TESTY by piotrex41 - nie usuwać! *****/
 
 	/* depr
 	protected function addOrder($id, $order)
