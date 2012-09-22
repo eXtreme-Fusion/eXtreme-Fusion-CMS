@@ -45,7 +45,7 @@ if ($_route->getAction())
 			$current = $_route->getByID(3);
 		}
 
-		$_GET['rowstart'] = PAGING::getRowStart($current, $items_per_page);
+		$_GET['rowstart'] = Paging::getRowStart($current, $items_per_page);
 		
 		// Cache dla kategorii newsów opisu, miniaturek, id
 		$category = $_system->cache('news_cats,cat-'.$_route->getAction().','.$_user->getCacheName().',page-'.$current, NULL, 'news_cats', $_sett->getUns('cache', 'expire_news_cats'));
