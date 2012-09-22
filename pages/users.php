@@ -30,7 +30,7 @@ $rows = $_pdo->getMatchRowsCount('SELECT * FROM [users] WHERE `status` = 0 '.($d
 
 if ($rows)
 {
-	$rowstart = $data->arr('current')->isNum(TRUE, FALSE) ? PAGING::getRowStart($data->arr('current')->isNum(TRUE, FALSE), intval($_sett->get('users_per_page'))) : 0;
+	$rowstart = $data->arr('current')->isNum(TRUE, FALSE) ? Paging::getRowStart($data->arr('current')->isNum(TRUE, FALSE), intval($_sett->get('users_per_page'))) : 0;
 
 	$cache = $_system->cache('users,'.$_user->getCacheName().',sort_by-'.$data->arr('sort')->filters('trim', 'strip').',page-'.$data->arr('current')->isNum(TRUE, FALSE), NULL, 'users', $_sett->getUns('cache', 'expire_pages'));
 	if ($cache === NULL)
