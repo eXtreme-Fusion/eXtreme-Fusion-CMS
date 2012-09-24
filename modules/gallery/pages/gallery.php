@@ -38,7 +38,7 @@ if($_route->getByID(1) === 'cat')
 
 		if ($rows)
 		{
-			$rowstart = $data->arr('current')->isNum(TRUE, FALSE) ? PAGING::getRowStart($data->arr('current')->isNum(TRUE, FALSE), intval($_gallery_sett->get('albums_per_page'))) : 0;
+			$rowstart = $data->arr('current')->isNum(TRUE, FALSE) ? Paging::getRowStart($data->arr('current')->isNum(TRUE, FALSE), intval($_gallery_sett->get('albums_per_page'))) : 0;
 
 			$cache = $_system->cache('gallery,cat-id-'.$_route->getByID(2).','.$_user->getCacheName().',page-'.$data->arr('current')->isNum(TRUE, FALSE), NULL, 'gallery', $_gallery_sett->get('cache_expire'));
 			if ($cache === NULL)
@@ -172,7 +172,7 @@ elseif($_route->getByID(1) === 'album')
 
 		if ($rows)
 		{
-			$rowstart = $data->arr('current')->isNum(TRUE, FALSE) ? PAGING::getRowStart($data->arr('current')->isNum(TRUE, FALSE), intval($_gallery_sett->get('albums_per_page'))) : 0;
+			$rowstart = $data->arr('current')->isNum(TRUE, FALSE) ? Paging::getRowStart($data->arr('current')->isNum(TRUE, FALSE), intval($_gallery_sett->get('albums_per_page'))) : 0;
 
 			$cache = $_system->cache('gallery,album-id-'.$_route->getByID(2).','.$_user->getCacheName().',page-'.$data->arr('current')->isNum(TRUE, FALSE), NULL, 'gallery', $_gallery_sett->get('cache_expire'));
 			if ($cache === NULL)
@@ -417,7 +417,7 @@ else
 
 	if ($rows)
 	{
-		$rowstart = $data->arr('current')->isNum(TRUE, FALSE) ? PAGING::getRowStart($data->arr('current')->isNum(TRUE, FALSE), intval($_gallery_sett->get('cats_per_page'))) : 0;
+		$rowstart = $data->arr('current')->isNum(TRUE, FALSE) ? Paging::getRowStart($data->arr('current')->isNum(TRUE, FALSE), intval($_gallery_sett->get('cats_per_page'))) : 0;
 
 		$cache = $_system->cache('gallery,cats,'.$_user->getCacheName().',page-'.$data->arr('current')->isNum(TRUE, FALSE), NULL, 'gallery', $_gallery_sett->get('cache_expire'));
 		if ($cache === NULL)
