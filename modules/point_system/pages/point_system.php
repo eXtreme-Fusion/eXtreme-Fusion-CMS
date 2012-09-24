@@ -41,7 +41,7 @@ if($_user->isLoggedIn())
 			$current = $_route->getByID(2);
 		}
 
-		$rowstart = PAGING::getRowStart($current, $per_page);
+		$rowstart = Paging::getRowStart($current, $per_page);
 
 		$data = $_system->cache('ps,'.$_user->getCacheName().',page-'.$current, NULL, 'point_system', 86700);
 		if($data === NULL)
