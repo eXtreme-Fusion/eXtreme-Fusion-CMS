@@ -532,7 +532,7 @@ try
 			$user = array();
 			if ($rows)
 			{
-				$rowstart = PAGING::getRowStart($current, intval($_sett->get('users_per_page')));
+				$rowstart = Paging::getRowStart($current, intval($_sett->get('users_per_page')));
 
 				$query = $_pdo->getData('SELECT * FROM [users] WHERE `status` = :status ORDER BY `username` ASC LIMIT :rowstart,:items_per_page',
 					array(
