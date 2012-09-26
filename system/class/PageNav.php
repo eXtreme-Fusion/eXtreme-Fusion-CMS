@@ -1,13 +1,13 @@
 <?php
 /***********************************************************
 | eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
+| This product is licensed under the BSD License.
+| http://extreme-fusion.org/ef5/license/
 ***********************************************************/
 
 # THIS CLASS IS A VIEW
@@ -18,7 +18,7 @@ interface PageNavIntf
 	public function create($show_go_to_first = TRUE, $show_go_to_last = TRUE);
 
 	public function get(array $paging, $filename, $dir = NULL);
-	
+
 	// Zwraca tablicê z numerami podstron do wyœwietlenia
 	public function getPagesNums();
 
@@ -52,7 +52,7 @@ class PageNav implements PageNavIntf
 		}
 
 		$this->_route = $route;
-		
+
 		$this->_paging = $paging;
 		$this->_tpl = $tpl;
 
@@ -132,19 +132,19 @@ class PageNav implements PageNavIntf
 
 		$page_nav['current'] = $this->_paging->getCurrentPage();
 		$page_nav['route'] = $this->_route;
-		
+
 		$page_nav['prev'] = $this->_paging->getPrevPage();
 		$page_nav['next'] = $this->_paging->getNextPage();
 
 		return $page_nav;
 	}
-	
+
 	// W odrêbnym stosie OPT tworzy szablon, który przechwycony przez bufor danych jest zwracany przez metodê
 	public function get(array $paging, $filename, $dir = NULL)
 	{
 		if ($paging)
 		{
-		
+
 			/* TO DO
 				Notice: Undefined index: route in C:\ef5gif\system\class\StaticContainer.php on line 14
 				Call Stack
@@ -174,7 +174,7 @@ class PageNav implements PageNavIntf
 			$out = ob_get_contents();
 
 			ob_end_clean();
-			
+
 			$this->_tpl->assign('page_nav', $out);
 		}
 	}
