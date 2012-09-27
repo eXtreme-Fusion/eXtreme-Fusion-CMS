@@ -1101,6 +1101,8 @@ class User {
 	 * @param   string  nazwa uprawnienia
 	 * @return  bool
 	 */
+	 
+	 // Do sprawdzenia... Komentowanie nie działa prawdopobnie przez to.
 	public function hasPermission($name, $logged_in = TRUE)
 	{
 		$roles = $this->getRoles();

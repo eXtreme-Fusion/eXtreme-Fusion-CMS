@@ -84,6 +84,8 @@ class Comment
 			)
 		);
 
+		
+		// Do sprawdzenia... Komentowanie nie dzia³a prawdopobnie przez to.
 		if ($this->_user->hasPermission('site.comment.add'))
 		{
 			$this->_tpl->assign('can_comment', TRUE);
