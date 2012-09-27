@@ -117,7 +117,7 @@ class URL
 
 		if ($params)
 		{
-			$params = $this->main_sep.implode($this->main_sep, $params);
+			$params = $this->main_sep.HELP::Title2Link(implode($this->main_sep, $params));
 		}
 		else
 		{
