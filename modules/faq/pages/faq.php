@@ -57,6 +57,7 @@ if ($id)
 			
 			if ($row['comment'] === '1')
 			{
+				$_comment = $ec->comment;
 				$_tpl->assign('comments', $_comment->get($_route->getFileName(), $row['id']));
 				$_tpl->assign('bbcode', bbcodes());
 

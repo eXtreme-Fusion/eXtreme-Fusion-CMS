@@ -294,6 +294,8 @@ elseif (isNum($_route->getAction(), FALSE))
 				'Desc' => $row['description']
 			);
 
+			$_comment = $ec->comment;
+			
 			$_tpl->assignGroup(array(
 				'comments' => $_comment->get($_route->getFileName(), $_route->getAction()),
 				'entry' => $row['title'],

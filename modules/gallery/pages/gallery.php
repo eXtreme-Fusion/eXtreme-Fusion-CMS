@@ -389,6 +389,8 @@ elseif($_route->getByID(1) === 'photo')
 		{
 			if ($cache['comment'] === '1')
 			{	
+				$_comment = $ec->comment;
+				
 				$_tpl->assign('comment', $_comment->get($_route->getFileName(), $cache['id']));
 
 				if (isset($_POST['comment']['save']))
