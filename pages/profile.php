@@ -239,10 +239,10 @@ if ($row)
 		}
 		elseif($_request->post('delete_user_points')->show())
 		{
-			$_points->deleteAll($id);
+			$_points->deleteAll($row['id']);
 			$_system->clearCache('point_system');
-			$_log->insertSuccess('delete_points', $_user->getByID($id, 'username').' - Akcja przez profil: '.__('Deleted all user points.'));
-			$_request->redirect(ADDR_SITE.'profile,'.$id.'.html');
+			$_log->insertSuccess('delete_points', $_user->getByID($row['id'], 'username').' - Akcja przez profil: '.__('Deleted all user points.'));
+			$_request->redirect($_route->path(array('controller' => 'profile', 'action' => $row['id'])));
 		}
 	}
 	// END :: Point System module - admin action 
