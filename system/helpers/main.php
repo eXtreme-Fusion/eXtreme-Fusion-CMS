@@ -254,21 +254,21 @@ Class HELP
 	{
 		if ($user === NULL && $username === NULL)
 		{
-			$link = '<a href="'.self::$_url->path(array('controller' => 'profile', 'action' => self::$_user->get('id'), HELP::Title2Link(self::$_user->get('username')))).'">'.($text ? $text : self::$_user->getUsername()).'</a>';
+			$link = '<a href="'.self::$_url->path(array('controller' => 'profile', 'action' => self::$_user->get('id'))).'">'.($text ? $text : self::$_user->getUsername()).'</a>';
 		}
 		elseif ($username === NULL)
 		{
 			$username = self::$_user->getByID($user, 'username');
-			$link = '<a href="'.self::$_url->path(array('controller' => 'profile', 'action' => $user, HELP::Title2Link($username))).'">'.($text ? $text : self::$_user->getUsername($user)).'</a>';
+			$link = '<a href="'.self::$_url->path(array('controller' => 'profile', 'action' => $user)).'">'.($text ? $text : self::$_user->getUsername($user)).'</a>';
 		}
 		elseif ($user === NULL)
 		{
 			$user = self::$_user->getByUsername($username, 'id');
-			$link = '<a href="'.self::$_url->path(array('controller' => 'profile', 'action' => $user, HELP::Title2Link($username))).'">'.($text ? $text : self::$_user->getUsername($user)).'</a>';
+			$link = '<a href="'.self::$_url->path(array('controller' => 'profile', 'action' => $user)).'">'.($text ? $text : self::$_user->getUsername($user)).'</a>';
 		}
 		else
 		{
-			$link = '<a href="'.self::$_url->path(array('controller' => 'profile', 'action' => $user, HELP::Title2Link($username))).'">'.($text ? $text : self::$_user->getUsername($user)).'</a>';
+			$link = '<a href="'.self::$_url->path(array('controller' => 'profile', 'action' => $user)).'">'.($text ? $text : self::$_user->getUsername($user)).'</a>';
 		}
 
 		return $link;

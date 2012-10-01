@@ -13,22 +13,11 @@ $_locale->load('profile');
 $_head->set('<link href="'.ADDR_TEMPLATES.'stylesheet/profile.css" media="screen" rel="stylesheet">');
 $_head->set('<script src="'.ADDR_TEMPLATES.'javascripts/jquery.tabs.js"></script>');
 
-$username = $_route->getByID(1);
-
-if ( ! isNum($username, FALSE, FALSE))
-{
-	$row = $_pdo->getRow('SELECT `id`, `username`, `avatar`, `email`, `hide_email`, `joined`, `lastvisit`, `role` FROM [users] WHERE `username` = :username', array(':username', HELP::strip($username), PDO::PARAM_STR));
-}
-else
-{
-	$row = $_pdo->getRow('SELECT `id`, `username`, `avatar`, `email`, `hide_email`, `joined`, `lastvisit`, `role` FROM [users] WHERE `id` = '.$username);
-}
+$row = $_pdo->getRow('SELECT `id`, `username`, `avatar`, `email`, `hide_email`, `joined`, `lastvisit`, `role` FROM [users] WHERE `id` = :id', array(':id', $_route->getByID(1), PDO::PARAM_INT));
 
 if ($row)
 {
-	$id = $row['id'];
-	
-	$_tpl->assign('rows', TRUE);
+	$_tpl->assign('profile', TRUE);
 	
 	$theme = array(
 		'Title' => __('Profil użytkownika - :Username', array(':Username' => $row['username'])).' &raquo; '.$_sett->get('site_name'),
@@ -40,7 +29,7 @@ if ($row)
 	define('THIS', FALSE);
 	
 	// nazwa pliku bez rozszerzenia, dane do zapisu (jeśli brak to funkcja zwraca dane o ile plik istnieje), czas użyteczności pliku (nadpisanie w przypadku zbyt starej wersji)
-	$cats = $_system->cache('profile_id_'.$id.'_cats', NULL, 'profiles', $_sett->getUns('cache', 'expire_profile'));
+	$cats = $_system->cache('profile_id_'.$row['id'].'_cats', NULL, 'profiles', $_sett->getUns('cache', 'expire_profile'));
 	if ($cats === NULL)
 	{
 		// Pobieranie kategorii
@@ -52,11 +41,11 @@ if ($row)
 		{
 			$cats[] = $data;
 		}
-		$_system->cache('profile_id_'.$id.'_cats', $cats, 'profiles');
+		$_system->cache('profile_id_'.$row['id'].'_cats', $cats, 'profiles');
 	}
 	
 	// nazwa pliku bez rozszerzenia, dane do zapisu (jeśli brak to funkcja zwraca dane o ile plik istnieje), czas użyteczności pliku (nadpisanie w przypadku zbyt starej wersji)
-	$fields = $_system->cache('profile_id_'.$id.'_user_fields', NULL, 'profiles', $_sett->getUns('cache', 'expire_profile'));
+	$fields = $_system->cache('profile_id_'.$row['id'].'_user_fields', NULL, 'profiles', $_sett->getUns('cache', 'expire_profile'));
 	if ($fields === NULL)
 	{
 		// Pobieranie pól
@@ -73,19 +62,19 @@ if ($row)
 		{
 			$fields[] = $data;
 		}
-		$_system->cache('profile_id_'.$id.'_user_fields', $fields, 'profiles');
+		$_system->cache('profile_id_'.$row['id'].'_user_fields', $fields, 'profiles');
 	}
 
 	
 	// nazwa pliku bez rozszerzenia, dane do zapisu (jeśli brak to funkcja zwraca dane o ile plik istnieje), czas użyteczności pliku (nadpisanie w przypadku zbyt starej wersji)
-	$data = $_system->cache('profile_id_'.$id.'_user_data', NULL, 'profiles', $_sett->getUns('cache', 'expire_profile'));
+	$data = $_system->cache('profile_id_'.$row['id'].'_user_data', NULL, 'profiles', $_sett->getUns('cache', 'expire_profile'));
 	if ($data === NULL)
 	{
 		// Pobieranie wszystkich dodatkowych pól uzytkowników
-		$data = $_pdo->getRow('SELECT * FROM [users_data] WHERE `user_id` ='.$id.' LIMIT 1');
+		$data = $_pdo->getRow('SELECT * FROM [users_data] WHERE `user_id` ='.$row['id'].' LIMIT 1');
 		
 		// Przepisywanie pobranych pól na zwykłą tablicę
-		$_system->cache('profile_id_'.$id.'_user_data', $data, 'profiles');
+		$_system->cache('profile_id_'.$row['id'].'_user_data', $data, 'profiles');
 	}
 	$i = 0;
 
@@ -137,76 +126,70 @@ if ($row)
 
 
 	#************
+
+	$query = $_pdo->getData('SELECT `id` FROM [news] WHERE `author` = :id',
+		array(':id', $row['id'], PDO::PARAM_INT)
+	);
+	$news = $_pdo->getRowsCount($query);
 	
-	$row = $_pdo->getRow('SELECT * FROM [users] WHERE `id` = '.$id);
+	$query = $_pdo->getData('SELECT `id` FROM [comments] WHERE `author` = :id',
+		array(':id', $row['id'], PDO::PARAM_INT)
+	);
+	$comment = $_pdo->getRowsCount($query);
 	
-	if($row)
-	{	
-		$query = $_pdo->getData('SELECT `id` FROM [news] WHERE `author` = :id',
+	$data = array(
+		'id' => $row['id'],
+		'username' => $_user->getUsername($row['id']),
+		'hide_email' => $row['hide_email'],
+		'role' => $_user->getRoleName($row['role']),
+		'roles' => implode($_user->getUserRolesTitle($row['id']), ', '),
+		'avatar' => $_user->getAvatarAddr($row['id']),
+		'email' => $row['email'],
+		'joined' => HELP::showDate('shortdate', $row['joined']),
+		'joined_datetime' => date('c', $row['joined']),
+		'last_visit_time' => $row['lastvisit'] ? HELP::showDate('longdate', $row['lastvisit']) : NULL,
+		'is_online' => inArray($row['id'], $_user->getOnline(), 'id') ? 1 : 0,
+		'time' => time(),
+		'news' => $news,
+		'comment' => $comment,
+		'myid' => $_user->get('id'),
+		'pm_link' => $_route->path(array('controller' => 'messages', 'action' => 'new', $row['id']))
+	);
+	//var_dump(inArray($row['id'], $_user->getOnline(), 'id'));exit;
+	if ($_pdo->tableExists('chat_messages'))
+	{
+		$query = $_pdo->getData('SELECT `id` FROM [chat_messages] WHERE `user_id` = :id',
+			array(':id', $id, PDO::PARAM_INT)
+		);
+		$chat = $_pdo->getRowsCount($query);
+		
+		$_tpl->assign('chat', $chat);
+	}
+	
+	if (class_exists('Points', FALSE))
+	{
+		$points = array(
+			'points' => $_points->show($row['id']),
+			'rank' => $_points->showRank($row['id'])
+		);
+		
+		$_tpl->assign('points_stat', $points);
+	}
+	
+	if ($_pdo->tableExists('cautions'))
+	{
+		$query = $_pdo->getData('SELECT `id` FROM [cautions] WHERE `user_id` = :id',
 			array(':id', $row['id'], PDO::PARAM_INT)
 		);
-		$news = $_pdo->getRowsCount($query);
-		
-		$query = $_pdo->getData('SELECT `id` FROM [comments] WHERE `author` = :id',
-			array(':id', $row['id'], PDO::PARAM_INT)
+		$cautions = array(
+			'cautions' => $_pdo->getRowsCount($query),
+			'link' => $_route->path(array('controller' => 'cautions', 'action' => $row['id']))
 		);
-		$comment = $_pdo->getRowsCount($query);
 		
-		$data = array(
-			'id' => $row['id'],
-			'username' => $_user->getUsername($row['id']),
-			'hide_email' => $row['hide_email'],
-			'role' => $_user->getRoleName($row['role']),
-			'roles' => implode($_user->getUserRolesTitle($row['id']), ', '),
-			'avatar' => $_user->getAvatarAddr($row['id']),
-			'email' => $row['email'],
-			'joined' => HELP::showDate('shortdate', $row['joined']),
-			'joined_datetime' => date('c', $row['joined']),
-			'last_visit_time' => $row['lastvisit'] ? HELP::showDate('longdate', $row['lastvisit']) : NULL,
-			'is_online' => inArray($row['id'], $_user->getOnline(), 'id') ? 1 : 0,
-			'time' => time(),
-			'news' => $news,
-			'comment' => $comment,
-			'myid' => $_user->get('id'),
-			'pm_link' => $_route->path(array('controller' => 'messages', 'action' => 'new', $row['id']))
-		);
-		//var_dump(inArray($row['id'], $_user->getOnline(), 'id'));exit;
-		if ($_pdo->tableExists('chat_messages'))
-		{
-			$query = $_pdo->getData('SELECT `id` FROM [chat_messages] WHERE `user_id` = :id',
-				array(':id', $id, PDO::PARAM_INT)
-			);
-			$chat = $_pdo->getRowsCount($query);
-			
-			$_tpl->assign('chat', $chat);
-		}
-		
-		if (class_exists('Points', FALSE))
-		{
-			$points = array(
-				'points' => $_points->show($row['id']),
-				'rank' => $_points->showRank($row['id'])
-			);
-			
-			$_tpl->assign('points_stat', $points);
-		}
-		
-		if ($_pdo->tableExists('cautions'))
-		{
-			$query = $_pdo->getData('SELECT `id` FROM [cautions] WHERE `user_id` = :id',
-				array(':id', $id, PDO::PARAM_INT)
-			);
-			$cautions = array(
-				'cautions' => $_pdo->getRowsCount($query),
-				'link' => $_route->path(array('controller' => 'cautions', 'action' => $id))
-			);
-			
-			$_tpl->assign('cautions', $cautions);
-		}
+		$_tpl->assign('cautions', $cautions);
 	}
 	
 	$_tpl->assign('user', $data);
-	
 	
 	// START :: Point System module - admin action
 	if (class_exists('Points', FALSE) && $_user->hasPermission('module.point_system.admin'))
@@ -229,10 +212,10 @@ if ($row)
 			}
 			if ($_request->post('points_bonus')->show() > 0)
 			{
-				$_points->add($id, $_request->post('points_bonus')->show(), $comment);
+				$_points->add($row['id'], $_request->post('points_bonus')->show(), $comment);
 				$_system->clearCache('point_system');
-				$_log->insertSuccess('add_bonus', $_user->getByID($id, 'username').' - Dodanie punktów przez profil: '.$comment);
-				$_request->redirect(ADDR_SITE.'profile,'.$id.'.html');
+				$_log->insertSuccess('add_bonus', $_user->getByID($row['id'], 'username').' - Dodanie punktów przez profil: '.$comment);
+				$_request->redirect($_route->path(array('controller' => 'profile', 'action' => $row['id'])));
 			}
 		}
 		elseif($_request->post('minus_points')->show() && $_request->post('points_fine')->isNum())
@@ -248,10 +231,10 @@ if ($row)
 			}
 			if ($_request->post('points_fine')->show() > 0)
 			{
-				$_points->add($id, -$_request->post('points_fine')->show(), $comment);
+				$_points->add($row['id'], -$_request->post('points_fine')->show(), $comment);
 				$_system->clearCache('point_system');
-				$_log->insertSuccess('add_fine', $_user->getByID($id, 'username').' - Odjęcie punktów przez profil: '.$comment);
-				$_request->redirect(ADDR_SITE.'profile,'.$id.'.html');
+				$_log->insertSuccess('add_fine', $_user->getByID($row['id'], 'username').' - Odjęcie punktów przez profil: '.$comment);
+				$_request->redirect($_route->path(array('controller' => 'profile', 'action' => $row['id'])));
 			}
 		}
 		elseif($_request->post('delete_user_points')->show())

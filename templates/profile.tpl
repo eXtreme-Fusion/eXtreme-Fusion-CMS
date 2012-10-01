@@ -1,4 +1,4 @@
-{if $rows}
+{if $profile}
     {php} opentable(__('Member Profile')) {/php}
         <div id="profile" class="dark">
             <div class="profile_avatar">
