@@ -12,7 +12,7 @@ $_locale->moduleLoad('lang', 'forum');
 
 ! class_exists('Tree') || $_tree = New Tree($_pdo, 'forum_drzewko');
 
-$id = 1;
+$id = 7;
 
 //var_dump($_tree->get($id));
 
@@ -30,6 +30,9 @@ else
 
 // Pobieranie listy potomastwa
 //var_dump($_tree->getChildren($id));
+
+var_dump($_tree->getNav($id));
+
 $_tpl->assign('children', $_tree->getChildren('15'));
 
 $_tpl->setPageCompileDir(DIR_MODULES.'forum'.DS.'templates'.DS);

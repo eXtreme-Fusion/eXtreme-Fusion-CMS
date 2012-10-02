@@ -31,7 +31,8 @@ class Tree
 		{
 			$row = $this->_pdo->getRow('SELECT `left`, `right` FROM ['.$this->table.'] WHERE id = :id', array(':id', $id, PDO::PARAM_INT));
 
-			$data = $this->_pdo->getData('SELECT `name`, `right`, `left` FROM ['.$this->table.'] WHERE `left` BETWEEN '.$row['left'].' AND `right` ORDER BY `left`');
+			//$data = $this->_pdo->getData('SELECT `name`, `right`, `left` FROM ['.$this->table.'] WHERE `left` BETWEEN '.$row['left'].' AND `right` ORDER BY `left`');
+			$data = $this->_pdo->getData('SELECT `name`, `right`, `left` FROM ['.$this->table.'] WHERE `left` BETWEEN '.$row['left'].' AND '.$row['right'].' ORDER BY `left`');
 
 			$right = NULL; $z = NULL; $i = 0;
 			$elem = array();
@@ -257,6 +258,20 @@ class Tree
 			}
 			
 			return FALSE;
+		}
+
+		return FALSE;
+	}
+	
+	public function getNav($id)
+	{
+		if (isNum($id))
+		{
+			$row = $this->_pdo->getRow('SELECT `left`, `right` FROM ['.$this->table.'] WHERE `id` = '.$id);
+
+			$data = $this->_pdo->getData('SELECT `name` FROM ['.$this->table.'] WHERE `left` <= '.$row['left'].' AND `right` >= '.$row['right'].' ORDER BY `left`');
+
+			return $data;
 		}
 
 		return FALSE;
