@@ -67,7 +67,7 @@ class Tree
 		{
 			if ($data = $this->_pdo->getRow('SELECT `left`, `right` FROM ['.$this->table.'] WHERE id = :id', array('id', $id, PDO::PARAM_INT)))
 			{
-				$lock = $this->_pdo->query('LOCK TABLE ['.$this->table.'] WRITE');
+				$this->_pdo->query('LOCK TABLE ['.$this->table.'] WRITE');
 
 				if ($del_sub)
 				{
@@ -93,10 +93,9 @@ class Tree
 				}
 
 				$this->_pdo->exec('DELETE FROM ['.$this->table.'] WHERE `id` = '.$id);
-
+				$this->_pdo->query('UNLOCK TABLES');
+				
 				return TRUE;
-
-				$lock = $this->_pdo->query('UNLOCK TABLES');
 			}
 		}
 
@@ -108,7 +107,7 @@ class Tree
 	{
 		if ($data = $this->_pdo->getData('SELECT `left`, `right` FROM ['.$this->table.']'))
 		{
-			$lock = $this->_pdo->query('LOCK TABLE ['.$this->table.'] WRITE');
+			$this->_pdo->query('LOCK TABLE ['.$this->table.'] WRITE');
 
 			$order = intval($order);
 
@@ -135,23 +134,27 @@ class Tree
 
 			if (!isset($new_left))
 			{
-				return $this->_pdo->exec('INSERT INTO ['.$this->table.'] (`left`, `right`) VALUES ('.($max_right+1).', '.($max_right+2).')');
+				$query = $this->_pdo->exec('INSERT INTO ['.$this->table.'] (`left`, `right`) VALUES ('.($max_right+1).', '.($max_right+2).')');
+				$this->_pdo->query('UNLOCK TABLES');
+				
+				return $query;
 			}
 			else
 			{
 				$this->_pdo->exec('UPDATE ['.$this->table.'] SET `left` = `left`+2, `right` = `right`+2 WHERE `left` >= '.$new_left);
-				return $this->_pdo->exec('INSERT INTO ['.$this->table.'] (`left`, `right`) VALUES ('.($new_left).', '.($new_left+1).')');
+				$query = $this->_pdo->exec('INSERT INTO ['.$this->table.'] (`left`, `right`) VALUES ('.($new_left).', '.($new_left+1).')');
+				$this->_pdo->query('UNLOCK TABLES');
+				
+				return $query;
 			}
-
-			$lock = $this->_pdo->query('UNLOCK TABLES');
 		}
 		else
 		{
-			$lock = $this->_pdo->query('LOCK TABLE ['.$this->table.'] WRITE');
-
-			return $this->_pdo->exec('INSERT INTO ['.$this->table.'] (`left`, `right`) VALUES (1, 2)');
-
-			$lock = $this->_pdo->query('UNLOCK TABLES');
+			$this->_pdo->query('LOCK TABLE ['.$this->table.'] WRITE');
+			$query = $this->_pdo->exec('INSERT INTO ['.$this->table.'] (`left`, `right`) VALUES (1, 2)');
+			$this->_pdo->query('UNLOCK TABLES');
+			
+			return $query;
 		}
 	}
 
@@ -169,7 +172,7 @@ class Tree
 			// NOWY LIŚĆ:
 			if ($data = $this->_pdo->getRow('SELECT `left`, `right` FROM ['.$this->table.'] WHERE `id` = '.$id))
 			{
-				$lock = $this->_pdo->query('LOCK TABLE ['.$this->table.'] WRITE');
+				//$this->_pdo->query('LOCK TABLE ['.$this->table.'] WRITE');
 
 				if ($order && isNum($order))
 				{
@@ -210,9 +213,11 @@ class Tree
 				$this->_pdo->exec('UPDATE ['.$this->table.'] SET `left` = `left`+2, `right` = `right`+2 WHERE `left` >= '.$left);
 				$this->_pdo->exec('UPDATE ['.$this->table.'] SET `right` = `right`+2 WHERE `left` <= '.$data['left'].' AND `right` >= '.$data['right']);
 
-				return $this->_pdo->exec('INSERT INTO ['.$this->table.'] (`left`, `right`) VALUES ('.($left).', '.($left+1).')');
+				$query = $this->_pdo->exec('INSERT INTO ['.$this->table.'] (`left`, `right`) VALUES ('.($left).', '.($left+1).')');
 
-				$lock = $this->_pdo->query('UNLOCK TABLES');
+				//$this->_pdo->query('UNLOCK TABLES');
+				
+				return $query;
 			}
 		}
 

@@ -1,5 +1,12 @@
 {php} opentable(__('Strona główna forum')) {/php}
+<div class="tbl2 text-padding-h3">
+	<span class="bold">Jesteś tutaj: </span>
+	{section=Breadcrumb}
+		<span class="bold">{$Breadcrumb.name}</span> >>
+	{/section}
+</div>
 	<div class="tbl2 formated_text">
+		Elementy w tym zbiorze:
 		{section=drzewko}
 			{if $drzewko.new}
 				<ul>
@@ -9,14 +16,5 @@
 			<li>{$drzewko.name}</li>
 		{/section}
 		<div class="info">{i18n('Tu będzie znajdować się forum.')}</div>
-		<div class="error">Czy element ma potomstwo? - <strong>{$tree}</strong></div>
-		{section=children}
-			{if $children.new}
-				<ul>
-			{elseif $children.end}
-				</ul>
-			{/if}
-			<li>{$children.name}</li>
-		{/section}
 	</div>	
 {php} closetable() {/php}
