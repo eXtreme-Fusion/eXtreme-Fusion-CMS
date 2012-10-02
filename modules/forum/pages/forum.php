@@ -12,7 +12,7 @@ $_locale->moduleLoad('lang', 'forum');
 
 ! class_exists('Tree') || $_tree = New Tree($_pdo, 'forum_drzewko');
 
-$id = $_route->getByID(1);
+$id = ($_route->getByID(1) ? $_route->getByID(1) : 1);
 
 $_tpl->assign('drzewko', $_tree->get($id));
 
