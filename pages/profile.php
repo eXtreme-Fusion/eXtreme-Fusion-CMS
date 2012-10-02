@@ -159,7 +159,7 @@ if ($row)
 	if ($_pdo->tableExists('chat_messages'))
 	{
 		$query = $_pdo->getData('SELECT `id` FROM [chat_messages] WHERE `user_id` = :id',
-			array(':id', $id, PDO::PARAM_INT)
+			array(':id', $row['id'], PDO::PARAM_INT)
 		);
 		$chat = $_pdo->getRowsCount($query);
 		
