@@ -33,11 +33,11 @@ try
 				'url_ext' => $_request->post('url_ext')->strip(),
 				'tpl_ext' => $_request->post('tpl_ext')->strip(),
 				'logic_ext' => $_request->post('logic_ext')->strip(),
-				'ext_allowed' => $_result->post('ext_allowed')->isNum(TRUE)
+				'ext_allowed' => $_request->post('ext_allowed')->isNum(TRUE)
 			))
 		));
 		
-		// Petmanentne usuwanie cache z wyjatkiem pliku dodanego do wyj¹tku.
+		// Petmanentne usuwanie cache z wyjatkiem pliku dodanego do wyjï¿½tku.
 		$_files->setOmitExt(array('.htaccess'));
 		$_files->rmDirRecursive(DIR_CACHE, TRUE);
 		
