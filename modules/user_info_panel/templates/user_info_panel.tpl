@@ -2,7 +2,7 @@
 	{php} openside(__('User Panel')) {/php}
         <div id="user_info_panel">
 					<div class="top">
-						<strong>Witaj {$user.username}!</strong>
+						<strong>Witaj {$username}!</strong>
 						<a href="{$url_messages}"{if $messages} class="message"{/if}></a>
 					</div>
 					<div class="mid">

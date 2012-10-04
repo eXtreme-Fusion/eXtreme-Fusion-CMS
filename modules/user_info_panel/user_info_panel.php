@@ -19,6 +19,7 @@ if ($_user->isLoggedIn())
 	}
 	
 	$_panel->assign('is_logged_in', TRUE);
+	$_panel->assign('username', $_user->getUsername());
 
 	$count = $_pdo->getMatchRowsCount('SELECT `id` FROM [messages] WHERE `to` = :id AND `read` = 0',
 		array(
