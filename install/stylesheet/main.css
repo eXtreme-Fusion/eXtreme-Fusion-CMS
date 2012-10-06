@@ -4,21 +4,50 @@ a img {border:none;}
 body {background:url(images/ui/iframe-shadow-top.png) repeat-x 0 81px;color:#333;font-size:12px;font-family:Tahoma,Geneva,Kalimati,sans-serif;margin:0;padding:0;}
 /* * table tr td, table tr td {margin:0;padding:0;border-spacing:0;width:100%} */
 .clear {clear:both;overflow:hidden;width:0;height:0;}
-
+.tab-cont{display:none}
 #leaders{
 	margin-right:10px;
 	padding-bottom:29px;
 }
+.tab-click{margin:10px 0; text-align:center;font-weight:bold}
 .left{float:left;}
 .right{float:right}
-
+.red{color:red}
+p {padding:10px 0;}
 #team .bold {
 	padding-top:10px;
 }
+#team p {
+	margin: 5px 0;
+	padding: 0;
+}
+.installFormLabel{
+	margin-bottom:5px;
+	font-family: "Myriad Pro",Verdana,sans-serif;
+    font-size: 12px;
+    text-align: right;
+}
 
-#ef-crew {display:none;margin-top:10px}
-#team-tab {list-style:disc;cursor}
-ul > #team-tab{margin-left:15px}
+.formMessage {
+	overflow:hidden;
+	padding:5px 10px;
+	margin:10px 0;
+}
+.formMessage  input{
+
+}
+
+.formMessage label {
+
+}
+.formWarning {
+	border-radius:8px;
+	background-color: yellow;
+}
+#CustomStep3 {display:none}
+#tab-crew-list {display:none;margin-top:10px}
+#crew-list {list-style:disc;cursor}
+ul > #crew-list{margin-left:15px}
 h1	{
 	color: #4b4b4b;
 	font-family: Tahoma;
@@ -110,6 +139,11 @@ div.valid a {color:#6da827;}
 	font-size:16px;
 	color:#121212;
 	background: url(images/step.png) no-repeat 0 0;
+}
+
+#MainBox {
+	float:left;
+	width:720px;
 }
 
 .graybar { width:226px; background:#dddddd;height:3px;float:left; }

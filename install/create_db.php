@@ -1,13 +1,14 @@
 <?php
-/*---------------------------------------------------------------+
-| eXtreme-Fusion - Content Management System - version 5         |
-+----------------------------------------------------------------+
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 |
-| http://extreme-fusion.org/                               		 |
-+----------------------------------------------------------------+
-| This product is licensed under the BSD License.				 |
-| http://extreme-fusion.org/ef5/license/						 |
-+---------------------------------------------------------------*/
+/***********************************************************
+| eXtreme-Fusion 5.0 Beta 5
+| Content Management System       
+|
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
+| http://extreme-fusion.org/                               		 
+|
+| This product is licensed under the BSD License.				 
+| http://extreme-fusion.org/ef5/license/						 
+***********************************************************/
 $result = dbquery("DROP TABLE IF EXISTS ".$db_prefix."pages");
 $result = dbquery("CREATE TABLE ".$db_prefix."pages (
 	`id` SMALLINT UNSIGNED AUTO_INCREMENT,
@@ -192,6 +193,19 @@ $result = dbquery("CREATE TABLE ".$db_prefix."messages (
 ) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";");
 if ( ! $result) $fail = TRUE;
 
+$result = dbquery("DROP TABLE IF EXISTS ".$db_prefix."navigation");
+$result = dbquery("CREATE TABLE ".$db_prefix."navigation (
+	`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(100) NOT NULL DEFAULT '',
+	`url` VARCHAR(200) NOT NULL DEFAULT '',
+	`visibility` VARCHAR(255) NOT NULL DEFAULT '',
+	`position` TINYINT(1) UNSIGNED NOT NULL DEFAULT '1',
+	`window` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
+	`order` SMALLINT(2) UNSIGNED NOT NULL DEFAULT '0',
+	PRIMARY KEY (`id`)
+) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";");
+if ( ! $result) $fail = TRUE;
+
 $result = dbquery("DROP TABLE IF EXISTS ".$db_prefix."news");
 $result = dbquery("CREATE TABLE ".$db_prefix."news (
 	`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -331,19 +345,6 @@ $result = dbquery("CREATE TABLE ".$db_prefix."settings_inf (
 ) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate."");
 if ( ! $result) $fail = TRUE;
 
-$result = dbquery("DROP TABLE IF EXISTS ".$db_prefix."navigation");
-$result = dbquery("CREATE TABLE ".$db_prefix."navigation (
-	`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`name` VARCHAR(100) NOT NULL DEFAULT '',
-	`url` VARCHAR(200) NOT NULL DEFAULT '',
-	`visibility` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
-	`position` TINYINT(1) UNSIGNED NOT NULL DEFAULT '1',
-	`window` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
-	`order` SMALLINT(2) UNSIGNED NOT NULL DEFAULT '0',
-	PRIMARY KEY (`id`)
-) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";");
-if ( ! $result) $fail = TRUE;
-
 $result = dbquery("DROP TABLE IF EXISTS ".$db_prefix."smileys");
 $result = dbquery("CREATE TABLE ".$db_prefix."smileys (
 	`id` MEDIUMINT(8) UNSIGNED NOT NULL auto_increment,
@@ -445,6 +446,7 @@ $result = dbquery("CREATE TABLE ".$db_prefix."users (
 	`roles` TEXT NOT NULL DEFAULT '',
 	`role` INT(11) NOT NULL DEFAULT '2',
 	`lastupdate` INT(10) NOT NULL DEFAULT '0',
+	`lang` VARCHAR(20) NOT NULL,
 	PRIMARY KEY (`id`),
 	KEY name (username),
 	KEY joined (joined),

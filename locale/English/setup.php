@@ -3,9 +3,7 @@
 return array(
 	'Charset' => 'UTF-8',
 	'xml_lang' => 'en',
-	'Setup complete' => '<div class="valid">Completed installation - eXtreme-fusion v.5.0 - Ninja Edition!</div><br />
-	<div class="status"><strong>Note:</strong> For safety, when you press Finish the installation files will be deleted.</div><br />
-	<div class="info">Thank you for choosing eXtreme-fusion v.5.0 - Ninja Edition!</div>',
+	'Setup complete' => '<div class="valid">Completed installation. Thank you for choosing eXtreme-fusion v.5.0 - Ninja Edition!</div>',
 	// Permissions
 	'Perm: admin login' => 'U¿ytkownik mo¿e zalogowaæ siê do panelu administracyjnego.',
 	'Perm: user login' => 'U¿ytkownik mo¿e zalogowaæ siê do serwisu.',
@@ -18,4 +16,9 @@ return array(
 	'Group: user' => 'Grupa ta posiada podstawowe zezwolenia m.in. Mo¿liwoœæ logowania siê.',
 	'Group: guest' => 'Grupa o ograniczonych prawach korzystania ze strony',
 	'Rewrite info' => 'Your server is ready to work with rewrite module, but system does not have permission to change name of file. If you want to have SEO URLs, rename the file from "rewrite" to ".htaccess". Otherwise, just ignore this message.',
-);
+	// Example news
+	'Example news title' => 'Przyk³adowa treœæ',
+	'Example news content' => 'Witaj na swojej stronie.',
+	'Example news url' => 'przkladowa-tresc',
+	'Example news description' => 'Tresc podstawowa',
+	);

@@ -1,6 +1,6 @@
 <div class="tbl2 text-padding-h3">
 	<span class="bold">Jesteś tutaj: </span>
-	<a href="{$FILE_SELF}">{$Breadcrumb.index.title}</a>
+	<a href="{$ADDR_SITE}{$Breadcrumb.index.id}">{$Breadcrumb.index.title}</a>
 	{if $Breadcrumb.cat.title && $Breadcrumb.cat.id}
 	 &raquo; <a href="{$Breadcrumb.cat.link}">{$Breadcrumb.cat.title}</a>
 	{/if}
@@ -16,14 +16,15 @@
 	{if $album}
 			<div class="floatfix container_10 center">
 			{section=album}
-				<a href="{$album.album_link}" class="{$album.color}" style="float:left; height:20%; width:20%; display:block; padding:5px; margin:5px; text-decoration:none;">
-					<strong>{$album.title}</strong>
-					<p style="margin:0px;padding:0px;">{$album.description}</p>
-					<span>Zdjęć: {$album.photos}</span><br />
-					<span>Komentarzy: {$album.comments}</span><br />
-					<span>Dostęp: {$album.role_name}</span><br />
-					<em style="font-style:normal;">{i18n('Created:')} {date("d.m.Y", $album.datestamp)}</em>
-				</a>
+				<a href="{$album.album_link}" title="
+					Tytuł: {$album.title}<br />
+					Opis: {$album.description}<br />
+					Zdjęć: {$album.photos}<br />
+					Komentarzy: {$album.comments}<br />
+					Dostęp: {$album.role_name}<br />
+					{i18n('Created:')} {date("d.m.Y", $album.datestamp)}"
+				class="tip {$album.color}" style="float:left; height:20%; width:20%; display:block; padding:5px; margin:5px; text-decoration:none;"><img src="{$ADDR_SITE}modules/gallery/templates/images/upload/albums/thumbnail/_thumbnail_{$album.file_name}" alt="{$album.title}" /></a>
+			
 			{/section}
 			</div>	
 			{$page_nav}
@@ -98,16 +99,15 @@
 	{if $cat}
 			<div class="floatfix container_10 center">
 			{section=cat}
-				<a href="{$cat.cat_link}" class="{$cat.color}" style="float:left; height:20%; width:20%; display:block; padding:5px; margin:5px; text-decoration:none;">
-					<strong>{$cat.title}</strong>
-					<p style="margin:0px;padding:0px;">{$cat.description}</p>
-					<span>Albumów: {$cat.albums}</span><br />
-					<span>Zdjęć: {$cat.photos}</span><br />
-					<span>Komentarzy: {$cat.comments}</span><br />
-					<span>Dostęp: {$cat.role_name}</span><br />
-					<em style="font-style:normal;">{i18n('Created:')} {date("d.m.Y", $cat.datestamp)}</em>
-				</a>
-				
+				<a href="{$cat.cat_link}" title="
+					Tytuł: {$cat.title}<br />
+					Opis: {$cat.description}<br />
+					Albumów: {$cat.albums}<br />
+					Zdjęć: {$cat.photos}<br />
+					Komentarzy: {$cat.comments}<br />
+					Dostęp: {$cat.role_name}<br />
+					{i18n('Created:')} {date("d.m.Y", $cat.datestamp)}"
+				class="tip {$cat.color}" style="float:left; height:20%; width:20%; display:block; padding:5px; margin:5px; text-decoration:none;"><img src="{$ADDR_SITE}modules/gallery/templates/images/upload/cats/thumbnail/_thumbnail_{$cat.file_name}" alt="{$cat.title}" /></a>
 			{/section}
 			</div>	
 			{$page_nav}

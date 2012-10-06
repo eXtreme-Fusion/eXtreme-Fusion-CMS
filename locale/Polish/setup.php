@@ -27,6 +27,7 @@ return array(
 	'Perm: admin security' => 'Polityka bezpieczeństwa',
 	'Perm: admin settings' => 'Ustawienia główne systemu.',
 	'Perm: admin settings_banners' => 'Zarządzanie banerami',
+	'Perm: admin settings_cache' => 'Pamięć podręczna',
 	'Perm: admin settings_time' => 'Zarządzanie datą i godziną.',
 	'Perm: admin settings_registration' => 'Dostęp do ustawień rejestracji.',
 	'Perm: admin settings_misc' => 'Dostęp do ustawień różnych.',
@@ -100,9 +101,7 @@ return array(
 	'Login password fields can not be left empty' => 'Pole hasło użytkownika nie może być puste!',
 	'Your email address does not appear to be valid.' => 'Podano nieprawidłowy adres e-mail.',
 	'Email field can not be left empty.' => 'Pole adres e-mail nie może być puste!',
-	'Setup complete' => '<div class="valid">Zakończono instalację systemu eXtreme-Fusion 5.0 - Ninja Edition!</div><br />
-	<div class="status"><strong>Informacja:</strong> Dla bezpieczeństwa, po naciśnięciu Zakończ pliki instalacyjne zostaną usunięte.</div><br />
-	<div class="info">Dziękujemy za wybranie eXtreme-fusion v.5.0 - Ninja Edition!</div>',
+	'Setup complete' => '<div class="valid">Zakończono instalację. Dziękujemy za wybranie eXtreme-fusion v.5.0 - Ninja Edition!</div>',
 	'Your user settings are not correct:' => 'Podane dane użytkownika zawierają następujące błędy:',
 	//Welcome Message
 	'Welcome to your site' => 'Witaj na Swojej nowej stronie.',
@@ -145,4 +144,9 @@ return array(
 	'Living place' => 'Miejscowość',
 	'Signature' => 'Podpis',
 	'Rewrite info' => 'Twój serwer umożliwia korzystanie z modułu mod_rewrite, lecz nie ma uprawnień do automatycznej zmiany nazwy pliku. Jeśli chcesz z niego skorzystać do tworzenia linków przyjaznych dla wyszukiwarek, zmień nazwę pliku "rewrite" na ".htaccess". W przeciwnym przypadku, po prostu zignoruj ten komunikat.',
+	// Example news
+	'Example news title' => 'Przykładowa treść',
+	'Example news content' => 'Witaj na swojej stronie.',
+	'Example news url' => 'przkladowa-tresc',
+	'Example news description' => 'Tresc podstawowa',
 );

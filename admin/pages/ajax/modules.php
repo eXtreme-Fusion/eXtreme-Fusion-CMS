@@ -1,13 +1,14 @@
 <?php
-/*---------------------------------------------------------------+
-| eXtreme-Fusion - Content Management System - version 5         |
-+----------------------------------------------------------------+
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 |
-| http://extreme-fusion.org/                               		 |
-+----------------------------------------------------------------+
-| This product is licensed under the BSD License.				 |
-| http://extreme-fusion.org/ef5/license/						 |
-+---------------------------------------------------------------*/
+/***********************************************************
+| eXtreme-Fusion 5.0 Beta 5
+| Content Management System       
+|
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
+| http://extreme-fusion.org/                               		 
+|
+| This product is licensed under the BSD License.				 
+| http://extreme-fusion.org/ef5/license/						 
+***********************************************************/
 try
 {
 	require_once '../../../config.php';
@@ -33,8 +34,9 @@ try
 	{
 		/**
 		 * Pobieranie prywatnych wiadomości - home.php
+		 * NIE USUWAĆ - informacje w pliku modules.js
 		 */
-		if ($_request->post('Action')->show() === 'GetMessages' && $_request->post('UserID')->isNum())
+		/*if ($_request->post('Action')->show() === 'GetMessages' && $_request->post('UserID')->isNum())
 		{
 			$count = $_pdo->getMatchRowsCount('SELECT `id` FROM [messages] WHERE `to` = :id AND `read` = 0 AND `folder` = 0',
 				array(
@@ -43,7 +45,7 @@ try
 			);
 
 			_e($count);
-		}
+		}*/
 
 		/**
 		 * Aktualizacja pozycji panelu - panels.php

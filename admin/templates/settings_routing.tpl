@@ -2,6 +2,7 @@
 
 <form action="{$URL_REQUEST}" method="post" id="This">
 	<h3>{i18n('Routing')}</h3>
+	
 	<div class="tbl1">
 		<div class="grid_6 formLabel"><label for="ParamSeparator">{i18n('Separator of parameters:')}</label><small>{i18n('The default is `-`.')}</small></div>
 		<div class="grid_4 formField"><input type="text" name="param_sep" value="{$param_sep}" id="ParamSeparator" class="num_10" maxlength="10" /></div>
@@ -21,6 +22,11 @@
 	<div class="tbl1">
 		<div class="grid_6 formLabel"><label for="TplExtension">{i18n('Extensions of templates:')}</label><small>{i18n('The default is `.tpl`.')}</small></div>
 		<div class="grid_4 formField"><input type="text" name="tpl_ext" value="{$tpl_ext}" id="TplExtension" class="num_10" maxlength="10" /></div>
+	</div>
+	<div class="tbl2">
+		<div class="grid_6 formLabel">{i18n('Dozwolone rozszerzenie plików:')}</div>
+		<div class="grid_1 formField"><label><input type="radio" name="ext_allowed" value="1"{if $ext_allowed == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
+		<div class="grid_5 formField"><label><input type="radio" name="ext_allowed" value="0"{if $ext_allowed == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
 	</div>
 	
 	<div class="tbl AdminButtons">

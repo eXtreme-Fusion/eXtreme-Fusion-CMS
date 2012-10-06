@@ -61,15 +61,19 @@ try
 	elseif ($_request->post('save')->show() && $_request->post('email')->isEmail() && $_request->post('title')->show())
 	{
 		$title = $_request->post('title')->filters('trim', 'strip');
-		$email = $_request->post('email')->show();
+		$email = $_request->post('email')->isEmail();
+		$description = $_request->post('description')->strip();
+		$value = $_request->post('value')->strip();
 		
 		if ($_request->get('action')->show() === 'edit' && $_request->get('id')->isNum())
 		{
-			$count = $_pdo->exec('UPDATE [contact] SET `title` = :title, `email` = :email WHERE `id` = :id',
+			$count = $_pdo->exec('UPDATE [contact] SET `title` = :title, `email` = :email, `description` = :description, `value` = :value WHERE `id` = :id',
 				array(
 					array(':id', $_request->get('id')->show(), PDO::PARAM_INT),
 					array(':title', $title, PDO::PARAM_STR),
-					array(':email', $email, PDO::PARAM_STR)
+					array(':email', $email, PDO::PARAM_STR),
+					array(':description', $description, PDO::PARAM_STR),
+					array(':value', $value, PDO::PARAM_STR)
 				)
 			);
 
@@ -82,10 +86,12 @@ try
 		}
 		else
 		{
-			$count = $_pdo->exec('INSERT INTO [contact] (`title`, `email`) VALUES (:title, :email)',
+			$count = $_pdo->exec('INSERT INTO [contact] (`title`, `email`, `description`, `value`) VALUES (:title, :email, :description, :value)',
 				array(
 					array(':title', $title, PDO::PARAM_STR),
-					array(':email', $email, PDO::PARAM_STR)
+					array(':email', $email, PDO::PARAM_STR),
+					array(':description', $description, PDO::PARAM_STR),
+					array(':value', $value, PDO::PARAM_STR)
 				)
 			);
 				
@@ -103,15 +109,17 @@ try
 	}
 	elseif ($_request->get('action')->show() === 'edit' && $_request->get('id')->isNum())
 	{
-		$data = $_pdo->getRow('SELECT `title`, `email` FROM [contact] WHERE `id` = :id',
-			array(':id', $_request->get('id')->isNum(), PDO::PARAM_INT)
+		$data = $_pdo->getRow('SELECT * FROM [contact] WHERE `id` = :id',
+			array(':id', $_request->get('id')->show(), PDO::PARAM_INT)
 		);
 		
 		if($data)
 		{
 			$contact = array(
 				'title' => $data['title'],
-				'email' => $data['email']
+				'email' => $data['email'],
+				'description' => $data['description'],
+				'value' => $data['value']
 			);
 		}
 		else

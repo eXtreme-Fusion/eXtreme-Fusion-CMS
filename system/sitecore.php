@@ -1,32 +1,32 @@
 <?php preg_match("/sitecore.php/i", $_SERVER['PHP_SELF']) == FALSE || exit;
-/*---------------------------------------------------------------+
-| eXtreme-Fusion - Content Management System - version 5         |
-+----------------------------------------------------------------+
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 |
-| http://extreme-fusion.org/                               		 |
-+----------------------------------------------------------------+
-| This product is licensed under the BSD License.				 |
-| http://extreme-fusion.org/ef5/license/						 |
-+---------------------------------------------------------------*/
+/***********************************************************
+| eXtreme-Fusion 5.0 Beta 5
+| Content Management System
+|
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
+|
+| This product is licensed under the BSD License.
+| http://extreme-fusion.org/ef5/license/
+***********************************************************/
+
 try
 {
 	function optUrl(optClass &$_tpl)
 	{
 		$value = func_get_args();
 		unset($value[0]);
-		
+
 		if ($value)
-		{	
+		{
 			$ret = array(); $i = 0; $id = NULL;
 			foreach($value as $array)
 			{
 				$data = explode('=>', $array);
-				
-				//return count($data);
+
 				if (count($data) == 2)
 				{
 					$id = trim($data[0]);
-					//$val = trim($data[1]);
 				}
 				else
 				{
@@ -43,17 +43,13 @@ try
 					$id = FALSE;
 				}
 			}
-			
-			
+
+
 			if ($ret)
 			{
 				if (method_exists($_tpl, 'route'))
 				{
 					return $_tpl->route()->path($ret);
-				}
-				else
-				{
-					return HELP::path($ret);
 				}
 			}
 		}
@@ -63,70 +59,70 @@ try
 			{
 				return $_tpl->route()->path($value);
 			}
-			else
-			{
-				return HELP::path($value);
-			}
 		}
-		
+
 		return '';
 	}
-	
+
 	error_reporting(E_ALL | E_NOTICE);
 
-	if ( ! defined('__DIR__')) define('__DIR__', dirname(__FILE__));
+	define('DIR_BASE', realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..').DIRECTORY_SEPARATOR);
 
-	if ( ! file_exists(__DIR__.'/../config.php'))
+	if ( ! file_exists(DIR_BASE.'config.php'))
 	{
-		if (file_exists(__DIR__.'/../install/'.DIRECTORY_SEPARATOR))
+		if (file_exists(DIR_BASE.'install'.DIRECTORY_SEPARATOR))
 		{
 			header('Location: install/');
+			exit;
 		}
 		else
 		{
-			die('Config file does not exists. Please upload config.php again.');
+			die('Installer not found on server. Please upload install directory again.');
 		}
 	}
 	else
 	{
-		require_once __DIR__.'/../config.php';
+		require DIR_BASE.'config.php';
 		require DIR_SITE.'bootstrap.php';
 	}
-	
-	require_once DIR_CLASS.'exception.php';
-	
-	if( ! extension_loaded('pdo')) 
+
+	require_once DIR_CLASS.'Exception.php';
+
+	if( ! extension_loaded('pdo'))
 	{
 		throw new systemException('PDO "pdo" extension is required! Please turn it on in your php.ini.');
 	}
-	
-	if( ! extension_loaded('pdo_mysql')) 
+
+	if( ! extension_loaded('pdo_mysql'))
 	{
 		throw new systemException('PDO "pdo_mysql" extension is required! Please turn it on in your php.ini');
 	}
-	
+
 	require_once DIR_SYSTEM.'helpers/main.php';
 	require_once OPT_DIR.'opt.class.php';
-	require_once DIR_CLASS.'parser.php';
-	require_once DIR_CLASS.'robots.php';
+	require_once DIR_CLASS.'Parser.php';
 
     ob_start();
 
-    $_system = new System;
+    $ec = new Container(array('pdo.config' => $_dbconfig));
+
 
 	# PHP Data Object
-    $_pdo = new PDO_EXT('mysql:host='.$_dbconfig['host'].';dbname='.$_dbconfig['database'].';port='.$_dbconfig['port'], $_dbconfig['user'], $_dbconfig['password'], array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES '.$_dbconfig['charset']));
-    $_pdo->config($_dbconfig['prefix']);
-	unset($_dbconfig);
+    $_pdo = $ec->pdo;
+
+	$_system = $ec->system;
+
+    //1. way: $_sett = $ec->register('sett')->setArguments(array($_system, $_pdo))->get();
+	//2. way:
+	$_sett = $ec->sett;
+
 	require_once DIR_SYSTEM.'table_list.php';
-    $_sett = new Sett($_system, $_pdo);
-    $_user = new User($_sett, $_pdo);
+
+	//1. way:
+    $_user = $ec->register('user')->setArguments(array(new Reference('sett'), new Reference('pdo')))->get();
+	
     $_locale = new Locales($_sett->get('locale'), DIR_LOCALE);
 
-	// $_robots = New detectRobots();
-
-	// Fetch the Site Settings from the database and store them in the $settings variable
-    $settings = $_sett->get();
 
 	define('URL_REQUEST', isset($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'] != '' ? HELP::cleanurl($_SERVER['REQUEST_URI']) : $_SERVER['SCRIPT_NAME']);
 	define('URL_QUERY', isset($_SERVER['QUERY_STRING']) ? HELP::cleanurl($_SERVER['QUERY_STRING']) : '');
@@ -136,10 +132,12 @@ try
 
 	# Files class
 	$_files = new Files;
-	
+
+	$_url = new Url($_sett->getUns('routing', 'url_ext'), $_sett->getUns('routing', 'main_sep'), $_sett->getUns('routing', 'param_sep'), $_system->rewriteAvailable(), $_system->pathInfoExists());
+
 	# Helper class
-	HELP::init($_pdo, $_sett, $_user);
-	
+	HELP::init($_pdo, $_sett, $_user, $_url);
+
 	if ($_request->post('login')->show() && $_request->post('username')->show() && $_request->post('password')->show())
 	{
 		// Sprawdzanie danych logowania
@@ -154,7 +152,7 @@ try
 	// Załączenie wymaganych plików
 	require_once DIR_SYSTEM.'table_list.php';
 
-    if ( ! count($settings))
+    if ( ! $_sett->get())
     {
 		if (file_exists('../install'.DIRECTORY_SEPARATOR))
 		{
@@ -187,7 +185,7 @@ try
 
 	if ($_user->iUSER())
 	{
-		if ($_user->get('theme') !== 'Default' && $_sett->get('userthemes') === 1)
+		if ($_user->get('theme') !== 'Default' && $_sett->get('userthemes') === '1')
 		{
 			if ( ! HELP::theme_exists($_user->get('theme')))
 			{
@@ -215,15 +213,12 @@ try
 
 	// Aktualizacja czasu ostatniej wizyty
 	$_user->updateActivity();
-
+	
     define('iGUEST', $_user->iGUEST());
     define('iUSER', $_user->iUSER());
     define('iADMIN', $_user->iADMIN());
 
-	$_head  = new Header;
-
-	# Comments
-	$_comment = new Comment(new Basic, $_pdo, $_user, $_sett, $_head);
+	$_head  = $ec->header;
 
     // Zadania Cron
     // Cron-Jobs

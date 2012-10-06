@@ -3,19 +3,19 @@
 
 <form id="This" action="{$URL_REQUEST}" method="post">
 	<div class="tbl1">
-		<div class="formLabel sep_1 grid_3"><label for="smiley_code">{i18n('Smiley Code:')}</label></div>
-		<div class="formField grid_7"><textarea name="smiley_code" id="smiley_code" rows="1">{$smiley_code}</textarea></div>
+		<div class="formLabel sep_1 grid_3"><label for="code">{i18n('Smiley Code:')}</label></div>
+		<div class="formField grid_7"><input type="text" name="code" value="{$code}" id="code" class="num6"></div>
 	</div>
 	<div class="tbl2">
-		<div class="formLabel sep_1 grid_3"><label for="smiley_text">{i18n('Description:')}</label></div>
-		<div class="formField grid_7"><textarea name="smiley_text" id="smiley_text" rows="1">{$smiley_text}</textarea></div>
+		<div class="formLabel sep_1 grid_3"><label for="text">{i18n('Description:')}</label></div>
+		<div class="formField grid_7"><input type="text" name="text" value="{$text}" id="text" class="num20"></div>
 	</div>
 	<div class="tbl1">
-		<div class="formLabel sep_1 grid_3"><label for="smiley_image">{i18n('Smiley image:')}</label></div>
+		<div class="formLabel sep_1 grid_3"><label for="image">{i18n('Smiley image:')}</label></div>
 		<div class="formField grid_7">
-			<select name="smiley_image" id="smiley_image">
-				{section=smiley_image}
-					<option value="{$smiley_image.value}"{if $smiley_image.selected} selected="selected"{/if}>{$smiley_image.display}</option>
+			<select name="image" id="image">
+				{section=image}
+					<option value="{$image.value}"{if $image.selected} selected="selected"{/if}>{$image.display}</option>
 				{/section}
 			</select>
 		</div>

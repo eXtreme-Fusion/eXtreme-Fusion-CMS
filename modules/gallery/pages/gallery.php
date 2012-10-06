@@ -38,13 +38,13 @@ if($_route->getByID(1) === 'cat')
 
 		if ($rows)
 		{
-			$rowstart = $data->arr('current')->isNum(TRUE, FALSE) ? PAGING::getRowStart($data->arr('current')->isNum(TRUE, FALSE), intval($_gallery_sett->get('albums_per_page'))) : 0;
+			$rowstart = $data->arr('current')->isNum(TRUE, FALSE) ? Paging::getRowStart($data->arr('current')->isNum(TRUE, FALSE), intval($_gallery_sett->get('albums_per_page'))) : 0;
 
 			$cache = $_system->cache('gallery,cat-id-'.$_route->getByID(2).','.$_user->getCacheName().',page-'.$data->arr('current')->isNum(TRUE, FALSE), NULL, 'gallery', $_gallery_sett->get('cache_expire'));
 			if ($cache === NULL)
 			{
 				$query = $_pdo->getData('
-					SELECT a.`id`, a.`title`, a.`description`, a.`datestamp`, a.`access`
+					SELECT a.`id`, a.`title`, a.`description`, a.`file_name`, a.`datestamp`, a.`access`
 					FROM [gallery_albums] a
 					LEFT JOIN [gallery_cats] c
 					ON (a.`cat` = c.`id`)
@@ -81,6 +81,7 @@ if($_route->getByID(1) === 'cat')
 							'id' => $row['id'],
 							'title' => $row['title'],
 							'description' => $row['description'],
+							'file_name' => $row['file_name'],
 							'datestamp' => $row['datestamp'],
 							'photos' => $row['photos'],
 							'album_link' => $_route->path(array('controller' => 'gallery', 'action' => 'album', $row['id'], $row['title'])),
@@ -94,55 +95,55 @@ if($_route->getByID(1) === 'cat')
 				$_system->cache('gallery,cat-id-'.$_route->getByID(2).','.$_user->getCacheName(), $cache, 'gallery');
 			}
 
-			$seo_var = $_system->cache('gallery,seo-var-cat-id-'.$_route->getByID(2).','.$_user->getCacheName().',page-'.$data->arr('current')->isNum(TRUE, FALSE), NULL, 'gallery', $_gallery_sett->get('cache_expire'));
-			if ($seo_var === NULL)
-			{
-				$row = $_pdo->getRow('
-					SELECT `title` as cat, `description`, `id` as cat_id
-					FROM [gallery_cats]
-					WHERE id = :id',
-					array(':id', $_route->getByID(2), PDO::PARAM_INT)
-				);
-				
-				if ($row)
-				{
-					$keyword = array();
-					if ($keys = $_tag->getTagFromSupplementAndSupplementID('GALLERY_CATS', $_route->getByID(2))){
-						foreach($keys as $var){
-							$keyword[] = $var['value'];
-						}
-					}
-					$keyword = implode(', ', $keyword);
-					
-					$seo_var = array(
-						'Theme' => array(
-							'Title' => $_gallery_sett->get('title').' &raquo; '.$row['cat'],
-							'Keys' => $keyword,
-							'Desc' => $row['description']
-						),
-						'Breadcrumb' => array(
-							'index' => array(
-								'id' => FILE_SELF,
-								'title' => $_gallery_sett->get('title')
-							),
-							'cat' => array(
-								'id' => $row['cat_id'],
-								'link' => $_route->path(array('controller' => 'gallery', 'cat' => $row['cat_id'], $row['cat'])),
-								'title' => $row['cat']
-							),
-							'album' => FALSE,
-							'photo' => FALSE
-						)
-					);
-				}
-				
-				$_system->cache('gallery,seo-var-cat-id-'.$_route->getByID(2).','.$_user->getCacheName(), $seo_var, 'gallery');
-			}
-			
 			$_pagenav = new PageNav(new Paging($rows, $data->arr('current')->isNum(TRUE, FALSE), intval($_gallery_sett->get('albums_per_page'))), $_tpl, 5, array($_route->getFileName(), 'cat,'.$_route->getByID(2).','.$_route->getByID(3).',page'));
 			
 			$_tpl->assign('album', $cache);
 		}
+	}
+	
+	$seo_var = $_system->cache('gallery,seo-var-cat-id-'.$_route->getByID(2).','.$_user->getCacheName().',page-'.$data->arr('current')->isNum(TRUE, FALSE), NULL, 'gallery', $_gallery_sett->get('cache_expire'));
+	if ($seo_var === NULL)
+	{
+		$row = $_pdo->getRow('
+			SELECT `title` as cat, `description`, `id` as cat_id
+			FROM [gallery_cats]
+			WHERE id = :id',
+			array(':id', $_route->getByID(2), PDO::PARAM_INT)
+		);
+		
+		if ($row)
+		{
+			$keyword = array();
+			if ($keys = $_tag->getTagFromSupplementAndSupplementID('GALLERY_CATS', $_route->getByID(2))){
+				foreach($keys as $var){
+					$keyword[] = $var['value'];
+				}
+			}
+			$keyword = implode(', ', $keyword);
+			
+			$seo_var = array(
+				'Theme' => array(
+					'Title' => $_gallery_sett->get('title').' &raquo; '.$row['cat'],
+					'Keys' => $keyword,
+					'Desc' => $row['description']
+				),
+				'Breadcrumb' => array(
+					'index' => array(
+						'id' => 'gallery'.$_sett->getUns('routing', 'url_ext'),
+						'title' => $_gallery_sett->get('title')
+					),
+					'cat' => array(
+						'id' => $row['cat_id'],
+						'link' => $_route->path(array('controller' => 'gallery', 'cat' => $row['cat_id'], $row['cat'])),
+						'title' => $row['cat']
+					),
+					'album' => FALSE,
+					'photo' => FALSE
+				)
+			);
+		}
+		
+		$_system->cache('gallery,seo-var-cat-id-'.$_route->getByID(2).','.$_user->getCacheName(), $seo_var, 'gallery');
 	}
 }
 elseif($_route->getByID(1) === 'album')
@@ -172,7 +173,7 @@ elseif($_route->getByID(1) === 'album')
 
 		if ($rows)
 		{
-			$rowstart = $data->arr('current')->isNum(TRUE, FALSE) ? PAGING::getRowStart($data->arr('current')->isNum(TRUE, FALSE), intval($_gallery_sett->get('albums_per_page'))) : 0;
+			$rowstart = $data->arr('current')->isNum(TRUE, FALSE) ? Paging::getRowStart($data->arr('current')->isNum(TRUE, FALSE), intval($_gallery_sett->get('albums_per_page'))) : 0;
 
 			$cache = $_system->cache('gallery,album-id-'.$_route->getByID(2).','.$_user->getCacheName().',page-'.$data->arr('current')->isNum(TRUE, FALSE), NULL, 'gallery', $_gallery_sett->get('cache_expire'));
 			if ($cache === NULL)
@@ -229,61 +230,61 @@ elseif($_route->getByID(1) === 'album')
 				$_system->cache('gallery,album-id-'.$_route->getByID(2).','.$_user->getCacheName().',page-'.$data->arr('current')->isNum(TRUE, FALSE), $cache, 'gallery');
 			}
 			
-			$seo_var = $_system->cache('gallery,seo-var-album-id-'.$_route->getByID(2).','.$_user->getCacheName(), NULL, 'gallery', $_gallery_sett->get('cache_expire'));
-			if ($seo_var === NULL)
-			{			
-				$row = $_pdo->getRow('
-					SELECT a.`title` AS album, a.`description`, c.`title` AS cat, a.`id` AS album_id, c.`id` AS cat_id
-					FROM [gallery_albums] a
-					LEFT JOIN [gallery_cats] c
-					ON (a.`cat` = c.`id`)
-					WHERE a.`id` = :id',
-					array(':id', $_route->getByID(2), PDO::PARAM_INT)
-				);
-				
-				if ($row)
-				{		
-					$keyword = array();
-					if ($keys = $_tag->getTagFromSupplementAndSupplementID('GALLERY_ALBUMS', $_route->getByID(2))){
-						foreach($keys as $var){
-							$keyword[] = $var['value'];
-						}
-					}
-					$keyword = implode(', ', $keyword);
-					
-					$seo_var = array(
-						'Theme' => array(
-							'Title' => $_gallery_sett->get('title').' &raquo; '.$row['cat'].' &raquo; '.$row['album'],
-							'Keys' => $keyword,
-							'Desc' => $row['description']
-						),
-						'Breadcrumb' => array(
-							'index' => array(
-								'id' => FILE_SELF,
-								'title' => $_gallery_sett->get('title')
-							),
-							'cat' => array(
-								'id' => $row['cat_id'],
-								'link' => $_route->path(array('controller' => 'gallery', 'cat' => $row['cat_id'], $row['cat'])),
-								'title' => $row['cat']
-							),
-							'album' => array(
-								'id' => $row['album_id'],
-								'link' => $_route->path(array('controller' => 'gallery', 'album' => $row['album_id'], $row['album'])),
-								'title' => $row['album']
-							),
-							'photo' => FALSE
-						)
-					);
-				}
-				
-				$_system->cache('gallery,seo-var-album-id-'.$_route->getByID(2).','.$_user->getCacheName(), $seo_var, 'gallery');
-			}
-			
 			$_pagenav = new PageNav(new Paging($rows, $data->arr('current')->isNum(TRUE, FALSE), intval($_gallery_sett->get('photos_per_page'))), $_tpl, 5, array($_route->getFileName(), 'album,'.$_route->getByID(2).','.$_route->getByID(3).',page'));
 		
 			$_tpl->assign('photo', $cache);
-		}		
+		}
+	}
+	
+	$seo_var = $_system->cache('gallery,seo-var-album-id-'.$_route->getByID(2).','.$_user->getCacheName(), NULL, 'gallery', $_gallery_sett->get('cache_expire'));
+	if ($seo_var === NULL)
+	{			
+		$row = $_pdo->getRow('
+			SELECT a.`title` AS album, a.`description`, c.`title` AS cat, a.`id` AS album_id, c.`id` AS cat_id
+			FROM [gallery_albums] a
+			LEFT JOIN [gallery_cats] c
+			ON (a.`cat` = c.`id`)
+			WHERE a.`id` = :id',
+			array(':id', $_route->getByID(2), PDO::PARAM_INT)
+		);
+		
+		if ($row)
+		{		
+			$keyword = array();
+			if ($keys = $_tag->getTagFromSupplementAndSupplementID('GALLERY_ALBUMS', $_route->getByID(2))){
+				foreach($keys as $var){
+					$keyword[] = $var['value'];
+				}
+			}
+			$keyword = implode(', ', $keyword);
+			
+			$seo_var = array(
+				'Theme' => array(
+					'Title' => $_gallery_sett->get('title').' &raquo; '.$row['cat'].' &raquo; '.$row['album'],
+					'Keys' => $keyword,
+					'Desc' => $row['description']
+				),
+				'Breadcrumb' => array(
+					'index' => array(
+						'id' => 'gallery'.$_sett->getUns('routing', 'url_ext'),
+						'title' => $_gallery_sett->get('title')
+					),
+					'cat' => array(
+						'id' => $row['cat_id'],
+						'link' => $_route->path(array('controller' => 'gallery', 'cat' => $row['cat_id'], $row['cat'])),
+						'title' => $row['cat']
+					),
+					'album' => array(
+						'id' => $row['album_id'],
+						'link' => $_route->path(array('controller' => 'gallery', 'album' => $row['album_id'], $row['album'])),
+						'title' => $row['album']
+					),
+					'photo' => FALSE
+				)
+			);
+		}
+		
+		$_system->cache('gallery,seo-var-album-id-'.$_route->getByID(2).','.$_user->getCacheName(), $seo_var, 'gallery');
 	}
 }
 elseif($_route->getByID(1) === 'photo')
@@ -327,68 +328,13 @@ elseif($_route->getByID(1) === 'photo')
 			}
 			$_system->cache('gallery,photo-id-'.$_route->getByID(2).','.$_user->getCacheName(), $cache, 'gallery');
 		}
-	
-		$seo_var = $_system->cache('gallery,seo-var-photo-id-'.$_route->getByID(2).','.$_user->getCacheName(), NULL, 'gallery', $_gallery_sett->get('cache_expire'));
-		if ($seo_var === NULL)
-		{			
-			$row = $_pdo->getRow('
-				SELECT p.`title` AS photo, p.`description`, a.`title` AS album, c.`title` AS cat, p.`id` AS photo_id, a.`id` AS album_id, c.`id` AS cat_id
-				FROM [gallery_photos] p
-				LEFT JOIN [gallery_albums] a
-				ON (p.`album` = a.`id`)
-				LEFT JOIN [gallery_cats] c
-				ON (a.`cat` = c.`id`)
-				WHERE p.`id` = :id',
-				array(':id', $_route->getByID(2), PDO::PARAM_INT)
-			);
-			
-			if ($row)
-			{		
-				$keyword = array();
-				if ($keys = $_tag->getTagFromSupplementAndSupplementID('GALLERY_PHOTOS', $_route->getByID(2))){
-					foreach($keys as $var){
-						$keyword[] = $var['value'];
-					}
-				}
-				$keyword = implode(', ', $keyword);
-				
-				$seo_var = array(
-					'Theme' => array(
-						'Title' => $_gallery_sett->get('title').' &raquo; '.$row['cat'].' &raquo; '.$row['album'].' &raquo; '.$row['photo'],
-						'Keys' => $keyword,
-						'Desc' => $row['description']
-					),
-					'Breadcrumb' => array(
-						'index' => array(
-							'id' => FILE_SELF,
-							'title' => $_gallery_sett->get('title')
-						),
-						'cat' => array(
-							'id' => $row['cat_id'],
-							'link' => $_route->path(array('controller' => 'gallery', 'cat' => $row['cat_id'], $row['cat'])),
-							'title' => $row['cat']
-						),
-						'album' => array(
-							'id' => $row['album_id'],
-							'link' => $_route->path(array('controller' => 'gallery', 'album' => $row['album_id'], $row['album'])),
-							'title' => $row['album']
-						),
-						'photo' => array(
-							'id' => $row['photo_id'],
-							'link' => $_route->path(array('controller' => 'gallery', 'photo' => $row['photo_id'], $row['photo'])),
-							'title' => $row['photo']
-						)
-					)
-				);
-			}
-			
-			$_system->cache('gallery,seo-var-photo-id-'.$_route->getByID(2).','.$_user->getCacheName(), $seo_var, 'gallery');
-		}
 		
 		if ($_gallery_sett->get('allow_comment') === 'true')
 		{
 			if ($cache['comment'] === '1')
 			{	
+				$_comment = $ec->comment;
+				
 				$_tpl->assign('comment', $_comment->get($_route->getFileName(), $cache['id']));
 
 				if (isset($_POST['comment']['save']))
@@ -404,6 +350,63 @@ elseif($_route->getByID(1) === 'photo')
 		
 		$_tpl->assign('photo', $cache);
 	}
+	
+	$seo_var = $_system->cache('gallery,seo-var-photo-id-'.$_route->getByID(2).','.$_user->getCacheName(), NULL, 'gallery', $_gallery_sett->get('cache_expire'));
+	if ($seo_var === NULL)
+	{			
+		$row = $_pdo->getRow('
+			SELECT p.`title` AS photo, p.`description`, a.`title` AS album, c.`title` AS cat, p.`id` AS photo_id, a.`id` AS album_id, c.`id` AS cat_id
+			FROM [gallery_photos] p
+			LEFT JOIN [gallery_albums] a
+			ON (p.`album` = a.`id`)
+			LEFT JOIN [gallery_cats] c
+			ON (a.`cat` = c.`id`)
+			WHERE p.`id` = :id',
+			array(':id', $_route->getByID(2), PDO::PARAM_INT)
+		);
+		
+		if ($row)
+		{		
+			$keyword = array();
+			if ($keys = $_tag->getTagFromSupplementAndSupplementID('GALLERY_PHOTOS', $_route->getByID(2))){
+				foreach($keys as $var){
+					$keyword[] = $var['value'];
+				}
+			}
+			$keyword = implode(', ', $keyword);
+			
+			$seo_var = array(
+				'Theme' => array(
+					'Title' => $_gallery_sett->get('title').' &raquo; '.$row['cat'].' &raquo; '.$row['album'].' &raquo; '.$row['photo'],
+					'Keys' => $keyword,
+					'Desc' => $row['description']
+				),
+				'Breadcrumb' => array(
+					'index' => array(
+						'id' => 'gallery'.$_sett->getUns('routing', 'url_ext'),
+						'title' => $_gallery_sett->get('title')
+					),
+					'cat' => array(
+						'id' => $row['cat_id'],
+						'link' => $_route->path(array('controller' => 'gallery', 'cat' => $row['cat_id'], $row['cat'])),
+						'title' => $row['cat']
+					),
+					'album' => array(
+						'id' => $row['album_id'],
+						'link' => $_route->path(array('controller' => 'gallery', 'album' => $row['album_id'], $row['album'])),
+						'title' => $row['album']
+					),
+					'photo' => array(
+						'id' => $row['photo_id'],
+						'link' => $_route->path(array('controller' => 'gallery', 'photo' => $row['photo_id'], $row['photo'])),
+						'title' => $row['photo']
+					)
+				)
+			);
+		}
+		
+		$_system->cache('gallery,seo-var-photo-id-'.$_route->getByID(2).','.$_user->getCacheName(), $seo_var, 'gallery');
+	}
 }
 else
 {
@@ -417,13 +420,13 @@ else
 
 	if ($rows)
 	{
-		$rowstart = $data->arr('current')->isNum(TRUE, FALSE) ? PAGING::getRowStart($data->arr('current')->isNum(TRUE, FALSE), intval($_gallery_sett->get('cats_per_page'))) : 0;
+		$rowstart = $data->arr('current')->isNum(TRUE, FALSE) ? Paging::getRowStart($data->arr('current')->isNum(TRUE, FALSE), intval($_gallery_sett->get('cats_per_page'))) : 0;
 
 		$cache = $_system->cache('gallery,cats,'.$_user->getCacheName().',page-'.$data->arr('current')->isNum(TRUE, FALSE), NULL, 'gallery', $_gallery_sett->get('cache_expire'));
 		if ($cache === NULL)
 		{
 			$query = $_pdo->getData('
-					SELECT `id`, `title`, `description`, `datestamp`, `access`
+					SELECT `id`, `title`, `description`, `file_name`, `datestamp`, `access`
 					FROM [gallery_cats]
 					WHERE `access` IN ('.$_user->listRoles().')
 					ORDER BY `order`
@@ -476,6 +479,7 @@ else
 						'id' => $row['id'],
 						'title' => $row['title'],
 						'description' => $row['description'],
+						'file_name' => $row['file_name'],
 						'datestamp' => $row['datestamp'],
 						'cat_link' => $_route->path(array('controller' => 'gallery', 'action' => 'cat', $row['id'], $row['title'])),
 						'access' => $row['access'],
@@ -489,41 +493,40 @@ else
 			}
 			$_system->cache('gallery,cats,'.$_user->getCacheName().',page-'.$data->arr('current')->isNum(TRUE, FALSE), $cache, 'gallery');
 		}
-		
-		$seo_var = $_system->cache('gallery,seo-var-cats,'.$_user->getCacheName(), NULL, 'gallery', $_gallery_sett->get('cache_expire'));
-		if ($seo_var === NULL)
-		{			
-			$keyword = array();
-			if ($keys = $_tag->getTagFromSupplementAndSupplementID('GALLERY_GLOBAL', 1)){
-				foreach($keys as $var){
-					$keyword[] = $var['value'];
-				}
-			}
-			$keyword = implode(', ', $keyword);
 			
-			$seo_var = array(
-				'Theme' => array(
-					'Title' => $_gallery_sett->get('title'),
-					'Keys' => $keyword,
-					'Desc' => $_gallery_sett->get('description')
-				),
-				'Breadcrumb' => array(
-					'index' => array(
-						'id' => FILE_SELF,
-						'title' => $_gallery_sett->get('title')
-					),
-					'cat' => FALSE,
-					'album' => FALSE,
-					'photo' => FALSE
-				)
-			);
-			
-			$_system->cache('gallery,seo-var-cats,'.$_user->getCacheName(), $seo_var, 'gallery');
-		}
-		
 		$_pagenav = new PageNav(new Paging($rows, $data->arr('current')->isNum(TRUE, FALSE), intval($_gallery_sett->get('cats_per_page'))), $_tpl, 5, array($_route->getFileName(), 'page'));
 		
 		$_tpl->assign('cat', $cache);
+	}
+	$seo_var = $_system->cache('gallery,seo-var-cats,'.$_user->getCacheName(), NULL, 'gallery', $_gallery_sett->get('cache_expire'));
+	if ($seo_var === NULL)
+	{			
+		$keyword = array();
+		if ($keys = $_tag->getTagFromSupplementAndSupplementID('GALLERY_GLOBAL', 1)){
+			foreach($keys as $var){
+				$keyword[] = $var['value'];
+			}
+		}
+		$keyword = implode(', ', $keyword);
+		
+		$seo_var = array(
+			'Theme' => array(
+				'Title' => $_gallery_sett->get('title'),
+				'Keys' => $keyword,
+				'Desc' => $_gallery_sett->get('description')
+			),
+			'Breadcrumb' => array(
+				'index' => array(
+					'id' => 'gallery'.$_sett->getUns('routing', 'url_ext'),
+					'title' => $_gallery_sett->get('title')
+				),
+				'cat' => FALSE,
+				'album' => FALSE,
+				'photo' => FALSE
+			)
+		);
+		
+		$_system->cache('gallery,seo-var-cats,'.$_user->getCacheName(), $seo_var, 'gallery');
 	}
 }
 

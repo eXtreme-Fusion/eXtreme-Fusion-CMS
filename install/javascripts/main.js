@@ -12,6 +12,9 @@ $(document).ready(function() {
 		});
 	});
 
+	$('.refresh').click(function() {
+		window.location.reload();
+	});
 
     $("select[name=localeset]").change(function () {
 		var ChengeLang = $("select[name=localeset] option:selected").val();
@@ -49,12 +52,22 @@ $(document).ready(function() {
 	});
 
 	/** Team section **/
-	$('#team-tab').click(function() {
-		$object = $('#ef-crew');
+	$('.tab-click').click(function() {
+		var id = this.id;
+		$object = $('#tab-'+id);
 		if ($object.is(':hidden')) {
 			$object.fadeIn();
 		} else {
 			$object.fadeOut();
+		}
+	});
+
+	$('#CustomRewrite, #CustomFurl').change(function() {
+		var status = $(this).is(':checked');
+		if (status) {
+			$('#CustomStep3').fadeIn(1000);
+		} else {
+			$('#CustomStep3').fadeOut(500);
 		}
 	});
 	/**/

@@ -19,13 +19,12 @@ try
     {
         throw new userException(__('Access denied'));
     }
-
-	include DIR_MODULES.'point_system'.DS.'class'.DS.'points.php';
-	
-	$_points = new Points($_pdo, $_system);
 	
 	$_tpl = new AdminModuleIframe('point_system');
-
+	
+	include DIR_MODULES.'point_system'.DS.'class'.DS.'Points.php';
+	$_points = new Points($_pdo, $_system);
+	
 	if ($_request->get(array('status', 'act'))->show())
 	{
 		$_tpl->getMessage($_request->get('status')->show(), $_request->get('act')->show(), 
@@ -69,9 +68,11 @@ try
 			)
 		);
     }
-
-    if ($_request->get('page')->show() === 'points')
+	
+	if ($_request->get('page')->show() === 'points')
 	{
+		$point = TRUE;
+		
 		if ($_request->get('action')->show() === 'delete_points' && $_request->get('id')->isNum())
 		{
 			$count = $_pdo->exec('DELETE FROM [points] WHERE `id`='.$_request->get('id')->show());
@@ -135,28 +136,27 @@ try
 			{
 				$points = $data['points'];
 				$section = $data['section'];
-				$ranks = '';
-				$user_list = '';
-				$add_bonus = $_request->get('page')->show() === 'bonus';
-				$add_ranks = $_request->get('page')->show() === 'ranks';
-				$add_points = $_request->get('page')->show() === 'points';
-				$edit_points = $_request->get('page')->show() === 'points' && $_request->get('action')->show() === 'edit';
+				$edit = TRUE;
 			}
 		}
 		else
 		{
 			$points = '';
 			$section = '';
-			$ranks = '';
-			$user_list = '';
-			$add_bonus = $_request->get('page')->show() === 'bonus';
-			$add_ranks = $_request->get('page')->show() === 'ranks';
-			$add_points = $_request->get('page')->show() === 'points';
-			$edit_points = $_request->get('page')->show() === 'points' && $_request->get('action')->show() === 'edit';
+			$edit = FALSE;
 		}
+	
+		$_tpl->assignGroup(array(
+			'point' => $point,
+			'points' => $points,
+			'section' => $section,
+			'edit' => $edit
+		));
 	}
 	elseif ($_request->get('page')->show() === 'ranks')
 	{
+		$rank = TRUE;
+		
 		if ($_request->get('action')->show() === 'delete_ranks' && $_request->get('id')->isNum())
 		{
 			$count = $_pdo->exec('DELETE FROM [ranks] WHERE `id` = '.$_request->get('id')->show());
@@ -227,158 +227,126 @@ try
 			{
 				$points = $data['points'];
 				$ranks = $data['ranks'];
-				$section = '';
-				$user_list = '';
-				$add_bonus = $_request->get('page')->show() === 'bonus';
-				$add_ranks = $_request->get('page')->show() === 'ranks';
-				$add_points = $_request->get('page')->show() === 'points';
-				$edit_points = $_request->get('page')->show() === 'points' && $_request->get('action')->show() === 'edit';
 			}
 		}
 		else
 		{
 			$points = '';
-			$section = '';
 			$ranks = '';
-			$user_list = '';
-			$add_bonus = $_request->get('page')->show() === 'bonus';
-			$add_ranks = $_request->get('page')->show() === 'ranks';
-			$add_points = $_request->get('page')->show() === 'points';
-			$edit_points = $_request->get('page')->show() === 'points' && $_request->get('action')->show() === 'edit';
 		}
+		
+		$_tpl->assignGroup(array(
+			'rank' => $rank,
+			'points' => $points,
+			'ranks' => $ranks
+		));
 	}
 	elseif ($_request->get('page')->show() === 'bonus')
 	{
-		if($_request->post('plus_points')->show() && $_request->post('points_bonus')->show())
-		{
-			if($_request->post('points_bonus')->isNum() && $_request->post('bonus_user')->isNum())
-			{
-				if($_request->post('add_comment')->show() != NULL)
-				{
-					$comment = $_request->post('add_comment')->strip().'&nbsp;';
-					$comment .= __('(:points points)', array(':points' => $_request->post('points_bonus')->show()));
-				}
-				else
-				{
-					$comment = __('Bonus points to the administrator (:points points)', array(':points' => $_request->post('points_bonus')->show()));
-				}
-				if ($_request->post('points_bonus')->show() > 0)
-				{
-					$_points->add($_request->post('bonus_user')->show(), $_request->post('points_bonus')->show(), $comment);
-					$_system->clearCache('point_system');
-					$_log->insertSuccess('add_bonus', $_user->getByID($_request->post('bonus_user')->show(), 'username').' - Dodanie punktów: '.$comment);
-					$_request->redirect(FILE_PATH, array('page' => 'bonus', 'act' => 'add_bonus', 'status' => 'ok'));
-				}
-				else
-				{
-					$_request->redirect(FILE_PATH, array('page' => 'bonus', 'act' => 'add_error', 'status' => 'error'));
-				}
-			}
-		}
-		elseif($_request->post('minus_points')->show() && $_request->post('points_fine')->show())
-		{
-			if($_request->post('points_fine')->isNum() && $_request->post('fine_user')->isNum())
-			{
-				if($_request->post('fine_comment')->show() != NULL)
-				{
-					$comment = $_request->post('fine_comment')->strip().'&nbsp;';
-					$comment .= __('(:points points)', array(':points' => -$_request->post('points_fine')->show()));
-				}
-				else
-				{
-					$comment = __('Punishment points to the administrator (:points points)', array(':points' => -$_request->post('points_fine')->show()));
-				}
-				if ($_request->post('points_fine')->show() > 0)
-				{
-					$_points->add($_request->post('fine_user')->show(), -$_request->post('points_fine')->show(), $comment);
-					$_system->clearCache('point_system');
-					$_log->insertSuccess('add_fine', $_user->getByID($_request->post('fine_user')->show(), 'username').' - Odjęcie punktów: '.$comment);
-					$_request->redirect(FILE_PATH, array('page' => 'bonus', 'act' => 'add_fine', 'status' => 'ok'));
-				}
-				else
-				{
-					$_request->redirect(FILE_PATH, array('page' => 'bonus', 'act' => 'add_error', 'status' => 'error'));
-				}
-			}
-		}
-		elseif($_request->post('delete_user_points')->show() && $_request->post('user')->isNum())
-		{
-			$_points->deleteAll($_request->post('user')->show());
-			$_system->clearCache('point_system');
-			$_log->insertSuccess('delete_points', $_user->getByID($_request->post('user')->show(), 'username').' - '.__('Deleted all user points.'));
-			$_request->redirect(FILE_PATH, array('page' => 'bonus', 'act' => 'delete_points', 'status' => 'ok'));
-		}
-		elseif($_request->post('delete_all')->show())
-		{
-			$_points->clearAll();
-			$_system->clearCache('point_system');
-			$_log->insertSuccess('delete_all_points', __('Deleted all points.'));
-			$_request->redirect(FILE_PATH, array('page' => 'bonus', 'act' => 'delete_all_points', 'status' => 'ok'));
-		}
-		else
-		{
-			$points = '';
-			$comment = '';
-			$user_list = '';
-			$section = '';
-			$ranks = '';
-			$add_bonus = $_request->get('page')->show() === 'bonus';
-			$add_ranks = $_request->get('page')->show() === 'ranks';
-			$add_points = $_request->get('page')->show() === 'points';
-			$edit_points = $_request->get('page')->show() === 'points' && $_request->get('action')->show() === 'edit';
-		}
+		$bonus = TRUE;
+		$user_points = array();
 		
-		if ($_user->get('role') >= 1)
+		if ($_request->get('user')->show())
 		{
-			$user_list = array(); $query = $_pdo->getData('SELECT `id`, `username` FROM [users] ORDER BY `role` ASC, `username` ASC');
-			if ($_pdo->getRowsCount($query))
+			if($_request->post('plus_points')->show() && $_request->post('points_bonus')->show())
 			{
-				foreach($query as $row)
+				if($_request->post('points_bonus')->isNum() && $_request->post('bonus_user')->isNum())
 				{
-					$user_list[] = array(
-						'entry' => $row['username'],
-						'value' => $row['id']
+					if($_request->post('add_comment')->show() != NULL)
+					{
+						$comment = $_request->post('add_comment')->strip().'&nbsp;';
+						$comment .= __('(:points points)', array(':points' => $_request->post('points_bonus')->show()));
+					}
+					else
+					{
+						$comment = __('Bonus points to the administrator (:points points)', array(':points' => $_request->post('points_bonus')->show()));
+					}
+					if ($_request->post('points_bonus')->show() > 0)
+					{
+						$_points->add($_request->post('bonus_user')->show(), $_request->post('points_bonus')->show(), $comment);
+						$_system->clearCache('point_system');
+						$_log->insertSuccess('add_bonus', $_user->getByID($_request->post('bonus_user')->show(), 'username').' - Dodanie punktów: '.$comment);
+						$_request->redirect(FILE_PATH, array('page' => 'bonus', 'user' => $_request->post('user')->show(), 'act' => 'add_bonus', 'status' => 'ok'));
+					}
+					else
+					{
+						$_request->redirect(FILE_PATH, array('page' => 'bonus', 'user' => $_request->post('user')->show(), 'act' => 'add_error', 'status' => 'error'));
+					}
+				}
+			}
+			elseif($_request->post('minus_points')->show() && $_request->post('points_fine')->show())
+			{
+				if($_request->post('points_fine')->isNum() && $_request->post('fine_user')->isNum())
+				{
+					if($_request->post('fine_comment')->show() != NULL)
+					{
+						$comment = $_request->post('fine_comment')->strip().'&nbsp;';
+						$comment .= __('(:points points)', array(':points' => -$_request->post('points_fine')->show()));
+					}
+					else
+					{
+						$comment = __('Punishment points to the administrator (:points points)', array(':points' => -$_request->post('points_fine')->show()));
+					}
+					if ($_request->post('points_fine')->show() > 0)
+					{
+						$_points->add($_request->post('fine_user')->show(), -$_request->post('points_fine')->show(), $comment);
+						$_system->clearCache('point_system');
+						$_log->insertSuccess('add_fine', $_user->getByID($_request->post('fine_user')->show(), 'username').' - Odjęcie punktów: '.$comment);
+						$_request->redirect(FILE_PATH, array('page' => 'bonus', 'user' => $_request->post('user')->show(), 'act' => 'add_fine', 'status' => 'ok'));
+					}
+					else
+					{
+						$_request->redirect(FILE_PATH, array('page' => 'bonus', 'user' => $_request->post('user')->show(), 'act' => 'add_error', 'status' => 'error'));
+					}
+				}
+			}
+			elseif($_request->post('delete_user_points')->show() && $_request->post('user')->isNum())
+			{
+				$_points->deleteAll($_request->post('user')->show());
+				$_system->clearCache('point_system');
+				$_log->insertSuccess('delete_points', $_user->getByID($_request->post('user')->show(), 'username').' - '.__('Deleted all user points.'));
+				$_request->redirect(FILE_PATH, array('page' => 'bonus', 'user' => $_request->post('user')->show(), 'act' => 'delete_points', 'status' => 'ok'));
+			}
+			
+			$query = $_pdo->getData('
+				SELECT p.*, u.`id` 
+				FROM [points_history] p
+				LEFT JOIN [users] u 
+				ON p.`user_id` = u.`id`
+				WHERE p.`user_id` = '.$_request->get('user')->show().'
+				ORDER BY p.`date` DESC LIMIT 0,6'
+			);
+			
+			if ($_pdo->getRowsCount($query)) 
+			{
+				$i = 0; $history = array();
+				foreach ($query as $row)
+				{
+					$history[] = array(
+						'date' => HELP::showDate("shortdate", $row['date']),
+						'text' => $row['text'],
+						'points' => $row['points']
 					);
+					$i++;
 				}
 			}
 			
+		
+			$user_points = array(
+				'user_bonus' => TRUE,
+				'points' => $_points->show($_user->getByID($_request->get('user')->show(), 'id')),
+				'rank' => $_points->showRank($_user->getByID($_request->get('user')->show(), 'id')),
+			);
 		}
-		else
-		{
-			$user_list = array(); $query = $_pdo->getData('SELECT `id`, `username` FROM [users] WHERE `role` > 1 ORDER BY `role` ASC, `username` ASC');
-			if ($_pdo->getRowsCount($query))
-			{
-				foreach($query as $row)
-				{
-					$user_list[] = array(
-						'entry' => $row['username'],
-						'value' => $row['id']
-					);
-				}
-			}
-		}
-	}
-	else
-	{
-		$points = '';
-		$section = '';
-		$ranks = '';
-		$user_list = '';
-		$add_bonus = '';
-		$add_points = '';
-		$add_ranks = '';
-		$edit_points = '';
+		
+		$_tpl->assignGroup(array(
+			'bonus' => $bonus,
+			'point_user' => $user_points,
+			'user' => ($_request->get('user')->show() ? $_user->getByID($_request->get('user')->show()) : FALSE),
+			'history' => (isset($history) ? $history : FALSE)
+		));
 	}
 	
-	$_tpl->assign('user_list', $user_list);
-    $_tpl->assign('points', $points);
-	$_tpl->assign('section', $section);
-	$_tpl->assign('ranks', $ranks);
-	$_tpl->assign('add_bonus', $add_bonus);
-	$_tpl->assign('add_points', $add_points);
-	$_tpl->assign('add_ranks', $add_ranks);
-	$_tpl->assign('edit_points', $edit_points);
-
 	$query = $_pdo->getData('SELECT `id`, `points`, `section` FROM [points] ORDER BY `id`');
 	if ($_pdo->getRowsCount($query)) {
 		$i = 0; $data = array();
@@ -392,7 +360,7 @@ try
 			);
 			$i++;
 		}
-		$_tpl->assign('point', $data);
+		$_tpl->assign('point_list', $data);
 	}
 
 	$query = $_pdo->getData('SELECT `id`, `points`, `ranks` FROM [ranks] ORDER BY `points`');
@@ -408,10 +376,10 @@ try
 			);
 			$i++;
 		}
-		$_tpl->assign('rank', $data);
+		$_tpl->assign('rank_list', $data);
 	}
-
-    $_tpl->template('admin.tpl');
+	
+	$_tpl->template('admin.tpl');
 
 }
 catch(optException $exception)

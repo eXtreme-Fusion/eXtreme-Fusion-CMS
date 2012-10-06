@@ -1,5 +1,5 @@
 <?php defined('EF5_SYSTEM') || exit;
 
 return array(
-	'Contact' => 'Kontakt'
+	'Contact' => 'Kontakt',
 );

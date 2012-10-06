@@ -1,13 +1,14 @@
 <?php
-/*---------------------------------------------------------------+
-| eXtreme-Fusion - Content Management System - version 5         |
-+----------------------------------------------------------------+
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 |
-| http://extreme-fusion.org/                               		 |
-+----------------------------------------------------------------+
-| This product is licensed under the BSD License.				 |
-| http://extreme-fusion.org/ef5/license/						 |
-+---------------------------------------------------------------*/
+/***********************************************************
+| eXtreme-Fusion 5.0 Beta 5
+| Content Management System       
+|
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
+| http://extreme-fusion.org/                               		 
+|
+| This product is licensed under the BSD License.				 
+| http://extreme-fusion.org/ef5/license/						 
+***********************************************************/
 $_head->set('<meta name="robots" content="noindex" />');
 
 if ($_user->isLoggedIn())
@@ -18,9 +19,9 @@ if ($_user->isLoggedIn())
 		'Desc' => 'Łatwy dostęp do najpotrzebniejszych miejsc na stronie.'
 	);
 
-	if ($_route->getParam('page'))
+	if ($_route->getAction())
 	{
-		HELP::redirect(base64_decode($_route->getParam('page')));
+		HELP::redirect(base64_decode($_route->getAction()));
 	}
 	
 	$_tpl->assign('is_logged_in', TRUE);

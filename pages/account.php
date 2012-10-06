@@ -1,13 +1,14 @@
 <?php defined('EF5_SYSTEM') || exit;
-/*---------------------------------------------------------------+
-| eXtreme-Fusion - Content Management System - version 5         |
-+----------------------------------------------------------------+
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 |
-| http://extreme-fusion.org/                               		 |
-+----------------------------------------------------------------+
-| This product is licensed under the BSD License.				 |
-| http://extreme-fusion.org/ef5/license/						 |
-+---------------------------------------------------------------*/
+/***********************************************************
+| eXtreme-Fusion 5.0 Beta 5
+| Content Management System       
+|
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
+| http://extreme-fusion.org/                               		 
+|
+| This product is licensed under the BSD License.				 
+| http://extreme-fusion.org/ef5/license/						 
+***********************************************************/
 if(!iUSER) HELP::redirect(ADDR_SITE);
 
 if ($_route->getAction() === 'logout')
@@ -129,7 +130,8 @@ if ($_request->post('save')->show() && $_request->post('email')->show())
 
 	$count = $_user->update(array(
 		'hide_email' => $_request->post('hideemail')->isNum(TRUE),
-		'theme' => $_request->post('theme')->strip()
+		'theme' => $_request->post('theme')->strip(),
+		'lang' => $_request->post('language')->strip()
 		), $_user->get('id')
 	);
 
@@ -180,10 +182,12 @@ if ($_request->post('save')->show() && $_request->post('email')->show())
 
 	$_tpl->assignGroup(array(
 		'theme_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'themes', array('templates'), TRUE, 'folders'), $_user->get('theme')),
+		'locale_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'locale', array(), TRUE, 'folders'), $_user->get('lang')),
 		'User' => $user,
 		'ChangeName' => $_sett->get('change_name')
 	));
 
+	//print_r($_user->getLang());
 	// Pobieranie kategorii
 	$query = $_pdo->getData('SELECT * FROM [user_field_cats] ORDER BY `order` ASC');
 	$cats = array();
@@ -255,9 +259,13 @@ if ($_request->post('save')->show() && $_request->post('email')->show())
 				$cat['has_fields'] = '0';
 			}
 		}
-
 		$_tpl->assign('Fields', $new_fields);
 	}
 
 	$_tpl->assign('Cats', $cats);
 	#************
+
+	$_tpl->assignGroup(array(
+		'bbcode' => $ec->sbb->bbcodes(),
+		'smiley' => $ec->sbb->smileys()
+	));

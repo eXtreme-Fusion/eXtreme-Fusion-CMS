@@ -1,12 +1,12 @@
 {if $Begin}
-	<div id="Content">
-		<div id="IframeOPT">
-			<div class='capmain'>
-				<h3>{$Title}</h3>
-			</div>
-			<div class='main-body floatfix container_16'>
+
+			<section class="main_body">
+				<header>
+					<h2>{$Title}</h2>
+				</header>
+				<div class="content">
 {else}
 			</div>
-		</div>
-	</div>
+		</section>
+    
 {/if}

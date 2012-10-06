@@ -7,7 +7,7 @@
 	'Desc' => $data['description']
 );*/
 
-
+// TO DO Będziesz dodawać cache dla tej strony użyj: $_sett->getUns('cache', 'expire_pages') //
 
 
 if ($_user->isLoggedIn())
@@ -294,6 +294,8 @@ elseif (isNum($_route->getAction(), FALSE))
 				'Desc' => $row['description']
 			);
 
+			$_comment = $ec->comment;
+			
 			$_tpl->assignGroup(array(
 				'comments' => $_comment->get($_route->getFileName(), $_route->getAction()),
 				'entry' => $row['title'],

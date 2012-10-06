@@ -1,0 +1,92 @@
+#user_info_panel {text-align: center;}
+#user_info_panel input[type=text], 
+#user_info_panel input[type=password] {width: 85%;}
+	
+#user_info_panel .top {
+	margin: 0 0 0 -15px;
+	width: 200px;
+	overflow: hidden;
+	}
+	
+#user_info_panel .top strong {
+	float: left;
+	padding: 5px 15px;
+	max-width: 150px;
+	font-size: 13px;
+	background: #373737;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	}
+	
+#user_info_panel .top a {
+	float: right;
+	margin: 5px 0 0 5px;
+	height: 11px;
+	width: 16px;
+	background: url('../images/message_bg.png');
+	}
+
+#user_info_panel .top a.message {background-position: bottom;}
+
+#user_info_panel .mid {
+	margin: 10px auto 5px;
+	height: 105px;
+	width: 135px;
+	text-align: left;
+	}
+
+#user_info_panel .mid .avatar {
+	position: absolute;
+	z-index: 1;
+	margin: 0;
+	padding: 7px;
+	height: 90px;
+	width: 90px;
+	border-left: 1px solid #d0ef00;
+	background: #373737;
+	border-radius: 5px;
+ 	box-shadow: 6px 0px 5px -2px #222;
+	}
+	
+#user_info_panel .mid .avatar img {height: 90px; max-width: 90px;}
+	
+#user_info_panel .mid ul {
+    position: absolute;
+    margin: 1px 0 0 105px;
+	overflow: hidden;
+	}
+
+#user_info_panel .mid ul li {margin: 2px 0;}
+
+#user_info_panel .mid ul li a {
+    display: block;
+    margin: 0 0 0 -70px;
+	padding: 2px 0; 
+    width: 95px;
+	text-align: left;
+	color: #fff;
+	border-right: 2px solid #d0ef00;
+    background:#373737;
+    border-radius:0px 8px 8px 0px;
+	text-decoration: none;
+	}
+	
+#user_info_panel .mid ul li a.long {margin: 0 0 0 -75px; width: 100px;}
+	
+#user_info_panel .mid ul li a p {
+	margin: 0 3px;
+	padding: 2px 25px 0 5px;
+	height: 17px;
+	background: no-repeat right;
+	}
+	
+#user_info_panel .mid .edit {background-image: url('../images/edit_profile.png');}
+#user_info_panel .mid .messages {background-image: url('../images/messages.png');}
+#user_info_panel .mid .members {background-image: url('../images/members.png');}
+#user_info_panel .mid .admin {background-image: url('../images/admin_panel.png');}
+
+#user_info_panel .bot {
+	margin: 0 auto;
+	width: 180px;
+	overflow: hidden;
+}

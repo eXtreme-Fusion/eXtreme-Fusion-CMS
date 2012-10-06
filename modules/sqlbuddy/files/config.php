@@ -20,9 +20,9 @@ MIT license
 include '../../../config.php';
 
 $sbconfig['DefaultAdapter'] = "mysql";
-$sbconfig['DefaultHost'] = $_dbconfig['host'];
-$sbconfig['DefaultUser'] = $_dbconfig['user'];
-$sbconfig['DefaultPass'] = $_dbconfig['password'];
+$sbconfig['DefaultHost'] = 'localhost';//$_dbconfig['host'];				// niebezpieczne, tymczasowo zakomentowane - EF Team
+$sbconfig['DefaultUser'] = '';//$_dbconfig['user'];
+$sbconfig['DefaultPass'] = '';//$_dbconfig['password'];
 
 // END :: eXtreme-Fusion CMS
 

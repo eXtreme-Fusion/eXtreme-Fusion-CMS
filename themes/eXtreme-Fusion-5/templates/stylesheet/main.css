@@ -1,0 +1,343 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	vertical-align: baseline;
+	margin: 0;
+	padding: 0;
+	font: inherit;
+	border: 0;
+	outline: none;
+}
+
+body {
+	margin: 0 auto;
+	font: 12px 'Tahoma', Geneva, 'Kalimati', sans-serif;
+	line-height: 120%;
+	resize-x: none;
+}
+
+ol, ul {list-style: none;}
+hr {margin: 10px 0; height: 1px; background: #feffff;}
+sup {font-size: 12px; font-weight: bold; color: #ff0000;}
+
+h4 {
+	margin: 12px 0 4px 0;
+	padding: 9px 12px 2px 12px;
+	font-size: 14px;
+	font-weight: bold;
+	color: #999;
+	border-bottom: 1px solid #eee;
+}
+/* tuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu */
+
+.tbl {overflow: hidden; padding: 5px 0}
+.tbl1 {background: #2e2e2e; padding: 4px; overflow: hidden; vertical-align: middle}
+.tbl2 {background: #3a3a3a; padding: 4px; overflow: hidden}
+.tbl2 img, .tbl2 img {vertical-align: middle}
+
+
+/****** Statusy (Messages) ******/
+.status, .info, .error, .valid {
+	margin: 10px 0;
+	padding: 9px 15px;
+	font-size: 12px;
+	text-align: center;
+	background: #feffff;
+	border-radius: 5px;
+}
+
+.status a, .info a, .error a, .valid a {
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+.status-right, .info-right, .error-right, .valid-right {
+	position: absolute;
+	top: 0;
+	right: -6px;
+	width: 55px;
+}
+
+.status-right a, .info-right a, .error-right a, .valid-right a {
+	cursor: pointer;
+}
+
+.status, .status a {color: #e79300;}
+.info, .info a {color: #2e74b2;}
+.error, .error a {color: #ce2700;}
+.valid, .valid a {color: #97be7a;}
+
+
+.center {text-align:center}
+
+.form_label {
+	width: 170px;
+	margin: 3px 10px;
+	float: left;
+	}
+	
+.form_input {
+	float: left;
+}
+
+
+/* Rejestracja (Register)*/
+
+.rules {
+	padding:8px 5px;
+	max-height:250px;
+	overflow:auto;
+	width:90%;
+	margin:auto;
+	border-radius:8px;
+	background-color: #222;
+}
+
+input[type=submit], 
+.button {
+	background: url(../images/button_bg.png) repeat-x;
+    border: 1px solid #77A600;
+    color: #272727;
+	}
+	
+input[type=submit]:hover, 
+.button:hover {background-position: 0 -40px; color: #373738;}
+
+	
+/* Tekst sformatowany ------------------------------------------------------------------------- */
+.formated_text hr,
+.formated_text p,
+.formated_text pre,
+.formated_text div,
+.formated_text table,
+.formated_text ul,
+.formated_text ol,
+.formated_text blockquote,
+.formated_text form,
+.formated_text section,
+.formated_text aside,
+.formated_text video,
+.formated_text audio,
+.formated_text embed,
+.formated_text object,
+.formated_text iframe,
+.formated_text address,
+.formated_text h1,
+.formated_text h2,
+.formated_text h3,
+.formated_text h4,
+.formated_text h5,
+.formated_text h6 {
+	margin:10px 0;
+}
+
+.formated_text img,
+.formated_text canvas {
+	margin: 10px;
+}
+
+.formated_text sub,
+.formated_text sup,
+.formated_text small {
+	font-size: 10px;
+	font-weight: normal;
+	color: inherit;
+}
+
+.formated_text sub {
+	vertical-align: sub;
+}
+
+.formated_text sup {
+	vertical-align: super;
+}
+
+.formated_text strong,
+.formated_text b {
+	font-weight: bold;
+}
+
+.formated_text em,
+.formated_text i,
+.formated_text q {
+	font-style: italic;
+}
+
+.formated_text u {
+	text-decoration: underline;
+}
+
+.formated_text strike,
+.formated_text s {
+	text-decoration: line-through;
+}
+
+.formated_text h1,
+.formated_text h2,
+.formated_text h3,
+.formated_text h4,
+.formated_text h5,
+.formated_text h6 {
+	padding: 0;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.formated_text ul li,
+.formated_text ol li {
+	margin-left: 30px;
+}
+
+.formated_text ul li {list-style:disc outside none;}
+.formated_text ol li {list-style:decimal outside none;}
+
+.formated_text table td,
+.formated_text table th {
+	padding:5px;
+}
+
+.formated_text table th {
+	text-align: center;
+	font-weight: bold;
+}
+
+.formated_text blockquote {
+	font-family: inherit;
+	font-size: inherit;
+	font-style: italic;
+	font-weight: normal;
+	padding: 10px;
+	margin: 10px;
+	border-radius: 5px;
+}
+
+/* Menu zakładek ----------------------------------------------------------------------------------------------- */
+.tab_menu ul {
+    float: left;
+    padding: 0;
+}
+
+.tab_menu ul li {
+	display: inline;
+}
+
+.tab_menu ul li a {
+	font-size: 12px;
+	font-weight: bold;
+    float: left;
+    margin-right: 5px;
+    padding: 4px 15px;
+    text-decoration: none;
+}
+
+/* Zawartość zakładek --------------------------------------------------------------------------------------- */
+.tab_cont {
+	position: relative;
+    float: left;
+	padding: 7px 0;
+    width: 100%;
+}
+
+/* Short posts -------------------------------------------------------------------------------- */
+.short_post {
+	margin: 10px 20px;
+	position: relative;
+}
+
+.short_post .arrow {
+	display: block;
+	position: absolute;
+	z-index:99;
+	width: 20px;
+	height: 20px;
+	top: 5px;
+	left: 65px;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.short_post .avatar {
+	display: block;
+	float: left;
+	width: 40px;
+	border-width: 5px;
+	border-style: solid;
+	border-radius: 5px;
+}
+
+.short_post .pw_cont {
+	position: relative;
+	font-size: 11px;
+	margin-left: 75px;
+	padding: 7px 20px;
+	border-radius: 0 5px 5px 5px;
+}
+
+.short_post .pw_cont header {
+	padding-bottom: 5px;
+	margin-bottom: 5px;
+}
+.short_post .pw_cont header {border-bottom-width: 1px; border-bottom-style: dashed;}
+.short_post .pw_cont header strong {font-size: 12px;}
+
+.short_post .pw_cont header time {
+	width: auto;
+	float: right;
+	font-style: italic;
+	line-height: 12px;
+}
+
+/* Wybrany element z rozwijanej listy-------------------------------------------------------------------------------------- */
+#defender_user {
+	display: inline-block;
+	padding: 3px 8px;
+	font-size: 11px;
+}
+
+#defender_user img {
+	width: 7px;
+	height: 7px;
+	cursor: pointer;
+}
+
+/* Rozwijana lista ajaxowa----------------------------------------------------------------------------------------------- */
+#defenders ul,
+#defenders .defender_error {
+	display: block;
+	position: absolute;
+	width: 200px;
+	font-size: 11px;
+	margin: 0;
+	padding: 2px 10px;
+	border: 0;
+}
+
+#defenders ul {
+	list-style: none;
+}
+
+#defenders .defender_error {
+	text-align: center;
+	padding: 5px 10px;
+}
+
+#defenders ul li {
+	margin: 0;
+	padding: 0;
+	cursor: pointer;
+	list-style: none;
+	line-height: 180%;
+}

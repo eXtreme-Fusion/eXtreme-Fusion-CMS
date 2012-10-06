@@ -8,7 +8,7 @@
 | This product is licensed under the BSD License.				 |
 | http://extreme-fusion.org/ef5/license/						 |
 +---------------------------------------------------------------*/
-
+$_locale->moduleLoad('polls', 'polls');
 // $_head->set('<script src="'.ADDR_MODULES.'polls_panel/polls_panel.js"></script>'); // nie wiem czemu nie chce dzia³aæ ;o
 echo('<script src="'.ADDR_MODULES.'polls/templates/javascripts/polls_panel.js"></script>');
   
@@ -21,7 +21,8 @@ if ($_request->post('vote_'.$_request->post('polls')->show())->show())
 			array(':response', $_request->post('response')->show(), PDO::PARAM_INT)
 		)
 	);
-		HELP::redirect(ADDR_SITE.'polls.html');
+	
+	$_request->redirect(ADDR_SITE.'polls.html');
 }
 
 $count = $_pdo->getData('
@@ -55,30 +56,32 @@ if ($_pdo->getRowsCount($query))
 		if( ! $query)
 		{
 			$polls[$i] = array(
-				'ID' => $row['id'],
-				'Question' => $row['question'],
-				'DateStart' => HELP::showDate('shortdate', $row['date_start'])
+				'id' => $row['id'],
+				'question' => $row['question'],
+				'date_start' => HELP::showDate('shortdate', $row['date_start'])
 			);
 
 			$n = 0;
 			foreach(unserialize($row['response']) as $key => $val)
 			{
 				$response[$i][$key] = array(
-					'Val' => $val,
-					'N' => $n
+					'val' => $val,
+					'n' => $n
 				);
 				$n++;
 			}
 
-			$_panel->assign('PanelData', $polls);
-			$_panel->assign('PanelResponse', $response);
+			$_panel->assign('polls_data', $polls);
+			$_panel->assign('polls_response', $response);
 		}
 
 		if($_user->isLoggedIn())
 		{
-			$_panel->assign('Login', TRUE);
+			$_panel->assign('login', TRUE);
 		}
 
 		$i++;
 	}
+	
+	$_panel->assign('polls_archive', $_route->path(array('controller' => 'polls', 'action' => 'archive')));
 }

@@ -9,6 +9,7 @@
 | http://extreme-fusion.org/ef5/license/						 |
 +---------------------------------------------------------------*/
 $_locale->moduleLoad('lang', 'user_info_panel');
+$_head->set('	<link href="'.ADDR_MODULES.'user_info_panel/templates/stylesheet/user_info_panel.css" rel="stylesheet">');
 
 if ($_user->isLoggedIn())
 {
@@ -18,6 +19,7 @@ if ($_user->isLoggedIn())
 	}
 	
 	$_panel->assign('is_logged_in', TRUE);
+	$_panel->assign('username', $_user->getUsername());
 
 	$count = $_pdo->getMatchRowsCount('SELECT `id` FROM [messages] WHERE `to` = :id AND `read` = 0',
 		array(

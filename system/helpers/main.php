@@ -1,13 +1,14 @@
 <?php
-/*---------------------------------------------------------------+
-| eXtreme-Fusion - Content Management System - version 5         |
-+----------------------------------------------------------------+
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 |
-| http://extreme-fusion.org/                               		 |
-+----------------------------------------------------------------+
-| This product is licensed under the BSD License.				 |
-| http://extreme-fusion.org/ef5/license/						 |
-+---------------------------------------------------------------*/
+/***********************************************************
+| eXtreme-Fusion 5.0 Beta 5
+| Content Management System       
+|
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
+| http://extreme-fusion.org/                               		 
+|
+| This product is licensed under the BSD License.				 
+| http://extreme-fusion.org/ef5/license/						 
+***********************************************************/
 
 defined('EF5_SYSTEM') || exit;
 
@@ -48,7 +49,17 @@ function isNum($var, $exception = TRUE, $return_value = TRUE)
 
 function __autoload($class_name)
 {
-	$path = DIR_CLASS.strtolower($class_name).'.php';
+	$data = explode('_', $class_name);
+	if (count($data) > 1)
+	{
+		$path = implode(DIRECTORY_SEPARATOR, $data);
+	}
+	else
+	{
+		$path = $class_name;
+	}
+	
+	$path = DIR_CLASS.$path.'.php';
 
     if (file_exists($path))
 	{
@@ -66,13 +77,15 @@ Class HELP
 	protected static
 		$_pdo,
 		$_sett,
-		$_user;
+		$_user,
+		$_url;
 
-	public static function init($pdo, $sett, $user)
+	public static function init($pdo, $sett, $user, $url)
 	{
 		self::$_pdo  = $pdo;
 		self::$_sett = $sett;
 		self::$_user = $user;
+		self::$_url = $url;
 	}
 
 	/** METODY NAPISANE PRZEZ EF TEAM: **/
@@ -86,6 +99,20 @@ Class HELP
 			}
 
 			return $time/(60*60*24);
+		}
+	}
+
+	// TODO:: Przerobic na metodę routera
+	public static function createNaviLink($url)
+	{
+		if (!preg_match('/^http:/i', $url))
+		{
+			if ($url)
+			{	
+				return ADDR_SITE.self::$_url->getPathPrefix().$url;
+			}
+
+			return ADDR_SITE;
 		}
 	}
 
@@ -227,21 +254,21 @@ Class HELP
 	{
 		if ($user === NULL && $username === NULL)
 		{
-			$link = '<a href="'.HELP::path(array('controller' => 'profile', 'action' => self::$_user->get('id'), HELP::Title2Link(self::$_user->get('username')))).'">'.($text ? $text : self::$_user->getUsername()).'</a>';
+			$link = '<a href="'.self::$_url->path(array('controller' => 'profile', 'action' => self::$_user->get('id'))).'">'.($text ? $text : self::$_user->getUsername()).'</a>';
 		}
 		elseif ($username === NULL)
 		{
 			$username = self::$_user->getByID($user, 'username');
-			$link = '<a href="'.HELP::path(array('controller' => 'profile', 'action' => $user, HELP::Title2Link($username))).'">'.($text ? $text : self::$_user->getUsername($user)).'</a>';
+			$link = '<a href="'.self::$_url->path(array('controller' => 'profile', 'action' => $user)).'">'.($text ? $text : self::$_user->getUsername($user)).'</a>';
 		}
 		elseif ($user === NULL)
 		{
 			$user = self::$_user->getByUsername($username, 'id');
-			$link = '<a href="'.HELP::path(array('controller' => 'profile', 'action' => $user, HELP::Title2Link($username))).'">'.($text ? $text : self::$_user->getUsername($user)).'</a>';
+			$link = '<a href="'.self::$_url->path(array('controller' => 'profile', 'action' => $user)).'">'.($text ? $text : self::$_user->getUsername($user)).'</a>';
 		}
 		else
 		{
-			$link = '<a href="'.HELP::path(array('controller' => 'profile', 'action' => $user, HELP::Title2Link($username))).'">'.($text ? $text : self::$_user->getUsername($user)).'</a>';
+			$link = '<a href="'.self::$_url->path(array('controller' => 'profile', 'action' => $user)).'">'.($text ? $text : self::$_user->getUsername($user)).'</a>';
 		}
 
 		return $link;
@@ -250,6 +277,64 @@ Class HELP
 	public static function randArrayKey($array)
 	{
 		return rand(0, count($array)-1);
+	}
+	
+	//==================================
+	//PL: Oznaczenie kolorem znalezionego wyrażenia w ciągu
+	//==================================
+	public static function highlight($text, $search, $color = '#99bb00')
+	{
+		$txt = str_ireplace($search, '<span style="background: '.$color.'; font-weight: bold;">'.$search.'</span>', $text);
+ 
+		return $txt;
+	}
+	
+	//==================================
+	//PL: Rozkodowywanie adresów URL
+	//EN: Decoding URL
+	//==================================
+	public static function decodingURL($text)
+	{
+		$coding = array(
+			'%C4%85', '%C4%84', '%C4%87', '%C4%86', '%C4%99', '%C4%98', '%C5%82', '%C5%81', '%C5%84', '%C5%83',
+			'%C3%B3', '%C3%93', '%C5%9B', '%C5%9A', '%C5%BA', '%C5%B9', '%C5%BC', '%C5%BB', '%20', '%22',
+			'%3C', '%3E', '%7B', '%7D', '%7C', '%60', '%5E', '%E2%82%AC', '%E2%80%B0', '%C6%92',
+			'%CE%94', '%CE%A0', '%CE%A9', '%CE%B1', '%CE%B2', '%C2%A3', '%C2%A7', '%C2%A9', '%C2%B5', '%E2%88%9E'
+		);
+		$encoding = array(
+			'ą', 'Ą', 'ć', 'Ć', 'ę', 'Ę', 'ł', 'Ł', 'ń', 'Ń',
+			'ó', 'Ó', 'ś', 'Ś', 'ź', 'Ź', 'ż', 'Ż', ' ', '"',
+			'<', '>', '{', '}', '|', '`', '^', '€', '‰', 'ƒ',
+			'Δ', 'Π', 'Ω', 'α', 'β', '£', '§', '©', 'µ', '∞'
+		);
+		
+		$txt = str_replace($coding, $encoding, $text);
+		
+		return $txt;
+	}
+	
+	//==================================
+	//PL: Aliasy dla klas parsującej BBCode
+	//==================================
+	public static function parseBBCode($text)
+	{
+		return self::$_sbb->parseBBCode($text);
+	}
+	
+	//==================================
+	//PL: Aliasy dla klas parsującej Uśmieszki
+	//==================================
+	public static function parseSmiley($text)
+	{
+		return self::$_sbb->parseSmiley($text);
+	}
+	
+	//==================================
+	//PL: Aliasy dla klas parsującej BBCode i Uśmieszki
+	//==================================
+	public static function parseAllTags($text)
+	{
+		return self::$_sbb->parseAllTags($text);
 	}
 
 	/** koniec METODY NAPISANE PRZEZ EF TEAM **/
@@ -643,8 +728,8 @@ Class HELP
 	{
 		if( ! is_array($text))
 		{		
-			$a = array("Ą","Ś","Ę","Ó","Ł","Ż","Ź","Ć","Ń","ą","ś","ę","ó","ł","ż","ź","ć","ń","ü","&quot"," - "," ",".","!",";",":","(",")","[","]","{","}","|","?",",","/","+","=","#","@","$","%","^","&","*");
-			$b = array("A","S","E","O","L","Z","Z","C","N","a","s","e","o","l","z","z","c","n","u","","-","_","","","","","","","","","","","","","","","","","","","","","","","");
+			$a = array("Ą","Ś","Ę","Ó","Ł","Ż","Ź","Ć","Ń","ą","ś","ę","ó","ł","ż","ź","ć","ń","ü","&quot"," - "," ",".","!",";",":","(",")","[","]","{","}","|","?",",","+","=","#","@","$","%","^","&","*");
+			$b = array("A","S","E","O","L","Z","Z","C","N","a","s","e","o","l","z","z","c","n","u","","-","_","","","","","","","","","","","","","","","","","","","","","","");
 			$c = array("--","---","__","___");
 			$d = array("-","-","_","_");
 			$textreplaced = strtolower(str_replace($a,$b,$text));
@@ -739,77 +824,6 @@ Class HELP
 		}
 	}
 	
-	public static function path(array $data)
-	{
-		$sep = self::$_sett->getUns('routing', 'main_sep');
-		$param_sep = self::$_sett->getUns('routing', 'param_sep');
-		$ext_allowed = TRUE;		// Czy linki mogą posiadać rozszerzenie?
-		
-		if (isset($data['controller']))
-		{
-			$ctrl = $data['controller'];
-		}
-		else
-		{
-			die('Kontroler jest wymagany');
-		}
-
-		unset($data['controller']);
-
-		if (isset($data['action']))
-		{
-			$action = $sep.$data['action'];
-		}
-		else
-		{
-			$action = '';
-		}
-
-		unset($data['action']);
-
-		if (isset($data['extension']) && $data['extension'])
-		{
-			$ext = '.'.str_replace('.', '', $data['extension']);
-		}
-		elseif ($ext_allowed)
-		{
-			$ext = self::$_sett->getUns('routing', 'url_ext');
-		}
-		else
-		{
-			$ext = '';
-		}
-
-
-		unset($data['extension']);
-
-		$params = array();
-		foreach($data as $key => $val)
-		{
-			$params[] = !is_int($key) ? $key.$param_sep.$val : $val;
-		}
-
-		if ($params)
-		{
-			$params = $sep.implode($sep, $params);
-		}
-		else
-		{
-			$params = '';
-		}
-
-		if (self::$_sett->get('rewrite_module'))
-		{
-			$trace = '';
-		}
-		else
-		{
-			$trace = 'index.php/';
-		}
-
-		return ADDR_SITE.$trace.$ctrl.$action.$params.$ext;
-	}
-	
 	// Format the date & time accordingly
 	public static function showDate($format, $val) 
 	{
@@ -882,95 +896,4 @@ function showdate($format, $val) {
     } else {
         return strftime($format, $val + ($offset * 3600));
     }
-}
-
-function bbcodes($textarea = 'message')
-{
-	global $_pdo, $_sett, $_locale;
-	$bbcode_used = FALSE;
-	$_locale->setSubDir('bbcodes');
-
-	$query = $_pdo->getData('SELECT `name` FROM [bbcodes] WHERE `name` != \'autolink\' ORDER BY `order` ASC');
-	if ($_pdo->getRowsCount($query))
-	{
-		$bbcodes = array();
-		foreach ($query as $row)
-		{
-			$bbcode_name[] = $row['name'];
-		}
-	}
-	else
-	{
-		return FALSE;
-	}
-
-	$bbcode_info = array();
-	foreach ($bbcode_name as $bbcode)
-	{
-		include DIR_SYSTEM.'bbcodes'.DS.$bbcode.'.php';
-
-		if ($bbcode_info)
-		{
-			if (file_exists(DIR_SYSTEM."bbcodes/images/".$bbcode_info['value'].".png"))
-			{
-				$image = ADDR_BBCODE.'images/'.$bbcode_info['value'].'.png';
-			}
-			elseif (file_exists(DIR_SYSTEM."bbcodes/images/".$bbcode_info['value'].".gif"))
-			{
-				$image = ADDR_BBCODE.'images/'.$bbcode_info['value'].'.gif';
-			}
-			elseif (file_exists(DIR_SYSTEM."bbcodes/images/".$bbcode_info['value'].".jpg"))
-			{
-				$image = ADDR_BBCODE.'images/'.$bbcode_info['value'].'.jpg';
-			}
-			else
-			{
-				$image = FALSE;
-			}
-
-			$bbcodes[] = array(
-				'textarea' => $textarea,
-				'value' => $bbcode_info['value'],
-				'description' => $bbcode_info['description'],
-				'image' => $image,
-			);
-		}
-		unset ($bbcode_info);
-	}
-
-	$_locale->setSubDir('');
-	return $bbcodes;
-}
-
-function parseBBCode($text, $parse = TRUE)
-{
-	global $_pdo, $_locale, $_head, $_user;
-	$bbcode_used = $parse;
-	$_locale->setSubDir('bbcodes');
-
-	$query = $_pdo->getData('SELECT `name` FROM [bbcodes] ORDER BY `order` ASC');
-	if ($_pdo->getRowsCount($query))
-	{
-		$bbcodes = array();
-		foreach ($query as $row)
-		{
-			$bbcode_name[] = $row['name'];
-		}
-	}
-	else
-	{
-		return FALSE;
-	}
-
-	foreach ($bbcode_name as $bbcode)
-	{
-		if (file_exists(DIR_SYSTEM.'bbcodes'.DS.$bbcode.'.php'))
-		{
-			include DIR_SYSTEM.'bbcodes'.DS.$bbcode.'.php';
-		}
-	}
-
-	$text = HELP::descript($text, FALSE);
-	$_locale->setSubDir('');
-    return $text;
 }

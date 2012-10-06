@@ -1,29 +1,19 @@
 <?php defined('EF5_SYSTEM') || exit;
-/*---------------------------------------------------------------+
-| eXtreme-Fusion - Content Management System - version 5         |
-+----------------------------------------------------------------+
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 |
-| http://extreme-fusion.org/                               		 |
-+----------------------------------------------------------------+
-| This product is licensed under the BSD License.				 |
-| http://extreme-fusion.org/ef5/license/						 |
-+---------------------------------------------------------------*/
+/***********************************************************
+| eXtreme-Fusion 5.0 Beta 5
+| Content Management System       
+|
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
+| http://extreme-fusion.org/                               		 
+|
+| This product is licensed under the BSD License.				 
+| http://extreme-fusion.org/ef5/license/						 
+***********************************************************/
 try
 {
 	error_reporting(E_ALL | E_NOTICE);
 
-	require_once DIR_CLASS.'exception.php';
-
-	// Deklaracja sta³ej œcie¿ki adresu URL
-	if (isset($_SERVER['PATH_INFO']))
-	{
-		define('PATH_INFO', $_SERVER['PATH_INFO']);
-	}
-	else
-	{
-		// Strona g³ówna
-		define('PATH_INFO', '');
-	}
+	require_once DIR_CLASS.'Exception.php';
 	
 	if( ! extension_loaded('pdo')) 
 	{
@@ -38,7 +28,7 @@ try
 	if ( ! isset($_GET['NoOPT']))
 	{
 		require_once OPT_DIR.'opt.class.php';
-		require_once DIR_CLASS.'parser.php';
+		require_once DIR_CLASS.'Parser.php';
 	}
 
 	require_once DIR_SYSTEM.'helpers/main.php';
@@ -49,7 +39,7 @@ try
     $_system = new System;
 
     # PHP Data Object
-    $_pdo = new PDO_EXT('mysql:host='.$_dbconfig['host'].';dbname='.$_dbconfig['database'].';port='.$_dbconfig['port'], $_dbconfig['user'], $_dbconfig['password'], array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES '.$_dbconfig['charset']));
+    $_pdo = new Data('mysql:host='.$_dbconfig['host'].';dbname='.$_dbconfig['database'].';port='.$_dbconfig['port'], $_dbconfig['user'], $_dbconfig['password'], array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES '.$_dbconfig['charset']));
     
 	$_pdo->config($_dbconfig['prefix']);
     unset($_dbconfig);
@@ -74,7 +64,9 @@ try
 	# Files class
 	$_files = new Files;
 
-	HELP::init($_pdo, $_sett, $_user);
+	$_url = new Url($_sett->getUns('routing', 'url_ext'), $_sett->getUns('routing', 'main_sep'), $_sett->getUns('routing', 'param_sep'), $_system->rewriteAvailable(), $_system->pathInfoExists());
+		
+	HELP::init($_pdo, $_sett, $_user, $_url);
 
 	define('URL_REQUEST', isset($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'] != '' ? HELP::cleanurl($_SERVER['REQUEST_URI']) : $_SERVER['SCRIPT_NAME']);
 	define('URL_QUERY', isset($_SERVER['QUERY_STRING']) ? HELP::cleanurl($_SERVER['QUERY_STRING']) : '');

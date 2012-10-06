@@ -1,13 +1,14 @@
 <?php
-/*---------------------------------------------------------------+
-| eXtreme-Fusion - Content Management System - version 5         |
-+----------------------------------------------------------------+
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 |
-| http://extreme-fusion.org/                               		 |
-+----------------------------------------------------------------+
-| This product is licensed under the BSD License.				 |
-| http://extreme-fusion.org/ef5/license/						 |
-+---------------------------------------------------------------*/
+/***********************************************************
+| eXtreme-Fusion 5.0 Beta 5
+| Content Management System       
+|
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
+| http://extreme-fusion.org/                               		 
+|
+| This product is licensed under the BSD License.				 
+| http://extreme-fusion.org/ef5/license/						 
+***********************************************************/
 try
 {
 	require_once '../../config.php';
@@ -32,7 +33,7 @@ try
 		$_pdo->exec('UPDATE [notes] SET `note` = :note WHERE `id` = :id',
 			array(
 				array(':id', $_request->post('note_id')->show(), PDO::PARAM_INT),
-				array(':note', $_request->post('note_note')strip(), PDO::PARAM_STR)
+				array(':note', $_request->post('note_note')->strip(), PDO::PARAM_STR)
 			)
 		);
 		

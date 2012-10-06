@@ -24,6 +24,8 @@ $new_table[1] = array(
 		`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
 		`email` VARCHAR(200) NOT NULL DEFAULT '',
 		`title` VARCHAR(400) NOT NULL DEFAULT '',
+		`description` TEXT NOT NULL DEFAULT '',
+		`value` TEXT NOT NULL DEFAULT '',
 		PRIMARY KEY (`id`)
 	) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;"
 );

@@ -51,6 +51,6 @@ return array(
 	'Subtracted :points point with :section.' => 'Odečteno :points pkt. za :section.',
 	'All user points have been deleted.' => 'Všechny body uživatele byly smazány.',
 	'All users points have been deleted.' => 'Všechny body uživatelů byly smazány.',
-	'Points history has been deleted.' => 'Historie bodů uživatele byla smazána.'
+	'Points history has been deleted.' => 'Historie bodů uživatele byla smazána.',
 	'Error: There was not given numeric value.' => 'Chyba: Nebyly zadána numerická hodnota.',
 );

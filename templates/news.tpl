@@ -1,101 +1,91 @@
-{if $action}
+{if $action && $action !== 'page'}
 	{if $rows}
-	{php} opentable(__('News preview')) {/php}
-		<div class="news-content">
-			<div class="news">
-				<h4>{$news.title_name} <span class="right small">{i18n('Date:')} {$news.date}</span></h4>
-				{if $access_edit}
-					<div class="clear"></div>
-					<div class="right">
-						<a href="javascript:void(0);" class="tip admin-box" rel="{$ADDR_ADMIN}pages/news.php?page=news&action=edit&id={$news.title_id}&fromPage=true" title="{i18n('Edit')}">
-						<img src="{$ADDR_ADMIN_ICONS}edit.png" alt="{i18n('Edit')}" />
-					</div>
-				{/if}
-				<div class="left small">
-					<div>{if $news.category_id}{i18n('Category:')} <a href="{$news.category_link}">{$news.category_name}</a>,{/if} {i18n('Author:')} <a href="{$news.author_link}">{$news.author_name}</a></div>
-					<div>
-						{if $news.source}
-							<a href="{$news.source}" target="_blank">{i18n('Source')}</a>,
+		{php} opentable(__('News preview')) {/php}
+			<article class="news dark border_top_other">
+				<header>
+					<p class="text_dark">{i18n('Date:')} <time datetime="{$news.datetime}" pubdate="pubdate">{$news.date}</time></p>
+					<h3>
+						<a href="{$news.url}" title="{$news.title_name}">{$news.title_name}</a>
+						{if $access_edit}
+							<a href="javascript:void(0);" class="admin-box" rel="{$ADDR_ADMIN}pages/news.php?page=news&amp;action=edit&amp;id={$news.title_id}&amp;fromPage=true" title="{i18n('Edit')}">[{i18n('Edit')}]</a>
 						{/if}
-						{if $news.keyword}
-							{i18n('Tags:')}
-							{foreach=$news.keyword; value}
-								<a href="{@value.tag_url}">{@value.keyword_name}</a>,
-							{/foreach}
-						{/if}
+					</h3>
+					{if $news.allow_comments}<a href="#comments" class="news_comments" title="{i18n('Comments:')} {$news.num_comments}">{$news.num_comments}</a>{/if}
+					<div class="light text_light box_shadow1">
+						{if $news.category_id}<p>{i18n('Category:')} <a href="{$news.category_link}" rel="tag">{$news.category_name}</a></p>{/if}
+						<p>{i18n('Author:')} <a href="{$news.author_link}" rel="author">{$news.author_name}</a></p>
+						<p>{i18n('Reads:')} {$news.reads}</p>
 					</div>
+				</header>
+				<div id="content_extended" class="formated_text clearfix">
+					{if $news.content}
+						{$news.content}
+					{/if}
+					{if $news.content_ext}
+						{$news.content_ext}
+					{/if}
 				</div>
-				<div class="right small">{i18n('Reads:')} {$news.reads}, {i18n('Comments:')} {$news.num_comments}</div>
-			</div>
-			<div class="Content">
-				{if $news.content}
-					<a name='content'></a>
-					{$news.content}
-				{/if}
-				{if $news.content_ext}
-					<p>
-					<a name='content_extended'></a>
-					{$news.content_ext}
-					</p>
-				{/if}
-			</div>
-			<div class="ContentFooter">
-				<hr /><!--
-				{* Share it *}
-					<div class="addthis_toolbox addthis_default_style ">
-					<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
-					<a class="addthis_button_tweet"></a>
-					<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
-					<a class="addthis_counter addthis_pill_style"></a>
-					</div>
-					<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4e6dcb8a3de24922"></script>
-				{* (end of) Share it *}-->
-			</div>
-		</div>
-		
-	{php} closetable() {/php}
-	<a name='comments'></a>
-	{$comments}
+				<footer class="text_dark">
+					{if $news.keyword}
+						<p>
+							<strong>{i18n('Tags:')}</strong>
+							{foreach=$news.keyword; value}
+								<a href="{@value.tag_url}" rel="tag">{@value.keyword_name}</a>,
+							{/foreach}
+						</p>
+					{/if}
+					{if $news.source}
+						<p><strong>{i18n('Source')}:</strong> <a href="{$news.source}" target="_blank">{$news.source}</a></p>
+					{/if}
+				</footer>
+			</article>
+		{php} closetable() {/php}
+		{$comments}
 	{else}
-	{php} opentable(__('Error')) {/php}
-		<div class="status">{i18n('No data!')}</div>
-	{php} closetable() {/php}
+		{php} opentable(__('Error')) {/php}
+			<p class="status">{i18n('No data!')}</p>
+		{php} closetable() {/php}
 	{/if}
 {else}
 	{php} opentable(__('News')); {/php}
 		{if $news}
 			{section=news}
-				<div class="news-content">
-					<div class="news">
-						<h4><a href="{$news.url}">{$news.title_name}</a> <span class="right small">{i18n('Date:')} {$news.date}</span></h4>
-						<div class="left small">
-							<div>{if $news.category_id}{i18n('Category:')} <a href="{$news.category_link}">{$news.category_name}</a>, {/if}{i18n('Author:')} <a href="{$news.author_link}">{$news.author_name}</a> {i18n('Language:')} {$news.language}</div>
-							<div>
-								{if $news.source}
-									<a href="{$news.source}" target="_blank">{i18n('Source')}</a>,
-								{/if}
-								{if $news.keyword}
-									{i18n('Tags:')}
-									{foreach=$news.keyword; value}
-										<a href="{@value.tag_url}">{@value.keyword_name}</a>,
-									{/foreach}
-								{/if}
-							</div>
+				<article class="news dark border_top_other">
+					<header>
+						<p class="text_dark">{i18n('Date:')} <time datetime="{$news.datetime}" pubdate="pubdate">{$news.date}</time></p>
+						<h3><a href="{$news.url}" title="{$news.title_name}">{$news.title_name}</a></h3>
+						{if $news.allow_comments}<a href="{$news.url}#comments" class="news_comments" title="{i18n('Comments:')} {$news.num_comments}">{$news.num_comments}</a>{/if}
+						<div class="light text_light box_shadow1">
+							{if $news.category_id}<p>{i18n('Category:')} <a href="{$news.category_link}" rel="tag">{$news.category_name}</a></p>{/if}
+							<p>{i18n('Author:')} <a href="{$news.author_link}" rel="author">{$news.author_name}</a></p>
+							<p>{i18n('Language:')} {$news.language}</p>
+							<p>{i18n('Reads:')} {$news.reads}</p>
 						</div>
-						<div class="right small">{i18n('Reads:')} {$news.reads}, {if $news.allow_comments} <a href="{$news.url}#comments">{i18n('Comments:')} {$news.num_comments}</a>{/if}</div>
-					</div>
+					</header>
+					<div class="formated_text clearfix">
 						{$news.content}
-					<hr />
-					{if $news.content_ext}
-						<div class="right">
-							<a href="{$news.url}{if $news.content_ext}#content_extended{else}#content{/if}" class="tip" title="{i18n('Read more...')}">{i18n('Read more...')}</a>
-						</div>
-					{/if}
-				</div>
-			{/section}	
-			{$page_nav}
-		{else}
-			<div class="status">{i18n('No News has been posted yet')}</div>
-		{/if}
-	{php} closetable(); {/php}
+					</div>
+					<footer class="text_dark clearfix">
+						{if $news.content_ext}
+							<a href="{$news.url}#content_extended" class="button more">{i18n('Read more...')}</a>
+						{/if}
+						{if $news.keyword}
+							<p>
+								<strong>{i18n('Tags:')}</strong>
+								{foreach=$news.keyword; value}
+									<a href="{@value.tag_url}" rel="tag">{@value.keyword_name}</a>,
+								{/foreach}
+							</p>
+						{/if}
+						{if $news.source}
+							<p><strong>{i18n('Source')}:</strong> <a href="{$news.source}" target="_blank">{$news.source}</a></p>
+						{/if}
+					</footer>
+					</article>
+			{/section}
+		{$page_nav}
+	{else}
+		<p class="status">{i18n('No News has been posted yet')}</p>
+	{/if}
+{php} closetable(); {/php}
 {/if}

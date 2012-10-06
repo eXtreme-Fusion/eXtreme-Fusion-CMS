@@ -84,7 +84,7 @@ return array(
 	'User Panel' => 'Panel uživatele',
 	'Admin Panel' => 'Panel administrátora',
 
-	'Private messages' => 'Soukromé zprávy',
+	'Private messages' => 'Soukr. zprávy',
 
 	'Failed to request account data. Error:' => 'Nelze získat informace o účtu. Chyba:',
 	'Failed to request report data. Error:' => 'Nepodařilo se získat data reportu. Chyba:',
@@ -184,7 +184,7 @@ return array(
 
 		// Member User Menu
 	'Edit profile' => 'Upravit profil',//120
-	'Messages' => 'Soukromé zprávy',
+	'Messages' => 'Zprávy',
 	'Users' => 'Uživatelé',
 	'Logout' => 'Odhlásit',
 
@@ -315,8 +315,9 @@ return array(
 	//Czas sesji
 	
 	// Function showCopyrights()
-	'Powered by :link' => 'Zasilany przez :link',
-	'Under BSD License' => 'Na licencji BSD',
+	'Powered by :system' => 'Stránka založena na systému CMS :system',
+
+	'Powered by :system under :license License' => 'Stránka založena na systému CMS :system na licenci :license',
 
 	'Yes' => 'Ano',
 	'No' => 'Ne',
@@ -351,4 +352,10 @@ return array(
 	'Confirm new password:' => 'Potvrdit nové heslo:',
 	'Avatar:' => 'Avatar:',
 	'Edit account' => 'Upravit účet',
+	'Language:' => 'Jazyk:',
+
+	'Polish' => 'Polský',
+	'English' => 'Anglický',
+	'Czech' => 'Český'
+
 );

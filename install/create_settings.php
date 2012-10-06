@@ -1,13 +1,14 @@
 <?php
-/*---------------------------------------------------------------+
-| eXtreme-Fusion - Content Management System - version 5         |
-+----------------------------------------------------------------+
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 |
-| http://extreme-fusion.org/                               		 |
-+----------------------------------------------------------------+
-| This product is licensed under the BSD License.				 |
-| http://extreme-fusion.org/ef5/license/						 |
-+---------------------------------------------------------------*/
+/***********************************************************
+| eXtreme-Fusion 5.0 Beta 5
+| Content Management System
+|
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
+|
+| This product is licensed under the BSD License.
+| http://extreme-fusion.org/ef5/license/
+***********************************************************/
 
 date_default_timezone_set('UTC');
 mysql_query('SET NAMES utf8');
@@ -27,7 +28,7 @@ insert($_dbconfig['prefix'].'settings', array('key' => 'site_intro', 'value' => 
 insert($_dbconfig['prefix'].'settings', array('key' => 'footer', 'value' => 'Copyright &copy; 2005 - '.date('Y').' by the eXtreme-Fusion Crew'));
 insert($_dbconfig['prefix'].'settings', array('key' => 'opening_page', 'value' => 'news'));
 insert($_dbconfig['prefix'].'settings', array('key' => 'theme', 'value' => 'eXtreme-Fusion-5'));
-insert($_dbconfig['prefix'].'settings', array('key' => 'locale', 'value' => stripinput($_POST['localeset'])));
+insert($_dbconfig['prefix'].'settings', array('key' => 'locale', 'value' => $localeset));
 
 insert($_dbconfig['prefix'].'settings', array('key' => 'site_banner', 'value' => 'images/extreme-fusion-logo-light.png'));
 insert($_dbconfig['prefix'].'settings', array('key' => 'site_banner1', 'value' => ''));
@@ -110,6 +111,8 @@ insert($_dbconfig['prefix'].'settings', array('key' => 'maintenance_level', 'val
 insert($_dbconfig['prefix'].'settings', array('key' => 'default_search', 'value' => 'all'));
 insert($_dbconfig['prefix'].'settings', array('key' => 'deactivation_period', 'value' => 365));
 insert($_dbconfig['prefix'].'settings', array('key' => 'deactivation_response', 'value' => 14));
+insert($_dbconfig['prefix'].'settings', array('key' => 'news_cats_per_page', 'value' => 25));
+insert($_dbconfig['prefix'].'settings', array('key' => 'news_cats_iteam_per_page', 'value' => 10));
 insert($_dbconfig['prefix'].'settings', array('key' => 'news_per_page', 'value' => 11));
 insert($_dbconfig['prefix'].'settings', array('key' => 'notes_per_page', 'value' => 4));
 insert($_dbconfig['prefix'].'settings', array('key' => 'users_per_page', 'value' => 10));
@@ -127,10 +130,23 @@ insert($_dbconfig['prefix'].'settings', array('key' => 'routing', 'value' => ser
 	'main_sep' => '/',
 	'url_ext' => '.html',
 	'tpl_ext' => '.tpl',
-	'logic_ext' => '.php'
+	'logic_ext' => '.php',
+	'ext_allowed' => '1'
+))));
+insert($_dbconfig['prefix'].'settings', array('key' => 'cache', 'value' => serialize(array(
+	//'expire_contact' => '3600',
+	'expire_news' => '3600',
+	'expire_news_cats' => '3600',
+	'expire_pages' => '3600',
+	'expire_profile' => '3600',
+	//'expire_rules' => '3600',
+	'expire_tags' => '3600',
+	'expire_team' => '3600',
+	'expire_users' => '3600',
 ))));
 
-if ($_system->apacheLoadedModules('mod_rewrite'))
+/** Nie usuwac/Do not remove
+if ($_system->apachemoduleLoaded('mod_rewrite'))
 {
 	insert($_dbconfig['prefix'].'settings', array('key' => 'rewrite_module', 'value' => 1));
 }
@@ -138,7 +154,7 @@ else
 {
 	insert($_dbconfig['prefix'].'settings', array('key' => 'rewrite_module', 'value' => 0));
 }
-
+**/
 /*
 * Admin Panel Settings
 */
@@ -159,6 +175,7 @@ $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `im
 $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.security', 'security.png', 'Security Politics', 'settings_security.php', '4')");
 $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.settings', 'settings.png', 'Main', 'settings_main.php', 4)");
 $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.settings_banners', 'settings_banners.png', 'Banners', 'settings_banners.php', 4)");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.settings_cache', 'settings_cache.png', 'Cache', 'settings_cache.php', 4)");
 $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.settings_time', 'settings_time.png', 'Time and Date', 'settings_time.php', 4)");
 $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.settings_registration', 'registration.png', 'Registration', 'settings_registration.php', 4)");
 $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.settings_misc', 'settings_misc.png', 'Miscellaneous', 'settings_misc.php', 4)");
@@ -187,30 +204,35 @@ $salt = substr(sha512(uniqid(rand(), true)), 0, 5);
 //Store hash of salt plus a random symbol plus original password.
 $hashedpwd = sha512($salt.'^'.$password1);
 
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."users (`username`, `password`, `salt`,  `link`, `email`, `hide_email`, `valid`, `offset`, `avatar`, `joined`, `lastvisit`, `ip`, `status`, `theme`, `roles`, `role`) VALUES ('".$username."', '".($hashedpwd)."', '".($salt)."', '".HELP::Title2Link($username)."', '".$email."', '1', '1', '0', '', '".time()."', '0', '0.0.0.0', '0', 'Default', '".serialize(array(1, 2, 3))."', '1')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."users (`username`, `password`, `salt`,  `link`, `email`, `hide_email`, `valid`, `offset`, `avatar`, `joined`, `lastvisit`, `ip`, `status`, `theme`, `roles`, `role`, `lang`) VALUES ('".$username."', '".($hashedpwd)."', '".($salt)."', '".HELP::Title2Link($username)."', '".$email."', '1', '1', '0', '', '".time()."', '0', '0.0.0.0', '0', 'Default', '".serialize(array(1, 2, 3))."', '1', '".$language."')");
 
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('smiley', '1')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('b', '2')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('i', '3')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('u', '4')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('url', '5')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('mail', '6')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('img', '7')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('center', '8')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('small', '9')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('code', '10')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('quote', '11')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('spo', 12)");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('b', '1')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('i', '2')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('u', '3')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('url', '4')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('mail', '5')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('img', '6')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('center', '7')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('small', '8')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('code', '9')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('quote', '10')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('spo', '11')");
 
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (':)', 'smile.gif', 'Smile')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (';)', 'wink.gif', 'Wink')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (':(', 'sad.gif', 'Sad')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (':|', 'frown.gif', 'Frown')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (':o', 'shock.gif', 'Shock')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (':P', 'pfft.gif', 'Pfft')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES ('B)', 'cool.gif', 'Cool')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (':D', 'grin.gif', 'Grin')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (':@', 'angry.gif', 'Angry')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (':)', 'smile.png', 'Smile')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (';)', 'wink.png', 'Wink')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (':(', 'sad.png', 'Sad')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (';(', 'cry.png', 'Cry')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (':|', 'frown.png', 'Frown')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (':o', 'shock.png', 'Shock')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES ('Oo', 'blink.png', 'Blink')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (':P', 'pfft.png', 'Pfft')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES ('B)', 'cool.png', 'Cool')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (';/', 'annoyed.png', 'Annoyed')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (':D', 'grin.png', 'Grin')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (':@', 'angry.png', 'Angry')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES ('^^', 'joyful.png', 'Joyful')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES ('-.-', 'pinch.png', 'Pinch')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (':extreme:', '../favicon.ico', 'eXtreme-Fusion')");
 
 $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('".__('Bugs')."', '".HELP::Title2Link(__('Bugs'))."', 'bugs.png')");
 $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('".__('Downloads')."', '".HELP::Title2Link(__('Downloads'))."', 'downloads.png')");
@@ -229,27 +251,23 @@ $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`
 $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('".__('Themes')."', '".HELP::Title2Link(__('Themes'))."', 'themes.png')");
 $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('".__('Windows')."', '".HELP::Title2Link(__('Windows'))."', 'windows.png')");
 
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."news  (`id`, `title`, `link`, `category`, `content`, `content_extended`, `author`, `source`, `breaks`, `description`, `datestamp`, `access`, `reads`, `draft`, `sticky`, `allow_comments`, `allow_ratings`, `language`) VALUES (NULL, 'Lorem Ipsum - 1', 'lorem_ipsum-1', '2', 'Lorem Ipsum jest tekstem stosowanym jako przykładowy wypełniacz w przemyśle poligraficznym. Został po raz pierwszy użyty w XV w. przez nieznanego drukarza do wypełnienia tekstem próbnej książki. Pięć wieków później zaczął być używany przemyśle elektronicznym, pozostając praktycznie niezmienionym. Spopularyzował się w latach 60. XX w. wraz z publikacją arkuszy Letrasetu, zawierających fragmenty Lorem Ipsum, a ostatnio z zawierającym różne wersje Lorem Ipsum oprogramowaniem przeznaczonym do realizacji druków na komputerach osobistych, jak Aldus PageMaker Ogólnie znana teza głosi, iż użytkownika może rozpraszać zrozumiała zawartość strony, kiedy ten chce zobaczyć sam jej wygląd. Jedną z mocnych stron używania Lorem Ipsum jest to, że ma wiele różnych „kombinacji” zdań, słów i akapitów, w przeciwieństwie do zwykłego: „tekst, tekst, tekst”, sprawiającego, że wygląda to „zbyt czytelnie” po polsku. Wielu webmasterów i designerów używa Lorem Ipsum jako domyślnego modelu tekstu i wpisanie w internetowej wyszukiwarce ‘lorem ipsum’ spowoduje znalezienie bardzo wielu stron, które wciąż są w budowie. Wiele wersji tekstu ewoluowało i zmieniało się przez lata, czasem przez przypadek, czasem specjalnie (humorystyczne wstawki itd).', 'Lorem Ipsum jest tekstem stosowanym jako przykładowy wypełniacz w przemyśle poligraficznym. Został po raz pierwszy użyty w XV w. przez nieznanego drukarza do wypełnienia tekstem próbnej książki. Pięć wieków później zaczął być używany przemyśle elektronicznym, pozostając praktycznie niezmienionym. Spopularyzował się w latach 60. XX w. wraz z publikacją arkuszy Letrasetu, zawierających fragmenty Lorem Ipsum, a ostatnio z zawierającym różne wersje Lorem Ipsum oprogramowaniem przeznaczonym do realizacji druków na komputerach osobistych, jak Aldus PageMaker Ogólnie znana teza głosi, iż użytkownika może rozpraszać zrozumiała zawartość strony, kiedy ten chce zobaczyć sam jej wygląd. Jedną z mocnych stron używania Lorem Ipsum jest to, że ma wiele różnych „kombinacji” zdań, słów i akapitów, w przeciwieństwie do zwykłego: „tekst, tekst, tekst”, sprawiającego, że wygląda to „zbyt czytelnie” po polsku. Wielu webmasterów i designerów używa Lorem Ipsum jako domyślnego modelu tekstu i wpisanie w internetowej wyszukiwarce ‘lorem ipsum’ spowoduje znalezienie bardzo wielu stron, które wciąż są w budowie. Wiele wersji tekstu ewoluowało i zmieniało się przez lata, czasem przez przypadek, czasem specjalnie (humorystyczne wstawki itd).', '1', 'http://extreme-fusion.org', '0', 'Skrót newsa nr. 1', '".time()."', '1', '1', '0', '0', '1', '1', '".$default_lang."')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."news  (`id`, `title`, `link`, `category`, `content`, `content_extended`, `author`, `source`, `breaks`, `description`, `datestamp`, `access`, `reads`, `draft`, `sticky`, `allow_comments`, `allow_ratings`, `language`) VALUES (NULL, 'Lorem Ipsum - 2', 'lorem_ipsum-2', '3', 'Lorem Ipsum jest tekstem stosowanym jako przykładowy wypełniacz w przemyśle poligraficznym. Został po raz pierwszy użyty w XV w. przez nieznanego drukarza do wypełnienia tekstem próbnej książki. Pięć wieków później zaczął być używany przemyśle elektronicznym, pozostając praktycznie niezmienionym. Spopularyzował się w latach 60. XX w. wraz z publikacją arkuszy Letrasetu, zawierających fragmenty Lorem Ipsum, a ostatnio z zawierającym różne wersje Lorem Ipsum oprogramowaniem przeznaczonym do realizacji druków na komputerach osobistych, jak Aldus PageMaker Ogólnie znana teza głosi, iż użytkownika może rozpraszać zrozumiała zawartość strony, kiedy ten chce zobaczyć sam jej wygląd. Jedną z mocnych stron używania Lorem Ipsum jest to, że ma wiele różnych „kombinacji” zdań, słów i akapitów, w przeciwieństwie do zwykłego: „tekst, tekst, tekst”, sprawiającego, że wygląda to „zbyt czytelnie” po polsku. Wielu webmasterów i designerów używa Lorem Ipsum jako domyślnego modelu tekstu i wpisanie w internetowej wyszukiwarce ‘lorem ipsum’ spowoduje znalezienie bardzo wielu stron, które wciąż są w budowie. Wiele wersji tekstu ewoluowało i zmieniało się przez lata, czasem przez przypadek, czasem specjalnie (humorystyczne wstawki itd).', 'Lorem Ipsum jest tekstem stosowanym jako przykładowy wypełniacz w przemyśle poligraficznym. Został po raz pierwszy użyty w XV w. przez nieznanego drukarza do wypełnienia tekstem próbnej książki. Pięć wieków później zaczął być używany przemyśle elektronicznym, pozostając praktycznie niezmienionym. Spopularyzował się w latach 60. XX w. wraz z publikacją arkuszy Letrasetu, zawierających fragmenty Lorem Ipsum, a ostatnio z zawierającym różne wersje Lorem Ipsum oprogramowaniem przeznaczonym do realizacji druków na komputerach osobistych, jak Aldus PageMaker Ogólnie znana teza głosi, iż użytkownika może rozpraszać zrozumiała zawartość strony, kiedy ten chce zobaczyć sam jej wygląd. Jedną z mocnych stron używania Lorem Ipsum jest to, że ma wiele różnych „kombinacji” zdań, słów i akapitów, w przeciwieństwie do zwykłego: „tekst, tekst, tekst”, sprawiającego, że wygląda to „zbyt czytelnie” po polsku. Wielu webmasterów i designerów używa Lorem Ipsum jako domyślnego modelu tekstu i wpisanie w internetowej wyszukiwarce ‘lorem ipsum’ spowoduje znalezienie bardzo wielu stron, które wciąż są w budowie. Wiele wersji tekstu ewoluowało i zmieniało się przez lata, czasem przez przypadek, czasem specjalnie (humorystyczne wstawki itd).', '1', 'http://pl.lipsum.com/', '0', 'Skrót newsa nr.2', '".time()."', '3', '1', '0', '0', '1', '1', '".$default_lang."')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."news  (`id`, `title`, `link`, `category`, `content`, `author`, `source`, `breaks`, `description`, `datestamp`, `access`, `reads`, `draft`, `sticky`, `allow_comments`, `allow_ratings`, `language`) VALUES (NULL, '".__('Example news title')."', '".__('Example news url')."', '2', '".__('Example news content')."', '1', 'http://extreme-fusion.org', '0', '".__('Example news description')."', '".time()."', '3', '1', '0', '0', '1', '1', '".$language."')");
 
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."tags  (`id`, `supplement`, `supplement_id`, `value`, `value_for_link`, `access`) VALUES (1, 'NEWS', 1, 'Tag1', 'tag1', '1')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."tags  (`id`, `supplement`, `supplement_id`, `value`, `value_for_link`, `access`) VALUES (2, 'NEWS', 1, 'Tag2', 'tag2', '1')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."tags  (`id`, `supplement`, `supplement_id`, `value`, `value_for_link`, `access`) VALUES (3, 'NEWS', 1, 'Tag3', 'tag3', '1')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."tags  (`id`, `supplement`, `supplement_id`, `value`, `value_for_link`, `access`) VALUES (4, 'NEWS', 2, 'Tag4', 'tag4', '1')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."tags  (`id`, `supplement`, `supplement_id`, `value`, `value_for_link`, `access`) VALUES (5, 'NEWS', 2, 'Tag5', 'tag5', '1')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."tags  (`id`, `supplement`, `supplement_id`, `value`, `value_for_link`, `access`) VALUES (6, 'NEWS', 2, 'Tag6', 'tag6', '1')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."tags  (`id`, `supplement`, `supplement_id`, `value`, `value_for_link`, `access`) VALUES (1, 'NEWS', 1, 'eXtreme-Fusion', 'extreme_fusion', '1')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."tags  (`id`, `supplement`, `supplement_id`, `value`, `value_for_link`, `access`) VALUES (2, 'NEWS', 1, 'eXtreme-Fusion 5', 'extreme_fusion_5', '1')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."tags  (`id`, `supplement`, `supplement_id`, `value`, `value_for_link`, `access`) VALUES (3, 'NEWS', 1, 'CMS', 'cms', '1')");
 
 $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."panels (`name`, `filename`, `content`, `side`, `order`, `type`, `access`, `display`, `status`) VALUES ('".__('Navigation')."', 'navigation_panel', '', '1', '1', 'file', '3', '0', '1')");
 $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."panels (`name`, `filename`, `content`, `side`, `order`, `type`, `access`, `display`, `status`) VALUES ('".__('Online Users')."', 'online_users_panel', '', '1', '2', 'file', '3', '0', '1')");
 $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."panels (`name`, `filename`, `content`, `side`, `order`, `type`, `access`, `display`, `status`) VALUES ('".__('Welcome Message')."', 'welcome_message_panel', '', '2', '1', 'file', '3', '0', '0')");
 $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."panels (`name`, `filename`, `content`, `side`, `order`, `type`, `access`, `display`, `status`) VALUES ('".__('User Panel')."', 'user_info_panel', '', '4', 1, 'file', '3', '0', '1')");
 
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('Home')."', '', '3', '2', '0', '1')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('News Cats')."', 'news_cats', '3', '2', '0', '2')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('Users')."', 'users', '3', '2', '0', '3')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('Home')."', '', '3', '3', '0', '1')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('News Cats')."', 'news_cats.html', '3', '3', '0', '2')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('Users')."', 'users.html', '3', '3', '0', '3')");
 //$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('Login')."', 'login', '3', '1', '0', '4')");
-//$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('Search')."', 'search', '3', '0', '0', '5')");
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('Materiały i wpisy')."', 'pages', '3', '2', '0', '3')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('Materiały i wpisy')."', 'pages.html', '3', '3', '0', '4')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('Search')."', 'search.html', '3', '3', '0', '5')");
 
 
 $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."user_field_cats (`name`, `order`) VALUES ('".__('Information')."', 1)");
@@ -292,6 +310,7 @@ $result = dbquery("INSERT INTO `".$_dbconfig['prefix']."permissions` (`name`, `s
 	('admin.security', 1, '".__('Perm: admin security')."', 1),
 	('admin.settings', 1, '".__('Perm: admin settings')."', 1),
 	('admin.settings_banners', 1, '".__('Perm: admin settings_banners')."', 1),
+	('admin.settings_cache', 1, '".__('Perm: admin settings_cache')."', 1),
 	('admin.settings_time', 1, '".__('Perm: admin settings_time')."', 1),
 	('admin.settings_registration', 1, '".__('Perm: admin settings_registration')."', 1),
 	('admin.settings_misc', 1, '".__('Perm: admin settings_misc')."', 1),
@@ -307,6 +326,6 @@ $result = dbquery("INSERT INTO `".$_dbconfig['prefix']."permissions` (`name`, `s
 	('admin.users', 1, '".__('Perm: admin users')."', 1)
 ");
 $result = dbquery("INSERT INTO `".$_dbconfig['prefix']."permissions_sections` (`name`, `description`, `is_system`) VALUES ('admin', '".__('Administration')."', 1), ('site', '".__('Site')."', 1)");
-$result = dbquery("INSERT INTO `".$_dbconfig['prefix']."groups` (`title`, `description`, `format`, `permissions`) VALUES ('".__('Admin')."', '".__('Group: admin')."', '<span style=\"color:#99bb00\">{username}</span>', '".serialize(array('*'))."'), ('".__('User')."', '".__('Group: user')."', '{username}', '".serialize(array('site.login', 'site.comment', 'site.comment.edit'))."'), ('".__('Guest')."', '".__('Group: guest')."', '{username}', '".serialize(array())."')");
+$result = dbquery("INSERT INTO `".$_dbconfig['prefix']."groups` (`title`, `description`, `format`, `permissions`) VALUES ('".__('Admin')."', '".__('Group: admin')."', '<span style=\"color:#99bb00\">{username}</span>', '".serialize(array('*'))."'), ('".__('User')."', '".__('Group: user')."', '{username}', '".serialize(array('site.login', 'site.comment', 'site.comment.add', 'site.comment.edit'))."'), ('".__('Guest')."', '".__('Group: guest')."', '{username}', '".serialize(array())."')");
 
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."users_data (`user_id`, `lang`) VALUES ('1', '".$default_lang."')");
+$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."users_data (`user_id`) VALUES ('1')");

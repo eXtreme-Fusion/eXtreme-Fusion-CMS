@@ -1,13 +1,14 @@
 <?php
-/*---------------------------------------------------------------+
-| eXtreme-Fusion - Content Management System - version 5         |
-+----------------------------------------------------------------+
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 |
-| http://extreme-fusion.org/                               		 |
-+----------------------------------------------------------------+
-| This product is licensed under the BSD License.				 |
-| http://extreme-fusion.org/ef5/license/						 |
-+---------------------------------------------------------------*/
+/***********************************************************
+| eXtreme-Fusion 5.0 Beta 5
+| Content Management System       
+|
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
+| http://extreme-fusion.org/                               		 
+|
+| This product is licensed under the BSD License.				 
+| http://extreme-fusion.org/ef5/license/						 
+***********************************************************/
 
 // Paweł jak będziesz dokańczać strony swoje to pole z nazwą strony niech nie nazywa się 'name' tylko 'title'
 // W innym przypadku koliduje to z API tagów. To samo ma się do opisu tzw. description
@@ -30,7 +31,7 @@ try
 	$_locale->load('pages');
 
 	/** Załączam model-klasę do obsługi Stron **/
-	require DIR_CLASS.'pages.php';
+	require DIR_CLASS.'Pages.php';
 
     $_tpl = new Iframe;
 

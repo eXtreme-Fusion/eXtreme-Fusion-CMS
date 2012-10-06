@@ -27,6 +27,7 @@ return array(
 	'Perm: admin security' => 'Bezpečnostní nastavení',
 	'Perm: admin settings' => 'Nastavení hlavního systému.',
 	'Perm: admin settings_banners' => 'Správa bannerů',
+	'Perm: admin settings_cache' => 'Nastavení paměti cache',
 	'Perm: admin settings_time' => 'Nastavení datumu a času.',
 	'Perm: admin settings_registration' => 'Přístup do nastavení registrace.',
 	'Perm: admin settings_misc' => 'Přístup do nastavení sekce ostatní.',
@@ -100,9 +101,7 @@ return array(
 	'Login password fields can not be left empty' => 'Pole pro heslo nemůže být prázdné!',
 	'Your email address does not appear to be valid.' => 'Byla zadána neplatná adresa e-mailu',
 	'Email field can not be left empty.' => 'Pole e-mailové adresy nemůže být prázdné!',
-	'Setup complete' => '<div class="valid">Dokončení instalace systému eXtreme-Fusion 5.0 - Ninja Edition!</div><br />
-	<div class="status"><strong>Informace:</strong> Z bezpečnostních důvodů po stisknutí tlačítka Dokončit musí být instalační soubory smazány.</div><br />
-	<div class="info">Děkujeme, že jste se rozhodli pro eXtreme-fusion v.5.0 - Ninja Edition!</div>',
+	'Setup complete' => '<div class="valid">Dokončení instalace. Děkujeme, že jste se rozhodli pro eXtreme-fusion v.5.0 - Ninja Edition!</div>',
 	'Your user settings are not correct:' => 'Vaše uživatelská data nejsou správná:',
 	//Welcome Message
 	'Welcome to your site' => 'Vítejte na své nové stránce.',
@@ -144,5 +143,10 @@ return array(
 	'Website' => 'Webová stránka',
 	'Living place' => 'Bydliště',
 	'Signature' => 'Podpis',
-	'Rewrite info' => 'Your server is ready to work with rewrite module, but system does not have permission to change name of file. If you want to have SEO URLs, rename the file from "rewrite" to ".htaccess". Otherwise, just ignore this message.',
-);
+	'Rewrite info' => 'Váš server je připraven spolupracovat s rewrite modulem, ale systém nemá oprávnění ke změně názvu souboru. Pokud chcete mít SEO URLs, přejmenujte soubor z "rewrite" na ".htaccess". V opačném případě tuto zprávu ignorujte.',
+	// Example news
+	'Example news title' => 'Příklad novinky',
+	'Example news content' => 'Vítejte na své webové stránce.',
+	'Example news url' => 'příklad adresy novinky',
+	'Example news description' => 'Příklad popisu novinky',
+	);

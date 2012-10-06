@@ -1,13 +1,14 @@
 <?php defined('EF5_SYSTEM') || exit;
-/*---------------------------------------------------------------+
-| eXtreme-Fusion - Content Management System - version 5         |
-+----------------------------------------------------------------+
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 |
-| http://extreme-fusion.org/                               		 |
-+----------------------------------------------------------------+
-| This product is licensed under the BSD License.				 |
-| http://extreme-fusion.org/ef5/license/						 |
-+---------------------------------------------------------------*/
+/***********************************************************
+| eXtreme-Fusion 5.0 Beta 5
+| Content Management System       
+|
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
+| http://extreme-fusion.org/                               		 
+|
+| This product is licensed under the BSD License.				 
+| http://extreme-fusion.org/ef5/license/						 
+***********************************************************/
 
 $side_types = array(
 	'1' => 'LEFT',
@@ -52,7 +53,18 @@ foreach($_panels->getPanelsList($_user) as $id => $data)
 	}
 	else
 	{
-		eval($_panels->closePHPSet($data['content'], TRUE));
+		if ($data['side'] === '2' || $data['side'] === '3')
+		{
+			opentable($data['name']);
+				eval($_panels->closePHPSet($data['content'], TRUE));
+			closetable();
+		}
+		else
+		{
+			openside($data['name']);
+				eval($_panels->closePHPSet($data['content'], TRUE));
+			closeside();
+		}
 	}
 }
 

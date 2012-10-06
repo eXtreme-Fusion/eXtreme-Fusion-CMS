@@ -1,16 +1,23 @@
 <?php defined('EF5_SYSTEM') || exit;
-/*---------------------------------------------------------------+
-| eXtreme-Fusion - Content Management System - version 5         |
-+----------------------------------------------------------------+
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 |
-| http://extreme-fusion.org/                               		 |
-+----------------------------------------------------------------+
-| This product is licensed under the BSD License.				 |
-| http://extreme-fusion.org/ef5/license/						 |
-+---------------------------------------------------------------*/
+/***********************************************************
+| eXtreme-Fusion 5.0 Beta 5
+| Content Management System       
+|
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
+| http://extreme-fusion.org/                               		 
+|
+| This product is licensed under the BSD License.				 
+| http://extreme-fusion.org/ef5/license/						 
+***********************************************************/
 $_locale->load('users');
 
 define('THIS', FALSE);
+
+$theme = array(
+	'Title' => __('Lista użytkowników').' &raquo; '.$_sett->get('site_name'),
+	'Keys' => 'Użytkownicy '.$_sett->get('site_name').', konta '.$_sett->get('site_name').', profile',
+	'Desc' => 'Lista aktywnych kont na stronie '.$_sett->get('site_name')
+);
 
 $data = new Edit(
 	array(
@@ -23,9 +30,9 @@ $rows = $_pdo->getMatchRowsCount('SELECT * FROM [users] WHERE `status` = 0 '.($d
 
 if ($rows)
 {
-	$rowstart = $data->arr('current')->isNum(TRUE, FALSE) ? PAGING::getRowStart($data->arr('current')->isNum(TRUE, FALSE), intval($_sett->get('users_per_page'))) : 0;
+	$rowstart = $data->arr('current')->isNum(TRUE, FALSE) ? Paging::getRowStart($data->arr('current')->isNum(TRUE, FALSE), intval($_sett->get('users_per_page'))) : 0;
 
-	$cache = $_system->cache('users,'.$_user->getCacheName().',sort_by-'.$data->arr('sort')->filters('trim', 'strip').',page-'.$data->arr('current')->isNum(TRUE, FALSE), NULL, 'users', 60);
+	$cache = $_system->cache('users,'.$_user->getCacheName().',sort_by-'.$data->arr('sort')->filters('trim', 'strip').',page-'.$data->arr('current')->isNum(TRUE, FALSE), NULL, 'users', $_sett->getUns('cache', 'expire_pages'));
 	if ($cache === NULL)
 	{
 		$query = $_pdo->getData('
@@ -100,9 +107,3 @@ if ($data->arr('sort')->filters('trim', 'strip') !== 'all')
 		'link' => $_route->path(array('controller' => 'users', 'action' => $data->arr('current')->isNum(TRUE, FALSE)))
 	));
 }
-
-$theme = array(
-		'Title' => __('Lista użytkowników').' &raquo; '.$_sett->get('site_name'),
-		'Keys' => 'Użytkownicy '.$_sett->get('site_name').', konta '.$_sett->get('site_name').', profile',
-		'Desc' => 'Lista aktywnych kont na stronie '.$_sett->get('site_name')
-	);

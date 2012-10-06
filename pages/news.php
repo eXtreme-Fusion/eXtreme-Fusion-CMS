@@ -1,15 +1,16 @@
 <?php defined('EF5_SYSTEM') || exit;
-/*---------------------------------------------------------------+
-| eXtreme-Fusion - Content Management System - version 5         |
-+----------------------------------------------------------------+
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 |
-| http://extreme-fusion.org/                               		 |
-+----------------------------------------------------------------+
-| This product is licensed under the BSD License.				 |
-| http://extreme-fusion.org/ef5/license/						 |
-+---------------------------------------------------------------*/
+/***********************************************************
+| eXtreme-Fusion 5.0 Beta 5
+| Content Management System       
+|
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
+| http://extreme-fusion.org/                               		 
+|
+| This product is licensed under the BSD License.				 
+| http://extreme-fusion.org/ef5/license/						 
+***********************************************************/
 
-if ($_route->getAction())
+if ($_route->getAction() && $_route->getAction() !== 'page')
 {
 	$_locale->load('news');
 
@@ -21,7 +22,7 @@ if ($_route->getAction())
 
 	if ( ! file_exists(DIR_THEME.'templates'.DS.'pages'.DS.'news.tpl'))
 	{
-		$_head->set('<link href="'.ADDR_TEMPLATES.'stylesheet/news.css" media="screen" rel="stylesheet" />');
+		$_head->set('<link href="'.ADDR_TEMPLATES.'stylesheet/news.css" rel="stylesheet">');
 	}
 	
 	! class_exists('Tag') || $_tag = New Tag($_system, $_pdo);
@@ -31,7 +32,7 @@ if ($_route->getAction())
 	if (isNum($item_id))
 	{
 		// nazwa pliku bez rozszerzenia, dane do zapisu (jeśli brak to funkcja zwraca dane o ile plik istnieje), czas użyteczności pliku (nadpisanie w przypadku zbyt starej wersji)
-		$data = $_system->cache('news_'.$item_id, NULL, 'news', 60);
+		$data = $_system->cache('news_'.$item_id, NULL, 'news', $_sett->getUns('cache', 'expire_news'));
 		if ($data === NULL)
 		{
 			$data = $_pdo->getRow('
@@ -86,6 +87,7 @@ if ($_route->getAction())
 				'author_name' => $_user->getUsername($data['user_id']),
 				'author_link' => $_route->path(array('controller' => 'profile', 'action' => $data['user_id'], HELP::Title2Link($data['username']))),
 				'date' => HELP::showDate('shortdate', $data['datestamp']),
+				'datetime' => date('c', $data['datestamp']),
 				'source' => $data['source'],
 				'keyword' => $keyword,
 				'content' => stripslashes($data['content']),
@@ -103,8 +105,10 @@ if ($_route->getAction())
 			$r = $_pdo->exec('UPDATE [news] SET `reads` = `reads`+1 WHERE `id`= :id', array(array(':id', $item_id, PDO::PARAM_INT)));
 
 			$_tpl->assign('news', $d);
+			//print_r($data['allow_comments']);
 			if ($data['allow_comments'] === '1')
 			{
+				$_comment = $ec->comment;
 				$_tpl->assign('comments', $_comment->get($_route->getFileName(), $data['news_id']));
 
 				if (isset($_POST['comment']['save']))
@@ -125,9 +129,11 @@ if ($_route->getAction())
 		HELP::redirect(ADDR_SITE);
 	}
 
+	$_sbb = $ec->sbb;
+	
 	$_tpl->assignGroup(array(
-
-		'bbcode' => bbcodes()
+		'bbcode' => $_sbb->bbcodes('post'),
+		'smiley' => $_sbb->smileys('post')
 	));
 }
 else
@@ -136,7 +142,7 @@ else
 
 	if ( ! file_exists(DIR_THEME.'templates'.DS.'pages'.DS.'news.tpl'))
 	{
-		$_head->set('<link href="'.ADDR_TEMPLATES.'stylesheet/news.css" media="screen" rel="stylesheet" />');
+		$_head->set('<link href="'.ADDR_TEMPLATES.'stylesheet/news.css" rel="stylesheet">');
 	}
 
 	$title = array(
@@ -147,8 +153,9 @@ else
 	! class_exists('Tag') || $_tag = New Tag($_system, $_pdo);
 
 	// Sprawdzanie, czy użytkownik ma prawo do zobaczenia jakiegokolwiek newsa
-	$rows = $_pdo->getMatchRowsCount('SELECT `id` FROM [news] WHERE `access` IN ('.$_user->listRoles().') AND `draft` = 0 AND `language` = :lang', 
-		array(':lang', $_user->get('lang'), PDO::PARAM_STR)
+	$rows = $_pdo->getMatchRowsCount('SELECT `id` FROM [news] WHERE `access` IN ('.$_user->listRoles().') AND `draft` = 0', 
+	//$rows = $_pdo->getMatchRowsCount('SELECT `id` FROM [news] WHERE `access` IN ('.$_user->listRoles().') AND `draft` = 0 AND `language` = :lang', 
+		array(':lang', $_user->getLang(), PDO::PARAM_STR)
 	);
 
 	if ($rows)
@@ -165,10 +172,12 @@ else
 			$_GET['current'] = $_route->getByID(2);
 		}
 
-		$_GET['rowstart'] = PAGING::getRowStart($_GET['current'], $items_per_page);
+		$_GET['rowstart'] = Paging::getRowStart($_GET['current'], $items_per_page);
+		
+		//print_r($_GET['rowstart']);
 
 		# / STRONICOWANIE #
-		$cache = $_system->cache('news,'.$_user->getCacheName().',page-'.$_GET['current'], NULL, 'news', 60);
+		$cache = $_system->cache('news,'.$_user->getCacheName().',page-'.$_GET['current'], NULL, 'news', $_sett->getUns('cache', 'expire_news'));
 		if ($cache === NULL)
 		{
 			$query = $_pdo->getData('
@@ -213,6 +222,7 @@ else
 						'author_name' => $_user->getUsername($data['user_id']),
 						'author_link' => $_route->path(array('controller' => 'profile', 'action' => $data['user_id'], HELP::Title2Link($data['username']))),
 						'date' => HELP::showDate('shortdate', $data['datestamp']),
+						'datetime' => date('c', $data['datestamp']),
 						'source' => $data['source'],
 						'keyword' => $keyword,
 						'content' => stripslashes($data['content']),
@@ -243,6 +253,7 @@ else
 		}
 
 		$_pagenav = new PageNav(new Paging($rows, $_GET['current'], $items_per_page), $_tpl, 5, array($_route->getFileName(), 'page', FALSE));
+		//$_pagenav = new PageNav(new Paging($rows, $_GET['current'], $items_per_page), $_tpl, 5, array($_route->getFileName(), 'page'.$_route->getByID(2), FALSE)); // old
 
 		if (file_exists(DIR_THEME.'templates'.DS.'paging'.DS.'news_page_nav.tpl'))
 		{

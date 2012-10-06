@@ -8,6 +8,7 @@ return array(
 	'Blacklist' => 'Czarna Lista',
 	'Comments' => 'Komentarze',
 	'Colors' => 'Kolorowanie',
+	'Cache' => 'Pamięć podręczna',
 	'Gallery' => 'Galeria',
 	'Images' => 'Obrazy',
 	'Logs' => 'Dziennik zdarzeń',

@@ -1,13 +1,14 @@
 <?php
-/*---------------------------------------------------------------+
-| eXtreme-Fusion - Content Management System - version 5         |
-+----------------------------------------------------------------+
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 |
-| http://extreme-fusion.org/                               		 |
-+----------------------------------------------------------------+
-| This product is licensed under the BSD License.				 |
-| http://extreme-fusion.org/ef5/license/						 |
-+---------------------------------------------------------------*/
+/***********************************************************
+| eXtreme-Fusion 5.0 Beta 5
+| Content Management System
+|
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
+|
+| This product is licensed under the BSD License.
+| http://extreme-fusion.org/ef5/license/
+***********************************************************/
 
 $config = '<?php'.PHP_EOL;
 $config .= '/*---------------------------------------------------------------+'.PHP_EOL;
@@ -33,6 +34,16 @@ $config .= '    \'database\' => \''.$db_name.'\','.PHP_EOL;
 $config .= '    \'prefix\' => \''.$db_prefix.'\','.PHP_EOL;
 $config .= '    \'charset\' => \'utf8\','.PHP_EOL;
 $config .= '    \'version\' => \'eXtreme-Fusion CMS - Ninja Edition\''.PHP_EOL;
+$config .= ');'.PHP_EOL.PHP_EOL;
+
+$config .= '#Routing'.PHP_EOL.PHP_EOL;
+
+
+$config .= '$_route = array('.PHP_EOL;
+$config .= '	//Change this to TRUE if your server has been configured to work with $_SERVER[\'PATH_INFO\']'.PHP_EOL;
+$config .= '    \'custom_furl\' => '.($custom_furl_choice ? 'TRUE' : 'FALSE').','.PHP_EOL;
+$config .= '	//Change this to TRUE if your server has got configured modRewrite'.PHP_EOL;
+$config .= '    \'custom_rewrite\' => '.($custom_rewrite_choice ? 'TRUE' : 'FALSE').','.PHP_EOL;
 $config .= ');'.PHP_EOL.PHP_EOL;
 
 $config .= '#Cookie && cache'.PHP_EOL.PHP_EOL;

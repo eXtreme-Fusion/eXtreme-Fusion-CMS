@@ -133,19 +133,17 @@
 						</select>
 					</div>
 				</div>
-				<div class="tbl2">
-					<div class="formLabel sep_1 grid_3">Administrator:</div>
-					<div class="formField grid_7"><input type="checkbox" name="roles[]" value="1" /> {i18n('Yes')}</div>
-				</div>
+
 					<input type="hidden" name="roles[]" value="2" />
 					<input type="hidden" name="roles[]" value="3" />
+				
 				<div class="tbl2">
 					<div class="formLabel sep_1 grid_3">{i18n('Roles:')}{i18n('Default roles')}</div>
 					<div class="formField grid_7">
 						<select name="roles[]" multiple id="InsightGroups" class="select-multi" size="5" >
-							{section=insight_groups}
-								{if $insight_groups.value != 1 && $insight_groups.value != 2 && $insight_groups.value != 3}
-									<option value="{$insight_groups.value}"{if $insight_groups.value == $user.roles} selected="selected"{/if}>{$insight_groups.display}</option>
+							{section=all_groups}
+								{if $all_groups.value != 2 && $all_groups.value != 3}
+									<option value="{$all_groups.value}"{if $all_groups.value == $user.roles} selected="selected"{/if}>{$all_groups.display}</option>
 								{/if}
 							{/section}
 						</select>
@@ -197,11 +195,7 @@
 				<h4>Profil - {$account.username}<span class="box-right">{i18n('Main group: ')}{$account.role}</span></h4>
 				<div class="tbl">
 					<div class="avatar">
-						{if $account.avatar}
-							<img src="{$ADDR_IMAGES}avatars/{$account.avatar}">
-						{else}
-							<img src="{$ADDR_IMAGES}avatars/none.jpg">
-						{/if}
+						<img src="{$account.avatar}">
 					</div>
 					<div class="data">
 						<div>{i18n('User ID: ')}{$account.id}</div>
@@ -355,36 +349,44 @@
 					<label for="HideEmail_0"><input type="radio" id="hide_email_0" name="hide_email" value="0"{if $hide_email == 0} checked="checked"{/if}>{i18n('No')}</label>
 				</div>
 			</div>
-			<div class="tbl2">
+			<!--<div class="tbl2">
 				<div class="formLabel sep_1 grid_3">Administrator:</div>
 				<div class="formField grid_7"><input type="checkbox" name="roles[]" value="1" /> {i18n('Yes')}</div>
-			</div>
-				<input type="hidden" name="roles[]" value="2" />
-				<input type="hidden" name="roles[]" value="3" />
-			<div class="tbl2">
-				<div class="formLabel sep_1 grid_3">{i18n('Roles:')}{i18n('Default roles')}</div>
+			</div>-->
+
+			<input type="hidden" name="roles[]" value="2" />
+			<input type="hidden" name="roles[]" value="3" />
+			
+			<div class="tbl1">
+				<div class="formLabel sep_1 grid_3">{i18n('Uprawnienia grup:')}<small>{i18n('Przytrzymaj klawisz Ctrl, aby wybrać kilka opcji z listy.')}</small></div>
 				<div class="formField grid_7">
 					<select name="roles[]" multiple id="InsightGroups" class="select-multi" size="5" >
 						{section=insight_groups}
-							{if $insight_groups.value != 1 && $insight_groups.value != 2 && $insight_groups.value != 3}
+							{if $insight_groups.value != 2 && $insight_groups.value != 3}
 								<option value="{$insight_groups.value}"{if $insight_groups.value == $user.roles} selected="selected"{/if}>{$insight_groups.display}</option>
 							{/if}
 						{/section}
 					</select>
 				</div>
 			</div>
-			<div class="tbl1">
-				<div class="formLabel sep_1 grid_3"><label for="role">{i18n('Main role:')}</label></div>
+			<div class="tbl2">
+				<div class="formLabel sep_1 grid_3"><label for="role">{i18n('Główna grupa:')}</label></div>
 				<div class="formField grid_7">
-					<select name="role">
+					<select name="role" id="user_groups">
 						{section=insight_groups}
-							{if $insight_groups.value != 3}
+							{if $insight_groups.value == 2}
 								<option value="{$insight_groups.value}"{if $insight_groups.selected} selected="selected"{/if}>{$insight_groups.display}</option>
 							{/if}
 						{/section}
 					</select>
 				</div>
 			</div>
+			{if $active}
+				<div class="tbl1">
+					<div class="formLabel sep_1 grid_3">Aktywuj konto od razu</div>
+					<div class="formField grid_7"><input type="checkbox" name="active" value="yes" /> {i18n('Yes')}</div>
+				</div>
+			{/if}
 			{if $data}
 				<h4>{i18n('Additional informations')}</h4>
 				{section=data}
@@ -458,6 +460,19 @@
 			<div class="tbl1">
 				<div class="formField sep_2 grid_9"><textarea name="email_message" id="Message" cols="80" rows="3"></textarea></div>
 			</div>
+			<script>
+				{literal}
+					var editor = CKEDITOR.replace('Message', {
+						toolbar : [
+							['Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
+							['NumberedList','BulletedList','-','Outdent','Indent','Blockquote','CreateDiv'],
+							['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
+							['Link','Unlink','Anchor'],
+							['Source','-','Preview']
+						]
+					});
+				{/literal}
+			</script>
 			<div class="tbl2">
 				<div class="sep_1 grid_2 formLabel">{i18n('Hide recipients?')}</div>
 				<div class="grid_1 formField"><label><input type="radio" name="hide" value="1" checked="checked" /> {i18n('Yes')}</label></div>
@@ -477,16 +492,3 @@
 
 	<script>var ADDR_SITE = '{$ADDR_SITE}';</script>
 	<script src="{$ADDR_ADMIN_PAGES_JS}users.js"></script>
-	<script>
-		{literal}
-			var editor = CKEDITOR.replace('Message', {
-				toolbar : [
-					['Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
-					['NumberedList','BulletedList','-','Outdent','Indent','Blockquote','CreateDiv'],
-					['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
-					['Link','Unlink','Anchor'],
-					['Source','-','Preview']
-				]
-			});
-		{/literal}
-	</script>

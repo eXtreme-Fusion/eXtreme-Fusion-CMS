@@ -1,18 +1,19 @@
 <?php defined('EF5_SYSTEM') || exit;
-/*---------------------------------------------------------------+
-| eXtreme-Fusion - Content Management System - version 5         |
-+----------------------------------------------------------------+
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 |
-| http://extreme-fusion.org/                               		 |
-+----------------------------------------------------------------+
-| This product is licensed under the BSD License.				 |
-| http://extreme-fusion.org/ef5/license/						 |
-+---------------------------------------------------------------*/
+/***********************************************************
+| eXtreme-Fusion 5.0 Beta 5
+| Content Management System
+|
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| http://extreme-fusion.org/ 
+|
+| This product is licensed under the BSD License. 
+| http://extreme-fusion.org/ef5/license/
+***********************************************************/
 
 // Cron Job (1 MIN)
 if ($_sett->get('cronjob_templates_clean') < (time()-60))
 {
-	$_files->rmDirRecursive(DIR_TEMPLATES_C);
+	$_files->rmDirRecursive(DIR_CACHE);
 	$_sett->update(array('cronjob_templates_clean' => time()));
 }
 
@@ -44,6 +45,7 @@ if ($_sett->get('cronjob_day') < (time()-86400))
 		WHERE `status`=3 AND `actiontime` != 0 AND `actiontime` < '.time().'
 		LIMIT 10
 	');
+
 	if ($query)
 	{
 		/*
@@ -74,6 +76,7 @@ if ($_sett->get('cronjob_day') < (time()-86400))
 		WHERE `actiontime` < '.time().' AND `actiontime` !=0 AND `status` = 0
 		LIMIT 10
 	');
+
 	if ($query)
 	{
 		if ($_sett->get('deactivation_action') == 0)

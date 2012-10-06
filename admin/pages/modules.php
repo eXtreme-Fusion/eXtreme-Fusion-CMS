@@ -1,19 +1,22 @@
 <?php
-/*---------------------------------------------------------------+
-| eXtreme-Fusion - Content Management System - version 5         |
-+----------------------------------------------------------------+
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 |
-| http://extreme-fusion.org/                               		 |
-+----------------------------------------------------------------+
-| This product is licensed under the BSD License.				 |
-| http://extreme-fusion.org/ef5/license/						 |
-+---------------------------------------------------------------*/
+/***********************************************************
+| eXtreme-Fusion 5.0 Beta 5
+| Content Management System       
+|
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
+| http://extreme-fusion.org/                               		 
+|
+| This product is licensed under the BSD License.				 
+| http://extreme-fusion.org/ef5/license/						 
+***********************************************************/
 try
 {
 	require_once '../../config.php';
+	// TODO:: Niwelacja komunikatu o rozpoczętej sesji "Notice: A session had already been started - ignoring session_start()"
+	// TODO:: Albo bez require DIR_SITE.'bootstrap.php';
+	// TODO:: Albo z require DIR_SITE.'bootstrap.php'; lecz bez zmodyfikwanego bootstrap.php podczas rozpoczynania sesji.
 	require DIR_SITE.'bootstrap.php';
 	require_once DIR_SYSTEM.'admincore.php';
-	require DIR_CLASS.'modules.php';
 	
 	$_locale->load('modules');
 

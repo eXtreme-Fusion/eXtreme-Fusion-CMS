@@ -8,11 +8,12 @@
 | This product is licensed under the BSD License.				 |
 | http://extreme-fusion.org/ef5/license/						 |
 +---------------------------------------------------------------*/
-$_head->set('<script src="'.ADDR_SITE.'modules\chat\templates\shoutbox.js"></script>');
+$_locale->moduleLoad('shoutbox', 'chat');
+$_head->set('<script src="'.ADDR_SITE.'modules/chat/templates/shoutbox.js"></script>');
 
 if ($_user->isLoggedIn()) 
 {
 	$_panel->assign('IsLoggedIn', TRUE);
 }
 
-$_panel->assign('url_chat', HELP::path(array('controller' => 'chat')));
+$_panel->assign('url_chat', $_url->path(array('controller' => 'chat')));

@@ -15,7 +15,7 @@
 		<link href="{$ADDR_ADMIN_CSS}jquery.colorpicker.css" media="screen" rel="stylesheet" />
 		<link href="{$ADDR_ADMIN_CSS}jquery.tagedit.css" media="screen" rel="stylesheet" />
 		<link href="{$ADDR_ADMIN_CSS}main.css" media="screen" rel="stylesheet" />
-		
+
 		<script src="{$ADDR_ADMIN_JS}jquery.js"></script>
 		<script src="{$ADDR_ADMIN_JS}jquery.ui.js"></script>
 		<script src="{$ADDR_ADMIN_JS}jquery.ui.timepicker.js"></script>
@@ -34,9 +34,12 @@
 		<script src="{$ADDR_ADMIN_JS}jquery.Alert.js"></script>
 		<script src="{$ADDR_ADMIN_JS}main.js"></script>
 		<script src="{$ADDR_ADMIN_JS}ckeditor/ckeditor.js"></script>
+		<script src="{$ADDR_JS}common.js"></script>
 
 		<script>
 			{literal}
+				var addr_site = '{/literal}{$ADDR_SITE}{literal}';
+				
 				$(document).ready(function() {
 					$(".resize").TextAreaResizer();
 					$("h3").corner("4px");
@@ -61,22 +64,22 @@
 					$(".confirm_button").live('click', function() {
 						var href = $(this).attr('href');
 						jConfirm('{/literal}{i18n('Yes')}{literal}','{/literal}{i18n('No')}{literal}','{/literal}{i18n('Usunąć ten element?')}{literal}', '{/literal}{i18n('Okno operacji')}{literal}', function(r) {
-								if(r == true) { 
+								if(r == true) {
 									document.location = href;
 								}
 						});
 						return false;
 					});
 				});
-			
+
 				$(document).ready(function() {
-				
-					$("#Notes").accordion({ 
+
+					$("#Notes").accordion({
 					autoHeight: false,
 					collapsible: true,
 					active: false,
 					});
-					
+
 					$('.edit').editable('{/literal}{$ADDR_ADMIN}{literal}pages/notes.php', {
 						 indicator : '<img src="{/literal}{$ADDR_ADMIN_ICONS}{literal}loading.gif">',
 						 tooltip   : '{/literal}{i18n('Click to edit...')}{literal}',
@@ -84,10 +87,10 @@
 						 id 	   : 'note_id',
 						 name 	   : 'note_title',
 						 onblur	   : 'submit'
-						 
+
 					});
-					
-					$('.edit_area').editable('{/literal}{$ADDR_ADMIN}{literal}pages/notes.php', { 
+
+					$('.edit_area').editable('{/literal}{$ADDR_ADMIN}{literal}pages/notes.php', {
 						 type      : 'textarea',
 						 indicator : '<img src="{/literal}{$ADDR_ADMIN_ICONS}{literal}loading.gif">',
 						 tooltip   : '{/literal}{i18n('Click to edit...')}{literal}',
@@ -96,7 +99,7 @@
 						 name 	   : 'note_note',
 						 onblur	   : 'submit'
 					});
-					
+
 				});
 			{/literal}
 		</script>

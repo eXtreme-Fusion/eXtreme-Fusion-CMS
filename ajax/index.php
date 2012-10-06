@@ -1,19 +1,20 @@
 <?php
-/*---------------------------------------------------------------+
-| eXtreme-Fusion - Content Management System - version 5         |
-+----------------------------------------------------------------+
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 |
-| http://extreme-fusion.org/                               		 |
-+----------------------------------------------------------------+
-| This product is licensed under the BSD License.				 |
-| http://extreme-fusion.org/ef5/license/						 |
-+---------------------------------------------------------------*/
+/***********************************************************
+| eXtreme-Fusion 5.0 Beta 5
+| Content Management System       
+|
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
+| http://extreme-fusion.org/                               		 
+|
+| This product is licensed under the BSD License.				 
+| http://extreme-fusion.org/ef5/license/						 
+***********************************************************/
 
 require_once '../config.php';
 require_once DIR_SYSTEM.'sitecore.php';
 
 // Wczytywanie g³ównej klasy
-require_once DIR_CLASS.'themes.php';
+require_once DIR_CLASS.'Themes.php';
 
 // Tworzenie emulatora statycznoœci klasy OPT
 TPL::build($_theme = new Theme($_sett, $_user));

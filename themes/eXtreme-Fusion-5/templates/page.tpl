@@ -1,37 +1,38 @@
-<div id="MainWrap" class="box-center">
-	<div class="floatfix">
-		<div class="full-header floatfix">
-			<a href="{$ADDR_SITE}" id="HomeLink" class="tip" title="{$Sitename}">
-				<img src="{$THEME_IMAGES}logo.png" alt="{$Sitename}" />
-			</a>
-			<div id="RightHeaderBG">
-				<a href="http://www.extreme-fusion.org/downloads.php?action=get&amp;id=530" rel="blank" class="tip" title="Download eXtreme-Fusion 4.17">
-					Download eXtreme-Fusion 4.17
-				</a>
-			</div>
-		</div>
-		<div class="sub-header floatfix">
-			<div class="left">{$Menu}</div>
-			<div id="fancyClock"></div>
-		</div>
-	</div>
-	{if $LEFT}<div id="side-border-left">{$LEFT}</div>{/if}
-	{if $RIGHT}<div id="side-border-right">{$RIGHT}</div>{/if}
-	<div id="main-bg" class="clearfix">
-		<div id="container">{$CONTENT}</div>
-	</div>
-	<div class="bottom floatfix">{$primiarymenu}</div>
-	<div class="footer floatfix">
-		<div class="center">
-			{if $Copyright}
-				<p>{$Copyright}</p>
-				<p>{$License}</p>
-			{/if}
-			<p>
-				Theme by <a href="http://nlds-group.com/" title="NLDS-Group.com"><img src="{$THEME_IMAGES}nlds.png" alt="NLDS-Group.com" /></a>
-			</p>
-			{if $AdminLinks}<p>{$AdminLinks}</p>{/if}
-		</div>
-		<!--<div class="right">{$Footer}</div>-->
-	</div>
-</div>
+
+
+	<header id="site_top">
+		<h1><a href="{$ADDR_SITE}" title="{$Sitename}"><img src="{$THEME_IMAGES}header_logo.png" alt="{$Sitename}"></a></h1>
+	</header>
+
+	<nav id="main_nav">
+{if $Menu}
+		<ul>
+{section=Menu}
+			<li{if $Menu.selected} class="selected"{/if}>{$Menu.sep}<a href="{$Menu.link}"{if $Menu.target} target="_blank"{/if}>{$Menu.name}</a></li>
+{/section}
+		</ul>
+{/if}
+	</nav>
+
+	<section id="site_mid" >
+		{if $LEFT}<aside id="s_left">
+		{$LEFT}		</aside>{/if}
+        
+        
+		{if $RIGHT}<aside id="s_right">
+		{$RIGHT}		</aside>{/if}
+        
+        
+        	<section id="{if $LEFT && $RIGHT}s_center{/if}{if !$LEFT && !$RIGHT}no_both{/if}{if !$LEFT && $RIGHT}no_left{/if}{if !$RIGHT && $LEFT}no_right{/if}">{$CONTENT}</section>
+	</section>
+
+	<footer id="site_bot">
+		{if $Copyright}
+		<address>{$Copyright}</address>
+    	<p>{$License}</p>
+    	{/if}
+    	{if $Footer}<p>{$Footer}</p>{/if}
+		<address>Theme by <a href="http://nlds-group.com/" title="NLDS-Group.com"><img src="{$THEME_IMAGES}nlds_logo.png" alt="NLDS-Group.com"></a></address>
+		{if $AdminLinks}<p>{$AdminLinks}</p>{/if}
+	</footer>
+

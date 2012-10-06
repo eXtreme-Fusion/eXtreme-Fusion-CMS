@@ -1,0 +1,47 @@
+/* Górna belka */
+.tag_top {
+	margin-bottom: 10px;
+	padding: 10px 15px;
+	border-radius: 5px;
+}
+
+.tag_top img {
+	margin: 0 5px;
+}
+
+/* Lista otagowanych materiałów */
+.tagged_elements  {
+	list-style: none;
+}
+
+.tagged_elements li  {
+	width: 49%;
+	float: left;
+}
+
+.tagged_elements li:nth-child(odd)  {
+	clear: both;
+}
+
+.tagged_elements li:nth-child(even)  {
+	float: right;
+}
+
+.tagged_elements li a {
+	display: block;
+	margin-bottom: 10px;
+	padding: 10px 15px;
+	border-radius: 5px;
+}
+
+/* Chmurka */
+.tag_cloud  {
+	width: 500px;
+	height: 500px;
+	margin: 0 auto;
+	background-color: inherit;
+}
+
+.tag_cloud ul {
+	list-style: none;
+}

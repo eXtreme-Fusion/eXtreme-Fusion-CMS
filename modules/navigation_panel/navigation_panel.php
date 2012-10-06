@@ -12,7 +12,7 @@ $_locale->moduleLoad('lang', 'navigation_panel');
 
 $query = $_pdo->getData("
 	SELECT `name`, `url`, `window`, `visibility` FROM [navigation]
-	WHERE `position`=1 OR `position`=2 ORDER BY `order`
+	WHERE `position` = 1 OR `position` = 3 ORDER BY `order`
 ");
 
 if ($_pdo->getRowsCount($query))
@@ -33,16 +33,17 @@ if ($_pdo->getRowsCount($query))
 			else
 			{
 				$link_target = ($data['window'] == '1' ? ' target="_blank"' : '');
-				$name = parseBBCode($data['name'], "b|i|u|color");
+				$name = $ec->sbb->parseBBCode($data['name'], "b|i|u|color");
 				$bullet = THEME_IMAGES.'bullet.gif';
 			}
 			
 			$nav[] = array(
 				'name' => $name,
 				'link_target' => $link_target,
-				'url' => $data['url'] !== '' ? HELP::path(array('controller' => $data['url'])) : ADDR_SITE,
+				'url' => HELP::createNaviLink($data['url']),
 				'bullet' => $bullet
 			);
+
 		}
 	}
 

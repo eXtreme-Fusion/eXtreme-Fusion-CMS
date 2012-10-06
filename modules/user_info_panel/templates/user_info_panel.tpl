@@ -1,40 +1,47 @@
 {if $is_logged_in}
 	{php} openside(__('User Panel')) {/php}
-		<div class="center">
-			<ul>
-				<li><a href="{$url_account}" class="side">{i18n("Edit profile")}</a></li>
-				<li><a href="{$url_messages}" class="side">{i18n("Messages")}</a></li>
-				<li><a href="{$url_users}" class="side">{i18n("Users")}</a></li>
-				{if $is_admin}
-					<li><a href="{$ADDR_ADMIN}" class="side">{i18n("Admin Panel")}</a></li>
-				{/if}
-				<li><a href="{$url_logout}" class="side">{i18n("Logout")}</a></li>
-			</ul>
-			{if $messages}
-				<p class="bold"><a href="{$url_messages}" class="side">{$messages}</a></p>
-			{/if}
-		</div>
+        <div id="user_info_panel">
+					<div class="top">
+						<strong>Witaj {$username}!</strong>
+						<a href="{$url_messages}"{if $messages} class="message"{/if}></a>
+					</div>
+					<div class="mid">
+						<div class="avatar">
+                        {if $user.avatar}
+							<img src="{$ADDR_IMAGES}avatars/{$user.avatar}" alt="Avatar">
+						{else}
+							<img src="{$ADDR_IMAGES}avatars/none.gif" alt="No Avatar">
+						{/if}
+						</div>
+						<ul id="nav">
+							<li><a href="{$url_account}"><p class="edit">{i18n("Edit profile")}</p></a></li>
+							<li><a href="{$url_messages}"><p class="messages">{i18n("Messages")}</p></a></li>
+							<li><a href="{$url_users}"><p class="members">{i18n("Users")}</p></a></li>
+							{if $is_admin}<li><a href="{$ADDR_ADMIN}" class="long"><p class="admin">{i18n("Admin Panel")}</p></a></li>{/if}
+						</ul> 
+					</div>
+					<div class="bot">
+						<p><a href="{$url_logout}" class="button">Wyloguj</a></p>
+					{if $messages}
+						<p><a href="{$url_messages}">{$messages}</a></p>
+                    {/if}
+					</div>
+				</div>
 	{php} closeside() {/php}
 {else}
 	{php} openside(__('Login')) {/php}
-		<div style="text-align:center">
-			<form method="post" action="{$URL_REQUEST}">
-				<div>
-					<label for="username">{i18n("Username:")}</label>
-					<div><input type="text" name="username" id="username" class="textbox" style="width:100px" /></div>
-				</div>
-				<div>
-					<label for="password">{i18n("Password:")}</label>
-					<div><input type="password" name="password" id="password" class="textbox" style="width:100px" /></div>
-				</div>
-				<div>
-					<input type="checkbox" name="remember_me" value="y" id="remember" />
-					<label for="remember">{i18n("Remember me")}</label>
-				</div>
-				<div><input type="submit" name="login" value="{i18n("Login")}" class="button" /></div>
-			</form>
-			{if $enable_reg}<div><a href="{$url_register}" class="side"><span>{i18n("Register")}</span></a></div>{/if}
-			<div><a href="{$url_password}" class="side"><span>{i18n("Forgot password")}</span></a></div>
-		</div>
+	<div id="user_info_panel">
+		<form method="post" action="{$URL_REQUEST}">
+			<input type="text" name="username" id="username" value="{i18n("Username:")}">
+			<input type="password" name="password" id="password" value="{i18n("Password:")}">
+			<div>
+				<input type="checkbox" name="remember_me" value="y" id="remember">
+				<label for="remember">{i18n("Remember me")}</label>
+			</div>
+			<input type="submit" name="login" value="Zaloguj się">
+		</form>
+		{if $enable_reg}<p><a href="{$url_register}">{i18n("Register")}</a></p>{/if}
+		<p><a href="{$url_password}">{i18n("Forgot password")}</a></p>
+	</div>
 	{php} closeside() {/php}
 {/if}

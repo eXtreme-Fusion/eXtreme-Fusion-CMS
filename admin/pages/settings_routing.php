@@ -1,13 +1,14 @@
 <?php
-/*---------------------------------------------------------------+
-| eXtreme-Fusion - Content Management System - version 5         |
-+----------------------------------------------------------------+
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 |
-| http://extreme-fusion.org/                               		 |
-+----------------------------------------------------------------+
-| This product is licensed under the BSD License.				 |
-| http://extreme-fusion.org/ef5/license/						 |
-+---------------------------------------------------------------*/
+/***********************************************************
+| eXtreme-Fusion 5.0 Beta 5
+| Content Management System       
+|
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
+| http://extreme-fusion.org/                               		 
+|
+| This product is licensed under the BSD License.				 
+| http://extreme-fusion.org/ef5/license/						 
+***********************************************************/
 try
 {
 	require_once '../../config.php';
@@ -31,11 +32,12 @@ try
 				'main_sep' => $_request->post('main_sep')->strip(),
 				'url_ext' => $_request->post('url_ext')->strip(),
 				'tpl_ext' => $_request->post('tpl_ext')->strip(),
-				'logic_ext' => $_request->post('logic_ext')->strip()
+				'logic_ext' => $_request->post('logic_ext')->strip(),
+				'ext_allowed' => $_request->post('ext_allowed')->isNum(TRUE)
 			))
 		));
 		
-		// Petmanentne usuwanie cache z wyjatkiem pliku dodanego do wyj¹tku.
+		// Petmanentne usuwanie cache z wyjatkiem pliku dodanego do wyjï¿½tku.
 		$_files->setOmitExt(array('.htaccess'));
 		$_files->rmDirRecursive(DIR_CACHE, TRUE);
 		
@@ -47,7 +49,8 @@ try
 		'main_sep' => $_sett->getUns('routing', 'main_sep'),
 		'url_ext' => $_sett->getUns('routing', 'url_ext'),
 		'tpl_ext' => $_sett->getUns('routing', 'tpl_ext'),
-		'logic_ext' => $_sett->getUns('routing', 'logic_ext')
+		'logic_ext' => $_sett->getUns('routing', 'logic_ext'),
+		'ext_allowed' => $_sett->getUns('routing', 'ext_allowed')
 	));
 
 	$_tpl->template('settings_routing');

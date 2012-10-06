@@ -82,7 +82,7 @@ return array(
 	'Message:' => 'Wiadomość:',
 
 	'User Panel' => 'Panel użytkownika',
-	'Admin Panel' => 'Panel administratora',
+	'Admin Panel' => 'Administracja',
 
 	'Private messages' => 'Prywatne wiadomości',
 

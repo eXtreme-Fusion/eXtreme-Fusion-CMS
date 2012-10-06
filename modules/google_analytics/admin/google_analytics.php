@@ -25,7 +25,7 @@ try
 		
 		$_tpl = new AdminModuleIframe('google_analytics');
 
-		include DIR_MODULES.'google_analytics'.DS.'class'.DS.'gapi.php';
+		include DIR_MODULES.'google_analytics'.DS.'class'.DS.'Gapi.php';
 		
 		$row = $_pdo->getRow('SELECT * FROM [google_analytics_sett]');
 		
@@ -33,7 +33,7 @@ try
 		{
 			if (function_exists('curl_exec'))
 			{
-				$google_analytics = $_system->cache('google_analytics', NULL, 86700);
+				$google_analytics = $_system->cache('google_analytics', NULL, 'google_analytics', 86700);
 				
 				if ($google_analytics === NULL)
 				{
@@ -147,7 +147,7 @@ try
 		exit;
 	}
 	
-	$_tpl->template('google_analytics.tpl');
+	$_tpl->template('admin.tpl');
 }
 catch(optException $exception)
 {

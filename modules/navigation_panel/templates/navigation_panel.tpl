@@ -1,4 +1,6 @@
 {php} openside(__('Navigation Panel')) {/php}
+		<nav id="side_nav">
+						<ul>
 {if $nav}
 	{section=nav}
 		{if $navigation.name == 1}
@@ -6,10 +8,12 @@
 		{elseif $navigation.name == 2}
 			<div><hr class="side-hr" /></div>
 		{else}
-			<div><img src="{$nav.bullet}">&nbsp;<a href="{$nav.url}" {$nav.link_target}>{$nav.name}</a></div>
-		{/if}
+				<li><a href="{$nav.url}"{if $nav.link_target} {$nav.link_target}{/if}>{$nav.name}</a></li>
+{/if}
 	{/section}
 {else}
 	<div class="error center">No site links</div>
 {/if}
+					</ul>
+					</nav>
 {php} closeside() {/php}

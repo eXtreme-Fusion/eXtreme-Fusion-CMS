@@ -1,30 +1,27 @@
 {if $tag}
-	{php} opentable(__('Materiały zawierające słowo kluczowe: :tagTitle', array(':tagTitle' => $__Tag_val['tag_name']))) {/php}
-		<div class="tbl2">
-			<div class="grid_8 bold">{i18n('News')}</div>
-		</div>
+	{php} opentable(__('Materiały zawierające słowo kluczowe: :tagTitle', array(':tagTitle' => $this->data['tag_name']))) {/php}
+		<p class="tag_top dark text_dark">
+			<a href="{$url_tag}">Tagi</a> <img src="{$THEME_IMAGES}bullet.gif" alt=""> <strong>{$tag_name}</strong> ({$tag_frequency})
+		</p>
+		<ul class="tagged_elements clearfix">
 		{section=tag}
-			<div class="tbl">
-				<div class="grid_8"><a href="{$tag.tag_url_iteam}">{$tag.tag_title_iteam}</a></div>
-			</div>
+			<li><a href="{$tag.tag_url_iteam}" class="light">{$tag.tag_title_iteam}</a></li>
 		{/section}
-	<a href="{$url_tag}">Wróć do listy tagów.</a>
+		</ul>
+		<a href="{$url_tag}" class="button">Wróć do listy tagów</a>
+	{php} closetable() {/php}
 {elseif $tags}
 	{php} opentable(__('Lista słów kluczowych')) {/php}
-		<div class="tbl2">
-			<div class="grid_3 bold">{i18n('Tag')}</div>
-			<div class="grid_8 bold">{i18n('News')}</div>
+		<div class="tag_cloud">
+			<ul>
+				{section=tags}
+					<li><a href="{$tags.tag_url}" rel="{if $tags.tag_frequency<30}{$tags.tag_frequency}{else}30{/if}">{$tags.tag_name}</a></li>
+				{/section}
+			</ul>
 		</div>
-		{section=tags}
-			<div class="tbl">
-				<div class="grid_3"><span><a href="{$tags.tag_url}">{$tags.tag_name}</a></span></div>
-				<div class="grid_8"><a href="{$tags.tag_url_iteam}">{$tags.tag_title_iteam}</a></div>
-			</div>
-		{/section}
+	{php} closetable() {/php}
 {else}
 	{php} opentable(__('Brak tagów w bazie')) {/php}	
-		<div class="tbl2">
-			<div class="status">{i18n('Brak takiego tagu')}</div>
-		</div>
-	{/if}
-{php} closetable() {/php}
+		<p class="status">{i18n('Brak takiego tagu')}</p>
+	{php} closetable() {/php}
+{/if}

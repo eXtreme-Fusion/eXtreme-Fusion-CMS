@@ -25,7 +25,7 @@ body {
 	}
 
 /* Rozszerzenia */
-textarea {resize:none;}
+textarea {resize:vertical;min-height:80px}
 .center {text-align:center;}
 .center-box {margin:0 auto;text-align:center;}
 .italic{font-style:italic}
@@ -175,13 +175,13 @@ h1 {
 .status-right a,.info-right a,.error-right a,.valid-right a {
 	cursor:pointer;
 	}
-.status {color:#e79300;background:url(../images/table/messages-sprite.png) no-repeat 0 -70px;}
+.status {color:#e79300;background:#fff4cc;border:1px #f8e3ac solid;}
 .status a {color:#e79300;}
-.info {color:#2e74b2;background:url(../images/table/messages-sprite.png) no-repeat 0 -105px;}
+.info {color:#2e74b2;background:#e4edf5;border:1px #d8e1e9 solid;}
 .info a {color:#2e74b2;}
-.error {color:#ce2700;background:url(../images/table/messages-sprite.png) no-repeat 0 -35px;}
+.error {color:#ce2700;background:#fbd3b1;border:1px #f5c69a solid;}
 .error a {color:#ce2700;}
-.valid {color:#6da827;background:url(../images/table/messages-sprite.png) no-repeat 0 0;}
+.valid {color:#6da827;background:#e0f2cb;border:1px #ccebac solid;}
 .valid a {color:#6da827;}
 
 
@@ -403,6 +403,68 @@ li.sort:hover .tbl2 { background:url(../images/icons/move.png) no-repeat left ce
 	background-color:#F5F5F5;
 	font-weight:bold;
 }
+
+/* Wybrany adresat-------------------------------------------------------------------------------------------------------- */
+#defender_user {
+	display: inline-block;
+	padding: 3px 8px;
+	background: #fff;
+	font-size: 11px;
+	color: #333;
+	border-radius: 5px;
+}
+
+#defender_user img {
+	width: 7px;
+	height: 7px;
+	cursor: pointer;
+}
+
+/* Lista userów----------------------------------------------------------------------------------------------- */
+#defenders ul,
+#defenders .defender_error {
+	display: block;
+	position: absolute;
+	width: 200px;
+	background: #fff;
+	font-size: 11px;
+	color: #333;
+	margin: 0;
+	padding: 2px 10px;
+	border: 0;
+	border-radius: 0 5px 5px 5px;
+	-webkit-box-shadow: 0px 3px 21px rgba(50, 50, 50, 0.75);
+	-moz-box-shadow: 0px 3px 21px rgba(50, 50, 50, 0.75);
+	box-shadow: 0px 3px 21px rgba(50, 50, 50, 0.75);
+}
+
+#defenders ul {
+	list-style: none;
+}
+
+#defenders .defender_error {
+	text-align: center;
+	padding: 5px 10px;
+}
+
+#defenders ul li {
+	margin: 0;
+	padding: 0;
+	cursor: pointer;
+	list-style: none;
+	line-height: 180%;
+	border-bottom: 1px #e5e5e5 dashed;
+}
+
+#defenders ul li:last-child {
+	border: 0;
+}
+
+#defenders ul li:hover {
+	color: #000;
+	text-decoration: underline;
+}
+
 /*
 input[name="save"] {
     background: url("../images/ui/button-send.png") repeat-x scroll 0 0 transparent;

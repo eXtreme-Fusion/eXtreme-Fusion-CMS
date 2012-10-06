@@ -20,10 +20,7 @@
 .margin-b-10{margin-bottom:10px}
 textarea {resize:none;}
 .clear {
-	width:0;
-	height:0;
-	clear:both;
-	overflow:hidden;
+	clear: both;
 }
 
 * table,table {
@@ -44,7 +41,7 @@ body {
 	font-family:Verdana,Geneva,Kalimati,sans-serif;
 	font-size:12px;
 	color:#333;
-	background:url(../admin/templates/images/ui/iframe-shadow-top.png) repeat-x;
+	background:url(../../admin/templates/images/ui/iframe-shadow-top.png) repeat-x;
 	overflow-x:hidden;
 }
 
@@ -66,7 +63,7 @@ h1 {
 	color:#fff;
 	border:1px #010101 solid;
 	border-bottom:1px #262626 solid;
-	background:#3C3C3C url(../admin/templates/images/shared/nav/repeat.jpg) repeat-x 0 -37px;
+	background:#3C3C3C url(../../admin/templates/images/shared/nav/repeat.jpg) repeat-x 0 -37px;
 	-moz-box-shadow:0 0 4px #010101;
 	-webkit-box-shadow:0 0 4px #010101;
 	box-shadow:0 0 4px #010101;
@@ -77,7 +74,7 @@ h1 {
 	border-style:solid;
 	border-width:0 1px 1px;
 	border-color:#e7e7e7;
-	background:#efefef url(../admin/templates/images/ui/handle-icon.png) no-repeat 50% 50%;
+	background:#efefef url(../../admin/templates/images/ui/handle-icon.png) no-repeat 50% 50%;
 	border-bottom-left-radius:4px;
 	-moz-border-radius-bottomleft:4px;
 	-webkit-border-bottom-left-radius:4px;
@@ -95,14 +92,14 @@ h1 {
 
 
 /* Treść */
-#Content {
+.main_panel_content {
 	margin-left:auto;
 	margin-right:auto;
 	margin-bottom:20px;
 	width:100%;
 	overflow:hidden;
 }
-#Content .corner4px .cc {
+.main_panel_content .corner4px .cc {
 	padding:13px 15px;
 }
 .buttons, .button-l, .button-r, .button-c {
@@ -113,16 +110,36 @@ h1 {
 	border-top:1px #eee solid;
 }
 
+.button {
+	cursor:pointer;
+	font-size:11px;
+	font-weight:bold;
+	color:#000;
+	padding:3px 6px;
+	background:#FFFFFF;
+	border:0px;
+	border-radius:4px;
+	-moz-border-radius:4px;
+	-webkit-border-radius:4px;
+	-o-border-radius:4px;
+	margin: 4px;
+	}
+	
+.button:hover {
+	text-decoration: none;
+	color: #3a3a3a;
+	}
+
 /* Zaokrąglony kontener */
 .corner4px .ctl {
 	height:4px;
 	font-size:1px;
-	background:url(../admin/templates/images/shared/corner4px.png) no-repeat left -8px;
+	background:url(../../admin/templates/images/shared/corner4px.png) no-repeat left -8px;
 }
 .corner4px .ctl .ctr {
 	margin:0 0 0 4px;
 	font-size:1px;
-	background:url(../admin/templates/images/shared/corner4px.png) no-repeat right 0;
+	background:url(../../admin/templates/images/shared/corner4px.png) no-repeat right 0;
 }
 .corner4px .ctl .ctr .ctc {
 	margin:0 4px 0 0;
@@ -139,12 +156,12 @@ h1 {
 .corner4px .cfl {
 	height:4px;
 	font-size:1px;
-	background:url(../admin/templates/images/shared/corner4px.png) no-repeat left -12px;
+	background:url(../../admin/templates/images/shared/corner4px.png) no-repeat left -12px;
 }
 .corner4px .cfl .cfr {
 	margin:0 0 0 4px;
 	font-size:1px;
-	background:url(../admin/templates/images/shared/corner4px.png) no-repeat right -3px;
+	background:url(../../admin/templates/images/shared/corner4px.png) no-repeat right -3px;
 }
 .corner4px .cfl .cfr .cfc {
 	margin:0 4px 0 0;
@@ -154,19 +171,17 @@ h1 {
 }
 
 
-/* Statusy (Messages) */
+/* Statusy (Messages)*/
 .status,.info,.error,.valid {
-	position:relative;
-	margin:6px 0 16px;
-	padding:8px 0 9px;
-	width:99%;
+	margin:10px 0;
+	padding:9px 15px;
 	font-size:12px;
-}
-.status div,.info div,.error div,.valid div {
-	margin:0 65px 0 10px;
+	text-align: center;
+	background: #fff;
+	border-radius: 5px;
 }
 .status a,.info a,.error a,.valid a {
-	font-weight:400;
+	font-weight:bold;
 	text-decoration:underline;
 }
 .status-right,.info-right,.error-right,.valid-right {
@@ -178,14 +193,11 @@ h1 {
 .status-right a,.info-right a,.error-right a,.valid-right a {
 	cursor:pointer;
 }
-.status {color:#e79300;background:url(../admin/templates/images/table/messages-sprite.png) no-repeat 0 -70px; padding: 9px; border-radius: 5px 6px 5px 5px;width: 98%;}
-.status a {color:#e79300;}
-.info {color:#2e74b2;background:url(../admin/templates/images/table/messages-sprite.png) no-repeat 0 -105px;}
-.info a {color:#2e74b2;}
-.error {color:#ce2700;background:url(../admin/templates/images/table/messages-sprite.png) no-repeat 0 -35px; width:99%;  padding: 9px; border-radius: 5px 6px 5px 5px;width: 98%;}
-.error a {color:#ce2700;}
-.valid {color:#6da827;background:url(../admin/templates/images/table/messages-sprite.png) no-repeat 0 0; padding: 9px; border-radius: 5px 6px 5px 5px;width: 98%;}
-.valid a {color:#6da827;}
+.status,.status a {color:#e79300;}
+.info,.info a {color:#2e74b2;}
+.error,.error a {color:#ce2700;}
+.valid,.valid a {color:#97be7a;}
+
 
 .EF-Nav {
 	margin-bottom:14px;
@@ -236,7 +248,7 @@ h1 {
 }
 
 #admin-box-cross {
-    background: url("../admin/templates/images/icons/cross.png") no-repeat scroll 10px 10px #FFFFFF;
+    background: url("../../admin/templates/images/icons/cross.png") no-repeat scroll 10px 10px #FFFFFF;
     border-radius: 10px 10px 10px 10px;
     display: none;
     height: 10px;
@@ -307,7 +319,7 @@ h1 {
 .cm_content {
 	width:85%;
 	background:none;
-	background:url("../templates/images/comm_arrow.png") no-repeat 3px -10px;
+	background:url("../images/comm_arrow.png") no-repeat 3px -10px;
 	float:left;
 	}
 .cm_content2 {
