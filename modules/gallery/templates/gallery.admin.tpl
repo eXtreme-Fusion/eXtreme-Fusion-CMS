@@ -62,7 +62,7 @@
 		{/literal}
 	</script>
 
-	<form id="This" action="{$URL_REQUEST}" class="tagform-full" method="post">
+	<form id="This" action="{$URL_REQUEST}" class="tagform-full" method="post" enctype="multipart/form-data">
 		<div class="tbl1">
 			<div class="formLabel sep_1 grid_2"><label for="title">{i18n('Name:')}</label></div>
 			<div class="formField grid_6"><input type="text" name="title" value="{$title}" id="title" rows="1" /></div>
@@ -72,6 +72,10 @@
 			<div class="formField grid_6"><textarea name="description" id="description" rows="3" class="resize">{$description}</textarea></div>
 		</div>
 		<div class="tbl1">
+			<div class="formLabel sep_1 grid_2"><label for="file">{i18n('Thumbnail:')}</label></div>
+			<div class="formField grid_6"><input type="file" name="file" value="{$file}" id="file" rows="1" /></div>
+		</div>
+		<div class="tbl2">
 			<div class="formLabel sep_1 grid_2"><label for="keyword">{i18n('Keywords:')}</label></div>
 			<div class="formField grid_6">
 				<p>
@@ -83,7 +87,7 @@
 				</p>
 			</div>
 		</div>
-		<div class="tbl2">
+		<div class="tbl1">
 			<div class="formLabel sep_1 grid_2"><label for="access">{i18n('Visible for:')}</label></div>
 			<div class="formField grid_6">
 				<select name="access[]" multiple id="access" class="select-multi" size="5">
@@ -93,7 +97,7 @@
 				</select>
 			</div>
 		</div>
-		<div class="tbl1">
+		<div class="tbl2">
 			<div class="formLabel sep_1 grid_2"><label for="order">{i18n('Order:')}</label></div>
 			<div class="formField grid_1"><input type="text" name="order" value="{$order}" id="order" /></div>
 		</div>
@@ -184,7 +188,7 @@
 			{/literal}
 		</script>
 
-		<form id="This" action="{$URL_REQUEST}" class="tagform-full" method="post">
+		<form id="This" action="{$URL_REQUEST}" class="tagform-full" method="post" enctype="multipart/form-data">
 			<div class="tbl1">
 				<div class="formLabel sep_1 grid_2"><label for="title">{i18n('Name:')}</label></div>
 				<div class="formField grid_6"><input type="text" name="title" value="{$title}" id="title" rows="1" /></div>
@@ -194,6 +198,10 @@
 				<div class="formField grid_6"><textarea name="description" id="description" rows="3" class="resize">{$description}</textarea></div>
 			</div>
 			<div class="tbl1">
+				<div class="formLabel sep_1 grid_2"><label for="file">{i18n('Thumbnail:')}</label></div>
+				<div class="formField grid_6"><input type="file" name="file" value="{$file}" id="file" rows="1" /></div>
+			</div>
+			<div class="tbl2">
 				<div class="formLabel sep_1 grid_2"><label for="keyword">{i18n('Keywords:')}</label></div>
 				<div class="formField grid_6">
 					<p>
@@ -205,7 +213,7 @@
 					</p>
 				</div>
 			</div>
-			<div class="tbl2">
+			<div class="tbl1">
 				<div class="formLabel sep_1 grid_2"><label for="cat">{i18n('Category:')}</label></div>
 				<div class="formField grid_6">
 					<select name="cat" id="cat">
@@ -215,7 +223,7 @@
 					</select>
 				</div>
 			</div>
-			<div class="tbl1">
+			<div class="tbl2">
 				<div class="formLabel sep_1 grid_2"><label for="access">{i18n('Visible for:')}</label></div>
 				<div class="formField grid_6">
 					<select name="access[]" multiple id="access" class="select-multi" size="5">
@@ -225,7 +233,7 @@
 				</select>
 				</div>
 			</div>
-			<div class="tbl2">
+			<div class="tbl1">
 				<div class="formLabel sep_1 grid_2"><label for="order">{i18n('Order:')}</label></div>
 				<div class="formField grid_1"><input type="text" name="order" value="{$order}" id="order" /></div>
 			</div>

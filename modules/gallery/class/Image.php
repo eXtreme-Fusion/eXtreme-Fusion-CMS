@@ -514,6 +514,14 @@ class Image {
 			}
 		}
 		
+		if (file_exists($path.'thumbnail'.DS.'_square_thumbnail_'.$name))
+		{		
+			if ( ! unlink($path.'thumbnail'.DS.'_square_thumbnail_'.$name))
+			{
+				throw new systemException(__('Error: File :path has not been deleted.', array(':path' => $path.'thumbnail'.DS.'_square_thumbnail_'.$name)));
+			}
+		}
+		
 		if (file_exists($path.'thumbnail'.DS.'_thumbnail_'.$name))
 		{		
 			if ( ! unlink($path.'thumbnail'.DS.'_thumbnail_'.$name))

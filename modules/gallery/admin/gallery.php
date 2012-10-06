@@ -72,7 +72,7 @@ try
 			if ( ! $_pdo->getRowsCount($query))
 			{			
 				// Pobranie kolejności kategorii dla wszystkich elementów
-				$row = $_pdo->getRow('SELECT `order` FROM [gallery_cats] WHERE `id`=  :id',
+				$row = $_pdo->getRow('SELECT `order`, `file_name` FROM [gallery_cats] WHERE `id`=  :id',
 					array(':id', $_request->get('id')->show(), PDO::PARAM_INT)
 				);
 				
@@ -83,6 +83,8 @@ try
 					$_pdo->exec('UPDATE [gallery_cats] SET `order`=`order`-1 WHERE `order` >= :order AND `order` > 0',
 						array(':order', $row['order'], PDO::PARAM_INT)
 					);
+					
+					$_image->removePhotos(DIR_MODULES.'gallery'.DS.'templates'.DS.'images'.DS.'upload'.DS.'cats'.DS, $row['file_name']);
 				}
 				
 				// Usuń kategorię
@@ -123,10 +125,11 @@ try
 		{
 			$title = $_request->post('title')->strip();
 			$description = $_request->post('description')->strip();
+			$file_name = strtolower($_request->post('title')->strip());
 			$keyword = $_request->post('tag')->strip();
 			$access = $_request->post('access')->show() ? $_request->post('access')->getNumArray() : array(0 => '0');
 			$order = $_request->post('order')->isNum(TRUE);
-			
+
 			if (($_request->get('action')->show() === "edit") && $_request->get('id')->isNum(TRUE)) 
 			{
 				// Zapisz edytowane dane
@@ -188,6 +191,41 @@ try
 			}
 			else
 			{
+				$file_name = $file_name !== '' ? $_image->setPhotoName($file_name).$_image->getPhotoExt(strtolower($_FILES['file']['name'])) : $_image->setPhotoName($_image->getPhotoNameWithExtension(strtolower($_FILES['file']['name']))).$_image->getPhotoExt(strtolower($_FILES['file']['name']));
+				
+				$path_upload = DIR_MODULES.'gallery'.DS.'templates'.DS.'images'.DS.'upload'.DS;
+
+				$_image->createDir($path_upload, 'cats', 0777);
+				$_image->createDir($path_upload.'cats'.DS, 'thumbnail', 0777);
+				
+				$path_thumbnail = $path_upload.DS.'cats'.DS.'thumbnail'.DS;
+			
+				$path_url = ADDR_SITE.'modules/gallery/templates/images/upload/cats/';
+				
+				if (file_exists($path_thumbnail.'_thumbnail_'.$file_name))
+				{
+					throw new systemException(__('Error: Image with that title (:iname) is already existing!', array(':iname' => $path_thumbnail.'_thumbnail_'.$file_name)));
+				}
+				
+				if (file_exists($path_thumbnail.'_square_thumbnail_'.$file_name))
+				{
+					throw new systemException(__('Error: Image with that title (:iname) is already existing!', array(':iname' => $path_thumbnail.'_square_thumbnail_'.$file_name)));
+				}
+				
+				// Przenieś podany plik w wskazaną lokalizacje, zmień jego nazwę
+				move_uploaded_file($_FILES['file']['tmp_name'], $path_thumbnail.$file_name);
+				
+				// Utwórz miniaturkę o podanej wysokości i szerokości
+				// Do podglądu małego
+				$_image->createThumbnail($path_thumbnail.$file_name, $path_thumbnail.'_thumbnail_'.$file_name, $_gallery_sett->get('thumbnail_width'), $_gallery_sett->get('thumbnail_hight'));
+				
+				// Utwórz miniaturkę o podanym wymiarza szerokość i wysokość taka sama
+				// Tworzy miniaturkę podglądową do galeri
+				$_image->createSquareThumbnail($path_thumbnail.$file_name, $path_thumbnail.'_square_thumbnail_'.$file_name, $_gallery_sett->get('thumbnail_width'));
+				
+				// Usuwa oryginalny plik
+				unlink($path_thumbnail.$file_name);
+
 				// Nie podano kolejności
 				if ( ! $order) 
 				{
@@ -201,10 +239,11 @@ try
 				);
 				
 				// Tu będą zapytania PDO
-				$count = $_pdo->exec('INSERT INTO [gallery_cats] (`title`, `description`, `access`, `order`, `datestamp`) VALUES (:title, :description, :access, :order, '.time().')',
+				$count = $_pdo->exec('INSERT INTO [gallery_cats] (`title`, `description`, `file_name`, `access`, `order`, `datestamp`) VALUES (:title, :description, :file_name, :access, :order, '.time().')',
 					array(
 						array(':title', $title, PDO::PARAM_STR),
 						array(':description', $description, PDO::PARAM_STR),
+						array(':file_name', $file_name, PDO::PARAM_STR),
 						array(':access', HELP::implode($access), PDO::PARAM_STR),
 						array(':order', $order, PDO::PARAM_INT)
 					)
@@ -319,13 +358,15 @@ try
 			
 			// Nie zawiera albumów
 			if ( ! $_pdo->getRowsCount($query))
-			{				
+			{			
 				// Pobranie kolejności albumu dla wszystkich elementów
-				$row = $_pdo->getRow('SELECT `order` FROM [gallery_albums] WHERE `id`= '.$_request->get('id')->show());
+				$row = $_pdo->getRow('SELECT `order`, `file_name` FROM [gallery_albums] WHERE `id`= '.$_request->get('id')->show());
 				
 				// Jeśli są wyniki...
 				if ($row)
 				{
+					$_image->removePhotos(DIR_MODULES.'gallery'.DS.'templates'.DS.'images'.DS.'upload'.DS.'albums'.DS, $row['file_name']);
+				
 					// Zmień kolejność wszystkich albumu o większej kolejności od usuwanej albumu
 					$_pdo->exec('UPDATE [gallery_albums] SET `order`=`order`-1 WHERE `order` >= :order AND `order` > 0',
 						array(':order', $row['order'], PDO::PARAM_INT)
@@ -370,6 +411,7 @@ try
 		{
 			$title = $_request->post('title')->strip();
 			$description = $_request->post('description')->strip();
+			$file_name = strtolower($_request->post('title')->strip());
 			$keyword = $_request->post('tag')->strip();
 			$cat = $_request->post('cat')->isNum(TRUE);
 			$access = $_request->post('access')->show() ? $_request->post('access')->getNumArray() : array(0 => '0');
@@ -437,6 +479,41 @@ try
 			}
 			else
 			{
+				$file_name = $file_name !== '' ? $_image->setPhotoName($file_name).$_image->getPhotoExt(strtolower($_FILES['file']['name'])) : $_image->setPhotoName($_image->getPhotoNameWithExtension(strtolower($_FILES['file']['name']))).$_image->getPhotoExt(strtolower($_FILES['file']['name']));
+				
+				$path_upload = DIR_MODULES.'gallery'.DS.'templates'.DS.'images'.DS.'upload'.DS;
+
+				$_image->createDir($path_upload, 'albums', 0777);
+				$_image->createDir($path_upload.'albums'.DS, 'thumbnail', 0777);
+				
+				$path_thumbnail = $path_upload.DS.'albums'.DS.'thumbnail'.DS;
+			
+				$path_url = ADDR_SITE.'modules/gallery/templates/images/upload/albums/';
+				
+				if (file_exists($path_thumbnail.'_thumbnail_'.$file_name))
+				{
+					throw new systemException(__('Error: Image with that title (:iname) is already existing!', array(':iname' => $path_thumbnail.'_thumbnail_'.$file_name)));
+				}
+				
+				if (file_exists($path_thumbnail.'_square_thumbnail_'.$file_name))
+				{
+					throw new systemException(__('Error: Image with that title (:iname) is already existing!', array(':iname' => $path_thumbnail.'_square_thumbnail_'.$file_name)));
+				}
+				
+				// Przenieś podany plik w wskazaną lokalizacje, zmień jego nazwę
+				move_uploaded_file($_FILES['file']['tmp_name'], $path_thumbnail.$file_name);
+				
+				// Utwórz miniaturkę o podanej wysokości i szerokości
+				// Do podglądu małego
+				$_image->createThumbnail($path_thumbnail.$file_name, $path_thumbnail.'_thumbnail_'.$file_name, $_gallery_sett->get('thumbnail_width'), $_gallery_sett->get('thumbnail_hight'));
+				
+				// Utwórz miniaturkę o podanym wymiarza szerokość i wysokość taka sama
+				// Tworzy miniaturkę podglądową do galeri
+				$_image->createSquareThumbnail($path_thumbnail.$file_name, $path_thumbnail.'_square_thumbnail_'.$file_name, $_gallery_sett->get('thumbnail_width'));
+				
+				// Usuwa oryginalny plik
+				unlink($path_thumbnail.$file_name);
+
 				// Nie podano kolejności
 				if ( ! $order) 
 				{
@@ -450,10 +527,11 @@ try
 				);
 				
 				// Tu będą zapytania PDO
-				$count = $_pdo->exec('INSERT INTO [gallery_albums] (`title`, `description`, `cat`, `access`, `order`, `datestamp`) VALUES (:title, :description, :cat, :access, :order, '.time().')',
+				$count = $_pdo->exec('INSERT INTO [gallery_albums] (`title`, `description`, `file_name`, `cat`, `access`, `order`, `datestamp`) VALUES (:title, :description, :file_name, :cat, :access, :order, '.time().')',
 					array(
 						array(':title', $title, PDO::PARAM_STR),
 						array(':description', $description, PDO::PARAM_STR),
+						array(':file_name', $file_name, PDO::PARAM_STR),
 						array(':cat', $cat, PDO::PARAM_INT),
 						array(':access', HELP::implode($access), PDO::PARAM_STR),
 						array(':order', $order, PDO::PARAM_INT)
@@ -730,21 +808,22 @@ try
 				
 				$path_upload = DIR_MODULES.'gallery'.DS.'templates'.DS.'images'.DS.'upload'.DS;
 				
-				$_image->createDir($path_upload, date('Y'), 0777);
-				$_image->createDir($path_upload, date('Y').DS.date('m'), 0777);
-				$_image->createDir($path_upload, date('Y').DS.date('m'), 0777);
-				$_image->createDir($path_upload, date('Y').DS.date('m').DS.date('d'), 0777);
-				$_image->createDir($path_upload, date('Y').DS.date('m').DS.date('d'), 0777);
-				$_image->createDir($path_upload, date('Y').DS.date('m').DS.date('d').DS.'original', 0777);
-				$_image->createDir($path_upload, date('Y').DS.date('m').DS.date('d').DS.'thumbnail', 0777);
-				$_image->createDir($path_upload, date('Y').DS.date('m').DS.date('d').DS.'watermark', 0777);
+				$_image->createDir($path_upload, 'photos', 0777);
+				$_image->createDir($path_upload, 'photos'.DS.date('Y'), 0777);
+				$_image->createDir($path_upload, 'photos'.DS.date('Y').DS.date('m'), 0777);
+				$_image->createDir($path_upload, 'photos'.DS.date('Y').DS.date('m'), 0777);
+				$_image->createDir($path_upload, 'photos'.DS.date('Y').DS.date('m').DS.date('d'), 0777);
+				$_image->createDir($path_upload, 'photos'.DS.date('Y').DS.date('m').DS.date('d'), 0777);
+				$_image->createDir($path_upload, 'photos'.DS.date('Y').DS.date('m').DS.date('d').DS.'original', 0777);
+				$_image->createDir($path_upload, 'photos'.DS.date('Y').DS.date('m').DS.date('d').DS.'thumbnail', 0777);
+				$_image->createDir($path_upload, 'photos'.DS.date('Y').DS.date('m').DS.date('d').DS.'watermark', 0777);
 				
-				$path_absolute = $path_upload.date('Y').DS.date('m').DS.date('d').DS;
-				$path_original = $path_upload.date('Y').DS.date('m').DS.date('d').DS.'original'.DS;
-				$path_thumbnail = $path_upload.date('Y').DS.date('m').DS.date('d').DS.'thumbnail'.DS;
-				$path_watermark = $path_upload.date('Y').DS.date('m').DS.date('d').DS.'watermark'.DS;
+				$path_absolute 	= $path_upload.'photos'.DS.date('Y').DS.date('m').DS.date('d').DS;
+				$path_original 	= $path_upload.'photos'.DS.date('Y').DS.date('m').DS.date('d').DS.'original'.DS;
+				$path_thumbnail = $path_upload.'photos'.DS.date('Y').DS.date('m').DS.date('d').DS.'thumbnail'.DS;
+				$path_watermark = $path_upload.'photos'.DS.date('Y').DS.date('m').DS.date('d').DS.'watermark'.DS;
 				
-				$path_url = ADDR_SITE.'modules/gallery/templates/images/upload/'.date('Y').'/'.date('m').'/'.date('d').'/';
+				$path_url = ADDR_SITE.'modules/gallery/templates/images/upload/photos/'.date('Y').'/'.date('m').'/'.date('d').'/';
 				
 				if (file_exists($path_original.$file_name))
 				{
