@@ -138,12 +138,12 @@ try
 				$row = $_pdo->getRow('SELECT `order`, `file_name`  FROM [gallery_cats] WHERE `id`= :id',
 					array(':id', $_request->get('id')->show(), PDO::PARAM_INT)
 				);
-
-				if (isset($_FILES['file']['name']) && ($_FILES['file']['name'] !== ''))
+				
+				if ($_request->upload('file'))
 				{
 					$_image->removePhotos(DIR_MODULES.'gallery'.DS.'templates'.DS.'images'.DS.'upload'.DS.'cats'.DS, $row['file_name']);
 					
-					$file_name = $file_name !== '' ? $_image->setPhotoName($file_name).$_image->getPhotoExt(strtolower($_FILES['file']['name'])) : $_image->setPhotoName($_image->getPhotoNameWithExtension(strtolower($_FILES['file']['name']))).$_image->getPhotoExt(strtolower($_FILES['file']['name']));
+					$file_name = $file_name !== '' ? $_image->setPhotoName($file_name).$_image->getPhotoExt(strtolower($_request->file('file', 'name')->show())) : $_image->setPhotoName($_image->getPhotoNameWithExtension(strtolower($_request->file('file', 'name')->show()))).$_image->getPhotoExt(strtolower($_request->file('file', 'name')->show()));
 				
 					$path_upload = DIR_MODULES.'gallery'.DS.'templates'.DS.'images'.DS.'upload'.DS;
 
@@ -165,7 +165,7 @@ try
 					}
 
 					// Przenieś podany plik w wskazaną lokalizacje, zmień jego nazwę
-					move_uploaded_file($_FILES['file']['tmp_name'], $path_thumbnail.$file_name);
+					move_uploaded_file($_request->file('file', 'tmp_name')->show(), $path_thumbnail.$file_name);
 
 					// Utwórz miniaturkę o podanej wysokości i szerokości
 					// Do podglądu małego
@@ -236,7 +236,7 @@ try
 			}
 			else
 			{
-				$file_name = $file_name !== '' ? $_image->setPhotoName($file_name).$_image->getPhotoExt(strtolower($_FILES['file']['name'])) : $_image->setPhotoName($_image->getPhotoNameWithExtension(strtolower($_FILES['file']['name']))).$_image->getPhotoExt(strtolower($_FILES['file']['name']));
+				$file_name = $file_name !== '' ? $_image->setPhotoName($file_name).$_image->getPhotoExt(strtolower($_request->file('file', 'name')->show())) : $_image->setPhotoName($_image->getPhotoNameWithExtension(strtolower($_request->file('file', 'name')->show()))).$_image->getPhotoExt(strtolower($_request->file('file', 'name')->show()));
 			
 				$path_upload = DIR_MODULES.'gallery'.DS.'templates'.DS.'images'.DS.'upload'.DS;
 
@@ -258,7 +258,7 @@ try
 				}
 
 				// Przenieś podany plik w wskazaną lokalizacje, zmień jego nazwę
-				move_uploaded_file($_FILES['file']['tmp_name'], $path_thumbnail.$file_name);
+				move_uploaded_file($_request->file('file', 'tmp_name')->show(), $path_thumbnail.$file_name);
 
 				// Utwórz miniaturkę o podanej wysokości i szerokości
 				// Do podglądu małego
@@ -471,11 +471,11 @@ try
 					array(':id', $_request->get('id')->show(), PDO::PARAM_INT)
 				);
 				
-				if (isset($_FILES['file']['name']) && ($_FILES['file']['name'] !== ''))
+				if ($_request->upload('file'))
 				{
 					$_image->removePhotos(DIR_MODULES.'gallery'.DS.'templates'.DS.'images'.DS.'upload'.DS.'albums'.DS, $row['file_name']);
 					
-					$file_name = $file_name !== '' ? $_image->setPhotoName($file_name).$_image->getPhotoExt(strtolower($_FILES['file']['name'])) : $_image->setPhotoName($_image->getPhotoNameWithExtension(strtolower($_FILES['file']['name']))).$_image->getPhotoExt(strtolower($_FILES['file']['name']));
+					$file_name = $file_name !== '' ? $_image->setPhotoName($file_name).$_image->getPhotoExt(strtolower($_request->file('file', 'name')->show())) : $_image->setPhotoName($_image->getPhotoNameWithExtension(strtolower($_request->file('file', 'name')->show()))).$_image->getPhotoExt(strtolower($_request->file('file', 'name')->show()));
 				
 					$path_upload = DIR_MODULES.'gallery'.DS.'templates'.DS.'images'.DS.'upload'.DS;
 
@@ -497,7 +497,7 @@ try
 					}
 
 					// Przenieś podany plik w wskazaną lokalizacje, zmień jego nazwę
-					move_uploaded_file($_FILES['file']['tmp_name'], $path_thumbnail.$file_name);
+					move_uploaded_file($_request->file('file', 'tmp_name')->show(), $path_thumbnail.$file_name);
 
 					// Utwórz miniaturkę o podanej wysokości i szerokości
 					// Do podglądu małego
@@ -569,7 +569,7 @@ try
 			}
 			else
 			{
-				$file_name = $file_name !== '' ? $_image->setPhotoName($file_name).$_image->getPhotoExt(strtolower($_FILES['file']['name'])) : $_image->setPhotoName($_image->getPhotoNameWithExtension(strtolower($_FILES['file']['name']))).$_image->getPhotoExt(strtolower($_FILES['file']['name']));
+				$file_name = $file_name !== '' ? $_image->setPhotoName($file_name).$_image->getPhotoExt(strtolower($_request->file('file', 'name')->show())) : $_image->setPhotoName($_image->getPhotoNameWithExtension(strtolower($_request->file('file', 'name')->show()))).$_image->getPhotoExt(strtolower($_request->file('file', 'name')->show()));
 				
 				$path_upload = DIR_MODULES.'gallery'.DS.'templates'.DS.'images'.DS.'upload'.DS;
 
@@ -591,7 +591,7 @@ try
 				}
 				
 				// Przenieś podany plik w wskazaną lokalizacje, zmień jego nazwę
-				move_uploaded_file($_FILES['file']['tmp_name'], $path_thumbnail.$file_name);
+				move_uploaded_file($_request->file('file', 'tmp_name')->show(), $path_thumbnail.$file_name);
 				
 				// Utwórz miniaturkę o podanej wysokości i szerokości
 				// Do podglądu małego
@@ -880,21 +880,21 @@ try
 			}
 			else
 			{
-				if ($_FILES['file']['error'] !== 0)
+				if ($_request->file('file', 'error')->show())
 				{
-					throw new uploadException($_FILES['file']['error']);
+					throw new uploadException($_request->file('file', 'error')->show());
 				}
 				
 				// Dozwolone nowe roszerzenia plików
 				$_image->newImageExt(explode(', ', $_gallery_sett->get('allow_ext')));
 				
 				// Walidacja dopuszczalnego rozszerzenia pliku
-				$_image->validExt(strtolower($_FILES['file']['name']));
+				$_image->validExt(strtolower($_request->file('file', 'name')->show()));
 				
 				// Walidacja dopuszczalnej wagi pliku
-				$_image->validSize($_FILES['file']['size']);
+				$_image->validSize($_request->file('file', 'size')->show());
 				
-				$file_name = $file_name !== '' ? $_image->setPhotoName($file_name).$_image->getPhotoExt(strtolower($_FILES['file']['name'])) : $_image->setPhotoName($_image->getPhotoNameWithExtension(strtolower($_FILES['file']['name']))).$_image->getPhotoExt(strtolower($_FILES['file']['name']));
+				$file_name = $file_name !== '' ? $_image->setPhotoName($file_name).$_image->getPhotoExt(strtolower($_request->file('file', 'name')->show())) : $_image->setPhotoName($_image->getPhotoNameWithExtension(strtolower($_request->file('file', 'name')->show()))).$_image->getPhotoExt(strtolower($_request->file('file', 'name')->show()));
 				
 				$path_upload = DIR_MODULES.'gallery'.DS.'templates'.DS.'images'.DS.'upload'.DS;
 				
@@ -936,7 +936,7 @@ try
 				}
 				
 				// Przenieś podany plik w wskazaną lokalizacje, zmień jego nazwę
-				move_uploaded_file($_FILES['file']['tmp_name'], $path_original.$file_name);
+				move_uploaded_file($_request->file('file', 'tmp_name')->show(), $path_original.$file_name);
 				
 				$image_upload = $_image->getWidthAndHight($path_original.$file_name, TRUE);
 
