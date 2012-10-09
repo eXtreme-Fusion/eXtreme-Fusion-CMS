@@ -3,9 +3,9 @@
 	<ul>
 		{if $nav}
 			{section=nav}
-				{if $nav.name == 1}
+				{if $nav.type == 1}
 					<div class="side-label"><strong>{$nav.name}</strong></div>
-				{elseif $nav.name == 2}
+				{elseif $nav.type == 2}
 					<div><hr class="side-hr" /></div>
 				{else}
 					<li><a href="{$nav.url}"{if $nav.link_target} {$nav.link_target}{/if}>{$nav.name}</a></li>

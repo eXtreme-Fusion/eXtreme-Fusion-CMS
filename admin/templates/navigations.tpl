@@ -28,9 +28,9 @@
 	<div class="tbl1">
 		<div class="formLabel sep_1 grid_3"><label for="Position">{i18n('Position:')}</label></div>
 		<div class="formField grid_7">
-			<input type="radio" name="position" value="1" {if $position == 1} checked='checked'{/if} id="Position" /> {i18n('Vertical menu')}
-			<input type="radio" name="position" value="2" {if $position == 2} checked='checked'{/if} id="Position" /> {i18n('Horizontal menu')}
-			<input type="radio" name="position" value="3" {if $position == 3} checked='checked'{/if} id="Position" /> {i18n('Vertical and horizontal menu')}
+			<input type="radio" name="position" value="1" {if $position == 1}checked='checked'{elseif ! $position}checked='checked'{/if} id="Position" /> {i18n('Vertical menu')}
+			<input type="radio" name="position" value="2" {if $position == 2}checked='checked'{/if} id="Position" /> {i18n('Horizontal menu')}
+			<input type="radio" name="position" value="3" {if $position == 3}checked='checked'{/if} id="Position" /> {i18n('Vertical and horizontal menu')}
 		</div>
 	</div>
 	<div class="tbl2">

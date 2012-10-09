@@ -23,15 +23,18 @@ if ($_pdo->getRowsCount($query))
 		{
 			if ($data['name'] != "---" && $data['url'] == "---")
 			{
-				$name = 1;
+				$type = 1;
+				$name = $ec->sbb->parseBBCode($data['name'], "b|i|u|color");
 				$bullet = '';
 			}
 			else if ($data['name'] == "---" && $data['url'] == "---") {
-				$name = 2;
+				$type = 2;
+				$name = '';
 				$bullet = '';
 			}
 			else
 			{
+				$type = '';
 				$link_target = ($data['window'] == '1' ? ' target="_blank"' : '');
 				$name = $ec->sbb->parseBBCode($data['name'], "b|i|u|color");
 				$bullet = THEME_IMAGES.'bullet.gif';
@@ -39,6 +42,7 @@ if ($_pdo->getRowsCount($query))
 			
 			$nav[] = array(
 				'name' => $name,
+				'type' => $type,
 				'link_target' => $link_target,
 				'url' => HELP::createNaviLink($data['url']),
 				'bullet' => $bullet
