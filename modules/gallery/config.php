@@ -15,7 +15,7 @@ $mod_info = array(
 	'support' => 'http://extreme-fusion.org',
 	'version' => '1.0',
 	'dir' => 'gallery',
-	'not_ready' => TRUE
+	'development' => TRUE
 );
 
 $admin_page[1] = array(

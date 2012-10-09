@@ -122,7 +122,8 @@ try
 					'desc'       	=> $mod_info['description'],
 					'version'   	=> $_mod->getItemVersion($mod_info['dir'], $mod_info['version']),
 					'webURL'     	=> $mod_info['support'],
-					'author'     	=> $mod_info['developer']
+					'author'     	=> $mod_info['developer'],
+					'development'   => isset($mod_info['development']) ? $mod_info['development'] : FALSE
 				);
 				$i++;
 			}

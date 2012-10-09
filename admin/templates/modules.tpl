@@ -10,12 +10,12 @@
 			<div class="grid_3 bold">{i18n('Author:')}</div>
 		</div>
 		{section=mod}
-			<div class="tbl {$mod.row_color}">
+			<div class="tbl {if $mod.development}{if $mod.installed}modInstalledDevelopment{else}modDevelopment{/if}{else}{if $mod.installed}modInstallOfficial{else}modOfficial{/if}{/if}">
 				<div class="sep_1 grid_2">
 					<input type='checkbox' name='mod[]' id='{$mod.id}' value='{$mod.value}' {if $mod.installed}checked='checked'{/if}/>
 					{$mod.label}
 					{if $mod.is_to_update}
-						<p style="margin-left:27px;" class="red">
+						<p class="red">
 							<input type="checkbox" name="update[]" value="{$mod.value}" />{i18n('Update')}
 						</p>
 					{/if}
@@ -26,6 +26,13 @@
 
 			</div>
 		{/section}
+		<div class="tbl">
+			<div class="tbl">{i18n('Legend:')}</div>
+			<div class="modDevelopmentLegend">{i18n('Modules under Development')}</div>
+			<div class="modInstalledDevelopmentLegend">{i18n('Installed Modules under Development')}</div>
+			<div class="modOfficialLegend">{i18n('Modules officially released')}</div>
+			<div class="modInstallOfficialLegend">{i18n('Installed Modules officially released')}</div>
+		</div>
 		<div class="tbl AdminButtons">
 			<div class="center grid_2 button-l">
 				<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
