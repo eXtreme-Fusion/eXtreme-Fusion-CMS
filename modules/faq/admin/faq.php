@@ -22,6 +22,10 @@ try
 
     $_tpl = new AdminModuleIframe('faq');
 	
+	include DIR_MODULES.'faq'.DS.'config.php';
+	
+	$_tpl->assign('config', $mod_info);
+	
 	// Wyświetlenie komunikatów
 	if ($_request->get(array('status', 'act'))->show())
 	{

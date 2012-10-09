@@ -16,16 +16,20 @@ try
 
 	$_locale->moduleLoad('admin', 'forum');
 
-        if ( ! $_user->hasPermission('module.forum.admin'))
-        {
-            throw new userException(__('Access denied'));
-        }
+	if ( ! $_user->hasPermission('module.forum.admin'))
+	{
+		throw new userException(__('Access denied'));
+	}
 
-        $_tpl = new AdminModuleIframe('forum');
+	$_tpl = new AdminModuleIframe('forum');
+	
+	
+	include DIR_MODULES.'forum'.DS.'config.php';
+	
+	$_tpl->assign('config', $mod_info);
 	
 	// Inicjalizacja klas
 	! class_exists('Tag') || $_tag = New Tag($_system, $_pdo);
-	
 	
 	$_tpl->template('admin.tpl');	
 }

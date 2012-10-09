@@ -25,6 +25,9 @@ try
 	
 	include DIR_MODULES.'gallery'.DS.'class'.DS.'Sett.php';
 	include DIR_MODULES.'gallery'.DS.'class'.DS.'Image.php';
+	include DIR_MODULES.'gallery'.DS.'config.php';
+	
+	$_tpl->assign('config', $mod_info);
 	
 	// Inicjalizacja klas
 	! class_exists('GallerySett') || $_gallery_sett = New GallerySett($_system, $_pdo);

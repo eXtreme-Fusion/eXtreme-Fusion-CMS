@@ -1,3 +1,4 @@
+{if $config.development}<div class="error">{$config.developmentMessage}</div>{/if}
 {if $question}
 	{php} opentable(__('Question preview')) {/php}
 		<div class="tbl2">

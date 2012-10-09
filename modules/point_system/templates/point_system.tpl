@@ -1,5 +1,6 @@
 {php} opentable(__('Points & Rank')); {/php}
 	{if $message}<div class="{$class}">{$message}</div>{/if}
+	{if $config.development}<div class="error">{$config.developmentMessage}</div>{/if}
 	<div class="tbl">
 		<div class="center grid_10 sep_1 red">{i18n('Points:&nbsp;')}{$points}<br/>{i18n('Rank:&nbsp;')}{$ranks}</div>
 	</div>

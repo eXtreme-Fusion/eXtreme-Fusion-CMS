@@ -12,6 +12,11 @@ $_locale->moduleLoad('lang', 'gallery');
 
 ! class_exists('Tag') || $_tag = New Tag($_system, $_pdo);
 
+include DIR_MODULES.'gallery'.DS.'config.php';
+
+$_tpl->assign('config', $mod_info);
+
+
 if($_route->getByID(1) === 'cat')
 {
 	if ( ! $_route->getByID(2))

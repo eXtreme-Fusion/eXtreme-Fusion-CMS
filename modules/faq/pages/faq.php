@@ -13,6 +13,10 @@ $_locale->moduleLoad('lang', 'faq');
 $_head->set('<link href="'.ADDR_SITE.'modules/faq/templates/stylesheet.css" media="screen" rel="stylesheet" />');
 $_head->set('<script src="'.ADDR_SITE.'modules/faq/templates/script.js"></script>');
 
+include DIR_MODULES.'faq'.DS.'config.php';
+	
+$_tpl->assign('config', $mod_info);
+
 $id = $_route->getByID(1);
 
 // Blokuje wykonywanie pliku TPL z katalogu szablonu

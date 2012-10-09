@@ -23,6 +23,10 @@ try
 
     $_tpl = new AdminModuleIframe('master_download');
 	
+	include DIR_MODULES.'master_download'.DS.'config.php';
+	
+	$_tpl->assign('config', $mod_info);
+
 	// Wyœwietlenie komunikatów
 	if ($_request->get(array('status', 'act'))->show())
 	{
