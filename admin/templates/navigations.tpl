@@ -70,9 +70,9 @@
 								<strong>[{$data.name}]</strong>
 							{else}
 								{if $data.perse_url}
-									<a href="{$ADDR_SITE}/{$data.url}">{$data.url}</a>
+									<a href="{$ADDR_SITE}{$data.url}">{if $data.url}{$data.url}{else}{$ADDR_SITE}{/if}</a>
 								{else}
-									<a href="{$ADDR_SITE}/{$data.url}"><small>{$data.url}</small></a>
+									<a href="{$ADDR_SITE}{$data.url}"><small>{if $data.url}{$data.url}{else}{$ADDR_SITE}{/if}</small></a>
 								{/if}
 							{/if}
 						</div>

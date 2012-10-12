@@ -1,4 +1,4 @@
-{if $config.development}<div class="error">{$config.developmentMessage}</div>{/if}
+{if $config.development}<div class="error">{i18n($config.developmentMessage)}</div>{/if}
 
 {if $md_download}
 	{php} opentable(__('Master Download').' - '.__('Categories')) {/php}

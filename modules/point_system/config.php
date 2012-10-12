@@ -17,7 +17,7 @@ $mod_info = array(
 	'version' => '1.0',
 	'dir' => 'point_system',
 	'development' => TRUE,
-	'developmentMessage' => __('Modules under Development')
+	'developmentMessage' => __('Modules under Development.')
 );
 
 $new_table[1] = array(

@@ -81,8 +81,8 @@ try
 			$name = $_request->post('name')->strip();
 			$url = $_request->post('url')->strip();
 			$visibility = $_request->post('visibility')->show() ? $_request->post('visibility')->getNumArray() : array(0 => '0');
-			$position =  $_request->post('position')->isNum() ? $_request->post('position')->show() : '1';
-			$window =  $_request->post('window')->isNum() ? $_request->post('window')->show() : '0';
+			$position =  $_request->post('position')->isNum(TRUE);
+			$window =  $_request->post('window')->isNum(TRUE);
 			$order = $_request->post('order')->isNum(TRUE);
 			if ($name && $url) 
 			{
@@ -231,7 +231,7 @@ try
 					$data[] = array(
 						'id' => $row['id'],
 						'name' => $row['name'],
-						'url' => $row['url'] !== '' ? $row['url'] : ADDR_SITE,
+						'url' => $row['url'],
 						'perse_url' => ((strstr($row['url'], "http://") || strstr($row['url'], "https://")) ? TRUE : FALSE),
 						'order' => $row['order'],
 						'visibility' => $_user->groupArrIDsToNames(HELP::explode($row['visibility'])),

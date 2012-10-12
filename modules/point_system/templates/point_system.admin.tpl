@@ -1,6 +1,6 @@
 <h3 class="ui-corner-all">{$SystemVersion} - {i18n('Points System')}</h3>
 {if $message}<div class="{$class}">{$message}</div>{/if}
-{if $config.development}<div class="error">{$config.developmentMessage}</div>{/if}
+{if $config.development}<div class="error">{i18n($config.developmentMessage)}</div>{/if}
 
 <div class="tbl AdminButtons">
 	<div class="center grid_2 button-l">

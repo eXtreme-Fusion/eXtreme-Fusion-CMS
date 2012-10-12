@@ -356,6 +356,7 @@ return array(
 	
 	'Polish' => 'Polski',
 	'English' => 'Angielski',
-	'Czech' => 'Czeski'
+	'Czech' => 'Czeski',
 	
+	'Modules under Development.' => 'Moduł w trakcie rozwoju.'
 );

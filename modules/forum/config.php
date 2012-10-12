@@ -16,7 +16,7 @@ $mod_info = array(
 	'version' => '1.0',
 	'dir' => 'forum',
 	'development' => TRUE,
-	'developmentMessage' => __('Modules under Development')
+	'developmentMessage' => __('Modules under Development.')
 );
 
 $admin_page[1] = array(

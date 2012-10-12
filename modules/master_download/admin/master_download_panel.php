@@ -93,7 +93,7 @@ try
 			{
 				$file_name = $_request->post('file_name')->filters('trim', 'strip');
 				$file_desc = $_request->post('file_desc')->filters('trim', 'strip');
-				$file_subcat = $_request->post('file_subcat')->isNum() ? $_request->post('file_subcat')->show() : '';
+				$file_subcat = $_request->post('file_subcat')->isNum(TRUE);
 				$file_url = $_request->post('file_url')->filters('trim', 'strip');
 				$file_img = $_request->post('file_img')->filters('trim', 'strip');
 				$file_size = $_request->post('file_size')->filters('trim', 'strip');
@@ -425,7 +425,7 @@ try
 			{
 				$sub_name = $_request->post('name')->filters('trim', 'strip');
 				$sub_desc = $_request->post('desc')->filters('trim', 'strip');
-				$sub_cat = $_request->post('cat')->isNum() ? $_request->post('cat')->show() : '';
+				$sub_cat = $_request->post('cat')->isNum(TRUE);
 				$sub_view_access =  $_request->post('view_access')->show() ? $_request->post('view_access')->getNumArray() : array(0 => '3');
 				$sub_get_access =  $_request->post('get_access')->show() ? $_request->post('get_access')->getNumArray() : array(0 => '2');
 				if ($sub_name && $sub_cat)

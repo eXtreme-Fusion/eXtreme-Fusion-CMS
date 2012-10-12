@@ -358,4 +358,5 @@ return array(
 	'English' => 'Anglický',
 	'Czech' => 'Český'
 
-);
+	'Modules under Development.' => 'Moduł w trakcie rozwoju.'
+	);
