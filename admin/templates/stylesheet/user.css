@@ -1,0 +1,42 @@
+.user {
+	width:90%;
+	margin:auto;
+}
+.user .avatar {
+	width:100px;
+	height:100px;
+	margin:3px;
+	float:left;
+}
+.user .data {
+	float:left;
+}
+.user .box {
+	float:right;
+	width:200px;
+	border: solid 1px #959090;
+	border-radius:8px;
+	padding:3px;
+	position:relative;z-index:99;
+	text-align:center;
+}
+.user .misc {
+	border: solid 1px; #959090;
+	border-radius:8px;
+	margin-left:5px;
+	padding:5px;
+}
+.search {
+	width:200px;
+	border: #acabab solid 1px;
+	background:#dbdcd7;
+	padding:3px;
+	border-radius:3px;
+}
+.search:hover {
+	background:#748e00;
+}
+a:hover {
+	text-decoration:none;
+	font-weight:bold;
+}

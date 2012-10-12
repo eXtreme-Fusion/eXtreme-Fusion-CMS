@@ -1,0 +1,9 @@
+Postanowi³em zostawiæ tylko te:
+
+0 - aktywne
+1 - wymaga akceptacji mailowej
+2 - wymaga aktywacji admina
+3 - zablkowane (ban)
+4 - ukryte
+
+Proszê o dostosowanie tego w innych plikach systemu.
