@@ -30,10 +30,9 @@ if($_user->isLoggedIn())
 	}
 	
 	$rows = $_pdo->getMatchRowsCount('SELECT `id` FROM [points_history] WHERE `user_id` = '.$_user->get('id'));
-	
-	if ($rows !== '0')
+
+	if ($rows)
 	{
-		$count = $_pdo->getMatchRowsCount('SELECT `id` FROM [points_history] WHERE `user_id` = '.$_user->get('id'));
 		$per_page = 25;
 	
 		if ( ! $_route->getByID(2))
@@ -79,13 +78,15 @@ if($_user->isLoggedIn())
 			$_system->cache('ps,'.$_user->getCacheName().',page-'.$current, $data, 'point_system');
 		}
 		
-		$_pagenav = new PageNav(new Paging($count, $current, $per_page), $_tpl, 5, array($_route->getFileName(), 'page'));
+		$_tpl->assign('history', $data);
+		
+		$_pagenav = new PageNav(new Paging($rows, $current, $per_page), $_tpl, 5, array($_route->getFileName(), 'page'));
 		$_pagenav->get($_pagenav->create(), 'page_nav');
 	}
 	
 	$_tpl->assign('points', $_points->show($_user->get('id')));
 	$_tpl->assign('ranks', $_points->showRank($_user->get('id')));
-	$_tpl->assign('history', $data);
+	
 }
 else
 {
