@@ -15,7 +15,9 @@ $mod_info = array(
 	'developer' => 'Bartłomiej \'M@ster\' Baron',
 	'support' => 'http://bbproject.net/',
 	'version' => '1.0',
-	'dir' => 'master_download'
+	'dir' => 'master_download',
+	'development' => TRUE,
+	'developmentMessage' => __('Modules under Development.')
 );
 
 $new_table[1] = array(

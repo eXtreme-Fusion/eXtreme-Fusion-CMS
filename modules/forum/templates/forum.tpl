@@ -1,5 +1,6 @@
 {php} opentable(__('Strona główna forum')) {/php}
 <div class="tbl2 text-padding-h3">
+	{if $config.development}<div class="error">{i18n($config.developmentMessage)}</div>{/if}
 	<span class="bold">Jesteś tutaj: </span>
 	{section=Breadcrumb}
 		<span class="bold">{$Breadcrumb.name}</span> >>

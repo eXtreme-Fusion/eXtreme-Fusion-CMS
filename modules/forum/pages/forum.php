@@ -14,6 +14,11 @@ $_locale->moduleLoad('lang', 'forum');
 
 $id = ($_route->getByID(1) ? $_route->getByID(1) : 1);
 
+include DIR_MODULES.'forum'.DS.'config.php';
+
+$_tpl->assign('config', $mod_info);
+
+
 $_tpl->assign('drzewko', $_tree->get($id));
 
 // Pobieranie listy potomastwa

@@ -1,5 +1,5 @@
 <h3 class="ui-corner-all">{$SystemVersion} - {i18n('Master Download')}- {i18n('Navigation')}</h3>
-
+{if $config.development}<div class="error">{i18n($config.developmentMessage)}</div>{/if}
 	<div class="tbl AdminButtons">
 		<div class="center grid_2 button-l">
 			{if $mdp_files == 1}

@@ -15,7 +15,8 @@ $mod_info = array(
 	'support' => 'http://extreme-fusion.org',
 	'version' => '1.0',
 	'dir' => 'gallery',
-	'development' => TRUE
+	'development' => TRUE,
+	'developmentMessage' => __('Modules under Development.')
 );
 
 $admin_page[1] = array(

@@ -25,6 +25,9 @@ try
 	
 	include DIR_MODULES.'gallery'.DS.'class'.DS.'Sett.php';
 	include DIR_MODULES.'gallery'.DS.'class'.DS.'Image.php';
+	include DIR_MODULES.'gallery'.DS.'config.php';
+	
+	$_tpl->assign('config', $mod_info);
 	
 	// Inicjalizacja klas
 	! class_exists('GallerySett') || $_gallery_sett = New GallerySett($_system, $_pdo);
@@ -1163,17 +1166,17 @@ try
 					'allow_comment'  => $_request->post('allow_comment')->strip(),
 					'allow_rating'  => $_request->post('allow_rating')->strip(),
 					'thumb_compression'  => $_request->post('thumb_compression')->strip(),
-					'thumbnail_width'  => $_request->post('thumbnail_width')->isNum() ? $_request->post('thumbnail_width')->show() : $_gallery_sett->get('thumbnail_width'),
-					'thumbnail_hight'  => $_request->post('thumbnail_hight')->isNum() ? $_request->post('thumbnail_hight')->show() : $_gallery_sett->get('thumbnail_hight'),
-					'photo_max_width'  => $_request->post('photo_max_width')->isNum() ? $_request->post('photo_max_width')->show() : $_gallery_sett->get('photo_max_width'),
-					'photo_max_hight'  => $_request->post('photo_max_hight')->isNum() ? $_request->post('photo_max_hight')->show() : $_gallery_sett->get('photo_max_hight'),
+					'thumbnail_width'  => $_request->post('thumbnail_width')->isNum(TRUE),
+					'thumbnail_hight'  => $_request->post('thumbnail_hight')->isNum(TRUE),
+					'photo_max_width'  => $_request->post('photo_max_width')->isNum(TRUE),
+					'photo_max_hight'  => $_request->post('photo_max_hight')->isNum(TRUE),
 					'watermark_logo'  => $_request->post('watermark_logo')->strip(),
 					'allow_ext'  => $_request->post('allow_ext')->strip(),
 					'cache_expire'  => $_request->post('cache_expire')->strip(),
-					'max_file_size'  => $_request->post('max_file_size')->isNum() ? $_request->post('max_file_size')->show() : $_gallery_sett->get('max_file_size'),
-					'cats_per_page'  => $_request->post('cats_per_page')->isNum(TRUE, FALSE),
-					'albums_per_page'  => $_request->post('albums_per_page')->isNum(TRUE, FALSE),
-					'photos_per_page'  => $_request->post('photos_per_page')->isNum(TRUE, FALSE),
+					'max_file_size'  => $_request->post('max_file_size')->isNum(TRUE),
+					'cats_per_page'  => $_request->post('cats_per_page')->isNum(TRUE),
+					'albums_per_page'  => $_request->post('albums_per_page')->isNum(TRUE),
+					'photos_per_page'  => $_request->post('photos_per_page')->isNum(TRUE),
 					'title'  => $_request->post('title')->strip(),
 					'description'  => $_request->post('description')->strip()
 				)

@@ -1,4 +1,5 @@
 <h3>{$SystemVersion} - {i18n('Gallery')} || {i18n('Section')} - {i18n($page)}</h3>
+{if $config.development}<div class="error">{i18n($config.developmentMessage)}</div>{/if}
 {if $message}<div class="{$class}">{$message}</div>{/if}
 
 <div class="tbl AdminButtons">

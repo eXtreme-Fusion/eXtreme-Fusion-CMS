@@ -17,7 +17,11 @@ if($_user->isLoggedIn())
 		'Keys' => 'points, history, ranks, point_system',
 		'Desc' => 'Strona punktacji użytkownika '.$_user->get('username')
 	);
-			
+	
+	include DIR_MODULES.'point_system'.DS.'config.php';
+	
+	$_tpl->assign('config', $mod_info);
+	
 	if($_request->post('clear_history')->show())
 	{
 		$_points->clearHistory($_user->get('id'));

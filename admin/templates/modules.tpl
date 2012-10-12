@@ -28,10 +28,10 @@
 		{/section}
 		<div class="tbl">
 			<div class="tbl">{i18n('Legend:')}</div>
-			<div class="modDevelopmentLegend">{i18n('Modules under Development')}</div>
-			<div class="modInstalledDevelopmentLegend">{i18n('Installed Modules under Development')}</div>
-			<div class="modOfficialLegend">{i18n('Modules officially released')}</div>
-			<div class="modInstallOfficialLegend">{i18n('Installed Modules officially released')}</div>
+			<div class="modDevelopmentLegend">{i18n('Modules under Development.')}</div>
+			<div class="modInstalledDevelopmentLegend">{i18n('Installed Modules under Development.')}</div>
+			<div class="modOfficialLegend">{i18n('Modules officially released.')}</div>
+			<div class="modInstallOfficialLegend">{i18n('Installed Modules officially released.')}</div>
 		</div>
 		<div class="tbl AdminButtons">
 			<div class="center grid_2 button-l">

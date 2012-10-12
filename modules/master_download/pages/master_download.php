@@ -13,6 +13,10 @@ $_locale->moduleLoad('lang', 'master_download');
 
 $_head->set('<link href="'.ADDR_MDP.'templates/stylesheet/mdp.css" media="screen" rel="stylesheet" />');
 
+include DIR_MODULES.'master_download'.DS.'config.php';
+	
+$_tpl->assign('config', $mod_info);
+
 #*********** Settings 
 	$theme = array(
 		'Title' => __('Master Download'),

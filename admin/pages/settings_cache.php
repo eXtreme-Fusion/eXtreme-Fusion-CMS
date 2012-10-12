@@ -28,15 +28,15 @@ try
 	{
 		$_sett->update(array(
 			'cache' => serialize(array(
-				//'expire_contact' => $_request->post('expire_contact')->isNum() ? $_request->post('expire_contact')->show() : $_sett->get('expire_contact'),
-				'expire_news' => $_request->post('expire_news')->isNum() ? $_request->post('expire_news')->show() : $_sett->get('expire_news'),
-				'expire_news_cats' => $_request->post('expire_news_cats')->isNum() ? $_request->post('expire_news_cats')->show() : $_sett->get('expire_news_cats'),
-				'expire_pages' => $_request->post('expire_pages')->isNum() ? $_request->post('expire_pages')->show() : $_sett->get('expire_pages'),
-				'expire_profile' => $_request->post('expire_profile')->isNum() ? $_request->post('expire_profile')->show() : $_sett->get('expire_profile'),
-				//'expire_rules' => $_request->post('expire_rules')->isNum() ? $_request->post('expire_rules')->show() : $_sett->get('expire_rules'),
-				'expire_tags' => $_request->post('expire_tags')->isNum() ? $_request->post('expire_tags')->show() : $_sett->get('expire_tags'),
-				'expire_team' => $_request->post('expire_team')->isNum() ? $_request->post('expire_team')->show() : $_sett->get('expire_team'),
-				'expire_users' => $_request->post('expire_users')->isNum() ? $_request->post('expire_users')->show() : $_sett->get('expire_users')
+				//'expire_contact' => $_request->post('expire_contact')->isNum(TRUE),
+				'expire_news' => $_request->post('expire_news')->isNum(TRUE),
+				'expire_news_cats' => $_request->post('expire_news_cats')->isNum(TRUE),
+				'expire_pages' => $_request->post('expire_pages')->isNum(TRUE),
+				'expire_profile' => $_request->post('expire_profile')->isNum(TRUE),
+				//'expire_rules' => $_request->post('expire_rules')->isNum(TRUE),
+				'expire_tags' => $_request->post('expire_tags')->isNum(TRUE),
+				'expire_team' => $_request->post('expire_team')->isNum(TRUE),
+				'expire_users' => $_request->post('expire_users')->isNum(TRUE)
 			))
 		));
 		

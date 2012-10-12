@@ -22,6 +22,10 @@ try
 	
 	$_tpl = new AdminModuleIframe('point_system');
 	
+	include DIR_MODULES.'point_system'.DS.'config.php';
+	
+	$_tpl->assign('config', $mod_info);
+	
 	include DIR_MODULES.'point_system'.DS.'class'.DS.'Points.php';
 	$_points = new Points($_pdo, $_system);
 	
