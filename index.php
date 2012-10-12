@@ -36,7 +36,7 @@ try
 	$_route = new Router($_request, $_sett, $_system->rewriteAvailable(), 'page', $_system->pathInfoExists(), $_sett->get('opening_page'), TRUE, TRUE, FALSE, 'admin');
 
 	StaticContainer::register('route', $_route);
-	
+
 	/** Konfiguracja obiektu szablonu **/
 	$_tpl   = new Site($_route);
 
@@ -60,9 +60,12 @@ try
 
 	// Scieżki, w których jest wyszukiwany plik wg kolejności przeszukiwania
 	$folders = array(
-		'pages'.DS,
-		'modules'.DS.$_route->getFileName().DS.'pages'.DS
+		'modules' 	=> DIR_SITE.'modules'.DS.$_route->getFileName().DS.'pages'.DS,
+		'pages' 	=> DIR_SITE.'pages'.DS
 	);
+
+	// Przesyła ściezkę do katalogu modułów
+	$_route->setInstalledModules($ec->modules->getInstalled());
 
 	$_route->setFolders($folders);
 

@@ -1,13 +1,13 @@
 <?php
 /***********************************************************
 | eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
+| This product is licensed under the BSD License.
+| http://extreme-fusion.org/ef5/license/
 ***********************************************************/
 
 class Panels
@@ -117,19 +117,33 @@ class Panels
 		return $this->panel;
 	}
 
-    public function updatePanel($id, $name, $content, array $access)
+    public function updatePanel($id, array $access, $name, $content = NULL)
     {
         if ( ! isNum($id))
         {
             throw new systemException('B³¹d! Parametr metody jest nieprawid³owego typu.');
         }
 
+		$data = $this->get($id);
+
+		if ($data['type'] !== 'file')
+		{
+			return $this->_pdo->exec('
+				UPDATE [panels] SET `name` = :name, `content` = :content, `access` = :access
+				WHERE `id` = :id',
+				array(
+					array(':name', $name, PDO::PARAM_STR),
+					array(':content', $content, PDO::PARAM_STR),
+					array(':access', HELP::implode($access), PDO::PARAM_STR),
+					array(':id', $id, PDO::PARAM_INT)
+				)
+			);
+		}
+
 		return $this->_pdo->exec('
-			UPDATE [panels] SET `name` = :name, `content` = :content, `type` = \''.$this->_type.'\', `access` = :access
-			WHERE `id` = :id',
+			UPDATE [panels] SET `name` = :name, `access` = :access WHERE `id` = :id',
 			array(
 				array(':name', $name, PDO::PARAM_STR),
-				array(':content', $content, PDO::PARAM_STR),
 				array(':access', HELP::implode($access), PDO::PARAM_STR),
 				array(':id', $id, PDO::PARAM_INT)
 			)
@@ -178,7 +192,7 @@ class Panels
         {
             return FALSE;
         }
-		
+
         if ($val[0] != '?' && $val[1] != '>' && $check)
         {
             return $val;
@@ -200,18 +214,18 @@ class Panels
 
         return '?>'.$val;
     }
-	
+
 	/** Wyœwietlanie paneli poza Panelem Admina **/
-	
-	public function checkState($side) 
+
+	public function checkState($side)
 	{
-		
+
 	}
-	
+
 	public function getPanelsList($_user)
 	{
 		$data = $this->_pdo->getData('SELECT `id`, `name`, `filename`, `side`, `access`, `type`, `content` FROM [panels] WHERE `status` = 1 ORDER BY `side`, `order` ASC');
-		
+
 		$panels = array();
 		foreach($data as $panel)
 		{
@@ -220,10 +234,10 @@ class Panels
 				$panels[$panel['id']] = array('name' => $panel['name'], 'filename' => $panel['filename'], 'side' => $panel['side'], 'type' => $panel['type'], 'content' => $panel['content']);
 			}
 		}
-		
+
 		return $panels;
 	}
-	
+
 	public function loadPanel($type, $filename, $content = NULL)
 	{
 		if ($type === 'file')
@@ -233,13 +247,13 @@ class Panels
 				//$_panel = new Panel($_route, DIR_MODULES.$filename.DS.'templates'.DS);
 				//include DIR_MODULES.$filename.DS.'panel'.DS.$filename.'.php';
 				//$_panel->template($filename.'_panel.tpl');
-				
+
 				return array(
-					DIR_MODULES.$filename.DS.'templates'.DS, 
-					DIR_MODULES.$filename.DS.'panel'.DS.$filename.'.php', 
+					DIR_MODULES.$filename.DS.'templates'.DS,
+					DIR_MODULES.$filename.DS.'panel'.DS.$filename.'.php',
 					$filename.'_panel.tpl'
 				);
-				
+
 				//unset($_panel);
 			}
 			elseif (file_exists(DIR_MODULES.$filename.DS.$filename.'.php'))
@@ -247,12 +261,12 @@ class Panels
 				if (file_exists(DIR_MODULES.$filename.DS.'templates'.DS.$filename.'.tpl'))
 				{
 					//$_panel = new Panel($_route, DIR_MODULES.$filename.DS.'templates'.DS);
-					
-					
+
+
 					//include DIR_MODULES.$filename.DS.$filename.'.php';
 					//$_panel->template($filename.'.tpl');
 					//unset($_panel);
-					
+
 					return array(
 						DIR_MODULES.$filename.DS.'templates'.DS,
 						DIR_MODULES.$filename.DS.$filename.'.php',
@@ -260,7 +274,7 @@ class Panels
 					);
 				}
 				else
-				{							
+				{
 					//include DIR_MODULES.$filename.DS.$filename.'.php';
 					return array(
 						NULL,
@@ -272,14 +286,14 @@ class Panels
 			elseif (preg_match('/\//', $filename))
 			{
 				$path = explode('/', $filename);
-				
+
 				if (file_exists(DIR_MODULES.$path[0].DS.'templates'.DS.$path[1].'.tpl'))
 				{
 					//$_panel = new Panel($_route, DIR_MODULES.$path[0].DS.'templates'.DS);
 					//include DIR_MODULES.$path[0].DS.$path[1].DS.$path[1].'.php';
 					//$_panel->template($path[1].'.tpl');
 					//unset($_panel);
-					
+
 					return array(
 						DIR_MODULES.$path[0].DS.'templates'.DS,
 						DIR_MODULES.$path[0].DS.$path[1].DS.$path[1].'.php',
@@ -287,16 +301,16 @@ class Panels
 					);
 				}
 				else
-				{							
+				{
 					//include DIR_MODULES.$path[0].DS.$path[1].DS.$path[1].'.php';
-					
+
 					return array(
 						NULL,
 						DIR_MODULES.$path[0].DS.$path[1].DS.$path[1].'.php',
 						NULL
 					);
 				}
-				
+
 			}
 		}
 		else
@@ -304,10 +318,10 @@ class Panels
 			if ($content !== NULL)
 			{
 				//eval($_pnl->closePHPSet($content, TRUE));
-				
+
 				return array();
 			}
 		}
 	}
-			
+
 }

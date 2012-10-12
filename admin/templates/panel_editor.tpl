@@ -11,10 +11,12 @@
 			<div class="formLabel sep_1 grid_3"><label for="panel_name">{i18n('Name:')}</label></div>
 			<div class="formField grid_7"><input type="text" name="panel_name" id="panel_name" value="{$name}" /></div>
 		</div>
-		<div class="tbl2">
-			<div class="formLabel sep_1 grid_3"><label for="panel_content">{i18n('Content:')}</label></div>
-			<div class="formField grid_7"><textarea name="panel_content" id="panel_content" rows="5">{$content}</textarea></div>
-		</div>
+		{if $is_file == 0}
+			<div class="tbl2">
+				<div class="formLabel sep_1 grid_3"><label for="panel_content">{i18n('Content:')}</label></div>
+				<div class="formField grid_7"><textarea name="panel_content" id="panel_content" rows="5">{$content}</textarea></div>
+			</div>
+		{/if}
 		{if $action != 'edit'}
 			<div class="tbl1">
 				<div class="formLabel sep_1 grid_3"><label for="panel_side">{i18n('Place:')}</label></div>

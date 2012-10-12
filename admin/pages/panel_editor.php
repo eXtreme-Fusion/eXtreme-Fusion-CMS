@@ -88,7 +88,7 @@ try
 		// Aktualizacja panelu
 		if ($_request->get('action')->show() === 'edit' && $_request->get('id')->isNum())
 		{
-			$_pnl->updatePanel($_request->get('id')->show(), $_request->post('panel_name')->show(), $_request->post('panel_content')->show(), $_request->post('panel_access')->show());
+			$_pnl->updatePanel($_request->get('id')->show(), $_request->post('panel_access')->show(), $_request->post('panel_name')->show(), $_request->post('panel_content')->show());
 			$_log->insertSuccess('edit', __('The panel has been edited.'));
 			$_request->redirect(FILE_PATH, array('act' => 'edit', 'status' => 'ok'));
 		}
@@ -133,7 +133,8 @@ try
 				'name' => $data['name'],
 				'content' => $data['content'],
 				'side' => $data['side'],
-				'access' => $_tpl->getMultiSelect($_user->getViewGroups(), $data['access'], TRUE)
+				'access' => $_tpl->getMultiSelect($_user->getViewGroups(), $data['access'], TRUE),
+				'is_file' => $data['type'] === 'file'
 			));
 		}
 		// Tworzenie nowego panelu
