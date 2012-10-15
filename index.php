@@ -32,7 +32,7 @@ try
 	$_route = new Router($_request, $_sett, $_system->rewriteAvailable(), 'page', $_system->pathInfoExists(), $_sett->get('opening_page'), TRUE, TRUE, FALSE, 'admin');
 
 	StaticContainer::register('route', $_route);
-	
+
 	// Tryb prac na serwerze
 	if ($_user->get('id') !== '1')
 	{
@@ -56,9 +56,9 @@ try
 		elseif ($_route->getFileName() === 'maintenance')
 		{
 			HELP::redirect(ADDR_SITE);
-		}	
+		}
 	}
-	
+
 	/** Konfiguracja obiektu szablonu **/
 	$_tpl   = new Site($_route);
 

@@ -30,7 +30,7 @@ function multiSelectDefault(data, id)
 
 /**
  * Wyświetlanie kolejnych pól formularza jeśli pole radio zaznaczone z opcją 1.
- * Przykłąd użycia: boxByStatus('input[name="maintenance"]', '#maintenance-box');
+ * Przykład użycia: boxByStatus('input[name="maintenance"]', '#maintenance-box');
  */
 function boxByStatus(id, box) {
 
@@ -50,6 +50,7 @@ function boxByStatus(id, box) {
 		controlBox(id, box);
 	});
 }
+
 $(function(){
 
 	/** Wsparcie dla multilist select **/

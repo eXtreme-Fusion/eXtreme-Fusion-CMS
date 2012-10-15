@@ -30,7 +30,7 @@
 		<div class="grid_6 formLabel"><label for="BadWordReplace">{i18n('Bad word replacement:')}</label></div>
 		<div class="grid_4 formField"><input type="text" name="bad_word_replace" value="{$bad_word_replace}" id="BadWordReplace" class="num_128" maxlength="128" /></div>
 	</div>
-	<h4>{i18n('Maintenance mode')}</h4>	
+	<h4>{i18n('Maintenance mode')}</h4>
 	<div class="tbl1">
 		<div class="grid_6 formLabel">{i18n('Maintenance mode enabled:')}</div>
 		<div class="grid_1 formField"><label><input type="radio" name="maintenance" value="1"{if $maintenance == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
@@ -49,9 +49,8 @@
 	</div>
 	<div class="tbl1">
 		<div class="grid_6 formLabel"><label for="MaintenanceMessage">{i18n('Maintenance mode message:')}</label></div>
-	</div>
-	<div class="tbl1">
-		<div class="sep_1 grid_10 formField"><textarea name="maintenance_message" id="MaintenanceMessage" class="resize" cols="80" rows="3">{$maintenance_message}</textarea></div>
+		<div class="clear"></div>
+		<div class="sep_1 grid_10 formField"><textarea name="maintenance_message" id="MaintenanceMessage" cols="80" rows="3">{$maintenance_message}</textarea></div>
 	</div>
 	<script type="text/javascript">
 		{literal}
@@ -73,12 +72,4 @@
 	</div>
 </form>
 
-{literal}
-	<script>
-
-		
-		$(function() {
-			boxByStatus('input[name="maintenance"]', '#maintenance-box');
-		});
-	</script>
-{/literal}
+<script src="{$ADDR_ADMIN_PAGES_JS}settings_security.js"></script>
