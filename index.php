@@ -17,11 +17,7 @@ try
 
 	require_once 'system/sitecore.php';
 
-	// Deklaracja stałej ścieżki adresu URL
-	if ($_sett->get('maintenance') == 1 && ((iMEMBER && $_sett->get('maintenance_level') == 1 && $_user->get('id') != 1) || ($_sett->get('maintenance_level') > $_user->get('level'))))
-	{
-		HELP::redirect(ADDR_SITE.'maintenance.html');
-	}
+
 
 	/**
 	 * Szablon systemowy (theme)
@@ -36,7 +32,33 @@ try
 	$_route = new Router($_request, $_sett, $_system->rewriteAvailable(), 'page', $_system->pathInfoExists(), $_sett->get('opening_page'), TRUE, TRUE, FALSE, 'admin');
 
 	StaticContainer::register('route', $_route);
-
+	
+	// Tryb prac na serwerze
+	if ($_user->get('id') !== '1')
+	{
+		if ($_sett->get('maintenance') === '1')
+		{
+			if ($_route->getFileName() !== 'maintenance')
+			{
+				if (! $_user->hasAccess($_sett->get('maintenance_level')))
+				{
+					HELP::redirect(ADDR_SITE.'maintenance.html');
+				}
+			}
+			else
+			{
+				if ($_user->hasAccess($_sett->get('maintenance_level')))
+				{
+					HELP::redirect(ADDR_SITE);
+				}
+			}
+		}
+		elseif ($_route->getFileName() === 'maintenance')
+		{
+			HELP::redirect(ADDR_SITE);
+		}	
+	}
+	
 	/** Konfiguracja obiektu szablonu **/
 	$_tpl   = new Site($_route);
 

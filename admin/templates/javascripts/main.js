@@ -28,10 +28,32 @@ function multiSelectDefault(data, id)
 	return false;
 }
 
+/**
+ * Wyświetlanie kolejnych pól formularza jeśli pole radio zaznaczone z opcją 1.
+ * Przykłąd użycia: boxByStatus('input[name="maintenance"]', '#maintenance-box');
+ */
+function boxByStatus(id, box) {
+
+	function controlBox(id, box) {
+		var value = $(id+':checked').val();
+
+		if (value == '1') {
+			$(box).fadeIn();
+		} else {
+			$(box).fadeOut();
+		}
+	}
+
+	controlBox(id, box);
+
+	$(id).change(function() {
+		controlBox(id, box);
+	});
+}
 $(function(){
 
 	/** Wsparcie dla multilist select **/
-	$('.select-multi').each(function() { 
+	$('.select-multi').each(function() {
 		multiSelectDefault($(this).val(), $(this).attr('id'));
 	}).change(function() {
 		multiSelectDefault($(this).val(), $(this).attr('id'));

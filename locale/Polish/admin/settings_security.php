@@ -12,11 +12,11 @@ return array(
 	'Bad Words' => 'Cenzura',
 	'Bad word replacement:' => 'Zamiennik ocenzurowanych słów:',
 	'Maintenance mode' => 'Tryb serwisowy',
-	'Maintenance level:' => 'Poziom trybu serwisowego:',
 	'Administrators' => 'Administratorzy',
 	'Head administrators' => 'Główni administratorzy',
 	'Site owner' => 'Właściciel strony',
 	'HTML code is allowed.' => 'Kod HTML dozwolony.',
 	'Maintenance mode enabled:' => 'Tryb serwisowy uruchomiony:',
-	'Maintenance mode message:' => 'Komunikat wyświetlany podczas trybu serwisowego:',
+	'Maintenance mode message:' => 'Komunikat o trybie serwisowym:',
+	'Who is able to login?' => 'Kto może się zalogować?'
 );
