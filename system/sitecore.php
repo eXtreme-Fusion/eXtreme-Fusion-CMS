@@ -119,7 +119,7 @@ try
 	require_once DIR_SYSTEM.'table_list.php';
 
 	//1. way:
-    $_user = $ec->register('user')->setArguments(array(new Reference('sett'), new Reference('pdo')))->get();
+    $_user = $ec->register('User')->setArguments(array(new Reference('sett'), new Reference('pdo')))->get();
 	
     $_locale = new Locales($_sett->get('locale'), DIR_LOCALE);
 

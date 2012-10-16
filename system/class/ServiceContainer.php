@@ -3,7 +3,7 @@
 class ServiceContainer implements ArrayAccess
 {
 	protected static $shared = array();
-	
+
 	protected $parameters = array();
 
 	public function __construct($parameters = array())
@@ -66,6 +66,8 @@ class ServiceContainer implements ArrayAccess
 
 	public function getService($id)
 	{
+		$id = strtolower($id);
+
 		if (isset(self::$shared[$id]))
 		{
 			return self::$shared[$id];

@@ -15,7 +15,6 @@ return array(
 	'Administrators' => 'Administratorzy',
 	'Head administrators' => 'Główni administratorzy',
 	'Site owner' => 'Właściciel strony',
-	'HTML code is allowed.' => 'Kod HTML dozwolony.',
 	'Maintenance mode enabled:' => 'Tryb serwisowy uruchomiony:',
 	'Maintenance mode message:' => 'Komunikat o trybie serwisowym:',
 	'Who is able to login?' => 'Kto może się zalogować?'
