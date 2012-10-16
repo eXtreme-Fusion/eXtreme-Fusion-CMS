@@ -1,13 +1,13 @@
 <?php
 /***********************************************************
 | eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
+| This product is licensed under the BSD License.
+| http://extreme-fusion.org/ef5/license/
 ***********************************************************/
 
 class Comment
@@ -52,14 +52,14 @@ class Comment
 				}
 
 				$val['avatar'] = NULL;
-				
+
 				if ($val['author_type'] === 'u' || !$val['author_type'])
 				{
 					if (isNum($val['author']))
 					{
 						$id = $val['author'];
 						$val['author'] = HELP::profileLink($this->_user->getByID($id, 'username'), $id);
-						
+
 						$user_data = $this->_user->getByID($id, array('avatar', 'username'));
 						$val['avatar'] = $this->_user->getAvatarAddr($id);
 						$val['avatar_desc'] = $user_data['username'];
@@ -84,8 +84,6 @@ class Comment
 			)
 		);
 
-		
-		// Do sprawdzenia... Komentowanie nie dzia³a prawdopobnie przez to.
 		if ($this->_user->hasPermission('site.comment.add'))
 		{
 			$this->_tpl->assign('can_comment', TRUE);
