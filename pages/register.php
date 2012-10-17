@@ -29,7 +29,7 @@ if ($_sett->get('enable_registration') != 1)
 	throw new userException('Rejestra została wyłączona przez Administratora.');
 }
 
-$_mail = new Mailer($_sett->get('smtp_username'), $_sett->get('smtp_password'), $_sett->get('smtp_host'));
+$_mail = new Mailer($_sett->get('smtp_username'), $_sett->get('smtp_password'), $_sett->get('smtp_host'), $_sett->get('smtp_port'));
 
 $_protection = NULL;
 

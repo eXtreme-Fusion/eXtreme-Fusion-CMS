@@ -461,7 +461,7 @@ class Mailer
 			fwrite($this->_smtp, PHP_EOL. "." . PHP_EOL);
 			if ($this->getCode() != 250)
 			{
-				throw new systemException('Błąd: Komenda kończąca wymianę treści nie została zaakceptowana przez serwer SMTP.');
+				throw new systemException('Błąd '.$this->getCode().': Komenda kończąca wymianę treści nie została zaakceptowana przez serwer SMTP.');
 			}
 
 			return TRUE;
