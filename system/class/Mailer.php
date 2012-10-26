@@ -345,7 +345,7 @@ class Mailer
 		while($str = fgets($this->_smtp, 515))
 		{
 			$data .= $str;
-			if (substr($str, 3, 1) === ' ')
+			if (substr($str, 3, 1) === ' ') // todo: tu moze byc blad, byc moze wystarczy ==' '
 			{
 				break;
 			}
