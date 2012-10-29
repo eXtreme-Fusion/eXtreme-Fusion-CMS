@@ -278,13 +278,13 @@ class Mailer
 			$this->getReply();
 
 			// Wysyłanie zapytania Hello - na przywitanie ;)
-			if (! $this->sendHello('EHLO', $this->_data['smtp_host']))
-			{
+			//if (! $this->sendHello('EHLO', $this->_data['smtp_host']))
+			//{
 				if (! $this->sendHello('HELO', $this->_data['smtp_host']))
 				{
 					throw new systemException('Helo/Ehlo zakończone niepowodzeniem.');
 				}
-			}
+			//}
 
 			// Autoryzacja - zwróci TRUE, albo rzuci wyjątkiem
 			return $this->auth();
@@ -344,7 +344,7 @@ class Mailer
 		$data = '';
 		while($str = fgets($this->_smtp, 515))
 		{
-			$data .= $str;
+			$data .= trim($str);
 			if (substr($str, 3, 1) === ' ') // todo: tu moze byc blad, byc moze wystarczy ==' '
 			{
 				break;
@@ -388,29 +388,29 @@ class Mailer
 
 	public function sendFrom($from)
 	{
-		if ($this->isConnected())
-		{
-			fwrite($this->_smtp, 'MAIL FROM:<'.$from.'>'.PHP_EOL);
+		//if ($this->isConnected())
+		//{
+			fwrite($this->_smtp, 'MAIL FROM: <'.$from.'>'.PHP_EOL);
 			if ($this->getCode() != 250)
 			{
 				throw new systemException('Błąd: Nadawca wiadomości został odrzucony przez serwer SMTP.');
 			}
 
 			return TRUE;
-		}
+		//}
 
-		return FALSE;
+		//return FALSE;
 	}
 
 	public function sendRecipient($to)
 	{
-		if ($this->isConnected())
-		{
+		//if ($this->isConnected())
+		//{
 			if ($this->_to_is_array)
 			{
 				foreach ($to as $rcpt)
 				{
-					fwrite($this->_smtp, 'RCPT TO:<'.$rcpt.'>'.PHP_EOL);
+					fwrite($this->_smtp, 'RCPT TO: <'.$rcpt.'>'.PHP_EOL);
 					if ($this->getCode() != 250 && $this->getCode() != 251)
 					{
 						if ($this->_exception)
@@ -424,7 +424,7 @@ class Mailer
 			}
 			else
 			{
-				fwrite($this->_smtp, 'RCPT TO:<'.$to.'>'.PHP_EOL);
+				fwrite($this->_smtp, 'RCPT TO: <'.$to.'>'.PHP_EOL);
 				if ($this->getCode() != 250 && $this->getCode() != 251)
 				{
 					if ($this->_exception)
@@ -437,15 +437,15 @@ class Mailer
 			}
 
 			return TRUE;
-		}
+		//}
 
-		return FALSE;
+		//return FALSE;
 	}
 
 	public function sendMessage($headers, $message)
 	{
-		if ($this->isConnected())
-		{
+		//if ($this->isConnected())
+		//{
 			fwrite($this->_smtp, 'DATA'.PHP_EOL);
 			if ($this->getCode() != 354)
 			{
@@ -457,17 +457,20 @@ class Mailer
 			// Wysyłanie wiadomości
 			fwrite($this->_smtp,$headers.PHP_EOL.$message.PHP_EOL);
 
+			$this->getCode();
+
 			// Informowanie serwera SMTP, że wiadomość przesłana już w całości
-			fwrite($this->_smtp, PHP_EOL. "." . PHP_EOL);
+			//fwrite($this->_smtp, PHP_EOL. "." . PHP_EOL);
+			fwrite($this->_smtp, '.' . PHP_EOL);
 			if ($this->getCode() != 250)
 			{
 				throw new systemException('Błąd '.$this->getCode().': Komenda kończąca wymianę treści nie została zaakceptowana przez serwer SMTP.');
 			}
 
 			return TRUE;
-		}
+		//}
 
-		return FALSE;
+		//return FALSE;
 	}
 
 	/**
@@ -477,8 +480,8 @@ class Mailer
 	 */
 	protected function sendHello($hello, $host)
 	{
-		if ($this->isConnected())
-		{
+		//if ($this->isConnected())
+		//{
 			fwrite($this->_smtp, $hello.' '.$host.PHP_EOL);
 
 			if ($this->getCode() != 250)
@@ -487,25 +490,25 @@ class Mailer
 			}
 
 			return TRUE;
-		}
+		//}
 
-		return FALSE;
+		//return FALSE;
 	}
 
 	// Zamyka połączenie z SMTP
 	protected function quit()
 	{
-		if ($this->isConnected())
-		{
-			fwrite($this->_smtp, 'quit'.PHP_EOL);
+		//if ($this->isConnected())
+		//{
+			fwrite($this->_smtp, 'QUIT'.PHP_EOL);
 			if ($this->getCode() != 221)
 			{
 				throw new systemException('Błąd! Połączenie z serwerem nie może zostać zamknięte.');
 			}
 
 			return TRUE;
-		}
+		//}
 
-		return FALSE;
+		//return FALSE;
 	}
 }
