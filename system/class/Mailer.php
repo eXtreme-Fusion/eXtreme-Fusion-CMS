@@ -38,6 +38,8 @@ class Mailer
 		$_keep_alive = FALSE,
 		$_to_is_array,			// Czy wiadomość ma być wysłana do wielu odbiorców? (bool)
 		$_exception;
+		
+	private $_eol = "\r\n";
 
 	public function __construct($username = NULL, $password = NULL, $host = NULL, $port = 587, $exception = TRUE)
 	{
@@ -80,12 +82,12 @@ class Mailer
 		{
 			// Nagłówki
 			$this->addHeaders(array(
-				'To: '.$this->_to.PHP_EOL,
-				'From: '.$this->_from.PHP_EOL,
-				'Subject: '.$this->_subject.PHP_EOL,
-				'Reply-To: '.$this->_from.PHP_EOL,
-				'X-Mailer: PHP eXtreme-Fusion 5'.PHP_EOL,
-				'Return-Path: '.$this->_from.PHP_EOL
+				'To: '.$this->_to.$this->_eol,
+				'From: '.$this->_from.$this->_eol,
+				'Subject: '.$this->_subject.$this->_eol,
+				'Reply-To: '.$this->_from.$this->_eol,
+				'X-Mailer: PHP eXtreme-Fusion 5'.$this->_eol,
+				'Return-Path: '.$this->_from.$this->_eol
 			));
 
 			$this->_to_is_array = FALSE;
@@ -93,8 +95,8 @@ class Mailer
 			if ($html)
 			{
 				$this->addHeaders(array(
-					'MIME-Version: 1.0'.PHP_EOL,
-					'Content-type: text/html; charset=UTF-8'.PHP_EOL
+					'MIME-Version: 1.0'.$this->_eol,
+					'Content-type: text/html; charset=UTF-8'.$this->_eol
 				));
 			}
 
@@ -125,22 +127,22 @@ class Mailer
 		{
 			// Nagłówki
 			$this->addHeaders(array(
-				'From: '.$this->_from.PHP_EOL,
-				'Subject: '.$this->_subject.PHP_EOL,
-				'Reply-To: '.$this->_from.PHP_EOL,
-				'X-Mailer: PHP eXtreme-Fusion 5'.PHP_EOL,
-				'Return-Path: '.$this->_from.PHP_EOL
+				'From: '.$this->_from.$this->_eol,
+				'Subject: '.$this->_subject.$this->_eol,
+				'Reply-To: '.$this->_from.$this->_eol,
+				'X-Mailer: PHP eXtreme-Fusion 5'.$this->_eol,
+				'Return-Path: '.$this->_from.$this->_eol
 			));
 
 
 			$this->_to_is_array = TRUE;
-			$this->addHeaders(array('Cc: '.implode($this->_to, ', ').PHP_EOL));
+			$this->addHeaders(array('Cc: '.implode($this->_to, ', ').$this->_eol));
 
 			if ($html)
 			{
 				$this->addHeaders(array(
-					'MIME-Version: 1.0'.PHP_EOL,
-					'Content-type: text/html; charset=UTF-8'.PHP_EOL
+					'MIME-Version: 1.0'.$this->_eol,
+					'Content-type: text/html; charset=UTF-8'.$this->_eol
 				));
 			}
 
@@ -172,18 +174,18 @@ class Mailer
 
 			// Nagłówki
 			$this->addHeaders(array(
-				'From: '.$this->_from.PHP_EOL,
-				'Subject: '.$this->_subject.PHP_EOL,
-				'Reply-To: '.$this->_from.PHP_EOL,
-				'X-Mailer: PHP eXtreme-Fusion 5'.PHP_EOL,
-				'Return-Path: '.$this->_from.PHP_EOL
+				'From: '.$this->_from.$this->_eol,
+				'Subject: '.$this->_subject.$this->_eol,
+				'Reply-To: '.$this->_from.$this->_eol,
+				'X-Mailer: PHP eXtreme-Fusion 5'.$this->_eol,
+				'Return-Path: '.$this->_from.$this->_eol
 			));
 
 			if ($html)
 			{
 				$this->addHeaders(array(
-					'MIME-Version: 1.0'.PHP_EOL,
-					'Content-type: text/html; charset=UTF-8'.PHP_EOL
+					'MIME-Version: 1.0'.$this->_eol,
+					'Content-type: text/html; charset=UTF-8'.$this->_eol
 				));
 			}
 
@@ -197,7 +199,7 @@ class Mailer
 				foreach($to as $rcpt)
 				{
 					$this->_to = $rcpt;
-					$this->addHeaders(array('To: '.$rcpt.PHP_EOL));
+					$this->addHeaders(array('To: '.$rcpt.$this->_eol));
 					if ( ! $this->sendBySMTP())
 					{
 						return FALSE;
@@ -317,19 +319,19 @@ class Mailer
 	// Logowanie do SMTP
 	public function auth()
 	{
-		fwrite($this->_smtp, 'AUTH LOGIN'.PHP_EOL);
+		fwrite($this->_smtp, 'AUTH LOGIN'.$this->_eol);
 		if ($this->getCode() != 334)
 		{
 			throw new systemException('Błąd: Serwer SMTP nie zaakceptował próby autoryzacji.');
 		}
 
-		fwrite($this->_smtp, base64_encode($this->_data['smtp_username']).PHP_EOL);
+		fwrite($this->_smtp, base64_encode($this->_data['smtp_username']).$this->_eol);
 		if ($this->getCode() != 334)
 		{
 			throw new systemException('Błąd: Nazwa użytkownika nie została zaakceptowana przez serwer SMTP.');
 		}
 
-		fwrite($this->_smtp, base64_encode($this->_data['smtp_password']).PHP_EOL);
+		fwrite($this->_smtp, base64_encode($this->_data['smtp_password']).$this->_eol);
 		if ($this->getCode() != 235)
 		{
 			throw new systemException('Błąd: Hasło nie zostało zaakceptowana przez serwer SMTP.');
@@ -377,7 +379,7 @@ class Mailer
 
 	public function reset()
 	{
-		fwrite($this->_smtp, 'RSET'.PHP_EOL);
+		fwrite($this->_smtp, 'RSET'.$this->_eol);
 		if ($this->getCode() != 250)
 		{
 			throw new systemException('Błąd: komenda RSET nie została zaakceptowana przez serwer SMTP.');
@@ -390,7 +392,7 @@ class Mailer
 	{
 		//if ($this->isConnected())
 		//{
-			fwrite($this->_smtp, 'MAIL FROM: <'.$from.'>'.PHP_EOL);
+			fwrite($this->_smtp, 'MAIL FROM: <'.$from.'>'.$this->_eol);
 			if ($this->getCode() != 250)
 			{
 				throw new systemException('Błąd: Nadawca wiadomości został odrzucony przez serwer SMTP.');
@@ -410,7 +412,7 @@ class Mailer
 			{
 				foreach ($to as $rcpt)
 				{
-					fwrite($this->_smtp, 'RCPT TO: <'.$rcpt.'>'.PHP_EOL);
+					fwrite($this->_smtp, 'RCPT TO: <'.$rcpt.'>'.$this->_eol);
 					if ($this->getCode() != 250 && $this->getCode() != 251)
 					{
 						if ($this->_exception)
@@ -424,7 +426,7 @@ class Mailer
 			}
 			else
 			{
-				fwrite($this->_smtp, 'RCPT TO: <'.$to.'>'.PHP_EOL);
+				fwrite($this->_smtp, 'RCPT TO: <'.$to.'>'.$this->_eol);
 				if ($this->getCode() != 250 && $this->getCode() != 251)
 				{
 					if ($this->_exception)
@@ -446,7 +448,7 @@ class Mailer
 	{
 		//if ($this->isConnected())
 		//{
-			fwrite($this->_smtp, 'DATA'.PHP_EOL);
+			fwrite($this->_smtp, 'DATA'.$this->_eol);
 			if ($this->getCode() != 354)
 			{
 				throw new systemException('Błąd: Komenda DATA niezaakceptowana przez serwer SMTP.');
@@ -455,13 +457,13 @@ class Mailer
 			/** server ready for work ;) **/
 
 			// Wysyłanie wiadomości
-			fwrite($this->_smtp,$headers.PHP_EOL.$message.PHP_EOL);
+			fwrite($this->_smtp,$headers.$this->_eol.$message.$this->_eol);
 
 			$this->getCode();
 
 			// Informowanie serwera SMTP, że wiadomość przesłana już w całości
-			//fwrite($this->_smtp, PHP_EOL. "." . PHP_EOL);
-			fwrite($this->_smtp, '.' . PHP_EOL);
+			//fwrite($this->_smtp, $this->_eol. "." . $this->_eol);
+			fwrite($this->_smtp, '.' . $this->_eol);
 			if ($this->getCode() != 250)
 			{
 				throw new systemException('Błąd '.$this->getCode().': Komenda kończąca wymianę treści nie została zaakceptowana przez serwer SMTP.');
@@ -482,7 +484,7 @@ class Mailer
 	{
 		//if ($this->isConnected())
 		//{
-			fwrite($this->_smtp, $hello.' '.$host.PHP_EOL);
+			fwrite($this->_smtp, $hello.' '.$host.$this->_eol);
 
 			if ($this->getCode() != 250)
 			{
@@ -500,7 +502,7 @@ class Mailer
 	{
 		//if ($this->isConnected())
 		//{
-			fwrite($this->_smtp, 'QUIT'.PHP_EOL);
+			fwrite($this->_smtp, 'QUIT'.$this->_eol);
 			if ($this->getCode() != 221)
 			{
 				throw new systemException('Błąd! Połączenie z serwerem nie może zostać zamknięte.');
