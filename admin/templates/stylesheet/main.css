@@ -27,7 +27,7 @@ body {
 /* Rozszerzenia */
 textarea {resize:vertical;min-height:80px}
 .center {text-align:center;}
-.center-box {margin:0 auto;text-align:center;}
+.center-box {margin:0 auto !important;text-align:center !important;}
 .italic{font-style:italic}
 .underline{text-decoration:underline}
 .right{text-align:right;}
@@ -43,6 +43,8 @@ textarea {resize:vertical;min-height:80px}
 .margin-l-10{margin-left:10px}
 .margin-t-10{margin-top:10px}
 
+.width_2 {width:200px !important}
+.width_3 {width:300px !important}
 
 /* Podstawowe */
 h1 {
@@ -420,22 +422,26 @@ li.sort:hover .tbl2 { background:url(../images/icons/move.png) no-repeat left ce
 	cursor: pointer;
 }
 
+#defenders {
+
+
+}
 /* Lista userów----------------------------------------------------------------------------------------------- */
 #defenders ul,
 #defenders .defender_error {
 	display: block;
 	position: absolute;
-	width: 200px;
+	min-width: 200px;
 	background: #fff;
 	font-size: 11px;
 	color: #333;
 	margin: 0;
 	padding: 2px 10px;
 	border: 0;
-	border-radius: 0 5px 5px 5px;
-	-webkit-box-shadow: 0px 3px 21px rgba(50, 50, 50, 0.75);
-	-moz-box-shadow: 0px 3px 21px rgba(50, 50, 50, 0.75);
-	box-shadow: 0px 3px 21px rgba(50, 50, 50, 0.75);
+	border-radius: 0 0 5px 5px;
+	
+	border: 2px solid rgba(50, 50, 50, 0.5);
+	border-top:1px dashed #E5E5E5;
 }
 
 #defenders ul {
