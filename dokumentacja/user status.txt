@@ -1,0 +1,30 @@
+TABELA USERS
+
+==============
+Pole "status"
+==============
+
+Mo¿liwe wartoœci:
+
+0 - niektywne; widoczne na stronie, ale w³asciciel konta nie mo¿e sie logowaæ: widzi informacjê, ¿e konto jest nieaktywne;
+1 - konto aktywne;
+2 - konto zbanowane - uzytkownik nie mo¿e siê logowaæ, ma informacjê, ¿e konto zosta³o zablokowane;
+3 - konto ukryte - widoczne tylko w Panelu Admina; nie mozna siê na nie logowaæ
+
+========================
+Pola od aktywacji konta
+========================
+
+activation_email = 0/1 - czy konto musi byæ aktywowane przez maila
+activation_admin = 0/1 - czy konto musi byæ aktywowane przez admina
+
+====================
+Informacje koñcowe
+====================
+
+Na konto mo¿na siê logowaæ, jeœli pola od aktywacji maj¹ wartoœæ 0 i status jest równy 1.
+Aktywowanie konta przez e-mail b¹dŸ admina nie mo¿e zmieniaæ wartoœci pola "status".
+Nowo zarejestrowane konto z podstrony dostepnej dla Goœci powinno miec status 1,
+zaœ informacja o ewentualnej potrzebie aktywacji trafia do pól od aktywacji konta.
+
+~ created by Inscure (c)
