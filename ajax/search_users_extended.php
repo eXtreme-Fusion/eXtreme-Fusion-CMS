@@ -75,11 +75,16 @@ if ($_user->isLoggedIn())
 					]
 				}
 			  <?php
+			  exit;
 			}
 			else
 			{
-				echo '{"status" : 1}';
+				echo '{"status" : 1, "error_msg" : "Brak wyników wyszukiwania."}'; exit; // brak wyników wyszukiwania
 			}
 		}
 	}
+	
+	echo '{"status" : 2}'; exit; // brak reakcji - nie przes³ano danych
 }
+
+echo '{"status" : 3, "error_msg" : "B³¹d: sesja zalogowania straci³a wa¿noœæ. Nale¿y zalogowaæ siê ponownie."}'; exit;
