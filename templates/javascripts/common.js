@@ -1,8 +1,8 @@
-/** FUNKCJE WSPÓLNE DLA PANELU aDMINA I RESZTY STRONY **/
+/** FUNKCJE OD WYSZUKIWANIA UŻYTKOWNIKA WSPÓLNE DLA PANELU ADMINA I RESZTY STRONY **/
 
 window.last_value = '';
 
-// Wyszukiwanie użytkownika po jego loginie
+// Wyszukiwanie użytkownika po loginie, e-mailu, IP lub ID
 function searchUser(is_here_admin_panel, self_search, php_file)
 {
 	window.self_search = self_search;
@@ -41,7 +41,7 @@ function searchUser(is_here_admin_panel, self_search, php_file)
 			}
 		});
 	});
-	// end of Wyszukiwanie adresata wiadomości
+	// end of Wyszukiwanie
 }
 
 function searchIt(obj)
