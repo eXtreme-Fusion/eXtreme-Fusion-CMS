@@ -428,7 +428,7 @@ li.sort:hover .tbl2 { background:url(../images/icons/move.png) no-repeat left ce
 }
 /* Lista userów----------------------------------------------------------------------------------------------- */
 #defenders ul,
-#defenders .defender_error {
+#defenders .defenders_error {
 	display: block;
 	position: absolute;
 	min-width: 200px;
@@ -448,7 +448,7 @@ li.sort:hover .tbl2 { background:url(../images/icons/move.png) no-repeat left ce
 	list-style: none;
 }
 
-#defenders .defender_error {
+#defenders .defenders_error {
 	text-align: center;
 	padding: 5px 10px;
 }
