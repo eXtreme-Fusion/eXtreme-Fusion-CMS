@@ -1,4 +1,4 @@
-<?php defined('EF5_SYSTEM') || exit;
+<?php
 /***********************************************************
 | eXtreme-Fusion 5.0 Beta 5
 | Content Management System       
@@ -268,7 +268,7 @@ class Mailer
 		// Jeśli połączenie nie jest nawiązane
 		if (! $this->isConnected())
 		{
-			$this->_smtp = fsockopen($this->_data['smtp_host'], $this->_data['smtp_port'], $errno, $errstr, 30);
+			$this->_smtp = fsockopen($this->_data['smtp_host'], $this->_data['smtp_port'], $errno, $errstr, 45);
 
 			// Jeśli wystąpiły błędy
 			if (! $this->_smtp)
@@ -279,14 +279,14 @@ class Mailer
 			// Odbieranie odpowiedzi z serwera
 			$this->getReply();
 
-			// Wysyłanie zapytania Hello - na przywitanie ;)
-			//if (! $this->sendHello('EHLO', $this->_data['smtp_host']))
-			//{
-				if (! $this->sendHello('HELO', $this->_data['smtp_host']))
+			// Wysyłanie zapytania na przywitanie ;)
+			if (! $this->sendHello('EHLO', $this->_data['smtp_host'])) // nowy typ komunikacji: extendedSMTP -> poprawne odpowiedzi serwera mają kod 250
+			{
+				if (! $this->sendHello('HELO', $this->_data['smtp_host'])) // starszy typ komunikacji jeśli nowy niedostępny; poprawne odpowiedzi serwera mają rózne kody
 				{
 					throw new systemException('Helo/Ehlo zakończone niepowodzeniem.');
 				}
-			//}
+			}
 
 			// Autoryzacja - zwróci TRUE, albo rzuci wyjątkiem
 			return $this->auth();
@@ -310,36 +310,32 @@ class Mailer
 		}
 	}
 
+	public function isValidResp($valid, $resp)
+	{
+		if (is_array($valid))
+		{
+			foreach($valid as $val)
+			{
+				if ($val === $resp)
+				{
+					return TRUE;
+				}
+			}
+		}
+		else
+		{
+			return $valid === $resp;
+		}
+		
+		return FALSE;
+	}
+	
 	// Zwraca kod odpowiedzi serwera SMTP
 	public function getCode()
 	{
-		return substr($this->getReply(), 0, 3);
+		return intval(substr($this->getReply(), 0, 3));
 	}
-
-	// Logowanie do SMTP
-	public function auth()
-	{
-		fwrite($this->_smtp, 'AUTH LOGIN'.$this->_eol);
-		if ($this->getCode() != 334)
-		{
-			throw new systemException('Błąd: Serwer SMTP nie zaakceptował próby autoryzacji.');
-		}
-
-		fwrite($this->_smtp, base64_encode($this->_data['smtp_username']).$this->_eol);
-		if ($this->getCode() != 334)
-		{
-			throw new systemException('Błąd: Nazwa użytkownika nie została zaakceptowana przez serwer SMTP.');
-		}
-
-		fwrite($this->_smtp, base64_encode($this->_data['smtp_password']).$this->_eol);
-		if ($this->getCode() != 235)
-		{
-			throw new systemException('Błąd: Hasło nie zostało zaakceptowana przez serwer SMTP.');
-		}
-
-		return TRUE;
-	}
-
+	
 	// Pobiera odpowiedź od serwera SMTP.
 	public function getReply()
 	{
@@ -355,6 +351,32 @@ class Mailer
 
 		return $data;
 	}
+
+	// Logowanie do SMTP
+	public function auth()
+	{
+		fwrite($this->_smtp, 'AUTH LOGIN'.$this->_eol);
+		if (!$this->isValidResp(334, $this->getCode()))
+		{
+			throw new systemException('Błąd: Serwer SMTP nie zaakceptował próby autoryzacji.');
+		}
+
+		fwrite($this->_smtp, base64_encode($this->_data['smtp_username']).$this->_eol);
+		if (!$this->isValidResp(334, $this->getCode()))
+		{
+			throw new systemException('Błąd: Nazwa użytkownika nie została zaakceptowana przez serwer SMTP.');
+		}
+
+		fwrite($this->_smtp, base64_encode($this->_data['smtp_password']).$this->_eol);
+		if (!$this->isValidResp(235, $this->getCode()))
+		{
+			throw new systemException('Błąd: Hasło nie zostało zaakceptowana przez serwer SMTP.');
+		}
+
+		return TRUE;
+	}
+
+
 
 	// Sprawdza stan połączenia z SMTP.
 	public function isConnected()
@@ -457,13 +479,7 @@ class Mailer
 			/** server ready for work ;) **/
 
 			// Wysyłanie wiadomości
-			fwrite($this->_smtp,$headers.$this->_eol.$message.$this->_eol);
-
-			$this->getCode();
-
-			// Informowanie serwera SMTP, że wiadomość przesłana już w całości
-			//fwrite($this->_smtp, $this->_eol. "." . $this->_eol);
-			fwrite($this->_smtp, '.' . $this->_eol);
+			fwrite($this->_smtp,$headers.$this->_eol.$this->_eol.$message.$this->_eol.'.' . $this->_eol);
 			if ($this->getCode() != 250)
 			{
 				throw new systemException('Błąd '.$this->getCode().': Komenda kończąca wymianę treści nie została zaakceptowana przez serwer SMTP.');
