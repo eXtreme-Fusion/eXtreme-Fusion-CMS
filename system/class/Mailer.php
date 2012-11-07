@@ -76,12 +76,12 @@ class Mailer
 		/**
 		 * Niektóre systemy pocztowe blokują odbiór wiadomości pochodzących z adresu e-mail
 		 * nie należacego do domeny, z której wiadomość jest wysyłana.
-		 * Dlatego jako nadawce wiadomości zamieszcza się no-reply@domain.com,
-		 * natomiast w nagłówku Reply-To przesyła się adres e-mail, na który mają być wysyłane
-		 * odpowiedzi pisane przez adresata ze zmiennej $to.
+		 * Dlatego jako nadawce wiadomości (MAIL FROM przy komunikacji z SMTP) zamieszcza się 
+		 * no-reply@domain.com, natomiast w nagłówku Reply-To przesyła się adres e-mail, 
+		 * na który mają być wysyłane odpowiedzi pisane przez adresata.
 		 */
-		$this->_from = 'no-reply@'.$_SERVER['HTTP_HOST'];
-		$this->_reply_to = $from;
+		$this->_reply_to = $this->_from = $from;
+		$this->_mail_from = 'no-reply@'.$_SERVER['HTTP_HOST'];
 
 		$this->_subject = $subject;
 		$this->_message = $message;
@@ -245,7 +245,7 @@ class Mailer
 		if ($this->connect())
 		{
 			// Wysyłanie do serwera SMTP informacji od kogo jest mail
-			$this->sendFrom($this->_from);
+			$this->sendFrom($this->_mail_from);
 
 			// Wysyłanie do serwera SMTP informacji do kogo jest mail
 			if ($status = $this->sendRecipient($this->_to))
