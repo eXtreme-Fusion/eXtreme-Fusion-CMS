@@ -71,10 +71,18 @@ class Mailer
 
 	public function send($to, $from, $subject, $message = NULL, array $headers = array(), $html = TRUE)
 	{
-		/** Zapis danych do zmiennych klasowych **/
 		$this->_to = $to;
+		
+		/**
+		 * Niektóre systemy pocztowe blokują odbiór wiadomości pochodzących z adresu e-mail 
+		 * nie należacego do domeny, z której wiadomość jest wysyłana.
+		 * Dlatego jako nadawce wiadomości zamieszcza się no-reply@domain.com,
+		 * natomiast w nagłówku Reply-To przesyła się adres e-mail, na który mają być wysyłane 
+		 * odpowiedzi pisane przez adresata ze zmiennej $to. 
+		 */
 		$this->_from = 'no-reply@'.$_SERVER['HTTP_HOST'];
 		$this->_reply_to = $from;
+		
 		$this->_subject = $subject;
 		$this->_message = $message;
 		$this->_headers = $headers;
@@ -131,7 +139,7 @@ class Mailer
 			$this->addHeaders(array(
 				'From: '.$this->_from.$this->_eol,
 				'Subject: '.$this->_subject.$this->_eol,
-				'Reply-To: '.$this->_from.$this->_eol,
+				'Reply-To: '.$this->_reply_to.$this->_eol,
 				'X-Mailer: PHP eXtreme-Fusion 5'.$this->_eol,
 				'Return-Path: '.$this->_from.$this->_eol
 			));
@@ -178,7 +186,7 @@ class Mailer
 			$this->addHeaders(array(
 				'From: '.$this->_from.$this->_eol,
 				'Subject: '.$this->_subject.$this->_eol,
-				'Reply-To: '.$this->_from.$this->_eol,
+				'Reply-To: '.$this->_reply_to.$this->_eol,
 				'X-Mailer: PHP eXtreme-Fusion 5'.$this->_eol,
 				'Return-Path: '.$this->_from.$this->_eol
 			));
