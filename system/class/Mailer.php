@@ -1,13 +1,13 @@
 <?php
 /***********************************************************
 | eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
+| This product is licensed under the BSD License.
+| http://extreme-fusion.org/ef5/license/
 ***********************************************************/
 /*	Notatka dla rozwijających klasę:
 
@@ -39,7 +39,7 @@ class Mailer
 		$_keep_alive = FALSE,
 		$_to_is_array,			// Czy wiadomość ma być wysłana do wielu odbiorców? (bool)
 		$_exception;
-		
+
 	private $_eol = "\r\n";
 
 	public function __construct($username = NULL, $password = NULL, $host = NULL, $port = 587, $exception = TRUE)
@@ -54,11 +54,11 @@ class Mailer
 				'smtp_port' => $port
 			);
 		}
-		
+
 		$this->_exception = $exception;
 	}
 
-	// Walidacja
+	// Todo:: Walidacja
 	protected function validate()
 	{
 		return TRUE;
@@ -72,17 +72,17 @@ class Mailer
 	public function send($to, $from, $subject, $message = NULL, array $headers = array(), $html = TRUE)
 	{
 		$this->_to = $to;
-		
+
 		/**
-		 * Niektóre systemy pocztowe blokują odbiór wiadomości pochodzących z adresu e-mail 
+		 * Niektóre systemy pocztowe blokują odbiór wiadomości pochodzących z adresu e-mail
 		 * nie należacego do domeny, z której wiadomość jest wysyłana.
 		 * Dlatego jako nadawce wiadomości zamieszcza się no-reply@domain.com,
-		 * natomiast w nagłówku Reply-To przesyła się adres e-mail, na który mają być wysyłane 
-		 * odpowiedzi pisane przez adresata ze zmiennej $to. 
+		 * natomiast w nagłówku Reply-To przesyła się adres e-mail, na który mają być wysyłane
+		 * odpowiedzi pisane przez adresata ze zmiennej $to.
 		 */
 		$this->_from = 'no-reply@'.$_SERVER['HTTP_HOST'];
 		$this->_reply_to = $from;
-		
+
 		$this->_subject = $subject;
 		$this->_message = $message;
 		$this->_headers = $headers;
@@ -143,7 +143,6 @@ class Mailer
 				'X-Mailer: PHP eXtreme-Fusion 5'.$this->_eol,
 				'Return-Path: '.$this->_from.$this->_eol
 			));
-
 
 			$this->_to_is_array = TRUE;
 			$this->addHeaders(array('Cc: '.implode($this->_to, ', ').$this->_eol));
@@ -320,6 +319,7 @@ class Mailer
 		}
 	}
 
+	// Sprawdzanie, czy serwer SMTP zwrócił prawidłowy kod odpowiedzi
 	public function isValidResp($valid, $resp)
 	{
 		if (is_array($valid))
@@ -336,16 +336,16 @@ class Mailer
 		{
 			return $valid === $resp;
 		}
-		
+
 		return FALSE;
 	}
-	
+
 	// Zwraca kod odpowiedzi serwera SMTP
 	public function getCode()
 	{
 		return intval(substr($this->getReply(), 0, 3));
 	}
-	
+
 	// Pobiera odpowiedź od serwera SMTP.
 	public function getReply()
 	{
@@ -353,7 +353,7 @@ class Mailer
 		while($str = fgets($this->_smtp, 515))
 		{
 			$data .= trim($str);
-			if (substr($str, 3, 1) === ' ') // todo: tu moze byc blad, byc moze wystarczy ==' '
+			if (substr($str, 3, 1) === ' ')
 			{
 				break;
 			}
@@ -412,7 +412,7 @@ class Mailer
 	public function reset()
 	{
 		fwrite($this->_smtp, 'RSET'.$this->_eol);
-		if ($this->getCode() != 250)
+		if (!$this->isValidResp(250, $this->getCode()))
 		{
 			throw new systemException('Błąd: komenda RSET nie została zaakceptowana przez serwer SMTP.');
 		}
@@ -422,83 +422,68 @@ class Mailer
 
 	public function sendFrom($from)
 	{
-		//if ($this->isConnected())
-		//{
-			fwrite($this->_smtp, 'MAIL FROM: <'.$from.'>'.$this->_eol);
-			if ($this->getCode() != 250)
-			{
-				throw new systemException('Błąd: Nadawca wiadomości został odrzucony przez serwer SMTP.');
-			}
+		fwrite($this->_smtp, 'MAIL FROM: <'.$from.'>'.$this->_eol);
+		if (!$this->isValidResp(250, $this->getCode()))
+		{
+			throw new systemException('Błąd: Nadawca wiadomości został odrzucony przez serwer SMTP.');
+		}
 
-			return TRUE;
-		//}
-
-		//return FALSE;
+		return TRUE;
 	}
 
 	public function sendRecipient($to)
 	{
-		//if ($this->isConnected())
-		//{
-			if ($this->_to_is_array)
+		if ($this->_to_is_array)
+		{
+			foreach ($to as $rcpt)
 			{
-				foreach ($to as $rcpt)
-				{
-					fwrite($this->_smtp, 'RCPT TO: <'.$rcpt.'>'.$this->_eol);
-					if ($this->getCode() != 250 && $this->getCode() != 251)
-					{
-						if ($this->_exception)
-						{
-							throw new systemException('Błąd: Odbiorca niezaakceptowany przez serwer SMTP.');
-						}
-						
-						return FALSE;
-					}
-				}
-			}
-			else
-			{
-				fwrite($this->_smtp, 'RCPT TO: <'.$to.'>'.$this->_eol);
-				if ($this->getCode() != 250 && $this->getCode() != 251)
+				fwrite($this->_smtp, 'RCPT TO: <'.$rcpt.'>'.$this->_eol);
+				if (!$this->isValidResp(array(250, 251), $this->getCode()))
 				{
 					if ($this->_exception)
 					{
 						throw new systemException('Błąd: Odbiorca niezaakceptowany przez serwer SMTP.');
 					}
-					
+
 					return FALSE;
 				}
 			}
+		}
+		else
+		{
+			fwrite($this->_smtp, 'RCPT TO: <'.$to.'>'.$this->_eol);
+			if (!$this->isValidResp(array(250, 251), $this->getCode()))
+			{
+				if ($this->_exception)
+				{
+					throw new systemException('Błąd: Odbiorca niezaakceptowany przez serwer SMTP.');
+				}
 
-			return TRUE;
-		//}
+				return FALSE;
+			}
+		}
 
-		//return FALSE;
+		return TRUE;
 	}
 
 	public function sendMessage($headers, $message)
 	{
-		//if ($this->isConnected())
-		//{
-			fwrite($this->_smtp, 'DATA'.$this->_eol);
-			if ($this->getCode() != 354)
-			{
-				throw new systemException('Błąd: Komenda DATA niezaakceptowana przez serwer SMTP.');
-			}
+		fwrite($this->_smtp, 'DATA'.$this->_eol);
+		if (!$this->isValidResp(354, $this->getCode()))
+		{
+			throw new systemException('Błąd: Komenda DATA niezaakceptowana przez serwer SMTP.');
+		}
 
-			/** server ready for work ;) **/
+		/** server ready for work ;) **/
 
-			// Wysyłanie wiadomości
-			fwrite($this->_smtp,$headers.$this->_eol.$this->_eol.$message.$this->_eol.'.' . $this->_eol);
-			if ($this->getCode() != 250)
-			{
-				throw new systemException('Błąd '.$this->getCode().': Komenda kończąca wymianę treści nie została zaakceptowana przez serwer SMTP.');
-			}
+		// Wysyłanie wiadomości
+		fwrite($this->_smtp,$headers.$this->_eol.$this->_eol.$message.$this->_eol.'.' . $this->_eol);
+		if (!$this->isValidResp(250, $this->getCode()))
+		{
+			throw new systemException('Błąd '.$this->getCode().': Komenda kończąca wymianę treści nie została zaakceptowana przez serwer SMTP.');
+		}
 
-			return TRUE;
-		//}
-
-		//return FALSE;
+		return TRUE;
 	}
 
 	/**
@@ -508,35 +493,25 @@ class Mailer
 	 */
 	protected function sendHello($hello, $host)
 	{
-		//if ($this->isConnected())
-		//{
-			fwrite($this->_smtp, $hello.' '.$host.$this->_eol);
+		fwrite($this->_smtp, $hello.' '.$host.$this->_eol);
 
-			if ($this->getCode() != 250)
-			{
-				return FALSE;
-			}
+		if (!$this->isValidResp(250, $this->getCode()))
+		{
+			return FALSE;
+		}
 
-			return TRUE;
-		//}
-
-		//return FALSE;
+		return TRUE;
 	}
 
 	// Zamyka połączenie z SMTP
 	protected function quit()
 	{
-		//if ($this->isConnected())
-		//{
-			fwrite($this->_smtp, 'QUIT'.$this->_eol);
-			if ($this->getCode() != 221)
-			{
-				throw new systemException('Błąd! Połączenie z serwerem nie może zostać zamknięte.');
-			}
+		fwrite($this->_smtp, 'QUIT'.$this->_eol);
+		if (!$this->isValidResp(221, $this->getCode()))
+		{
+			throw new systemException('Błąd! Połączenie z serwerem nie może zostać zamknięte.');
+		}
 
-			return TRUE;
-		//}
-
-		//return FALSE;
+		return TRUE;
 	}
 }
