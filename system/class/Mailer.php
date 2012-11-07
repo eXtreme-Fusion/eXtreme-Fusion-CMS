@@ -29,6 +29,7 @@ class Mailer
 {
 	protected
 		$_to,
+		$_reply_to,
 		$_from,
 		$_subject,
 		$_message,
@@ -72,7 +73,8 @@ class Mailer
 	{
 		/** Zapis danych do zmiennych klasowych **/
 		$this->_to = $to;
-		$this->_from = $from;
+		$this->_from = 'no-reply@'.$_SERVER['HTTP_HOST'];
+		$this->_reply_to = $from;
 		$this->_subject = $subject;
 		$this->_message = $message;
 		$this->_headers = $headers;
@@ -85,7 +87,7 @@ class Mailer
 				'To: '.$this->_to.$this->_eol,
 				'From: '.$this->_from.$this->_eol,
 				'Subject: '.$this->_subject.$this->_eol,
-				'Reply-To: '.$this->_from.$this->_eol,
+				'Reply-To: '.$this->_reply_to.$this->_eol,
 				'X-Mailer: PHP eXtreme-Fusion 5'.$this->_eol,
 				'Return-Path: '.$this->_from.$this->_eol
 			));
