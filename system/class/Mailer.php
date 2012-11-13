@@ -30,6 +30,7 @@ class Mailer
 	protected
 		$_to,
 		$_reply_to,
+		$_mail_from,
 		$_from,
 		$_subject,
 		$_message,
