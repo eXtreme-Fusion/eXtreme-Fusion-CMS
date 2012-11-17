@@ -1,13 +1,13 @@
 <?php
 /***********************************************************
 | eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
+| This product is licensed under the BSD License.
+| http://extreme-fusion.org/ef5/license/
 ***********************************************************/
 
 class Parser extends optClass
@@ -76,7 +76,7 @@ class Parser extends optClass
 
 		// Zwraca dane zalogowanego użytkownika
 		$this->assign('user', self::$_user->get());
-		
+
 		$this->assign('isLoggedIn', self::$_user->isLoggedIn());
 
 		if (self::$_user->iADMIN())
@@ -94,7 +94,7 @@ class Parser extends optClass
 		{
 			$this->assign('iGUEST', TRUE);
 		}
-		
+
 		if (self::$_request->get('action')->show())
 		{
 			$this->assign('action', self::$_request->get('action')->show());
@@ -182,7 +182,7 @@ class Parser extends optClass
 		{
 			$selected = intval($selected);
 		}
-		
+
 		$i = 0; $assign = array();
 
 		// Dopisywanie opcji Brak wyboru
@@ -196,7 +196,7 @@ class Parser extends optClass
 			$i++;
 		}
 
-		
+
 		if ($key_value)
 		{
 			foreach($data as $key => $value)
@@ -207,7 +207,7 @@ class Parser extends optClass
 					'selected' => ''
 				);
 
-				
+
 				if ($selected !== NULL && $key === $selected)
 				{
 					$assign[0]['selected'] = TRUE;
@@ -301,7 +301,7 @@ class pageNavParser extends optClass
 	private $_ext = '.tpl';
 
 	private $_route;
-	
+
 	public function __construct($_route = NULL)
 	{
 		$this->plugins = OPT_DIR.'plugins'.DS;
@@ -317,7 +317,7 @@ class pageNavParser extends optClass
 
 		$this->root = DIR_TEMPLATES.'paging'.DS;
 		$this->compile = DIR_CACHE;
-		
+
 		$this->_route = $_route;
 	}
 
@@ -325,7 +325,7 @@ class pageNavParser extends optClass
 	{
 		return $this->_route;
 	}
-	
+
 	// Parametr drugi to katalog, w którym znajduje się szablon.
 	// Doskonałe dla modułów, które mogą w ten sposób definiować własne szablony stronicowania,
 	// używając AJAXA lub innych technik.
@@ -714,7 +714,7 @@ class Ajax extends Parser
 		// Local OPT configuration loader
 		$this->setConfig();
 		$this->root = $root;
-		
+
 		// Main OPT configuration && system constants loader
 		parent::loadSystem();
 	}
@@ -807,7 +807,8 @@ class AdminModuleIframe extends Parser
 		$this->assign('ADDR_ADMIN_ICONS', ADDR_ADMIN_IMAGES.'icons/');
 		$this->assign('ADDR_ADMIN_CSS', ADDR_ADMIN_TEMPLATES.'stylesheet/');
 		$this->assign('ADDR_ADMIN_JS', ADDR_ADMIN_TEMPLATES.'javascripts/');
-		
+		$this->assign('ADDR_ADMIN_PAGES', ADDR_ADMIN.'pages/');
+
 		$GetExpire = explode(':', HELP::sec2hms(parent::$_sett->getUns('loging', 'admin_loging_time')-(time()-parent::$_user->get('admin_last_logged_in'))));
 		$this->assign('SessionExpire', '+'.$GetExpire[0].'h +'.$GetExpire[1].'m +'.$GetExpire[2].'s');
 

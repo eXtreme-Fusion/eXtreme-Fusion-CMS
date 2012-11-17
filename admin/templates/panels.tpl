@@ -3,11 +3,9 @@
 {*<h3>{$SystemVersion} - {i18n('Inactive panels')}</h3>*}
 <h3>{$SystemVersion} - {i18n('Panels managment')}</h3>
 <div class="tbl AdminButtons">
-	<div class="grid_4 buttons-bg">&nbsp;</div>
-	<div class="center grid_4 buttons">
+	<div class="center grid_4 button-c">
 		<span><a href="panel_editor.php" class="Save"><strong>{i18n('Add new panel')}<img src="{$ADDR_ADMIN_ICONS}pixel/plus.png" alt="" /></strong></a></span>
 	</div>
-	<div class="grid_4 buttons-bg">&nbsp;</div>
 </div>
 
 

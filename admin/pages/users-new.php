@@ -23,7 +23,214 @@ try
 
     $_tpl = new Iframe;
 
-	$_tpl->assign('page', $_request->get('page')->show());
+/**
+ *	@reqGET "page" 		<-- opisuje podstronę modułu Zarzadzania uzytkownikami
+ *	@reqGET "section"	<-- opisuje sekcję podstrony "page"
+ *	@reqGET "action"	<-- akcja wykonywania na podstronie "page"; nie wymaga "section" do zaistnienia
+ *	@reqGET "id"		<-- ID użytkownika, którego dotyczą żądania GET/POST
+ *	@reqGET "act"		<-- identyfikator akcji, której dotyczy komunikat; możliwe wartości takie jak w "action"
+ */
+
+ /**
+  * Wytyczne co do komunikatów:
+  *
+  * Przekierowanie na podstronę z komunikatem ma się odbywać kosztem parametru "action".
+  * Wartość "page" oraz "section" musi pozostać bez zmian.
+  */
+
+	class internalRoute
+	{
+		public function __construct($_request, $_ec)
+		{
+			$this->page = $_request->get('page', 'main')->show();
+			$this->section = $_request->get('section', 'main')->show();
+			$this->action = $_request->get('page', NULL)->show();
+			$this->act = $_request->get('page', NULL)->show();
+			$this->id = $_request->get('id', NULL)->show();
+			
+			$this->checkParams();
+			
+			// Zwróci wyjątek w razie błędu
+			$this->controller = $this->fireCtrl();
+			
+			if (!method_exists($this->controller, $this->section))
+			{
+				throw new userException('Na tej podstronie wskazana sekcja nie istnieje');
+			}
+			
+			$section = $this->section;
+			
+			
+			$this->controller->set($ec);
+			$this->controller->$section();
+		}
+		
+		
+		// Sprawdzanie poprawności danych przesłanych parametrami GET
+		protected function checkParams()
+		{
+			if (!is_string($this->page) || !$this->page)
+			{
+				throw new userException('Adres podstrony jest nieprawidłowy.');
+			}
+			
+			if (!is_string($this->section) || !$this->section)
+			{
+				throw new userException('Adres podstrony jest nieprawidłowy.');
+			}
+			
+			if ($this->action !== NULL)
+			{
+				if (!is_string($this->action) || !$this->action)
+				{
+					throw new userException('Adres podstrony jest nieprawidłowy.');
+				}
+			}
+			
+			if ($this->act !== NULL)
+			{
+				if (!is_string($this->act) || !$this->act)
+				{
+					throw new userException('Adres podstrony jest nieprawidłowy.');
+				}
+			}
+			if ($this->id !== NULL)
+			{
+				$id = intval($this->id);
+				
+				if (!is_numeric($this->id) || !$this->id || !$id || $id == $this->id)
+				{
+					throw new userException('Adres podstrony jest nieprawidłowy.');
+				}
+				else
+				{
+					$this->id = $id;
+				}
+			}
+		}
+		
+		// Ładuje odpowiedni controller odpowiedzialny za podstronę
+		protected function fireCtrl()
+		{
+			if (class_exists($class_name = 'User_'.ucfirst($this->page), FALSE))
+			{
+				return new $class_name($this->action, $this->id, $this->act);
+			}
+			
+			throw new userEXception('Nie znaleziono takiej podstrony');
+		}
+	}
+
+	abstract class abstractUser
+	{
+		public function set($ec)
+		{
+			$this->ec = $ec;
+		}
+		
+		public function get($name)
+		{
+			return $this->ec;
+		}
+	
+	}
+	class User_Main extends abstractUser
+	{
+		public function __construct($action, $id, $act)
+		{
+			$this->action = $action;
+			$this->id = $id;
+			$this->act = $act;
+		}
+		
+		public function main()
+		{
+			var_dump($this->ec->user);
+		}
+	}
+	
+	$obj = new internalRoute($_request, $ec);
+	
+	// Parametr "page" żądania GET
+	$page = $_request->get('page', 'main')->show();
+
+	// Strona główna
+	if ($page === 'main')
+	{
+
+	}
+	else
+	// Zarządzanie wyszukanym użytkownikiem
+	if ($page === 'management')
+	{
+		$section = $_request->get('section', 'main')->show();
+
+		// Strona główna podstrony
+		if ($section === 'main')
+		{
+
+		}
+		else
+		// Edycja konta
+		if ($section === 'edit')
+		{
+
+		}
+		else
+		// Zmiana statusu konta
+		if ($section === 'status')
+		{
+
+		}
+		else
+		// Usuwanie lub ukrywania konta
+		if ($section === 'delete')
+		{
+
+		}
+		else
+		// Wymuszanie aktywacji
+		if ($section === 'activation')
+		{
+
+		}
+		else
+		// Logowanie na konto użytkownika
+		if ($section === 'login')
+		{
+
+		}
+		else
+		// Przeglądanie historii aktywności użytkownika
+		if ($section === 'history')
+		{
+
+		}
+
+		// Przekazywanie informacji do szablonu: obecnie przeglądana sekcja podstrony
+		$_tpl->assign('section', $section);
+	}
+	else
+	// Tworzenie nowego konta
+	if ($page === 'creation')
+	{
+
+	}
+	else
+	// Aktywacja istniejących kont
+	if ($page === 'activation')
+	{
+
+	}
+	else
+	// Wysyłanie wiadomości mailowych
+	if ($page === 'mailing')
+	{
+
+	}
+
+	// Przekazywanie informacji do szablonu: obecnie przeglądana podstrona
+	$_tpl->assign('page', $page);
 
 	require_once DIR_CLASS.'Mailer.php';
 	$_mail = new Mailer($_sett->get('smtp_username'), $_sett->get('smtp_password'), $_sett->get('smtp_host'));
@@ -556,7 +763,7 @@ try
 					}
 				}
 
-				
+
 				$_pagenav = new PageNav(new Paging($rows, $current, intval($_sett->get('users_per_page'))), $_tpl, 10, array('page=users', 'current=', FALSE));
 
 				$_pagenav->get($_pagenav->create(), 'page_nav', DIR_ADMIN_TEMPLATES.'paging'.DS);
@@ -653,7 +860,7 @@ try
 
 				$status = 0;
 				$valid = '';
-				
+
 				if ( ! $_request->post('active')->show())
 				{
 					if ($_sett->get('email_verification') === '1')
@@ -768,7 +975,7 @@ try
 			}
 			$_tpl->assign('data', $data);
 		}
-		
+
 		if ($_sett->get('email_verification') === '1' || $_sett->get('admin_activation') === '1')
 		{
 			$_tpl->assign('active', TRUE);
@@ -807,10 +1014,7 @@ try
 			$_request->redirect(FILE_PATH, array('page' => 'mail', 'act' => 'error'));
 		}
 	}
-	else
-	{
-		$_tpl->assign('page', 'main');
-	}
+
 
   $_tpl->template('users-new');
 }

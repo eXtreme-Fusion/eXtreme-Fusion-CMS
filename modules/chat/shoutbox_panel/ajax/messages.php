@@ -21,14 +21,13 @@ $_sbb =  $ec->sbb;
 	$posts = array();
 	if ($rows)
 	{
-		if($chat_settings['life_messages'] == 0) 
+		if ($chat_settings['panel_limit'] == 0) 
 		{
 			$result = $_pdo->getData('SELECT * FROM [chat_messages] ORDER BY `id` DESC'); 
 		}
 		else
 		{
-			$result = $_pdo->exec('DELETE FROM [chat_messages] WHERE date < '.(time() - ($chat_settings['life_messages']*60)));
-			$result = $_pdo->getData('SELECT * FROM [chat_messages] WHERE date > '.(time() - ($chat_settings['life_messages']*60)).' ORDER BY `id` DESC');    
+			$result = $_pdo->getData('SELECT * FROM [chat_messages] ORDER BY `id` DESC LIMIT 0,'.intval($chat_settings['panel_limit'])); 
 		}
 
 		foreach ($result as $row) 
