@@ -75,8 +75,8 @@ try
 			$language = $_request->post('language')->filters('trim', 'strip');
 			$keyword = $_request->post('tag')->strip();
 			$access = $_request->post('access')->show() ? $_request->post('access')->getNumArray() : array(0 => '0');
-			$content = HELP::formatOrphan(addslashes($_request->post('content')->show()));
-			$content_extended = HELP::formatOrphan(addslashes($_request->post('content_extended')->show()));
+			$content = HELP::formatOrphan($_request->post('content')->show());
+			$content_extended = HELP::formatOrphan($_request->post('content_extended')->show());
 			$category = $_request->post('category')->isNum(TRUE, FALSE) ? $_request->post('category')->show() : '';
 			$author = $_user->get('id');
 			$source = $_request->post('source')->filters('trim', 'strip');
@@ -210,8 +210,8 @@ try
 						'description' => $row['description'],
 						'category' => $_tpl->createSelectOpts($category, intval($row['category']), TRUE, TRUE),
 						'language' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'locale', array(), TRUE, 'folders'), $row['language'], FALSE, TRUE),
-						'content' => HELP::phpentities(stripslashes($row['content'])),
-						'content_extended' => HELP::phpentities(stripslashes($row['content_extended'])),
+						'content' => $row['content'],
+						'content_extended' => $row['content_extended'],
 						'access' => $_tpl->getMultiSelect($_user->getViewGroups(), HELP::explode($row['access']), TRUE),
 						'keyword' => $keyword,
 						'allow_comments' => $row['allow_comments'],
