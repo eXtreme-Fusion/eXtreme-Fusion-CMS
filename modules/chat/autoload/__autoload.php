@@ -14,7 +14,7 @@ $row = $_system->cache('cleaning_raport', NULL, 'chat', 86400);
 
 if ($row === NULL)
 {
-	$_system->cache('cleaning_raport', time(), 'chat'); echo 5; exit;
+	$_system->cache('cleaning_raport', time(), 'chat');
 
 	// Usuniêcie z pamiêci zmiennej $row przechowuj¹cej informacje o poprzednim cache
 	unset($row);
