@@ -11,4 +11,6 @@
 		{if $iAdmin}<div style="float:right;"><a href="{$ADDR_SITE}modules/chat/shoutbox_panel/ajax/delete.php?post={$posts.id}" class="shoutbox_delete_post">Usuń</a> <a href="{$ADDR_SITE}modules/chat/shoutbox_panel/ajax/edit.php?post={$posts.id}" class="shoutbox_edit_post">Edytuj</a></div>{/if}
 		</div>
 	</div>
+{sectionelse}
+	<p class="center margin-vertical-10">Brak dodanych postów.</p>
 {/section}
