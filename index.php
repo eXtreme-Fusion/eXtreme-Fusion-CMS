@@ -120,8 +120,11 @@ try
 	if ($row = $_system->getModuleBootstrap())
 	{
 		foreach ($row as $name)
-		{
-			include DIR_MODULES.$name.DS.'autoload'.DS.'__autoload.php';
+		{ 
+			if ($ec->modules->isInstalled($name))
+			{
+				include_once DIR_MODULES.$name.DS.'autoload'.DS.'__autoload.php';
+			}
 		}
 	}
 

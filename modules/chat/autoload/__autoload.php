@@ -8,7 +8,7 @@
 | This product is licensed under the BSD License.				 |
 | http://extreme-fusion.org/ef5/license/						 |
 +---------------------------------------------------------------*/
-
+echo 5;
 // Pobranie z cache
 $row = $_system->cache('cleaning_raport', NULL, 'chat', 86400);
 

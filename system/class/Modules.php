@@ -544,4 +544,11 @@ class Modules
 			$result = $this->_pdo->exec("DELETE FROM [modules] WHERE `folder`='{$mod_info['dir']}'");
 		}
 	}
+	
+	// $folder - nazwa modułu/katalogu modułu
+	// sprawdzanie, czy moduł jest zainstalowany
+	public function isInstalled($folder)
+	{
+		return (bool) $this->_pdo->getRow('SELECT `id` FROM [modules] WHERE `folder` = :folder', array(':folder', HELP::strip($folder), PDO::PARAM_STR));
+	}
 }
