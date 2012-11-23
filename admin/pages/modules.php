@@ -1,13 +1,13 @@
 <?php
 /***********************************************************
 | eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
+| This product is licensed under the BSD License.
+| http://extreme-fusion.org/ef5/license/
 ***********************************************************/
 try
 {
@@ -17,7 +17,7 @@ try
 	// TODO:: Albo z require DIR_SITE.'bootstrap.php'; lecz bez zmodyfikwanego bootstrap.php podczas rozpoczynania sesji.
 	require DIR_SITE.'bootstrap.php';
 	require_once DIR_SYSTEM.'admincore.php';
-	
+
 	$_locale->load('modules');
 
     if ( ! $_user->hasPermission('admin.modules'))
@@ -26,14 +26,14 @@ try
     }
 
 	$_tpl = new Iframe;
-	
+
 	$_mod = new Modules($_pdo, $_sett, $_user, New Tag($_system, $_pdo), $_locale);
 
 	// Wyświetlenie komunikatów
 	if ($_request->get(array('status', 'act'))->show())
 	{
 		// Wyświetli komunikat
-		$_tpl->getMessage($_request->get('status')->show(), $_request->get('act')->show(), 
+		$_tpl->getMessage($_request->get('status')->show(), $_request->get('act')->show(),
 			array(
 				'install' => array(
 					__('Modules have been installed.'), __('Error! Modules have not been installed.')
@@ -61,10 +61,10 @@ try
 		{
 			// Pobierz listę wszystkich modułów z katalogu modules
 			$file_list = $_mod->getItems();
-			
+
 			foreach($file_list as $val)
 			{
-				
+
 				if (in_array($val[0], $_request->post('mod')->show()) && !in_array($val[0], $installed))
 				{
 					$_mod->install($val[0]);
@@ -83,10 +83,11 @@ try
 					$_mod->update($val);
 				}
 			}
-			
+
 			$_log->insertSuccess('install', __('Modules have been installed.'));
-			$_request->redirect(FILE_PATH, array('act' => 'install', 'status' => 'ok'));
 			$_system->clearCache('system', array('__autoloadModulesList'));
+			$_request->redirect(FILE_PATH, array('act' => 'install', 'status' => 'ok'));
+
 		}
 		else
 		{
@@ -94,10 +95,11 @@ try
 			{
 				$_mod->uninstall($val);
 			}
-			
+
 			$_log->insertSuccess('uninstall', __('Modules have been uninstalled.'));
-			$_request->redirect(FILE_PATH, array('act' => 'uninstall', 'status' => 'ok'));
 			$_system->clearCache('system', array('__autoloadModulesList'));
+			$_request->redirect(FILE_PATH, array('act' => 'uninstall', 'status' => 'ok'));
+
 		}
 	}
 

@@ -117,14 +117,11 @@ try
 	//$_theme->registerFunction('url', 'Url');
 
 	// Ładowanie pliku startowego modułu
-	if ($row = $_system->getModuleBootstrap())
+	if ($row = $ec->modules->getModuleBootstrap($_system))
 	{
 		foreach ($row as $name)
-		{ 
-			if ($ec->modules->isInstalled($name))
-			{
-				include_once DIR_MODULES.$name.DS.'autoload'.DS.'__autoload.php';
-			}
+		{
+			include_once DIR_MODULES.$name.DS.'autoload'.DS.'__autoload.php';
 		}
 	}
 
