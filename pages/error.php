@@ -1,4 +1,4 @@
-<?php
+<?php defined('EF5_SYSTEM') || exit;
 /***********************************************************
 | eXtreme-Fusion 5.0 Beta 5
 | Content Management System       

@@ -11,24 +11,6 @@
 ***********************************************************/
 try
 {
-	error_reporting(E_ALL | E_NOTICE);
-
-	// Check if magic_quotes_runtime is active
-	if (get_magic_quotes_runtime()) 
-	{
-		if (version_compare(PHP_VERSION, '5.3.0', '<')) 
-		{
-			// Deactivate when function is not deprecated PHP < 5.3.0
-			set_magic_quotes_runtime(0);
-		}
-		else
-		{
-			// Deactivate when function PHP > 5.3.0
-			ini_set("magic_quotes_gpc", 0);
-			ini_set("magic_quotes_runtime", 0);
-		}
-	}
-	
 	require_once DIR_CLASS.'Exception.php';
 	
 	if( ! extension_loaded('pdo')) 
