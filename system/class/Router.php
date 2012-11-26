@@ -51,6 +51,8 @@ class Router
 		$_action = '';			  	/**********TEST*********/
 
 	protected $_path_info_exists;
+	
+	protected $_installed_modules = array();
 
 	public function __construct($request, $_sett, $rewrite, $main_param, $path_info_exists, $opening_page, $ret_default = FALSE, $search_more = TRUE, $search_admin = FALSE, $searching = '')
 	{
@@ -489,6 +491,11 @@ class Router
 		}
 	}
 
+	public function setInstalledModules(array $installed)
+	{
+		$this->_installed_modules = $installed;
+	}
+	
 	public function setExitFile()
 	{
 		if ($this->_exit_file)
@@ -518,8 +525,13 @@ class Router
 			{
 				$file = $this->getFileName().$this->getExt('log');
 			}
-			foreach($this->_folders as $val)
+			foreach($this->_folders as $key => $val)
 			{
+				if ($key === 'modules' && !in_array($this->getFileName(), $this->_installed_modules))
+				{
+					continue;
+				}
+				
 				if (file_exists($val.DS.$file))
 				{
 					$this->_exit_file = $val.$file;
@@ -528,8 +540,12 @@ class Router
 			}
 			if (isset($level))
 			{
-				foreach($this->_folders as $val)
+				foreach($this->_folders as $key => $val)
 				{
+					if ($key === 'modules' && !in_array($this->getFileName(), $this->_installed_modules))
+					{
+						continue;
+					}
 					if (file_exists($val.DS.$level))
 					{
 						$this->_exit_file = $val.$level;

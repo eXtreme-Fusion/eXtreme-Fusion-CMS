@@ -35,7 +35,7 @@ class System {
 			$this->_furl = isset($_route['custom_furl']) && $_route['custom_furl'] === TRUE;
 			$this->_rewrite = isset($_route['custom_rewrite']) && $_route['custom_rewrite'] === TRUE;
 		}
-		
+
 		$_SERVER['SERVER_SOFTWARE'] = isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : '';
 		$_SERVER['SERVER_SIGNATURE'] = isset($_SERVER['SERVER_SIGNATURE']) ? $_SERVER['SERVER_SIGNATURE'] : '';
 	}
@@ -225,31 +225,8 @@ class System {
 		{
 			return $current;
 		}
-		
+
 		return $langs[$current];
-	}
-
-	public function getModuleBootstrap($cache_expire = 43200)
-	{
-		$row = $this->cache('__autoloadModulesList', NULL, 'system', $cache_expire);
-		if ($row === NULL)
-		{
-			$files = new DirectoryIterator(DIR_MODULES);
-			foreach ($files as $file)
-			{
-				if ( ! in_array($file->getFilename(), array('..', '.', '.svn', '.gitignore')))
-				{
-					if (is_dir($file->getPathname()) && file_exists($file->getPathname().DS.'autoload'.DS.'__autoload.php'))
-					{
-						$row[] = $file->getFilename();
-					}
-				}
-			}
-			sort($row);
-			$this->cache('__autoloadModulesList', $row, 'system');
-		}
-
-		return $row;
 	}
 
 	// Zwraca informację, czy uzyskanie listy załadowanych modułów Apache jest możliwe
@@ -345,12 +322,12 @@ class System {
 		}
 		return TRUE;
 	}
-	
+
 	public function serverPathInfoExists()
 	{
 		return isset($_SERVER['PATH_INFO']) || isset($_SERVER['ORIG_PATH_INFO']);
 	}
-	
+
 	public function httpServerIs($name)
 	{
 		return preg_match('/'.$name.'/i', $_SERVER['SERVER_SOFTWARE']) || preg_match('/'.$name.'/i', $_SERVER['SERVER_SIGNATURE']);

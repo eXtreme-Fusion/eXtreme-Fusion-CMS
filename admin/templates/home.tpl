@@ -49,7 +49,7 @@
 						<div class="center grid_2 button-l">
 							<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
 						</div>
-						<div class="center grid_3 button-r">
+						<div class="center grid_2 button-r">
 							<input type="hidden" name="note_add_save" value="yes" />
 							<span id="SendForm_This" class="Save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></a>
 						</div>
@@ -76,7 +76,7 @@
 
 			<form id="ThisNotes" action="{$URL_REQUEST}" method="post">
 				<div class="AdminButtons">
-					<div class="center grid_2">
+					<div class="center grid_2 button-c">
 						<input type="hidden" name="note_add" value="yes" />
 						<span {if $current < $notes_per_page}id="SendForm_ThisNotes"{/if} class="{if $current < $notes_per_page}Save{/if}"><strong>{if $current < $notes_per_page}{i18n('Add')}{else}{i18n('You have reached maximum number of notes. Remove some.')}{/if}<img src="{$ADDR_ADMIN_ICONS}pixel/plus.png" alt="" /></strong></span>
 					</div>
@@ -101,7 +101,7 @@
 				</div>
 				<div class="clear"></div>
 				<div class="tbl AdminButtons">
-					<div class="center grid_2"><input type="hidden" name="quick_news_add" value="yes" />
+					<div class="center grid_2 button-c"><input type="hidden" name="quick_news_add" value="yes" />
 						<span id="SendForm_ThisQuickNews" class="Save"><strong>{i18n('Add')}<img src="{$ADDR_ADMIN_ICONS}pixel/plus.png" alt="" /></strong></span>
 					</div>
 				</div>

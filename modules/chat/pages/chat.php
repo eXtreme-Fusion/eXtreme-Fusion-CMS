@@ -22,7 +22,7 @@ if(iUSER) {
 
 $_sbb = $ec->sbb;
 
-#*********** Settings 
+#*********** Settings
 $theme = array(
 	'Title' => __('Chat'),
 	'Keys' => '',

@@ -530,7 +530,8 @@ class User {
 	 */
 	public function userLoggedInBySession($id, $hash)
 	{
-		if (isNum($id))
+		// Fix for IE for "o" value of $id; todo: sprawdzić czemu trafiało tam "o" po dłuższej nieobecności na stronie
+		if (isNum($id, FALSE, FALSE))
 		{
 			if ($row = $this->_pdo->getRow('SELECT u.*, ud.* FROM [users] u LEFT JOIN [users_data] ud ON u.`id`= ud.`user_id` WHERE u.`id` = '.$id))
 			{

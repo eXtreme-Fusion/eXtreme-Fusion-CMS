@@ -32,7 +32,13 @@
 	</div>
 	<h4>{i18n('Maintenance mode')}</h4>
 	<div class="tbl1">
-		<div class="grid_6 formLabel"><label for="MaintenanceLevel">{i18n('Maintenance level:')}</label></div>
+		<div class="grid_6 formLabel">{i18n('Maintenance mode enabled:')}</div>
+		<div class="grid_1 formField"><label><input type="radio" name="maintenance" value="1"{if $maintenance == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
+		<div class="grid_5 formField"><label><input type="radio" name="maintenance" value="0"{if $maintenance == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
+	</div>
+	<div id="maintenance-box">
+	<div class="tbl2">
+		<div class="grid_6 formLabel"><label for="MaintenanceLevel">{i18n('Who is able to login?')}</label></div>
 		<div class="grid_6 formField">
 			<select name="maintenance_level[]" multiple id="maintenance_level" class="select-multi" size="5">
 				{section=maintenance_level}
@@ -41,14 +47,19 @@
 			</select>
 		</div>
 	</div>
-	<div class="tbl2">
-		<div class="grid_6 formLabel">{i18n('Maintenance mode enabled:')}</div>
-		<div class="grid_1 formField"><label><input type="radio" name="maintenance" value="1"{if $maintenance == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
-		<div class="grid_5 formField"><label><input type="radio" name="maintenance" value="0"{if $maintenance == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
-	</div>
 	<div class="tbl1">
-		<div class="grid_6 formLabel"><label for="MaintenanceMessage">{i18n('Maintenance mode message:')}</label><small>{i18n('HTML code is allowed.')}</small></div>
-		<div class="grid_4 formField"><textarea name="MaintenanceMessage" id="MaintenanceMessage" class="resize" cols="80" rows="3">{$MaintenanceMessage}</textarea></div>
+		<div class="grid_6 formLabel"><label for="MaintenanceMessage">{i18n('Maintenance mode message:')}</label></div>
+		<div class="clear"></div>
+		<div class="sep_1 grid_10 formField"><textarea name="maintenance_message" id="MaintenanceMessage" cols="80" rows="3">{$maintenance_message}</textarea></div>
+	</div>
+	<script type="text/javascript">
+		{literal}
+			var editor = CKEDITOR.replace( 'MaintenanceMessage',{
+				extraPlugins : 'docprops',
+				uiColor: '#4B4B4B'
+			});
+		{/literal}
+	</script>
 	</div>
 	<div class="tbl AdminButtons">
 		<div class="grid_2 center button-l">
@@ -60,3 +71,5 @@
 		</div>
 	</div>
 </form>
+
+<script src="{$ADDR_ADMIN_PAGES_JS}settings_security.js"></script>

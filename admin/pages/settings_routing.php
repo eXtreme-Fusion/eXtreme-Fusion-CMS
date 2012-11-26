@@ -37,7 +37,7 @@ try
 			))
 		));
 		
-		// Petmanentne usuwanie cache z wyjatkiem pliku dodanego do wyj�tku.
+		// Petmanentne usuwanie cache z wyjatkiem pliku dodanego do wyjątku.
 		$_files->setOmitExt(array('.htaccess'));
 		$_files->rmDirRecursive(DIR_CACHE, TRUE);
 		

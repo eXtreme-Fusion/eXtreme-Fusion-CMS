@@ -64,8 +64,6 @@ try
 		return '';
 	}
 
-	error_reporting(E_ALL | E_NOTICE);
-
 	define('DIR_BASE', realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..').DIRECTORY_SEPARATOR);
 
 	if ( ! file_exists(DIR_BASE.'config.php'))
@@ -119,7 +117,7 @@ try
 	require_once DIR_SYSTEM.'table_list.php';
 
 	//1. way:
-    $_user = $ec->register('user')->setArguments(array(new Reference('sett'), new Reference('pdo')))->get();
+    $_user = $ec->register('User')->setArguments(array(new Reference('sett'), new Reference('pdo')))->get();
 	
     $_locale = new Locales($_sett->get('locale'), DIR_LOCALE);
 
@@ -154,7 +152,7 @@ try
 
     if ( ! $_sett->get())
     {
-		if (file_exists('../install'.DIRECTORY_SEPARATOR))
+		if (file_exists('../install'.DS))
 		{
 			HELP::redirect('../install/');
 		}

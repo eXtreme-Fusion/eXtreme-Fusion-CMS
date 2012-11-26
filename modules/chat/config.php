@@ -34,6 +34,8 @@ $new_table[2] = array(
 	"(
 		`refresh` SMALLINT(5) NOT NULL DEFAULT '0',
 		`life_messages` SMALLINT(5) NOT NULL DEFAULT '0',
+		`panel_limit` SMALLINT(5) NOT NULL DEFAULT '0',
+		`archive_limit` SMALLINT(5) NOT NULL DEFAULT '0',
 		PRIMARY KEY (`refresh`)
 	) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;"
 );
@@ -43,7 +45,7 @@ $drop_table[2] = "chat_settings";
 
 $new_row[1] = array(
 	"chat_settings", 
-	"(`refresh`, `life_messages`) VALUES (5, 0)"
+	"(`refresh`, `life_messages`, `panel_limit`, `archive_limit`) VALUES (5, 30, 15, 30)"
 );
 
 $admin_page[1] = array(

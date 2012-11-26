@@ -48,4 +48,14 @@ class Container extends ServiceContainerBuilder
 	{
 		return new Locales($this->getService('Sett')->get('locale'), DIR_LOCALE);
 	}
+
+	protected function getTagService()
+	{
+		return new Tag($this->getService('System'), $this->getService('Pdo'));
+	}
+
+	protected function getModulesService()
+	{
+		return new Modules($this->getService('Pdo'), $this->getService('Sett'), $this->getService('User'), $this->getService('Tag'), $this->getService('Locale'));
+	}
 }

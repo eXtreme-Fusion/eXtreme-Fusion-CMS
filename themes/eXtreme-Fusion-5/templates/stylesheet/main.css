@@ -45,6 +45,8 @@ h4 {
 .tbl2 {background: #3a3a3a; padding: 4px; overflow: hidden}
 .tbl2 img, .tbl2 img {vertical-align: middle}
 
+.margin-vertical-10{margin:10px 0 !important}
+.margin-top-10{margin-top:10px !important}
 
 /****** Statusy (Messages) ******/
 .status, .info, .error, .valid {

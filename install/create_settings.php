@@ -106,7 +106,7 @@ insert($_dbconfig['prefix'].'settings', array('key' => 'change_name', 'value' =>
 
 insert($_dbconfig['prefix'].'settings', array('key' => 'maintenance', 'value' => 0));
 insert($_dbconfig['prefix'].'settings', array('key' => 'maintenance_message', 'value' => __('Welcome to eXtreme-Fusion CMS. Thank for using our CMS, Please turn off the maintenance mode in security, onces you have finished configuring your site.')));
-insert($_dbconfig['prefix'].'settings', array('key' => 'maintenance_level', 'value' => '1^2^3'));
+insert($_dbconfig['prefix'].'settings', array('key' => 'maintenance_level', 'value' => '1'));
 
 insert($_dbconfig['prefix'].'settings', array('key' => 'default_search', 'value' => 'all'));
 insert($_dbconfig['prefix'].'settings', array('key' => 'deactivation_period', 'value' => 365));

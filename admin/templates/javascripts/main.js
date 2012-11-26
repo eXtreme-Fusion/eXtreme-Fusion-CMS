@@ -28,10 +28,33 @@ function multiSelectDefault(data, id)
 	return false;
 }
 
+/**
+ * Wyświetlanie kolejnych pól formularza jeśli pole radio zaznaczone z opcją 1.
+ * Przykład użycia: boxByStatus('input[name="maintenance"]', '#maintenance-box');
+ */
+function boxByStatus(id, box) {
+
+	function controlBox(id, box) {
+		var value = $(id+':checked').val();
+
+		if (value == '1') {
+			$(box).fadeIn();
+		} else {
+			$(box).fadeOut();
+		}
+	}
+
+	controlBox(id, box);
+
+	$(id).change(function() {
+		controlBox(id, box);
+	});
+}
+
 $(function(){
 
 	/** Wsparcie dla multilist select **/
-	$('.select-multi').each(function() { 
+	$('.select-multi').each(function() {
 		multiSelectDefault($(this).val(), $(this).attr('id'));
 	}).change(function() {
 		multiSelectDefault($(this).val(), $(this).attr('id'));
@@ -258,26 +281,79 @@ $(function(){
 
 	// Wyśrodkowywanie buttonów
 
-	if ($('.button-c').length != 1 || ($('.button-r').length && $('.button-l').length))
-	{
-		var val = 4-$('.button-c').length;
-		if (val > 0)
-		{
-			$('.button-l').before('<div class="grid_'+val+' buttons-bg">&nbsp;</div>');
-			$('.button-r').after('<div class="grid_'+val+' buttons-bg">&nbsp;</div>');
+	$('.AdminButtons').each(function() {
+		var c = $(this).children('.button-c');
+		var r = $(this).children('.button-r');
+		var l = $(this).children('.button-l');
+
+		var sum = 0;
+
+		// Tylko jeden button na środku
+		if (c.length == 1 && !r.lenght && !l.length) {
+
+			c.each(function() {
+				if ($(this).hasClass('grid_2')) {
+					sum = sum + 2;
+				} else if ($(this).hasClass('grid_4')) {
+					sum = sum + 4;
+				} else {
+					sum = sum + 6;
+				}
+			});
+
+			var bg = (12-sum)/2;
+
+			c.before('<div class="grid_'+bg+' buttons-bg">&nbsp;</div>');
+			c.after('<div class="grid_'+bg+' buttons-bg">&nbsp;</div>');
 		}
-		else
+		// Brak buttonów na środku, jeden button z lewej i jeden z prawej strony
+		else if (!c.length && (r.length == 1 && l.length == 1))
 		{
-			$('.button-l').before('<div class="buttons-bg">&nbsp;</div>');
-			$('.button-r').after('<div class="buttons-bg">&nbsp;</div>');
+			if (r.hasClass('grid_2')) {
+				sum = sum + 2;
+			} else {
+				sum = sum + 4;
+			}
+			if (l.hasClass('grid_2')) {
+				sum = sum + 2;
+			} else {
+				sum = sum + 4;
+			}
+
+			var bg = (12-sum)/2;
+
+			l.before('<div class="grid_'+bg+' buttons-bg">&nbsp;</div>');
+			r.after('<div class="grid_'+bg+' buttons-bg">&nbsp;</div>');
+
 		}
-	}
-	else
-	{
-		$('.button-l').before('<div class="grid_4 buttons-bg">&nbsp;</div>');
-		$('.button-r').after('<div class="grid_4 buttons-bg">&nbsp;</div>');
-		$('.button-c').before('<div class="grid_5 buttons-bg">&nbsp;</div>').after('<div class="grid_5 buttons-bg">&nbsp;</div>');
-	}
+		// W środku jest kilka buttonów lub jeden; ponadto jeden z lewej i jeden z prawej;
+		else if (l.length == 1 && c.length >= 1 && r.length == 1)
+		{
+			if (r.hasClass('grid_2')) {
+				sum = sum + 2;
+			} else {
+				sum = sum + 4;
+			}
+			if (l.hasClass('grid_2')) {
+				sum = sum + 2;
+			} else {
+				sum = sum + 4;
+			}
+
+			c.each(function() {
+				if ($(this).hasClass('grid_2')) {
+					sum = sum + 2;
+				} else {
+					sum = sum + 4;
+				}
+			});
+
+			var bg = (12-sum)/2;
+
+			l.before('<div class="grid_'+bg+' buttons-bg">&nbsp;</div>');
+			r.after('<div class="grid_'+bg+' buttons-bg">&nbsp;</div>');
+		} else alert('ulozenie buttonow na tej podstronie jest nieprawidlowe');
+	});
 
 	/* Zakładki w Panelu Admina */
 	if (typeof(page_active_tab) != 'undefined' && page_active_tab != '') {

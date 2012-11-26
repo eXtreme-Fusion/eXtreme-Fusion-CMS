@@ -8,7 +8,7 @@ $(function() {
 	});
 
 	// Wyszukiwanie użytkownika po jego loginie
-	searchUser(true, true);
+	$('#search_user').searchEngine({'is_here_admin_panel': 1, 'php_file': 'ajax/search_users_extended.php'});
 
 	// Wybieranie adresata wiadomości
 	$('body').on('click', '.defender', function() {

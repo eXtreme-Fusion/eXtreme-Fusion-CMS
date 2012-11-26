@@ -1,7 +1,7 @@
 <div id="ShoutBoxPanel">
 	{php} openside(__('ShoutBox')) {/php}
 	<div id="ShoutBoxUpArrow"></div>
-		{i18n('Posted in')}: <div id="chat_post"></div>
+		<p>{i18n('Posted in')}: <span id="chat_post"></span></p>
 	
 		<div class="InfoBoxPanel">
 			{if $IsLoggedIn}
@@ -14,7 +14,7 @@
 			<div class="InfoBoxCon">
 				<div id="ShoutboxIcon"></div>
 				<div class="InfoBoxCenterRight">
-					<strong>{i18n('Cautions!')}</strong><br />{i18n('You must be logged in to post a message!')}
+					<p class="center margin-vertical-10"><strong>{i18n('You must be logged in to post a message!')}</p>
 				</div>
 			</div>
 			<div class="InfoBoxEnd"></div>
@@ -22,7 +22,7 @@
 		</div>			
 		<div id="ShoutBoxPosts">
 		</div>
-		<div class="center"><img src="{$THEME_IMAGES}bullet.png"> <a href="{$url_chat}">{i18n('ARCHIVES')}</a></div>
+		<div class="center margin-top-10"><a href="{$url_chat}">{i18n('ARCHIVES')}</a></div>
 		
 	<div id="ShoutBoxDownArrow"></div>
 	{php} closeside() {/php}

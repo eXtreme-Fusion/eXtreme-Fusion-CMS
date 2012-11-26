@@ -10,11 +10,27 @@
 | http://extreme-fusion.org/ef5/license/
 ***********************************************************/
 
-// TODO:: Odnoœnie kodu z pliku admin/pages/mudules.php 
-// TODO:: Niwelacja komunikatu o rozpoczêtej sesji "Notice: A session had already been started - ignoring session_start()"
+error_reporting(E_ALL | E_NOTICE);
+
 if ( ! isset($_SESSION)) 
 {
 	session_start();
+}
+
+// Check if magic_quotes_runtime is active
+if (get_magic_quotes_runtime()) 
+{
+	if (version_compare(PHP_VERSION, '5.3.0', '<')) 
+	{
+		// Deactivate when function is not deprecated PHP < 5.3.0
+		set_magic_quotes_runtime(0);
+	}
+	else
+	{
+		// Deactivate when function PHP > 5.3.0
+		ini_set("magic_quotes_gpc", 0);
+		ini_set("magic_quotes_runtime", 0);
+	}
 }
 
 if (ini_get('register_globals'))

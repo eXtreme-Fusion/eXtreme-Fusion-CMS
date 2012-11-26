@@ -1,13 +1,13 @@
 <?php
 /***********************************************************
 | eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
+| This product is licensed under the BSD License.
+| http://extreme-fusion.org/ef5/license/
 ***********************************************************/
 
 class Modules
@@ -17,7 +17,7 @@ class Modules
 		$_sett,
 		$_user,
 		$_tag;
-		
+
 	protected $_categories = array();
 
 	/**
@@ -37,7 +37,7 @@ class Modules
 		$this->_locale   = $locale;
 		// Kategorie, do których można przypisywać moduły
 		$this->_categories = array(
-			'security', 
+			'security',
 			'comments'
 		);
 	}
@@ -59,9 +59,9 @@ class Modules
 					{
 						$this->_locale->moduleLoad('config', $file->getFilename());
 					}
-				
+
 					include $file->getPathname().DS.'config.php';
-					
+
 					if (isset($mod_info))
 					{
 						$modules[] = array($mod_info['dir'], $mod_info['title']);
@@ -70,12 +70,36 @@ class Modules
 				}
 			}
 		}
-		
+
 		sort($modules);
-		
+
 		return $modules;
 	}
 
+
+	public function getModuleBootstrap($_system, $cache_expire = 43200)
+	{
+		$row = $_system->cache('__autoloadModulesList', NULL, 'system', $cache_expire);
+		if ($row === NULL)
+		{
+			$row = array();
+			foreach($this->getInstalled() as $dir)
+			{
+				if (file_exists(DIR_MODULES.$dir) && is_dir(DIR_MODULES.$dir.DS))
+				{
+					if (file_exists(DIR_MODULES.$dir.DS.'autoload'.DS.'__autoload.php'))
+					{
+						$row[] = $dir;
+					}
+				}
+			}
+
+			sort($row);
+			$_system->cache('__autoloadModulesList', $row, 'system');
+		}
+
+		return $row;
+	}
 
 	/**
 	 * Pobiera z bazy danych nazwy katalogów zainstalowanych modułów
@@ -241,7 +265,7 @@ class Modules
 			exit;
 		}
 	}
-	
+
 	public function install($modules)
 	{
 		$modules = HELP::strip($modules);
@@ -252,7 +276,7 @@ class Modules
 			{
 				$this->_locale->moduleLoad('config', $modules);
 			}
-			
+
 			include DIR_MODULES.$modules.DS.'config.php';
 
 			// Kontrola tworzonych tabel
@@ -275,7 +299,7 @@ class Modules
 				$this->checkToCreateAdminPage($admin_page, $mod_info['dir']);
 				$do['create_page'] = TRUE;
 			}
-			
+
 			// Kontrola istniejących tabel, które mają zostać zaktualizowane przez zmianę nazw kolumn
 			if (isset($update_table) && is_array($update_table))
 			{
@@ -283,12 +307,12 @@ class Modules
 				{
 					$this->checkToUpdateTable($val[0]);
 				}
-				
+
 				$do['update_table'] = TRUE;
 			}
-			
+
 			/**
-			 * Kontrola istniejących tabel, które mają zostać zaktualizowane przez zmianę 
+			 * Kontrola istniejących tabel, które mają zostać zaktualizowane przez zmianę
 			 * nazw kolumn przez dodanie nowych kolumn.
 			 */
 			if (isset($add_field) && is_array($add_field))
@@ -297,14 +321,14 @@ class Modules
 				{
 					$this->checkToUpdateTable($val[0]);
 				}
-				
+
 				$do['add_field'] = TRUE;
 			}
-			
+
 			if (isset($mod_info['category']))
 			{
 				$this->checkCategory($mod_info['category']);
-				
+
 				if ($mod_info['category'] === 'security')
 				{
 					$_security = new Security($this->_pdo);
@@ -316,12 +340,12 @@ class Modules
 				$mod_info['category'] = '';
 			}
 
-			
-			
+
+
 			//TODO:: sprawdzanie, czy plik/klasa modułu security istnieje
-		
+
 			## ZAPIS MODUŁU W BAZIE:
-				
+
 			// Tworzenie linków nawigacyjnych
 			if (isset($menu_link) && is_array($menu_link))
 			{
@@ -349,7 +373,7 @@ class Modules
 					$this->_pdo->exec("INSERT INTO [{$val[0]}] {$val[1]}");
 				}
 			}
-			
+
 			// Tworzenie nowych uprawnień
 			if (isset($do['create_perm']))
 			{
@@ -361,7 +385,7 @@ class Modules
 			{
 				$this->createAdminPage($admin_page, $mod_info['dir']);
 			}
-			
+
 			// Aktualizacja istniejących tabel przez zmianę kolumn
 			if (isset($do['update_table']))
 			{
@@ -370,7 +394,7 @@ class Modules
 					$this->_pdo->exec("ALTER TABLE [{$val[0]}] {$val[1]}");
 				}
 			}
-			
+
 			// Aktualizacja istniejących tabel przez dodanie nowych kolumn
 			if (isset($do['add_field']))
 			{
@@ -379,7 +403,7 @@ class Modules
 					$this->_pdo->exec("ALTER TABLE [{$val[0]}] ADD {$val[1]}");
 				}
 			}
-			
+
 			// Zapis danych w bazie w głównej tabeli modułów
 			return $this->_pdo->exec("INSERT INTO [modules] (`title`, `folder`, `version`, `category`) VALUES ('{$mod_info['title']}', '{$mod_info['dir']}', '{$mod_info['version']}', '{$mod_info['category']}')");
 		}
@@ -396,9 +420,9 @@ class Modules
 			{
 				$this->_locale->moduleLoad('config', $modules);
 			}
-			
+
 			include DIR_MODULES.$modules.DS.'config.php';
-			
+
 			$data = $this->_pdo->getRow("SELECT `id`, `version` FROM [modules] WHERE `folder`='{$inf_folder}'");
 			if ($data)
 			{
@@ -431,9 +455,9 @@ class Modules
 			{
 				$this->_locale->moduleLoad('config', $modules);
 			}
-			
+
 			include DIR_MODULES.$modules.DS.'config.php';
-			
+
 			$data = $this->_pdo->getRow("SELECT `version` FROM [modules] WHERE `folder`='{$mod_info['dir']}'");
 			if ($data)
 			{
@@ -466,7 +490,7 @@ class Modules
 			{
 				$this->_locale->moduleLoad('config', $modules);
 			}
-			
+
 			include DIR_MODULES.$folder.DS.'config.php';
 
 			// Usuwanie podstron
@@ -540,8 +564,17 @@ class Modules
 					$this->_tag->delTagFromSupplement($val);
 				}
 			}
-			
+
 			$result = $this->_pdo->exec("DELETE FROM [modules] WHERE `folder`='{$mod_info['dir']}'");
+
+
 		}
+	}
+
+	// $folder - nazwa modułu/katalogu modułu
+	// sprawdzanie, czy moduł jest zainstalowany
+	public function isInstalled($folder)
+	{
+		return (bool) $this->_pdo->getRow('SELECT `id` FROM [modules] WHERE `folder` = :folder', array(':folder', HELP::strip($folder), PDO::PARAM_STR));
 	}
 }

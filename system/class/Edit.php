@@ -96,6 +96,11 @@ class Edit
 	{
 		return filter_var($this->_var, FILTER_VALIDATE_EMAIL);
 	}
+	
+	public function isIP()
+	{
+		return filter_var($this->_var, FILTER_VALIDATE_IP);
+	}
 
 	// True/False
 	public function isArrayNum($exception = TRUE)

@@ -17,12 +17,6 @@ try
 
 	require_once 'system/sitecore.php';
 
-	// Deklaracja stałej ścieżki adresu URL
-	if ($_sett->get('maintenance') == 1 && ((iMEMBER && $_sett->get('maintenance_level') == 1 && $_user->get('id') != 1) || ($_sett->get('maintenance_level') > $_user->get('level'))))
-	{
-		HELP::redirect(ADDR_SITE.'maintenance.html');
-	}
-
 	/**
 	 * Szablon systemowy (theme)
 	 */
@@ -36,9 +30,35 @@ try
 	$_route = new Router($_request, $_sett, $_system->rewriteAvailable(), 'page', $_system->pathInfoExists(), $_sett->get('opening_page'), TRUE, TRUE, FALSE, 'admin');
 
 	StaticContainer::register('route', $_route);
-	
+
+	// Tryb prac na serwerze
+	if ($_user->get('id') !== '1')
+	{
+		if ($_sett->get('maintenance') === '1')
+		{
+			if ($_route->getFileName() !== 'maintenance')
+			{
+				if (! $_user->hasAccess($_sett->get('maintenance_level')))
+				{
+					HELP::redirect(ADDR_SITE.'maintenance.html');
+				}
+			}
+			else
+			{
+				if ($_user->hasAccess($_sett->get('maintenance_level')))
+				{
+					HELP::redirect(ADDR_SITE);
+				}
+			}
+		}
+		elseif ($_route->getFileName() === 'maintenance')
+		{
+			HELP::redirect(ADDR_SITE);
+		}
+	}
+
 	/** Konfiguracja obiektu szablonu **/
-	$_tpl   = new Site($_route);
+	$_tpl = new Site($_route);
 
 	//$_tpl->registerFunction('url', 'Url');
 
@@ -60,9 +80,12 @@ try
 
 	// Scieżki, w których jest wyszukiwany plik wg kolejności przeszukiwania
 	$folders = array(
-		'pages'.DS,
-		'modules'.DS.$_route->getFileName().DS.'pages'.DS
+		'modules' 	=> DIR_SITE.'modules'.DS.$_route->getFileName().DS.'pages'.DS,
+		'pages' 	=> DIR_SITE.'pages'.DS
 	);
+
+	// Przesyła ściezkę do katalogu modułów
+	$_route->setInstalledModules($ec->modules->getInstalled());
 
 	$_route->setFolders($folders);
 
@@ -92,11 +115,11 @@ try
 	//$_theme->registerFunction('url', 'Url');
 
 	// Ładowanie pliku startowego modułu
-	if ($row = $_system->getModuleBootstrap())
+	if ($row = $ec->modules->getModuleBootstrap($_system))
 	{
 		foreach ($row as $name)
 		{
-			include DIR_MODULES.$name.DS.'autoload'.DS.'__autoload.php';
+			include_once DIR_MODULES.$name.DS.'autoload'.DS.'__autoload.php';
 		}
 	}
 

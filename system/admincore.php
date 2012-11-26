@@ -11,8 +11,6 @@
 ***********************************************************/
 try
 {
-	error_reporting(E_ALL | E_NOTICE);
-
 	require_once DIR_CLASS.'Exception.php';
 	
 	if( ! extension_loaded('pdo')) 

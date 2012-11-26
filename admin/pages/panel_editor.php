@@ -85,17 +85,18 @@ try
 	// Zapis danych
 	if ($_request->post('save')->show())
 	{
+		$access = $_request->post('panel_access')->show() != array(0 => '0') ? $_request->post('panel_access')->getNumArray() : array(0 => '3');
 		// Aktualizacja panelu
 		if ($_request->get('action')->show() === 'edit' && $_request->get('id')->isNum())
 		{
-			$_pnl->updatePanel($_request->get('id')->show(), $_request->post('panel_name')->show(), $_request->post('panel_content')->show(), $_request->post('panel_access')->show());
+			$_pnl->updatePanel($_request->get('id')->show(), $access, $_request->post('panel_name')->show(), $_request->post('panel_content')->show());
 			$_log->insertSuccess('edit', __('The panel has been edited.'));
 			$_request->redirect(FILE_PATH, array('act' => 'edit', 'status' => 'ok'));
 		}
 		// Dodanie nowego panelu
 		else
 		{
-            $_pnl->insertPanel($_request->post('panel_name')->show(), $_request->post('panel_content')->show(), $_request->post('panel_side')->show(), $_request->post('panel_access')->show());
+            $_pnl->insertPanel($_request->post('panel_name')->show(), $_request->post('panel_content')->show(), $_request->post('panel_side')->show(), $access);
 			$_log->insertSuccess('add', __('The panel has been added.'));
 			$_request->redirect(FILE_PATH, array('act' => 'add', 'status' => 'ok'));
 		}
@@ -133,13 +134,14 @@ try
 				'name' => $data['name'],
 				'content' => $data['content'],
 				'side' => $data['side'],
-				'access' => $_tpl->getMultiSelect($_user->getViewGroups(), $data['access'], TRUE)
+				'access' => $_tpl->getMultiSelect($_user->getViewGroups(), $data['access'], TRUE),
+				'is_file' => $data['type'] === 'file'
 			));
 		}
 		// Tworzenie nowego panelu
 		else
 		{
-			$_tpl->assign('access', $_tpl->getMultiSelect($_user->getViewGroups(), '0', TRUE));
+			$_tpl->assign('access', $_tpl->getMultiSelect($_user->getViewGroups(), NULL, TRUE));
 		}
 	}
 
