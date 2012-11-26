@@ -17,8 +17,6 @@ try
 
 	require_once 'system/sitecore.php';
 
-
-
 	/**
 	 * Szablon systemowy (theme)
 	 */
@@ -60,7 +58,7 @@ try
 	}
 
 	/** Konfiguracja obiektu szablonu **/
-	$_tpl   = new Site($_route);
+	$_tpl = new Site($_route);
 
 	//$_tpl->registerFunction('url', 'Url');
 
