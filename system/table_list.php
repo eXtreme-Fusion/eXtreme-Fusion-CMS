@@ -72,6 +72,10 @@ if ($tables)
 {
 	header('Content-Type: text/html; charset=utf-8');
 
+	// todo: sprawdzac czy katalog install istnieje na serwerze i dopiero wtedy słowo "ponownej instalacji" powinno być linkowane. Jeśli katalogu nie ma, to trzeba w komunikacie napisać że należy wrzucić pliki instalacyjne
+	
+	// todo: przerobić poniższe na locale
+	
 	if ($_system->detectBrowserLanguage() === 'pl')
 	{
 		throw new systemException('<div style="text-align:center"><p style="font-weight:bold">PL: Błąd! W bazie danych nie znaleziono poniższych, wymaganych tabel systemowych:</p><br /><p>'.implode(', ', $tables).'</p><br /> <p style="font-weight:bold">Dokonaj <a href="'.ADDR_SITE.'install/" title="eXtreme-Fusion 5 reinstallation">ponownej instalacji</a> systemu <a href="http://pl.extreme-fusion.org/" title="eXtreme-Fusion CMS Support">eXtreme-Fusion 5</a> lub przywróć kopię bazy danych.</p></div>');

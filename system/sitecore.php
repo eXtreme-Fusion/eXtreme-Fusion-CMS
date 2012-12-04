@@ -109,16 +109,18 @@ try
     $_pdo = $ec->pdo;
 
 	$_system = $ec->system;
-require_once DIR_SYSTEM.'table_list.php';
+
+	// Checking whether there are required database tables
+	require_once DIR_SYSTEM.'table_list.php';
+
     //1. way: $_sett = $ec->register('sett')->setArguments(array($_system, $_pdo))->get();
 	//2. way:
 	$_sett = $ec->sett;
 
-	
 
 	//1. way:
     $_user = $ec->register('User')->setArguments(array(new Reference('sett'), new Reference('pdo')))->get();
-	
+
     $_locale = new Locales($_sett->get('locale'), DIR_LOCALE);
 
 
@@ -211,7 +213,7 @@ require_once DIR_SYSTEM.'table_list.php';
 
 	// Aktualizacja czasu ostatniej wizyty
 	$_user->updateActivity();
-	
+
     define('iGUEST', $_user->iGUEST());
     define('iUSER', $_user->iUSER());
     define('iADMIN', $_user->iADMIN());
