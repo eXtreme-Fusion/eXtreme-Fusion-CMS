@@ -50,9 +50,20 @@ try
     {
 		$question = HELP::strip(trim($_request->post('Question')->show()));
 		$response = HELP::strip(trim($_request->post('Response')->show()));
-		$response = serialize(explode("\n", $response));
+		$response = explode("\n", $response);
         if ($question && $response)
         {
+			$new = array();
+			foreach($response as $d)
+			{
+				$d = trim($d);
+				
+				if ($d)
+				{
+					$new[] = $d;
+				}
+			}
+			$response = serialize($new);
             if ($_request->get('action')->show() === 'edit' && isNum($_request->get('poll_id')->show()))
             {
                $count = $_pdo->exec('UPDATE [polls] SET `question` = :question, `response` = :response WHERE `id` = :id',
