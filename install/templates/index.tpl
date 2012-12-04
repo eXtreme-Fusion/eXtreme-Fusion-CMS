@@ -367,9 +367,11 @@
 					{elseif $step == 5}
 
 							{if $show_info}
+								{*
 								<div class='valid'>{i18n('Database connection established.')}</div><br />
 								<div class='valid'>{i18n('Config file successfully written.')}</div><br />
 								<div class='valid'>{i18n('Database tables created.')}</div>
+								*}
 							{/if}
 
 							{if $empty_form_error}
