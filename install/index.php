@@ -12,7 +12,7 @@
 error_reporting(E_ALL | E_STRICT);
 
 // Instalowana wersja systemu - wyświetlana w nagłówku nawigacji
-define('VERSION', '5 Beta 5');
+define('VERSION', '5 Beta 6');
 
 $HostURL = explode('install', $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']);
 

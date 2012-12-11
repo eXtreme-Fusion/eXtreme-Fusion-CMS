@@ -104,7 +104,7 @@ return array(
 	'Setup complete' => '<div class="valid">Zakończono instalację. Dziękujemy za wybranie eXtreme-fusion v.5.0 - Ninja Edition!</div>',
 	'Your user settings are not correct:' => 'Podane dane użytkownika zawierają następujące błędy:',
 	//Welcome Message
-	'Welcome to your site' => 'Witaj na Swojej nowej stronie.',
+	'Welcome to your site' => 'Witaj na nowej stronie.',
 	'Welcome to eXtreme-Fusion CMS. Thank for using our CMS, Please turn off the maintenance mode in security, onces you have finished configuring your site.' => 'Dziękujemy za korzystanie z systemu eXtreme-Fusion. Tryb prac na serwerze można wyłączyć w Panelu Administratora w dziale Polityki bezpieczeństwa.',
 	// Stage 6 - News Categories
 	'Bugs' => 'Błędy',

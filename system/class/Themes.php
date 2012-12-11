@@ -170,10 +170,10 @@ class Theme extends optClass
 	{
 		if ($license)
 		{
-			return __('Powered by :system under :license License', array(':system' => '<a href="http://extreme-fusion.org/"'.($class ? ' class="'.$class.'"' : '').' rel="copyright">eXtreme-Fusion 5</a>', ':license' => '<a href="http://extreme-fusion.org/ef5/license/"'.($class ? ' class="'.$class.'"' : '').' rel="copyright">BSD</a>'))."\n";
+			return __('Powered by :system under :license License', array(':system' => '<a href="http://pl.extreme-fusion.org/"'.($class ? ' class="'.$class.'"' : '').' rel="copyright">eXtreme-Fusion 5</a>', ':license' => '<a href="http://extreme-fusion.org/ef5/license/"'.($class ? ' class="'.$class.'"' : '').' rel="copyright">BSD</a>'))."\n";
 		}
 		
-		return __('Powered by :system', array(':system' => '<a href="http://extreme-fusion.org/"'.($class ? ' class="'.$class.'"' : '').' rel="copyright">eXtreme-Fusion 5</a>'))."\n";
+		return __('Powered by :system', array(':system' => '<a href="http://pl.extreme-fusion.org/"'.($class ? ' class="'.$class.'"' : '').' rel="copyright">eXtreme-Fusion 5</a>'))."\n";
 	}
 	
 
