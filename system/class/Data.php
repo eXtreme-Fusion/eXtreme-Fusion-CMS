@@ -356,4 +356,38 @@ class Data extends PDO
 			return $res;
 		}
 	}
+	
+	/**
+		Zwraca w postaci numerycznej tablicy identyfikatory 
+	 	elementów pobranych z bazy i przesłanych do tej metody parametrem.
+	**/
+	public function getIDs(array $data, $key = 'id', $exception = TRUE)
+	{
+		if (!$data && $exception)
+		{
+			throw new systemException(__('Array is empty.'));
+		}
+		
+		if ($data && !isset($data[0][$key]))
+		{
+			throw new systemException(__('Required array key not exists.'));
+		}
+		
+		$ret = array();
+		foreach($data as $row)
+		{
+			$ret[] = $row[$key];
+		}
+		
+		return $ret;
+	}
+	
+	/**
+		Zwraca w postaci numerycznej tablicy identyfikatory 
+	 	elementów pobranych z bazy i przesłanych do tej metody parametrem.
+	**/
+	public function getIDsQuery(array $data, $key = 'id', $exception = TRUE)
+	{
+		return implode(',', $this->getIDs($data, $key, $exception));
+	}
 }

@@ -23,7 +23,7 @@
 		<link href="{$ADDR_CSS}main.css" media="screen" rel="stylesheet">
 		<link href="{$ADDR_CSS}facebox.css" media="screen" rel="stylesheet">
 		<link href="{$THEME_CSS}styles.css" media="screen" rel="stylesheet">
-		<script src="{$ADDR_JS}jquery.js"></script>
+		<script src="{$ADDR_COMMON_JS}jquery.js"></script>
 		<script src="{$ADDR_JS}jquery.uniform.js"></script>
 		<script src="{$ADDR_JS}jquery.tooltip.js"></script>
 		<script src="{$ADDR_JS}jquery.dataTables.js"></script>

@@ -29,6 +29,11 @@ try
 	// Routing class
 	$_route = new Router($_request, $_sett, $_system->rewriteAvailable(), 'page', $_system->pathInfoExists(), $_sett->get('opening_page'), TRUE, TRUE, FALSE, 'admin');
 
+	if ($_route->getByID(1) === 'ef5')
+	{
+		exit('eXtreme-Fusion 5 Beta 6');
+	}
+
 	StaticContainer::register('route', $_route);
 
 	// Tryb prac na serwerze
@@ -263,3 +268,4 @@ catch(PDOException $exception)
 {
    echo $exception;
 }
+

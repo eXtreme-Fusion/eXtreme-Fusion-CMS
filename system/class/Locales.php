@@ -1,13 +1,13 @@
 <?php
 /***********************************************************
 | eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
+| This product is licensed under the BSD License.
+| http://extreme-fusion.org/ef5/license/
 ***********************************************************/
 
 class Locales
@@ -91,17 +91,19 @@ class Locales
 	}
 
 	/**
-	 * Ładuje plik językowy z modułów, który można
-	 * użyć w dowolnym miejscu na stronie.
+	 * Ładuje plik językowy z katalogu modułu.
 	 *
-	 *     	// Załaduje jeden plik językowy foo.php z modułu "book"
+	 *		// Załaduje jeden plik językowy foo.php z modułu "book"
 	 *     	$_locale->moduleLoad('foo', 'book');
 	 *
-	 *		// Załaduje pliki z tablicy
-	 *     	$_locale->load(array('foo.php', 'bar.php'));
+	 * Metoda umożliwia ładowanie kilku plików jednocześnie.
+	 * W tym celu należy podać je w tablicy.
 	 *
-	 * @param   string nazwa modułu
-	 * @param   string nazwa pliku językowego
+	 *		// Załaduje pliki foo.php i bar.php z modułu "polls"
+	 *     	$_locale->moduleLoad(array('foo', 'bar'), 'polls');
+	 *
+	 * @param   mixed 	nazwa pliku lub nazwy kilku podane w tablicy
+	 * @param   string 	nazwa modułu, z którego pliki językowe mają być wczytane
 	 * @return  array
 	 */
 	public function moduleLoad($locales, $module)
