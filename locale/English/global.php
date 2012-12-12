@@ -2,5 +2,5 @@
 
 return array(
 	'Charset' => 'UTF-8',
-	'xml_lang' => 'pl'
+	'xml_lang' => 'en'
 );
