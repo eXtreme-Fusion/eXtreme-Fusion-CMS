@@ -91,6 +91,7 @@ $_tpl->assignGroup(array(
 	'title' => __('eXtreme-Fusion :version - Setup', array(':version' => VERSION)),
 	'charset' => __('Charset'),
 	'ADDR_ADMIN' => ADDR_SITE.'admin/',
+	'ADDR_SITE' => ADDR_SITE,
 	'ADDR_INSTALL' =>  ADDR_SITE.'install/',
 	'step_header' => __('eXtreme-Fusion :version - Setup', array(':version' => VERSION)).(getStepHeader() ? ' &raquo; '.getStepHeader() : ''),
 	'step_menu' => getStepMenu(),
