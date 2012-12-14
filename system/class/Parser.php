@@ -62,6 +62,7 @@ class Parser extends optClass
 		$this->assign('ADDR_ADMIN_IMAGES', ADDR_ADMIN_IMAGES);
 		$this->assign('NEWS_CAT_IMAGES', ADDR_IMAGES.'news_cats/'.self::$_sett->get('locale').'/');
 		$this->assign('ADDR_JS', ADDR_JS);
+		$this->assign('ADDR_COMMON_JS', ADDR_COMMON_JS);
 
 		if (file_exists(DIR_SITE.'themes'.DS.self::$_sett->get('theme').DS.'templates'.DS.'images'.DS.'favicon.ico'))
 		{
@@ -573,6 +574,7 @@ class Site extends Parser
 		}
 
 		$this->assign('ADDR_JS', ADDR_JS);
+		$this->assign('ADDR_COMMON_JS', ADDR_COMMON_JS);
 		$this->assign('ADDR_CSS', ADDR_CSS);
 		$this->assign('ADDR_MODULES', ADDR_SITE.'modules/');
 		$this->assign('ADDR_INCLUDES', ADDR_SITE.'system/includes/');
@@ -680,6 +682,7 @@ class Panel extends Parser
 	public function template($iframe)
 	{
 		$this->assign('ADDR_JS', ADDR_JS);
+		$this->assign('ADDR_COMMON_JS', ADDR_COMMON_JS);
 		$this->assign('ADDR_MODULES', ADDR_SITE.'modules/');
 		$this->assign('ADDR_INCLUDES', ADDR_SITE.'system/includes/');
 		$this->assign('ADDR_ICONS', ADDR_IMAGES.'icons/');
@@ -751,6 +754,7 @@ class Ajax extends Parser
 	public function template($iframe)
 	{
 		$this->assign('ADDR_JS', ADDR_JS);
+		$this->assign('ADDR_COMMON_JS', ADDR_COMMON_JS);
 		$this->assign('ADDR_MODULES', ADDR_SITE.'modules/');
 		$this->assign('ADDR_INCLUDES', ADDR_SITE.'system/includes/');
 		$this->assign('ADDR_ICONS', ADDR_IMAGES.'icons/');

@@ -9,7 +9,7 @@
 		<link rel="stylesheet" href="{$ADDR_ADMIN_CSS}grid.960.css" media="screen" />
 		<link rel="stylesheet" href="{$ADDR_ADMIN_CSS}_framework.css" media="screen" />
 		
-		<script src="{$ADDR_ADMIN_JS}jquery.js"></script>
+		<script src="{$ADDR_COMMON_JS}jquery.js"></script>
 		<script src="{$ADDR_ADMIN_JS}jquery.ui.js"></script>
 		<script src="{$ADDR_ADMIN_JS}jquery.tooltip.js"></script>
 		<script src="{$ADDR_ADMIN_JS}jquery.tzineClock.js"></script>

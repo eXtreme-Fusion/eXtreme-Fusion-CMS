@@ -10,7 +10,7 @@
 		<link rel="stylesheet" href="{$ADDR_INSTALL}stylesheet/jquery.uniform.css">
 		<link rel="stylesheet" href="{$ADDR_INSTALL}stylesheet/jquery.table.css">
 		<link rel="stylesheet" href="{$ADDR_INSTALL}stylesheet/main.css">
-		<script src="{$ADDR_ADMIN}templates/javascripts/jquery.js"></script>
+		<script src="{$ADDR_SITE}templates/javascripts/common/jquery.js"></script>
 		<script src="{$ADDR_ADMIN}templates/javascripts/jquery.uniform.js"></script>
 		<script src="{$ADDR_INSTALL}javascripts/passwordStrengthMeter.js"></script>
 		<script src="{$ADDR_INSTALL}javascripts/main.js"></script>

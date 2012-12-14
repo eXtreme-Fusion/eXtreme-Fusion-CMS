@@ -1,4 +1,10 @@
-﻿					eXtreme-Fusion V Beta 5 2012.06.23
+﻿					eXtreme-Fusion V RC1 2012.12.12
+
+- usunięcie katalogu "info": pliki przeniesiono do folderu "dokumentacja"
+- utworzenie katalogu "common" dla plików JS
+- poprawka do kodowania znaków dla języka angielskiego: nie powinno już "krzaczyć"
+
+					eXtreme-Fusion V Beta 5 2012.06.23
 
 - zrezygnowano z $_SERVER['PATH_INFO'] na rzecz $_SERVER['REQUEST_URI']
   ze względu na problemy na serwerach nginx

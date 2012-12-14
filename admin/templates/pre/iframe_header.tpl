@@ -16,7 +16,7 @@
 		<link href="{$ADDR_ADMIN_CSS}jquery.tagedit.css" media="screen" rel="stylesheet" />
 		<link href="{$ADDR_ADMIN_CSS}main.css" media="screen" rel="stylesheet" />
 
-		<script src="{$ADDR_ADMIN_JS}jquery.js"></script>
+		<script src="{$ADDR_COMMON_JS}jquery.js"></script>
 		<script src="{$ADDR_ADMIN_JS}jquery.ui.js"></script>
 		<script src="{$ADDR_ADMIN_JS}jquery.ui.timepicker.js"></script>
 		<script src="{$ADDR_ADMIN_JS}jquery.corner.js"></script>
