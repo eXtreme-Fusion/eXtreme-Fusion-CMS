@@ -61,6 +61,15 @@ return array(
 	'Write permissions check passed, click Next to continue.' => 'Prawa dostępu do plików prawidłowe, naciśnij Dalej w&nbsp;celu kontynuacji.',
 	'Write permissions check failed, please CHMOD files/folders marked Unwriteable.' => 'Prawa dostępu do plików nieprawidłowe, sprawdź uprawnienia dla zaznaczonych plików i&nbsp;folderów.',
 	'Refresh' => 'Odśwież',
+	'PHP Version Error' => 'Twój serwer nie spełnia wymagań systemu: posiada interpreter PHP starszy od wersji {$php_required}.<br />
+							Co możesz zrobić:
+							<ul>
+							<li>Skorzystaj z Panelu Zarządzania Serwerem i opcji "wybór interpretera PHP", by użyć nowszego - uwaga: nie każdy usługodawca hostingowy udostępnia takie narzędzia</li>
+							<li>Zainstaluj nowszą wersje PHP z pakietów dostępnych na stronie producenta - dla zaawansowanych</li>
+							<li>Skontaktuj się z Działem Pomocy Technicznej twojego serwera, by uzyskać pomoc</li>
+							</ul>',
+	'Extension error' => 'Nie znaleziono wymaganego rozszerzenia {$extension_error.name}. Należy je załadować przez odpowiednią konfigurację serwera.',
+	'Files has not been changed.' => 'Nie zmieniono plików.',
 	// Step 3 - Access criteria
 	'Please enter your MySQL database access settings.' => 'Wpisz ustawienia dla Twojej bazy danych MySQL.',
 	'Database Hostname:' => 'Adres hosta:',
@@ -70,10 +79,11 @@ return array(
 	'Table Prefix:' => 'Prefiks tabeli:',
 	'URL' => 'Adres strony',
 	// Step 4 - Database Setup
+	'Advanced' => 'Zaawansowane',
 	'Database connection established.' => 'Połączono z bazą danych.',
 	'Config file successfully written.' => 'Konfiguracja została zapisana poprawnie.',
 	'Database tables created.' => 'Utworzono tabele w&nbsp;bazie danych.',
-	'Error:' => 'Błąd!',
+	'Error:' => 'Błąd:',
 	'Unable to create database tables.' => 'Brak możliwości utworzenia tabel w&nbsp;bazie danych.',
 	'Unable to write config file.' => 'Brak możliwości zapisu pliku konfiguracyjnego.',
 	'Please ensure config.php is writable.' => 'Sprawdź, czy plik config.php jest zapisywalny.',
@@ -85,10 +95,21 @@ return array(
 	'The specified MySQL database does not exist.' => 'Podana baza danych MySQL nie istnieje',
 	'Unable to connect with MySQL.' => 'Brak możliwości połączenia z&nbsp;bazą danych.',
 	'Please ensure your MySQL username and password are correct.' => 'Sprawdź ustawienia, nazwę użytkownika oraz hasło do Twojej bazy danych MySQL.',
-	'Empty fields.' => 'Puste pola!',
+	'There are empty fields left!' => 'Pozostawiono niewypełnione pola!',
 	'Please make sure you have filled out all the MySQL connection fields.' => 'Sprawdź, czy wszystkie pola są wypełnione.',
+	'Tables prefix (Advanced settings) is already in use or prefix has not been written, and tables prefix exist in the database with the same name as that system is trying to create. Please enter a different prefix for tables.' => 'Prefiks tabel (Zaawansowane ustawienia) jest już w użyciu lub niepodano prefiksu, a w bazie istnieją tabele o takiej samej nazwie jak te, które system próbuje utworzyć. Należy podać inny prefiks dla tabel.',
+	'UWAGA! Jeżeli po zakończeniu instalacji wystąpią problemy z linkami i adresami URL (błędy 404), należy przeinstalować system nie zaznaczając poniższego pola lub zmienić ustawienia $_route w pliku config.php.' => 'NOTE! If after installation you experience problems with links and URLs (error 404), you must reinstall the system without checking the box below, or change the $ _route in config.php.',
+	'The names of the files listed below please change with the instructions.' => 'Nazwy poniższych plików proszę zmienić według instrukcji.',
+	'The folders and files listed below must be set writeable (chmod 777).' => 'Poniższym katalogom i plikom należy ustawić zapisywalność (chmod 777).',
+	'modRewrite warning' => 'Instalator nie mógł ustalić, czy twój serwer obsługuje modRewrite.<br />
+	Zaznacz to pole, jeżeli jesteś pewny, że wymieniony moduł jest dostępny. <br />
+	Odpowiada on za tworzenie linków przyjaznych wyszukiwarkom.', 
+	'FURL warning' => 'Instalator rozpoznał, że używasz innego serwera niż Apache.<br />
+	Aby móc korzystać z linków przyjaznych wyszukiwarkom, serwer musi obsługiwać ścieżki PATH_INFO.<br />
+	Po zakończeniu instalacji system spróbuje ustalić, czy są one dostępne, przy czym występuje ryzyko pomyłki.<br />
+	Aby temu zapobiec, zaznacz poniższe pole, jeżeli masz pewność, iż twój serwer obsługuje PATH_INFO.',
 	// Step 5 - Super Admin login
-	'Primary Super Admin login details' => 'Wpisz dane głównego administratora',
+	'Super Admin login details' => 'Wpisz dane głównego administratora',
 	'Username:' => 'Nazwa użytkownika:',
 	'Login Password:' => 'Hasło logowania:',
 	'Repeat Login password:' => 'Powtórz hasło logowania:',
@@ -149,4 +170,17 @@ return array(
 	'Example news content' => 'Witaj na swojej stronie.',
 	'Example news url' => 'przkladowa-tresc',
 	'Example news description' => 'Tresc podstawowa',
+	// Some additional informations
+	'The installation was interrupted. The system can be unstable.' => 'Instalacja została przerwana. System może nie działać stabilnie.',
+	'Start the installation again.' => 'Zacznij instalację ponownie',
+	'Stop the installation or start from the begining.' => 'Przerwij instalację lub zacznij od nowa.',
+	
+	'' => '',
+	'' => '',
+	'' => '',
+	'' => '',
+	'' => '',
+	'' => '',
+	'' => '',
+	
 );
