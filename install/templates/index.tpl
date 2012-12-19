@@ -42,8 +42,8 @@
 				<div id="MainBox">
 
 					{if $step == 0}
-						<p>Instalacja została przerwana. System może nie działać stabilnie.</p>
-						<p><a href={$ADDR_INSTALL} title={i18n('Zacznij instalację ponownie')}>{i18n('Zacznij instalację ponownie')}</a></p>
+						<p>{i18n('The installation was interrupted. The system can be unstable.')}</p>
+						<p><a href={$ADDR_INSTALL} title={i18n('Start the installation again.')}>{i18n('Start the installation again.')}</a></p>
 					{elseif $step == 1}
 						<form action="index.php" method="post" id="This" autocomplete="off">
 
@@ -80,7 +80,7 @@
 							</div>
 							<div class="clear"></div>
 
-							<div class="tab-click" id="crew-list"><a href="javascript:void(0)">Twórcy eXtreme-Fusion CMS v5</a></div>
+							<div class="tab-click" id="crew-list"><a href="javascript:void(0)">{i18n('Developers of eXtreme-Fusion v5.0')}</a></div>
 
 
 							<div id="tab-crew-list" class="tab-cont">
@@ -133,13 +133,7 @@
 									<div class='grid_1'>&nbsp;</div>
 									<div class='center grid_7'>
 										<p style='color:red;'>
-											Twój serwer nie spełnia wymagań systemu: posiada interpreter PHP starszy od wersji {$php_required}.<br />
-											Co możesz zrobić:
-											<ul>
-												<li>Skorzystaj z Panelu Zarządzania Serwerem i opcji "wybór interpretera PHP", by użyć nowszego - uwaga: nie każdy usługodawca hostingowy udostępnia takie narzędzia</li>
-												<li>Zainstaluj nowszą wersje PHP z pakietów dostępnych na stronie producenta - dla zaawansowanych</li>
-												<li>Skontaktuj się z Działem Pomocy Technicznej twojego serwera, by uzyskać pomoc</li>
-											</ul>
+											{i18n('PHP Version Error')}
 										</p>
 									</div>
 									<div class='grid_1'>&nbsp;</div>
@@ -148,7 +142,7 @@
 								{else}
 									{section=extension_error}
 										<div class='grid_1'>&nbsp;</div>
-										<div class='center grid_7'><span style='color:red;'>Nie znaleziono wymaganego rozszerzenia {$extension_error.name}. Należy je załadować przez odpowiednią konfigurację serwera.</span></div>
+										<div class='center grid_7'><span style='color:red;'>{i18n('Extension error')}</span></div>
 										<div class='grid_1'>&nbsp;</div>
 										<div class='clear'></div>
 										<br />
@@ -178,7 +172,7 @@
 									</a>
 								</div>
 							{/if}
-							<p><a href={$ADDR_INSTALL}?abort=true title={i18n('Przerwij instalację lub zacznij od nowa')}>{i18n('Przerwij instalację lub zacznij od nowa')}</a></p>
+							<p><a href={$ADDR_INSTALL}?abort=true title={i18n('Stop the installation or start from the begining.')}>{i18n('Stop the installation or start from the begining.')}</a></p>
 							<div class="clear"></div>
 					{elseif $step == 3}
 
@@ -186,16 +180,16 @@
 
 						{if $config_error || $chmod_error}
 							{if $config_error}
-								<div class="info">Nazwy poniższych plików proszę zmienić według instrukcji.</div><br />
+								<div class="info">{i18n('The names of the files listed below please change with the instructions.')}</div><br />
 
 								<div class='grid_2'>&nbsp;</div>
 								<div class='grid_3'>&raquo; sample.config.php => config.php</div>
-								<div class='center grid_3'><span style='color:red;'>Nie zmieniono</span></div>
+								<div class='center grid_3'><span style='color:red;'>{i18n('Files has not been changed.')}</span></div>
 								<div class='clear'></div>
 							{/if}
 
 							{if $chmod_error}
-								<div class="info">{i18n('Poniższym katalogom i plikom należy ustawić zapisywalność (chmod 777).')}</div><br />
+								<div class="info">{i18n('The folders and files listed below must be set writeable (chmod 777).')}</div><br />
 								{section=chmod_error}
 									<div class='grid_2'>&nbsp;</div>
 									<div class='grid_3'>&raquo; {$chmod_error.name}</div>
@@ -227,13 +221,13 @@
 								</a>
 							</div>
 						{/if}
-						<p><a href={$ADDR_INSTALL}?abort=true title={i18n('Przerwij instalację lub zacznij od nowa')}>{i18n('Przerwij instalację lub zacznij od nowa')}</a></p>
+						<p><a href={$ADDR_INSTALL}?abort=true title={i18n('Stop the installation or start from the begining.')}>{i18n('Stop the installation or start from the begining.')}</a></p>
 						<div class="clear"></div>
 
 					{elseif $step == 4}
 
 						{if $empty_form_error}
-							<div class='error'><strong>{i18n('Error:')}</strong> {i18n('Empty fields.')}</div><br />
+							<div class='error'><strong>{i18n('Error:')}</strong> {i18n('There are empty fields left!')}</div><br />
 							<div class='status'>{i18n('Please make sure you have filled out all the MySQL connection fields.')}</div>
 						{else}
 							{if $server_connection_error}
@@ -246,7 +240,7 @@
 								{else}
 									{if $table_prefix_error}
 										<div class='error'><strong>{i18n('Error:')}</strong> {i18n('Table prefix error.')}</div><br />
-										<div class='status'>{i18n('Prefiks tabel (Zaawansowane ustawienia) jest już w użyciu lub niepodano prefiksu, a w bazie istnieją tabele o takiej samej nazwie jak te, które system próbuje utworzyć. Należy podać inny prefiks dla tabel.')}</div>
+										<div class='status'>{i18n('Tables prefix (Advanced settings) is already in use or prefix has not been written, and tables prefix exist in the database with the same name as that system is trying to create. Please enter a different prefix for tables.')}</div>
 									{else}
 										{if $database_permission_error}
 											<div class='valid'>{i18n('Database connection established.')}</div><br />
@@ -288,30 +282,24 @@
 								<div class="clear"></div>
 							</div>
 
-							<div class="tab-click" id="url"><a href="javascript:void(0)">Zaawansowane</a></div>
+							<div class="tab-click" id="url"><a href="javascript:void(0)">{i18n('Advanced')}</a></div>
 
 							<div id="tab-url" class="tab-cont">
 								<p id="CustomStep3" class="red">
-									UWAGA! Jeżeli po zakończeniu instalacji wystąpią problemy z linkami i adresami URL (błędy 404),
-									należy przeinstalować system nie zaznaczając poniższego pola lub zmienić ustawienia $_route w pliku config.php
+									{i18n('NOTE! If after installation you experience problems with links and URLs (error 404), you must reinstall the system without checking the box below, or change the $ _route in config.php.')}
 								</p>
 								{if $custom_rewrite}
 									<div class="formWarning formMessage">
 										<input type="checkbox" name="custom_rewrite" value="true" {if $custom_rewrite_choice}checked="checked" {/if}id="CustomRewrite" />
 										<label for="CustomRewrite">
-											Instalator nie mógł ustalić, czy twój serwer obsługuje modRewrite.
-											Zaznacz to pole, jeżeli jesteś pewny, że wymieniony moduł jest dostępny.
-											Odpowiada on za tworzenie linków przyjaznych wyszukiwarkom.
+											{i18n('modRewrite warning')}
 										</label>
 									</div>
 								{elseif $custom_furl}
 									<div class="formWarning formMessage">
 										<input type="checkbox" name="custom_furl" value="true" {if $custom_furl_choice}checked="checked" {/if}id="CustomFurl" />
 										<label for="CustomFurl">
-											Instalator rozpoznał, że używasz innego serwera niż Apache.
-											Aby móc korzystać z linków przyjaznych wyszukiwarkom, serwer musi obsługiwać ścieżki PATH_INFO.
-											Po zakończeniu instalacji system spróbuje ustalić, czy są one dostępne, przy czym występuje ryzyko pomyłki.
-											Aby temu zapobiec, zaznacz poniższe pole, jeżeli masz pewność, iż twój serwer obsługuje PATH_INFO.
+											{i18n('FURL warning')}
 										</label>
 									</div>
 								{/if}
@@ -362,7 +350,7 @@
 							<div class="clear"></div>
 						</form>
 
-						<p><a href={$ADDR_INSTALL}?abort=true title={i18n('Przerwij instalację lub zacznij od nowa')}>{i18n('Przerwij instalację lub zacznij od nowa')}</a></p>
+						<p><a href={$ADDR_INSTALL}?abort=true title={i18n('Stop the installation or start from the begining.')}>{i18n('Stop the installation or start from the begining.')}</a></p>
 
 					{elseif $step == 5}
 
@@ -436,7 +424,7 @@
 								</div>
 							</form>
 
-							<p><a href={$ADDR_INSTALL}?abort=true title={i18n('Przerwij instalację lub zacznij od nowa')}>{i18n('Przerwij instalację lub zacznij od nowa')}</a></p>
+							<p><a href={$ADDR_INSTALL}?abort=true title={i18n('Stop the installation or start from the begining.')}>{i18n('Stop the installation or start from the begining.')}</a></p>
 					{elseif $step == 6}
 
 						<div class="center">{i18n('Setup complete')}</div><br />
