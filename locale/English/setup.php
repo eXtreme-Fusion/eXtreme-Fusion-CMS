@@ -16,7 +16,7 @@ return array(
 	'Group: user' => 'This group has basic permissions like possibility to log in to the website.',
 	'Group: guest' => 'This group has a limited right of use of the website.',
 	'Rewrite info' => 'Your server is ready to work with rewrite module, but system does not have permission to change name of file. If you want to have SEO URLs, rename the file from "rewrite" to ".htaccess". Otherwise, just ignore this message.',
-	'PHP Version Error' => 'Your server does not meet the system requirements: PHP interpreter is older than the version {$ 			php_required}. <br />
+	'PHP Version Error' => 'Your server does not meet the system requirements: PHP interpreter is older than the version :php_required. <br />
 	What can you do:
 	<ul>
 	<li>Use Server Management Panel and select "choose PHP interpreter," to use newer version - note: not every hosting provides such 		tool.</ li>

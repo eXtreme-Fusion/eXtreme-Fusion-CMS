@@ -11,5 +11,4 @@ return array(
 	'Hide e-Mail?' => 'Ukryć e-mail?',
 	
 	'Additional informations' => 'Dodatkowe informacje',
-	'test' => 'testtt'
 );

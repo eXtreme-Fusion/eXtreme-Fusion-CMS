@@ -61,14 +61,14 @@ return array(
 	'Write permissions check passed, click Next to continue.' => 'Prawa dostępu do plików prawidłowe, naciśnij Dalej w&nbsp;celu kontynuacji.',
 	'Write permissions check failed, please CHMOD files/folders marked Unwriteable.' => 'Prawa dostępu do plików nieprawidłowe, sprawdź uprawnienia dla zaznaczonych plików i&nbsp;folderów.',
 	'Refresh' => 'Odśwież',
-	'PHP Version Error' => 'Twój serwer nie spełnia wymagań systemu: posiada interpreter PHP starszy od wersji {$php_required}.<br />
+	'PHP Version Error' => 'Twój serwer nie spełnia wymagań systemu: posiada interpreter PHP starszy od wersji :php_required.<br />
 							Co możesz zrobić:
 							<ul>
 							<li>Skorzystaj z Panelu Zarządzania Serwerem i opcji "wybór interpretera PHP", by użyć nowszego - uwaga: nie każdy usługodawca hostingowy udostępnia takie narzędzia</li>
 							<li>Zainstaluj nowszą wersje PHP z pakietów dostępnych na stronie producenta - dla zaawansowanych</li>
 							<li>Skontaktuj się z Działem Pomocy Technicznej twojego serwera, by uzyskać pomoc</li>
 							</ul>',
-	'Extension error' => 'Nie znaleziono wymaganego rozszerzenia {$extension_error.name}. Należy je załadować przez odpowiednią konfigurację serwera.',
+	'Extension error' => 'Nie znaleziono wymaganego rozszerzenia :extension_error. Należy je załadować przez odpowiednią konfigurację serwera.',
 	'Files has not been changed.' => 'Nie zmieniono plików.',
 	// Step 3 - Access criteria
 	'Please enter your MySQL database access settings.' => 'Wpisz ustawienia dla Twojej bazy danych MySQL.',
