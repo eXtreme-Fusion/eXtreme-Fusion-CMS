@@ -350,6 +350,7 @@ else if (getStepNum() === 3)
 	$write_check = TRUE; $chmod_error = array(); $i = 0;
 	foreach ($check_arr as $key => $value)
 	{
+		$write_check = TRUE;
 		if (file_exists($key))
 		{
 			if (is_writable($key))
