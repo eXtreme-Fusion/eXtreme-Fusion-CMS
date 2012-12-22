@@ -153,7 +153,7 @@
 
 								<hr /><br />
 								<div class="center">
-									<a class="SendButton refresh" style="width:100px;margin:0 auto;">
+									<a id="refresh" class="SendButton" style="width:100px;margin:0 auto;">
 										<strong class="o">
 											<strong class="m">
 												<strong>{i18n('Refresh')} &raquo;</strong>
@@ -202,7 +202,7 @@
 
 							<hr /><br />
 							<div class="center">
-								<a id="SendForm_This" class="SendButton" style="width:100px;margin:0 auto;">
+								<a id="refresh" class="SendButton" style="width:100px;margin:0 auto;">
 									<strong class="o">
 										<strong class="m">
 											<strong>{i18n('Refresh')} &raquo;</strong>
