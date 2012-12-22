@@ -390,4 +390,39 @@ class Data extends PDO
 	{
 		return implode(',', $this->getIDs($data, $key, $exception));
 	}
+	
+	// Czyści tabelę z przestarzałych wpisów
+	function cleanTable($table, $limit)
+	{
+		if (! is_numeric($limit))
+		{
+			exit('Błąd w funkcji czyszczącej logi');
+		}
+		
+		$table = HELP::strip($table);
+		
+		$count = $this->getSelectCount('SELECT Count(`log_id`) FROM ['.$table.']');
+		
+		$limit = $count-$limit;
+		
+		if ($limit < 0)
+		{
+			$limit = 0;
+		}
+		
+		$data = $this->getData('SELECT `log_id` FROM ['.$table.'] ORDER BY `log_id` ASC LIMIT '.$limit);
+		$d = array();
+		foreach($data as $val)
+		{
+			$d[] = $val['log_id'];
+		}
+		
+		if ($d) 
+		{
+			// Usuwanie rekordów
+			$this->exec('DELETE FROM ['.$table.'] WHERE `log_id` IN ('.implode(',', $d).')');
+		}
+		
+		return TRUE;
+	}
 }
