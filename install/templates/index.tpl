@@ -133,7 +133,7 @@
 									<div class='grid_1'>&nbsp;</div>
 									<div class='center grid_7'>
 										<p style='color:red;'>
-											{i18n('PHP Version Error')}
+											{i18n('PHP Version Error', array(':php_required' => $php_required))}
 										</p>
 									</div>
 									<div class='grid_1'>&nbsp;</div>
@@ -142,7 +142,7 @@
 								{else}
 									{section=extension_error}
 										<div class='grid_1'>&nbsp;</div>
-										<div class='center grid_7'><span style='color:red;'>{i18n('Extension error')}</span></div>
+										<div class='center grid_7'><span style='color:red;'>{i18n('Extension error', array(':extension_error' => $extension_error.name))}</span></div>
 										<div class='grid_1'>&nbsp;</div>
 										<div class='clear'></div>
 										<br />
