@@ -32,17 +32,15 @@ return array(
 	'Error! News category has not been edited.' => 'Błąd! Kategoria newsów nie została zmodyfikowana.',
 	'Error! News category has not been deleted.' => 'Błąd! Kategoria newsów nie została usunięta.',
 	'Error! News category has not been deleted. There are news in category.' => 'Wystąpił błąd! Kategoria nie została usunięta. Istnieją newsy w danej kategorii.',
+	'Cats' => 'Kategorie',
 	'Category name:' => 'Nazwa kategorii:',
 	'Category image:' => 'Obraz kategorii:',
 	'Category language:' => 'Język kategorii:',
 	'There are no existing news categories.' => 'Nie utworzono jeszcze żadnych kategorii newsów.',
 	'Same as a site language.' => 'Taki sam jak język strony.',
 	'Language:' => 'Język:',
-	// To dodać do całego systemu
-	
+	// To dodać do całego systemu	
 	'Polish' => 'Polski',
 	'English' => 'Angielski',
-	'Czech' => 'Czeski',
-	
-	
+	'Czech' => 'Czeski'	
 );
