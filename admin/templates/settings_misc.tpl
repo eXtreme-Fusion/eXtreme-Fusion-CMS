@@ -3,7 +3,7 @@
 
 <form action="{$URL_REQUEST}" method="post" id="This">
 	<div class="tbl1">
-		<div class="grid_6 formLabel">{i18n('Use TinyMCE HTML editor:')}</div>
+		<div class="grid_6 formLabel">{i18n('Use CKEditor HTML editor:')}</div>
 		<div class="grid_1 formField"><label><input type="radio" name="tinymce_enabled" value="1"{if $tinymce_enabled == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
 		<div class="grid_5 formField"><label><input type="radio" name="tinymce_enabled" value="0"{if $tinymce_enabled == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
 	</div>
