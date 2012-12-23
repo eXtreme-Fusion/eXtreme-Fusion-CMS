@@ -114,7 +114,7 @@ function getStepHeader()
 		} elseif (getStepNum() === 4) {
 			$header = __('Step 4: Database Settings');
 		} elseif (getStepNum() === 5) {
-			$header = __('Step 5: Head Admin Datails');
+			$header = __('Step 5: Head Admin Details');
 		} elseif (getStepNum() === 6) {
 			$header = __('Step 6: Final Settings');
 		} else {
@@ -169,7 +169,7 @@ function getStepMenu()
 			explode(':', __('Step 2: Checking server configuration')),
 			explode(':', __('Step 3: File and Folder Permissions Test')),
 			explode(':', __('Step 4: Database Settings')),
-			explode(':', __('Step 5: Head Admin Datails')),
+			explode(':', __('Step 5: Head Admin Details')),
 			explode(':', __('Step 6: Final Settings'))
 		);
 
