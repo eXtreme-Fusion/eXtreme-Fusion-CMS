@@ -165,7 +165,7 @@
 	</form>
 	<div class="clear"></div><br />
 	
-	<h3 class="ui-corner-all">{i18n('Istniejące aktualnosci')}</h3>
+	<h3 class="ui-corner-all">{i18n('Current news')}</h3>
 	<div class="tbl2">
 		<div class="sep_1 grid_3 bold">{i18n('News title:')}</div>
 		<div class="grid_3 bold">{i18n('Publication date:')}</div>

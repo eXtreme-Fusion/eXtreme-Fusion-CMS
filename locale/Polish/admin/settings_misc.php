@@ -2,7 +2,7 @@
 
 return array(
 	'Miscellaneous' => 'Różne',
-	'Use TinyMCE HTML editor:' => 'Korzystać z&nbsp;edytora TinyMCE:',
+	'Use CKEditor HTML editor:' => 'Korzystać z&nbsp; CKEditor edytora HTML:',
 	'For article and news admin only.' => 'Dotyczy artykułów i&nbsp;newsów w panelu administratora.',
 	'SMTP Host:' => 'Adres serwera SMTP:',
 	'Leave blank if sending e-mails is enabled.' => 'Pozostaw puste, jeśli wysyłanie e-maili jest włączone.',
