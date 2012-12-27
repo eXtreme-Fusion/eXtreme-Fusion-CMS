@@ -21,6 +21,7 @@
 	<script src="{$THEME_JS}html5shiv.min.js"></script>
 	<![endif]-->
 	<script src="{$ADDR_COMMON_JS}jquery.js"></script>
+	<script src="{$ADDR_COMMON_JS}jquery-ui.js"></script>
 	<script src="{$THEME_JS}jquery.main.js"></script>
 	<script src="{$THEME_JS}jquery.tools.min.js"></script>
 	<script src="{$THEME_JS}jquery.uniform.min.js"></script>
