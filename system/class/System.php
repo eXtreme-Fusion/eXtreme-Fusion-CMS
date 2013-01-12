@@ -72,7 +72,7 @@ class System {
 		}
 
 		// Tworzy ścieżkę dostępu do katalogu z pamięcią podręczną
-		$dir = DIR_SITE.'cache'.DS.$dir.DS;
+		$dir = DIR_CACHE.$dir.DS;
 		if ( ! file_exists($dir))
 		{
 			mkdir($dir);
