@@ -80,10 +80,8 @@ class Router
 		
 		$this->setEnv();
 				
-		$this->_url = new URL($this->_ext['url'], $this->_sep, $this->_param_sep, $this->_rewrite, $this->_path_info_exists, $this->getFileName());
-
+		$this->_url = new URL($this->_ext['url'], $this->_sep, $this->_param_sep, $this->_rewrite, $this->_path_info_exists);
 		$this->_ext_allowed = $this->_url->extAllowed();
-		
 		
 		/**
 		 * Metoda zwróci FALSE, jeśli żądanie nie spełnia warunku dotyczącego rozszerzenia.
@@ -96,6 +94,8 @@ class Router
 			$this->setParams();
 			$this->setAction();
 		}
+		
+		$this->_url->setController($this->getFileName());
 	}
 	
 	/**
