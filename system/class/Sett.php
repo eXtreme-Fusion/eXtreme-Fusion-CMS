@@ -131,7 +131,7 @@ class Sett {
 				}
 
 				// Czyści pamięć podręczną
-				$this->clearCache();
+				$this->clearCache('system', 'settings');
 			}
 			else
 			{

@@ -156,9 +156,12 @@ class System {
 	 * @param   string   ścieżka do głównego katalogu z pamięcią podręczną
 	 * @return  boolean  zawsze zwróci TRUE
 	 */
-	public function clearCache($dir = NULL, array $cache = array(), $path = DIR_CACHE)
+	public function clearCache($dir = NULL, $cache = array(), $path = DIR_CACHE)
 	{
-
+		if ($cache && !is_array($cache))
+		{
+			$cache = array($cache);
+		}
 		if (file_exists($path.$dir))
 		{
 			// Przeszukuje katalog pamięci podręcznej
