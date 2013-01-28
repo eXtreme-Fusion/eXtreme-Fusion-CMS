@@ -283,7 +283,7 @@ $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."user_fields (`name`, `ind
 $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."user_fields (`name`, `index`, `cat`, `type`) VALUES ('".__('Signature')."', 'sig', 3, 2)");
 $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."user_fields (`name`, `index`, `cat`, `type`, `option`, `register`) VALUES ('".__('Language:')."', 'lang', 1, 3, '".serialize(array('Czech', 'English', 'Polish'))."', '1')");
 
-$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."settings_inf (`name`, `value`, `inf`) VALUES ('version', '5.0', '(Beta)')");
+//$result = dbquery("INSERT INTO ".$_dbconfig['prefix']."settings_inf (`name`, `value`, `inf`) VALUES ('version', '5.0', '(Beta)')");
 
 $result = dbquery("INSERT INTO ".$_dbconfig['prefix']."pages_categories (`name`, `description`, `submitting_groups`, `is_system`) VALUES ('".__('Bez kategorii')."', '".__('Kategoria dla materiałów nieprzypisanych do żadnej kategorii')."', 0, 1)");
 

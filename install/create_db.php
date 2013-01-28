@@ -1,13 +1,13 @@
 <?php
 /***********************************************************
 | eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
+| This product is licensed under the BSD License.
+| http://extreme-fusion.org/ef5/license/
 ***********************************************************/
 $result = dbquery("DROP TABLE IF EXISTS ".$db_prefix."pages");
 $result = dbquery("CREATE TABLE ".$db_prefix."pages (
@@ -17,9 +17,9 @@ $result = dbquery("CREATE TABLE ".$db_prefix."pages (
 	`preview` MEDIUMTEXT NOT NULL DEFAULT '',
 	`description` VARCHAR(255) NOT NULL DEFAULT '',
 	`type` SMALLINT UNSIGNED NOT NULL DEFAULT '0',
-	`categories` VARCHAR(255) NOT NULL DEFAULT '',	
+	`categories` VARCHAR(255) NOT NULL DEFAULT '',
 	`author` SMALLINT UNSIGNED NOT NULL DEFAULT '0',
-	`date` INT(10) UNSIGNED NOT NULL DEFAULT '0',	
+	`date` INT(10) UNSIGNED NOT NULL DEFAULT '0',
 	`url` VARCHAR(255) NOT NULL DEFAULT '',
 	`thumbnail` VARCHAR(255) NOT NULL DEFAULT '',
 	`settings` TINYINT UNSIGNED NOT NULL DEFAULT '0',
@@ -112,16 +112,6 @@ $result = dbquery("CREATE TABLE ".$db_prefix."blacklist (
 ) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";");
 if ( ! $result) $fail = TRUE;
 
-$result = dbquery("DROP TABLE IF EXISTS ".$db_prefix."captcha");
-$result = dbquery("CREATE TABLE ".$db_prefix."captcha (
-	`datestamp` INT(10) UNSIGNED NOT NULL DEFAULT '0',
-	`ip` VARCHAR(20) NOT NULL,
-	`encode` VARCHAR(32) NOT NULL DEFAULT '',
-	`string` VARCHAR(15) NOT NULL DEFAULT '',
-	KEY `datestamp` (`datestamp`)
-) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";");
-if ( ! $result) $fail = TRUE;
-
 $result = dbquery("DROP TABLE IF EXISTS ".$db_prefix."comments");
 $result = dbquery("CREATE TABLE ".$db_prefix."comments (
 	`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -134,14 +124,6 @@ $result = dbquery("CREATE TABLE ".$db_prefix."comments (
 	`ip` VARCHAR(20) NOT NULL DEFAULT '0.0.0.0',
 	PRIMARY KEY (`id`),
 	KEY `datestamp` (`datestamp`)
-) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";");
-if ( ! $result) $fail = TRUE;
-
-$result = dbquery("DROP TABLE IF EXISTS ".$db_prefix."flood_control");
-$result = dbquery("CREATE TABLE ".$db_prefix."flood_control (
-	`ip` VARCHAR(20) NOT NULL DEFAULT '0.0.0.0',
-	`timestamp` INT(5) UNSIGNED NOT NULL DEFAULT '0',
-	KEY flood_timestamp (`timestamp`)
 ) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";");
 if ( ! $result) $fail = TRUE;
 
@@ -276,19 +258,6 @@ $result = dbquery("CREATE TABLE ".$db_prefix."permissions_sections (
 ) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";");
 if ( ! $result) $fail = TRUE;
 
-$result = dbquery("DROP TABLE IF EXISTS ".$db_prefix."ratings");
-$result = dbquery("CREATE TABLE ".$db_prefix."ratings (
-	`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`item_id` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '0',
-	`type` CHAR(1) NOT NULL DEFAULT '',
-	`user` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '0',
-	`vote` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
-	`datestamp` INT(10) UNSIGNED NOT NULL DEFAULT '0',
-	`ip` VARCHAR(20) NOT NULL DEFAULT '0.0.0.0',
-	PRIMARY KEY (`id`)
-) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";");
-if ( ! $result) $fail = TRUE;
-
 $result = dbquery("DROP TABLE IF EXISTS ".$db_prefix."groups");
 $result = dbquery("CREATE TABLE ".$db_prefix."groups (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -318,30 +287,11 @@ $result = dbquery("CREATE TABLE ".$db_prefix."panels (
 ) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";");
 if ( ! $result) $fail = TRUE;
 
-$result = dbquery("DROP TABLE IF EXISTS ".$db_prefix."sessions");
-$result = dbquery("CREATE TABLE ".$db_prefix."sessions (
-	`id` varchar(32) NOT NULL,
-	`started` int(10) unsigned NOT NULL default '0',
-	`expire` int(10) unsigned NOT NULL default '0',
-	`ip` varchar(20) NOT NULL,
-	`data` text NOT NULL
-) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";");
-if ( ! $result) $fail = TRUE;
-
 $result = dbquery("DROP TABLE IF EXISTS ".$db_prefix."settings");
 $result = dbquery("CREATE TABLE ".$db_prefix."settings (
 	`key` VARCHAR(100) NOT NULL DEFAULT '',
 	`value` text NOT NULL,
 	PRIMARY KEY (`key`)
-) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate."");
-if ( ! $result) $fail = TRUE;
-
-$result = dbquery("DROP TABLE IF EXISTS ".$db_prefix."settings_inf");
-$result = dbquery("CREATE TABLE ".$db_prefix."settings_inf (
-	`name` VARCHAR(200) NOT NULL DEFAULT '',
-	`value` TEXT NOT NULL,
-	`inf` VARCHAR(200) NOT NULL DEFAULT '',
-	PRIMARY KEY (`name`)
 ) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate."");
 if ( ! $result) $fail = TRUE;
 
@@ -351,17 +301,6 @@ $result = dbquery("CREATE TABLE ".$db_prefix."smileys (
 	`code` VARCHAR(50) NOT NULL,
 	`image` VARCHAR(100) NOT NULL,
 	`text` VARCHAR(100) NOT NULL,
-	PRIMARY KEY (`id`)
-) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";");
-if ( ! $result) $fail = TRUE;
-
-$result = dbquery("DROP TABLE IF EXISTS ".$db_prefix."submissions");
-$result = dbquery("CREATE TABLE ".$db_prefix."submissions (
-	`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`type` CHAR(1) NOT NULL,
-	`user` MEDIUMINT(8) UNSIGNED DEFAULT '0' NOT NULL,
-	`datestamp` INT(10) UNSIGNED DEFAULT '0' NOT NULL,
-	`criteria` TEXT NOT NULL,
 	PRIMARY KEY (`id`)
 ) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";");
 if ( ! $result) $fail = TRUE;

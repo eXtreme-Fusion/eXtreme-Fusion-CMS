@@ -3,6 +3,10 @@
 - usunięcie katalogu "info": pliki przeniesiono do folderu "dokumentacja"
 - utworzenie katalogu "common" dla plików JS
 - poprawka do kodowania znaków dla języka angielskiego: nie powinno już "krzaczyć"
+- poprawka do detekcji języka: jeśli brakuje indeksu tablicy SERVER, język ustawia się na angielski; przydatne dla wyszukiwarek
+- usunięcie niepotrzebnych tabel oraz zbędnego kodu z pliku cronjob.php
+- zmiana nazwy katalogu "dokumentacja" na "docs"
+- poprawka do czyszczenia cache po zmianie ustawień - nie usuwało plików
 
 					eXtreme-Fusion V Beta 5 2012.06.23
 
