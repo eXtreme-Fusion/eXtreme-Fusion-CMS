@@ -10,7 +10,7 @@
 | http://extreme-fusion.org/ef5/license/
 ***********************************************************/
 
-// Cron Job (1 MIN) - todo: zakomentowane, bo przecie¿ cache czysci sie wg poszczegolych ustawien dla plikow a nie wszystko przez cronjoba!
+// Cron Job (1 MIN) - todo: zakomentowane, bo przecieÅ¼ cache czysci sie wg poszczegolych ustawien dla plikow a nie wszystko przez cronjoba!
 //if ($_sett->get('cronjob_templates_clean') < (time()-60))
 //{
 //	$_files->rmDirRecursive(DIR_CACHE);
@@ -28,7 +28,7 @@
 // Cron Job (12 MIN)
 if ($_sett->get('cronjob_hour') < (time()-60*60*2))
 {
-	// Usuwanie niepotrzebnych wpisów z tabeli u¿ytkowników online.
+	// Usuwanie niepotrzebnych wpisÃ³w z tabeli uÅ¼ytkownikÃ³w online.
 	$_pdo->exec('DELETE FROM [users_online] WHERE `last_activity` < '.(time()-60*60*2));
 	$_sett->update(array('cronjob_hour' => time()));
 }

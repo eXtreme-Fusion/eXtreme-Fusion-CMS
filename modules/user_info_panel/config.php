@@ -10,7 +10,7 @@
 +---------------------------------------------------------------*/
 
 $panel_info = array(
-	'title' => 'Panel u¿ytkownika',
+	'title' => 'Panel uÅ¼ytkownika',
 	'access' => 3,
 	'status' => TRUE
 );
