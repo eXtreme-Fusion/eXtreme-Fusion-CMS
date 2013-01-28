@@ -205,21 +205,24 @@ class System {
 			'cz' => 'Czech'
 		);
 
-		$var = explode(';', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
-		$var = explode(',', $var[0]);
+		$current = NULL;
 
-		$current = null;
-		foreach($var as $data)
+		if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))
 		{
+			$var = explode(';', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
+			$var = explode(',', $var[0]);
 
-			if(isset($langs[$data]))
+			foreach($var as $data)
 			{
-				$current = $data;
-				break;
+				if(isset($langs[$data]))
+				{
+					$current = $data;
+					break;
+				}
 			}
 		}
 
-		if(is_null($current))
+		if ($current === NULL)
 		{
 			$current = 'en';
 		}
