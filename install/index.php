@@ -18,6 +18,9 @@ try
 
 	$HostURL = explode('install', $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']);
 
+	$charset = 'utf8';
+	$collate = 'utf8_general_ci';
+
 	define('DS', DIRECTORY_SEPARATOR);
 
 	define('DIR_BASE', dirname(__FILE__).DS);
@@ -86,9 +89,6 @@ try
 		HELP::removeCookie('user');
 		HELP::redirect(ADDR_SITE);
 	}
-
-	$charset = 'utf8';
-	$collate = 'utf8_general_ci';
 
 	function getStepHeader()
 	{
@@ -347,7 +347,7 @@ try
 		'step' => getStepNum(),
 		'php_required' => PHP_REQUIRED
 	));
-	
+
 	// Inicjacja przerwania instalacji
 	if (isset($_GET['abort']))
 	{
