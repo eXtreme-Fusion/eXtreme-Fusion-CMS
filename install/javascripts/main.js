@@ -15,6 +15,10 @@ $(document).ready(function() {
 	$('#refresh').click(function() {
 		window.location.reload();
 	});
+	
+	$('.CancelButton').click(function() {
+		window.location.href = window.location.protocol + '//' + window.location.host + '/' + window.location.pathname + '?abort=true';
+	});
 
     $("select[name=localeset]").change(function () {
 		var ChengeLang = $("select[name=localeset] option:selected").val();

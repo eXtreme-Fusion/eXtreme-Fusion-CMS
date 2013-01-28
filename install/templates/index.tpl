@@ -112,7 +112,7 @@
 										<p>Marcin (Tymcio) Tymków - English language files</p>
 										<p>Pavel (LynX) Laurenčík - Czech language files</p>
 
-										<div class="bold">jQuery && Ajax Developers:</div>
+										<div class="bold">jQuery & Ajax Developers:</div>
 
 										<p>Dominik (Domon) Barylski</p>
 										<p>Paweł (Inscure) Zegardło </p>
@@ -172,7 +172,13 @@
 									</a>
 								</div>
 							{/if}
-							<p><a href={$ADDR_INSTALL}?abort=true title={i18n('Stop the installation or start from the begining.')}>{i18n('Stop the installation or start from the begining.')}</a></p>
+							<a class="CancelButton" style="width:100px;margin:0 auto;">
+								<strong class="o">
+									<strong class="m">
+										<strong title={i18n('Stop the installation or start from the begining.')}>{i18n('Stop installation')}</strong>
+									</strong>
+								</strong>
+							</a>
 							<div class="clear"></div>
 					{elseif $step == 3}
 
@@ -221,7 +227,13 @@
 								</a>
 							</div>
 						{/if}
-						<p><a href={$ADDR_INSTALL}?abort=true title={i18n('Stop the installation or start from the begining.')}>{i18n('Stop the installation or start from the begining.')}</a></p>
+						<a class="CancelButton" style="width:100px;margin:0 auto;">
+							<strong class="o">
+								<strong class="m">
+									<strong title={i18n('Stop the installation or start from the begining.')}>{i18n('Stop installation')}</strong>
+								</strong>
+							</strong>
+						</a>
 						<div class="clear"></div>
 
 					{elseif $step == 4}
@@ -349,9 +361,13 @@
 							</div>
 							<div class="clear"></div>
 						</form>
-
-						<p><a href={$ADDR_INSTALL}?abort=true title={i18n('Stop the installation or start from the begining.')}>{i18n('Stop the installation or start from the begining.')}</a></p>
-
+						<a class="CancelButton" style="width:100px;margin:0 auto;">
+							<strong class="o">
+								<strong class="m">
+									<strong title={i18n('Stop the installation or start from the begining.')}>{i18n('Stop installation')}</strong>
+								</strong>
+							</strong>
+						</a>
 					{elseif $step == 5}
 
 							{if $show_info}
@@ -424,7 +440,13 @@
 								</div>
 							</form>
 
-							<p><a href={$ADDR_INSTALL}?abort=true title={i18n('Stop the installation or start from the begining.')}>{i18n('Stop the installation or start from the begining.')}</a></p>
+							<a class="CancelButton" style="width:100px;margin:0 auto;">
+								<strong class="o">
+									<strong class="m">
+										<strong title={i18n('Stop the installation or start from the begining.')}>{i18n('Stop installation')}</strong>
+									</strong>
+								</strong>
+							</a>
 					{elseif $step == 6}
 
 						<div class="center">{i18n('Setup complete')}</div><br />

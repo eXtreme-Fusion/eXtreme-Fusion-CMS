@@ -3,7 +3,7 @@
 return array(
 	'Charset' => 'UTF-8',
 	'xml_lang' => 'en',
-	'Setup complete' => '<div class="valid">Completed installation. Thank you for choosing eXtreme-fusion v.5.0 - Ninja Edition!</div>',
+	'Setup complete' => '<div class="valid">Completed installation. Thank you for choosing eXtreme-Fusion 5 - Ninja Edition!</div>',
 	// Permissions
 	'Perm: admin login' => 'The user can log in to the Admin Panel.',
 	'Perm: user login' => 'The user can log in to the website.',
