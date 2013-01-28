@@ -1,13 +1,13 @@
 <?php
 /***********************************************************
 | eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
+| This product is licensed under the BSD License.
+| http://extreme-fusion.org/ef5/license/
 ***********************************************************/
 try
 {
@@ -55,7 +55,7 @@ try
 			if ($_user->hasPermission('admin.panels'))
 			{
 				$req = get_object_vars(json_decode($_request->post('SortOrder')->show()));
-				
+
 				// Walidacja danych wejściowych
 				foreach($req as $column => $panels)
 				{
@@ -85,16 +85,17 @@ try
 					$data = explode('_', $column);
 
 					$side = $data[1];
-					
+
 					for ($i = 1, $c = count($panels); $i <= $c; $i++)
 					{
 						$pdata = explode('_', $panels[$i-1]);
-						
+
+						// Czy panel pochodzi z grupy nieaktywnych biorąc pod uwagę stan sprzed przeładowania strony?
 						if ($pdata[0] === 'New')
 						{
 							$file = $pdata; unset($file[0]); $file = implode('_', $file);
 						}
-					
+
 						// Czy panel przeciągnięto do nieaktywnych?
 						if ($side === '5')
 						{
@@ -102,7 +103,7 @@ try
 							if ($pdata[0] === 'New')
 							{
 								// Usuwanie w celu otrzymania ściężki po sklejeniu
-								
+
 								$delete = $_pdo->exec('DELETE FROM [panels] WHERE filename = :filename', array(':filename', HELP::strip($file), PDO::PARAM_STR));
 							}
 							// Usuwanie panelu, który od dłuższego czasu był aktywny
@@ -117,7 +118,8 @@ try
 							$exists = $_pdo->getRow('SELECT `id` FROM [panels] WHERE `filename` = :filename', array(
 								':filename', HELP::strip($file), PDO::PARAM_STR
 							));
-								
+
+							// Czy panel nie istnieje w bazie danych i przeciągnięto go z pola nieaktywnych?
 							if (!$exists && $pdata[0] === 'New')
 							{
 								// Czy plik z informacjami o panelu istnieje?
@@ -134,8 +136,8 @@ try
 										)
 									);
 									echo 'zapis';
-								} 
-								else 
+								}
+								else
 								{
 									echo 'plik '.$file.' nie istnieje';
 								}
@@ -151,7 +153,7 @@ try
 								));
 							}
 						}
-						
+
 					}
 				}
 			}

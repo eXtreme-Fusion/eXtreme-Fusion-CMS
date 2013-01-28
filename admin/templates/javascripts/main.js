@@ -70,6 +70,8 @@ $(function(){
 	$('.AdminButtons .Cancel').click(function() {
 		history.back();
 	});
+	
+	$('.AdminButtons img').css({'position': 'absolute'});
 
 	// ============================
 	// Uprawnienia
