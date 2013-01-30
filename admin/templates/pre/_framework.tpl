@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-		<meta charset="utf-8" />
+		<meta charset="UTF-8" />
 		<title>{$SystemVersion}</title>
 		<link rel="shortcut icon" href="{$ADDR_FAVICON}" type="image/x-icon" />
 		<link rel="stylesheet" href="{$ADDR_ADMIN_CSS}grid.reset.css" media="screen" />

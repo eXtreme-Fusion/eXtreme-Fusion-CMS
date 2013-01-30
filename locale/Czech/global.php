@@ -14,7 +14,6 @@ setlocale(LC_TIME, array('cs_CS.UTF-8', 'Czech'));
 return array(
 'Charset' => 'UTF-8',
 'xml_lang' => 'cs',
-'phpmailer' => 'cs',
 
 
 'An unexpected error occurred' => 'Došlo k neočekávané chybě',
