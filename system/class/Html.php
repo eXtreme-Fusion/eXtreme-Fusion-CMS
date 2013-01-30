@@ -29,12 +29,12 @@ abstract class HTMLAbstract
 			$assign[$i] = array(
 				'value' => $key,
 				'display' => $value,
-				'selected' => ''
+				'selected' => NULL
 			);
 
 			if ((string)$key === $selected)
 			{
-				$assign[$i]['selected'] = TRUE;
+				$assign[$i]['selected'] = '1';
 			}
 
 			$i++;

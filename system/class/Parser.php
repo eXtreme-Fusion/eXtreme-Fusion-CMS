@@ -107,7 +107,7 @@ class Parser extends optClass
 		}
 	}
 
-	public static function getMessage($status, $act = NULL, array $message = array())
+	public function getMessage($status, $act = NULL, array $message = array())
 	{
 		if ($message)
 		{

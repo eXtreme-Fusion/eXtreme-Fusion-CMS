@@ -36,7 +36,7 @@
 			});
 		{/literal}
 	</script>
-	
+
 	<form id="This" class="tagform-full" action="{$URL_REQUEST}" method="post">
 		<div class="tbl1">
 			<div class="formLabel grid_6"><label for="Title">{i18n('News title:')}</label></div>
@@ -138,17 +138,12 @@
 			<div class="formField grid_1"><label><input type="checkbox" name="allow_comments" value="1" {if $allow_comments == 1} checked="checked"{/if} /></label></div>
 			<div class="clear"></div>
 		</div>
-		<div class="tbl2">
-			<div class="formLabel grid_6"><label for="Ratings">{i18n('Enable ratings')}</label></div>
-			<div class="formField grid_1"><label><input type="checkbox" name="allow_ratings" value="1" {if $allow_ratings == 1} checked="checked"{/if} /></label></div>
-			<div class="clear"></div>
-		</div>
-		<div class="tbl1">
+		<div class="tbl12">
 			<div class="formLabel grid_6"><label for="Draft">{i18n('Save as a draft')}</label></div>
 			<div class="formField grid_1"><label><input type="checkbox" name="draft" value="1" {if $draft == 1} checked="checked"{/if} /></label></div>
 			<div class="clear"></div>
 		</div>
-		<div class="tbl2">
+		<div class="tbl1">
 			<div class="formLabel grid_6"><label for="Sticky">{i18n('Make sticky')}</label></div>
 			<div class="formField grid_1"><label><input type="checkbox" name="sticky" value="1" {if $sticky == 1} checked="checked"{/if} /></label></div>
 			<div class="clear"></div>
@@ -164,7 +159,7 @@
 		</div>
 	</form>
 	<div class="clear"></div><br />
-	
+
 	<h3 class="ui-corner-all">{i18n('Current news')}</h3>
 	<div class="tbl2">
 		<div class="sep_1 grid_3 bold">{i18n('News title:')}</div>
@@ -178,7 +173,7 @@
 			<div class="grid_3 bold">{$news_list.date}</div>
 			<div class="grid_2 bold">{$news_list.author}</div>
 			<div class="grid_3 bold">
-				<a href="{$FILE_SELF}?page=news&action=edit&id={$news_list.id}" class="tip" title="{i18n('Edit')}"><img src="{$ADDR_ADMIN_IMAGES}icons/edit.png" alt="{i18n('Edit')}" /></a> | 
+				<a href="{$FILE_SELF}?page=news&action=edit&id={$news_list.id}" class="tip" title="{i18n('Edit')}"><img src="{$ADDR_ADMIN_IMAGES}icons/edit.png" alt="{i18n('Edit')}" /></a>
 				<a href="{$FILE_SELF}?page=news&action=delete&id={$news_list.id}" class="tip confirm_button" title="{i18n('Delete')}"><img src="{$ADDR_ADMIN_IMAGES}icons/delete.png" alt="{i18n('Delete')}" /></a></div>
 		</div>
 	{/section}

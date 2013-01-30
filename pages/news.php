@@ -1,13 +1,13 @@
 <?php defined('EF5_SYSTEM') || exit;
 /***********************************************************
 | eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
+| This product is licensed under the BSD License.
+| http://extreme-fusion.org/ef5/license/
 ***********************************************************/
 
 if ($_route->getAction() && $_route->getAction() !== 'page')
@@ -24,7 +24,7 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 	{
 		$_head->set('<link href="'.ADDR_TEMPLATES.'stylesheet/news.css" rel="stylesheet">');
 	}
-	
+
 	! class_exists('Tag') || $_tag = New Tag($_system, $_pdo);
 
 	$item_id = $_route->getAction();
@@ -47,7 +47,7 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 		if ($_user->hasAccess($data['access']))
 		{
 			$_tpl->assign('rows', TRUE);
-	
+
 			$keyword = array();
 			if ($keys = $_tag->getTagFromSupplementAndSupplementID('NEWS', $data['news_id'])){
 				foreach($keys as $var){
@@ -57,7 +57,7 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 					);
 				}
 			}
-			
+
 			$keyword = array(); $k = array();
 			if ($keys = $_tag->getTagFromSupplementAndSupplementID('NEWS', $data['news_id'])){
 				foreach($keys as $var){
@@ -68,9 +68,9 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 					$k[] = $var['value'];
 				}
 			}
-			
+
 			$k = implode(', ', $k);
-			
+
 			$theme = array(
 				'Title' => $data['title'].' &raquo; '.$_sett->get('site_name'),
 				'Keys' => $k,
@@ -105,7 +105,7 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 			$r = $_pdo->exec('UPDATE [news] SET `reads` = `reads`+1 WHERE `id`= :id', array(array(':id', $item_id, PDO::PARAM_INT)));
 
 			$_tpl->assign('news', $d);
-			
+
 			if ($data['allow_comments'] === '1')
 			{
 				$_comment = $ec->comment;
@@ -130,7 +130,7 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 	}
 
 	$_sbb = $ec->sbb;
-	
+
 	$_tpl->assignGroup(array(
 		'bbcode' => $_sbb->bbcodes('post'),
 		'smiley' => $_sbb->smileys('post')
@@ -153,8 +153,8 @@ else
 	! class_exists('Tag') || $_tag = New Tag($_system, $_pdo);
 
 	// Sprawdzanie, czy użytkownik ma prawo do zobaczenia jakiegokolwiek newsa
-	$rows = $_pdo->getMatchRowsCount('SELECT `id` FROM [news] WHERE `access` IN ('.$_user->listRoles().') AND `draft` = 0', 
-	//$rows = $_pdo->getMatchRowsCount('SELECT `id` FROM [news] WHERE `access` IN ('.$_user->listRoles().') AND `draft` = 0 AND `language` = :lang', 
+	$rows = $_pdo->getMatchRowsCount('SELECT `id` FROM [news] WHERE `access` IN ('.$_user->listRoles().') AND `draft` = 0',
+	//$rows = $_pdo->getMatchRowsCount('SELECT `id` FROM [news] WHERE `access` IN ('.$_user->listRoles().') AND `draft` = 0 AND `language` = :lang',
 		array(':lang', $_user->getLang(), PDO::PARAM_STR)
 	);
 
@@ -173,7 +173,7 @@ else
 		}
 
 		$_GET['rowstart'] = Paging::getRowStart($_GET['current'], $items_per_page);
-		
+
 		# / STRONICOWANIE #
 		$cache = $_system->cache('news,'.$_user->getCacheName().',page-'.$_GET['current'], NULL, 'news', $_sett->getUns('cache', 'expire_news'));
 		if ($cache === NULL)
