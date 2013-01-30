@@ -304,9 +304,10 @@ class System {
 	 */
 	public function pathInfoExists()
 	{
-		if (!$this->httpServerIs('Apache'))
+		// Serwer może nie udostępniać informacji o swojej nazwie, natomiast może udzielać dostępu do listy modułów Apache, co świadczy o tym, że jest to Apache :)
+		if (!$this->httpServerIs('Apache') && !$this->rewriteAvailable())
 		{
-			$result = $this->serverPathInfoExists() || $apache || $this->_furl;
+			$result =  $this->serverPathInfoExists() || $this->_furl;
 
 			// Serwer to nie Apache
 			if ($result === FALSE)
