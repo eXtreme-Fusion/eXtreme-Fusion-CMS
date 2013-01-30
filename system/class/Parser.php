@@ -42,7 +42,7 @@ class Parser extends optClass
 		{
 			$this->registerFunction('url', 'Url');
 		}
-		$this->httpHeaders(OPT_Html);
+		$this->httpHeaders(OPT_HTML);
 		$this->assignMain();
 	}
 
@@ -206,7 +206,7 @@ class pageNavParser extends optClass
 			$this->registerFunction('url', 'Url');
 		}
 
-		$this->httpHeaders(OPT_Html);
+		$this->httpHeaders(OPT_HTML);
 
 		$this->root = DIR_TEMPLATES.'paging'.DS;
 		$this->compile = DIR_CACHE;

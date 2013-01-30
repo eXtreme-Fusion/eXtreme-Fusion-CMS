@@ -43,8 +43,8 @@ abstract class HtmlAbstract
 
 
 	// Return PHP: Tworzenie tablicy danych dla listy formularza
-	// Parametr trzeci ustawiony na TRUE powoduje, ¿e indeksy w zwróconej tablicy bêd¹ takie same, jak w Ÿród³owej.
-	// Ustawienie na FALSE powoduje, ¿e indeksem stanie siê wartoœæ z tablicy Ÿród³owej.
+	// Parametr trzeci ustawiony na TRUE powoduje, Å¼e indeksy w zwrÃ³conej tablicy bÄ™dÄ… takie same, jak w ÅºrÃ³dÅ‚owej.
+	// Ustawienie na FALSE powoduje, Å¼e indeksem stanie siÄ™ wartoÅ›Ä‡ z tablicy ÅºrÃ³dÅ‚owej.
 	public static function createSelectOpts($data, $selected = NULL, $key_value = FALSE, $no_select_option = FALSE)
 	{
 		if (isNum($selected, FALSE))
@@ -127,7 +127,7 @@ abstract class HtmlAbstract
 	}
 }
 
-// Helpery dla plików szablonu
+// Helpery dla plikÃ³w szablonu
 class Html extends HtmlAbstract
 {
 	// Opcje listy wyboru
