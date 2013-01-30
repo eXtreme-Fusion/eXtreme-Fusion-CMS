@@ -255,7 +255,7 @@ try
 		else
 		{
 			$_files = new Files;
-			$_tpl->assign('languages', HTML::getSelectOpts($_files->createFileList(DIR_SITE.'locale'.DS, array(), TRUE, 'folders'), $_SESSION['localeset']));
+			$_tpl->assign('languages', Html::getSelectOpts($_files->createFileList(DIR_SITE.'locale'.DS, array(), TRUE, 'folders'), $_SESSION['localeset']));
 		}
 	}
 	elseif (getStepNum() === 2)

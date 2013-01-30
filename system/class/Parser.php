@@ -42,7 +42,7 @@ class Parser extends optClass
 		{
 			$this->registerFunction('url', 'Url');
 		}
-		$this->httpHeaders(OPT_HTML);
+		$this->httpHeaders(OPT_Html);
 		$this->assignMain();
 	}
 
@@ -179,13 +179,13 @@ class Parser extends optClass
 	// Ustawienie na FALSE powoduje, że indeksem stanie się wartość z tablicy źródłowej.
 	public function createSelectOpts($data, $selected = NULL, $key_value = FALSE, $no_select_option = FALSE)
 	{
-		return HTML::createSelectOpts($data, $selected, $key_value, $no_select_option);
+		return Html::createSelectOpts($data, $selected, $key_value, $no_select_option);
 	}
 
 	// LISTA MULTI SELECT
 	public function getMultiSelect($data, $selected = NULL, $show_default = TRUE)
 	{
-		return HTML::createMultiSelect($data, $selected, $show_default);
+		return Html::createMultiSelect($data, $selected, $show_default);
 	}
 }
 
@@ -206,7 +206,7 @@ class pageNavParser extends optClass
 			$this->registerFunction('url', 'Url');
 		}
 
-		$this->httpHeaders(OPT_HTML);
+		$this->httpHeaders(OPT_Html);
 
 		$this->root = DIR_TEMPLATES.'paging'.DS;
 		$this->compile = DIR_CACHE;

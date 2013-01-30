@@ -1,7 +1,7 @@
 <?php
 
 // Zwiera metody typowe dla PHP, bez htmla.
-abstract class HTMLAbstract
+abstract class HtmlAbstract
 {
 	protected static function arraySelected($data, $selected, &$assign, $i)
 	{
@@ -128,7 +128,7 @@ abstract class HTMLAbstract
 }
 
 // Helpery dla plików szablonu
-class HTML extends HTMLAbstract
+class Html extends HtmlAbstract
 {
 	// Opcje listy wyboru
 	public static function getSelectOpts($data, $selected = NULL, $key_value = FALSE, $no_select_option = FALSE)
