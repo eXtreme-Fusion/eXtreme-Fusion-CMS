@@ -49,7 +49,9 @@
 
 							<div class="tbl1">
 								<div class="formLabel grid_4"><label for="01">{i18n('Please select the required locale (language):')}</label></div>
-								<div class="formField grid_4"><select id="01" name='localeset'>{$languages}</select></div>
+								<div class="formField grid_4">
+									<select id="01" name='localeset'>{$languages}</select>
+								</div>
 								<div class="clear"></div>
 							</div>
 							<div class="clear"></div><br />
@@ -242,32 +244,27 @@
 							<div class='error'><strong>{i18n('Error:')}</strong> {i18n('There are empty fields left!')}</div><br />
 							<div class='status'>{i18n('Please make sure you have filled out all the MySQL connection fields.')}</div>
 						{else}
-							{if $server_connection_error}
-								<div class='error'><strong>{i18n('Error:')}</strong> {i18n('Unable to connect with MySQL.')}</div><br />
-								<div class='status'>{i18n('Please ensure your MySQL username and password are correct.')}</div>
+							{if $database_connection_error}
+								<div class='error'><strong>{i18n('Error:')}</strong> {i18n('Unable to connect with MySQL database.')}</div><br />
+								<div class='status'>{i18n('Sprawdź, czy podane dane są prawidłowe lub skontaktuj się z dostawcą hostingu.')}</div>
 							{else}
-								{if $database_connection_error}
-									<div class='error'><strong>{i18n('Error:')}</strong> {i18n('Unable to connect with MySQL database.')}</div><br />
-									<div class='status'>{i18n('The specified MySQL database does not exist.')}</div>
+								{if $table_prefix_error}
+									<div class='error'><strong>{i18n('Error:')}</strong> {i18n('Table prefix error.')}</div><br />
+									<div class='status'>{i18n('Tables prefix (Advanced settings) is already in use or prefix has not been written, and tables prefix exist in the database with the same name as that system is trying to create. Please enter a different prefix for tables.')}</div>
 								{else}
-									{if $table_prefix_error}
-										<div class='error'><strong>{i18n('Error:')}</strong> {i18n('Table prefix error.')}</div><br />
-										<div class='status'>{i18n('Tables prefix (Advanced settings) is already in use or prefix has not been written, and tables prefix exist in the database with the same name as that system is trying to create. Please enter a different prefix for tables.')}</div>
+									{if $database_permission_error}
+										<div class='valid'>{i18n('Database connection established.')}</div><br />
+										<div class='error'><strong>{i18n('Error:')}</strong> {i18n('Could not write or delete MySQL tables.')}</div><br />
+										<div class='status'>{i18n('Please make sure your MySQL user has read, write and delete permission for the selected database.')}</div>
 									{else}
-										{if $database_permission_error}
+										{if $config_write_error}
 											<div class='valid'>{i18n('Database connection established.')}</div><br />
-											<div class='error'><strong>{i18n('Error:')}</strong> {i18n('Could not write or delete MySQL tables.')}</div><br />
-											<div class='status'>{i18n('Please make sure your MySQL user has read, write and delete permission for the selected database.')}</div>
-										{else}
-											{if $config_write_error}
-												<div class='valid'>{i18n('Database connection established.')}</div><br />
-												<div class='error'><strong>{i18n('Error:')}</strong> {i18n('Unable to write config file.')}</div><br />
-												<div class='status'>{i18n('Please ensure config.php is writable.')}</div>
-											{elseif $table_creating_error}
-												<div class='valid'>{i18n('Database connection established.')}</div><br />
-												<div class='valid'>{i18n('Config file successfully written.')}</div><br />
-												<div class='error'><strong>{i18n('Error:')}</strong> {i18n('Unable to create database tables.')}</div>
-											{/if}
+											<div class='error'><strong>{i18n('Error:')}</strong> {i18n('Unable to write config file.')}</div><br />
+											<div class='status'>{i18n('Please ensure config.php is writable.')}</div>
+										{elseif $table_creating_error}
+											<div class='valid'>{i18n('Database connection established.')}</div><br />
+											<div class='valid'>{i18n('Config file successfully written.')}</div><br />
+											<div class='error'><strong>{i18n('Error:')}</strong> {i18n('Unable to create database tables.')}</div>
 										{/if}
 									{/if}
 								{/if}

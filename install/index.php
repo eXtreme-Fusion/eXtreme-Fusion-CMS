@@ -45,19 +45,8 @@ try
 
 	define('PHP_REQUIRED', Server::getRequiredPHPVersion());
 
-	// Zapisywanie języka zapamiętanego dzięki sesji
-	if (isset($_SESSION['localeset']))
-	{
-		$language = $_SESSION['localeset'];
-	}
-	// Zapisywanie języka na podstawie informacji pochodzących z przeglądarki
-	else
-	{
-		$language = $_system->detectBrowserLanguage(TRUE);
-	}
-
 	/**
-	 * Można by wybrany z listy język zapisać do $language i sprawdzić dostępność kodem
+	 * Można by wybrany z listy język zapisać do $_SESSION['localeset'] i sprawdzić dostępność kodem
 	 * obecnie znajdującym się w else, ale byłoby to złe rozwiązanie, gdyż w przypadku,
 	 * gdy wybrany język byłby niedostępny, ustawiłby się angielski zamiast pozostać
 	 * przy języku sprzed próby jego zmiany.
@@ -70,11 +59,13 @@ try
 	}
 	else
 	{
-		if (file_exists(DIR_SITE.'locale'.DS.$language) && is_dir(DIR_SITE.'locale'.DS.$language))
+		if (!isset($_SESSION['localeset']))
 		{
-			$_SESSION['localeset'] = $language;
+			// Zapisywanie języka na podstawie informacji pochodzących z przeglądarki
+			$_SESSION['localeset'] = $_system->detectBrowserLanguage(TRUE);
 		}
-		else
+
+		if (!file_exists(DIR_SITE.'locale'.DS.$_SESSION['localeset']) || !is_dir(DIR_SITE.'locale'.DS.$_SESSION['localeset']))
 		{
 			$_SESSION['localeset'] = 'English';
 		}
@@ -208,8 +199,7 @@ try
 			$_SESSION['step'] = 1;
 		}
 
-		header('Refresh: 0');
-		exit;
+		exit('<script type="text/javascript">window.location = window.location.href;</script>');
 	}
 
 	// Przerywa bieżącą instalację z informacją dla użytkownika
@@ -232,109 +222,6 @@ try
 		header('Location: '.ADDR_SITE);
 		exit;
 	}
-
-	// mySQL database functions
-	function dbconnect($db_host, $db_user, $db_pass, $db_name) {
-		global $db_connect;
-
-		$db_connect = @mysql_connect($db_host, $db_user, $db_pass);
-		$db_select = @mysql_select_db($db_name);
-		dbquery('SET NAMES utf8');
-		if (!$db_connect) {
-			return FALSE;
-		} else {
-			return TRUE;
-		}
-	}
-
-	function dbquery($query) {
-		$result = @mysql_query($query);
-		if (!$result) {
-			echo mysql_error();
-			return FALSE;
-		} else {
-			return $result;
-		}
-	}
-
-	function dbrows($query) {
-		$result = @mysql_num_rows($query);
-		return $result;
-	}
-
-	function rowCount($table, $field, $conditions = '')
-	{
-		$cond = ($conditions ? ' WHERE '.$conditions : '');
-		$result = mysql_query('SELECT Count('.$field.') FROM '.$table.$cond);
-
-		return mysql_result($result, 0);
-	}
-
-	/**
-	 * Dodawanie rekordów
-	 *
-	 *@copyright Clear-PHP.com
-	 *
-	 * Przykład użycia:
-	 * 		$result = $sql_manager->insert('test', array('fgfg' => '34', 'baza' => 'sdsd'));
-	 *
-	 * @param string $table, array $fields
-	 * @return number of modified records
-	 */
-
-	function insert($table = null, $fields = null)
-	{
-		// Sprawdzanie, czy parametry nie zostały pominięte, a zmienna $fields jest tablicą
-		if (is_null($table) || is_null($fields) || !is_array($fields))
-		{
-			return FALSE;
-		}
-
-		$keys = implode('`, `', array_keys($fields));
-		$values = implode("', '", array_values($fields));
-
-		return dbquery("INSERT INTO ".$table." (`".$keys."`) VALUES ('".$values."')");
-
-	} // end of insert();
-
-
-	// Strip Input Function, prevents HTML in unwanted places
-	function stripinput($text) {
-		if (ini_get('magic_quotes_gpc')) $text = stripslashes($text);
-		$search = array("\"", "'", "\\", '\"', "\'", "<", ">", "&nbsp;");
-		$replace = array("&quot;", "&#39;", "&#92;", "&quot;", "&#39;", "&lt;", "&gt;", " ");
-		$text = str_replace($search, $replace, $text);
-		return $text;
-	}
-
-	// Create a list of files or folders and store them in an array
-	function makefilelist($folder, $filter, $sort=TRUE, $type='files') {
-		$res = array();
-		$filter = explode('|', $filter);
-		$temp = opendir($folder);
-		while ($file = readdir($temp)) {
-			if ($type == 'files' && !in_array($file, $filter)) {
-				if (!is_dir($folder.$file)) $res[] = $file;
-			} elseif ($type == 'folders' && !in_array($file, $filter)) {
-				if (is_dir($folder.$file)) $res[] = $file;
-			}
-		}
-		closedir($temp);
-		if ($sort) sort($res);
-		return $res;
-	}
-
-	// Create a selection list from an array created by makefilelist()
-	function makefileopts($files, $selected = '') {
-		$res = '';
-		for ($i=0; $i < count($files); $i++) {
-			$sel = ($selected == $files[$i] ? ' selected="selected"' : '');
-			$res .= '<option value="'.$files[$i].'"'.$sel.'>'.$files[$i].'</option>\n';
-		}
-		return $res;
-	}
-
-	if (isset($db_connect) && $db_connect != FALSE) { mysql_close($db_connect); }
 
 	$_tpl->assignGroup(array(
 		'title' => __('eXtreme-Fusion :version - Setup', array(':version' => VERSION)),
@@ -359,17 +246,17 @@ try
 	{
 		restartInstall();
 	}
-	else if (getStepNum() === 1)
+	elseif (getStepNum() === 1)
 	{
-		if ($_POST)
+		if ($_POST && isset($_POST['step']))
 		{
 			goToStep(2);
 		}
 		else
 		{
-			$_tpl->assign('languages', makefileopts(makefilelist(DIR_SITE.'locale/', '.gitignore|.svn|.|..', TRUE, 'folders'), $language));
+			$_files = new Files;
+			$_tpl->assign('languages', HTML::getSelectOpts($_files->createFileList(DIR_SITE.'locale'.DS, array(), TRUE, 'folders'), $_SESSION['localeset']));
 		}
-
 	}
 	elseif (getStepNum() === 2)
 	{
@@ -393,7 +280,6 @@ try
 
 			if ( ! extension_loaded('mcrypt'))
 			{
-
 				$extension_error[]['name'] = 'mcrypt';
 			}
 
@@ -488,7 +374,6 @@ try
 					'status' => $write_check === NULL ? 1 : 2
 				);
 			}
-
 		}
 
 		if ($chmod_error)
@@ -511,14 +396,14 @@ try
 				return $string[strlen($string)-1];
 			}
 
-			$db_host = (isset($_POST['db_host']) ? stripinput(trim($_POST['db_host'])) : '');
-			$db_port = (isset($_POST['db_port']) ? stripinput(trim($_POST['db_port'])) : '');
-			$db_user = (isset($_POST['db_user']) ? stripinput(trim($_POST['db_user'])) : '');
-			$db_pass = (isset($_POST['db_pass']) ? stripinput(trim($_POST['db_pass'])) : '');
-			$db_name = (isset($_POST['db_name']) ? stripinput(trim($_POST['db_name'])) : '');
-			$db_prefix = (isset($_POST['db_prefix']) ? stripinput(trim($_POST['db_prefix'])) : '');
-			$cookie_prefix = (isset($_POST['cookie_prefix']) ? stripinput(trim($_POST['cookie_prefix'])) : '');
-			$cache_prefix = (isset($_POST['cache_prefix']) ? stripinput(trim($_POST['cache_prefix'])) : '');
+			$db_host = (isset($_POST['db_host']) ? HELP::strip(trim($_POST['db_host'])) : '');
+			$db_port = (isset($_POST['db_port']) ? HELP::strip(trim($_POST['db_port'])) : '');
+			$db_user = (isset($_POST['db_user']) ? HELP::strip(trim($_POST['db_user'])) : '');
+			$db_pass = (isset($_POST['db_pass']) ? HELP::strip(trim($_POST['db_pass'])) : '');
+			$db_name = (isset($_POST['db_name']) ? HELP::strip(trim($_POST['db_name'])) : '');
+			$db_prefix = (isset($_POST['db_prefix']) ? HELP::strip(trim($_POST['db_prefix'])) : '');
+			$cookie_prefix = (isset($_POST['cookie_prefix']) ? HELP::strip(trim($_POST['cookie_prefix'])) : '');
+			$cache_prefix = (isset($_POST['cache_prefix']) ? HELP::strip(trim($_POST['cache_prefix'])) : '');
 			$site_url = (isset($_POST['site_url']) ? $_POST['site_url'] : '');
 
 			$custom_rewrite_choice = isset($_POST['custom_rewrite']) ? 'TRUE' : NULL;
@@ -542,107 +427,85 @@ try
 			// db_prefix powinien być opcjonalny!
 			if ($db_host !== '' && $db_user !== '' && $db_name !== '' && $db_port !== '' && $site_url !== '')
 			{
-				$db_connect = @mysql_connect($db_host.':'.$db_port, $db_user, $db_pass);
-				if ($db_connect)
+				$success = FALSE;
+				try
 				{
-					$db_select = @mysql_select_db($db_name);
-					if ($db_select)
+					$_pdo = new Data('mysql:host='.$db_host.';dbname='.$db_name.';port='.$db_port, $db_user, $db_pass, array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES '.$charset));
+					$_pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT);
+					$_pdo->config($db_prefix);
+
+					if (!$d = $_pdo->query("SHOW TABLES LIKE '$db_prefix%'"))
 					{
-						if (dbrows(dbquery("SHOW TABLES LIKE '$db_prefix%'")) == '0')
+						$table_name = $db_prefix.substr(strrev(time()), 0, 5);
+						$can_write = TRUE;
+
+						try
 						{
-							$table_name = uniqid($db_prefix, FALSE);
-							$can_write = TRUE;
-
-							$result = dbquery('CREATE TABLE '.$table_name.' (test_field VARCHAR(10) NOT NULL) ENGINE=MyISAM;');
+							$result = $_pdo->query('CREATE TABLE `'.$table_name.'` (`test_field` VARCHAR(10) NOT NULL) ENGINE=InnoDB CHARACTER SET '.$charset.' COLLATE '.$collate, NULL, FALSE);
 							if (!$result)
 							{
-								$can_write = FALSE;
+								throw new PDOException();
 							}
 
-							$result = dbquery('DROP TABLE '.$table_name);
+							$result = $_pdo->query('DROP TABLE '.$table_name, NULL, FALSE);
 							if (!$result)
 							{
-								$can_write = FALSE;
+								throw new PDOException();
 							}
 
-							if ($can_write)
+							include_once 'create_config.php';
+
+							$temp = fopen(DIR_SITE.'config.php','w');
+							if (fwrite($temp, $config))
 							{
-								include_once 'create_config.php';
+								fclose($temp);
+								$fail = FALSE;
 
-								$temp = fopen(DIR_SITE.'config.php','w');
-								if (fwrite($temp, $config))
-
+								try
 								{
-									fclose($temp);
-									$fail = FALSE;
-
-									$result = dbquery("ALTER DATABASE  `".$db_name."` DEFAULT CHARACTER SET ".$charset." COLLATE ".$collate);
+									$result = $_pdo->query("ALTER DATABASE  `".$db_name."` DEFAULT CHARACTER SET ".$charset." COLLATE ".$collate, NULL, FALSE);
 
 									include_once 'create_db.php';
-
 									if (!$fail)
 									{
 										$_tpl->assign('success_info', TRUE);
 
 										$success = TRUE;
-										$db_error = 6;
 									}
 									else
 									{
-										$_tpl->assign('table_creating_error', TRUE);
-
-										$success = FALSE;
-										$db_error = 0;
+										throw new PDOException();
 									}
 								}
-								else
+								catch (PDOException $e)
 								{
-									$_tpl->assign('config_write_error', TRUE);
-									$success = FALSE;
-									$db_error = 5;
+									$_tpl->assign('table_creating_error', TRUE);
 								}
 							}
 							else
 							{
-								$_tpl->assign('database_permission_error', TRUE);
-
-								$success = FALSE;
-								$db_error = 4;
+								$_tpl->assign('config_write_error', TRUE);
 							}
 						}
-						else
+						catch (PDOException $e)
 						{
-							$_tpl->assign('table_prefix_error', TRUE);
-
-
-							$success = FALSE;
-							$db_error = 3;
+							$_tpl->assign('database_permission_error', TRUE);
+							$can_write = FALSE;
 						}
 					}
 					else
 					{
-						$_tpl->assign('database_connection_error', TRUE);
-
-
-						$success = FALSE;
-						$db_error = 2;
+						$_tpl->assign('table_prefix_error', TRUE);
 					}
 				}
-				else
+				catch (PDOException $e)
 				{
-					$_tpl->assign('server_connection_error', TRUE);
-
-
-					$success = FALSE;
-					$db_error = 1;
+					$_tpl->assign('database_connection_error', TRUE);
 				}
 			}
 			else
 			{
 				$_tpl->assign('empty_form_error', TRUE);
-
-				$success = FALSE;
-				$db_error = 7;
 			}
 
 			if ($success)
@@ -660,7 +523,6 @@ try
 					'cookie_prefix' => $cookie_prefix,
 					'cache_prefix' => $cache_prefix,
 					'site_url' => $site_url,
-					'db_error' => $db_error,
 					'custom_rewrite_choice' => $custom_rewrite_choice,
 					'custom_furl_choice' => $custom_furl_choice
 				));
@@ -704,10 +566,10 @@ try
 	{
 		if ($_POST)
 		{
-			$username = (isset($_POST['username']) ? stripinput(trim($_POST['username'])) : '');
-			$password1 = (isset($_POST['password1']) ? stripinput(trim($_POST['password1'])) : '');
-			$password2 = (isset($_POST['password2']) ? stripinput(trim($_POST['password2'])) : '');
-			$email = (isset($_POST['email']) ? stripinput(trim($_POST['email'])) : '');
+			$username = isset($_POST['username']) ? HELP::strip(trim($_POST['username'])) : '';
+			$password1 = isset($_POST['password1']) ? HELP::strip(trim($_POST['password1'])) : '';
+			$password2 = isset($_POST['password2']) ? HELP::strip(trim($_POST['password2'])) : '';
+			$email = isset($_POST['email']) ? HELP::strip(trim($_POST['email'])) : '';
 
 
 			$error = FALSE;
@@ -746,13 +608,14 @@ try
 					$_system->clearCache(NULL, array(), DIR_SITE.'cache'.DS);
 				}
 
-				$dbconnect = dbconnect($_dbconfig['host'].':'.$_dbconfig['port'], $_dbconfig['user'], $_dbconfig['password'], $_dbconfig['database']);
+				$_pdo = new Data('mysql:host='.$_dbconfig['host'].';dbname='.$_dbconfig['database'].';port='.$_dbconfig['port'], $_dbconfig['user'], $_dbconfig['password'], array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES '.$_dbconfig['charset']));
+				$_pdo->config($_dbconfig['prefix']);
 
 				$localeset = $_SESSION['localeset'];
 				include 'create_settings.php';
 
 				// Sprawdzanie, czy konto admina zostało utworzone
-				if ($rows = rowCount($_dbconfig['prefix'].'users', '`id`'))
+				if ($rows = $_pdo->getField('SELECT `id` FROM [users] WHERE `id` = 1'))
 				{
 					// Nadawanie bezpie3cznych uprawnień dla pliku config.php
 					if (function_exists('chmod')) { @chmod(DIR_SITE.'config.php', 0644); }

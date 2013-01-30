@@ -21,17 +21,13 @@ $(document).ready(function() {
 	});
 
     $("select[name=localeset]").change(function () {
-		var ChengeLang = $("select[name=localeset] option:selected").val();
-		if(ChengeLang == "Polish" || ChengeLang == "Polish-utf8") {
-			$("#AcceptLink").attr('href', 'http://extreme-fusion.org/ef5/license/');
-			$("#AcceptLink").html('Akceptuje warunki licencji BSD');
-		} else {
-			$("#AcceptLink").attr('href', 'http://extreme-fusion.org/ef5/license/');
-			$("#AcceptLink").html('I accept BSD License');
-		}
+		$('input[type="hidden"]').attr('name', 'hidden');
+		$('form').submit();
+		
 	});
 
 	$('input:checkbox[name=AcceptCC]').click(function() {
+		$('input[type="hidden"]').attr('name', 'step');
 		if($('input:checkbox[name=AcceptCC]:checked').length > 0) {
 			$("#SendForm_This").show();
 		} else {

@@ -243,7 +243,7 @@ class System {
 
 	/**
 	 * Sprawdza, czy moduł Apache podany parametrem istnieje
-	 * lub zwraca tablicę załądowanych modułów Apache
+	 * lub zwraca tablicę załadowanych modułów Apache, jeżeli pominięto parametr.
 	 */
 	public function apacheModuleLoaded($name = NULL)
 	{
@@ -261,7 +261,7 @@ class System {
 		{
 			/**
 			 * Funkcja do sprawdzania załadowanych modułów Apache jest niedostępna.
-			 * Zakładamy więc, że mod_rewrite nie jest załadowany.
+			 * Zakładamy więc, że moduł nie jest załadowany.
 			 */
 			return FALSE;
 		}
@@ -287,8 +287,8 @@ class System {
 	 * PATH_INFO nie występuje na stronie głównej, dlatego sprawdzane jest, czy serwerem jest Apache,
 	 * który ścieżki ma zazwyczaj skonfigurowane prawidłowo.
 	 *
-	 * W przypadku IIS (test na 7.5), na stronie głównej występuje ORIG_PATH_INFO, a na podstronach także PATH_INFO.
-	 * ORIG_PATH_INFO jest stosowane również na niektórych serwerach Apache.
+	 * W przypadku IIS (test na 7.5), na stronie głównej występuje ORIG_PATH_INFO, a na podstronach dodatkowo PATH_INFO.
+	 * ORIG_PATH_INFO jest również na niektórych serwerach Apache.
 	 *
 	 * Jeżeli korzystasz z innego serwera, który jest skonfigurowany do PATH_INFO,
 	 * wystarczy w pliku config.php zmienić wartość z FALSE na TRUE przy $_route['custom_furl'].
@@ -304,13 +304,14 @@ class System {
 	 */
 	public function pathInfoExists()
 	{
-		$apache = (isset($_SERVER['SERVER_SOFTWARE']) && preg_match('/Apache/i', $_SERVER['SERVER_SOFTWARE'])) || (isset($_SERVER['SERVER_SIGNATURE']) && preg_match('/Apache/i', $_SERVER['SERVER_SIGNATURE']));
+		$apache = $this->httpServerIs('Apache');
 
-		return $result = (bool) ($this->rewriteAvailable() || $this->serverPathInfoExists() || $apache || $this->_furl);
+		$result = $this->rewriteAvailable() || $this->serverPathInfoExists() || $apache || $this->_furl;
 
 		// Serwer to nie Apache
 		if ($result === FALSE)
 		{
+			// Odczytywanie informacji z cache
 			$data = $this->cache('path_exists', NULL, 'system', 86400);
 			if ($data[0] === FALSE)
 			{
@@ -324,14 +325,22 @@ class System {
 
 		if (! $apache)
 		{
+			// Zapis informacji do cache
 			$this->cache('path_exists', array(TRUE), 'system');
 		}
+
 		return TRUE;
 	}
 
 	public function serverPathInfoExists()
 	{
 		return isset($_SERVER['PATH_INFO']) || isset($_SERVER['ORIG_PATH_INFO']);
+	}
+
+	// Sprawdza czy serwer udostępnia o sobie informacje
+	public function serverInfoAvailable()
+	{
+		return $_SERVER['SERVER_SOFTWARE'] || $_SERVER['SERVER_SIGNATURE'];
 	}
 
 	public function httpServerIs($name)
