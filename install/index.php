@@ -433,7 +433,10 @@ try
 					$_pdo = new Data('mysql:host='.$db_host.';dbname='.$db_name.';port='.$db_port, $db_user, $db_pass, array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES '.$charset));
 					$_pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT);
 					$_pdo->config($db_prefix);
-
+					
+					// For php < 5.3.1: http://stackoverflow.com/a/4348744/1794927
+					$_pdo->query('SET NAMES '.$charset, NULL, FALSE);
+				
 					if (!$d = $_pdo->query("SHOW TABLES LIKE '$db_prefix%'"))
 					{
 						$table_name = $db_prefix.substr(strrev(time()), 0, 5);
@@ -610,7 +613,10 @@ try
 
 				$_pdo = new Data('mysql:host='.$_dbconfig['host'].';dbname='.$_dbconfig['database'].';port='.$_dbconfig['port'], $_dbconfig['user'], $_dbconfig['password'], array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES '.$_dbconfig['charset']));
 				$_pdo->config($_dbconfig['prefix']);
-
+				
+				// For php < 5.3.1: http://stackoverflow.com/a/4348744/1794927
+				$_pdo->query('SET NAMES '.$_dbconfig['charset'], NULL, FALSE);
+				
 				$localeset = $_SESSION['localeset'];
 				include 'create_settings.php';
 
