@@ -309,11 +309,11 @@ class System {
 		$result = $this->rewriteAvailable() || $this->serverPathInfoExists() || $apache || $this->_furl;
 
 		// Serwer to nie Apache
-		if ($result === FALSE)
+		if ($result === FALSE && !$apache)
 		{
 			// Odczytywanie informacji z cache
 			$data = $this->cache('path_exists', NULL, 'system', 86400);
-			if ($data[0] === FALSE)
+			if (!isset($data[0]) || $data[0] === FALSE)
 			{
 				return FALSE;
 			}
