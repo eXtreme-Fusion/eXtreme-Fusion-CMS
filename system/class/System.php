@@ -269,7 +269,7 @@ class System {
 		throw new systemException('Błąd: Funkcja <span class="bold">apache_get_modules()</span> jest niedostępna!');
 	}
 
-	// Przed wywołaniem tej funkcji należy sprawdzić System::apacheModulesListingAvailable()
+	// Zwraca info czy modRewrite aktywny
 	public function rewriteAvailable()
 	{
 		if ($this->_rewrite_available !== NULL)
@@ -304,31 +304,30 @@ class System {
 	 */
 	public function pathInfoExists()
 	{
-		$apache = $this->httpServerIs('Apache');
-
-		$result = $this->rewriteAvailable() || $this->serverPathInfoExists() || $apache || $this->_furl;
-
-		// Serwer to nie Apache
-		if ($result === FALSE && !$apache)
+		if (!$this->httpServerIs('Apache'))
 		{
-			// Odczytywanie informacji z cache
-			$data = $this->cache('path_exists', NULL, 'system', 86400);
-			if (!isset($data[0]) || $data[0] === FALSE)
-			{
-				return FALSE;
-			}
-			else
-			{
-				return TRUE;
-			}
-		}
+			$result = $this->serverPathInfoExists() || $apache || $this->_furl;
 
-		if (! $apache)
-		{
+			// Serwer to nie Apache
+			if ($result === FALSE)
+			{
+				// Odczytywanie informacji z cache
+				$data = $this->cache('path_exists', NULL, 'system', 86400);
+				if (!isset($data[0]) || $data[0] === FALSE)
+				{
+					return FALSE;
+				}
+				else
+				{
+					return TRUE;
+				}
+			}
+
 			// Zapis informacji do cache
 			$this->cache('path_exists', array(TRUE), 'system');
 		}
 
+		// Gdy serwer to Apache lub gdy wykryto PATH_INFO/ORIG_PATH_INFO lub gdy ustawiono ręcznie
 		return TRUE;
 	}
 
