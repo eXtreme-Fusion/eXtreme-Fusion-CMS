@@ -1,13 +1,13 @@
 <?php
 /***********************************************************
 | eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
+| This product is licensed under the BSD License.
+| http://extreme-fusion.org/ef5/license/
 ***********************************************************/
 try
 {
@@ -16,7 +16,7 @@ try
 	require_once DIR_SYSTEM.'admincore.php';
 
 	$_locale->load('news');
-	
+
 	$_tpl = new Iframe;
 
 	if($_request->get('page')->show() === 'news')
@@ -25,14 +25,14 @@ try
 		{
 			throw new userException(__('Access Denied'));
 		}
-		
+
 		! class_exists('Tag') || $_tag = New Tag($_system, $_pdo);
-		
+
 		// Wyświetlenie komunikatów
 		if ($_request->get(array('status', 'act'))->show())
 		{
 			// Wyświetli komunikat
-			$_tpl->getMessage($_request->get('status')->show(), $_request->get('act')->show(), 
+			$_tpl->getMessage($_request->get('status')->show(), $_request->get('act')->show(),
 				array(
 					'add' => array(
 						__('News has been added.'), __('Error! News has not been added.')
@@ -46,7 +46,7 @@ try
 				)
 			);
 		}
-		
+
 		if ($_request->get('action')->show() === 'delete' && $_request->get('id')->isNum(TRUE))
 		{
 			$count = $_pdo->exec('DELETE FROM [news] WHERE `id` = :id',
@@ -54,7 +54,7 @@ try
 					array(':id', $_request->get('id')->show(), PDO::PARAM_INT)
 				)
 			);
-			
+
 			if ($count)
 			{
 				$_system->clearCache('news');
@@ -67,7 +67,7 @@ try
 			$_log->insertFail('delete', __('Error! News has not been deleted.'));
 			$_request->redirect(FILE_PATH, array('page' => 'news', 'act' => 'delete', 'status' => 'error'));
 		}
-		
+
 		if ($_request->post('save')->show())
 		{
 			$title = $_request->post('title')->filters('trim', 'strip');
@@ -85,12 +85,12 @@ try
 			$sticky = $_request->post('sticky')->show() ? 1 : 0;
 			$allow_comments = $_request->post('allow_comments')->show() ? 1 : 0;
 			$allow_ratings = $_request->post('allow_ratings')->show() ? 1 : 0;
-			
-			if (($_request->get('action')->show() === 'edit') && $_request->get('id')->isNum(TRUE)) 
+
+			if (($_request->get('action')->show() === 'edit') && $_request->get('id')->isNum(TRUE))
 			{
 				$count = $_pdo->exec('
-					UPDATE [news] 
-					SET `title` = :title, `link` = :link, `category` = :category, `language` = :language, `content` = :content, `content_extended` = :content_extended, `source` = :source, `description` = :description, `access` = :access, `draft` = :draft, `sticky` = :sticky, `allow_comments` = :allow_comments, `allow_ratings` = :allow_ratings 
+					UPDATE [news]
+					SET `title` = :title, `link` = :link, `category` = :category, `language` = :language, `content` = :content, `content_extended` = :content_extended, `source` = :source, `description` = :description, `access` = :access, `draft` = :draft, `sticky` = :sticky, `allow_comments` = :allow_comments, `allow_ratings` = :allow_ratings
 					WHERE `id` = :id',
 					array(
 						array(':id', $_request->get('id')->show(), PDO::PARAM_INT),
@@ -109,7 +109,7 @@ try
 						array(':allow_ratings', $allow_ratings, PDO::PARAM_INT)
 					)
 				);
-				
+
 				if ($count)
 				{
 					$_system->clearCache('news');
@@ -121,80 +121,67 @@ try
 
 				$_log->insertFail('edit', __('Error! News has not been edited.'));
 				$_request->redirect(FILE_PATH, array('page' => 'news', 'act' => 'edit', 'status' => 'error'));
-				
+
 			}
 			else
 			{
-				$query = $_pdo->getRow('SELECT `id` FROM [news] WHERE `title`=:title',
+				$count = $_pdo->exec('
+					INSERT INTO [news]
+					(`title`, `link`, `category`, `language`, `content`, `content_extended`, `source`, `description`, `author`, `access`, `datestamp`, `draft`, `sticky`, `allow_comments`, `allow_ratings`)
+					VALUES
+					(:title, :link, :category, :language, :content, :content_extended, :source, :description, :author, :access, '.time().', :draft, :sticky, :allow_comments, :allow_ratings)',
 					array(
-						array(':title', $title, PDO::PARAM_STR)
+						array(':title', $title, PDO::PARAM_STR),
+						array(':link', HELP::Title2Link($title), PDO::PARAM_STR),
+						array(':category', $category, PDO::PARAM_INT),
+						array(':language', $language, PDO::PARAM_STR),
+						array(':content', $content, PDO::PARAM_STR),
+						array(':content_extended', $content_extended, PDO::PARAM_STR),
+						array(':source', $source, PDO::PARAM_STR),
+						array(':description', $description, PDO::PARAM_STR),
+						array(':author', $author, PDO::PARAM_INT),
+						array(':access', HELP::implode($access), PDO::PARAM_STR),
+						array(':draft', $draft, PDO::PARAM_INT),
+						array(':sticky', $sticky, PDO::PARAM_INT),
+						array(':allow_comments', $allow_comments, PDO::PARAM_INT),
+						array(':allow_ratings', $allow_ratings, PDO::PARAM_INT)
 					)
 				);
-				
-				if( ! $query)
-				{
-					$count = $_pdo->exec('
-						INSERT INTO [news] 
-						(`title`, `link`, `category`, `language`, `content`, `content_extended`, `source`, `description`, `author`, `access`, `datestamp`, `draft`, `sticky`, `allow_comments`, `allow_ratings`) 
-						VALUES 
-						(:title, :link, :category, :language, :content, :content_extended, :source, :description, :author, :access, '.time().', :draft, :sticky, :allow_comments, :allow_ratings)',
-						array(
-							array(':title', $title, PDO::PARAM_STR),
-							array(':link', HELP::Title2Link($title), PDO::PARAM_STR),
-							array(':category', $category, PDO::PARAM_INT),
-							array(':language', $language, PDO::PARAM_STR),
-							array(':content', $content, PDO::PARAM_STR),
-							array(':content_extended', $content_extended, PDO::PARAM_STR),
-							array(':source', $source, PDO::PARAM_STR),
-							array(':description', $description, PDO::PARAM_STR),
-							array(':author', $author, PDO::PARAM_INT),
-							array(':access', HELP::implode($access), PDO::PARAM_STR),
-							array(':draft', $draft, PDO::PARAM_INT),
-							array(':sticky', $sticky, PDO::PARAM_INT),
-							array(':allow_comments', $allow_comments, PDO::PARAM_INT),
-							array(':allow_ratings', $allow_ratings, PDO::PARAM_INT)
-						)
-					);
-					
-					if ($count)
-					{
-						$_system->clearCache('news');
-						$_system->clearCache('news_cats');
-						$_tag->addTag('NEWS', $_pdo->lastInsertId(), $keyword, $access);
-						$_log->insertSuccess('add', __('News has been added.'));
-						$_request->redirect(FILE_PATH, array('page' => 'news', 'act' => 'add', 'status' => 'ok'));
-					}
 
-					$_log->insertFail('add', __('Error! News has not been added.'));
-					$_request->redirect(FILE_PATH, array('page' => 'news', 'act' => 'add', 'status' => 'error'));
-				} 
-				else
+				if ($count)
 				{
-					throw new userException(__('There is already news with that title.'));
+					$_system->clearCache('news');
+					$_system->clearCache('news_cats');
+					$_tag->addTag('NEWS', $_pdo->lastInsertId(), $keyword, $access);
+					$_log->insertSuccess('add', __('News has been added.'));
+					$_request->redirect(FILE_PATH, array('page' => 'news', 'act' => 'add', 'status' => 'ok'));
 				}
+
+				$_log->insertFail('add', __('Error! News has not been added.'));
+				$_request->redirect(FILE_PATH, array('page' => 'news', 'act' => 'add', 'status' => 'error'));
 			}
 		}
-		
+
 		// Pobranie kategori newsów
 		$query = $_pdo->getData('SELECT `id`, `name` FROM [news_cats] ORDER BY `id`');
-		
+
 		$category = array();
 		if ($_pdo->getRowsCount($query))
-		{	
+		{
 			foreach($query as $row)
 			{
 				$category[$row['id']] = $row['name'];
 			}
 		}
-		
+
 		if ($_request->get('action')->show() === 'edit' && $_request->get('id')->isNum())
-		{		
+		{
 			$row = $_pdo->getRow('SELECT * FROM [news] WHERE `id` = :id',
 				array(
 					array(':id', $_request->get('id')->show(), PDO::PARAM_INT)
 				)
 			);
-			
+
 			if ($row)
 			{
 				$keyword = array();
@@ -237,27 +224,27 @@ try
 				)
 			);
 		}
-		
+
 		$items_per_page = 20;
 		$current = intval($_request->get('current', NULL)->show() !== NULL ? $_request->get('current')->show() : 1);
-			
+
 		$rows = $_pdo->getMatchRowsCount('SELECT `id`, `title`, `datestamp`, `author`, `access` FROM [news] ORDER BY `datestamp`');
-		
+
 		if ($rows)
 		{
 			$rowstart = $_request->get('current', NULL)->show() !== NULL ? PAGING::getRowStart(intval($_request->get('current')->show()), $items_per_page) : 0;
-			
+
 			$query = $_pdo->getData('SELECT `id`, `title`, `datestamp`, `author`, `access` FROM [news] ORDER BY `datestamp` DESC LIMIT :rowstart, :items_per_page',
 				array(
 					array(':rowstart', $rowstart, PDO::PARAM_INT),
 					array(':items_per_page', $items_per_page, PDO::PARAM_INT)
 				)
 			);
-			
+
 			$news_list = array();
 			if ($_pdo->getRowsCount($query))
 			{
-				$i = 0; 
+				$i = 0;
 				foreach($query as $row)
 				{
 					$news_list[] = array(
@@ -268,12 +255,12 @@ try
 						'access' => $_user->groupArrIDsToNames(HELP::explode($row['access']))
 					);
 				}
-				
+
 			}
-			
+
 			$_pagenav = new PageNav(new Paging($rows, $current, $items_per_page), $_tpl, 10, array('page=news', 'current=', FALSE));
 			$_pagenav->get($_pagenav->create(), 'page_nav', DIR_ADMIN_TEMPLATES.'paging'.DS);
-			
+
 			$_tpl->assign('news_list', $news_list);
 		}
 	}
@@ -283,12 +270,12 @@ try
 		{
 			throw new userException(__('Access denied'));
 		}
-	
+
 		// Wyświetlenie komunikatów
 		if ($_request->get(array('status', 'act'))->show())
 		{
 			// Wyświetli komunikat
-			$_tpl->getMessage($_request->get('status')->show(), $_request->get('act')->show(), 
+			$_tpl->getMessage($_request->get('status')->show(), $_request->get('act')->show(),
 				array(
 					'add' => array(
 						__('News category has been added.'), __('Error! News category has not been added.')
@@ -302,7 +289,7 @@ try
 				)
 			);
 		}
-		
+
 		if ($_request->get('action')->show() === 'delete' && $_request->get('id')->isNum())
 		{
 			$row = $_pdo->getRow('SELECT `category` FROM [news] WHERE `category` = :category',
@@ -310,7 +297,7 @@ try
 					array(':category', $_request->get('id')->show(), PDO::PARAM_INT)
 				)
 			);
-			
+
 			if ( ! $row)
 			{
 				$count = $_pdo->exec('DELETE FROM [news_cats] WHERE `id` = :id',
@@ -318,7 +305,7 @@ try
 						array(':id', $_request->get('id')->show(), PDO::PARAM_INT),
 					)
 				);
-				
+
 				if ($count)
 				{
 					$_system->clearCache('news_cats');
@@ -334,12 +321,12 @@ try
 				throw new userException(__('Error! News category has not been deleted. There are news in category.'));
 			}
 		}
-		
+
 		if ($_request->post('save')->show())
 		{
 			$cat_name = $_request->post('cat_name')->filters('trim', 'strip');
 			$cat_image = $_request->post('cat_image')->filters('trim', 'strip');
-			
+
 			if ($cat_name)
 			{
 				if ($_request->get('action')->show() === 'edit' && $_request->get('id')->isNum())
@@ -352,14 +339,14 @@ try
 							array(':image', $cat_image, PDO::PARAM_STR)
 						)
 					);
-				
+
 					if ($count)
 					{
 						$_system->clearCache('news_cats');
 						$_log->insertSuccess('edit', __('News category has been edited.'));
 						$_request->redirect(FILE_PATH, array('page' => 'cats', 'act' => 'edit', 'status' => 'ok'));
 					}
-					
+
 					$_log->insertFail('edit',  __('Error! News category has not been edited.'));
 					$_request->redirect(FILE_PATH, array('page' => 'cats', 'act' => 'edit', 'status' => 'error'));
 				}
@@ -372,14 +359,14 @@ try
 							array(':image', $cat_image, PDO::PARAM_STR)
 						)
 					);
-				
+
 					if ($count)
 					{
 						$_system->clearCache('news_cats');
 						$_log->insertSuccess('add', __('News category has been added.'));
 						$_request->redirect(FILE_PATH, array('page' => 'cats', 'act' => 'add', 'status' => 'ok'));
 					}
-					
+
 					$_log->insertFail('add',  __('Error! News category has not been added.'));
 					$_request->redirect(FILE_PATH, array('page' => 'cats', 'act' => 'add', 'status' => 'error'));
 				}
@@ -389,7 +376,7 @@ try
 				$_request->redirect(FILE_PATH, array('page' => 'cats'));
 			}
 		}
-		
+
 		if ($_request->get('action')->show() === 'edit' && $_request->get('id')->isNum())
 		{
 			$row = $_pdo->getRow('SELECT `id`, `image`, `name` FROM [news_cats] WHERE `id` = :id',
@@ -397,7 +384,7 @@ try
 					array(':id', $_request->get('id')->show(), PDO::PARAM_STR)
 				)
 			);
-			
+
 			if ($row)
 			{
 				$_tpl->assignGroup(array(
@@ -416,7 +403,7 @@ try
 		}
 
 		$query = $_pdo->getData('SELECT * FROM [news_cats] ORDER by `id`');
-		
+
 		if ($_pdo->getRowsCount($query))
 		{
 			$i = 0; $cat = array();
@@ -439,7 +426,7 @@ try
 		$_request->redirect(FILE_PATH, array('page' => 'news'));
 		exit;
 	}
-	
+
 	$_tpl->template('news');
 }
 catch(optException $exception)
