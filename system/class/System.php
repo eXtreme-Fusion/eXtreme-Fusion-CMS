@@ -14,6 +14,9 @@ class System {
 	private $_rewrite_available;
 	private $_furl = FALSE;
 	private $_rewrite = FALSE;
+	// Wyłączenie szyfrowania cache wersja jedynie dla DEV
+	// Pamiętaj o ręcznym usunięciu cache po zmianie parametru FALSE/TRUE
+	private $code = FALSE;
 
 	/**
 	 * Tworzenie środowiska pracy systemu
@@ -57,12 +60,8 @@ class System {
 	 */
 	public function cache($name, $data = NULL, $dir = NULL, $lifetime = 3600)
 	{
-		// Wyłączenie szyfrowania cache wersja jedynie dla DEV
-		// Pamiętaj o ręcznym usunięciu cache po zmianie parametru FALSE/TRUE
-		$code = FALSE;
-
 		// Koduje nazwę pliku pamięci podręcznej
-		if ( ! $code)
+		if ( ! $this->code)
 		{
 			$file = CACHE_PREFIX.$name.'.txt';
 		}
@@ -79,7 +78,7 @@ class System {
 			chmod($dir, 0777);
 		}
 
-		if ($code)
+		if ($this->code)
 		{
 			// TODO:: czy wartość $key/$string nie powinna być brana z zakodowanej cześci $data zamiast z nazwy pliku?
 			// TODO:: bo wydaje mi się że w obecnej formie może się zdarzyć tak, że w zawartości
@@ -98,7 +97,7 @@ class System {
 			{
 				if ((time() - filemtime($dir.$file)) < $lifetime || $lifetime === NULL)
 				{
-					if ( ! $code)
+					if ( ! $this->code)
 					{
 						return unserialize(file_get_contents($dir.$file));
 					}
@@ -129,7 +128,7 @@ class System {
 			chmod($dir, 0777);
 		}
 
-		if ( ! $code)
+		if ( ! $this->code)
 		{
 			return (bool) file_put_contents($dir.$file, serialize($data), LOCK_EX);
 		}
@@ -162,6 +161,22 @@ class System {
 		{
 			$cache = array($cache);
 		}
+
+		if ($this->code)
+		{
+			foreach($cache as $key => $file)
+			{
+				$cache[$key] = sha1(CACHE_PREFIX.$file);
+			}
+		}
+		else
+		{
+			foreach($cache as $key => $file)
+			{
+				$cache[$key] = CACHE_PREFIX.$file;
+			}
+		}
+
 		if (file_exists($path.$dir))
 		{
 			// Przeszukuje katalog pamięci podręcznej
@@ -174,7 +189,7 @@ class System {
 
 				if ( ! $file->isDot() && $file->isFile() && ($extension === 'tpl' || $extension === 'txt'))
 				{
-					if (in_array(preg_replace('/'.CACHE_PREFIX.'/', '', pathinfo($file->getPathname(), PATHINFO_FILENAME)), $cache) || empty($cache))
+					if (in_array(pathinfo($file->getPathname(), PATHINFO_FILENAME), $cache) || empty($cache))
 					{
 						if (file_exists($file->getPathname()))
 						{
