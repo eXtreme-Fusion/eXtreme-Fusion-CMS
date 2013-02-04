@@ -47,12 +47,10 @@ abstract class HtmlAbstract
 	// Ustawienie na FALSE powoduje, że indeksem stanie się wartość z tablicy źródłowej.
 	public static function createSelectOpts($data, $selected = NULL, $key_value = FALSE, $no_select_option = FALSE)
 	{
-		/*
 		if (isNum($selected, FALSE))
 		{
 			$selected = intval($selected);
 		}
-		*/
 
 		$i = 0; $assign = array();
 
@@ -79,7 +77,7 @@ abstract class HtmlAbstract
 				);
 
 
-				if ($selected != NULL && $key === $selected)
+				if ($selected !== NULL && $key === $selected)
 				{
 					$assign[$i]['selected'] = TRUE;
 				}
@@ -97,7 +95,7 @@ abstract class HtmlAbstract
 					'selected' => ''
 				);
 
-				if ($selected != NULL && $value === $selected)
+				if ($selected !== NULL && $value === $selected)
 				{
 					$assign[$i]['selected'] = TRUE;
 				}
