@@ -29,9 +29,7 @@
 					{if $news.keyword}
 						<p>
 							<strong>{i18n('Tags:')}</strong>
-							{foreach=$news.keyword; value}
-								<a href="{@value.tag_url}" rel="tag">{@value.keyword_name}</a>,
-							{/foreach}
+							{$news.keyword}
 						</p>
 					{/if}
 					{if $news.source}
@@ -72,9 +70,7 @@
 						{if $news.keyword}
 							<p>
 								<strong>{i18n('Tags:')}</strong>
-								{foreach=$news.keyword; value}
-									<a href="{@value.tag_url}" rel="tag">{@value.keyword_name}</a>,
-								{/foreach}
+								{$news.keyword}
 							</p>
 						{/if}
 						{if $news.source}

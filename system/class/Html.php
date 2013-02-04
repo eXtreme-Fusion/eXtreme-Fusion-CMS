@@ -141,4 +141,33 @@ class Html extends HtmlAbstract
 
 		return $ret;
 	}
+	
+	// Konwertuje tablicę do postaci linków html
+	public static function arrayToLinks($data, $implode = FALSE)
+	{
+		$is_array = is_array($data);
+		
+		if (!$data || ($is_array && (!isset($data[0]['name']) || !isset($data[0]['url']))))
+		{
+			return FALSE;
+		}
+		
+		if (!$is_array)
+		{
+			$data = array($data);
+		}
+		
+		$ret = array();
+		foreach($data as $entity)
+		{
+			$ret[] = '<a href="'.$entity['url'].'"'.(isset($entity['title']) ? ' title="'.$entity['title'].'"' : '').' rel="tag">'.$entity['name'].'</a>';
+		}
+		
+		if ($implode !== FALSE)
+		{
+			return implode($implode, $ret);
+		}
+		
+		return $ret;
+	}
 }
