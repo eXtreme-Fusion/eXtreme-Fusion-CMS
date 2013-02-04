@@ -59,7 +59,7 @@ try
 			{
 				$_system->clearCache('news');
 				$_system->clearCache('news_cats');
-				$_tag->delTagFromSupplementAndSupplementID('NEWS', $_request->get('id')->show());
+				$_tag->delTag('NEWS', $_request->get('id')->show());
 				$_log->insertSuccess('delete', __('News has been deleted.'));
 				$_request->redirect(FILE_PATH, array('page' => 'news', 'act' => 'delete', 'status' => 'ok'));
 			}
@@ -128,7 +128,7 @@ try
 					{
 						$_system->clearCache('news');
 						$_system->clearCache('news_cats');
-						$_tag->updTagFromSupplementAndSupplementID('NEWS', $_request->get('id')->show(), $keyword, $access);
+						$_tag->updTag('NEWS', $_request->get('id')->show(), $keyword, $access);
 						$_log->insertSuccess('edit', __('News has been edited.'));
 						$_request->redirect(FILE_PATH, array('page' => 'news', 'act' => 'edit', 'status' => 'ok'));
 					}
@@ -206,7 +206,7 @@ try
 			if ($row)
 			{
 				$keyword = array();
-				if ($keys = $_tag->getTagFromSupplementAndSupplementID('NEWS', $_request->get('id')->show())){
+				if ($keys = $_tag->getTag('NEWS', $_request->get('id')->show())){
 					foreach($keys as $var){
 						$keyword[] = $var['value'];
 					}

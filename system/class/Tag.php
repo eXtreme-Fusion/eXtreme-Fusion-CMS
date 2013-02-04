@@ -1,23 +1,23 @@
 <?php
 /***********************************************************
 | eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
+| This product is licensed under the BSD License.
+| http://extreme-fusion.org/ef5/license/
 ***********************************************************/
 class Tag {
 
 	// Przechowuje obiekt bazy danych, do późniejszych zapytań
 	protected $_pdo = array();
-	
+
 	// Przechowuje obiekt głownego silnika systemu
 	protected $_system = array();
 
-	// Przechowuje obiekt danych 
+	// Przechowuje obiekt danych
 	protected $_data = array();
 
 	/**
@@ -32,7 +32,7 @@ class Tag {
 		$this->_system = $system;
 		$this->_pdo = $pdo;
 	}
-	
+
 	/**
 	 * Dodaje nowy tag do bazy danych.
 	 * Metoda nie potrzebuje filtracji danych ma ją zawartą w sobie.
@@ -51,7 +51,7 @@ class Tag {
 		{
 			$value = array($value);
 		}
-		
+
 		if (is_string($access))
 		{
 			if (isNum($access, FALSE, FALSE))
@@ -60,11 +60,11 @@ class Tag {
 			}
 			else
 			{
-				
+
 				throw new systemException('Parametr $access ma nieprawidłową wartość');
 			}
 		}
-	
+
 		if (is_array($value))
 		{
 			$count = FALSE;
@@ -79,7 +79,7 @@ class Tag {
 						'access' => $access
 					)
 				);
-				
+
 				if ($this->_data->arr('supplement_id')->isNum(FALSE, FALSE) && $this->_data->arr('access')->isArrayNum(FALSE))
 				{
 					$count = $this->_pdo->exec('INSERT INTO [tags] (`supplement`, `supplement_id`, `value`, `value_for_link`, `access`) VALUES (:supplement, :supplement_id, :value, :value_for_link, :access)',
@@ -93,13 +93,13 @@ class Tag {
 					);
 				}
 			}
-			
+
 			if ($count)
 			{
 				return TRUE;
 			}
 		}
-		
+
 		return FALSE;
 	}
 
@@ -113,7 +113,7 @@ class Tag {
 	public function getAllTag()
 	{
 		$query = $this->_pdo->getData('SELECT `id`, `supplement`, `supplement_id`, `value`, `value_for_link`, `access` FROM [tags] ORDER BY `id` DESC');
-		
+
 		$res = array();
 		if ($this->_pdo->getRowsCount($query))
 		{
@@ -125,7 +125,7 @@ class Tag {
 						array(':id', $row['supplement_id'], PDO::PARAM_INT)
 					);
 				}
-			
+
 				$res[] = array(
 					'id' => (int)$row['id'],
 					'supplement' => $row['supplement'],
@@ -137,13 +137,13 @@ class Tag {
 					'description' => $iteam['description']
 				);
 			}
-			
+
 			return $res;
 		}
-		
+
 		return FALSE;
 	}
-	
+
 	/**
 	 * Pobiera wiersze z bazy danych na podstawie pola supplement.
 	 * Metoda nie potrzebuje filtracji danych ma ją zawartą w sobie.
@@ -156,11 +156,11 @@ class Tag {
 	public function getTagFromSupplement($supplement)
 	{
 		$this->_data = new Edit($supplement);
-		
+
 		$query = $this->_pdo->getData('SELECT `id`, `supplement`, `supplement_id`, `value`, `value_for_link`, `access` FROM [tags] WHERE supplement = :supplement ORDER BY `id` DESC',
 			array(':supplement', $this->_data->filters('trim', 'strip'), PDO::PARAM_STR)
 		);
-		
+
 		$res = array();
 		if ($this->_pdo->getRowsCount($query))
 		{
@@ -172,7 +172,7 @@ class Tag {
 						array(':id', $row['supplement_id'], PDO::PARAM_INT)
 					);
 				}
-			
+
 				$res[] = array(
 					'id' => (int)$row['id'],
 					'supplement' => $row['supplement'],
@@ -184,13 +184,13 @@ class Tag {
 					'description' => $iteam['description']
 				);
 			}
-			
+
 			return $res;
 		}
-		
+
 		return FALSE;
 	}
-	
+
 	/**
 	 * Pobiera wiersze z bazy danych na podstawie pola supplement_id.
 	 * Metoda nie potrzebuje filtracji danych ma ją zawartą w sobie.
@@ -203,13 +203,13 @@ class Tag {
 	public function getTagFromSupplementID($supplement_id)
 	{
 		$this->_data = new Edit($supplement_id);
-		
+
 		if ($this->_data->isNum(FALSE, FALSE))
 		{
 			$query = $this->_pdo->getData('SELECT `id`, `supplement`, `supplement_id`, `value`, `value_for_link`, `access` FROM [tags] WHERE supplement_id = :supplement_id ORDER BY `id` DESC',
 				array(':supplement_id', $this->_data->isNum(TRUE, FALSE), PDO::PARAM_INT)
 			);
-			
+
 			$res = array();
 			if ($this->_pdo->getRowsCount($query))
 			{
@@ -221,7 +221,7 @@ class Tag {
 							array(':id', $row['supplement_id'], PDO::PARAM_INT)
 						);
 					}
-				
+
 					$res[] = array(
 						'id' => (int)$row['id'],
 						'supplement' => $row['supplement'],
@@ -233,14 +233,14 @@ class Tag {
 						'description' => $iteam['description']
 					);
 				}
-				
+
 				return $res;
 			}
 		}
-		
+
 		return FALSE;
 	}
-		
+
 	/**
 	 * Pobiera wiersze z bazy danych na podstawie pola supplement_id oraz supplement.
 	 * Metoda nie potrzebuje filtracji danych ma ją zawartą w sobie.
@@ -251,7 +251,7 @@ class Tag {
 	 * @param   int    		Identyfikator supplement_id
 	 * @return  array
 	 */
-	public function getTagFromSupplementAndSupplementID($supplement, $supplement_id)
+	public function getTag($supplement, $supplement_id)
 	{
 		$this->_data = new Edit(
 			array(
@@ -259,7 +259,7 @@ class Tag {
 				'supplement_id' => $supplement_id
 			)
 		);
-		
+
 		if ($this->_data->arr('supplement_id')->isNum(FALSE, FALSE))
 		{
 			$query = $this->_pdo->getData('SELECT `id`, `supplement`, `supplement_id`, `value`, `value_for_link`, `access` FROM [tags] WHERE supplement_id = :supplement_id AND supplement = :supplement ORDER BY `id` DESC',
@@ -268,7 +268,7 @@ class Tag {
 					array(':supplement_id', $this->_data->arr('supplement_id')->isNum(TRUE, FALSE), PDO::PARAM_INT)
 				)
 			);
-			
+
 			$res = array();
 			if ($this->_pdo->getRowsCount($query))
 			{
@@ -280,7 +280,7 @@ class Tag {
 							array(':id', $row['supplement_id'], PDO::PARAM_INT)
 						);
 					}
-				
+
 					$res[] = array(
 						'id' => (int)$row['id'],
 						'supplement' => $row['supplement'],
@@ -292,14 +292,14 @@ class Tag {
 						'description' => $iteam['description']
 					);
 				}
-				
+
 				return $res;
 			}
 		}
-		
+
 		return FALSE;
 	}
-	
+
 	/**
 	 * Pobiera wiersz z bazy danych na podstawie pola id.
 	 * Metoda nie potrzebuje filtracji danych ma ją zawartą w sobie.
@@ -312,13 +312,13 @@ class Tag {
 	public function getTagFromID($id)
 	{
 		$this->_data = new Edit($id);
-		
+
 		if ($this->_data->isNum(FALSE, FALSE))
 		{
 			$row = $this->_pdo->getRow('SELECT `id`, `supplement`, `supplement_id`, `value`, `value_for_link`, `access` FROM [tags] WHERE id= :id ORDER BY `id` DESC',
 				array(':id', $this->_data->isNum(TRUE, FALSE), PDO::PARAM_INT)
 			);
-			
+
 			if ($row)
 			{
 				if($table = strtolower($row['supplement']))
@@ -327,7 +327,7 @@ class Tag {
 						array(':id', $row['supplement_id'], PDO::PARAM_INT)
 					);
 				}
-			
+
 				return array(
 					'id' => (int)$row['id'],
 					'supplement' => $row['supplement'],
@@ -340,10 +340,10 @@ class Tag {
 				);
 			}
 		}
-		
+
 		return FALSE;
 	}
-	
+
 	/**
 	 * Pobiera wiersze z bazy danych na podstawie value.
 	 * Metoda nie potrzebuje filtracji danych ma ją zawartą w sobie.
@@ -356,11 +356,11 @@ class Tag {
 	public function getTagFromValue($value)
 	{
 		$this->_data = new Edit($value);
-		
+
 		$query = $this->_pdo->getData('SELECT `id`, `supplement`, `supplement_id`, `value`, `value_for_link`, `access` FROM [tags] WHERE value= :value ORDER BY `id` DESC',
 			array(':value', $this->_data->filters('trim', 'strip'), PDO::PARAM_STR)
 		);
-		
+
 		$res = array();
 		if ($this->_pdo->getRowsCount($query))
 		{
@@ -372,7 +372,7 @@ class Tag {
 						array(':id', $row['supplement_id'], PDO::PARAM_INT)
 					);
 				}
-			
+
 				$res[] = array(
 					'id' => (int)$row['id'],
 					'supplement' => $row['supplement'],
@@ -384,13 +384,13 @@ class Tag {
 					'description' => $iteam['description']
 				);
 			}
-			
+
 			return $res;
 		}
-		
+
 		return FALSE;
-	}	
-	
+	}
+
 	/**
 	 * Pobiera wiersze z bazy danych na podstawie value_for_link.
 	 * Metoda nie potrzebuje filtracji danych ma ją zawartą w sobie.
@@ -403,11 +403,11 @@ class Tag {
 	public function getTagFromValueLink($value)
 	{
 		$this->_data = new Edit($value);
-		
+
 		$query = $this->_pdo->getData('SELECT `id`, `supplement`, `supplement_id`, `value`, `value_for_link`, `access` FROM [tags] WHERE value_for_link= :value_for_link ORDER BY `id` DESC',
 			array(':value_for_link', $this->_data->filters('trim', 'strip'), PDO::PARAM_STR)
 		);
-		
+
 		$res = array();
 		if ($this->_pdo->getRowsCount($query))
 		{
@@ -419,7 +419,7 @@ class Tag {
 						array(':id', $row['supplement_id'], PDO::PARAM_INT)
 					);
 				}
-			
+
 				$res[] = array(
 					'id' => (int)$row['id'],
 					'supplement' => $row['supplement'],
@@ -431,13 +431,13 @@ class Tag {
 					'description' => $iteam['description']
 				);
 			}
-			
+
 			return $res;
 		}
-		
+
 		return FALSE;
 	}
-	
+
 	/**
 	 * Zwraca ilość powtóżeń tego samego tagu.
 	 * Metoda nie potrzebuje filtracji danych ma ją zawartą w sobie.
@@ -450,12 +450,12 @@ class Tag {
 	public function getTagCountFromValue($value)
 	{
 		$this->_data = new Edit($value);
-		
+
 		return $this->_pdo->getMatchRowsCount('SELECT `id` FROM [tags] WHERE value= :value',
 			array(':value', $this->_data->filters('trim', 'strip'), PDO::PARAM_STR)
 		);
 	}
-	
+
 	/**
 	 * Kasowanie wierszy z bazy danych na podstawie value.
 	 * Metoda nie potrzebuje filtracji danych ma ją zawartą w sobie.
@@ -468,12 +468,12 @@ class Tag {
 	public function delTagFromValue($value)
 	{
 		$this->_data = new Edit($value);
-		
+
 		return $this->_pdo->exec('DELETE FROM [tags] WHERE value= :value',
 			array(':value', $this->_data->filters('trim', 'strip'), PDO::PARAM_STR)
 		);
 	}
-	
+
 	/**
 	 * Kasowanie wierszy z bazy danych na podstawie identyfikatora.
 	 * Metoda nie potrzebuje filtracji danych ma ją zawartą w sobie.
@@ -486,12 +486,12 @@ class Tag {
 	public function delTagFromSupplement($supplement)
 	{
 		$this->_data = new Edit($supplement);
-		
+
 		return $this->_pdo->exec('DELETE FROM [tags] WHERE supplement= :supplement',
 			array(':supplement', $this->_data->filters('trim', 'strip'), PDO::PARAM_STR)
 		);
 	}
-	
+
 	/**
 	 * Kasowanie wierszy z bazy danych na podstawie ID supplement.
 	 * Metoda nie potrzebuje filtracji danych ma ją zawartą w sobie.
@@ -504,28 +504,28 @@ class Tag {
 	public function delTagFromSupplementID($supplement_id)
 	{
 		$this->_data = new Edit($supplement_id);
-		
+
 		if ($this->_data->isNum(FALSE, FALSE))
 		{
 			return $this->_pdo->exec('DELETE FROM [tags] WHERE supplement_id= :supplement_id',
 				array(':supplement_id', $this->_data->isNum(TRUE, FALSE), PDO::PARAM_INT)
 			);
 		}
-		
+
 		return FALSE;
-	}	
-	
+	}
+
 	/**
 	 * Kasowanie wierszy z bazy danych na podstawie ID supplement oraz supplement.
 	 * Metoda nie potrzebuje filtracji danych ma ją zawartą w sobie.
 	 *
-	 *	$_tag->delTagFromSupplementAndSupplementID('SUPPLEMENT', 1);
+	 *	$_tag->delTag('SUPPLEMENT', 1);
 	 *
 	 * @param   string  supplement
 	 * @param   int    	id_supplement
 	 * @return  boolen
 	 */
-	public function delTagFromSupplementAndSupplementID($supplement, $supplement_id)
+	public function delTag($supplement, $supplement_id)
 	{
 		$this->_data = new Edit(
 			array(
@@ -533,7 +533,7 @@ class Tag {
 				'supplement_id' => $supplement_id
 			)
 		);
-		
+
 		if ($this->_data->arr('supplement_id')->isNum(FALSE, FALSE))
 		{
 			return $this->_pdo->exec('DELETE FROM [tags] WHERE supplement_id = :supplement_id AND supplement = :supplement',
@@ -543,10 +543,10 @@ class Tag {
 				)
 			);
 		}
-		
+
 		return FALSE;
 	}
-	
+
 	/**
 	 * Kasowanie wierszy z bazy danych na podstawie ID.
 	 * Metoda nie potrzebuje filtracji danych ma ją zawartą w sobie.
@@ -559,39 +559,39 @@ class Tag {
 	public function delTagFromID($id)
 	{
 		$this->_data = new Edit($id);
-		
+
 		if ($this->_data->isNum(FALSE, FALSE))
 		{
 			return $this->_pdo->exec('DELETE FROM [tags] WHERE id= :id',
 				array(':supplement_id', $this->_data->isNum(TRUE, FALSE), PDO::PARAM_INT)
 			);
 		}
-		
-		return FALSE;	
+
+		return FALSE;
 	}
-	
+
 	/**
 	 * Aktualizacja na podstawie Supplement i Supplement ID.
 	 *
-	 *	$_tag->updTagFromSupplementAndSupplementID('SUPPLEMENT', 1);
+	 *	$_tag->updTag('SUPPLEMENT', 1);
 	 *
 	 * @param   int    	id
 	 * @return  boolen
 	 */
-	public function updTagFromSupplementAndSupplementID($supplement, $supplement_id, $keyword, $access = array(1,2,3))
+	public function updTag($supplement, $supplement_id, $keyword, $access = array(1,2,3))
 	{
-		if ( ! $this->getTagFromSupplementAndSupplementID($supplement, $supplement_id))
+		if ( ! $this->getTag($supplement, $supplement_id))
 		{
 			return $this->addTag($supplement, $supplement_id, $keyword, $access);
-		} 
+		}
 		else
 		{
-			if ($this->delTagFromSupplementAndSupplementID($supplement, $supplement_id))
+			if ($this->delTag($supplement, $supplement_id))
 			{
 				return $this->addTag($supplement, $supplement_id, $keyword, $access);
 			}
 		}
-		
+
 		return FALSE;
 	}
 }

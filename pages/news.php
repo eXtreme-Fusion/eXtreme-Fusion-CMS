@@ -49,7 +49,7 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 			$_tpl->assign('rows', TRUE);
 
 			$keyword = array();
-			if ($keys = $_tag->getTagFromSupplementAndSupplementID('NEWS', $data['news_id'])){
+			if ($keys = $_tag->getTag('NEWS', $data['news_id'])){
 				foreach($keys as $var){
 					$keyword[] = array(
 						'keyword_name' => $var['value'],
@@ -59,7 +59,7 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 			}
 
 			$keyword = array(); $k = array();
-			if ($keys = $_tag->getTagFromSupplementAndSupplementID('NEWS', $data['news_id'])){
+			if ($keys = $_tag->getTag('NEWS', $data['news_id'])){
 				foreach($keys as $var){
 					$keyword[] = array(
 						'keyword_name' => $var['value'],
@@ -195,7 +195,7 @@ else
 				foreach ($query as $data)
 				{
 					$keyword = array();
-					if ($keys = $_tag->getTagFromSupplementAndSupplementID('NEWS', $data['news_id'])){
+					if ($keys = $_tag->getTag('NEWS', $data['news_id'])){
 						foreach($keys as $var){
 							$keyword[] = array(
 								'keyword_name' => $var['value'],
