@@ -160,7 +160,7 @@ try
 	$_tpl->assignGroup(array(
 		'format' => $format,
 		'offset_timezone' => $_tpl->createSelectOpts($offset_opts, $_sett->get('offset_timezone'), TRUE),
-		'timezone' => $_sett->get('timezone'),
+		'timezone' => $_tpl->createSelectOpts($offset_opts, $_sett->get('timezone'), TRUE),
 		'shortdate' => $_tpl->createSelectOpts($date_opts, $_sett->get('shortdate'), TRUE),
 		'longdate' => $_tpl->createSelectOpts($date_opts, $_sett->get('longdate'), TRUE),
 		'user_custom_offset_timezone' => $_sett->get('user_custom_offset_timezone')
