@@ -29,8 +29,10 @@ class Container extends ServiceContainerBuilder
 		$pdo = new Data('mysql:host='.$_dbconfig['host'].';dbname='.$_dbconfig['database'].';port='.$_dbconfig['port'], $_dbconfig['user'], $_dbconfig['password'], array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES '.$_dbconfig['charset']));
 		$pdo->config($_dbconfig['prefix']);
 		
-		// http://stackoverflow.com/a/4348744/1794927
 		// MYSQL_ATTR_INIT_COMMAND is available for PHP >= 5.3.1
+		// http://stackoverflow.com/a/4348744/1794927
+		// Charset by dsn available after php 5.3.6:
+		// http://php.net/manual/en/ref.pdo-mysql.connection.php
 		$pdo->query('SET NAMES '.$_dbconfig['charset'], NULL, FALSE);
 		
 		return $pdo;

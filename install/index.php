@@ -396,15 +396,20 @@ try
 				return $string[strlen($string)-1];
 			}
 
-			$db_host = (isset($_POST['db_host']) ? HELP::strip(trim($_POST['db_host'])) : '');
-			$db_port = (isset($_POST['db_port']) ? HELP::strip(trim($_POST['db_port'])) : '');
-			$db_user = (isset($_POST['db_user']) ? HELP::strip(trim($_POST['db_user'])) : '');
-			$db_pass = (isset($_POST['db_pass']) ? HELP::strip(trim($_POST['db_pass'])) : '');
-			$db_name = (isset($_POST['db_name']) ? HELP::strip(trim($_POST['db_name'])) : '');
-			$db_prefix = (isset($_POST['db_prefix']) ? HELP::strip(trim($_POST['db_prefix'])) : '');
-			$cookie_prefix = (isset($_POST['cookie_prefix']) ? HELP::strip(trim($_POST['cookie_prefix'])) : '');
-			$cache_prefix = (isset($_POST['cache_prefix']) ? HELP::strip(trim($_POST['cache_prefix'])) : '');
-			$site_url = (isset($_POST['site_url']) ? $_POST['site_url'] : '');
+			$db_host = isset($_POST['db_host']) ? trim($_POST['db_host']) : '';
+			// todo: sprawdzanie czy numeryczny
+			$db_port = isset($_POST['db_port']) ? trim($_POST['db_port']) : '';
+			
+			$db_user = isset($_POST['db_user']) ? trim($_POST['db_user']) : '';
+			$db_pass = isset($_POST['db_pass']) ? trim($_POST['db_pass']) : '';
+			$db_name = isset($_POST['db_name']) ? trim($_POST['db_name']) : '';
+			
+			$db_prefix = isset($_POST['db_prefix']) ? HELP::strip(trim($_POST['db_prefix'])) : '';
+			$cookie_prefix = isset($_POST['cookie_prefix']) ? HELP::strip(trim($_POST['cookie_prefix'])) : '';
+			$cache_prefix = isset($_POST['cache_prefix']) ? HELP::strip(trim($_POST['cache_prefix'])) : '';
+			
+			// todo: filtrowanie aresu do strony
+			$site_url = isset($_POST['site_url']) ? $_POST['site_url'] : '';
 
 			$custom_rewrite_choice = isset($_POST['custom_rewrite']) ? 'TRUE' : NULL;
 			$custom_furl_choice = isset($_POST['custom_furl']) ? 'TRUE' : NULL;
@@ -424,7 +429,7 @@ try
 				$cache_prefix = $cache_prefix.'_';
 			}
 
-			// db_prefix powinien być opcjonalny!
+			// db_prefix jest opcjonalny!
 			if ($db_host !== '' && $db_user !== '' && $db_name !== '' && $db_port !== '' && $site_url !== '')
 			{
 				$success = FALSE;
@@ -537,7 +542,7 @@ try
 			$db_host = 'localhost';
 
 			// The port may be required! So here we set the default.
-			$db_port = '3306';
+			$db_port = 3306;
 
 			$db_prefix = 'extreme_'.substr(md5(uniqid('ef5_db', FALSE)), 13, 7).'_';
 			$cookie_prefix = 'extreme_'.substr(md5(uniqid('ef5_cookie', FALSE)), 13, 7).'_';
@@ -569,11 +574,10 @@ try
 	{
 		if ($_POST)
 		{
-			$username = isset($_POST['username']) ? HELP::strip(trim($_POST['username'])) : '';
-			$password1 = isset($_POST['password1']) ? HELP::strip(trim($_POST['password1'])) : '';
-			$password2 = isset($_POST['password2']) ? HELP::strip(trim($_POST['password2'])) : '';
+			$username = isset($_POST['username']) ? trim($_POST['username']) : '';
+			$password1 = isset($_POST['password1']) ? trim($_POST['password1']) : '';
+			$password2 = isset($_POST['password2']) ? trim($_POST['password2']) : '';
 			$email = isset($_POST['email']) ? HELP::strip(trim($_POST['email'])) : '';
-
 
 			$error = FALSE;
 
@@ -584,19 +588,19 @@ try
 			}
 			else
 			{
-				if (!preg_match("/^[-0-9A-Z_@\s]+$/i", $username))
+				if (preg_match("#[^\w\d-]+#i", $username))
 				{
 					$_tpl->assign('username_error', TRUE);
 					$error = TRUE;
 				}
 
-				if ($password1 != $password2)
+				if ($password1 !== $password2)
 				{
 					$_tpl->assign('password_error', TRUE);
 					$error = TRUE;
 				}
 
-				if (!preg_match("/^[-0-9A-Z_\.]{1,50}@([-0-9A-Z_\.]+\.){1,50}([0-9A-Z]){2,4}$/i", $email))
+				if (!filter_var($email, FILTER_VALIDATE_EMAIL))
 				{
 					$_tpl->assign('email_error', TRUE);
 					$error = TRUE;
