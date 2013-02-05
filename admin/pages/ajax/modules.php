@@ -1,13 +1,13 @@
 <?php
 /***********************************************************
 | eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
+| This product is licensed under the BSD License.
+| http://extreme-fusion.org/ef5/license/
 ***********************************************************/
 try
 {
@@ -54,34 +54,57 @@ try
 		{
 			if ($_user->hasPermission('admin.panels'))
 			{
-				$data = str_replace(array('Column_'), array(''), $_request->post('SortOrder')->show());
+				$req = get_object_vars(json_decode($_request->post('SortOrder')->show()));
 
-				$columns = explode('|', $data);
-
-
-				foreach ($columns as $cid => $cval)
+				// Walidacja danych wejściowych
+				foreach($req as $column => $panels)
 				{
-					$data = explode('=', $cval);
-
-					$side = $data[0];
-					if ( !isset($data[1]) || !$data[1]) continue;
-
-					$panel = explode(',', $data[1]);
-
-					for($i = 0, $c = count($panel); $i < $c; $i++)
+					if (explode('_', $column) < 2)
 					{
-						$pdata = explode('_', $panel[$i]);
-						if (count($pdata) < 2) continue;
+						exit('ERROR');
+					}
+					foreach($panels as $panel)
+					{
+						if ($panel)
+						{
+							if (explode('_', $panel) < 2)
+							{
+								exit('ERROR');
+							}
+						}
+					}
+				}
+
+				foreach ($req as $column => $panels)
+				{
+					if (!$panels)
+					{
+						continue;
+					}
+					var_dump($panels);
+					$data = explode('_', $column);
+
+					$side = $data[1];
+
+					for ($i = 1, $c = count($panels); $i <= $c; $i++)
+					{
+						$pdata = explode('_', $panels[$i-1]);
+
+						// Czy panel pochodzi z grupy nieaktywnych biorąc pod uwagę stan sprzed przeładowania strony?
+						if ($pdata[0] === 'New')
+						{
+							$file = $pdata; unset($file[0]); $file = implode('_', $file);
+						}
+
 						// Czy panel przeciągnięto do nieaktywnych?
-						if ($side == '5')
+						if ($side === '5')
 						{
 							// Usuwanie panelu, który został przed momentem z nieaktywnych przeniesiony do aktywnych
 							if ($pdata[0] === 'New')
 							{
-								unset($pdata[0]);
+								// Usuwanie w celu otrzymania ściężki po sklejeniu
 
-								$delete = $_pdo->exec('DELETE FROM [panels] WHERE filename = :filename', array(':filename', implode('_', $pdata), PDO::PARAM_STR));
-
+								$delete = $_pdo->exec('DELETE FROM [panels] WHERE filename = :filename', array(':filename', HELP::strip($file), PDO::PARAM_STR));
 							}
 							// Usuwanie panelu, który od dłuższego czasu był aktywny
 							else
@@ -89,22 +112,21 @@ try
 								$delete = $_pdo->exec('DELETE FROM [panels] WHERE id = :id', array(':id', $pdata[1], PDO::PARAM_INT));
 							}
 						}
-						// Panel przeciągnięto do aktywnych lub w aktywnych
+						// Panel przeciągnięto z nieaktywnych do aktywnych lub w polu aktywnych
 						else
 						{
-							// Czy panel przeciągnięto do aktywnych?
-							//echo $side.'->';
+							$exists = $_pdo->getRow('SELECT `id` FROM [panels] WHERE `filename` = :filename', array(
+								':filename', HELP::strip($file), PDO::PARAM_STR
+							));
 
-							if ($pdata[0] === 'New')
+							// Czy panel nie istnieje w bazie danych i przeciągnięto go z pola nieaktywnych?
+							if (!$exists && $pdata[0] === 'New')
 							{
-								unset($pdata[0]);
-								$file = implode('_', $pdata);
-
 								// Czy plik z informacjami o panelu istnieje?
 								if (file_exists(DIR_MODULES.$file.DS.'config.php'))
 								{
 									include DIR_MODULES.$file.DS.'config.php';
-									$result = $_pdo->exec('INSERT INTO [panels] (`name`, `filename`, `side`, `type`, `access`, `status`) VALUES (:name, :file, :side, "file", :access, :status)',
+									$result = $_pdo->exec('INSERT INTO [panels] (`name`, `filename`, `side`, `type`, `access`, `status`, `order`) VALUES (:name, :file, :side, "file", :access, :status, '.$i.')',
 										array(
 											array(':side', $side, PDO::PARAM_INT),
 											array(':name', $panel_info['title'], PDO::PARAM_STR),
@@ -112,25 +134,28 @@ try
 											array(':access', $panel_info['access'], PDO::PARAM_STR),
 											array(':status', (int) $panel_info['status'], PDO::PARAM_INT)
 										)
-									);_e('zapis');
-								}else _e('plik nie istnieje');
+									);
+									echo 'zapis';
+								}
+								else
+								{
+									echo 'plik '.$file.' nie istnieje';
+								}
 							}
 							// Panel przeciągnięto w grupie aktywnych
 							else
 							{
 								// Aktualizacja położenia poszczególnych paneli
-								$_pdo->exec('UPDATE [panels] SET `order` = '.($i+1).', `side` = :side WHERE id = :id',
+								$_pdo->exec('UPDATE [panels] SET `order` = '.$i.', `side` = :side WHERE id = :id',
 								array(
-									array(':id', $pdata[1], PDO::PARAM_INT),
+									array(':id', $pdata[0] === 'New' ? $exists['id'] : $pdata[1], PDO::PARAM_INT),
 									array(':side', $side, PDO::PARAM_STR)
 								));
-								echo '|'.$pdata[1].'-'.$i+1;
 							}
 						}
+
 					}
 				}
-
-				echo $data;
 			}
 			else
 			{

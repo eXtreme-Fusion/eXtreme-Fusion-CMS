@@ -99,7 +99,7 @@ try
 				if ($count)
 				{
 					// Usunięcie tagu
-					$_tag->delTagFromSupplementAndSupplementID('GALLERY_CATS', $_request->get('id')->show());
+					$_tag->delTag('GALLERY_CATS', $_request->get('id')->show());
 					
 					// Przekierowanie dla komunikatu sukcesu
 					$_log->insertSuccess('delete', __('The category has been deleted.'));
@@ -225,7 +225,7 @@ try
 				if ($count)
 				{
 					// Aktualizacja tagu
-					$_tag->updTagFromSupplementAndSupplementID('GALLERY_CATS', $_request->get('id')->show(), $keyword, $access);
+					$_tag->updTag('GALLERY_CATS', $_request->get('id')->show(), $keyword, $access);
 					
 					// Przekierowanie dla komunikatu sukcesu
 					$_log->insertSuccess('edit', __('The category has been edited.'));
@@ -326,7 +326,7 @@ try
 			if ($row)
 			{
 				$keyword = array();
-				if ($keys = $_tag->getTagFromSupplementAndSupplementID('GALLERY_CATS', $_request->get('id')->show())){
+				if ($keys = $_tag->getTag('GALLERY_CATS', $_request->get('id')->show())){
 					foreach($keys as $var){
 						$keyword[] = $var['value'];
 					}
@@ -430,7 +430,7 @@ try
 				if ($count)
 				{
 					// Usunięcie tagu
-					$_tag->delTagFromSupplementAndSupplementID('GALLERY_ALBUMS', $_request->get('id')->show());
+					$_tag->delTag('GALLERY_ALBUMS', $_request->get('id')->show());
 					
 					// Przekierowanie dla komunikatu sukcesu
 					$_log->insertSuccess('delete', __('The album has been deleted.'));
@@ -558,7 +558,7 @@ try
 				if ($count)
 				{
 					// Edycja tagów
-					$_tag->updTagFromSupplementAndSupplementID('GALLERY_ALBUMS', $_request->get('id')->show(), $keyword, $access);
+					$_tag->updTag('GALLERY_ALBUMS', $_request->get('id')->show(), $keyword, $access);
 					
 					// Przekierowanie dla komunikatu sukcesu
 					$_log->insertSuccess('edit', __('The album has been edited.'));
@@ -660,7 +660,7 @@ try
 			if ($row)
 			{
 				$keyword = array();
-				if ($keys = $_tag->getTagFromSupplementAndSupplementID('GALLERY_ALBUMS', $_request->get('id')->show())){
+				if ($keys = $_tag->getTag('GALLERY_ALBUMS', $_request->get('id')->show())){
 					foreach($keys as $var){
 						$keyword[] = $var['value'];
 					}
@@ -785,7 +785,7 @@ try
 			if ($count)
 			{
 				// Usunięcie tagu
-				$_tag->delTagFromSupplementAndSupplementID('GALLERY_PHOTOS', $_request->get('id')->show());
+				$_tag->delTag('GALLERY_PHOTOS', $_request->get('id')->show());
 					
 				// Przekierowanie dla komunikatu sukcesu
 				$_log->insertSuccess('delete', __('The image has been deleted.'));
@@ -869,7 +869,7 @@ try
 				if ($count)
 				{
 					// Edycja tagów
-					$_tag->updTagFromSupplementAndSupplementID('GALLERY_PHOTOS', $_request->get('id')->show(), $keyword, $access);
+					$_tag->updTag('GALLERY_PHOTOS', $_request->get('id')->show(), $keyword, $access);
 					
 					// Przekierowanie dla komunikatu sukcesu
 					$_log->insertSuccess('edit', __('The image has been edited.'));
@@ -1042,7 +1042,7 @@ try
 			if ($row)
 			{
 				$keyword = array();
-				if ($keys = $_tag->getTagFromSupplementAndSupplementID('GALLERY_PHOTOS', $_request->get('id')->show())){
+				if ($keys = $_tag->getTag('GALLERY_PHOTOS', $_request->get('id')->show())){
 					foreach($keys as $var){
 						$keyword[] = $var['value'];
 					}
@@ -1182,7 +1182,7 @@ try
 				)
 			);
 			
-			$_tag->updTagFromSupplementAndSupplementID('GALLERY_GLOBAL', 1, $_request->post('tag')->strip());
+			$_tag->updTag('GALLERY_GLOBAL', 1, $_request->post('tag')->strip());
 			
 			$_tpl->printMessage('valid', $_log->insertSuccess('edit', __('Data has been saved.')));
 		}

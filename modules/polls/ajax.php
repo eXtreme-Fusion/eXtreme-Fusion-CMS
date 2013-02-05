@@ -14,7 +14,7 @@ echo'<script src="'.ADDR_MODULES.'polls/templates/javascripts/polls_panel.js"></
 
 if ($_request->post('send'))
 {
-	$count = $_pdo->exec('INSERT INTO [polls_vote] (`polls`, `user_id`, `response`, `date`) VALUES (:polls, :user, :response, '.time().')',
+	$count = $_pdo->exec('INSERT INTO [polls_vote] (`poll_id`, `user_id`, `response`, `date`) VALUES (:polls, :user, :response, '.time().')',
 		array(
 			array(':polls', $_request->post('polls')->show(), PDO::PARAM_INT),
 			array(':user', $_user->get('id'), PDO::PARAM_INT),
@@ -46,7 +46,7 @@ if ($_pdo->getRowsCount($query))
 	$i = 0; $polls = array();
 	foreach($query as $row)
 	{
-		$query = $_pdo->getRow('SELECT * FROM [polls_vote] WHERE `polls` = :id AND `user_id` = :user',
+		$query = $_pdo->getRow('SELECT * FROM [polls_vote] WHERE `poll_id` = :id AND `user_id` = :user',
 			array(
 				array(':id', $row['id'], PDO::PARAM_INT),
 				array(':user', $_user->get('id'), PDO::PARAM_INT)

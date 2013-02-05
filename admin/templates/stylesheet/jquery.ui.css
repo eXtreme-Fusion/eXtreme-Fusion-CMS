@@ -625,14 +625,13 @@ span.MaxNum {
 	Buttony
 ========================*/
 .AdminButtons {margin-bottom:10px;}
-.AdminButtons span {background:none;text-decoration:none;border-color:transparent transparent transparent;border-color:transparent transparent rgba(255, 255, 255, 0);cursor:pointer;outline:none;font-size:12px;position:relative;}
-.AdminButtons span img {position:absolute;top:7px;left:9px;padding:0 6px 0 0;}
+.AdminButtons span {position:relative;background:none;text-decoration:none;border-color:transparent transparent transparent;border-color:transparent transparent rgba(255, 255, 255, 0);cursor:pointer;outline:none;font-size:12px;position:relative;}
+.AdminButtons span img {top:7px;left:9px;padding:0 6px 0 0;}
 
 .AdminButtons span:hover {text-decoration:none;-moz-box-shadow:0 0 6px #AFDB20;-webkit-box-shadow:0 0 6px #AFDB20;box-shadow:0 0 6px #AFDB20;}
 .AdminButtons span.Cancel:hover {text-decoration:none;-moz-box-shadow:0 0 6px #ccc;-webkit-box-shadow:0 0 6px #ccc;box-shadow:0 0 6px #ccc;}
 
 .AdminButtons span, .AdminButtons span strong {border-width:1px;border-style:solid;display: block;text-align:center;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;}
-
 
 .AdminButtons span strong {border-color: #77A600;border-color: rgba(119, 166, 0, 0);background: transparent url(../images/ui/button-send.png) repeat-x 0 0;border-color: #77A600 transparent #92CC00;border-color: #77A600 rgba(119, 166, 0, 1) rgba(119, 166, 0, 1);}
 .AdminButtons span.Cancel strong {border-color: #CDCDCD;border-color: rgba(205, 205, 205, 0);background: transparent url(../images/ui/button-cancel.png) repeat-x 0 0;border-color: #CDCDCD transparent #D9D9D9;border-color: #CDCDCD rgba(205, 205, 205, 1) rgba(205, 205, 205, 1);}
@@ -645,10 +644,9 @@ span.MaxNum {
 .AdminButtons span strong {display:block;font-weight:bold;padding:5px 16px 6px;text-shadow:0 1px 1px #fff;color:#272727;-moz-user-select:none;-webkit-user-select:none;}
 .AdminButtons span.Cancel strong {text-shadow:0 1px 1px #fff;}
 
-.AdminButtons a {background:none;text-decoration:none;border-color:transparent transparent transparent;border-color:transparent transparent rgba(255, 255, 255, 0);cursor:pointer;outline:none;font-size:12px;position:relative;}
-.AdminButtons a img {position:absolute;top:7px;left:9px;padding:0 6px 0 0;}
+.AdminButtons a {position:relative;background:none;text-decoration:none;border-color:transparent transparent transparent;border-color:transparent transparent rgba(255, 255, 255, 0);cursor:pointer;outline:none;font-size:12px;position:relative;}
 
-.AdminButtons a:hover {text-decoration:none;-moz-box-shadow:0 0 6px #AFDB20;-webkit-box-shadow:0 0 6px #AFDB20;box-shadow:0 0 6px #AFDB20;}
+.AdminButtons a:hover {text-decoration:none;}
 .AdminButtons span.Cancels:hover {text-decoration:none;-moz-box-shadow:0 0 6px #ccc;-webkit-box-shadow:0 0 6px #ccc;box-shadow:0 0 6px #ccc;}
 
 .AdminButtons span, .AdminButtons span strong {border-width:1px;border-style:solid;display: block;text-align:center;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;}

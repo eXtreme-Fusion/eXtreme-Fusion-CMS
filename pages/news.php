@@ -1,15 +1,16 @@
 <?php defined('EF5_SYSTEM') || exit;
 /***********************************************************
 | eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
+| This product is licensed under the BSD License.
+| http://extreme-fusion.org/ef5/license/
 ***********************************************************/
 
+// Konkretny news
 if ($_route->getAction() && $_route->getAction() !== 'page')
 {
 	$_locale->load('news');
@@ -24,7 +25,7 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 	{
 		$_head->set('<link href="'.ADDR_TEMPLATES.'stylesheet/news.css" rel="stylesheet">');
 	}
-	
+
 	! class_exists('Tag') || $_tag = New Tag($_system, $_pdo);
 
 	$item_id = $_route->getAction();
@@ -47,33 +48,24 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 		if ($_user->hasAccess($data['access']))
 		{
 			$_tpl->assign('rows', TRUE);
-	
-			$keyword = array();
-			if ($keys = $_tag->getTagFromSupplementAndSupplementID('NEWS', $data['news_id'])){
-				foreach($keys as $var){
-					$keyword[] = array(
-						'keyword_name' => $var['value'],
-						'tag_url' => $_route->path(array('controller' => 'tags', 'action' => $var['value_for_link']))
-					);
-				}
-			}
-			
+
 			$keyword = array(); $k = array();
-			if ($keys = $_tag->getTagFromSupplementAndSupplementID('NEWS', $data['news_id'])){
+			if ($keys = $_tag->getTag('NEWS', $data['news_id'])){
 				foreach($keys as $var){
 					$keyword[] = array(
-						'keyword_name' => $var['value'],
-						'tag_url' => $_route->path(array('controller' => 'tags', 'action' => $var['value_for_link']))
+						'name' => $var['value'],
+						'url' => $_route->path(array('controller' => 'tags', 'action' => $var['value_for_link'])),
+						'title' => $var['title']
 					);
 					$k[] = $var['value'];
 				}
 			}
-			
-			$k = implode(', ', $k);
+
+			$keyword = Html::arrayToLinks($keyword, ', ');
 			
 			$theme = array(
 				'Title' => $data['title'].' &raquo; '.$_sett->get('site_name'),
-				'Keys' => $k,
+				'Keys' => implode(', ', $k),
 				'Desc' => $data['description']
 			);
 
@@ -97,15 +89,16 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 				'allow_comments' => $data['allow_comments'],
 				'sticky' => $data['sticky']
 			);
+			
 			if ($_user->hasPermission('admin.news'))
 			{
 				$_tpl->assign('access_edit', TRUE);
 			}
+			
+			$_tpl->assign('news', $d);
 
 			$r = $_pdo->exec('UPDATE [news] SET `reads` = `reads`+1 WHERE `id`= :id', array(array(':id', $item_id, PDO::PARAM_INT)));
 
-			$_tpl->assign('news', $d);
-			
 			if ($data['allow_comments'] === '1')
 			{
 				$_comment = $ec->comment;
@@ -130,12 +123,13 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 	}
 
 	$_sbb = $ec->sbb;
-	
+
 	$_tpl->assignGroup(array(
 		'bbcode' => $_sbb->bbcodes('post'),
 		'smiley' => $_sbb->smileys('post')
 	));
 }
+// Wszystkie newsy
 else
 {
 	$_locale->load('news');
@@ -153,8 +147,8 @@ else
 	! class_exists('Tag') || $_tag = New Tag($_system, $_pdo);
 
 	// Sprawdzanie, czy użytkownik ma prawo do zobaczenia jakiegokolwiek newsa
-	$rows = $_pdo->getMatchRowsCount('SELECT `id` FROM [news] WHERE `access` IN ('.$_user->listRoles().') AND `draft` = 0', 
-	//$rows = $_pdo->getMatchRowsCount('SELECT `id` FROM [news] WHERE `access` IN ('.$_user->listRoles().') AND `draft` = 0 AND `language` = :lang', 
+	$rows = $_pdo->getMatchRowsCount('SELECT `id` FROM [news] WHERE `access` IN ('.$_user->listRoles().') AND `draft` = 0',
+	//$rows = $_pdo->getMatchRowsCount('SELECT `id` FROM [news] WHERE `access` IN ('.$_user->listRoles().') AND `draft` = 0 AND `language` = :lang',
 		array(':lang', $_user->getLang(), PDO::PARAM_STR)
 	);
 
@@ -173,7 +167,7 @@ else
 		}
 
 		$_GET['rowstart'] = Paging::getRowStart($_GET['current'], $items_per_page);
-		
+
 		# / STRONICOWANIE #
 		$cache = $_system->cache('news,'.$_user->getCacheName().',page-'.$_GET['current'], NULL, 'news', $_sett->getUns('cache', 'expire_news'));
 		if ($cache === NULL)
@@ -195,14 +189,17 @@ else
 				foreach ($query as $data)
 				{
 					$keyword = array();
-					if ($keys = $_tag->getTagFromSupplementAndSupplementID('NEWS', $data['news_id'])){
+					if ($keys = $_tag->getTag('NEWS', $data['news_id'])){
 						foreach($keys as $var){
 							$keyword[] = array(
-								'keyword_name' => $var['value'],
-								'tag_url' => $_route->path(array('controller' => 'tags', 'action' => $var['value_for_link']))
+								'name' => $var['value'],
+								'url' => $_route->path(array('controller' => 'tags', 'action' => $var['value_for_link'])),
+								'title' => $var['value']
 							);
 						}
 					}
+					
+					$keyword = Html::arrayToLinks($keyword, ', ');
 
 					$cache[] = array(
 						'id' => $data['news_id'],
@@ -215,7 +212,7 @@ else
 						'category_link' => $_route->path(array('controller' => 'news_cats', 'action' => $data['cat_id'], HELP::Title2Link($data['name']))),
 						'category_image' => $data['image'],
 						'language' => __($data['language']),
-						// Dodamy może po ciasteczkach zmienę jezyka newsa i wyswietlanie newsów w danym jezyku^^
+						// todo: Dodamy może po ciasteczkach zmienę jezyka newsa i wyswietlanie newsów w danym jezyku^^
 						'author_id' => $data['user_id'],
 						'author_name' => $_user->getUsername($data['user_id']),
 						'author_link' => $_route->path(array('controller' => 'profile', 'action' => $data['user_id'], HELP::Title2Link($data['username']))),
@@ -246,13 +243,12 @@ else
 			}
 			else
 			{
-				throw new systemException('Error! The user has material in CACHE memory for which does not have permission.');
+				throw new systemException('Error! User has not accesible for him material in CACHE memory.');
 			}
 		}
 
 		$_pagenav = new PageNav(new Paging($rows, $_GET['current'], $items_per_page), $_tpl, 5, array($_route->getFileName(), 'page', FALSE));
-		//$_pagenav = new PageNav(new Paging($rows, $_GET['current'], $items_per_page), $_tpl, 5, array($_route->getFileName(), 'page'.$_route->getByID(2), FALSE)); // old
-
+		
 		if (file_exists(DIR_THEME.'templates'.DS.'paging'.DS.'news_page_nav.tpl'))
 		{
 			$_pagenav->get($_pagenav->create(), 'news_page_nav', DIR_THEME.'templates'.DS.'paging'.DS);
@@ -260,7 +256,7 @@ else
 		else
 		{
 			$_pagenav->get($_pagenav->create(), 'page_nav');
-			// or //
+			// or  - not remove, it's example :) //
 			//$_pagenav->get($_pagenav->create(), 'news_page_nav');
 		}
 

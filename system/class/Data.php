@@ -26,6 +26,20 @@ class Data extends PDO
 {
 	private $_prefix;
 
+	public static function exceptionHandler($exception)
+	{
+		//exit('Connection failed: '.$exception->getMessage());
+	}
+	
+	public function __construct($dsn, $username = '', $password = '', array $driver_options = array())
+	{
+		set_exception_handler(array(__CLASS__, 'exceptionHandler'));
+		
+		parent::__construct($dsn, $username, $password, $driver_options = array());
+		
+		restore_exception_handler();
+	}
+	
 	/**
 	 Zapisywanie ustawień obiektu
 	**/
@@ -117,6 +131,7 @@ class Data extends PDO
 	public function query($query, $type = PDO::FETCH_ASSOC, $fetch = TRUE)
 	{
 		$d = parent::query(str_replace(array('[', ']'), array($this->_prefix, ''), $query));
+
 		if ($fetch)
 		{
 			return $d->fetchAll($type);
@@ -425,4 +440,20 @@ class Data extends PDO
 		
 		return TRUE;
 	}
+	
+	function insert($table = null, $fields = null)
+	{
+		// Sprawdzanie, czy parametry nie zostały pominięte, a zmienna $fields jest tablicą
+		if (is_null($table) || is_null($fields) || !is_array($fields))
+		{
+			return FALSE;
+		}
+
+		$keys = implode('`, `', array_keys($fields));
+		$values = implode("', '", array_values($fields));
+
+		return $this->exec("INSERT INTO ".$table." (`".$keys."`) VALUES ('".$values."')");
+
+	} // end of insert();
+
 }

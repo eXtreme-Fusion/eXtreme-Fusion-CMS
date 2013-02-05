@@ -31,6 +31,11 @@ class URL
 		return $this->ext_allowed;
 	}
 	
+	public function setController($controller)
+	{
+		$this->controller = $controller;
+	}
+	
 	public function getPathPrefix()
 	{
 		if ($this->rewrite_loaded)

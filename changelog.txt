@@ -1,8 +1,13 @@
 ﻿					eXtreme-Fusion V RC1 2012.12.12
 
-- usunięcie katalogu "info": pliki przeniesiono do folderu "dokumentacja"
-- utworzenie katalogu "common" dla plików JS
+- usunięto katalog "info": pliki przeniesiono do folderu "dokumentacja"
+- utworzeno katalog "common" dla plików JS
 - poprawka do kodowania znaków dla języka angielskiego: nie powinno już "krzaczyć"
+- poprawka do detekcji języka: jeśli brakuje indeksu tablicy SERVER, język ustawia się na angielski; przydatne dla wyszukiwarek
+- usunięto niepotrzebne tabele oraz kod z pliku cronjob.php; zmieniono nazwę katalogu "dokumentacja" na "docs"
+- poprawka do czyszczenia cache po zmianie ustawień - nie usuwało plików
+- poprawka Paneli w Panelu Admina - nie powinno już być powielania i problemów z zapisywanie kolejności
+- modyfikacja instalatora: PDO zamiast mysql_*; wybór języka z tłumaczeniem pierwszego etapu instalacji; wdrożenie metod helpera w miejsce strukturalnych
 
 					eXtreme-Fusion V Beta 5 2012.06.23
 

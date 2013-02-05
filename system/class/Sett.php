@@ -97,7 +97,7 @@ class Sett {
 	 */
 	public function clearCache()
 	{
-		$this->_system->clearCache('system', array(sha1(CACHE_PREFIX.'settings')));
+		$this->_system->clearCache('system', 'settings');
 	}
 
 	/**
@@ -129,9 +129,6 @@ class Sett {
 				{
 					throw new systemException('Błąd aktualizacji: Ustawienie o kluczu <strong>'.$key.'</strong> nie istnieje.');
 				}
-
-				// Czyści pamięć podręczną
-				$this->clearCache();
 			}
 			else
 			{
@@ -139,6 +136,9 @@ class Sett {
 			}
 		}
 
+		// Czyści pamięć podręczną
+		$this->clearCache('system', '');
+				
 		// Ustawienia zostały zapisane
 		return TRUE;
 	}

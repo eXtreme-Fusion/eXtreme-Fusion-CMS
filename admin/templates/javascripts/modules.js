@@ -80,7 +80,7 @@ $(function(){
 	$(function(){
 		$('.DragBox').each(function(){
 			$(this).click(function(){
-				$(this).siblings('.DragBoxContent').toggle();
+				//$(this).siblings('.DragBoxContent').toggle();
 			}).end();
 		});
 
@@ -94,14 +94,24 @@ $(function(){
 				opacity: 0.5,
 				stop: function(event, ui){
 					$(ui.item).find('h2').click();
-					var SortOrder = '';
+					
+					var Column = [];
+					
+					
 					$('.PanelColumn').each(function(){
 						var ItemOrder = $(this).sortable('toArray');
-						var ColumnID = $(this).attr('id');
 
-						var array = ColumnID.split('_');
-						SortOrder +=ColumnID+ '=' +ItemOrder.toString()+'|';
+						if (ItemOrder.length > 0) {
+							Column.push('"'+$(this).attr('id')+'": ['+ '"' +ItemOrder.join('", "')+'"]');
+						} else {
+							Column.push('"'+$(this).attr('id')+'": []');
+						}
 					});
+					
+					var SortOrder = '{';
+					SortOrder += Column.join(', ');
+					SortOrder += '}';
+					
 					var DragColumnID = $(this).attr('id');
 
 					$.ajax({

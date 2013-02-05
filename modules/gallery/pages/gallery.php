@@ -119,7 +119,7 @@ if($_route->getByID(1) === 'cat')
 		if ($row)
 		{
 			$keyword = array();
-			if ($keys = $_tag->getTagFromSupplementAndSupplementID('GALLERY_CATS', $_route->getByID(2))){
+			if ($keys = $_tag->getTag('GALLERY_CATS', $_route->getByID(2))){
 				foreach($keys as $var){
 					$keyword[] = $var['value'];
 				}
@@ -256,7 +256,7 @@ elseif($_route->getByID(1) === 'album')
 		if ($row)
 		{		
 			$keyword = array();
-			if ($keys = $_tag->getTagFromSupplementAndSupplementID('GALLERY_ALBUMS', $_route->getByID(2))){
+			if ($keys = $_tag->getTag('GALLERY_ALBUMS', $_route->getByID(2))){
 				foreach($keys as $var){
 					$keyword[] = $var['value'];
 				}
@@ -373,7 +373,7 @@ elseif($_route->getByID(1) === 'photo')
 		if ($row)
 		{		
 			$keyword = array();
-			if ($keys = $_tag->getTagFromSupplementAndSupplementID('GALLERY_PHOTOS', $_route->getByID(2))){
+			if ($keys = $_tag->getTag('GALLERY_PHOTOS', $_route->getByID(2))){
 				foreach($keys as $var){
 					$keyword[] = $var['value'];
 				}
@@ -507,7 +507,7 @@ else
 	if ($seo_var === NULL)
 	{			
 		$keyword = array();
-		if ($keys = $_tag->getTagFromSupplementAndSupplementID('GALLERY_GLOBAL', 1)){
+		if ($keys = $_tag->getTag('GALLERY_GLOBAL', 1)){
 			foreach($keys as $var){
 				$keyword[] = $var['value'];
 			}

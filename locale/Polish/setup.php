@@ -122,7 +122,7 @@ return array(
 	'Login password fields can not be left empty' => 'Pole hasło użytkownika nie może być puste!',
 	'Your email address does not appear to be valid.' => 'Podano nieprawidłowy adres e-mail.',
 	'Email field can not be left empty.' => 'Pole adres e-mail nie może być puste!',
-	'Setup complete' => '<div class="valid">Zakończono instalację. Dziękujemy za wybranie eXtreme-fusion v.5.0 - Ninja Edition!</div>',
+	'Setup complete' => '<div class="valid">Zakończono instalację. Dziękujemy za wybranie eXtreme-Fusion 5 - Ninja Edition!</div>',
 	'Your user settings are not correct:' => 'Podane dane użytkownika zawierają następujące błędy:',
 	//Welcome Message
 	'Welcome to your site' => 'Witaj na nowej stronie.',

@@ -76,7 +76,7 @@ class User {
 	protected $_online_activity;
 
 	// Cache użytkowników online
-	protected $_get_users_online = array();
+	protected $_get_users_online;
 
 	// Cache gości online
 	protected $_get_guests_online = NULL;
@@ -1554,7 +1554,7 @@ class User {
 	 */
 	public function getOnline()
 	{
-		if ($this->_get_users_online !== FALSE && ! $data = $this->_get_users_online)
+		if ($this->_get_users_online !== array() && !$this->_get_users_online)
 		{
 			if ( ! $online = $this->_online)
 			{
@@ -1585,19 +1585,11 @@ class User {
 				}
 			}
 
-			//Sprawdzanie czy jest co zapisać lub usunąć (duplikaty)
-			if ($data)
-			{
-				$this->_get_users_online = $data;
-				//$this->cleanOnlineDuplicates();
-			}
-			else
-			{
-				$this->_get_users_online = FALSE;
-				return array();
-			}
-			return $data;
+			$this->_get_users_online = $data;
+			//$this->cleanOnlineDuplicates();
 		}
+		
+		return $this->_get_users_online;
 	}
 
 	// deprecated

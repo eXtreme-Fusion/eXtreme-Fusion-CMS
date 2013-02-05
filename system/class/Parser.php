@@ -179,121 +179,13 @@ class Parser extends optClass
 	// Ustawienie na FALSE powoduje, że indeksem stanie się wartość z tablicy źródłowej.
 	public function createSelectOpts($data, $selected = NULL, $key_value = FALSE, $no_select_option = FALSE)
 	{
-		if (isNum($selected, FALSE))
-		{
-			$selected = intval($selected);
-		}
-
-		$i = 0; $assign = array();
-
-		// Dopisywanie opcji Brak wyboru
-		if ($no_select_option)
-		{
-			$assign[$i] = array(
-				'value' => '',
-				'display' => __('--Brak wyboru--'),
-				'selected' => ''
-			);
-			$i++;
-		}
-
-
-		if ($key_value)
-		{
-			foreach($data as $key => $value)
-			{
-				$assign[$i] = array(
-					'value' => $key,
-					'display' => $value,
-					'selected' => ''
-				);
-
-
-				if ($selected !== NULL && $key === $selected)
-				{
-					$assign[0]['selected'] = TRUE;
-				}
-
-				$i++;
-			}
-		}
-		else
-		{
-			foreach($data as $value)
-			{
-				$assign[$i] = array(
-					'value' => $value,
-					'display' => $value,
-					'selected' => ''
-				);
-
-				if ($selected !== NULL && $value === $selected)
-				{
-					$assign[$i]['selected'] = TRUE;
-				}
-
-				$i++;
-			}
-		}
-		return $assign;
+		return Html::createSelectOpts($data, $selected, $key_value, $no_select_option);
 	}
 
 	// LISTA MULTI SELECT
 	public function getMultiSelect($data, $selected = NULL, $show_default = TRUE)
 	{
-		if ($show_default)
-		{
-			HELP::arrayUnshift($data, '0', __('--Brak wyboru--'));
-		}
-			if (is_array($selected))
-			{
-				$this->arraySelected($data, $selected, $assign, (int)$show_default);
-			}
-			else
-			{
-				$this->stringSelected($data, $selected, $assign, (int)$show_default);
-			}
-		//}
-
-		return $assign;
-	}
-
-	protected function arraySelected($data, $selected, &$assign, $i)
-	{
-		foreach($data as $key => $value)
-		{
-			$assign[$i] = array(
-				'value' => $key,
-				'display' => $value,
-				'selected' => ''
-			);
-
-			if (in_array($key, $selected))
-			{
-				$assign[$i]['selected'] = TRUE;
-			}
-
-			$i++;
-		}
-	}
-
-	protected function stringSelected($data, $selected, &$assign, $i)
-	{
-		foreach($data as $key => $value)
-		{
-			$assign[$i] = array(
-				'value' => $key,
-				'display' => $value,
-				'selected' => ''
-			);
-
-			if ((string)$key === $selected)
-			{
-				$assign[$i]['selected'] = TRUE;
-			}
-
-			$i++;
-		}
+		return Html::createMultiSelect($data, $selected, $show_default);
 	}
 }
 

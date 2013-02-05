@@ -19,9 +19,7 @@ $system_tables = array(
 	'admin',
 	'bbcodes',
 	'blacklist',
-	'captcha',
 	'comments',
-	'flood_control',
 	'links',
 	'logs',
 	'messages',
@@ -31,15 +29,11 @@ $system_tables = array(
 	'notes',
 	'permissions',
 	'permissions_sections',
-	'ratings',
 	'groups',
 	'panels',
-	'sessions',
 	'settings',
-	'settings_inf',
 	'navigation',
 	'smileys',
-	'submissions',
 	'user_fields',
 	'user_field_cats',
 	'users',
@@ -52,7 +46,8 @@ $system_tables = array(
 	Jeśli nie, wyświetl stosowny komunikat.
 */
 
-$tables = $_system->cache('tables', NULL, 'system', 10);
+// Przestawiam na 100, bo zapytanie metody jest mocno czasochłonne
+$tables = $_system->cache('tables', NULL, 'system', 100);
 
 if ($tables === NULL)
 {
@@ -73,9 +68,9 @@ if ($tables)
 	header('Content-Type: text/html; charset=utf-8');
 
 	// todo: sprawdzac czy katalog install istnieje na serwerze i dopiero wtedy słowo "ponownej instalacji" powinno być linkowane. Jeśli katalogu nie ma, to trzeba w komunikacie napisać że należy wrzucić pliki instalacyjne
-	
+
 	// todo: przerobić poniższe na locale
-	
+
 	if ($_system->detectBrowserLanguage() === 'pl')
 	{
 		throw new systemException('<div style="text-align:center"><p style="font-weight:bold">PL: Błąd! W bazie danych nie znaleziono poniższych, wymaganych tabel systemowych:</p><br /><p>'.implode(', ', $tables).'</p><br /> <p style="font-weight:bold">Dokonaj <a href="'.ADDR_SITE.'install/" title="eXtreme-Fusion 5 reinstallation">ponownej instalacji</a> systemu <a href="http://pl.extreme-fusion.org/" title="eXtreme-Fusion CMS Support">eXtreme-Fusion 5</a> lub przywróć kopię bazy danych.</p></div>');
@@ -88,4 +83,6 @@ if ($tables)
 	{
 		throw new systemException('<div style="text-align:center"><p style="font-weight:bold">EN: Error! The following required database tables do not exists:</p><br /><p>'.implode(', ', $tables).'</p><br /> <p style="font-weight:bold">Dokonaj <a href="'.ADDR_SITE.'install/" title="eXtreme-Fusion 5 reinstallation">Make re-installation</a> of <a href="http://pl.extreme-fusion.org/" title="eXtreme-Fusion CMS Support">eXtreme-Fusion 5</a> or restore a copy of the database.</p></div>');
 	}
+
+	exit;
 }

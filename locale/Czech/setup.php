@@ -101,7 +101,7 @@ return array(
 	'Login password fields can not be left empty' => 'Pole pro heslo nemůže být prázdné!',
 	'Your email address does not appear to be valid.' => 'Byla zadána neplatná adresa e-mailu',
 	'Email field can not be left empty.' => 'Pole e-mailové adresy nemůže být prázdné!',
-	'Setup complete' => '<div class="valid">Dokončení instalace. Děkujeme, že jste se rozhodli pro eXtreme-fusion v.5.0 - Ninja Edition!</div>',
+	'Setup complete' => '<div class="valid">Dokončení instalace. Děkujeme, že jste se rozhodli pro eXtreme-Fusion 5 - Ninja Edition!</div>',
 	'Your user settings are not correct:' => 'Vaše uživatelská data nejsou správná:',
 	//Welcome Message
 	'Welcome to your site' => 'Vítejte na své nové stránce.',

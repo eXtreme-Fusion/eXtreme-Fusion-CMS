@@ -241,7 +241,7 @@ class Files
 	}
 	
 	/**
-	 * Tworzy listę plików/folderów z wskazanej scieżki.
+	 * Tworzy listę plików/folderów ze wskazanej scieżki.
 	 *
 	 *     
 	 * @param   string    	Ścieżka do katalogu
@@ -250,7 +250,7 @@ class Files
 	 * @param   string    	Typ: pliki/katalogi
 	 * @return  array  		Lista plików/katalogów
 	 */
-	public function createFileList($folder, $filter = array(), $sort = TRUE, $type = 'files') 
+	public function createFileList($folder, array $filter = array(), $sort = TRUE, $type = 'files') 
 	{
 		$res = array(); $this->setOmitExt($filter);
 		foreach (new DirectoryIterator($folder) as $file)

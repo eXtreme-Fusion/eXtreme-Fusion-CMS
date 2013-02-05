@@ -384,11 +384,11 @@ try
 						
 						if (isset($access))
 						{
-							$_tag->updTagFromSupplementAndSupplementID('PAGES', $_request->get('id')->show(), $keyword, $access);
+							$_tag->updTag('PAGES', $_request->get('id')->show(), $keyword, $access);
 						}
 						else
 						{
-							$_tag->delTagFromSupplementAndSupplementID('PAGES', $_request->get('id')->show());
+							$_tag->delTag('PAGES', $_request->get('id')->show());
 						}
 						
 						$_request->redirect(FILE_PATH, array('page' => 'entries', 'act' => 'edit', 'status' => 'ok'));
@@ -456,7 +456,7 @@ try
 					! class_exists('Tag') || $_tag = New Tag($_system, $_pdo);
 					
 					$keywords = array();
-					if ($keys = $_tag->getTagFromSupplementAndSupplementID('PAGES', $_request->get('id')->show())){
+					if ($keys = $_tag->getTag('PAGES', $_request->get('id')->show())){
 						foreach($keys as $var){
 							$keywords[] = $var['value'];
 						}
@@ -485,7 +485,7 @@ try
 				$_pdo->exec('DELETE FROM [pages_categories] WHERE id = '.$_request->get('id')->show().' AND `is_system` = 0');
 
 
-				////$_tag->delTagFromSupplementAndSupplementID('NEWS', $_request->get('id')->show());
+				////$_tag->delTag('NEWS', $_request->get('id')->show());
 
 				$_log->insertSuccess('edit', __('Data has been removed.'));
 				$_request->redirect(FILE_PATH, array('page' => 'categories', 'act' => 'delete', 'status' => 'ok'));

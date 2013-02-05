@@ -14,7 +14,6 @@ setlocale(LC_TIME, array('pl_PL.UTF-8', 'Polish'));
 return array(
 	'Charset' => 'UTF-8',
 	'xml_lang' => 'pl',
-	'phpmailer' => 'pl',
 
 
 	'An unexpected error occurred' => 'Wystąpił nieoczekiwany błąd',
