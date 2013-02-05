@@ -1,7 +1,7 @@
 <?php defined('EF5_SYSTEM') || exit;
 
 return array(
-	'Edit profile:' => 'Upravit profil',
+	'Edit profile:' => 'Upravit profill',
 	'Edit account' => 'Upravit účet',
 	'Username:' => 'Název uživatele:',
 	'Current password:' => 'Aktuální heslo:',
