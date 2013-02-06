@@ -1,7 +1,7 @@
 {if $rows}
 	{php} opentable(__('News categories')) {/php}
 		<p class="cat_top dark text_dark">
-			<a href="{$all_news_url}">Newsy</a> <img src="{$THEME_IMAGES}bullet.gif" alt=""> <a href="{$all_news_cats_url}">Kategorie newsów</a> <img src="{$THEME_IMAGES}bullet.gif" alt=""> <strong>{$category.cat_name}</strong> ({$category.cat_news_count})
+			<a href="{$all_news_url}">Newsy</a> <img src="{$THEME_IMAGES}bullet.png" alt=""> <a href="{$all_news_cats_url}">Kategorie newsów</a> <img src="{$THEME_IMAGES}bullet.png" alt=""> <strong>{$category.cat_name}</strong> ({$category.cat_news_count})
 		</p>
 		{if $rows}
 			<div class="clearfix">
@@ -28,7 +28,7 @@
 {elseif $i}
 	{php} opentable(__('News categories')) {/php}
 		<p class="cat_top dark text_dark">
-			<a href="{$all_news_url}">Newsy</a> <img src="{$THEME_IMAGES}bullet.gif" alt=""> <strong>Kategorie newsów</strong>
+			<a href="{$all_news_url}">Newsy</a> <img src="{$THEME_IMAGES}bullet.png" alt=""> <strong>Kategorie newsów</strong>
 		</p>
 		<ul class="cat_list">
 		{section=i}
