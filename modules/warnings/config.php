@@ -22,14 +22,14 @@ $mod_info = array(
 $new_table[1] = array(
 	"warnings",
 	"(
-		`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-		`guilty` MEDIUMINT(8) NOT NULL DEFAULT '0',
-		`sender` MEDIUMINT(8) NOT NULL DEFAULT '0',
+		`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
+		`guilty` MEDIUMINT NOT NULL DEFAULT '0',
+		`sender` MEDIUMINT NOT NULL DEFAULT '0',
 		`title` VARCHAR(100) NOT NULL DEFAULT '',
 		`description` VARCHAR(400) NOT NULL DEFAULT '',
-		`cat` MEDIUMINT(8) NOT NULL DEFAULT '0',
-		`datestamp` INT(10) NOT NULL DEFAULT '0',
-		`expiry` INT(10) NOT NULL DEFAULT '0',
+		`cat` MEDIUMINT NOT NULL DEFAULT '0',
+		`datestamp` INT NOT NULL DEFAULT '0',
+		`expiry` INT NOT NULL DEFAULT '0',
 		`notification` TINYINT(1) UNSIGNED NOT NULL DEFAULT '1',
 		PRIMARY KEY (`id`)
 	) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;"
@@ -47,7 +47,7 @@ $new_table[2] = array(
 $new_table[3] = array(
 	"warnings_cats",
 	"(
-		`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+		`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 		`title` VARCHAR(100) NOT NULL DEFAULT '',
 		`description` VARCHAR(255) DEFAULT NULL,
 		PRIMARY KEY (`id`)
@@ -57,8 +57,8 @@ $new_table[3] = array(
 $new_table[4] = array(
 	"warnings_explanation",
 	"(
-		`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-		`warnings` MEDIUMINT(8) NOT NULL DEFAULT '0',
+		`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
+		`warnings` MEDIUMINT NOT NULL DEFAULT '0',
 		`title` VARCHAR(100) NOT NULL DEFAULT '',
 		`description` VARCHAR(400) DEFAULT NULL,
 		PRIMARY KEY (`id`)

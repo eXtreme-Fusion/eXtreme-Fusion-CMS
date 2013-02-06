@@ -102,7 +102,7 @@ try
 			$title = $_request->post('title')->strip();
 			$description = $_request->post('description')->strip();
 			
-			if (($_request->get('action')->show() === 'edit') && $_request->get('id')->isNum(TRUE)) 
+			if ($_request->get('action')->show() === 'edit' && $_request->get('id')->isNum(TRUE)) 
 			{
 				// Wykonaj zapytania
 				$count = $_pdo->exec('
@@ -154,7 +154,7 @@ try
 		}
 		
 		// Sprawdzanie czy przesłano formularz edycji
-		if (($_request->get('action')->show() === 'edit') && $_request->get('id')->isNum(TRUE))
+		if ($_request->get('action')->show() === 'edit' && $_request->get('id')->isNum(TRUE))
 		{
 			// Pobranie kolumny z danego identyfikatora
 			$row = $_pdo->getRow('SELECT `id`, `title`, `description` FROM [warnings_cats] WHERE `id` = :id',
@@ -181,7 +181,7 @@ try
 		
 		$query = $_pdo->getData('SELECT * FROM [warnings_cats] ORDER BY `title`');
 		
-		if ($_pdo->getRowsCount($query))
+		if ($query)
 		{
 			foreach($query as $row)
             {
@@ -258,7 +258,7 @@ try
 				throw new systemException('Empty field title');
 			}
 			
-			if (($_request->get('action')->show() === 'edit') && $_request->get('id')->isNum(TRUE)) 
+			if ($_request->get('action')->show() === 'edit' && $_request->get('id')->isNum(TRUE)) 
 			{
 				// Wykonaj zapytania
 				$count = $_pdo->exec('
@@ -321,7 +321,7 @@ try
 		}
 		
 		// Sprawdzanie czy przesłano formularz edycji
-		if (($_request->get('action')->show() === 'edit') && $_request->get('id')->isNum(TRUE))
+		if ($_request->get('action')->show() === 'edit' && $_request->get('id')->isNum(TRUE))
 		{
 			// Pobranie kolumny z danego identyfikatora
 			$row = $_pdo->getRow('SELECT * FROM [warnings] WHERE `id` = :id',
@@ -352,7 +352,7 @@ try
 		}
 		
 		$cats = array(); $query = $_pdo->getData('SELECT `id`, `title` FROM [warnings_cats] ORDER BY `title`');
-		if ($_pdo->getRowsCount($query))
+		if ($query)
 		{
 			foreach($query as $row)
 			{
@@ -368,7 +368,7 @@ try
 		$q = $_pdo->getData('SELECT * FROM [warnings] ORDER BY `datestamp`');
 		
 		// Sprawdzanie czy pobrano dane
-		if ($_pdo->getRowsCount($q))
+		if ($q)
 		{
 			foreach($q as $row)
             {

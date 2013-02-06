@@ -65,7 +65,7 @@ class WarningsSett {
 	 */
 	public function clearCache()
 	{	
-		$this->_system->clearCache('warnings', array('settings'));
+		$this->_system->clearCache('warnings', 'settings');
 	}
 	
 	/**
