@@ -66,7 +66,7 @@ $new_table[4] = array(
 );
 
 $admin_page[1] = array(
-	'title' => __('warning'),
+	'title' => __('Warning'),
 	'image' => 'templates/images/warnings.png',
 	'page' => 'admin/warnings.php',
 	'perm' => 'admin'
