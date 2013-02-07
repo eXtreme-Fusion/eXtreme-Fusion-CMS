@@ -17,7 +17,7 @@ class SmileyBBcode
 	protected $_head;
 	protected $_user;
 	protected $_system;
-	// Spoiler ³aduje kod js, wiêc mo¿e byc tylko raz wywo³any
+	// Spoiler Å‚aduje kod js, wiÄ™c moÅ¼e byc tylko raz wywoÅ‚any
 	protected $_spo_loaded = FALSE;
 
 	//** Singleton pattern implementation **/
