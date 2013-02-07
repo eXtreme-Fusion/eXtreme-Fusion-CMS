@@ -17,6 +17,7 @@ class SmileyBBcode
 	protected $_head;
 	protected $_user;
 	protected $_system;
+	protected $_spo = FALSE;
 
 	//** Singleton pattern implementation **/
 	private static $_inst;
@@ -154,7 +155,11 @@ class SmileyBBcode
 		{
 			if (file_exists(DIR_SYSTEM.'bbcodes'.DS.$bbcode.'.php'))
 			{
-				include DIR_SYSTEM.'bbcodes'.DS.$bbcode.'.php';
+				if ($bbcode === 'spo' && !$this->_spo)
+				{
+					include DIR_SYSTEM.'bbcodes'.DS.$bbcode.'.php';
+					$this->_spo = TRUE;
+				}
 			}
 		}
 
