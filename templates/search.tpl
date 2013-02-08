@@ -17,7 +17,7 @@
 		<div class="tbl Buttons">
 			<div class="center grid_2">
 				<input type="hidden" name="search" value="yes" />
-				<span id="SendForm_This" class="Save button"><strong>{i18n('Search')}</strong></span>
+				<span id="SendForm_This" class="save button"><strong>{i18n('Search')}</strong></span>
 			</div>
 		</div>
 	</form>

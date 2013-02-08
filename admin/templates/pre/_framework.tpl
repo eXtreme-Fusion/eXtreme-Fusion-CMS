@@ -115,9 +115,6 @@
 								<ul class="select page-5">
 									<li><a id="Menu-5" href="#"><strong><span>{i18n('Modules')}</span></strong></a></li>
 								</ul>
-								<ul class="select">
-									<li><a href="http://www.mindmeister.com/97887012/extreme-fusion-v-5-0" target="mainFrame"><strong><span>MindMeister</span></strong></a></li>
-								</ul>
 							</div>
 						</div>
 					</div>

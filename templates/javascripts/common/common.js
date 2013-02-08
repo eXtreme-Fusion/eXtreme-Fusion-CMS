@@ -85,3 +85,46 @@
         }
     });
 })(jQuery);
+
+$(function() {
+
+	// ============================
+	// Wysyłanie formularzy przez link
+	// ============================
+	$('.Buttons .save').bind('click', function() {
+		$('#Preview').remove();
+		var FormSubmitID = (this.id).split('_');
+		$('#' +FormSubmitID[1]).submit();
+	});
+
+	$('.Buttons .Preview').bind('click', function() {
+		$('#Save').remove();
+		var FormSubmitID = (this.id).split('_');
+		$('#' +FormSubmitID[1]).submit();
+	})
+
+	$('.Buttons .Delete').bind('click', function() {
+		$('#Preview').remove();
+		$('#Save').remove();
+		var FormSubmitID = (this.id).split('_');
+		$('#' +FormSubmitID[1]).submit();
+	})
+	
+
+	// Manipulowanie domyślną zawartością pola
+	
+	$('.valueSystem').each(function() {
+		var val = $(this).val();
+		$(this).focus(
+			function() {
+				if (this.value == val) {
+					this.value = '';
+				}
+			}
+		).blur(function() {
+			if (this.value == '') {
+				this.value = val;
+			}
+		});
+	});
+});

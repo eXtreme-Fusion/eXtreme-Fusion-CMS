@@ -32,8 +32,8 @@
 	{php} openside(__('Login')) {/php}
 	<div id="user_info_panel">
 		<form method="post" action="{$URL_REQUEST}">
-			<input type="text" name="username" id="username" value="{i18n("Username:")}">
-			<input type="password" name="password" id="password" value="{i18n("Password:")}">
+			<input type="text" name="username" id="username" class="valueSystem" value="{i18n("Username:")}">
+			<input type="password" name="password" id="password" class="valueSystem" value="{i18n("Password:")}">
 			<div>
 				<input type="checkbox" name="remember_me" value="y" id="remember">
 				<label for="remember">{i18n("Remember me")}</label>

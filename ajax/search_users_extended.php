@@ -1,4 +1,4 @@
-<?php // Wyszukiwania uzytkownika po ID, loginie, adresie e-mail b¹dŸ IP
+<?php // Wyszukiwania uzytkownika po ID, loginie, adresie e-mail bÄ…dÅº IP
 /***********************************************************
 | eXtreme-Fusion 5.0 Beta 5
 | Content Management System       
@@ -79,12 +79,12 @@ if ($_user->isLoggedIn())
 			}
 			else
 			{
-				echo '{"status" : 1, "error_msg" : "Brak wyników wyszukiwania."}'; exit; // brak wyników wyszukiwania
+				echo '{"status" : 1, "error_msg" : "Brak wynikÃ³w wyszukiwania."}'; exit; // brak wynikÃ³w wyszukiwania
 			}
 		}
 	}
 	
-	echo '{"status" : 2}'; exit; // brak reakcji - nie przes³ano danych
+	echo '{"status" : 2}'; exit; // brak reakcji - nie przesÅ‚ano danych
 }
 
-echo '{"status" : 3, "error_msg" : "B³¹d: sesja zalogowania straci³a wa¿noœæ. Nale¿y zalogowaæ siê ponownie."}'; exit;
+echo '{"status" : 3, "error_msg" : "BÅ‚Ä…d: sesja zalogowania straciÅ‚a waÅ¼noÅ›Ä‡. NaleÅ¼y zalogowaÄ‡ siÄ™ ponownie."}'; exit;

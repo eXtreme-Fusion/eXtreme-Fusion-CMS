@@ -1,21 +1,5 @@
 $(document).ready(function() {
-	
-//********** Manipulowanie domyślną zawartością pola input i textarea **********//
 
-	$('input:text, input:password, input:password, textarea').each(function() {
-    	var default_value = this.value;
-    	$(this).focus(function() {
-        	if(this.value == default_value) {
-            	this.value = '';
-        	}
-    	});
-		
-    	$(this).blur(function() {
-        	if(this.value == '') {
-            	this.value = default_value;
-        	}
-    	});
-	});
 
 
 //********** Wyświetlanie zawartości title w dymku **********//
