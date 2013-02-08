@@ -9,13 +9,13 @@ $.fn.simpletooltip=function(){
 					var tipX=e.pageX+12;
 					var tipY=e.pageY+12;
 					$(this).attr("title","");
-					$("body").append("<div id='simpleTooltip' style='position:absolute;z-index:999999;display:none;border-top-left-radius:4px;-moz-border-radius-topleft:4px;-webkit-border-top-left-radius:4px;border-top-right-radius:4px;-moz-border-radius-topright:4px;-webkit-border-top-right-radius:4px;border-bottom-left-radius:4px;-moz-border-radius-bottomleft:4px;-webkit-border-bottom-left-radius:4px;border-bottom-right-radius:4px;-moz-border-radius-bottomright:4px;-webkit-border-bottom-right-radius:4px;'>"+text+"</div>").corner('4px');
+					$("body").append("<div id='simpleTooltip' style='position:absolute;z-index:999999;display:none;border-top-left-radius:4px;-moz-border-radius-topleft:4px;-webkit-border-top-left-radius:4px;border-top-right-radius:4px;-moz-border-radius-topright:4px;-webkit-border-top-right-radius:4px;border-bottom-left-radius:4px;-moz-border-radius-bottomleft:4px;-webkit-border-bottom-left-radius:4px;border-bottom-right-radius:4px;-moz-border-radius-bottomright:4px;-webkit-border-bottom-right-radius:4px;'>"+text+"</div>").css({'border-radius': '4px'});
 					if($.browser.msie)
 					var tipWidth=$("#simpleTooltip").outerWidth(true)
 					else
 					var tipWidth=$("#simpleTooltip").width();
 					$("#simpleTooltip").width(tipWidth);
-					$("#simpleTooltip").css("left",tipX).css("top",tipY).css("opacity","0.8").fadeIn(slow);
+					$("#simpleTooltip").css("left",tipX).css("top",tipY).css("opacity","0.8").fadeIn('slow');
 				},
 				mouseout: function(){
 					$("#simpleTooltip").remove();

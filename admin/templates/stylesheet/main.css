@@ -10,6 +10,7 @@ body {
 	font-size:12px;
 	color:#333;
 	overflow-x:hidden;
+	background: url(../images/ui/iframe-shadow-top.png) repeat-x;
 	}
 * table,table {
 	margin:0;
