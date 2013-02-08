@@ -9,6 +9,7 @@
 | This product is licensed under the BSD License.
 | http://extreme-fusion.org/ef5/license/
 ***********************************************************/
+// todo: przepisaƒá klasƒô z u≈ºyciem cache.
 
 class Panels
 {
@@ -33,8 +34,8 @@ class Panels
 	{
 		$this->_mod = $_mod;
 	}
-	
-	// Pobiera z bazy danych dane wszystkich zainstalowanych modu≥Ûw i zapisuje do zmiennej klsowej
+
+	// Pobiera z bazy danych dane wszystkich zainstalowanych modu≈Ç√≥w i zapisuje do zmiennej klsowej
 	public function adminGetDataPanels($_user)
 	{
 		$query = $this->_pdo->getData('SELECT * FROM [panels] ORDER BY `side`, `order`');
@@ -55,38 +56,39 @@ class Panels
 		}
 	}
 
-	// Tworzy listÍ wszystkich paneli dostÍpnych na FTP poza modu≥ami (samodzielnie)
+	// Tworzy listƒô wszystkich paneli dostƒôpnych na FTP poza modu≈Çami (samodzielnie)
 	// na podstawie prefiksu katalogu "_panel"
 	public function adminGetFtpPanels()
 	{
 		$this->panels = HELP::getFileList(DIR_MODULES, array('.', '..', '.svn', '.gitignore'), TRUE, 'folders', '_panel');
 	}
 
-	// Tworzy listÍ wszystkich paneli dostÍpnych w modu≥ach (niesamodzielnie)
+	// Tworzy listƒô wszystkich paneli dostƒôpnych w modu≈Çach (niesamodzielnie)
+	// Podanie drugiego parametru jako TRUE spowoduje, ≈ºe uwzglƒôdnione zostanƒÖ tylko zainstalowane modu≈Çy.
 	public function adminGetModulesPanels($check_if_installed = FALSE)
 	{
-		// Tworzy listÍ wszystkich folderÛw zawartych w katalogu "modules"
+		// Tworzy listƒô wszystkich folder√≥w zawartych w katalogu "modules"
 		$modules = HELP::getFileList(DIR_MODULES, array('.', '..', '.svn', '.gitignore'), TRUE, 'folders');
-		
+
 		$list = array(); $mod = array();
 		foreach ($modules as $module)
 		{
-			// Tworzy listÍ paneli dostÍpnych w $module rozpoznajπc je po prefiksie "_panel" katalogu.
+			// Tworzy listƒô paneli dostƒôpnych w $module rozpoznajƒÖc je po prefiksie "_panel" katalogu.
 			$module_panel = HELP::getFileList(DIR_MODULES.$module.DS, array('.', '..', '.svn', '.gitignore'), TRUE, 'folders', '_panel');
 
 			foreach($module_panel as $mpanel)
-			{	
+			{
 				$list[] = $module.'/'.$mpanel;
 				$mod[] = $module;
 			}
 		}
-		
+
 		if ($check_if_installed)
 		{
 			if ($this->_mod)
 			{
 				$installed = $this->_mod->getInstalled();
-				
+
 				foreach($mod as $key => $dir)
 				{
 					if (in_array($dir, $installed))
@@ -106,8 +108,8 @@ class Panels
 		}
 	}
 
-	// Tworzy listÍ nieaktywnych paneli, ktÛrych moøna uøyÊ zapisujπc je do zmiennej klasowej.
-	// Nie zosta≥y uøyte lub modu≥, z ktÛrego pochodzπ jest zainstalowany lub wystÍpujπ samodzielnie.
+	// Tworzy listƒô (z danymi z plik√≥w "config.php") nieaktywnych paneli, kt√≥rych mo≈ºna u≈ºyƒá.
+	// Nie zosta≈Çy u≈ºyte lub modu≈Ç, z kt√≥rego pochodzƒÖ jest zainstalowany lub wystƒôpujƒÖ samodzielnie.
 	public function adminMakeListPanels($_user, $check_if_installed = FALSE)
 	{
 		$this->adminGetDataPanels($_user);
@@ -135,16 +137,18 @@ class Panels
 			}
 		}
 	}
-	
+
+	// Zwraca tablicƒô z listƒÖ nazw folder√≥w paneli dostƒôpnych do instalacji
 	public function getInactivePanelsDir($_user, $check_if_installed)
 	{
 		$this->adminGetDataPanels($_user);
 		$this->adminGetFtpPanels();
 		$this->adminGetModulesPanels($check_if_installed);
-		
+
 		return $this->panels;
 	}
 
+	// Zwraca tablicƒô z danymi (z plik√≥w "config.php") paneli dostƒôpnych do instalacji
 	public function adminGetInactivePanels()
 	{
 		return $this->inactive_panels;
@@ -165,11 +169,12 @@ class Panels
 		return $this->panel;
 	}
 
+	// Aktualizacja panelu przez edytor.
     public function updatePanel($id, array $access, $name, $content = NULL)
     {
         if ( ! isNum($id))
         {
-            throw new systemException('B≥πd! Parametr metody jest nieprawid≥owego typu.');
+            throw new systemException('B≈ÇƒÖd! Parametr metody jest nieprawid≈Çowego typu.');
         }
 
 		$data = $this->get($id);
@@ -198,11 +203,12 @@ class Panels
 		);
 	}
 
+	// Zapis panelu przez edytor.
     public function insertPanel($name, $content, $side, array $access)
     {
         if ( ! isNum($side))
         {
-            throw new systemException('B≥πd! Parametr metody jest nieprawid≥owego typu.');
+            throw new systemException('B≈ÇƒÖd! Parametr metody jest nieprawid≈Çowego typu.');
         }
 
 		$this->_pdo->exec("UPDATE [panels] SET `order`=`order`+1 WHERE `side`='{$side}'");
@@ -263,7 +269,7 @@ class Panels
         return '?>'.$val;
     }
 
-	/** Wyúwietlanie paneli poza Panelem Admina **/
+	/** Wy≈õwietlanie paneli poza Panelem Admina **/
 
 	public function checkState($side)
 	{
