@@ -95,6 +95,7 @@ defined('ADDR_CSS') || define('ADDR_CSS', ADDR_TEMPLATES.'stylesheet/');
 defined('ADDR_IMAGES') || define('ADDR_IMAGES', ADDR_TEMPLATES.'images/');
 defined('ADDR_JS') || define('ADDR_JS', ADDR_TEMPLATES.'javascripts/');
 defined('ADDR_COMMON_JS') || define('ADDR_COMMON_JS', ADDR_TEMPLATES.'javascripts/common/');
+defined('ADDR_COMMON_CSS') || define('ADDR_COMMON_CSS', ADDR_TEMPLATES.'stylesheet/common/');
 defined('ADDR_BBCODE') || define('ADDR_BBCODE', ADDR_SITE.'system/bbcodes/');
 defined('ADDR_MODULES') || define('ADDR_MODULES', ADDR_SITE.'modules/');
 

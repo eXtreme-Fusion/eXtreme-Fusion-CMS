@@ -4,15 +4,15 @@
 		<title></title>
 		<meta charset="{i18n('Charset')}" />
 		<link rel="shortcut icon" href="{$ADDR_FAVICON}" type="image/x-icon" />
-		<link href="{$ADDR_ADMIN_CSS}grid.reset.css" media="screen" rel="stylesheet" />
-		<link href="{$ADDR_ADMIN_CSS}grid.text.css" media="screen" rel="stylesheet" />
-		<link href="{$ADDR_ADMIN_CSS}grid.960.css" media="screen" rel="stylesheet" />
-		<link href="{$ADDR_ADMIN_CSS}jquery.ui.css" media="screen" rel="stylesheet" />
-		<link href="{$ADDR_ADMIN_CSS}jquery.uniform.css" media="screen" rel="stylesheet" />
-		<link href="{$ADDR_ADMIN_CSS}jquery.table.css" media="screen" rel="stylesheet" />
-		<link href="{$ADDR_ADMIN_CSS}jquery.validationEngine.css" media="screen" rel="stylesheet" />
-		<link href="{$ADDR_ADMIN_CSS}jquery.tipTip.css" media="screen" rel="stylesheet" />
-		<link href="{$ADDR_ADMIN_CSS}jquery.colorpicker.css" media="screen" rel="stylesheet" />
+		<link href="{$ADDR_COMMON_CSS}grid.reset.css" media="screen" rel="stylesheet" />
+		<link href="{$ADDR_COMMON_CSS}grid.text.css" media="screen" rel="stylesheet" />
+		<link href="{$ADDR_COMMON_CSS}grid.960.css" media="screen" rel="stylesheet" />
+		<link href="{$ADDR_COMMON_CSS}jquery-ui.css" media="screen" rel="stylesheet" />
+		<link href="{$ADDR_COMMON_CSS}jquery.uniform.css" media="screen" rel="stylesheet" />
+		<link href="{$ADDR_COMMON_CSS}jquery.table.css" media="screen" rel="stylesheet" />
+		<link href="{$ADDR_COMMON_CSS}jquery.validationEngine.css" media="screen" rel="stylesheet" />
+		<link href="{$ADDR_COMMON_CSS}jquery.tipTip.css" media="screen" rel="stylesheet" />
+		<link href="{$ADDR_COMMON_CSS}jquery.colorpicker.css" media="screen" rel="stylesheet" />
 		<link href="{$ADDR_ADMIN_CSS}jquery.tagedit.css" media="screen" rel="stylesheet" />
 		<link href="{$ADDR_ADMIN_CSS}main.css" media="screen" rel="stylesheet" />
 
@@ -20,11 +20,11 @@
 		<script src="{$ADDR_COMMON_JS}jquery-ui.js"></script>
 		<script src="{$ADDR_ADMIN_JS}jquery.corner.js"></script>
 		<script src="{$ADDR_ADMIN_JS}jquery.jeditable.js"></script>
-		<script src="{$ADDR_ADMIN_JS}jquery.tooltip.js"></script>
-		<script src="{$ADDR_ADMIN_JS}jquery.tipTip.js"></script>
-		<script src="{$ADDR_ADMIN_JS}jquery.dataTables.js"></script>
-		<script src="{$ADDR_ADMIN_JS}jquery.validationEngine.js"></script>
-		<script src="{$ADDR_ADMIN_JS}jquery.uniform.js"></script>
+		<script src="{$ADDR_COMMON_JS}jquery.tooltip.js"></script>
+		<script src="{$ADDR_COMMON_JS}jquery.tipTip.js"></script>
+		<script src="{$ADDR_COMMON_JS}jquery.dataTables.js"></script>
+		<script src="{$ADDR_COMMON_JS}jquery.validationEngine.js"></script>
+		<script src="{$ADDR_COMMON_JS}jquery.uniform.js"></script>
 		<script src="{$ADDR_ADMIN_JS}jquery.tagedit-1.2.0.js"></script>
 		<script src="{$ADDR_ADMIN_JS}jquery.autoGrowInput.js"></script>
 		<script src="{$ADDR_ADMIN_JS}main.functions.js"></script>
@@ -32,7 +32,7 @@
 		<script src="{$ADDR_ADMIN_JS}jquery.Alert.js"></script>
 		<script src="{$ADDR_ADMIN_JS}main.js"></script>
 		<script src="{$ADDR_ADMIN_JS}ckeditor/ckeditor.js"></script>
-		<script src="{$ADDR_JS}common.js"></script>
+		<script src="{$ADDR_COMMON_JS}common.js"></script>
 		{literal}
 			<script>
 				var addr_site = '{/literal}{$ADDR_SITE}{literal}';
