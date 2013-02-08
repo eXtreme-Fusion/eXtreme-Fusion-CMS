@@ -15,7 +15,7 @@ $mod_info = array(
 	'support' => 'http://extreme-fusion.org',
 	'version' => '1.0',
 	'dir' => 'feedback',
-	'development' => FALSE,
+	'development' => TRUE,
 	'developmentMessage' => __('Modules under Development.')
 );
 
