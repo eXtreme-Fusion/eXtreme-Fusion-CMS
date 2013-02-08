@@ -16,42 +16,7 @@
 .ui-helper-clearfix { display:block; }
 /* end clearfix */
 .ui-helper-zfix { width: 100%; height: 100%; top: 0; left: 0; position: absolute; opacity: 0; filter:Alpha(Opacity=0); }
-.AdminButtons {margin-bottom:10px;}
-.AdminButtons span {position:relative;background:none;text-decoration:none;border-color:transparent transparent transparent;border-color:transparent transparent rgba(255, 255, 255, 0);cursor:pointer;outline:none;font-size:12px;position:relative;}
-.AdminButtons span img {top:7px;left:9px;padding:0 6px 0 0;}
 
-.AdminButtons span:hover {text-decoration:none;-moz-box-shadow:0 0 6px #AFDB20;-webkit-box-shadow:0 0 6px #AFDB20;box-shadow:0 0 6px #AFDB20;}
-.AdminButtons span.Cancel:hover {text-decoration:none;-moz-box-shadow:0 0 6px #ccc;-webkit-box-shadow:0 0 6px #ccc;box-shadow:0 0 6px #ccc;}
-
-.AdminButtons span, .AdminButtons span strong {border-width:1px;border-style:solid;display: block;text-align:center;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;}
-
-.AdminButtons span strong {border-color: #77A600;border-color: rgba(119, 166, 0, 0);background: transparent url(../../images/ui/button-send.png) repeat-x 0 0;border-color: #77A600 transparent #92CC00;border-color: #77A600 rgba(119, 166, 0, 1) rgba(119, 166, 0, 1);}
-.AdminButtons span.Cancel strong {border-color: #CDCDCD;border-color: rgba(205, 205, 205, 0);background: transparent url(../../images/ui/button-cancel.png) repeat-x 0 0;border-color: #CDCDCD transparent #D9D9D9;border-color: #CDCDCD rgba(205, 205, 205, 1) rgba(205, 205, 205, 1);}
-
-.AdminButtons span:hover strong {background-position: 0 -80px;}
-.AdminButtons span a:hover {text-decoration:none}
-.AdminButtons span:active strong {background-position: 0 -80px;border-color: #B7B7B7 transparent #D4D4D4;border-color: rgba(119, 166, 0, 1) rgba(198 ,84, 108, 1) rgba(119, 166, 0, 1);}
-.AdminButtons span.Cancel:active strong {background-position: 0 -80px;border-color: #B7B7B7 transparent #D4D4D4;border-color: rgba(205, 205, 205, 1) rgba(205, 205, 205, 1) rgba(205, 205, 205, 1);}
-
-.AdminButtons span strong {display:block;font-weight:bold;padding:5px 16px 6px;text-shadow:0 1px 1px #fff;color:#272727;-moz-user-select:none;-webkit-user-select:none;}
-.AdminButtons span.Cancel strong {text-shadow:0 1px 1px #fff;}
-
-.AdminButtons a {position:relative;background:none;text-decoration:none;border-color:transparent transparent transparent;border-color:transparent transparent rgba(255, 255, 255, 0);cursor:pointer;outline:none;font-size:12px;position:relative;}
-
-.AdminButtons a:hover {text-decoration:none;}
-.AdminButtons span.Cancels:hover {text-decoration:none;-moz-box-shadow:0 0 6px #ccc;-webkit-box-shadow:0 0 6px #ccc;box-shadow:0 0 6px #ccc;}
-
-.AdminButtons span, .AdminButtons span strong {border-width:1px;border-style:solid;display: block;text-align:center;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;}
-
-.AdminButtons a strong {border-color: #77A600;border-color: rgba(119, 166, 0, 0);background: transparent url(../../images/ui/button-send.png) repeat-x 0 0;border-color: #77A600 transparent #92CC00;border-color: #77A600 rgba(119, 166, 0, 1) rgba(119, 166, 0, 1);}
-.AdminButtons span.Cancels strong {border-color: #CDCDCD;border-color: rgba(205, 205, 205, 0);background: transparent url(../../images/ui/button-cancel.png) repeat-x 0 0;border-color: #CDCDCD transparent #D9D9D9;border-color: #CDCDCD rgba(205, 205, 205, 1) rgba(205, 205, 205, 1);}
-
-.AdminButtons a:hover strong {background-position: 0 -80px;}
-.AdminButtons a:active strong {background-position: 0 -80px;border-color: #B7B7B7 transparent #D4D4D4;border-color: rgba(119, 166, 0, 1) rgba(198 ,84, 108, 1) rgba(119, 166, 0, 1);}
-.AdminButtons span.Cancels:active strong {background-position: 0 -80px;border-color: #B7B7B7 transparent #D4D4D4;border-color: rgba(205, 205, 205, 1) rgba(205, 205, 205, 1) rgba(205, 205, 205, 1);}
-
-.AdminButtons a strong {display:block;font-weight:bold;padding:5px 16px 6px;text-shadow:0 1px 1px #fff;color:#272727;-moz-user-select:none;-webkit-user-select:none;}
-.AdminButtons span.Cancels strong {text-shadow:0 1px 1px #fff;}
 
 /* Interaction Cues
 ----------------------------------*/
@@ -85,26 +50,26 @@
 .ui-widget { font-family: Verdana,Arial,sans-serif; font-size: 1.1em; }
 .ui-widget .ui-widget { font-size: 1em; }
 .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: Verdana,Arial,sans-serif; font-size: 1em; }
-.ui-widget-content { border: 1px solid #aaaaaa; background: #ffffff url(../../admin/templates/images/ui/ui-bg_flat_75_ffffff_40x100.png) 50% 50% repeat-x; color: #222222; }
+.ui-widget-content { border: 1px solid #aaaaaa; background: #ffffff url(../images/ui/ui-bg_flat_75_ffffff_40x100.png) 50% 50% repeat-x; color: #222222; }
 .ui-widget-content a { color: #222222; }
-.ui-widget-header { border: 1px solid #aaa; background: #F1F1F1 url(../../admin/templates/images/ui/bg-panel-header.gif) repeat-x scroll 0 1px; color:#fff; font-weight: bold; }
+.ui-widget-header { border: 1px solid #aaa; background: #F1F1F1 url(../images/ui/bg-panel-header.gif) repeat-x scroll 0 1px; color:#fff; font-weight: bold; }
 .ui-widget-header a { color: #ccc; }
 
 /* Interaction states
 ----------------------------------*/
-.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { border: 1px solid #d3d3d3; background: #e6e6e6 url(../../admin/templates/images/ui/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x; font-weight: normal; color: #000; }
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { border: 1px solid #d3d3d3; background: #e6e6e6 url(../images/ui/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x; font-weight: normal; color: #000; }
 .ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited { color: #555555; text-decoration: none; }
-.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus { border: 1px solid #999999; background: #dadada url(../../admin/templates/images/ui/ui-bg_glass_75_dadada_1x400.png) 50% 50% repeat-x; font-weight: normal; color: #212121; }
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus { border: 1px solid #999999; background: #dadada url(../images/ui/ui-bg_glass_75_dadada_1x400.png) 50% 50% repeat-x; font-weight: normal; color: #212121; }
 .ui-state-hover a, .ui-state-hover a:hover { color: #212121; text-decoration: none; }
-.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active { border: 1px solid #aaaaaa; background: #ffffff url(../../admin/templates/images/ui/ui-bg_glass_65_ffffff_1x400.png) 50% 50% repeat-x; font-weight: normal; color: #212121; }
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active { border: 1px solid #aaaaaa; background: #ffffff url(../images/ui/ui-bg_glass_65_ffffff_1x400.png) 50% 50% repeat-x; font-weight: normal; color: #212121; }
 .ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited { color: #212121; text-decoration: none; }
 .ui-widget :active { outline: none; }
 
 /* Interaction Cues
 ----------------------------------*/
-.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight  {border: 1px solid #fcefa1; background: #fbf9ee url(../../admin/templates/images/ui/ui-bg_glass_55_fbf9ee_1x400.png) 50% 50% repeat-x; color: #363636; }
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight  {border: 1px solid #fcefa1; background: #fbf9ee url(../images/ui/ui-bg_glass_55_fbf9ee_1x400.png) 50% 50% repeat-x; color: #363636; }
 .ui-state-highlight a, .ui-widget-content .ui-state-highlight a,.ui-widget-header .ui-state-highlight a { color: #363636; }
-.ui-state-error, .ui-widget-content .ui-state-error, .ui-widget-header .ui-state-error {border: 1px solid #cd0a0a; background: #fef1ec url(../../admin/templates/images/ui/ui-bg_glass_95_fef1ec_1x400.png) 50% 50% repeat-x; color: #cd0a0a; }
+.ui-state-error, .ui-widget-content .ui-state-error, .ui-widget-header .ui-state-error {border: 1px solid #cd0a0a; background: #fef1ec url(../images/ui/ui-bg_glass_95_fef1ec_1x400.png) 50% 50% repeat-x; color: #cd0a0a; }
 .ui-state-error a, .ui-widget-content .ui-state-error a, .ui-widget-header .ui-state-error a { color: #cd0a0a; }
 .ui-state-error-text, .ui-widget-content .ui-state-error-text, .ui-widget-header .ui-state-error-text { color: #cd0a0a; }
 .ui-priority-primary, .ui-widget-content .ui-priority-primary, .ui-widget-header .ui-priority-primary { font-weight: bold; }
@@ -115,14 +80,14 @@
 ----------------------------------*/
 
 /* states and images */
-.ui-icon { width: 16px; height: 16px; background-image: url(../../admin/templates/images/ui/ui-icons_222222_256x240.png); }
-.ui-widget-content .ui-icon {background-image: url(../../admin/templates/images/ui/ui-icons_222222_256x240.png); }
-.ui-widget-header .ui-icon {background-image: url(../../admin/templates/images/ui/ui-icons_222222_256x240.png); }
-.ui-state-default .ui-icon { background-image: url(../../admin/templates/images/ui/ui-icons_888888_256x240.png); }
-.ui-state-hover .ui-icon, .ui-state-focus .ui-icon {background-image: url(../../admin/templates/images/ui/ui-icons_454545_256x240.png); }
-.ui-state-active .ui-icon {background-image: url(../../admin/templates/images/ui/ui-icons_454545_256x240.png); }
-.ui-state-highlight .ui-icon {background-image: url(../../admin/templates/images/ui/ui-icons_2e83ff_256x240.png); }
-.ui-state-error .ui-icon, .ui-state-error-text .ui-icon {background-image: url(../../admin/templates/images/ui/ui-icons_cd0a0a_256x240.png); }
+.ui-icon { width: 16px; height: 16px; background-image: url(../images/ui/ui-icons_222222_256x240.png); }
+.ui-widget-content .ui-icon {background-image: url(../images/ui/ui-icons_222222_256x240.png); }
+.ui-widget-header .ui-icon {background-image: url(../images/ui/ui-icons_222222_256x240.png); }
+.ui-state-default .ui-icon { background-image: url(../images/ui/ui-icons_888888_256x240.png); }
+.ui-state-hover .ui-icon, .ui-state-focus .ui-icon {background-image: url(../images/ui/ui-icons_454545_256x240.png); }
+.ui-state-active .ui-icon {background-image: url(../images/ui/ui-icons_454545_256x240.png); }
+.ui-state-highlight .ui-icon {background-image: url(../images/ui/ui-icons_2e83ff_256x240.png); }
+.ui-state-error .ui-icon, .ui-state-error-text .ui-icon {background-image: url(../images/ui/ui-icons_cd0a0a_256x240.png); }
 
 /* positioning */
 .ui-icon-carat-1-n { background-position: 0 0; }
@@ -317,8 +282,8 @@
 .ui-corner-all { -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px; }
 
 /* Overlays */
-.ui-widget-overlay { background: #aaaaaa url(../../admin/templates/images/ui/ui-bg_flat_0_aaaaaa_40x100.png) 50% 50% repeat-x; opacity: .30;filter:Alpha(Opacity=30); }
-.ui-widget-shadow { margin: -8px 0 0 -8px; padding: 8px; background: #aaaaaa url(../../admin/templates/images/ui/ui-bg_flat_0_aaaaaa_40x100.png) 50% 50% repeat-x; opacity: .30;filter:Alpha(Opacity=30); -moz-border-radius: 8px; -webkit-border-radius: 8px; border-radius: 8px; }/* Resizable
+.ui-widget-overlay { background: #aaaaaa url(../images/ui/ui-bg_flat_0_aaaaaa_40x100.png) 50% 50% repeat-x; opacity: .30;filter:Alpha(Opacity=30); }
+.ui-widget-shadow { margin: -8px 0 0 -8px; padding: 8px; background: #aaaaaa url(../images/ui/ui-bg_flat_0_aaaaaa_40x100.png) 50% 50% repeat-x; opacity: .30;filter:Alpha(Opacity=30); -moz-border-radius: 8px; -webkit-border-radius: 8px; border-radius: 8px; }/* Resizable
 ----------------------------------*/
 .ui-resizable { position: relative;}
 .ui-resizable-handle { position: absolute;font-size: 0.1px;z-index: 99999; display: block;}
@@ -343,8 +308,8 @@
 .ui-accordion .ui-accordion-content { padding: 1em 2.2em; border-top: 0; margin-top: -2px; position: relative; top: 1px; margin-bottom: 2px; overflow: auto; display: none; zoom: 1; }
 .ui-accordion .ui-accordion-content-active { display: block; }/* Autocomplete
 ----------------------------------*/
-.ui-autocomplete { position: absolute; cursor: default; }	
-.ui-autocomplete-loading { background: white url('../../admin/templates/images/ui/ui-anim_basic_16x16.gif') right center no-repeat; }
+.ui-autocomplete { position: absolute; cursor: default; }
+.ui-autocomplete-loading { background: white url('../images/ui/ui-anim_basic_16x16.gif') right center no-repeat; }
 
 /* workarounds */
 * html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% in IE6 */
@@ -386,8 +351,8 @@
 .ui-button { display: inline-block; position: relative; padding: 0; margin-right: .1em; text-decoration: none !important; cursor: pointer; text-align: center; zoom: 1; overflow: visible; } /* the overflow property removes extra width in IE */
 .ui-button-icon-only { width: 2.2em; } /* to make room for the icon, a width needs to be set here */
 button.ui-button-icon-only { width: 2.4em; } /* button elements seem to need a little more width */
-.ui-button-icons-only { width: 3.4em; } 
-button.ui-button-icons-only { width: 3.7em; } 
+.ui-button-icons-only { width: 3.4em; }
+button.ui-button-icons-only { width: 3.7em; }
 
 /*button text element */
 .ui-button .ui-button-text { display: block; line-height: 1.4;  }
@@ -419,7 +384,7 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 ----------------------------------*/
 .ui-dialog { position: absolute; padding: .2em; width: 300px; overflow: hidden; }
 .ui-dialog .ui-dialog-titlebar { padding: .5em 1em .3em; position: relative;  }
-.ui-dialog .ui-dialog-title { float: left; margin: .1em 16px .2em 0; } 
+.ui-dialog .ui-dialog-title { float: left; margin: .1em 16px .2em 0; }
 .ui-dialog .ui-dialog-titlebar-close { position: absolute; right: .3em; top: 50%; width: 19px; margin: -10px 0 0 0; padding: 1px; height: 18px; }
 .ui-dialog .ui-dialog-titlebar-close span { display: block; margin: 1px; }
 .ui-dialog .ui-dialog-titlebar-close:hover, .ui-dialog .ui-dialog-titlebar-close:focus { padding: 0; }
@@ -470,7 +435,7 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 .ui-datepicker .ui-datepicker-title { margin: 0 2.3em; line-height: 1.8em; text-align: center; }
 .ui-datepicker .ui-datepicker-title select { font-size:1em; margin:1px 0; }
 .ui-datepicker select.ui-datepicker-month-year {width: 100%;}
-.ui-datepicker select.ui-datepicker-month, 
+.ui-datepicker select.ui-datepicker-month,
 .ui-datepicker select.ui-datepicker-year { width: 49%;}
 .ui-datepicker table {width: 100%; font-size: .9em; border-collapse: collapse; margin:0 0 .4em; }
 .ui-datepicker th { padding: .7em .3em; text-align: center; font-weight: bold; border: 0;  }
@@ -538,7 +503,7 @@ sup {color:red;font-weight:bold;font-size:12px;}
 	font-family:Verdana,Geneva,Kalimati,sans-serif;
 	border:1px solid #eee;
 	border-bottom:1px solid #ccc;
-	background:url(../../admin/templates/images/ui/sprite.png) 0 -40px repeat-x;
+	background:url(../images/ui/sprite.png) 0 -40px repeat-x;
 	-moz-border-radius:6px;
 	-webkit-border-radius:6px;
 	}
@@ -552,7 +517,7 @@ sup {color:red;font-weight:bold;font-size:12px;}
 	font-family:Verdana,Geneva,Kalimati,sans-serif;
 	border:1px solid #eee;
 	border-bottom:1px solid #ccc;
-	background:url(../../admin/templates/images/ui/sprite.png) 0 -80px repeat-x;
+	background:url(../images/ui/sprite.png) 0 -80px repeat-x;
 	-moz-border-radius:6px;
 	-webkit-border-radius:6px;
 	}
@@ -566,14 +531,9 @@ sup {color:red;font-weight:bold;font-size:12px;}
 select {cursor:pointer;}
 .dataTables_length select {width:60px;}
 
-input[type=checkbox], input[type=radio] {
-	height: 13px;
-	vertical-align: text-top;
-	margin-right: 2px;
-	}
-
 input[type=text], input[type=password], input[type=file], textarea {
 	background:#FCFCFC;
+	padding:5px;
 	color:#999;
 	font-weight:normal;
 	font-family:Verdana,Geneva,Kalimati,sans-serif;
@@ -581,10 +541,7 @@ input[type=text], input[type=password], input[type=file], textarea {
 	border:1px solid #eee;
 	border-top:1px solid #ccc;
 	-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;
-	white-space: pre-wrap;
-	padding:3px 5px;
 	}
-	
 input[type=text]:hover, input[type=password]:hover, input[type=file:hover] {
 	background:#FFF;
 	color:#333;
@@ -621,7 +578,7 @@ input[type=submit].submit, input[type=button].button {
 	font-family:Verdana,Geneva,Kalimati,sans-serif;
 	border:1px solid #eee;
 	border-bottom:1px solid #ccc;
-	background:url(../../admin/templates/images/ui/sprite.png) 0 -40px repeat-x;
+	background:url(../images/ui/sprite.png) 0 -40px repeat-x;
 	-moz-border-radius:6px;
 	-webkit-border-radius:6px;
 	}
@@ -635,7 +592,7 @@ input[type=submit].submit:hover, input[type=button].button:hover {
 	font-family:Verdana,Geneva,Kalimati,sans-serif;
 	border:1px solid #eee;
 	border-bottom:1px solid #ccc;
-	background:url(../../admin/templates/images/ui/sprite.png) 0 -80px repeat-x;
+	background:url(../images/ui/sprite.png) 0 -80px repeat-x;
 	-moz-border-radius:6px;
 	-webkit-border-radius:6px;
 	}
@@ -644,8 +601,8 @@ input[type=button].back, input[type=button].back:hover {
 	margin-top: 15px;
 	}
 label {cursor: pointer;}
-.formLabel .small, 
-.formLabel small, 
+.formLabel .small,
+.formLabel small,
 .formField small {
 	display:block;
 	font-size:11px;
@@ -667,25 +624,42 @@ span.MaxNum {
 /*=======================
 	Buttony
 ========================*/
-ul.PageButtons {clear:both;margin:12px auto 0 auto;width:220px;list-style:none;}
-ul.PageButtons li {margin:0;padding:0 8px;display:table-cell;}
+.AdminButtons {margin-bottom:10px;}
+.AdminButtons span {position:relative;background:none;text-decoration:none;border-color:transparent transparent transparent;border-color:transparent transparent rgba(255, 255, 255, 0);cursor:pointer;outline:none;font-size:12px;position:relative;}
+.AdminButtons span img {top:7px;left:9px;padding:0 6px 0 0;}
 
-.PageButtons {margin-bottom:10px;}
-.PageButtons span {background:none;text-decoration:none;border-color:transparent transparent transparent;border-color:transparent transparent rgba(255, 255, 255, 0);cursor:pointer;outline:none;font-size:12px;position:relative;}
-.PageButtons span img {position:absolute;top:7px;left:9px;padding:0 6px 0 0;}
-.PageButtons span:hover {text-decoration:none;-moz-box-shadow:0 0 6px #AFDB20;-webkit-box-shadow:0 0 6px #AFDB20;box-shadow:0 0 6px #AFDB20;}
-.PageButtons span.Cancel:hover {text-decoration:none;-moz-box-shadow:0 0 6px #ccc;-webkit-box-shadow:0 0 6px #ccc;box-shadow:0 0 6px #ccc;}
-.PageButtons span, .PageButtons span strong {border-width:1px;border-style:solid;display: block;text-align:center;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;}
-.PageButtons span, .PageButtons span strong {border-width:1px;border-style:solid;display: block;text-align:center;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;}
-.PageButtons span strong {border-color: #77A600;border-color: rgba(119, 166, 0, 0);background: transparent url(../../admin/templates/images/ui/button-send.png) repeat-x 0 0;border-color: #77A600 transparent #92CC00;border-color: #77A600 rgba(119, 166, 0, 1) rgba(119, 166, 0, 1);}
-.PageButtons span strong {border-color: #77A600;border-color: rgba(119, 166, 0, 0);background: transparent url(../../admin/templates/images/ui/button-send.png) repeat-x 0 0;border-color: #77A600 transparent #92CC00;border-color: #77A600 rgba(119, 166, 0, 1) rgba(119, 166, 0, 1);}
-.PageButtons span.Cancel strong {border-color: #CDCDCD;border-color: rgba(205, 205, 205, 0);background: transparent url(../../admin/templates/images/ui/button-cancel.png) repeat-x 0 0;border-color: #CDCDCD transparent #D9D9D9;border-color: #CDCDCD rgba(205, 205, 205, 1) rgba(205, 205, 205, 1);}
-.PageButtons span.Cancel strong {border-color: #CDCDCD;border-color: rgba(205, 205, 205, 0);background: transparent url(../../admin/templates/images/ui/button-cancel.png) repeat-x 0 0;border-color: #CDCDCD transparent #D9D9D9;border-color: #CDCDCD rgba(205, 205, 205, 1) rgba(205, 205, 205, 1);}
-.PageButtons span:hover strong {background-position: 0 -80px;}
-.PageButtons span:active strong {background-position: 0 -80px;border-color: #B7B7B7 transparent #D4D4D4;border-color: rgba(119, 166, 0, 1) rgba(198 ,84, 108, 1) rgba(119, 166, 0, 1);}
-.PageButtons span.Cancel:active strong {background-position: 0 -80px;border-color: #B7B7B7 transparent #D4D4D4;border-color: rgba(205, 205, 205, 1) rgba(205, 205, 205, 1) rgba(205, 205, 205, 1);}
-.PageButtons span strong {display:block;font-weight:bold;padding:5px 16px 6px;text-shadow:0 1px 1px #fff;color:#272727;-moz-user-select:none;-webkit-user-select:none;}
-.PageButtons span.Cancel strong {text-shadow:0 1px 1px #fff;}
+.AdminButtons span:hover {text-decoration:none;-moz-box-shadow:0 0 6px #AFDB20;-webkit-box-shadow:0 0 6px #AFDB20;box-shadow:0 0 6px #AFDB20;}
+.AdminButtons span.Cancel:hover {text-decoration:none;-moz-box-shadow:0 0 6px #ccc;-webkit-box-shadow:0 0 6px #ccc;box-shadow:0 0 6px #ccc;}
+
+.AdminButtons span, .AdminButtons span strong {border-width:1px;border-style:solid;display: block;text-align:center;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;}
+
+.AdminButtons span strong {border-color: #77A600;border-color: rgba(119, 166, 0, 0);background: transparent url(../images/ui/button-send.png) repeat-x 0 0;border-color: #77A600 transparent #92CC00;border-color: #77A600 rgba(119, 166, 0, 1) rgba(119, 166, 0, 1);}
+.AdminButtons span.Cancel strong {border-color: #CDCDCD;border-color: rgba(205, 205, 205, 0);background: transparent url(../images/ui/button-cancel.png) repeat-x 0 0;border-color: #CDCDCD transparent #D9D9D9;border-color: #CDCDCD rgba(205, 205, 205, 1) rgba(205, 205, 205, 1);}
+
+.AdminButtons span:hover strong {background-position: 0 -80px;}
+.AdminButtons span a:hover {text-decoration:none}
+.AdminButtons span:active strong {background-position: 0 -80px;border-color: #B7B7B7 transparent #D4D4D4;border-color: rgba(119, 166, 0, 1) rgba(198 ,84, 108, 1) rgba(119, 166, 0, 1);}
+.AdminButtons span.Cancel:active strong {background-position: 0 -80px;border-color: #B7B7B7 transparent #D4D4D4;border-color: rgba(205, 205, 205, 1) rgba(205, 205, 205, 1) rgba(205, 205, 205, 1);}
+
+.AdminButtons span strong {display:block;font-weight:bold;padding:5px 16px 6px;text-shadow:0 1px 1px #fff;color:#272727;-moz-user-select:none;-webkit-user-select:none;}
+.AdminButtons span.Cancel strong {text-shadow:0 1px 1px #fff;}
+
+.AdminButtons a {position:relative;background:none;text-decoration:none;border-color:transparent transparent transparent;border-color:transparent transparent rgba(255, 255, 255, 0);cursor:pointer;outline:none;font-size:12px;position:relative;}
+
+.AdminButtons a:hover {text-decoration:none;}
+.AdminButtons span.Cancels:hover {text-decoration:none;-moz-box-shadow:0 0 6px #ccc;-webkit-box-shadow:0 0 6px #ccc;box-shadow:0 0 6px #ccc;}
+
+.AdminButtons span, .AdminButtons span strong {border-width:1px;border-style:solid;display: block;text-align:center;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;}
+
+.AdminButtons a strong {border-color: #77A600;border-color: rgba(119, 166, 0, 0);background: transparent url(../images/ui/button-send.png) repeat-x 0 0;border-color: #77A600 transparent #92CC00;border-color: #77A600 rgba(119, 166, 0, 1) rgba(119, 166, 0, 1);}
+.AdminButtons span.Cancels strong {border-color: #CDCDCD;border-color: rgba(205, 205, 205, 0);background: transparent url(../images/ui/button-cancel.png) repeat-x 0 0;border-color: #CDCDCD transparent #D9D9D9;border-color: #CDCDCD rgba(205, 205, 205, 1) rgba(205, 205, 205, 1);}
+
+.AdminButtons a:hover strong {background-position: 0 -80px;}
+.AdminButtons a:active strong {background-position: 0 -80px;border-color: #B7B7B7 transparent #D4D4D4;border-color: rgba(119, 166, 0, 1) rgba(198 ,84, 108, 1) rgba(119, 166, 0, 1);}
+.AdminButtons span.Cancels:active strong {background-position: 0 -80px;border-color: #B7B7B7 transparent #D4D4D4;border-color: rgba(205, 205, 205, 1) rgba(205, 205, 205, 1) rgba(205, 205, 205, 1);}
+
+.AdminButtons a strong {display:block;font-weight:bold;padding:5px 16px 6px;text-shadow:0 1px 1px #fff;color:#272727;-moz-user-select:none;-webkit-user-select:none;}
+.AdminButtons span.Cancels strong {text-shadow:0 1px 1px #fff;}
 
 
 
@@ -729,6 +703,7 @@ ul.PageButtons li {margin:0;padding:0 8px;display:table-cell;}
 #SiteContent {
 	position:relative;
 	margin:5px 0  20px;
+	min-height:50px;
 	color:#f6f6f6;
 	background:#fff;
 	border:1px solid #ddd;
