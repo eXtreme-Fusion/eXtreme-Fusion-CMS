@@ -25,7 +25,7 @@
 		<script src="{$ADDR_COMMON_JS}jquery.dataTables.js"></script>
 		<script src="{$ADDR_COMMON_JS}jquery.validationEngine.js"></script>
 		<script src="{$ADDR_COMMON_JS}jquery.uniform.js"></script>
-		<script src="{$ADDR_ADMIN_JS}jquery.tagedit-1.2.0.js"></script>
+		<script src="{$ADDR_ADMIN_JS}jquery.tagedit.js"></script>
 		<script src="{$ADDR_ADMIN_JS}jquery.autoGrowInput.js"></script>
 		<script src="{$ADDR_ADMIN_JS}main.functions.js"></script>
 		<script src="{$ADDR_ADMIN_JS}modules.js"></script>

@@ -4,14 +4,14 @@
 *
 * Examples and documentation at: tagedit.webwork-albrecht.de
 *
-* Copyright (c) 2010 Oliver Albrecht info@webwork-albrecht.de
+* Copyright (c) 2010 Oliver Albrecht <info@webwork-albrecht.de>
 *
 * License:
-* This work is licensed under a Creative Commons Attribution 3.0 Unported License.
-* http://creativecommons.org/licenses/by/3.0/
+* This work is licensed under a MIT License
+* http://www.opensource.org/licenses/mit-license.php
 *
 * @author Oliver Albrecht Mial: info@webwork-albrecht.de Twitter: @webworka
-* @version 1.2.0 (06/2011)
+* @version 1.2.1 (11/2011)
 * Requires: jQuery v1.4+, jQueryUI v1.8+, jQuerry.autoGrowInput
 *
 * Example of usage:
@@ -297,11 +297,14 @@
 
 			var closeTimer = null;
 
+			// Event that is fired if the User finishes the edit of a tag
 			element.bind('finishEdit', function(event, doReset) {
 				window.clearTimeout(closeTimer);
 
 				var textfield = $(this).find(':text');
-				if(textfield.val().length > 0 && (typeof doReset == 'undefined' || doReset === false) && isNew(textfield.val(), true)) {
+				var isNewResult = isNew(textfield.val(), true);
+				if(textfield.val().length > 0 && (typeof doReset == 'undefined' || doReset === false) && (isNewResult[0] == true)) {
+					// This is a new Value and we do not want to do a reset. Set the new value
 					$(this).find(':hidden').val(textfield.val());
 					$(this).find('span').html(textfield.val());
 				}
@@ -359,6 +362,10 @@
 								event.preventDefault();
 								$(this).parent().trigger('finishEdit');
 								return false;
+							case 27: // ESC
+								event.preventDefault();
+								$(this).parent().trigger('finishEdit', [true]);
+								return false;
 						}
 						return true;
 					})
@@ -413,7 +420,7 @@
 					result = options.autocompleteOptions.source;
 				}
                 else if ($.isFunction(options.autocompleteOptions.source)) {
-					options.autocompleteOptions.source({terms: value}, function (data) {result = data});
+					options.autocompleteOptions.source({term: value}, function (data) {result = data});
 				}
                 else if (typeof options.autocompleteOptions.source === "string") {
 					// Check also autocomplete values
@@ -423,7 +430,7 @@
 					} else {
 						autocompleteURL += '?';
 					}
-					autocompleteURL += 'terms=' + value;
+					autocompleteURL += 'term=' + value;
 					$.ajax({
 						async: false,
 						url: autocompleteURL,
