@@ -1,20 +1,20 @@
 <?php
 /***********************************************************
 | eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
+| This product is licensed under the BSD License.
+| http://extreme-fusion.org/ef5/license/
 ***********************************************************/
 try
 {
 	require_once '../../config.php';
 	require DIR_SITE.'bootstrap.php';
 	require_once DIR_SYSTEM.'admincore.php';
-	
+
 	$_locale->load('settings');
 
 	if ( ! $_user->hasPermission('admin.settings'))
@@ -44,12 +44,8 @@ try
 			'footer' => $_request->post('footer')->strip(),
 			'opening_page' => $_request->post('opening_page')->strip(),
 			'default_search' => $_request->post('default_search')->strip(),
-			'exclude_left' => $_request->post('exclude_left')->strip(),
-			'exclude_upper' => $_request->post('exclude_upper')->strip(),
-			'exclude_lower' => $_request->post('exclude_lower')->strip(),
-			'exclude_right' => $_request->post('exclude_right')->strip()
 		));
-		
+
 		$_files->rmDirRecursive(DIR_CACHE);
 
 		/**
@@ -103,10 +99,6 @@ try
 		'description' => $_sett->get('description'),
 		'keywords' => $_sett->get('keywords'),
 		'opening_page' => $_sett->get('opening_page'),
-		'exclude_left' => $_sett->get('exclude_left'),
-		'exclude_upper' => $_sett->get('exclude_upper'),
-		'exclude_lower' => $_sett->get('exclude_lower'),
-		'exclude_right' => $_sett->get('exclude_right'),
 		'default_search' => $_sett->get('default_search'),
 		'old_locale' => $_sett->get('locale'),
 		'locale_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'locale', array(), TRUE, 'folders'), $_sett->get('locale')),
