@@ -521,13 +521,16 @@ sup {color:red;font-weight:bold;font-size:12px;}
 	-moz-border-radius:6px;
 	-webkit-border-radius:6px;
 	}
-#desktop textarea, #IframeOPT textarea, #newWindowForm textarea {width:98%;}
-#desktop .formLabel, #IframeOPT .formLabel, #newWindowForm .formLabel {text-align:right;padding:10px 0 0 0;}
-#desktop .formField, #IframeOPT .formField, #newWindowForm .formField {text-align:left;min-height:28px;margin:6px 10px 4px 10px;}
-#desktop .formField input[type=text], #desktop .formField input[type=password], #desktop .formField input[type=file], #IframeOPT .formField input[type=text], #IframeOPT .formField input[type=password], #IframeOPT .formField input[type=file] {width:98%;}
+	
+/** Maybe from Mootools **/
+
+ textarea, #IframeOPT textarea, #newWindowForm textarea {width:98%;}
+.formLabel, #IframeOPT .formLabel, #newWindowForm .formLabel {text-align:right;padding:10px 0 0 0;}
+.formField, #IframeOPT .formField, #newWindowForm .formField {text-align:left;min-height:28px;margin:6px 10px 4px 10px;}
+.formField input[type=text], .formField input[type=password], .formField input[type=file], #IframeOPT .formField input[type=text], #IframeOPT .formField input[type=password], #IframeOPT .formField input[type=file] {width:98%;}
 #newWindowForm .formField input[type=radio], #newWindowForm .formField input[type=checkbox] {width:1%;text-align:left;}
-#desktop form .number, #IframeOPT form .number, #newWindowForm form .number {width:40px;}
-#desktop form .center, #IframeOPT form .center, #newWindowForm form .center {text-align:center;}
+ form .number, #IframeOPT form .number, #newWindowForm form .number {width:40px;}
+ form .center, #IframeOPT form .center, #newWindowForm form .center {text-align:center;}
 select {cursor:pointer;}
 .dataTables_length select {width:60px;}
 
