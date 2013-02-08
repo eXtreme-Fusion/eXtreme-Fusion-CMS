@@ -25,9 +25,15 @@ try
 		}
 
 		$_tpl = new General(DIR_ADMIN_PAGES.DS.'ajax'.DS.'templates'.DS);
-			
+		
+		$_tag = new Tag($_system, $_pdo);
+		$_modules = new Modules($_pdo, $_sett, $_user, $_tag, $_locale);
+		
 		$_panels = new Panels($_pdo);
-		$_panels->adminMakeListPanels($_user);
+		
+		$_panels->setModulesInst($_modules);
+		
+		$_panels->adminMakeListPanels($_user, TRUE);
 
 		$_tpl->assign('noact_panels', $_panels->adminGetInactivePanels());
 		

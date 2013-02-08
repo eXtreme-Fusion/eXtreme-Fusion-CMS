@@ -55,21 +55,42 @@ try
 			if ($_user->hasPermission('admin.panels'))
 			{
 				$req = get_object_vars(json_decode($_request->post('SortOrder')->show()));
+				$_tag = new Tag($_system, $_pdo);
+				$_modules = new Modules($_pdo, $_sett, $_user, $_tag, $_locale);
+				$_panels = new Panels($_pdo);
 
+				$_panels->setModulesInst($_modules);	
+   
+				// Tworzy listę modułów nieaktywnych 
+				$inactive = $_panels->getInactivePanelsDir($_user, TRUE);
+				
 				// Walidacja danych wejściowych
 				foreach($req as $column => $panels)
 				{
-					if (explode('_', $column) < 2)
+					$data = explode('_', $column);
+					
+					if (count($data) < 2)
 					{
-						exit('ERROR');
+						exit('ERROR 1');
 					}
+					
 					foreach($panels as $panel)
 					{
 						if ($panel)
 						{
-							if (explode('_', $panel) < 2)
+							$panel = explode('_', $panel);
+							if (count($panel) < 2)
 							{
-								exit('ERROR');
+								exit('ERROR 2');
+							}
+							// Sprawdzanie, czy panel jest dostępny, gdy przeciągnięto go z grupy nieaktywnych
+							elseif ($data[1] !== '5' && $panel[0] !== 'Item')
+							{
+								unset($panel[0]);
+								if (!in_array(implode('_', $panel), $inactive))
+								{
+									exit('ERROR 3');
+								}
 							}
 						}
 					}
@@ -81,7 +102,7 @@ try
 					{
 						continue;
 					}
-					var_dump($panels);
+
 					$data = explode('_', $column);
 
 					$side = $data[1];

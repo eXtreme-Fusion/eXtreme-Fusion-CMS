@@ -14,6 +14,7 @@ class Panels
 {
     protected
         $_pdo,
+		$_mod,
         $_type = 'php',
         $_dir,
 		// Panels - admin page
@@ -28,6 +29,12 @@ class Panels
         $this->_dir = $dir;
     }
 
+	public function setModulesInst($_mod)
+	{
+		$this->_mod = $_mod;
+	}
+	
+	// Pobiera z bazy danych dane wszystkich zainstalowanych modu³ów i zapisuje do zmiennej klsowej
 	public function adminGetDataPanels($_user)
 	{
 		$query = $this->_pdo->getData('SELECT * FROM [panels] ORDER BY `side`, `order`');
@@ -48,32 +55,64 @@ class Panels
 		}
 	}
 
+	// Tworzy listê wszystkich paneli dostêpnych na FTP poza modu³ami (samodzielnie)
+	// na podstawie prefiksu katalogu "_panel"
 	public function adminGetFtpPanels()
 	{
-	  $this->panels = HELP::getFileList(DIR_MODULES, array('.', '..', '.svn', '.gitignore'), TRUE, 'folders', '_panel');
+		$this->panels = HELP::getFileList(DIR_MODULES, array('.', '..', '.svn', '.gitignore'), TRUE, 'folders', '_panel');
 	}
 
-	public function adminGetModulesPanels()
+	// Tworzy listê wszystkich paneli dostêpnych w modu³ach (niesamodzielnie)
+	public function adminGetModulesPanels($check_if_installed = FALSE)
 	{
+		// Tworzy listê wszystkich folderów zawartych w katalogu "modules"
 		$modules = HELP::getFileList(DIR_MODULES, array('.', '..', '.svn', '.gitignore'), TRUE, 'folders');
+		
+		$list = array(); $mod = array();
 		foreach ($modules as $module)
 		{
+			// Tworzy listê paneli dostêpnych w $module rozpoznaj¹c je po prefiksie "_panel" katalogu.
 			$module_panel = HELP::getFileList(DIR_MODULES.$module.DS, array('.', '..', '.svn', '.gitignore'), TRUE, 'folders', '_panel');
+
 			foreach($module_panel as $mpanel)
-			{
-			  if ($mpanel != NULL)
-			  {
-				$this->panels[] = $module.'/'.$mpanel;
-			  }
+			{	
+				$list[] = $module.'/'.$mpanel;
+				$mod[] = $module;
 			}
+		}
+		
+		if ($check_if_installed)
+		{
+			if ($this->_mod)
+			{
+				$installed = $this->_mod->getInstalled();
+				
+				foreach($mod as $key => $dir)
+				{
+					if (in_array($dir, $installed))
+					{
+						$this->panels[] = $list[$key];
+					}
+				}
+			}
+			else
+			{
+				throw new systemException('Instance of Modules has not been set');
+			}
+		}
+		else
+		{
+			$this->panels = array_merge($list, $this->panels);
 		}
 	}
 
-	public function adminMakeListPanels($_user)
+	// Tworzy listê nieaktywnych paneli, których mo¿na u¿yæ zapisuj¹c je do zmiennej klasowej.
+	// Nie zosta³y u¿yte lub modu³, z którego pochodz¹ jest zainstalowany lub wystêpuj¹ samodzielnie.
+	public function adminMakeListPanels($_user, $check_if_installed = FALSE)
 	{
 		$this->adminGetDataPanels($_user);
 		$this->adminGetFtpPanels();
-		$this->adminGetModulesPanels();
+		$this->adminGetModulesPanels($check_if_installed);
 
 		foreach($this->adminGetPanels() as $panel)
 		{
@@ -95,6 +134,15 @@ class Panels
 				$this->inactive_panels[] = $panel_info;
 			}
 		}
+	}
+	
+	public function getInactivePanelsDir($_user, $check_if_installed)
+	{
+		$this->adminGetDataPanels($_user);
+		$this->adminGetFtpPanels();
+		$this->adminGetModulesPanels($check_if_installed);
+		
+		return $this->panels;
 	}
 
 	public function adminGetInactivePanels()
