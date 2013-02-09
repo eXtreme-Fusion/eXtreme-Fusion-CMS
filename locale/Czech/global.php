@@ -215,39 +215,39 @@ return array(
 	'global_158' => 'Potvrzovací kód:',
 	'global_159' => 'Zadejte ověřovací kód:',
 	// Footer Counter
-	'global_170' => 'unikalna wizyta',
-	'global_171' => 'unikalnych wizyt',
-	'global_172' => 'Wygenerowano w&nbsp;sekund: %s',
-	'global_173' => 'zapytań MySQL',
+	'global_170' => 'unikátní návštěva',
+	'global_171' => 'unikátních návštěv',
+	'global_172' => 'Vygenerováno w&nbsp;sekund: %s',
+	'global_173' => 'dotazy MySQL',
 	// Admin Navigation
-	'global_180' => 'Powróć do panelu administracyjnego',
-	'Go to homepage' => 'Przejdź do strony głównej',
-	'global_182' => '<strong>Uwaga:</strong> Podane hasło administratora jest nieprawidłowe lub puste.',
+	'global_180' => 'Návrat do administračního panelu',
+	'Go to homepage' => 'Přejít na domovskou stránku',
+	'global_182' => '<strong>Pozor:</strong> Zadané heslo administrátora je nesprávné nebo prázdné.',
 	// Miscellaneous
-	'global_190' => 'Aktywowano tryb serwisowy na serwerze.',
-	'global_191' => 'Twoje IP jest zablokowane.',
-	'global_192' => 'Wylogowuję jako: ',
-	'global_193' => 'Loguję jako: ',
-	'global_194' => 'Konto zostało zablokowane.',
-	'global_195' => 'Konto nie jest aktywne.',
-	'global_196' => 'Nieprawidłowa nazwa użytkownika lub hasło.',
-	'global_197' => 'Proszę czekać na przekierowanie...<br /><br />
-	[ <a href="index.html">Nie chcę czekać</a> ]',
-	'global_198' => '<strong>Ostrzeżenie:</strong> Wykryto katalog Install, usuń go natychmiast.',
+	'global_190' => 'Mód údržby je aktivován na webu.',
+	'global_191' => 'Vaše IP je zablokována.',
+	'global_192' => 'Odhlašuje jako: ',
+	'global_193' => 'Přihlašuje jako: ',
+	'global_194' => 'Váš účet byl zablokován.',
+	'global_195' => 'Účet není aktivní.',
+	'global_196' => 'Neplatné uživatelské jméno nebo heslo.',
+	'global_197' => 'Počkejte prosím na přesměrování...<br /><br />
+	[ <a href="index.html">Nechci čekat</a> ]',
+	'global_198' => '<strong>Upozornění:</strong> Zjištěn adresář Install, okamžitě jej smažte.',
 	//Titles
 	'global_201' => ': ',
 	'global_202' => 'Hledat',
 	'global_203' => 'FAQ',
 	'global_204' => 'Fórum',
 	//Themes
-	'global_210' => 'Przejdź do treści',
+	'global_210' => 'Přejít na obsah',
 	// No themes found
-	'global_300' => 'nie znaleziono skórki.',
-	'global_301' => 'Nie można wyświetlić strony. Jest to spowodowane brakiem plików odpowiadających za wygląd strony. Jeśli jesteś administratorem strony, uruchom swojego klienta FTP i&nbsp;wgraj do katalogu <em>/themes</em> jakąkolwiek skórkę zaprojektowaną dla <em>PHP-Fusion v7</em>. Następnie sprawdź w&nbsp;<em>Głównych ustawieniach</em> w&nbsp;<em>Panelu administratora</em> oraz upewnij się, że wybrana tam skórka jest w&nbsp;Twoim katalogu <em>/themes</em>. Jeśli tak nie jest, sprawdź, czy wgrana skórka ma taką samą nazwę (wliczając w&nbsp;to wielkość znaków, ważne na serwerach uniksowych) jak ta wybrana w&nbsp;<em>Głównych ustawieniach</em>.<br /><br />Jeśli jesteś użytkownikiem tej strony, skontaktuj się z&nbsp;administracją strony poprzez wysłanie e-maila na adres :siteemail oraz poinformuj o&nbsp;istniejącym problemie.', // ".HELP::hide_email($_sett -> getData('siteemail'))."
-	'global_302' => 'Wybrana przez Ciebie skórka nie istnieje lub jest niekompletna!',
+	'global_300' => 'nenalezena šablona skórki.',
+	'global_301' => 'Stránka nemůže být zobrazena. To je díky nedostatku odpovídajících souborů na webu. Pokud jste administrátor webu, spusťte klienta FTP i&nbsp;wgraj do katalogu <em>/themes</em> jakąkolwiek skórkę zaprojektowaną dla <em>PHP-Fusion v7</em>. Następnie sprawdź w&nbsp;<em>Głównych ustawieniach</em> w&nbsp;<em>Panelu administratora</em> oraz upewnij się, że wybrana tam skórka jest w&nbsp;Twoim katalogu <em>/themes</em>. Jeśli tak nie jest, sprawdź, czy wgrana skórka ma taką samą nazwę (wliczając w&nbsp;to wielkość znaków, ważne na serwerach uniksowych) jak ta wybrana w&nbsp;<em>Głównych ustawieniach</em>.<br /><br />Jeśli jesteś użytkownikiem tej strony, skontaktuj się z&nbsp;administracją strony poprzez wysłanie e-maila na adres :siteemail oraz poinformuj o&nbsp;istniejącym problemie.', // ".HELP::hide_email($_sett -> getData('siteemail'))."
+	'global_302' => 'Vybraná šablona neexistuje nebo není kompletní!',
 	// JavaScript Not Enabled
-	'global_303' => '<p>O&nbsp;nie! Ta strona potrzebuje włączonej obsługi języka <strong>JavaScript</strong>!</p>',
-	/*'global_303' => '<p>O&nbsp;nie! Ta strona potrzebuje włączonej obsługi języka <strong>JavaScript</strong>!</p><p>Twoja przeglądarka nie obsługuje tego języka lub ma wyłączoną jego obsługę. <strong>Włącz wykonywanie kodu JavaScript</strong> w swojej przeglądarce internetowej, aby skorzystać ze wszystkich funkcji strony<br /> lub <strong>skorzystaj</strong> z&nbsp;programu obsługującego język JavaScript, np. <a href="http://firefox.com" rel='nofollow' title='Mozilla Firefox'>Mozilla Firefox</a>, <a href='http://apple.com/safari/' rel='nofollow' title='Apple Safari'>Apple Safari</a>, <a href='http://opera.com' rel='nofollow' title='Opera Web Browser'>Opera</a>, <a href='http://www.google.com/chrome' rel='nofollow' title='Google Chrome'>Google Chrome</a> lub <a href='http://www.microsoft.com/windows/internet-explorer/' rel='nofollow' title='Windows Internet Explorer'>Windows Internet Explorer</a> w&nbsp;wersji wyższej niż 6.</p>', /*
+	'global_303' => '<p>O&nbsp;ne! Tato stránka potřebuje povolení <strong>JavaScriptu</strong>!</p>',
+	/*'global_303' => '<p>O&nbsp;ne! Tato stránka potřebuje povolení <strong>JavaScriptu</strong>!</p><p>Twoja przeglądarka nie obsługuje tego języka lub ma wyłączoną jego obsługę. <strong>Włącz wykonywanie kodu JavaScript</strong> w swojej przeglądarce internetowej, aby skorzystać ze wszystkich funkcji strony<br /> lub <strong>skorzystaj</strong> z&nbsp;programu obsługującego język JavaScript, np. <a href="http://firefox.com" rel='nofollow' title='Mozilla Firefox'>Mozilla Firefox</a>, <a href='http://apple.com/safari/' rel='nofollow' title='Apple Safari'>Apple Safari</a>, <a href='http://opera.com' rel='nofollow' title='Opera Web Browser'>Opera</a>, <a href='http://www.google.com/chrome' rel='nofollow' title='Google Chrome'>Google Chrome</a> lub <a href='http://www.microsoft.com/windows/internet-explorer/' rel='nofollow' title='Windows Internet Explorer'>Windows Internet Explorer</a> w&nbsp;wersji wyższej niż 6.</p>', /*
 	// User Management
 	// Member status
 	'global_400' => 'zawieszone',
