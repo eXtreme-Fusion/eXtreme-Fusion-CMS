@@ -113,8 +113,8 @@ return array(
 	'hAdmin' => 'Hlavní administrátor',
 	'Administration' => 'Administrace',
 	'Site' => 'Webová stránka',
-	'user_na' => 'Nd.',
-	'user_anonymous' => 'Účet skryt',
+	'user_na' => 'Uživatel n/a.',
+	'user_anonymous' => 'Uživatel anonymní',
 	// Forum Moderator Level(s)
 	'userf1' => 'Moderátor',
 	// Navigation
@@ -243,7 +243,7 @@ return array(
 	'global_210' => 'Přejít na obsah',
 	// No themes found
 	'global_300' => 'nenalezena šablona skórki.',
-	'global_301' => 'Stránka nemůže být zobrazena. To je díky nedostatku odpovídajících souborů na webu. Pokud jste administrátor webu, spusťte klienta FTP a&nbsp;přesuň do katalogu <em>/themes</em> jakoukoliv šablonu určenou pro <em>PHP-Fusion v7</em>. Pak klikněte na&nbsp;<em>Hlavní nastavení</em> v&nbsp;<em>panelu administrátora</em> a ujistěte se, že jste vybrali šablonu&nbsp;která je v adresáři <em>/themes</em>. Pokud tomu tak není, zkontrolujte, zda vložena šablona má stejný název (včetně velkých a malých písmen) jako jste zvolili v<em>Hlavním nastavení</em>.<br /><br />Pokud jste uživatelem tohoto webu, kontaktujte prosím administrátory zasláním e-mailu na :siteemail a informujte o stávajícím problému.', // ".HELP::hide_email($_sett -> getData('siteemail'))."
+	'global_301' => 'Stránka nemůže být zobrazena. Je to díky nedostatku odpovídajících souborů na webu. Pokud jste administrátor webu, spusťte klienta FTP a přesuňte do katalogu <em>/themes</em> jakoukoliv šablonu určenou pro <em>PHP-Fusion v7</em>. Pak klikněte na <em>Hlavní nastavení</em> v <em>panelu administrátora</em> a vyberte šablonu, kterou jste předali na adresáře <em>/themes</em>. Pokud tam není, zkontrolujte, zda vložena šablona má správný název (včetně velkých a malých písmen) jako jste zvolili v<em>Hlavním nastavení</em>.<br /><br />Pokud jste uživatelem tohoto webu, kontaktujte prosím administrátory zasláním e-mailu na :siteemail a informujte o stávajícím problému.', // ".HELP::hide_email($_sett -> getData('siteemail'))."
 	'global_302' => 'Vybraná šablona neexistuje nebo není kompletní!',
 	// JavaScript Not Enabled
 	'global_303' => '<p>O&nbsp;ne! Tato stránka potřebuje povolení <strong>JavaScriptu</strong>!</p>',
@@ -264,7 +264,7 @@ return array(
 	'global_411' => 'Konto zostało zablokowane zp. bezczynności',
 	'global_412' => 'Konto zostało anonimizowane, prawdopodobnie z&nbsp;powodu bezczynności',
 	// Banning due to flooding
-	'global_440' => 'Automatické banovaní zkrs zaplavování',
+	'global_440' => 'Automatické banovaní skrz antiflooding',
 
 	/**** TODO: Pliki językowe powinny być logic-less, czyli bez kodu PHP w tłumaczeniach, tym zajmą się dynamiczne parametry *****/
 	/**** TODO: Pliki językowe nie powinny zawierać szablonów wiadomości email, powinny znajdować się w tym katalogu, lecz w osobnych plikach które będą obsłużone przez OPY ****/
@@ -272,8 +272,8 @@ return array(
 	'global_441' => 'Váš účet na :sitename byl zabanován.', // ".$_sett -> getData('sitename')."
 	'global_442' => 'Vítej :username!
 	Z Vašeho účtu na :sitename bylo odesláno příliš soukromých zpráv v krátké době z IP: :ip, proto byl Váš účet zablokován. Tato funkce byla zapnuta na ochranu stránky proti robotům, kteří píšou soukromé zprávy v krátkém časovém období.
-	Obraťte se na administrátory zasláním e-mailu na :siteemail, aby Vam odemkli účet.
-	Ať se daří,
+	Obraťte se na administrátory zasláním e-mailu na :siteemail, aby Vám účet odemkli.
+	Hodně štěstí,
 	:siteusername
 	------
 	Tato zpráva byla zaslána automaticky. Neodpovídejte na ní.', // ".$_user -> getIP()."
@@ -285,20 +285,20 @@ return array(
 	Název uživatele: :username
 	Heslo: skryté z bezpečnostních důvodů
 	Pokud jste zapomněli své heslo, resetujte jej pomocí následujícího odkazu: :link
-	Ať se daří,
+	Hodně štěstí,
 	:siteusername
 	------
 	Tato zpráva byla zaslána automaticky. Neodpovídejte na ní.',
 	'global_453' => 'Vítej :username!
-	Odstraněno pozastavení účtu :siteurl.
+	Odstraněno pozastavení účtu na :siteurl.
 	Ať se daří,
 	:siteusername
 	------
-	NTato zpráva byla zaslána automaticky. Neodpovídejte na ní.',
+	Tato zpráva byla zaslána automaticky. Neodpovídejte na ní.',
 	'global_454' => 'Reaktivován účet na :sitename', // ".$_sett -> getData('sitename');
 	'global_455' => 'Witaj :username!
 	Vaše poslední návštěva na :siteurl Vám aktivovala Váš účet.
-	Ať se daří,
+	Hodně štěstí,,
 	:siteusername
 	------
 	Tato zpráva byla zaslána automaticky. Neodpovídejte prosím na ni.',
