@@ -429,10 +429,11 @@ try
 				$cache_prefix = $cache_prefix.'_';
 			}
 
+			$success = FALSE;
+			
 			// db_prefix jest opcjonalny!
 			if ($db_host !== '' && $db_user !== '' && $db_name !== '' && $db_port !== '' && $site_url !== '')
 			{
-				$success = FALSE;
 				try
 				{
 					$_pdo = new Data('mysql:host='.$db_host.';dbname='.$db_name.';port='.$db_port, $db_user, $db_pass, array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES '.$charset));
@@ -516,7 +517,7 @@ try
 				$_tpl->assign('empty_form_error', TRUE);
 			}
 
-			if (isset($success))
+			if ($success)
 			{
 				goToStep(5);
 			}
