@@ -29,7 +29,7 @@
 			</div>
 		</div>
 	{/section}
-	<div class="tbl AdminButtons">
+	<div class="tbl Buttons">
 		<div class="center grid_2 button-c">
 			<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
 		</div>
@@ -38,7 +38,7 @@
 	<div class="tbl2">
 		<div class="sep_1 grid_10 center">{i18n('There are no data.')}</div>
 	</div>
-	<div class="tbl AdminButtons">
+	<div class="tbl Buttons">
 		<div class="center grid_2 button-c">
 			<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
 		</div>

@@ -15,12 +15,12 @@
 			<div class="formLabel sep_1 grid_2"><label for="section">{i18n('Section:')}</label></div>
 			<div class="formField grid_7"><select name="section" id="section">{section=sections}<option value="{$sections.id}"{if $permission.section == $sections.id} selected="selected"{/if}>{$sections.description}</option>{/section}</select></div>
 		</div>
-		<div class="tbl AdminButtons">
+		<div class="tbl Buttons">
 			<div class="center grid_2 button-l">
 				<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="{i18n('Back')}"></strong></span>
 			</div>
 			<div class="center grid_2 button-r">
-				<span class="Save" id="SendForm_This" ><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
+				<span class="save" id="SendForm_This" ><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
 			</div>
 		</div>
 	</form>
@@ -36,12 +36,12 @@
 			<div class="formLabel sep_1 grid_4"><label for="description">{i18n('Description:')}</label></div>
 			<div class="formField grid_7"><input type="text" name="description" value="{$section.description}" id="description"></div>
 		</div>
-		<div class="tbl AdminButtons">
+		<div class="tbl Buttons">
 			<div class="center grid_2 button-l">
 				<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="{i18n('Back')}"></strong></span>
 			</div>
 			<div class="center grid_2 button-r">
-				<span class="Save" id="SendForm_This" ><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
+				<span class="save" id="SendForm_This" ><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
 			</div>
 		</div>
 	</form>

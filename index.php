@@ -138,8 +138,17 @@ try
 		$_route->trace(array('controller' => 'error', 'action' => 404, 'params' => NULL));
 	}
 
+	$trace = $_route->getExitFile();
+
 	// Ładowanie pliku PHP wybranej podstrony
 	require $_route->getExitFile();
+
+	// Sprawdzanie, czy w załadowanym pliku nastąpiła zmana trace'a (błąd 404, przymus logowania etc.).
+	if ($trace !== $_route->getExitFile())
+	{
+		// Załączanie pliku z trace'a. Zmienił się też TPL.
+		require $_route->getExitFile();
+	}
 
 	// Załączanie predefiniowanych elementów szablonu systemu (panele)
 	require_once DIR_SYSTEM.'panels.php';

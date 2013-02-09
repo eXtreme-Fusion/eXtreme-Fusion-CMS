@@ -1,6 +1,6 @@
 <h3 class="ui-corner-all">{$SystemVersion} - {i18n('Master Download')}- {i18n('Navigation')}</h3>
 {if $config.development}<div class="error">{i18n($config.developmentMessage)}</div>{/if}
-	<div class="tbl AdminButtons">
+	<div class="tbl Buttons">
 		<div class="center grid_2 button-l">
 			{if $mdp_files == 1}
 				<span class="Cancels"><strong>{i18n('Files')}</strong></span>
@@ -71,13 +71,13 @@
 			<div class="formLabel sep_1 grid_3"><label for="FileMirror"><div>{i18n('Mirrors:')}</div><div><small>{i18n('One mirror - one line.')}</small></div></label></div>
 			<div class="formField grid_7"><textarea name="file_mirror" id="FileMirror" rows="3" class="resize">{$mirror}</textarea></div>
 		</div>
-		<div class="tbl AdminButtons">
+		<div class="tbl Buttons">
 			<div class="center grid_2 button-l">
 				<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="{i18n('Back')}" /></strong></span>
 			</div>
 			<div class="center grid_2 button-r">
 				<input type="hidden" name="add_file" value="yes" />
-				<span class="Save" id="SendForm_This"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="{i18n('Save')}" /></strong></span>
+				<span class="save" id="SendForm_This"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="{i18n('Save')}" /></strong></span>
 			</div>
 		</div>
 	</form>
@@ -135,13 +135,13 @@
 				<div class="formLabel sep_1 grid_3"><label for="CatDesc">{i18n('Category description:')}</label></div>
 				<div class="formField grid_7"><textarea name="cat_desc" id="CatDesc" rows="3" class="resize">{$desc}</textarea></div>
 			</div>
-			<div class="tbl AdminButtons">
+			<div class="tbl Buttons">
 				<div class="center grid_2 button-l">
 					<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="{i18n('Back')}" /></strong></span>
 				</div>
 				<div class="center grid_2 button-r">
 					<input type="hidden" name="add_cat" value="yes" />
-					<span class="Save" id="SendForm_This"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="{i18n('Save')}" /></strong></span>
+					<span class="save" id="SendForm_This"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="{i18n('Save')}" /></strong></span>
 				</div>
 			</div>
 		</form>
@@ -222,13 +222,13 @@
 					</select>
 				</div>
 			</div>
-			<div class="tbl AdminButtons">
+			<div class="tbl Buttons">
 				<div class="center grid_2 button-l">
 					<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="{i18n('Back')}" /></strong></span>
 				</div>
 				<div class="center grid_2 button-r">
 					<input type="hidden" name="add_sub_cat" value="yes" />
-					<span class="Save" id="SendForm_This"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="{i18n('Save')}" /></strong></span>
+					<span class="save" id="SendForm_This"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="{i18n('Save')}" /></strong></span>
 				</div>
 			</div>
 		</form>

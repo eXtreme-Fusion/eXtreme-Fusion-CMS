@@ -40,13 +40,13 @@
 			<input type="radio" name="window" value="0" {if $window == 0} checked='checked'{/if} id="Window" /> {i18n('No')}
 		</div>
 	</div>
-	<div class="tbl AdminButtons">
+	<div class="tbl Buttons">
 		<div class="center grid_2 button-l">
 			<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
 		</div>
 		<div class="center grid_2 button-r">
 			<input type="hidden" name="save" value="yes" />
-			<span id="SendForm_This" class="Save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
+			<span id="SendForm_This" class="save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
 		</div>
 	</div>
 </form>

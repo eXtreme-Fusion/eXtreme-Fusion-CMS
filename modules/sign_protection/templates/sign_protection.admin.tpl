@@ -20,13 +20,13 @@
 			</div>
 		</div>
 	</div>
-	<div class="tbl AdminButtons">
+	<div class="tbl Buttons">
 		<div class="grid_2 center button-l">
 			<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
 		</div>
 		<div class="grid_2 center button-r">
 			<input type="hidden" name="save" value="yes" />
-			<span id="SendForm_This" class="Save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
+			<span id="SendForm_This" class="save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
 		</div>
 	</div>
 </form>

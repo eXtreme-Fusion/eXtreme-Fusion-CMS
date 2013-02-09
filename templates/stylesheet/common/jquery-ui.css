@@ -627,42 +627,42 @@ span.MaxNum {
 /*=======================
 	Buttony
 ========================*/
-.AdminButtons {margin-bottom:10px;}
-.AdminButtons span {position:relative;background:none;text-decoration:none;border-color:transparent transparent transparent;border-color:transparent transparent rgba(255, 255, 255, 0);cursor:pointer;outline:none;font-size:12px;position:relative;}
-.AdminButtons span img {top:7px;left:9px;padding:0 6px 0 0;}
+.Buttons {margin-bottom:10px;}
+.Buttons span {position:relative;background:none;text-decoration:none;border-color:transparent transparent transparent;border-color:transparent transparent rgba(255, 255, 255, 0);cursor:pointer;outline:none;font-size:12px;position:relative;}
+.Buttons span img {top:7px;left:9px;padding:0 6px 0 0;}
 
-.AdminButtons span:hover {text-decoration:none;-moz-box-shadow:0 0 6px #AFDB20;-webkit-box-shadow:0 0 6px #AFDB20;box-shadow:0 0 6px #AFDB20;}
-.AdminButtons span.Cancel:hover {text-decoration:none;-moz-box-shadow:0 0 6px #ccc;-webkit-box-shadow:0 0 6px #ccc;box-shadow:0 0 6px #ccc;}
+.Buttons span:hover {text-decoration:none;-moz-box-shadow:0 0 6px #AFDB20;-webkit-box-shadow:0 0 6px #AFDB20;box-shadow:0 0 6px #AFDB20;}
+.Buttons span.Cancel:hover {text-decoration:none;-moz-box-shadow:0 0 6px #ccc;-webkit-box-shadow:0 0 6px #ccc;box-shadow:0 0 6px #ccc;}
 
-.AdminButtons span, .AdminButtons span strong {border-width:1px;border-style:solid;display: block;text-align:center;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;}
+.Buttons span, .Buttons span strong {border-width:1px;border-style:solid;display: block;text-align:center;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;}
 
-.AdminButtons span strong {border-color: #77A600;border-color: rgba(119, 166, 0, 0);background: transparent url(../images/ui/button-send.png) repeat-x 0 0;border-color: #77A600 transparent #92CC00;border-color: #77A600 rgba(119, 166, 0, 1) rgba(119, 166, 0, 1);}
-.AdminButtons span.Cancel strong {border-color: #CDCDCD;border-color: rgba(205, 205, 205, 0);background: transparent url(../images/ui/button-cancel.png) repeat-x 0 0;border-color: #CDCDCD transparent #D9D9D9;border-color: #CDCDCD rgba(205, 205, 205, 1) rgba(205, 205, 205, 1);}
+.Buttons span strong {border-color: #77A600;border-color: rgba(119, 166, 0, 0);background: transparent url(../images/ui/button-send.png) repeat-x 0 0;border-color: #77A600 transparent #92CC00;border-color: #77A600 rgba(119, 166, 0, 1) rgba(119, 166, 0, 1);}
+.Buttons span.Cancel strong {border-color: #CDCDCD;border-color: rgba(205, 205, 205, 0);background: transparent url(../images/ui/button-cancel.png) repeat-x 0 0;border-color: #CDCDCD transparent #D9D9D9;border-color: #CDCDCD rgba(205, 205, 205, 1) rgba(205, 205, 205, 1);}
 
-.AdminButtons span:hover strong {background-position: 0 -80px;}
-.AdminButtons span a:hover {text-decoration:none}
-.AdminButtons span:active strong {background-position: 0 -80px;border-color: #B7B7B7 transparent #D4D4D4;border-color: rgba(119, 166, 0, 1) rgba(198 ,84, 108, 1) rgba(119, 166, 0, 1);}
-.AdminButtons span.Cancel:active strong {background-position: 0 -80px;border-color: #B7B7B7 transparent #D4D4D4;border-color: rgba(205, 205, 205, 1) rgba(205, 205, 205, 1) rgba(205, 205, 205, 1);}
+.Buttons span:hover strong {background-position: 0 -80px;}
+.Buttons span a:hover {text-decoration:none}
+.Buttons span:active strong {background-position: 0 -80px;border-color: #B7B7B7 transparent #D4D4D4;border-color: rgba(119, 166, 0, 1) rgba(198 ,84, 108, 1) rgba(119, 166, 0, 1);}
+.Buttons span.Cancel:active strong {background-position: 0 -80px;border-color: #B7B7B7 transparent #D4D4D4;border-color: rgba(205, 205, 205, 1) rgba(205, 205, 205, 1) rgba(205, 205, 205, 1);}
 
-.AdminButtons span strong {display:block;font-weight:bold;padding:5px 16px 6px;text-shadow:0 1px 1px #fff;color:#272727;-moz-user-select:none;-webkit-user-select:none;}
-.AdminButtons span.Cancel strong {text-shadow:0 1px 1px #fff;}
+.Buttons span strong {display:block;font-weight:bold;padding:5px 16px 6px;text-shadow:0 1px 1px #fff;color:#272727;-moz-user-select:none;-webkit-user-select:none;}
+.Buttons span.Cancel strong {text-shadow:0 1px 1px #fff;}
 
-.AdminButtons a {position:relative;background:none;text-decoration:none;border-color:transparent transparent transparent;border-color:transparent transparent rgba(255, 255, 255, 0);cursor:pointer;outline:none;font-size:12px;position:relative;}
+.Buttons a {position:relative;background:none;text-decoration:none;border-color:transparent transparent transparent;border-color:transparent transparent rgba(255, 255, 255, 0);cursor:pointer;outline:none;font-size:12px;position:relative;}
 
-.AdminButtons a:hover {text-decoration:none;}
-.AdminButtons span.Cancels:hover {text-decoration:none;-moz-box-shadow:0 0 6px #ccc;-webkit-box-shadow:0 0 6px #ccc;box-shadow:0 0 6px #ccc;}
+.Buttons a:hover {text-decoration:none;}
+.Buttons span.Cancels:hover {text-decoration:none;-moz-box-shadow:0 0 6px #ccc;-webkit-box-shadow:0 0 6px #ccc;box-shadow:0 0 6px #ccc;}
 
-.AdminButtons span, .AdminButtons span strong {border-width:1px;border-style:solid;display: block;text-align:center;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;}
+.Buttons span, .Buttons span strong {border-width:1px;border-style:solid;display: block;text-align:center;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;}
 
-.AdminButtons a strong {border-color: #77A600;border-color: rgba(119, 166, 0, 0);background: transparent url(../images/ui/button-send.png) repeat-x 0 0;border-color: #77A600 transparent #92CC00;border-color: #77A600 rgba(119, 166, 0, 1) rgba(119, 166, 0, 1);}
-.AdminButtons span.Cancels strong {border-color: #CDCDCD;border-color: rgba(205, 205, 205, 0);background: transparent url(../images/ui/button-cancel.png) repeat-x 0 0;border-color: #CDCDCD transparent #D9D9D9;border-color: #CDCDCD rgba(205, 205, 205, 1) rgba(205, 205, 205, 1);}
+.Buttons a strong {border-color: #77A600;border-color: rgba(119, 166, 0, 0);background: transparent url(../images/ui/button-send.png) repeat-x 0 0;border-color: #77A600 transparent #92CC00;border-color: #77A600 rgba(119, 166, 0, 1) rgba(119, 166, 0, 1);}
+.Buttons span.Cancels strong {border-color: #CDCDCD;border-color: rgba(205, 205, 205, 0);background: transparent url(../images/ui/button-cancel.png) repeat-x 0 0;border-color: #CDCDCD transparent #D9D9D9;border-color: #CDCDCD rgba(205, 205, 205, 1) rgba(205, 205, 205, 1);}
 
-.AdminButtons a:hover strong {background-position: 0 -80px;}
-.AdminButtons a:active strong {background-position: 0 -80px;border-color: #B7B7B7 transparent #D4D4D4;border-color: rgba(119, 166, 0, 1) rgba(198 ,84, 108, 1) rgba(119, 166, 0, 1);}
-.AdminButtons span.Cancels:active strong {background-position: 0 -80px;border-color: #B7B7B7 transparent #D4D4D4;border-color: rgba(205, 205, 205, 1) rgba(205, 205, 205, 1) rgba(205, 205, 205, 1);}
+.Buttons a:hover strong {background-position: 0 -80px;}
+.Buttons a:active strong {background-position: 0 -80px;border-color: #B7B7B7 transparent #D4D4D4;border-color: rgba(119, 166, 0, 1) rgba(198 ,84, 108, 1) rgba(119, 166, 0, 1);}
+.Buttons span.Cancels:active strong {background-position: 0 -80px;border-color: #B7B7B7 transparent #D4D4D4;border-color: rgba(205, 205, 205, 1) rgba(205, 205, 205, 1) rgba(205, 205, 205, 1);}
 
-.AdminButtons a strong {display:block;font-weight:bold;padding:5px 16px 6px;text-shadow:0 1px 1px #fff;color:#272727;-moz-user-select:none;-webkit-user-select:none;}
-.AdminButtons span.Cancels strong {text-shadow:0 1px 1px #fff;}
+.Buttons a strong {display:block;font-weight:bold;padding:5px 16px 6px;text-shadow:0 1px 1px #fff;color:#272727;-moz-user-select:none;-webkit-user-select:none;}
+.Buttons span.Cancels strong {text-shadow:0 1px 1px #fff;}
 
 
 

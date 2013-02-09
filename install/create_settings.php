@@ -105,7 +105,7 @@ $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'default_search', 
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'deactivation_period', 'value' => 365));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'deactivation_response', 'value' => 14));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'news_cats_per_page', 'value' => 25));
-$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'news_cats_iteam_per_page', 'value' => 10));
+$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'news_cats_item_per_page', 'value' => 10));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'news_per_page', 'value' => 11));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'notes_per_page', 'value' => 4));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'users_per_page', 'value' => 10));

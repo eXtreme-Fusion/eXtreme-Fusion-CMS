@@ -1,149 +1,137 @@
 <?php defined('EF5_SYSTEM') || exit;
 /***********************************************************
 | eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
+| This product is licensed under the BSD License.
+| http://extreme-fusion.org/ef5/license/
 ***********************************************************/
 $_locale->load('news_cats');
 
+// Ładowanie styli z szablonu
 $_head->set($_tpl->getHeaders());
-$_tpl->assign('all_news_url', $_route->path(array('controller' => 'news')));
-$_tpl->assign('all_news_cats_url', $_route->path(array('controller' => 'news_cats')));
 
+// Jeśli w szablonie nie istnieje plik news_cats.tpl, to załadowane zostaną domyślne style
 if ( ! $_theme->tplExists())
 {
 	$_head->set('<link href="'.ADDR_TEMPLATES.'stylesheet/news.css" media="screen" rel="stylesheet">');
 	$_head->set('<link href="'.ADDR_TEMPLATES.'stylesheet/news_cats.css" media="screen" rel="stylesheet">');
 }
 
+// Przesyłanie linków do szablonu
+$_tpl->assign('all_news_url', $_route->path(array('controller' => 'news')));
+$_tpl->assign('all_news_cats_url', $_route->path(array('controller' => 'news_cats')));
+
+// Konkretna kategoria
 if ($_route->getAction())
 {
+	// Przesyłanie do szablonu informacji o położeniu na stronie
+	$_tpl->assign('page', 'category');
 
-	// Sprawdzanie, czy użytkownik ma prawo do zobaczenia jakiegokolwiek newsa
-	$rowa = $_pdo->getMatchRowsCount('SELECT `id` FROM [news] WHERE `access` IN ('.$_user->listRoles().') AND `draft` = 0', 
-	//$rowa = $_pdo->getMatchRowsCount('SELECT `id` FROM [news] WHERE `access` IN ('.$_user->listRoles().') AND `draft` = 0 AND `language` = :lang', 
-		array(':lang', $_user->getLang(), PDO::PARAM_STR)
-	);
-
-	if ($rowa)
+	// Aktualna podstrona w danej kategorii
+	if ( ! $_route->getByID(3))
 	{
-		# STRONICOWANIE #
-		//$items_per_page = 2;
-		$items_per_page = intval($_sett->get('news_cats_iteam_per_page'));
+		$current = 1;
+	}
+	else
+	{
+		$current = $_route->getByID(3);
+	}
 
-		if ( ! $_route->getByID(3))
-		{
-			$current = 1;
-		}
-		else
-		{
-			$current = $_route->getByID(3);
-		}
+	/**
+	 * Pobieranie danych z cache.
+	 * Zawiera: cat_id, cat_name, cat_image, cat_news_count
+	 **/
+	$category = $_system->cache('news_cats,cat-'.$_route->getAction().','.$_user->getCacheName().',page-'.$current, NULL, 'news_cats', $_sett->getUns('cache', 'expire_news_cats'));
 
-		$_GET['rowstart'] = Paging::getRowStart($current, $items_per_page);
-		
-		// Cache dla kategorii newsów opisu, miniaturek, id
-		$category = $_system->cache('news_cats,cat-'.$_route->getAction().','.$_user->getCacheName().',page-'.$current, NULL, 'news_cats', $_sett->getUns('cache', 'expire_news_cats'));
-		if ($category === NULL)
+	// Sprawdzanie, czy cache nie istnieje
+	if ($category === NULL)
+	{
+		// Pobieranie danych z bazy
+		$rows = $_pdo->getRow('SELECT `id`, `name`, `image` FROM [news_cats] WHERE `id` = :id',
+			array(':id', $_route->getAction(), PDO::PARAM_INT)
+		);
+
+		// Zmienna przechowująca dane kategorii newsów, która trafi do cache
+		$category = array();
+
+		// Sprawdzanie, czy pobrano dane z bazy - czy kategoria istnieje
+		if ($rows)
 		{
-			$rows = $_pdo->getRow('SELECT * FROM [news_cats] WHERE `id` = :id', 
-				array(
-					array(':id', $_route->getAction(), PDO::PARAM_INT)
-				)
-			);
-			
 			$category = array(
 				'cat_id'    => $rows['id'],
 				'cat_name'  => $rows['name'],
 				'cat_image' => $rows['image'],
 				'cat_news_count'  => $_pdo->getSelectCount('SELECT COUNT(`id`) FROM [news] WHERE `category` = :category AND `access` IN ('.$_user->listRoles().')',
-					array(
-						array(':category', $_route->getAction(), PDO::PARAM_INT)
-					)
-				)
-			);
-
-			$_system->cache('news_cats,cat-'.$_route->getAction().','.$_user->getCacheName().',page-'.$current, $category, 'news_cats');
-		}
-		
-		// Cache dla wystęujących newsów w danej kategorii
-		$cache = $_system->cache('news,cat-'.$_route->getAction().','.$_user->getCacheName().',page-'.$current, NULL, 'news_cats', $_sett->getUns('cache', 'expire_news_cats'));
-		if ($cache === NULL)
-		{
-			$row = $_pdo->getSelectCount('SELECT COUNT(`id`) FROM [news] WHERE `category` = :category  AND `access` IN ('.$_user->listRoles().')',
-				array(
 					array(':category', $_route->getAction(), PDO::PARAM_INT)
 				)
 			);
-			
-			if ($row)
-			{
-				$query = $_pdo->getData('
-					SELECT tn.`id`, tn.`title`, tn.`access`, tn.`link`, tn.`content`, tn.`author`, tn.`reads`, tn.`datestamp`, tu.`id` AS `user_id`, tu.`username`
-					FROM [news] tn
-					LEFT JOIN [users] tu ON tn.`author`= tu.`id`
-					WHERE tn.`category` = :category AND tn.`access` IN ('.$_user->listRoles().')
-					ORDER BY tn.`datestamp` ASC, tn.`title` LIMIT :rowstart,:items_per_page',
-					array(
-						array(':category', $_route->getAction(), PDO::PARAM_INT),
-						array(':rowstart', $_GET['rowstart'], PDO::PARAM_INT),
-						array(':items_per_page', $items_per_page, PDO::PARAM_INT)
-					)
-				);
-
-				if ($_pdo->getRowsCount($query))
-				{
-					$i = 0;
-					foreach($query as $data)
-					{
-						// Przycinanie treści (nie wiem czy tu ma to być, czy gdzieś indziej - ~Lisu)
-						  $count = str_word_count(stripslashes($data['content']));
-						  $words = 20;
-						  if ($count>$words) {
-							$body = explode(" ", stripslashes($data['content']));
-							$short_content = $body['0']." ";
-							for ($n=1; $n < $words; $n++) {
-								$short_content .= $body[$n]." ";
-							}
-							$short_content .= "&#8230;";
-						  } else {
-							$short_content = stripslashes($data['content']);
-						  }
-						// KONIEC
-						
-						$cache[] = array(
-							'news_title_id'     => $data['id'],
-							'news_title_name'   => $data['title'],
-							'news_content'      => $short_content,
-							'news_author_id'    => $data['user_id'],
-							'news_author_name'  => $_user->getUsername($data['user_id']),
-							'news_reads'        => $data['reads'],
-							'news_datestamp'    => HELP::showDate('shortdate', $data['datestamp']),
-							'news_url'          => $_route->path(array('controller' => 'news', 'action' => $data['id'], HELP::Title2Link($data['title']))),
-							'profile_url'       => $_route->path(array('controller' => 'profile', 'action' => $data['user_id'], HELP::Title2Link($data['username']))),
-							'news_datetime' 	=> date('c', $data['datestamp'])
-						);
-						$i++;
-					}
-				}
-				$_system->cache('news,cat-'.$_route->getAction().','.$_user->getCacheName().',page-'.$current, $cache, 'news_cats');
-			}
 		}
-		$_tpl->assign('rows', $cache);
-		
-		$_tpl->assign('category', $category);
-	
-		if ($rowa)
+
+		// Zapis danych do cache ze zmiennej $category
+		$_system->cache('news_cats,cat-'.$_route->getAction().','.$_user->getCacheName().',page-'.$current, $category, 'news_cats');
+	}
+
+	// Sprawdzanie, czy kategoria istnieje
+	if ($category)
+	{
+		# STRONICOWANIE #
+		$items_per_page = intval($_sett->get('news_cats_item_per_page'));
+
+		// Pobieranie danych z cache dla występujących newsów w danej kategorii, do których użytkownik ma wgląd
+		$cache = $_system->cache('news,cat-'.$_route->getAction().','.$_user->getCacheName().',page-'.$current, NULL, 'news_cats', $_sett->getUns('cache', 'expire_news_cats'));
+
+		// Sprawdzanie, czy cache nie istnieje
+		if ($cache === NULL)
 		{
-			// TO DO
-			// Nie wiem czy tak stworzone parametry odpowiadają naszemu stylowi ~Rafik89
-			// array($_route->getFileName(), $_route->getByID(1).$_sett->getUns('routing', 'main_sep').$_route->getByID(2), FALSE)
-			$_pagenav = new PageNav(new Paging($rowa, $current, $items_per_page), $_tpl, 5, array($_route->getFileName(), $_route->getByID(1).$_sett->getUns('routing', 'main_sep').$_route->getByID(2), FALSE));
+			// Pobieranie danych z bazy
+			$query = $_pdo->getData('
+				SELECT tn.`id`, tn.`title`, tn.`access`, tn.`link`, tn.`content`, tn.`author`, tn.`reads`, tn.`datestamp`, tu.`id` AS `user_id`, tu.`username`
+				FROM [news] tn
+				LEFT JOIN [users] tu ON tn.`author`= tu.`id`
+				WHERE tn.`category` = :category AND tn.`access` IN ('.$_user->listRoles().')
+				ORDER BY tn.`datestamp` ASC, tn.`title` LIMIT :rowstart,:items_per_page',
+				array(
+					array(':category', $_route->getAction(), PDO::PARAM_INT),
+					array(':rowstart', Paging::getRowStart($current, $items_per_page), PDO::PARAM_INT),
+					array(':items_per_page', $items_per_page, PDO::PARAM_INT)
+				)
+			);
+
+			// Zmienna przechowująca dane newsów, które trafią do cache
+			$cache = array();
+
+			// Sprawdzanie, czy pobrano dane
+			if ($query)
+			{
+				foreach($query as $data)
+				{
+					$cache[] = array(
+						'news_title_id'     => $data['id'],
+						'news_title_name'   => $data['title'],
+						'news_content'      => HELP::truncate($data['content']),
+						'news_author_id'    => $data['user_id'],
+						'news_author_name'  => $_user->getUsername($data['user_id']),
+						'news_reads'        => $data['reads'],
+						'news_datestamp'    => HELP::showDate('shortdate', $data['datestamp']),
+						'news_url'          => $_route->path(array('controller' => 'news', 'action' => $data['id'], HELP::Title2Link($data['title']))),
+						'profile_url'       => $_route->path(array('controller' => 'profile', 'action' => $data['user_id'], HELP::Title2Link($data['username']))),
+						'news_datetime' 	=> date('c', $data['datestamp'])
+					);
+				}
+			}
+
+			// Zapisywanie danych ze zmiennej $cache do cache
+			$_system->cache('news,cat-'.$_route->getAction().','.$_user->getCacheName().',page-'.$current, $cache, 'news_cats');
+		}
+
+		// Sprawdzanie, czy istnieją newsy w danej kategorii
+		if ($cache)
+		{
+			$_pagenav = new PageNav(new Paging(count($cache), $current, $items_per_page), $_tpl, 5, array($_route->getFileName(), $_route->getByID(1).$_sett->getUns('routing', 'main_sep').$_route->getByID(2), FALSE));
 
 			if (file_exists(DIR_THEME.'templates'.DS.'paging'.DS.'news_cats_nav.tpl'))
 			{
@@ -153,28 +141,41 @@ if ($_route->getAction())
 			{
 				$_pagenav->get($_pagenav->create(), 'news_cats_nav');
 			}
+
+			// Przesyłanie do szablonu danych o newsach
+			$_tpl->assign('rows', $cache);
 		}
+
+		// Przesyłanie do szablonu danych o kategorii
+		$_tpl->assign('category', $category);
 	}
+	else
+	{
+		// Kategoria nie istnieje. Błąd 404.
+		$_route->trace(array('controller' => 'error', 'action' => 404));
+	}
+
 }
+// Wszystkie kategorie
 else
 {
+	// Przesyłanie do szablonu informacji o położeniu na stronie
+	$_tpl->assign('page', 'overview');
+
+	// Pobieranie z cache informacji o kategoriach i prawach dostępu przypisanych do newsów
 	$cache_count = $_system->cache('news_cats_count', NULL, 'news_cats', $_sett->getUns('cache', 'expire_news_cats'));
+
+	// Sprawdzanie, czy nie pobrano danych
 	if ($cache_count === NULL)
 	{
-		$count = $_pdo->getData('SELECT category, access FROM [news]');		
-		
-		$cache_count = array();
-		if ($_pdo->getRowsCount($count))
-		{
-			//Cache dla zliczen
-			foreach ($count as $row)
-			{
-				$cache_count[] = $row;
-			}
-		}
+		// Pobieranie danych z bazy
+		$cache_count = $_pdo->getData('SELECT category, access FROM [news]');
+
+		// Zapis danych do cache
 		$_system->cache('news_cats_count', $cache_count, 'news_cats');
 	}
-	
+
+	// Zliczanie ilości newsów w danej kategorii
 	foreach($cache_count as $val)
 	{
 		if ($_user->hasAccess($val['access']))
@@ -189,27 +190,22 @@ else
 			}
 		}
 	}
-	
+
+	// Pobieranie z cache danych wszystkich kategorii
 	$cache = $_system->cache('news_cats_list', NULL, 'news_cats', $_sett->getUns('cache', 'expire_news_cats'));
+
+	// Sprawdzanie, czy nie pobrano danych
 	if ($cache === NULL)
 	{
-		$query = $_pdo->getData('
-			SELECT `id`, `name`, `image`
-			FROM [news_cats]
-		');
-		
-		$cache = array();
-		if ($_pdo->getRowsCount($query))
-		{
-			foreach ($query as $row)
-			{
-				$cache[] = $row;
-			}
-		}
+		// Pobieranie danych z bazy
+		$cache = $_pdo->getData('SELECT `id`, `name`, `image` FROM [news_cats]');
+
+		// Zapis danych do cache
 		$_system->cache('news_cats_list', $cache, 'news_cats');
 	}
-	
-	$i = 0;  $d = array();
+
+	// Zmienna dla szablonu z danymi o kategoriach
+	$d = array();
 	foreach($cache as $data)
 	{
 		$d[] = array(
@@ -219,8 +215,8 @@ else
 			'cat_count_news' 	=> isset($array[$data['id']]) ? $array[$data['id']] : 0,
 			'url'		   		=> $_route->path(array('controller' => 'news_cats', 'action' => $data['id'], HELP::Title2Link($data['name'])))
 		);
-		$i++;
 	}
-	
+
+	// Przesyłanie danych kategorii do szablonu
 	$_tpl->assign('i', $d);
 }

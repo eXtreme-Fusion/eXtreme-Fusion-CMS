@@ -110,7 +110,7 @@
 							<div class="grid_8"><label><input type="radio" name="response" value="{$Response.N}"/> {$Response.Val}</label></div>
 						</div>
 					{/section}
-						<div class="tbl AdminButtons">
+						<div class="tbl Buttons">
 							<div class="button-l center grid_2 button-r">
 								<input type="hidden" name="polls" value="{$Data.ID}" />
 								<input type="hidden" name="vote_{$Data.ID}" value="yes" />
