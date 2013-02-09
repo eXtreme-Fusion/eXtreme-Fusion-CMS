@@ -99,9 +99,6 @@ try
 		// Sprawdzanie czy przesłano formularz
 		if ($_request->post('save')->show()) 
 		{
-			$title = $_request->post('title')->strip();
-			$description = $_request->post('description')->strip();
-			
 			if ($_request->get('action')->show() === 'edit' && $_request->get('id')->isNum(TRUE)) 
 			{
 				// Wykonaj zapytania
@@ -111,8 +108,8 @@ try
 					WHERE `id` = :id',
 					array(
 						array(':id', $_request->get('id')->show(), PDO::PARAM_INT),
-						array(':title', $title, PDO::PARAM_STR),
-						array(':description', $description, PDO::PARAM_STR)
+						array(':title', $_request->post('title')->strip(), PDO::PARAM_STR),
+						array(':description', $_request->post('description')->strip(), PDO::PARAM_STR)
 					)
 				);
 				
@@ -134,8 +131,8 @@ try
 				// Tu będą zapytania PDO
 				$count = $_pdo->exec('INSERT INTO [warnings_cats] (`title`, `description`) VALUES (:title, :description)',
 					array(
-						array(':title', $title, PDO::PARAM_STR),
-						array(':description', $description, PDO::PARAM_STR)
+						array(':title', $_request->post('title')->strip(), PDO::PARAM_STR),
+						array(':description', $_request->post('description')->strip(), PDO::PARAM_STR)
 					)
 				);
 				
@@ -244,16 +241,7 @@ try
 		// Sprawdzanie czy przesłano formularz
 		if ($_request->post('save')->show()) 
 		{
-			$sender = $_request->post('sender')->isNum(TRUE);
-			$guilty = $_request->post('guilty')->isNum(TRUE);
-			$title = $_request->post('title')->strip();
-			$description = $_request->post('description')->strip();
-			$cat = $_request->post('cat')->strip();
-			$expiry = strtotime($_request->post('expiry')->strip());
-			$notification = $_request->post('notification')->show() ? intval($_request->post('notification')->show()) : 0;
-			$datestamp = time();
-
-			if ($title === '')
+			if ($_request->post('title')->strip() === '')
 			{
 				throw new systemException('Empty field title');
 			}
@@ -267,13 +255,13 @@ try
 					WHERE `id` = :id',
 					array(
 						array(':id', $_request->get('id')->show(), PDO::PARAM_INT),
-						array(':guilty', $guilty, PDO::PARAM_INT),
-						array(':title', $title, PDO::PARAM_STR),
-						array(':description', $description, PDO::PARAM_STR),
-						array(':cat', $cat, PDO::PARAM_STR),
-						array(':datestamp', $datestamp, PDO::PARAM_INT),
-						array(':expiry', $expiry, PDO::PARAM_INT),
-						array(':notification', $notification, PDO::PARAM_INT)
+						array(':guilty', $_request->post('guilty')->isNum(TRUE), PDO::PARAM_INT),
+						array(':title', $_request->post('title')->strip(), PDO::PARAM_STR),
+						array(':description', $_request->post('description')->strip(), PDO::PARAM_STR),
+						array(':cat', $_request->post('cat')->strip(), PDO::PARAM_STR),
+						array(':datestamp', time(), PDO::PARAM_INT),
+						array(':expiry', strtotime($_request->post('expiry')->strip()), PDO::PARAM_INT),
+						array(':notification', $_request->post('notification')->show() ? intval($_request->post('notification')->show()) : 0, PDO::PARAM_INT)
 					)
 				);
 
@@ -295,14 +283,14 @@ try
 				// Tu będą zapytania PDO
 				$count = $_pdo->exec('INSERT INTO [warnings] (`guilty`, `sender`, `title`, `description`, `cat`, `datestamp`, `expiry`, `notification`) VALUES (:guilty, :sender, :title, :description, :cat, :datestamp, :expiry, :notification)',
 					array(
-						array(':guilty', $guilty, PDO::PARAM_INT),
-						array(':sender', $sender, PDO::PARAM_STR),
-						array(':title', $title, PDO::PARAM_STR),
-						array(':description', $description, PDO::PARAM_STR),
-						array(':cat', $cat, PDO::PARAM_STR),
-						array(':datestamp', $datestamp, PDO::PARAM_INT),
-						array(':expiry', $expiry, PDO::PARAM_INT),
-						array(':notification', $notification, PDO::PARAM_INT)
+						array(':guilty', $_request->post('guilty')->isNum(TRUE), PDO::PARAM_INT),
+						array(':sender', $_request->post('sender')->isNum(TRUE), PDO::PARAM_STR),
+						array(':title', $_request->post('title')->strip(), PDO::PARAM_STR),
+						array(':description', $_request->post('description')->strip(), PDO::PARAM_STR),
+						array(':cat', $_request->post('cat')->strip(), PDO::PARAM_STR),
+						array(':datestamp', time(), PDO::PARAM_INT),
+						array(':expiry', strtotime($_request->post('expiry')->strip()), PDO::PARAM_INT),
+						array(':notification', $_request->post('notification')->show() ? intval($_request->post('notification')->show()) : 0, PDO::PARAM_INT)
 					)
 				);
 				
@@ -351,8 +339,8 @@ try
 			}
 		}
 		
-		$cats = array(); $query = $_pdo->getData('SELECT `id`, `title` FROM [warnings_cats] ORDER BY `title`');
-		if ($query)
+		$cats = array();
+		if ($query = $_pdo->getData('SELECT `id`, `title` FROM [warnings_cats] ORDER BY `title`'))
 		{
 			foreach($query as $row)
 			{
