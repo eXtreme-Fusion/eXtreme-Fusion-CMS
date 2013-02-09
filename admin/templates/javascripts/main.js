@@ -67,11 +67,11 @@ $(function(){
 	$(".tipTip").tipTip();
 	$(".tip").simpletooltip();
 
-	$('.AdminButtons .Cancel').click(function() {
+	$('.Buttons .Cancel').click(function() {
 		history.back();
 	});
 	
-	$('.AdminButtons img').css({'position': 'absolute'});
+	$('.Buttons img').css({'position': 'absolute'});
 
 	// ============================
 	// Uprawnienia
@@ -137,34 +137,6 @@ $(function(){
 			$(this).fadeOut("slow");
 		});
 	});
-
-	// ============================
-	// Wysyłanie formularzy przez link
-	// ============================
-	$('.AdminButtons .Save').bind('click', function() {
-		$('#Preview').remove();
-		var FormSubmitID = (this.id).split('_');
-		$('#' +FormSubmitID[1]).submit();
-	});
-
-	$('.AdminButtons .save').bind('click', function() {
-		$('#Preview').remove();
-		var FormSubmitID = (this.id).split('_');
-		$('#' +FormSubmitID[1]).submit();
-	});
-
-	$('.AdminButtons .Preview').bind('click', function() {
-		$('#Save').remove();
-		var FormSubmitID = (this.id).split('_');
-		$('#' +FormSubmitID[1]).submit();
-	})
-
-	$('.AdminButtons .Delete').bind('click', function() {
-		$('#Preview').remove();
-		$('#Save').remove();
-		var FormSubmitID = (this.id).split('_');
-		$('#' +FormSubmitID[1]).submit();
-	})
 
 	// ============================
 	// Przesłanie wartości z select do input
@@ -283,7 +255,7 @@ $(function(){
 
 	// Wyśrodkowywanie buttonów
 
-	$('.AdminButtons').each(function() {
+	$('.Buttons').each(function() {
 		var c = $(this).children('.button-c');
 		var r = $(this).children('.button-r');
 		var l = $(this).children('.button-l');

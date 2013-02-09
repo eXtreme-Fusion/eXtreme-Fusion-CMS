@@ -54,13 +54,13 @@ $new_table[1] = array(
 $new_table[2] = array(
 	"forum_forums",
 	"(
-		`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+		`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 		`title` VARCHAR(100) NOT NULL DEFAULT '',
-		`cat` MEDIUMINT(8) UNSIGNED NOT NULL,
+		`cat` MEDIUMINT UNSIGNED NOT NULL,
 		`description` varchar(255) DEFAULT NULL,
 		`moderators` mediumtext  DEFAULT NULL,
-		`datestamp` INT(10) UNSIGNED DEFAULT '0' NOT NULL,
-		`order` SMALLINT(5) UNSIGNED NOT NULL,
+		`datestamp` INT UNSIGNED DEFAULT '0' NOT NULL,
+		`order` SMALLINT UNSIGNED NOT NULL,
 		`access` VARCHAR(255) NOT NULL DEFAULT '',
 		`posting` tinyint(3) unsigned NOT NULL DEFAULT '250',
 		`last_post` int(10) unsigned NOT NULL DEFAULT '0',
@@ -74,11 +74,11 @@ $new_table[2] = array(
 $new_table[3] = array(
 	"forum_cats",
 	"(
-		`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+		`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 		`title` VARCHAR(100) NOT NULL DEFAULT '',
 		`description` varchar(255) DEFAULT NULL,
-		`datestamp` INT(10) UNSIGNED DEFAULT '0' NOT NULL,
-		`order` SMALLINT(5) UNSIGNED NOT NULL,
+		`datestamp` INT UNSIGNED DEFAULT '0' NOT NULL,
+		`order` SMALLINT UNSIGNED NOT NULL,
 		`access` VARCHAR(255) NOT NULL DEFAULT '',
 		PRIMARY KEY (`id`)
 	) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;"

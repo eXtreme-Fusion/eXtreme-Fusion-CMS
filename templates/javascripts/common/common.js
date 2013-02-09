@@ -92,20 +92,20 @@ $(function() {
 	// Wysyłanie formularzy przez link
 	// ============================
 	$('.Buttons .save').bind('click', function() {
-		$('#Preview').remove();
+		$('#preview').remove();
 		var FormSubmitID = (this.id).split('_');
 		$('#' +FormSubmitID[1]).submit();
 	});
 
-	$('.Buttons .Preview').bind('click', function() {
-		$('#Save').remove();
+	$('.Buttons .preview').bind('click', function() {
+		$('#save').remove();
 		var FormSubmitID = (this.id).split('_');
 		$('#' +FormSubmitID[1]).submit();
 	})
 
-	$('.Buttons .Delete').bind('click', function() {
-		$('#Preview').remove();
-		$('#Save').remove();
+	$('.Buttons .delete').bind('click', function() {
+		$('#preview').remove();
+		$('#save').remove();
 		var FormSubmitID = (this.id).split('_');
 		$('#' +FormSubmitID[1]).submit();
 	})

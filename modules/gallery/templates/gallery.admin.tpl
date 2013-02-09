@@ -2,7 +2,7 @@
 {if $config.development}<div class="error">{i18n($config.developmentMessage)}</div>{/if}
 {if $message}<div class="{$class}">{$message}</div>{/if}
 
-<div class="tbl AdminButtons">
+<div class="tbl Buttons">
 	<div class="center grid_2 button-l">
 		{if $page === 'cats'}
 			<span class="Cancels"><strong>{i18n('Categories')}</strong></span>
@@ -102,7 +102,7 @@
 			<div class="formLabel sep_1 grid_2"><label for="order">{i18n('Order:')}</label></div>
 			<div class="formField grid_1"><input type="text" name="order" value="{$order}" id="order" /></div>
 		</div>
-		<div class="tbl AdminButtons">
+		<div class="tbl Buttons">
 			<div class="sep_2 center grid_2 button-l">
 				<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
 			</div>
@@ -238,7 +238,7 @@
 				<div class="formLabel sep_1 grid_2"><label for="order">{i18n('Order:')}</label></div>
 				<div class="formField grid_1"><input type="text" name="order" value="{$order}" id="order" /></div>
 			</div>
-			<div class="tbl AdminButtons">
+			<div class="tbl Buttons">
 				<div class="sep_2 center grid_2 button-l">
 					<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
 				</div>
@@ -428,7 +428,7 @@
 				<div class="formLabel sep_1 grid_2"><label for="order">{i18n('Order:')}</label></div>
 				<div class="formField grid_1"><input type="text" name="order" value="{$order}" id="order" /></div>
 			</div>
-			<div class="tbl AdminButtons">
+			<div class="tbl Buttons">
 				<div class="sep_2 center grid_2 button-l">
 					<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
 				</div>
@@ -782,13 +782,13 @@
 			</div>
 		</div>
 		
-		<div class="tb1 AdminButtons">
+		<div class="tb1 Buttons">
 			<div class="sep_2 center grid_2 button-l">
 				<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
 			</div>
 			<div class="center grid_2 button-r">
 				<input type="hidden" name="save" value="yes" />
-				<span id="SendForm_This" class="Save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
+				<span id="SendForm_This" class="save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
 			</div>
 		</div>
 	</form>

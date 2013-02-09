@@ -15,7 +15,7 @@
 				</div>
 			{/section}
 				{if $login}
-					<div class="tbl AdminButtons">
+					<div class="tbl Buttons">
 						<div class="button-l center grid_1 button-r">
 							<input type="hidden" name="polls" value="{$polls_data.id}" />
 							<input type="hidden" name="vote_{$polls_data.id}" value="yes" />
@@ -23,7 +23,7 @@
 						</div>
 					</div>
 				{else}
-					<div class="tbl AdminButtons">
+					<div class="tbl Buttons">
 						<div class="sep_2 grid_1">
 							<a href="{$ADDR_SITE}login.html" class="button"><strong>{i18n('Log in')}</strong></a>
 						</div>

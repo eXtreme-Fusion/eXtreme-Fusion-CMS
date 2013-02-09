@@ -1,9 +1,9 @@
 <h3 class="ui-corner-all">{$SystemVersion} - {i18n('Chat')}</h3>
 {if $message}<div class="{$class}">{$message}</div>{/if}
 
-	<div class="tbl AdminButtons">
+	<div class="tbl Buttons">
 		<div class="center grid_4 button-c">
-			<span class="Save"><a href="{$ADDR_ADMIN_PAGES}panels.php"><strong>Zarządzanie panelem</strong></a></span>
+			<span class="save"><a href="{$ADDR_ADMIN_PAGES}panels.php"><strong>Zarządzanie panelem</strong></a></span>
 		</div>
 	</div>
 
@@ -39,14 +39,14 @@
 		<div class="formField grid_7"><input type="text" name="archive_limit" id="archive_limit" value="{$archive_limit}" /></div>
 	</div>
 
-	<div class="tbl AdminButtons">
+	<div class="tbl Buttons">
 		<div class="center grid_2 button-l">
 			<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="{i18n('Back')}" /></strong></span>
 		</div>
 
 		<div class="center grid_2 button-r">
 			<input type="hidden" name="save" value="yes" />
-			<span class="Save" id="SendForm_This"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="{i18n('Save')}" /></strong></span>
+			<span class="save" id="SendForm_This"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="{i18n('Save')}" /></strong></span>
 		</div>
 
 	</div>

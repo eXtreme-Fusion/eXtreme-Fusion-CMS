@@ -23,15 +23,15 @@ $mod_info = array(
 $new_table[1] = array(
 	"master_download_files",
 	"(
-		`id` SMALLINT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
-		`subcat` SMALLINT(5) UNSIGNED NOT NULL DEFAULT '0',
+		`id` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+		`subcat` SMALLINT UNSIGNED NOT NULL DEFAULT '0',
 		`name` VARCHAR(100) NOT NULL DEFAULT '',
 		`desc` TEXT NOT NULL DEFAULT '',
 		`url` VARCHAR(200) NOT NULL DEFAULT '',
 		`img` VARCHAR(200) NOT NULL DEFAULT '',
-		`size` INT(10) UNSIGNED NOT NULL DEFAULT '0',
-		`count` INT(10) UNSIGNED NOT NULL DEFAULT '0',
-		`date` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+		`size` INT UNSIGNED NOT NULL DEFAULT '0',
+		`count` INT UNSIGNED NOT NULL DEFAULT '0',
+		`date` INT UNSIGNED NOT NULL DEFAULT '0',
 		`mirror` TEXT NOT NULL DEFAULT '',
 		PRIMARY KEY (`id`)
 	) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;"
@@ -40,7 +40,7 @@ $new_table[1] = array(
 $new_table[2] = array(
 	"master_download_cats",
 	"(
-		`id` SMALLINT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
+		`id` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
 		`name` VARCHAR(100) NOT NULL DEFAULT '',
 		`desc` TEXT NOT NULL DEFAULT '',
 		PRIMARY KEY (`id`)
@@ -50,8 +50,8 @@ $new_table[2] = array(
 $new_table[3] = array(
 	"master_download_subcats",
 	"(
-		`id` SMALLINT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
-		`cat` SMALLINT(5) UNSIGNED NOT NULL DEFAULT '0',
+		`id` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+		`cat` SMALLINT UNSIGNED NOT NULL DEFAULT '0',
 		`name` VARCHAR(100) NOT NULL DEFAULT '',
 		`desc` TEXT NOT NULL DEFAULT '',
 		`viewaccess` VARCHAR(255) NOT NULL DEFAULT '3',

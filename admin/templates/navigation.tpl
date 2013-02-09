@@ -12,9 +12,9 @@
 	{/section}
 </div>
 {if $Modules}
-	<div class="tbl AdminButtons">
+	<div class="tbl Buttons">
 		<div class="center grid_2 button-c">
-			<span class="Save" id="SendForm_This" ><a href="{$ADDR_ADMIN_PAGES}modules.php"><strong>Zarządzanie</strong></a></span>
+			<span class="save" id="SendForm_This" ><a href="{$ADDR_ADMIN_PAGES}modules.php"><strong>Zarządzanie</strong></a></span>
 		</div>
 	</div>
 {/if}

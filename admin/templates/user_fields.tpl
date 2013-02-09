@@ -49,13 +49,13 @@
 		<div class="formLabel sep_1 grid_3"><label for="Option">{i18n('Field options:')}<br /><small>{i18n('(kolejne opcje w nowej lini)')}</small></label></div>
 		<div class="formField grid_7"><textarea name="option" id="Option" rows="3" class="resize">{$option}</textarea></div>
 	</div>
-	<div class="tbl AdminButtons">
+	<div class="tbl Buttons">
 		<div class="center grid_2 button-l">
 			<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
 		</div>
 		<div class="center grid_2 button-r">
 			<input type="hidden" name="save" value="yes" />
-			<span id="SendForm_This" class="Save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></a>
+			<span id="SendForm_This" class="save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></a>
 		</div>
 	</div>
 </form>

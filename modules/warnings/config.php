@@ -30,7 +30,7 @@ $new_table[1] = array(
 		`cat` MEDIUMINT NOT NULL DEFAULT '0',
 		`datestamp` INT NOT NULL DEFAULT '0',
 		`expiry` INT NOT NULL DEFAULT '0',
-		`notification` TINYINT(1) UNSIGNED NOT NULL DEFAULT '1',
+		`notification` TINYINT UNSIGNED NOT NULL DEFAULT '1',
 		PRIMARY KEY (`id`)
 	) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;"
 );
@@ -50,6 +50,7 @@ $new_table[3] = array(
 		`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 		`title` VARCHAR(100) NOT NULL DEFAULT '',
 		`description` VARCHAR(255) DEFAULT NULL,
+		`period` INT NOT NULL DEFAULT '1',
 		PRIMARY KEY (`id`)
 	) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;"
 );

@@ -17,7 +17,7 @@
 		<div class="formLabel sep_1 grid_3"><label for="blacklist_reason">{i18n('Block reason:')}</label></div>
 		<div class="formField grid_7"><textarea name="blacklist_reason" id="blacklist_reason" rows="3" class="resize">{$blaclist_form.reason}</textarea></div>
 	</div>
-	<div class="tbl AdminButtons">
+	<div class="tbl Buttons">
 		<div class="center grid_2 button-l">
 			<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
 		</div>
@@ -26,7 +26,7 @@
 			{if $blaclist_form.id}
 				<input type="hidden" name="id" value="{$blaclist_form.id}" />
 			{/if}
-			<span class="Save" id="SendForm_This" ><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
+			<span class="save" id="SendForm_This" ><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
 		</div>
 	</div>
 </form>

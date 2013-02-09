@@ -23,13 +23,13 @@
 		<div class="formField grid_6"><textarea name="value" id="Value">{$contact.value}</textarea></div>
 	</div>
 
-	<div class="tbl AdminButtons">
+	<div class="tbl Buttons">
 		<div class="center grid_2 button-l">
 			<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="{i18n('Back')}" /></strong></span>
 		</div>
 		<div class="center grid_2 button-r">
 			<input type="hidden" name="save" value="yes" />
-			<span class="Save" id="SendForm_This"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="{i18n('Save')}" /></strong></span>
+			<span class="save" id="SendForm_This"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="{i18n('Save')}" /></strong></span>
 		</div>
 	</div>
 </form>

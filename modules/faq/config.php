@@ -32,13 +32,13 @@ $new_table[1] = array(
 $new_table[2] = array(
 	"faq_questions",
 	"(
-		`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+		`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 		`question` TEXT NOT NULL,
 		`answer` TEXT NOT NULL,
-		`status` MEDIUMINT(8) NOT NULL DEFAULT '0',
-		`created` MEDIUMINT(8) NOT NULL DEFAULT '0',
-		`comment` MEDIUMINT(8) NOT NULL DEFAULT '1',
-		`sticky` MEDIUMINT(8) NOT NULL DEFAULT '0',
+		`status` MEDIUMINT NOT NULL DEFAULT '0',
+		`created` MEDIUMINT NOT NULL DEFAULT '0',
+		`comment` MEDIUMINT NOT NULL DEFAULT '1',
+		`sticky` MEDIUMINT NOT NULL DEFAULT '0',
 		PRIMARY KEY (`id`)
 	) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;"
 );

@@ -1,13 +1,13 @@
 <?php
 /***********************************************************
 | eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
+| This product is licensed under the BSD License.
+| http://extreme-fusion.org/ef5/license/
 ***********************************************************/
 
 defined('EF5_SYSTEM') || exit;
@@ -36,7 +36,7 @@ function inArray($value, $array, $id = NULL)
 			}
 		}
 	}
-	
+
 	return FALSE;
 }
 
@@ -58,7 +58,7 @@ function __autoload($class_name)
 	{
 		$path = $class_name;
 	}
-	
+
 	$path = DIR_CLASS.$path.'.php';
 
     if (file_exists($path))
@@ -102,19 +102,35 @@ Class HELP
 		}
 	}
 
+	public static function truncate($data, $limit = 20)
+	{
+		if (str_word_count($data) > $limit)
+		{
+			$body = explode(' ', $data);
+			$short_content = array();
+			for ($n = 0; $n < $limit; $n++)
+			{
+				$short_content[] = $body[$n];
+			}
+
+			return implode(' ', $short_content);
+		}
+
+		return $data;
+	}
 	// TODO:: Przerobic na metodę routera
 	public static function createNaviLink($url)
 	{
 		if (!preg_match('/^http:/i', $url))
 		{
 			if ($url)
-			{	
+			{
 				return ADDR_SITE.self::$_url->getPathPrefix().$url;
 			}
 
 			return ADDR_SITE;
 		}
-		
+
 		return $url;
 	}
 
@@ -164,7 +180,7 @@ Class HELP
 
 		$array = $data;
 	}
-	
+
 	// Usuwa z tablicy element o numerycznym indeksie, po czym przesuwa pozostałe indeksy
 	public static function arrayRemoveElement($key, &$array)
 	{
@@ -179,13 +195,13 @@ Class HELP
 					$to_remove = $i;
 				}
 			}
-			
+
 			if (isset($to_remove))
 			{
 				unset($array[$to_remove]);
 			}
 		}
-		
+
 		return FALSE;
 	}
 
@@ -280,17 +296,17 @@ Class HELP
 	{
 		return rand(0, count($array)-1);
 	}
-	
+
 	//==================================
 	//PL: Oznaczenie kolorem znalezionego wyrażenia w ciągu
 	//==================================
 	public static function highlight($text, $search, $color = '#99bb00')
 	{
 		$txt = str_ireplace($search, '<span style="background: '.$color.'; font-weight: bold;">'.$search.'</span>', $text);
- 
+
 		return $txt;
 	}
-	
+
 	//==================================
 	//PL: Rozkodowywanie adresów URL
 	//EN: Decoding URL
@@ -309,12 +325,12 @@ Class HELP
 			'<', '>', '{', '}', '|', '`', '^', '€', '‰', 'ƒ',
 			'Δ', 'Π', 'Ω', 'α', 'β', '£', '§', '©', 'µ', '∞'
 		);
-		
+
 		$txt = str_replace($coding, $encoding, $text);
-		
+
 		return $txt;
 	}
-	
+
 	//==================================
 	//PL: Aliasy dla klas parsującej BBCode
 	//==================================
@@ -322,7 +338,7 @@ Class HELP
 	{
 		return self::$_sbb->parseBBCode($text);
 	}
-	
+
 	//==================================
 	//PL: Aliasy dla klas parsującej Uśmieszki
 	//==================================
@@ -330,7 +346,7 @@ Class HELP
 	{
 		return self::$_sbb->parseSmiley($text);
 	}
-	
+
 	//==================================
 	//PL: Aliasy dla klas parsującej BBCode i Uśmieszki
 	//==================================
@@ -729,7 +745,7 @@ Class HELP
 	public static function Title2Link($text)
 	{
 		if( ! is_array($text))
-		{		
+		{
 			$a = array("Ą","Ś","Ę","Ó","Ł","Ż","Ź","Ć","Ń","ą","ś","ę","ó","ł","ż","ź","ć","ń","ü","&quot"," - "," ",".","!",";",":","(",")","[","]","{","}","|","?",",","+","=","#","@","$","%","^","&","*");
 			$b = array("A","S","E","O","L","Z","Z","C","N","a","s","e","o","l","z","z","c","n","u","","-","_","","","","","","","","","","","","","","","","","","","","","","");
 			$c = array("--","---","__","___");
@@ -738,7 +754,7 @@ Class HELP
 			$textdoublereplaced = str_replace($c,$d,$textreplaced);
 			return $textdoublereplaced;
 		}
-		
+
 		throw new systemException('Przesłana tablica nie może być przetworzona.');
 	}
 
@@ -825,20 +841,20 @@ Class HELP
 			}
 		}
 	}
-	
+
 	// Format the date & time accordingly
-	public static function showDate($format, $val) 
+	public static function showDate($format, $val)
 	{
-		if ($format === 'shortdate' || $format == 'longdate') 
+		if ($format === 'shortdate' || $format == 'longdate')
 		{
 			return strftime(self::$_sett->get($format), $val);
-		} 
+		}
 		else
 		{
 			return strftime('shortdate', $val);
 		}
 	}
-	
+
 	// Przetwarza ciąg znaków, który ma trafić do meta tagu Desciption
 	// Usuwanie białych znaków
 	public static function cleanDescription($data, $length = 135)
@@ -852,9 +868,9 @@ Class HELP
 				$clean[] = $val;
 			}
 		}
-	
+
 		$return = implode(' ', $clean);
-		
+
 		if (strlen($return) > $length)
 		{
 			$break = $length;
@@ -866,7 +882,7 @@ Class HELP
 					break;
 				}
 			}
-			
+
 			if ($break === $length)
 			{
 				for ($i = $length, $c = $length+80; $i < $c; $i++)
@@ -878,10 +894,10 @@ Class HELP
 					}
 				}
 			}
-			
+
 			return substr($return, 0, $break);
 		}
-		
+
 		return $return;
 	}
 }

@@ -21,11 +21,11 @@ $mod_info = array(
 $new_table[1] = array(
 	"cautions",
 	"(
-		`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-		`user_id` MEDIUMINT(8) NOT NULL DEFAULT '0',
-		`admin_id` MEDIUMINT(8) NOT NULL DEFAULT '0',
+		`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
+		`user_id` MEDIUMINT NOT NULL DEFAULT '0',
+		`admin_id` MEDIUMINT NOT NULL DEFAULT '0',
 		`content` VARCHAR(400) NOT NULL,
-		`date` INT(10) NOT NULL DEFAULT '0',
+		`date` INT NOT NULL DEFAULT '0',
 		PRIMARY KEY (`id`)
 	) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;"
 );
