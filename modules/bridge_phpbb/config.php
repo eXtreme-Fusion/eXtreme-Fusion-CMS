@@ -21,7 +21,7 @@ $mod_info = array(
 $new_table[1] = array(
 	"bridge_phpbb",
 	"(
-		`status` MEDIUMINT(8) NOT NULL DEFAULT '0',
+		`status` MEDIUMINT NOT NULL DEFAULT '0',
 		`prefix` VARCHAR(100) NOT NULL DEFAULT 'phpbb_'
 	) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;"
 );

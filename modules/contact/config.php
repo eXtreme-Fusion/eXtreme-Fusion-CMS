@@ -21,7 +21,7 @@ $mod_info = array(
 $new_table[1] = array(
 	"contact",
 	"(
-		`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+		`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 		`email` VARCHAR(200) NOT NULL DEFAULT '',
 		`title` VARCHAR(400) NOT NULL DEFAULT '',
 		`description` TEXT NOT NULL DEFAULT '',

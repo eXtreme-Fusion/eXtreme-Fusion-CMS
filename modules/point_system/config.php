@@ -23,9 +23,9 @@ $mod_info = array(
 $new_table[1] = array(
 	"points",
 	"(
-		`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+		`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 		`section` VARCHAR(64) NOT NULL DEFAULT '',
-		`points` MEDIUMINT(8) NOT NULL DEFAULT '0',
+		`points` MEDIUMINT NOT NULL DEFAULT '0',
 		PRIMARY KEY (`id`)
 	) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;"
 );
@@ -33,11 +33,11 @@ $new_table[1] = array(
 $new_table[2] = array(
 	"points_history",
 	"(
-		`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-		`user_id` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '0',
-		`points` MEDIUMINT(8) NOT NULL DEFAULT '0',
+		`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
+		`user_id` MEDIUMINT UNSIGNED NOT NULL DEFAULT '0',
+		`points` MEDIUMINT NOT NULL DEFAULT '0',
 		`text` TEXT NOT NULL DEFAULT '',
-		`date` INT(10) NOT NULL DEFAULT '0',
+		`date` INT NOT NULL DEFAULT '0',
 		PRIMARY KEY (`id`)
 	) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;"
 );
@@ -45,9 +45,9 @@ $new_table[2] = array(
 $new_table[3] = array(
 	"ranks",
 	"(
-		`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+		`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 		`ranks` VARCHAR(100) NOT NULL DEFAULT '',
-		`points` MEDIUMINT(8) NOT NULL DEFAULT '0',
+		`points` MEDIUMINT NOT NULL DEFAULT '0',
 		PRIMARY KEY (`id`)
 	) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;"
 );
@@ -64,7 +64,7 @@ $new_row[2] = array(
 
 $add_field[1] = array(
 	"users",
-	"`points` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '0'"
+	"`points` MEDIUMINT UNSIGNED NOT NULL DEFAULT '0'"
 );
 
 $drop_table[1] = "points";
