@@ -274,7 +274,6 @@ $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."user_fields (`name`, `index`, `
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."user_fields (`name`, `index`, `cat`, `type`) VALUES ('".__('Website')."', 'www', 2, 1)");
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."user_fields (`name`, `index`, `cat`, `type`) VALUES ('".__('Living place')."', 'location', 2, 1)");
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."user_fields (`name`, `index`, `cat`, `type`) VALUES ('".__('Signature')."', 'sig', 3, 2)");
-$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."user_fields (`name`, `index`, `cat`, `type`, `option`, `register`) VALUES ('".__('Language:')."', 'lang', 1, 3, '".serialize(array('Czech', 'English', 'Polish'))."', '1')");
 
 //$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."settings_inf (`name`, `value`, `inf`) VALUES ('version', '5.0', '(Beta)')");
 
