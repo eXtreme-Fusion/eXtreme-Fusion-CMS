@@ -20,7 +20,7 @@ return array(
 
 	# Komunikaty analizy danych
 
-	'Action error' => 'Došlo k chybě :( tato akce nebyla provedena správně',
+	'Action error' => 'Došlo k chybě :( Tato akce nebyla provedena správně',
 	'Action success' => 'Všechno je v pořádku :) Akce byla provedena správně',
 
 	# 'Deleting error' => 'Došlo k neočekávané chybě: položka nebyla odstraněna',
@@ -33,9 +33,9 @@ return array(
 	'Management' => 'Správa',
 	'Author' => 'Autor',
 	'Title:' => 'Titulek:',
-	'Content' => 'Titulek:', 
+	'Content' => 'Obsah', 
 	// userException class
-	'Entered the wrong data type.' => 'Chybně zadané údaje typu.',
+	'Entered the wrong data type.' => 'Zadané data jsou nesprávného typu.',
 	
 	'Username' => 'Název uživatele',
 	'Online' => 'přihlášen',
@@ -66,7 +66,7 @@ return array(
 	'Forgot password' => 'Zapomenuté heslo',
 
 	'Visible for:' => 'Viditelné pro:',
-	'Order:' => 'Kolejność:',
+	'Order:' => 'Řazení:',
 	'Error' => 'Chyba',
 	'Options:' => 'Možnosti:',
 
@@ -85,25 +85,25 @@ return array(
 
 	'Private messages' => 'Soukromé zprávy',
 
-	'Failed to request account data. Error:' => 'Nie udało się pobrać danych konta. Błąd:',
-	'Failed to request report data. Error:' => 'Nie udało się pobrać danych raportu. Błąd:',
-	'Failed to authenticate user. Error:' => 'Nie udało się uwierzytelnić użytkownika. Błąd:',
-	'Invalid http interface defined. No such interface as' => 'Podano nieprawidłowy infetfejs http. Nie istnieje interfejs',
-	'Request failed, fopen provides no further information' => 'Żądanie nie powiodło się, fopen nie dostarcza dodatkowych informacji',
-	'No valid root parameter or aggregate metric called' => 'Niepoprawny parametr root',
-	'There is no valid property called' => 'Niepoprawna własność',
-	'Data has been saved.' => 'Dane zostały zapisane.',
-	'Error! Data has not been saved.' => 'Wystąpił błąd! Dane nie zostały zapisane.',
-	'There is no such function as' => 'Nie istnieje funkcja',
+	'Failed to request account data. Error:' => 'Nepodařilo se načíst uživatelská data. Chyba:',
+	'Failed to request report data. Error:' => 'Nepodařilo se načíst data hlášení. Chyba:',
+	'Failed to authenticate user. Error:' => 'Nepodařilo se ověřit uživatele. Chyba:',
+	'Invalid http interface defined. No such interface as' => 'Neplatný typ rozhraní http. Neexistuje takové rozhraní',
+	'Request failed, fopen provides no further information' => 'Požadavek se nezdařil, fopen neposkytuje další informace',
+	'No valid root parameter or aggregate metric called' => 'Nesprávný parametr root',
+	'There is no valid property called' => 'Nesprávná vlastnost',
+	'Data has been saved.' => 'Data byla uložena.',
+	'Error! Data has not been saved.' => 'Došlo k chybě! Data nebyla uložena.',
+	'There is no such function as' => 'Neexistuje funkce',
 
 	// Full & Short Months
-	'months' => '&nbsp|styczeń|luty|marzec|kwiecień|maj|czerwiec|lipiec|sierpień|wrzesień|październik|listopad|grudzień',
-	'shortmonths' => '&nbsp|st.|lt.|mar.|kwi.|maj|czer.|lip.|sier.|wrz.|paź.|lis.|gru.',
+	'months' => '&nbsp|leden|únor|březen|duben|květen|červen|červenec||srpen|zaří|říjen|listopad|prosinec',
+	'shortmonths' => '&nbsp|le.|ún.|bře.|du.|kvě.|čer.|červ.|spr.|zář.|říj.|lis.|pro..',
 	
 	//Paging
-	'Go to first page' => 'Idź do pierwszej podstrony',
-	'Go to page' => 'Idź do podstrony',
-	'Go to last page' => 'Idź do ostatniej podstrony',
+	'Go to first page' => 'Příjít na první stránku',
+	'Go to page' => 'Přejít na stránku',
+	'Go to last page' => 'Příjít na poslední stránku',
 	
 
 	// Standard User Levels
@@ -112,14 +112,14 @@ return array(
 	'Admin' => 'Administrátor',
 	'hAdmin' => 'Hlavní administrátor',
 	'Administration' => 'Administrace',
-	'Site' => 'Strona',
+	'Site' => 'Webová stránka',
 	'user_na' => 'Nd.',
 	'user_anonymous' => 'Účet skryt',
 	// Forum Moderator Level(s)
 	'userf1' => 'Moderátor',
 	// Navigation
 	'global_001' => 'Navigace',
-	'global_002' => 'Brak linków\n',
+	'global_002' => 'Žádné odkazy\n',
 	// Users Online
 	'global_010' => 'Aktuálně online',
 	'global_011' => 'Hosté online',
@@ -129,13 +129,13 @@ return array(
 	'global_015' => 'Neaktivní uživatelé',
 	'global_016' => 'Nejnovější uživatel',
 	// Forum Side panel
-	'global_020' => 'Ostatnio na forum',
-	'global_021' => 'Najnowsze tematy',
-	'global_022' => 'Najciekawsze tematy',
-	'global_023' => 'Brak tematów na forum',
+	'global_020' => 'Poslední témata',
+	'global_021' => 'Nejnovější témata',
+	'global_022' => 'Žhavá témata',
+	'global_023' => 'Žádné témata na fóru',
 	// Articles Side panel
-	'global_030' => 'Ostatnie artykuły',
-	'global_031' => 'Brak artykułów',
+	'global_030' => 'Nejnovější články',
+	'global_031' => 'Žádné články',
 	// Welcome panel
 	'global_035' => 'Powitanie',
 	'global_036' => 'Odśwież stronę',
