@@ -243,74 +243,74 @@ return array(
 	'global_210' => 'Přejít na obsah',
 	// No themes found
 	'global_300' => 'nenalezena šablona skórki.',
-	'global_301' => 'Stránka nemůže být zobrazena. To je díky nedostatku odpovídajících souborů na webu. Pokud jste administrátor webu, spusťte klienta FTP i&nbsp;wgraj do katalogu <em>/themes</em> jakąkolwiek skórkę zaprojektowaną dla <em>PHP-Fusion v7</em>. Następnie sprawdź w&nbsp;<em>Głównych ustawieniach</em> w&nbsp;<em>Panelu administratora</em> oraz upewnij się, że wybrana tam skórka jest w&nbsp;Twoim katalogu <em>/themes</em>. Jeśli tak nie jest, sprawdź, czy wgrana skórka ma taką samą nazwę (wliczając w&nbsp;to wielkość znaków, ważne na serwerach uniksowych) jak ta wybrana w&nbsp;<em>Głównych ustawieniach</em>.<br /><br />Jeśli jesteś użytkownikiem tej strony, skontaktuj się z&nbsp;administracją strony poprzez wysłanie e-maila na adres :siteemail oraz poinformuj o&nbsp;istniejącym problemie.', // ".HELP::hide_email($_sett -> getData('siteemail'))."
+	'global_301' => 'Stránka nemůže být zobrazena. To je díky nedostatku odpovídajících souborů na webu. Pokud jste administrátor webu, spusťte klienta FTP a&nbsp;přesuň do katalogu <em>/themes</em> jakoukoliv šablonu určenou pro <em>PHP-Fusion v7</em>. Pak klikněte na&nbsp;<em>Hlavní nastavení</em> v&nbsp;<em>panelu administrátora</em> a ujistěte se, že jste vybrali šablonu&nbsp;která je v adresáři <em>/themes</em>. Pokud tomu tak není, zkontrolujte, zda vložena šablona má stejný název (včetně velkých a malých písmen) jako jste zvolili v<em>Hlavním nastavení</em>.<br /><br />Pokud jste uživatelem tohoto webu, kontaktujte prosím administrátory zasláním e-mailu na :siteemail a informujte o stávajícím problému.', // ".HELP::hide_email($_sett -> getData('siteemail'))."
 	'global_302' => 'Vybraná šablona neexistuje nebo není kompletní!',
 	// JavaScript Not Enabled
 	'global_303' => '<p>O&nbsp;ne! Tato stránka potřebuje povolení <strong>JavaScriptu</strong>!</p>',
-	/*'global_303' => '<p>O&nbsp;ne! Tato stránka potřebuje povolení <strong>JavaScriptu</strong>!</p><p>Twoja przeglądarka nie obsługuje tego języka lub ma wyłączoną jego obsługę. <strong>Włącz wykonywanie kodu JavaScript</strong> w swojej przeglądarce internetowej, aby skorzystać ze wszystkich funkcji strony<br /> lub <strong>skorzystaj</strong> z&nbsp;programu obsługującego język JavaScript, np. <a href="http://firefox.com" rel='nofollow' title='Mozilla Firefox'>Mozilla Firefox</a>, <a href='http://apple.com/safari/' rel='nofollow' title='Apple Safari'>Apple Safari</a>, <a href='http://opera.com' rel='nofollow' title='Opera Web Browser'>Opera</a>, <a href='http://www.google.com/chrome' rel='nofollow' title='Google Chrome'>Google Chrome</a> lub <a href='http://www.microsoft.com/windows/internet-explorer/' rel='nofollow' title='Windows Internet Explorer'>Windows Internet Explorer</a> w&nbsp;wersji wyższej niż 6.</p>', /*
+	/*'global_303' => '<p>O&nbsp;ne! Tato stránka potřebuje povolení <strong>JavaScriptu</strong>!</p><p>Váš prohlížeč jej nemá zapnutý nebo JavaScript nepodporuje.<strong>Prosím povolte JavaScript</strong> ve Vašem webovém prohlížeči, aby jste mohli používat všechny funkce<br /> nebo <strong>použijte</strong>  v programu obsluhující jazyk JavaScript, např. <a href="http://firefox.com" rel='nofollow' title='Mozilla Firefox'>Mozilla Firefox</a>, <a href='http://apple.com/safari/' rel='nofollow' title='Apple Safari'>Apple Safari</a>, <a href='http://opera.com' rel='nofollow' title='Opera Web Browser'>Opera</a>, <a href='http://www.google.com/chrome' rel='nofollow' title='Google Chrome'>Google Chrome</a> nebo<a href='http://www.microsoft.com/windows/internet-explorer/' rel='nofollow' title='Windows Internet Explorer'>Windows Internet Explorer</a> ve verzi vyšší než 6.</p>', /*
 	// User Management
 	// Member status
-	'global_400' => 'zawieszone',
-	'global_401' => 'zablokowane',
-	'global_402' => 'wyłączone',
-	'global_403' => 'konto wyłączone',
-	'global_404' => 'konto anonimizowane',
-	'global_405' => 'anonimowe',
-	'global_406' => 'Konto zostało zbanowane z&nbsp;następujących powodów:',
-	'global_407' => 'Konto jest zawieszone do ',
-	'global_408' => ' z&nbsp;następujących powodów:',
-	'global_409' => 'Konto zostało zablokowane ze względów bezpieczeństwa.',
-	'global_410' => 'Powód: ',
+	'global_400' => 'pozastaven',
+	'global_401' => 'zablokován',
+	'global_402' => 'vypnut',
+	'global_403' => 'účet byl zakázán',
+	'global_404' => 'anonymní účet',
+	'global_405' => 'anonymní',
+	'global_406' => 'Váš účet byl zablokován z následujících důvodů:',
+	'global_407' => 'Účet je pozastaven do ',
+	'global_408' => ' z následujících důvodů:',
+	'global_409' => 'Účet byl zablokován z bezpečnostních důvodů.',
+	'global_410' => 'Důvod: ',
 	'global_411' => 'Konto zostało zablokowane zp. bezczynności',
 	'global_412' => 'Konto zostało anonimizowane, prawdopodobnie z&nbsp;powodu bezczynności',
 	// Banning due to flooding
-	'global_440' => 'Automatyczne zbanowanie przez blokadę antyfloodową',
+	'global_440' => 'Automatické banovaní zkrs zaplavování',
 
 	/**** TODO: Pliki językowe powinny być logic-less, czyli bez kodu PHP w tłumaczeniach, tym zajmą się dynamiczne parametry *****/
 	/**** TODO: Pliki językowe nie powinny zawierać szablonów wiadomości email, powinny znajdować się w tym katalogu, lecz w osobnych plikach które będą obsłużone przez OPY ****/
 
-	'global_441' => 'Twoje konto na :sitename zostało zbanowane.', // ".$_sett -> getData('sitename')."
-	'global_442' => 'Witaj :username!
-	Z Twojego konta na :sitename wysłano zbyt wiele wiadomości w krótkim czasie z następującego IP: :ip, w związku z czym zostało zablokowane. Powyższe działanie zostało podjęte w celu ochrony strony przed botami dodającymi wiadomości w krótkim odstępie czasu.
-	Skontaktuj się z administracją strony wysyłając e-mail na adres :siteemail, żeby odblokować konto lub wyjaśnić zaistniałą sytuację.
-	Wszystkiego dobrego
+	'global_441' => 'Váš účet na :sitename byl zabanován.', // ".$_sett -> getData('sitename')."
+	'global_442' => 'Vítej :username!
+	Z Vašeho účtu na :sitename bylo odesláno příliš soukromých zpráv v krátké době z IP: :ip, proto byl Váš účet zablokován. Tato funkce byla zapnuta na ochranu stránky proti robotům, kteří píšou soukromé zprávy v krátkém časovém období.
+	Obraťte se na administrátory zasláním e-mailu na :siteemail, aby Vam odemkli účet.
+	Ať se daří,
 	:siteusername
 	------
-	Niniejsza wiadomość została wysłana automatycznie. Nie odpowiadaj na nią.', // ".$_user -> getIP()."
+	Tato zpráva byla zaslána automaticky. Neodpovídejte na ní.', // ".$_user -> getIP()."
 	// Lifting of suspension
 	'global_450' => 'Automatyczne zdjęcie zawieszenia konta.',
 	'global_451' => 'Zdjęcie zawieszenia konta na :sitename', // .$_sett -> getData('sitename')
-	'global_452' => 'Witaj :username!
-	Zawieszenie Twojego konta na :siteurl zostało zdjęte. Zaloguj się korzystając z poniższych danych:
-	Nazwa użytkownika: :username
-	Hasło: ukryte ze względów bezpieczeństwa
-	Jeśli nie pamiętasz hasła, zresetuj je korzystając z poniższego linka: :link
-	Wszystkiego dobrego,
+	'global_452' => 'Vítej :username!
+	Pozastavení Vašeho účtu na :siteurl bylo odstraněno. Přihlašte se pod svými údaji:
+	Název uživatele: :username
+	Heslo: skryté z bezpečnostních důvodů
+	Pokud jste zapomněli své heslo, resetujte jej pomocí následujícího odkazu: :link
+	Ať se daří,
 	:siteusername
 	------
-	Niniejsza wiadomość została wysłana automatycznie. Nie odpowiadaj na nią.',
-	'global_453' => 'Witaj :username!
-	Zdjęto zawieszenie Twojego konta na :siteurl.
-	Wszystkiego dobrego,
+	Tato zpráva byla zaslána automaticky. Neodpovídejte na ní.',
+	'global_453' => 'Vítej :username!
+	Odstraněno pozastavení účtu :siteurl.
+	Ať se daří,
 	:siteusername
 	------
-	Niniejsza wiadomość została wysłana automatycznie. Nie odpowiadaj na nią.',
-	'global_454' => 'Reaktywowano konto na :sitename', // ".$_sett -> getData('sitename');
+	NTato zpráva byla zaslána automaticky. Neodpovídejte na ní.',
+	'global_454' => 'Reaktivován účet na :sitename', // ".$_sett -> getData('sitename');
 	'global_455' => 'Witaj :username!
-	Twoja ostatnia wizyta na :siteurl reaktywowała Twoje konto, w związku z czym, przestało ono być uznawane za bezczynne.
-	Wszystkiego dobrego,
+	Vaše poslední návštěva na :siteurl Vám aktivovala Váš účet.
+	Ať se daří,
 	:siteusername
 	------
-	Niniejsza wiadomość została wysłana automatycznie. Nie odpowiadaj na nią.',
+	Tato zpráva byla zaslána automaticky. Neodpovídejte prosím na ni.',
 	// Function parsebytesize()
-	'global_460' => 'Plik pusty',
-	'global_461' => 'Bajtów',
+	'global_460' => 'Soubor prázdný',
+	'global_461' => 'Bajtů',
 	'global_462' => 'kB',
 	'global_463' => 'MB',
 	'global_464' => 'GB',
 	'global_465' => 'TB',
 	//Safe Redirect
-	'global_500' => 'Trwa przekierowanie na adres %s, proszę czekać. Naciśnij, jeśli Cię nie przekierowało.',
+	'global_500' => 'Probíha přesměrování na adresu %s, prosíme počkejte. Stiskněte tlačítko, pokud nechcete čekat.',
 	//Czas sesji
 
 	// Function showCopyrights()
