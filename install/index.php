@@ -404,9 +404,9 @@ try
 			$db_pass = isset($_POST['db_pass']) ? trim($_POST['db_pass']) : '';
 			$db_name = isset($_POST['db_name']) ? trim($_POST['db_name']) : '';
 			
-			$db_prefix = isset($_POST['db_prefix']) ? trim($_POST['db_prefix']) : '';
-			$cookie_prefix = isset($_POST['cookie_prefix']) ? trim($_POST['cookie_prefix']) : '';
-			$cache_prefix = isset($_POST['cache_prefix']) ? trim($_POST['cache_prefix']) : '';
+			$db_prefix = isset($_POST['db_prefix']) ? trim(HELP::strip($_POST['db_prefix'])) : '';
+			$cookie_prefix = isset($_POST['cookie_prefix']) ? trim(HELP::strip($_POST['cookie_prefix'])) : '';
+			$cache_prefix = isset($_POST['cache_prefix']) ? trim(HELP::strip($_POST['cache_prefix'])) : '';
 			
 			// todo: filtrowanie aresu do strony
 			$site_url = isset($_POST['site_url']) ? $_POST['site_url'] : '';
@@ -516,7 +516,7 @@ try
 				$_tpl->assign('empty_form_error', TRUE);
 			}
 
-			if ($success)
+			if (isset($success))
 			{
 				goToStep(5);
 			}
@@ -577,7 +577,7 @@ try
 			$username = isset($_POST['username']) ? trim($_POST['username']) : '';
 			$password1 = isset($_POST['password1']) ? trim($_POST['password1']) : '';
 			$password2 = isset($_POST['password2']) ? trim($_POST['password2']) : '';
-			$email = isset($_POST['email']) ? trim($_POST['email']) : '';
+			$email = isset($_POST['email']) ? trim(HELP::strip($_POST['email'])) : '';
 
 			$error = FALSE;
 
