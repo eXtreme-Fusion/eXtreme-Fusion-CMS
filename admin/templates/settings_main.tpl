@@ -68,22 +68,6 @@
 			</select>
 		</div>
 	</div>
-	<div class="tbl2">
-		<div class="grid_6 formLabel"><label for="ExcludeLeft">{i18n('Turn of left panels on:')}</label><small>{i18n('Example')}</small></div>
-		<div class="grid_4 formField"><textarea name="exclude_left" id="ExcludeLeft" class="resize" rows="3">{$exclude_left}</textarea></div>
-	</div>
-	<div class="tbl1">
-		<div class="grid_6 formLabel"><label for="ExcludeUpper">{i18n('Turn of top panels on:')}</label><small>{i18n('Example')}</small></div>
-		<div class="grid_4 formField"><textarea name="exclude_upper" id="ExcludeUpper" class="resize" rows="3">{$exclude_upper}</textarea></div>
-	</div>
-	<div class="tbl2">
-		<div class="grid_6 formLabel"><label for="ExcludeLower">{i18n('Turn of footer panels on:')}</label><small>{i18n('Example')}</small></div>
-		<div class="grid_4 formField"><textarea name="exclude_lower" id="ExcludeLower" class="resize" rows="3">{$exclude_lower}</textarea></div>
-	</div>
-	<div class="tbl1">
-		<div class="grid_6 formLabel"><label for="ExcludeRight">{i18n('Turn of right panels on:')}</label><small>{i18n('Example')}</small></div>
-		<div class="grid_4 formField"><textarea name="exclude_right" id="ExcludeRight" class="resize" rows="3">{$exclude_right}</textarea></div>
-	</div>
 	<div class="tbl AdminButtons">
 		<div class="grid_2 center button-l">
 			<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="{i18n('Back')}" /></strong></span>

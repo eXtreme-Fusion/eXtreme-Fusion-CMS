@@ -23,12 +23,6 @@ return array(
 	'Default language:' => 'Jazyk stránky:',
 	'Default theme:' => 'Šablona (theme) stránky:',
 	'Default search place:' => 'Základní vyhledávací prostor:',
-	'Turn of left panels on:' => 'Vypnout levé panely na:',
-	'Turn of right panels on:' => 'Vypnout pravé panely na:',
-	'Turn of top panels on:' => 'Vypnout horní panely na:',
-	'Turn of footer panels on:' => 'Vypnout dolní panely na:',
-	'Example' => '<em>Příklad:</em><br />/news.php<br />/index.php<br />',
-	
 	//Logs
 	'The data has been saved.' => 'Data byla uložena.',
 	'<strong>Error!</strong> The data has not been saved.' => '<strong>Chyba!</strong> Data nebyla uložena.'

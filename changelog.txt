@@ -8,6 +8,7 @@
 - poprawka do czyszczenia cache po zmianie ustawień - nie usuwało plików
 - poprawka Paneli w Panelu Admina - nie powinno już być powielania i problemów z zapisywanie kolejności
 - modyfikacja instalatora: PDO zamiast mysql_*; wybór języka z tłumaczeniem pierwszego etapu instalacji; wdrożenie metod helpera w miejsce strukturalnych
+- panele z niezainstalowanych modułów nie będą dostępne
 
 					eXtreme-Fusion V Beta 5 2012.06.23
 

@@ -7,17 +7,17 @@
 		<div class="tbl2">
 			<div class="formLabel sep_1 grid_3">{i18n('Miejsce wyszukiwania:')}</div>
 			<div class="formField grid_7">
-				<label for="news"><input type="radio" id="news" name="search_type" value="news"{if $search_type === "news"} checked="checked"{/if}>{i18n('Newsy')}</label>
-				<label for="users"><input type="radio" id="users" name="search_type" value="users"{if $search_type === "users"} checked="checked"{/if}>{i18n('Użytkownicy')}</label>
-				<label for="tags"><input type="radio" id="tags" name="search_type" value="tags"{if $search_type === "tags"} checked="checked"{/if}>{i18n('Tagi')}</label>
-				<label for="all"><input type="radio" id="all" name="search_type" value="all"{if $search_type === "all"} checked="checked"{/if}>{i18n('Cała strona')}</label>
+				<label for="news"><input type="radio" id="news" name="search_type" value="news"{if $search_type === "news"} checked="checked"{/if} />{i18n('Newsy')}</label>
+				<label for="users"><input type="radio" id="users" name="search_type" value="users"{if $search_type === "users"} checked="checked"{/if} />{i18n('Użytkownicy')}</label>
+				<label for="tags"><input type="radio" id="tags" name="search_type" value="tags"{if $search_type === "tags"} checked="checked"{/if} />{i18n('Tagi')}</label>
+				<label for="all"><input type="radio" id="all" name="search_type" value="all"{if $search_type === "all"} checked="checked"{/if} />{i18n('Cała strona')}</label>
 			</div>
 		</div>
 		
 		<div class="tbl Buttons">
 			<div class="center grid_2">
 				<input type="hidden" name="search" value="yes" />
-				<span id="SendForm_This" class="Save button"><strong>{i18n('Search')}</strong></span>
+				<span id="SendForm_This" class="save button"><strong>{i18n('Search')}</strong></span>
 			</div>
 		</div>
 	</form>
@@ -67,7 +67,7 @@
 				<div class="grid_9"><a href="{$tags.link}">{$tags.value}</a></div>
 			</div>
 		{/section}
-	{elseif $search_type === "tags" || ($all && $users === array())}
+	{elseif $search_type === "tags" || ($all && $tags === array())}
 		<div class="info">Nie znaleziono tagów pasujących do następującego kryterium "<strong>{$search_text}</strong>"</div>
 	{/if}
 	

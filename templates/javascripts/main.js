@@ -1,24 +1,4 @@
 (function($){$.fn.clearDefault=function(){return this.each(function(){var default_value=$(this).val();$(this).focus(function(){if($(this).val()==default_value)$(this).val("");});$(this).blur(function(){/*if($(this).val()=="")$(this).val(default_value);*/});});};})(jQuery);
-
-// jQuery.noConflict();
-
-// Manipulowanie domyœln¹ zawartoœci¹ pola
-function valueSystem(id) {
-	jQuery(function() {
-		var val = jQuery(id).val();
-		jQuery(id).focus(
-			function() {
-				if (this.value == val) {
-					this.value = '';
-				}
-			}
-		).blur(function() {
-			if (this.value == '') {
-				this.value = val;
-			}
-		});
-	});
-}
  
 jQuery(function() {
 
@@ -62,14 +42,6 @@ jQuery(function() {
 	// ============================
 	jQuery('.FacebookLike iframe').each(function() {
 		jQuery(this).attr("allowtransparency", "true");
-	});
-
-	// ============================
-	// Button Save
-	// ============================
-	jQuery('span.Save').bind('click', function() {
-		var FormSubmitID = (this.id).split('_');
-		jQuery('#' +FormSubmitID[1]).submit();
 	});
 
 	// ============================

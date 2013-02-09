@@ -2,5 +2,5 @@
 
 return array(
 	'Tlen' => 'Komunikátor Tlen',
-	'Displays the status of Tlen' => 'Zobrazuje status pro komunikační programu Tlen'
+	'Displays the status of Tlen' => 'Zobrazí status pro komunikační program Tlen'
 );

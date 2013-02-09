@@ -1,7 +1,7 @@
 {if $tag}
 	{php} opentable(__('Materiały zawierające słowo kluczowe: :tagTitle', array(':tagTitle' => $this->data['tag_name']))) {/php}
 		<p class="tag_top dark text_dark">
-			<a href="{$url_tag}">Tagi</a> <img src="{$THEME_IMAGES}bullet.gif" alt=""> <strong>{$tag_name}</strong> ({$tag_frequency})
+			<a href="{$url_tag}">Tagi</a> <img src="{$THEME_IMAGES}bullet.png" alt=""> <strong>{$tag_name}</strong> ({$tag_frequency})
 		</p>
 		<ul class="tagged_elements clearfix">
 		{section=tag}

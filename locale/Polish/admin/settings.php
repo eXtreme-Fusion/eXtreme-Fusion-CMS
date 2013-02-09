@@ -23,16 +23,10 @@ return array(
 	'Default language:' => 'Język strony:',
 	'Default theme:' => 'Skórka strony:',
 	'Default search place:' => 'Domyślne miejsce wyszukiwania:',
-	'Turn of left panels on:' => 'Wyłącz lewe panele na:',
-	'Turn of right panels on:' => 'Wyłącz prawe panele na:',
-	'Turn of top panels on:' => 'Wyłącz górne panele na:',
-	'Turn of footer panels on:' => 'Wyłącz dolne panele na:',
-	'Example' => '<em>Przykładowo:</em><br />/news.php<br />/index.php<br />',
-	
 	//Logs
 	'The language chosen is not avaible.' => 'Wybrany język nie jest dostępny.',
 	'The template chosen is not available.' => 'Wybrany szablon nie jest dostępny.',
 	'Data has been saved. Please refresh the page to see changes.' => 'Dane zostały zapisane. Odśwież stronę aby zobaczyć zmiany.',
 	'System language has been changed.' => 'Język systemu został zmieniony.',
-	
+
 );

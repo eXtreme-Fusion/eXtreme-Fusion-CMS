@@ -73,17 +73,17 @@ class ServiceContainer implements ArrayAccess
 			return self::$shared[$id];
 		}
 
-		if (method_exists($this, $method = 'get'.$this->camelize($id).'Service'))
+		if (method_exists($this, $method = 'get'.$this->camelize($id).'Service') && !$this->arguments)
 		{
 			return self::$shared[$id] = $this->$method();
 		}
 
-		$class = new ReflectionClass($id);
+		$class = new ReflectionClass($this->camelize($id));
 		$obj = $class->newInstanceArgs($this->arguments);
 
 		if ($this->save_shared)
 		{
-			self::$shared[$this->class] = $obj;
+			self::$shared[$id] = $obj;
 		}
 
 		return $obj;

@@ -4,15 +4,15 @@
 		<meta charset="UTF-8" />
 		<title>{$SystemVersion}</title>
 		<link rel="shortcut icon" href="{$ADDR_FAVICON}" type="image/x-icon" />
-		<link rel="stylesheet" href="{$ADDR_ADMIN_CSS}grid.reset.css" media="screen" />
-		<link rel="stylesheet" href="{$ADDR_ADMIN_CSS}grid.text.css" media="screen" />
-		<link rel="stylesheet" href="{$ADDR_ADMIN_CSS}grid.960.css" media="screen" />
+		<link rel="stylesheet" href="{$ADDR_COMMON_CSS}grid.reset.css" media="screen" />
+		<link rel="stylesheet" href="{$ADDR_COMMON_CSS}grid.text.css" media="screen" />
+		<link rel="stylesheet" href="{$ADDR_COMMON_CSS}grid.960.css" media="screen" />
 		<link rel="stylesheet" href="{$ADDR_ADMIN_CSS}_framework.css" media="screen" />
 		
 		<script src="{$ADDR_COMMON_JS}jquery.js"></script>
-		<script src="{$ADDR_ADMIN_JS}jquery.ui.js"></script>
-		<script src="{$ADDR_ADMIN_JS}jquery.tooltip.js"></script>
-		<script src="{$ADDR_ADMIN_JS}jquery.tzineClock.js"></script>
+		<script src="{$ADDR_COMMON_JS}jquery-ui.js"></script>
+		<script src="{$ADDR_COMMON_JS}jquery.tooltip.js"></script>
+		<script src="{$ADDR_COMMON_JS}jquery.tzineClock.js"></script>
 		<script src="{$ADDR_ADMIN_JS}jquery.layout.js"></script>
 		<script src="{$ADDR_ADMIN_JS}jquery.countdown.js"></script>
 		<script src="{$ADDR_ADMIN_JS}jquery.autoGrowInput.js"></script>
@@ -114,9 +114,6 @@
 								{/if}
 								<ul class="select page-5">
 									<li><a id="Menu-5" href="#"><strong><span>{i18n('Modules')}</span></strong></a></li>
-								</ul>
-								<ul class="select">
-									<li><a href="http://www.mindmeister.com/97887012/extreme-fusion-v-5-0" target="mainFrame"><strong><span>MindMeister</span></strong></a></li>
 								</ul>
 							</div>
 						</div>

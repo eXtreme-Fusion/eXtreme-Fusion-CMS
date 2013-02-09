@@ -15,7 +15,9 @@ $mod_info = array(
 	'developer' => 'eXtreme Crew',
 	'support' => 'http://www.extreme-fusion.org/',
 	'version' => '1.0',
-	'dir' => 'polls'
+	'dir' => 'polls',
+	'development' => TRUE,
+	'developmentMessage' => __('Modules under Development.')
 );
 
 $new_table[1] = array(

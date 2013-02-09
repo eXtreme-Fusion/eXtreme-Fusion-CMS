@@ -24,8 +24,13 @@ try
 
 	$_tpl = new Iframe;
 
-    $_panels = new Panels($_pdo);
-	$_panels->adminMakeListPanels($_user);
+	$_tag = new Tag($_system, $_pdo);
+	$_modules = new Modules($_pdo, $_sett, $_user, $_tag, $_locale);
+	$_panels = new Panels($_pdo);
+
+	$_panels->setModulesInst($_modules);	
+   
+	$_panels->adminMakeListPanels($_user, TRUE);
 
 	$_tpl->assign('noact_panels', $_panels->adminGetInactivePanels());
 	$_tpl->assign('panel', $_panels->adminGetPanel());

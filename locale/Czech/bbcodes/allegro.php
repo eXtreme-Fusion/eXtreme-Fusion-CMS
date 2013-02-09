@@ -2,5 +2,5 @@
 
 return array(
 	'Allegro' => 'Aukce Allegro',
-	'It is used to make links to the Allegro auction' => 'Toto je používáno pro vytvoření odkazů na aukce Allegro'
+	'It is used to make links to the Allegro auction' => 'Používá se pro vytvoření odkazů na aukce Allegro'
 );

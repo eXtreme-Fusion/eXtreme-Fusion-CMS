@@ -114,6 +114,8 @@ Class HELP
 
 			return ADDR_SITE;
 		}
+		
+		return $url;
 	}
 
 	public static function hoursToSeconds($time, $conv = FALSE)

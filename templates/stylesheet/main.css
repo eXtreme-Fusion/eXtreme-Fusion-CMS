@@ -1,6 +1,5 @@
 /*========================
  PL: Główne clasy
- EN: Main class
 ========================*/
 .center {text-align:center}
 .box-center{margin:0 auto}
@@ -22,39 +21,23 @@
 .margin-vertical-10{margin:10px 0 !important}
 .margin-top-10{margin-top:10px !important}
 textarea {resize:none;}
-.clear {
-	clear: both;
-}
+.clear {clear: both;}
 
-* table,table {
+table {
 	margin:0;
 	padding:0;
 	width:100%;
 	border-spacing:0;
 }
 
-/* Ogólne */
-* {margin:0;padding:0;}
-a {text-decoration:none;color:#666;}
-a img {border:none;}
-
-body {
-	margin:0;
-	padding:14px 0;
-	font-family:Verdana,Geneva,Kalimati,sans-serif;
-	font-size:12px;
-	color:#333;
-	background:url(../../admin/templates/images/ui/iframe-shadow-top.png) repeat-x;
-	overflow-x:hidden;
+// Formularze
+.formField, .formLabel
+{
+	float:left;
 }
 
-h1 {
-	margin:15px 0 5px;
-	padding:0 0 0 26px;
-	font-size:22px;
-	line-height:24px;
-	font-weight:400;
-	color:#4b4b4b;
+.formLabel {
+	width:30%;
 }
 
 /* Zewnętrzene */
@@ -87,12 +70,6 @@ h1 {
 	overflow:hidden;
 	cursor:s-resize;
 }
-.resize {
-	display:block;
-	margin-bottom:0;
-	height:20%;
-}
-
 
 /* Treść */
 .main_panel_content {
@@ -112,67 +89,6 @@ h1 {
 	margin-top:30px;
 	border-top:1px #eee solid;
 }
-
-.button {
-	cursor:pointer;
-	font-size:11px;
-	font-weight:bold;
-	color:#000;
-	padding:3px 6px;
-	background:#FFFFFF;
-	border:0px;
-	border-radius:4px;
-	-moz-border-radius:4px;
-	-webkit-border-radius:4px;
-	-o-border-radius:4px;
-	margin: 4px;
-	}
-	
-.button:hover {
-	text-decoration: none;
-	color: #3a3a3a;
-	}
-
-/* Zaokrąglony kontener */
-.corner4px .ctl {
-	height:4px;
-	font-size:1px;
-	background:url(../../admin/templates/images/shared/corner4px.png) no-repeat left -8px;
-}
-.corner4px .ctl .ctr {
-	margin:0 0 0 4px;
-	font-size:1px;
-	background:url(../../admin/templates/images/shared/corner4px.png) no-repeat right 0;
-}
-.corner4px .ctl .ctr .ctc {
-	margin:0 4px 0 0;
-	height:4px;
-	border-top:1px #ddd solid;
-	background:#fbfbfb;
-}
-.corner4px .cc {
-	padding:3px 6px 0;
-	border-left:1px #ddd solid;
-	border-right:1px #ddd solid;
-	background:#fbfbfb;
-}
-.corner4px .cfl {
-	height:4px;
-	font-size:1px;
-	background:url(../../admin/templates/images/shared/corner4px.png) no-repeat left -12px;
-}
-.corner4px .cfl .cfr {
-	margin:0 0 0 4px;
-	font-size:1px;
-	background:url(../../admin/templates/images/shared/corner4px.png) no-repeat right -3px;
-}
-.corner4px .cfl .cfr .cfc {
-	margin:0 4px 0 0;
-	height:4px;
-	border-bottom:1px #ddd solid;
-	background:#fbfbfb;
-}
-
 
 /* Statusy (Messages)*/
 .status,.info,.error,.valid {

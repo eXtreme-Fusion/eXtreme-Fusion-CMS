@@ -2,5 +2,5 @@
 
 return array(
 	'Background' => 'Pozadí',
-	'Displays the selected text background' => 'Zobrazí vybraný text na pozadí'
+	'Displays the selected text background' => 'Zobrazí za vybraným textem pozadí'
 );
