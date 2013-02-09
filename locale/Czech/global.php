@@ -70,7 +70,7 @@ return array(
 	'Error' => 'Chyba',
 	'Options:' => 'Možnosti:',
 
-	'Database error' => 'Błąd podczas aktualizacji danych: ustawienia nie zostały zmienione!',
+	'Database error' => 'Chyba při aktualizaci dat: nastavení nebyla změněna!',
 	
 	//Informations
 	'Author:' => 'Autor:',
@@ -80,10 +80,10 @@ return array(
 	'User:' => 'Uživatel:',
 	'Message:' => 'Zpráva:',
 
-	'User Panel' => 'Panel użytkownika',
-	'Admin Panel' => 'Administracja',
+	'User Panel' => 'Panel uživatele',
+	'Admin Panel' => 'Administrace',
 
-	'Private messages' => 'Prywatne wiadomości',
+	'Private messages' => 'Soukromé zprávy',
 
 	'Failed to request account data. Error:' => 'Nie udało się pobrać danych konta. Błąd:',
 	'Failed to request report data. Error:' => 'Nie udało się pobrać danych raportu. Błąd:',
@@ -107,27 +107,27 @@ return array(
 	
 
 	// Standard User Levels
-	'Guest' => 'Gość',
-	'User' => 'Użytkownik',
-	'Admin' => 'Administrator',
-	'hAdmin' => 'Główny administrator',
-	'Administration' => 'Administracja',
+	'Guest' => 'Host',
+	'User' => 'Uživatel',
+	'Admin' => 'Administrátor',
+	'hAdmin' => 'Hlavní administrátor',
+	'Administration' => 'Administrace',
 	'Site' => 'Strona',
 	'user_na' => 'Nd.',
-	'user_anonymous' => 'Konto ukryte',
+	'user_anonymous' => 'Účet skryt',
 	// Forum Moderator Level(s)
-	'userf1' => 'Moderator',
+	'userf1' => 'Moderátor',
 	// Navigation
-	'global_001' => 'Nawigacja',
+	'global_001' => 'Navigace',
 	'global_002' => 'Brak linków\n',
 	// Users Online
-	'global_010' => 'Aktualnie online',
-	'global_011' => 'Gości online',
-	'global_012' => 'Użytkowników online',
-	'global_013' => 'Brak użytkowników online',
-	'global_014' => 'Łącznie użytkowników',
-	'global_015' => 'Nieaktywnych użytkowników',
-	'global_016' => 'Najnowszy użytkownik',
+	'global_010' => 'Aktuálně online',
+	'global_011' => 'Hosté online',
+	'global_012' => 'Uživatelé online',
+	'global_013' => 'Žádný uživatel online',
+	'global_014' => 'Celkem uživatelů',
+	'global_015' => 'Neaktivní uživatelé',
+	'global_016' => 'Nejnovější uživatel',
 	// Forum Side panel
 	'global_020' => 'Ostatnio na forum',
 	'global_021' => 'Najnowsze tematy',
