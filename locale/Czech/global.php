@@ -236,9 +236,9 @@ return array(
 	'global_198' => '<strong>Ostrzeżenie:</strong> Wykryto katalog Install, usuń go natychmiast.',
 	//Titles
 	'global_201' => ': ',
-	'global_202' => 'Szukaj',
+	'global_202' => 'Hledat',
 	'global_203' => 'FAQ',
-	'global_204' => 'Forum',
+	'global_204' => 'Fórum',
 	//Themes
 	'global_210' => 'Przejdź do treści',
 	// No themes found
@@ -314,9 +314,9 @@ return array(
 	//Czas sesji
 
 	// Function showCopyrights()
-	'Powered by :system' => 'Strona oparta na systemie CMS :system',
+	'Powered by :system' => 'Web běží na redakčním systému :system',
 	
-	'Powered by :system under :license License' => 'Strona oparta na systemie CMS :system na licencji :license',
+	'Powered by :system under :license License' => 'Web běží na redakčním systému :system pod licencí :license',
 	
 	'Yes' => 'Ano',
 	'No' => 'Ne',
