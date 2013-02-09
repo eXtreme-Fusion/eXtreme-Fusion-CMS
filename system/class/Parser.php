@@ -64,7 +64,16 @@ class Parser extends optClass
 		$this->assign('ADDR_JS', ADDR_JS);
 		$this->assign('ADDR_COMMON_JS', ADDR_COMMON_JS);
 		$this->assign('ADDR_COMMON_CSS', ADDR_COMMON_CSS);
-
+		$this->assignGroup(
+			array(
+				'ADDR_ADMIN_TEMPLATES' => ADDR_ADMIN_TEMPLATES,
+				'ADDR_ADMIN_ICONS' => ADDR_ADMIN_IMAGES.'icons/',
+				'ADDR_ADMIN_PAGES_JS' => ADDR_ADMIN_TEMPLATES.'javascripts/pages/',
+				'ADDR_ADMIN_CSS' => ADDR_ADMIN_TEMPLATES.'stylesheet/',
+				'ADDR_ADMIN_JS' => ADDR_ADMIN_TEMPLATES.'javascripts/',
+				'ADDR_ADMIN_PAGES' => ADDR_ADMIN.'pages/'
+			)
+		);
 		if (file_exists(DIR_SITE.'themes'.DS.self::$_sett->get('theme').DS.'templates'.DS.'images'.DS.'favicon.ico'))
 		{
 			$this->assign('ADDR_FAVICON', ADDR_SITE.'themes/'.self::$_sett->get('theme').'/templates/images/favicon.ico');
@@ -342,6 +351,7 @@ class Iframe extends Parser
 	public function template($iframe)
 	{
 		$this->assignGroup(array(
+			'ADDR_ADMIN_TEMPLATES' => ADDR_ADMIN_TEMPLATES,
 			'ADDR_ADMIN_ICONS' => ADDR_ADMIN_IMAGES.'icons/',
 			'ADDR_ADMIN_PAGES_JS' => ADDR_ADMIN_TEMPLATES.'javascripts/pages/',
 			'ADDR_ADMIN_CSS' => ADDR_ADMIN_TEMPLATES.'stylesheet/',
