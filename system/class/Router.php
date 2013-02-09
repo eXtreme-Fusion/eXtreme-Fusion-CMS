@@ -1,13 +1,13 @@
 <?php
 /***********************************************************
 | eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
+| This product is licensed under the BSD License.
+| http://extreme-fusion.org/ef5/license/
 ***********************************************************/
 
 /* DEBUGOWANIE:
@@ -51,14 +51,14 @@ class Router
 		$_action = '';			  	/**********TEST*********/
 
 	protected $_path_info_exists;
-	
+
 	protected $_installed_modules = array();
 
 	public function __construct($request, $_sett, $rewrite, $main_param, $path_info_exists, $opening_page, $ret_default = FALSE, $search_more = TRUE, $search_admin = FALSE, $searching = '')
 	{
 		$this->_sett = $_sett;
 		$this->_request = $request;
-		
+
 		$this->_rewrite = $rewrite;
 		$this->_sep = $this->_sett->getUns('routing', 'main_sep');
 		$this->_param_sep = $this->_sett->getUns('routing', 'param_sep');
@@ -77,12 +77,12 @@ class Router
 		);
 
 		$this->_path_info_exists = $path_info_exists;
-		
+
 		$this->setEnv();
-				
+
 		$this->_url = new URL($this->_ext['url'], $this->_sep, $this->_param_sep, $this->_rewrite, $this->_path_info_exists);
 		$this->_ext_allowed = $this->_url->extAllowed();
-		
+
 		/**
 		 * Metoda zwróci FALSE, jeśli żądanie nie spełnia warunku dotyczącego rozszerzenia.
 		 * Wyświetli się błąd 404, więc wykonanie poniższych metod jest niepotrzebne.
@@ -94,10 +94,10 @@ class Router
 			$this->setParams();
 			$this->setAction();
 		}
-		
+
 		$this->_url->setController($this->getFileName());
 	}
-	
+
 	/**
 	 * Konfiguruje środowisko pracy dla Routera.
 	 * Tworzy stałą PATH_INFO zawierającą żądanie URL.
@@ -116,7 +116,7 @@ class Router
 			{
 				$to_replace = array($dirname, $this->_sep.'index.php');
 			}
-			
+
 			define('PATH_INFO', str_replace($to_replace, '', $_SERVER['REQUEST_URI']));
 		}
 		else
@@ -338,7 +338,7 @@ class Router
 	// Przekierowanie na inny kontriker (plik).
 	public function goToFile($file, $action = NULL, array $params = array())
 	{
-	
+
 		echo 'METODA KLASY ROUTER O NAZWIE GOTOFILE JEST PRZESTARZALA';
 		$str_params = '';
 		if ($params)
@@ -401,7 +401,7 @@ class Router
 			{
 				$path = substr($path, 1, $path_len);
 			}
-			
+
 			if ($this->_ext_allowed)
 			{
 				if (in_array($ext = strrchr($path, '.'), array('.html', '.htm', '.php')))
@@ -473,7 +473,7 @@ class Router
 	/**
 	 * Ustawia kontroler i akcję do wywołania
 	 *
-	 * Może być przydatne gdy na danej podstronie chcemy wyświetlić 
+	 * Może być przydatne gdy na danej podstronie chcemy wyświetlić
 	 * najpierw panel logowania przed właściwą treścią bez przekierowania
 	 * na podstronę logowania.
 	 */
@@ -482,7 +482,7 @@ class Router
 		if (isset($trace['controller']))
 		{
 			$this->_file_name = $trace['controller'];
-			$this->setExitFile();
+			$this->setExitFile(FALSE);
 		}
 
 		if (isset($trace['action']))
@@ -495,10 +495,10 @@ class Router
 	{
 		$this->_installed_modules = $installed;
 	}
-	
-	public function setExitFile()
+
+	public function setExitFile($shared = TRUE)
 	{
-		if ($this->_exit_file)
+		if ($this->_exit_file && $shared)
 		{
 			if (file_exists($this->_exit_file))
 			{
@@ -531,7 +531,7 @@ class Router
 				{
 					continue;
 				}
-				
+
 				if (file_exists($val.DS.$file))
 				{
 					$this->_exit_file = $val.$file;
@@ -574,10 +574,7 @@ class Router
 
 	public function getExitFile()
 	{
-		if ($this->_exit_file)
-		{
-			return $this->_exit_file ? $this->_exit_file : FALSE;
-		}
+		return $this->_exit_file ? $this->_exit_file : FALSE;
 	}
 
 	public function getFileName()

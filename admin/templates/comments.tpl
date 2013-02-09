@@ -7,13 +7,13 @@
 			<div class="formLabel sep_1 grid_3"><label for="comment_post">{i18n('Content:')}</label></div>
 			<div class="formField grid_7"><textarea name="post" id="comment_post" rows="5">{$edit.post}</textarea></div>
 		</div>
-		<div class="tbl AdminButtons">
+		<div class="tbl Buttons">
 			<div class="center grid_2 button-l">
 				<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
 			</div>
 			<div class="center grid_2 button-r">
 				<input type="hidden" name="save" value="yes" />
-				<span id="SendForm_This" class="Save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
+				<span id="SendForm_This" class="save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
 			</div>
 		</div>
 	</form>
@@ -48,7 +48,7 @@
 				{/section}
 			</tbody>
 		</table>
-		<div class="tbl AdminButtons">
+		<div class="tbl Buttons">
 			<div class="center grid_2 button-c">
 				<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
 			</div>
@@ -57,7 +57,7 @@
 		<div class="tbl2">
 			<div class="sep_1 grid_10 center">{i18n('There are no comments.')}</div>
 		</div>
-		<div class="tbl AdminButtons">
+		<div class="tbl Buttons">
 			<div class="center grid_2 button-c">
 				<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
 			</div>

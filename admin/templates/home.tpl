@@ -45,13 +45,13 @@
 						<div class="formField grid_6"><label for="block_edit"><input type="checkbox" name="block_edit" value="0" id="block_edit">{i18n('Block editing')}<small>{i18n('Only author can edit this note.')}</small></label></div>
 					</div>
 
-					<div class="tbl AdminButtons">
+					<div class="tbl Buttons">
 						<div class="center grid_2 button-l">
 							<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
 						</div>
 						<div class="center grid_2 button-r">
 							<input type="hidden" name="note_add_save" value="yes" />
-							<span id="SendForm_This" class="Save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></a>
+							<span id="SendForm_This" class="save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></a>
 						</div>
 					</div>
 				</form>
@@ -75,7 +75,7 @@
 				{/if}
 
 			<form id="ThisNotes" action="{$URL_REQUEST}" method="post">
-				<div class="AdminButtons">
+				<div class="Buttons">
 					<div class="center grid_2 button-c">
 						<input type="hidden" name="note_add" value="yes" />
 						<span {if $current < $notes_per_page}id="SendForm_ThisNotes"{/if} class="{if $current < $notes_per_page}Save{/if}"><strong>{if $current < $notes_per_page}{i18n('Add')}{else}{i18n('You have reached maximum number of notes. Remove some.')}{/if}<img src="{$ADDR_ADMIN_ICONS}pixel/plus.png" alt="" /></strong></span>
@@ -100,9 +100,9 @@
 					<textarea cols="80" name="quick_news_content" id="quick_news_content" class="num_255 resize" rows="4"></textarea>
 				</div>
 				<div class="clear"></div>
-				<div class="tbl AdminButtons">
+				<div class="tbl Buttons">
 					<div class="center grid_2 button-c"><input type="hidden" name="quick_news_add" value="yes" />
-						<span id="SendForm_ThisQuickNews" class="Save"><strong>{i18n('Add')}<img src="{$ADDR_ADMIN_ICONS}pixel/plus.png" alt="" /></strong></span>
+						<span id="SendForm_ThisQuickNews" class="save"><strong>{i18n('Add')}<img src="{$ADDR_ADMIN_ICONS}pixel/plus.png" alt="" /></strong></span>
 					</div>
 				</div>
 				<div class="clear"></div>

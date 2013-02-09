@@ -40,17 +40,17 @@
 				</select>
 			</div>
 		</div>
-		<div class="tbl AdminButtons">
+		<div class="tbl Buttons">
 			<div class="center grid_2 button-l">
 				<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
 			</div>
 			<div class="center grid_2 button-c">
 				<input type="hidden" name="preview" value="yes" id="Preview" />
-				<span class="Preview" id="SendForm_This"><strong>{i18n('Preview')}<img src="{$ADDR_ADMIN_ICONS}pixel/zoom-in.png" alt="" /></strong></span>
+				<span class="preview" id="SendForm_This"><strong>{i18n('Preview')}<img src="{$ADDR_ADMIN_ICONS}pixel/zoom-in.png" alt="" /></strong></span>
 			</div>
 			<div class="center grid_2 button-r">
-				<input type="hidden" name="save" value="yes" id="Save" />
-				<span class="Save" id="SendForm_This" ><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
+				<input type="hidden" name="save" value="yes" id="save" />
+				<span class="save" id="SendForm_This" ><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
 			</div>
 		</div>
 

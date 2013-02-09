@@ -137,13 +137,13 @@
 				<div class="grid_1 formField"><label><input type="radio" name="show_type" value="1"{if $show_type == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
 				<div class="grid_5 formField"><label><input type="radio" name="show_type" value="0"{if $show_type == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
 			</div>
-			<div class="tbl AdminButtons">
+			<div class="tbl Buttons">
 				<div class="grid_2 center button-l">
 					<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="{i18n('Back')}" /></strong></span>
 				</div>
 				<div class="grid_2 center button-r">
 					<input type="hidden" name="save" value="yes" />
-					<span id="SendForm_This" class="Save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="{i18n('Save')}" /></strong></span>
+					<span id="SendForm_This" class="save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="{i18n('Save')}" /></strong></span>
 				</div>
 			</div>
 		</form>
@@ -217,13 +217,13 @@
 				<div class="grid_6 formLabel"><label for="Thumbnail">{i18n('Category thumbnail:')}</label></div>
 				<div class="grid_4 formField"><input type="file" name="thumbnail" value="{$thumbnail}" id="Thumbnail" /></div>
 			</div>
-			<div class="tbl AdminButtons">
+			<div class="tbl Buttons">
 				<div class="grid_2 center button-l">
 					<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="{i18n('Back')}" /></strong></span>
 				</div>
 				<div class="grid_2 center button-r">
 					<input type="hidden" name="save" value="yes" />
-					<span id="SendForm_This" class="Save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="{i18n('Save')}" /></strong></span>
+					<span id="SendForm_This" class="save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="{i18n('Save')}" /></strong></span>
 				</div>
 			</div>
 		</form>
@@ -383,13 +383,13 @@
 						});
 					{/literal}
 				</script>
-				<div class="tbl AdminButtons">
+				<div class="tbl Buttons">
 					<div class="grid_2 center button-l">
 						<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="{i18n('Back')}" /></strong></span>
 					</div>
 					<div class="grid_2 center button-r">
 						<input type="hidden" name="save" value="yes" />
-						<span id="SendForm_This" class="Save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="{i18n('Save')}" /></strong></span>
+						<span id="SendForm_This" class="save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="{i18n('Save')}" /></strong></span>
 					</div>
 				</div>
 			</form>

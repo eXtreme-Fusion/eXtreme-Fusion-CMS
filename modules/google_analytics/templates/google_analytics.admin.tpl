@@ -1,6 +1,6 @@
 <h3>{i18n('Google Analitics')} - {i18n('Navigation')}</h3>
 <div class="capmain"></div>
-<div class="tbl AdminButtons">
+<div class="tbl Buttons">
 	<div class="center grid_2 button-l">
 		{if $page === 'preview'}
 			<span class="Cancels"><strong>{i18n('Podgląd')}</strong></span>
@@ -97,13 +97,13 @@
 			<div class="formField grid_7"><input type="text" id="profile_id" name="profile_id" class="num_255" value="{$profile_id}" ></div>
 		</div>
 		
-		<div class="tbl AdminButtons">
+		<div class="tbl Buttons">
 			<div class="center grid_2 button-l">
 				<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="{i18n('Back')}" /></strong></span>
 			</div>
 			<div class="center grid_2 button-r">
 				<input type="hidden" name="save" value="yes" />
-				<span class="Save" id="SendForm_This"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="{i18n('Save')}" /></strong></span>
+				<span class="save" id="SendForm_This"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="{i18n('Save')}" /></strong></span>
 			</div>
 		</div>
 	</form>

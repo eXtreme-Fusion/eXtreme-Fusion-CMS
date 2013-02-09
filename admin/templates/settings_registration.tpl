@@ -41,13 +41,13 @@
 	<div class="tbl1">
 		<div class="formField sep_1 grid_10"><textarea name="license_agreement" id="LicenseAgreement" cols="80" rows="3">{$license_agreement}</textarea></div>
 	</div>
-	<div class="tbl AdminButtons">
+	<div class="tbl Buttons">
 		<div class="grid_2 center button-l">
 			<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
 		</div>
 		<div class="grid_2 center button-r">
 			<input type="hidden" name="save" value="yes" />
-			<span id="SendForm_This" class="Save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
+			<span id="SendForm_This" class="save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
 		</div>
 	</div>
 </form>

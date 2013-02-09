@@ -1,7 +1,7 @@
 <h3 class="ui-corner-all">{$SystemVersion} - {i18n('Users')}</h3>
 <link href="{$ADDR_ADMIN_CSS}user.css" media="screen" rel="stylesheet" />
 	{if $page !== 'users'}
-		<div class="center tbl AdminButtons">
+		<div class="center tbl Buttons">
 			<div class="center grid_2 button-l">
 				{if $page === 'users'}
 					<span class="Cancels"><strong>{i18n('Users')}<img src="{$ADDR_ADMIN_ICONS}pixel/user.png" alt="" /></strong></span>
@@ -47,7 +47,7 @@
 		
 	{elseif $page === 'users'}
 		{if $action !== 'edit'}
-			<div class="center tbl AdminButtons">
+			<div class="center tbl Buttons">
 				<div class="center grid_2 button-l">
 					{if $page === 'users'}
 						<span class="Cancels"><a href="{$FILE_SELF}?page=users"><strong>{i18n('Users')}<img src="{$ADDR_ADMIN_ICONS}pixel/user.png" alt="" /></strong></a></span>
@@ -186,13 +186,13 @@
 						</div>
 					{/section}
 				{/if}
-				<div class="tbl AdminButtons">
+				<div class="tbl Buttons">
 					<div class="center grid_2 button-l">
 						<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
 					</div>
 					<div class="center grid_2 button-r">
 						<input type="hidden" name="save" value="yes" />
-						<span id="SendForm_This" class="Save"><strong>{i18n('Edit account')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
+						<span id="SendForm_This" class="save"><strong>{i18n('Edit account')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
 					</div>
 				</div>
 			</form>
@@ -222,7 +222,7 @@
 					{if $account.id !== '1'}
 						<div class="box">
 							<h4>{i18n('Administration options')}</h4>
-							<div class="center AdminButtons">
+							<div class="center Buttons">
 								{if $action === 'edit'}
 									<span class="Cancels"><strong>{i18n('Edit the account')}<img src="{$ADDR_ADMIN_ICONS}pixel/edit.png" alt="" /></strong></span>
 								{else}
@@ -315,12 +315,12 @@
 		{/if}
 		
 		{if $action !== 'edit'}
-			<div class="tb1 AdminButtons">
+			<div class="tb1 Buttons">
 				<div class="center grid_2 button-l">
 					<span class="Cancels"><a href="{$FILE_SELF}"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></a></span>
 				</div>
 				<div class="center grid_2 button-r">
-					<span class="Save"><a href="{$FILE_SELF}?page=add"><strong>{i18n('Create account')}<img src="{$ADDR_ADMIN_ICONS}pixel/plus.png" alt="" /></strong></a></span>
+					<span class="save"><a href="{$FILE_SELF}?page=add"><strong>{i18n('Create account')}<img src="{$ADDR_ADMIN_ICONS}pixel/plus.png" alt="" /></strong></a></span>
 				</div>
 			</div>
 		{/if}
@@ -412,13 +412,13 @@
 					</div>
 				{/section}
 			{/if}
-			<div class="tbl AdminButtons">
+			<div class="tbl Buttons">
 				<div class="sep_1 center grid_2 button-l">
 					<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
 				</div>
 				<div class="center grid_2 button-r">
 					<input type="hidden" name="create_account" value="yes" />
-					<span id="SendForm_This" class="Save"><strong>{i18n('Create account')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
+					<span id="SendForm_This" class="save"><strong>{i18n('Create account')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
 				</div>
 			</div>
 		</form>
@@ -484,13 +484,13 @@
 				<div class="grid_1 formField"><label><input type="radio" name="hide" value="1" checked="checked" /> {i18n('Yes')}</label></div>
 				<div class="grid_6 formField"><label><input type="radio" name="hide" value="0" /> {i18n('No')}</label></div>
 			</div>
-			<div class="tbl AdminButtons">
+			<div class="tbl Buttons">
 				<div class="sep_1 center grid_2 button-l">
 					<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
 				</div>
 				<div class="center grid_2 button-r">
 					<input type="hidden" name="send" value="yes" />
-					<span id="SendForm_This" class="Save"><strong>{i18n('Send message')}<img src="{$ADDR_ADMIN_ICONS}pixel/mail.png" alt="" /></strong></span>
+					<span id="SendForm_This" class="save"><strong>{i18n('Send message')}<img src="{$ADDR_ADMIN_ICONS}pixel/mail.png" alt="" /></strong></span>
 				</div>
 			</div>
 		</form>

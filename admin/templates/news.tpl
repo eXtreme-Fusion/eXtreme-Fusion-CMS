@@ -1,7 +1,7 @@
 <h3>{$SystemVersion} - {i18n('News')} || {i18n('Section')} - {i18n($page)}</h3>
 {if $message}<div class="{$class}">{$message}</div>{/if}
 
-<div class="tbl AdminButtons">
+<div class="tbl Buttons">
 	<div class="center grid_2 button-l">
 		{if $page === 'news'}
 			<span class="Cancels"><strong>{i18n('News')}</strong></span>
@@ -148,13 +148,13 @@
 			<div class="formField grid_1"><label><input type="checkbox" name="sticky" value="1" {if $sticky == 1} checked="checked"{/if} /></label></div>
 			<div class="clear"></div>
 		</div>
-		<div class="tb1 AdminButtons">
+		<div class="tb1 Buttons">
 			<div class="center grid_2 button-l">
 				<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
 			</div>
 			<div class="center grid_2 button-r">
 				<input type="hidden" name="save" value="yes" />
-				<span id="SendForm_This" class="Save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
+				<span id="SendForm_This" class="save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
 			</div>
 		</div>
 	</form>
@@ -200,13 +200,13 @@
 			<div class="grid_4 right">{i18n('Category language:')}</div>
 			<div class="grid_6 left">{$language}<br /><small>{i18n('Same as a site language.')}</small></div>
 		</div>
-		<div class="tb2 AdminButtons">
+		<div class="tb2 Buttons">
 			<div class="center grid_2 button-l">
 				<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
 			</div>
 			<div class="center grid_2 button-r">
 				<input type="hidden" name="save" value="yes" />
-				<span id="SendForm_This" class="Save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
+				<span id="SendForm_This" class="save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
 			</div>
 		</div>
 	</form>

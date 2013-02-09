@@ -2,7 +2,7 @@
 {if $config.development}<div class="error">{i18n($config.developmentMessage)}</div>{/if}
 {if $message}<div class="{$class}">{$message}</div>{/if}
 
-<div class="tbl AdminButtons">
+<div class="tbl Buttons">
 	<div class="center grid_2 button-l">
 		{if $page === 'cats'}
 			<span class="Cancels"><strong>{i18n('Categories')}</strong></span>
@@ -37,7 +37,7 @@
 			<div class="formLabel sep_1 grid_2"><label for="description">{i18n('Description:')}</label></div>
 			<div class="formField grid_6"><textarea name="description" id="description" rows="3" class="resize">{$description}</textarea></div>
 		</div>
-		<div class="tbl AdminButtons">
+		<div class="tbl Buttons">
 			<div class="center grid_2 button-l">
 				<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
 			</div>
@@ -138,7 +138,7 @@
 				<input type="checkbox" name="notification" value="1" {if $notification == 1}checked=checked{/if} id="notification" />
 			</div>
 		</div>
-		<div class="tbl AdminButtons">
+		<div class="tbl Buttons">
 			<div class="center grid_2 button-l">
 				<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
 			</div>
@@ -197,7 +197,7 @@
 			<div class="info">{i18n('This section is under construction.')}</div>
 		</div>
 			
-		<div class="tbl AdminButtons">
+		<div class="tbl Buttons">
 			<div class="center grid_2 button-l">
 				<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
 			</div>

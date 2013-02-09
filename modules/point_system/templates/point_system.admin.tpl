@@ -2,7 +2,7 @@
 {if $message}<div class="{$class}">{$message}</div>{/if}
 {if $config.development}<div class="error">{i18n($config.developmentMessage)}</div>{/if}
 
-<div class="tbl AdminButtons">
+<div class="tbl Buttons">
 	<div class="center grid_2 button-l">
 		<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
 	</div>
@@ -39,10 +39,10 @@
 			<div class="formLabel sep_1 grid_3"><label for="section">{i18n('For What')}:<br /><small>{i18n('(f.e. Shoutbox)')}</small></label></div>
 			<div class="formField grid_7"><input type="text" id="section" name="section" class="num_64" value="{$section}" {if $edit} disabled="disabled" {/if} /></div>
 		</div>
-		<div class="tbl AdminButtons">
+		<div class="tbl Buttons">
 			<div class="sep_2 center grid_3 button-l button-r">
 				<input type="hidden" name="save_points" value="yes" />
-				<span id="SendForm_This" class="Save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
+				<span id="SendForm_This" class="save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
 			</div>
 		</div>
 	{elseif $rank}
@@ -54,10 +54,10 @@
 			<div class="formLabel sep_1 grid_3"><label for="ranks">{i18n('Rank')}:</label></div>
 			<div class="formField grid_7"><input type="text" id="ranks" name="ranks" class="num_100" value="{$ranks}"/></div>
 		</div>
-		<div class="tbl AdminButtons">
+		<div class="tbl Buttons">
 			<div class="sep_2 center grid_3 button-l button-r">
 				<input type="hidden" name="save_ranks" value="yes" />
-				<span id="SendForm_This" class="Save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
+				<span id="SendForm_This" class="save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
 			</div>
 		</div>
 	{elseif $bonus}
@@ -100,11 +100,11 @@
 					<div class="formLabel sep_1 grid_3"><label for="Comment">{i18n('Comment:')}</label></div>
 					<div class="formField grid_7"><input type="text" id="Comment" name="add_comment"/></div>
 				</div>
-				<div class="tbl AdminButtons">
+				<div class="tbl Buttons">
 					<div class="sep_2 center grid_3 button-l button-r">
 						<input type="hidden" name="bonus_user" value="{$user.id}" />
 						<input type="hidden" name="plus_points" value="yes" />
-						<span id="SendForm_This" class="Save"><strong>{i18n('Add')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
+						<span id="SendForm_This" class="save"><strong>{i18n('Add')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
 					</div>
 				</div>
 				
@@ -117,20 +117,20 @@
 					<div class="formLabel sep_1 grid_3"><label for="Comment">{i18n('Comment:')}</label></div>
 					<div class="formField grid_7"><input type="text" id="Comment" name="fine_comment"/></div>
 				</div>
-				<div class="tbl AdminButtons">
+				<div class="tbl Buttons">
 					<div class="sep_2 center grid_3 button-l button-r">
 						<input type="hidden" name="fine_user" value="{$user.id}" />
 						<input type="hidden" name="minus_points" value="yes" />
-						<span id="SendForm_This" class="Save"><strong>{i18n('Remove')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
+						<span id="SendForm_This" class="save"><strong>{i18n('Remove')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
 					</div>
 				</div>
 				
 				<h4>{i18n('Delete all user points')}</h4>
-				<div class="tbl AdminButtons">
+				<div class="tbl Buttons">
 					<div class="sep_2 center grid_3 button-l button-r">
 						<input type="hidden" name="user" value="{$user.id}" />
 						<input type="hidden" name="delete_user_points" value="yes" />
-						<span id="SendForm_This" class="Save"><strong>{i18n('Delete')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
+						<span id="SendForm_This" class="save"><strong>{i18n('Delete')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
 					</div>
 				</div>
 		{else}
@@ -148,10 +148,10 @@
 			<div class="tbl1">
 				<div class="formLabel grid_10 center sep_1"><small>{i18n('Can not be undone. Think before you make.')}</small></div>
 			</div>
-			<div class="tbl AdminButtons">
+			<div class="tbl Buttons">
 				<div class="sep_2 center grid_3 button-l button-r">
 					<input type="hidden" name="delete_all" value="yes" />
-					<span id="SendForm_This" class="Save"><strong>{i18n('Delete all')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
+					<span id="SendForm_This" class="save"><strong>{i18n('Delete all')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
 				</div>
 			</div>
 		{/if}

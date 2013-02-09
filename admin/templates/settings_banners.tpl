@@ -26,13 +26,13 @@
             });
 		{/literal}
 	</script>
-	<div class="tbl AdminButtons">
+	<div class="tbl Buttons">
 		<div class="center grid_2 button-l">
 			<span class="Cancel"><strong>{i18n('Back')}<img alt="" src="{$ADDR_ADMIN_ICONS}pixel/undo.png"></strong></span>
 		</div>
 		<div class="center grid_2 button-r">
 			<input type="hidden" name="save" value="yes" />
-			<span id="SendForm_This" class="Save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
+			<span id="SendForm_This" class="save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
 		</div>
 	</div>
 </form>

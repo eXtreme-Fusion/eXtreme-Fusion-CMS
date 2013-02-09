@@ -15,7 +15,7 @@
 		<div class="formLabel sep_1 grid_3"><label for="short_path">{i18n('New URL:')}</label></div>
 		<div class="formField grid_7"><textarea name="short_path" id="short_path" rows="1">{$link.short}</textarea></div>
 	</div>
-	<div class="tbl AdminButtons">
+	<div class="tbl Buttons">
 		<div class="center grid_2 button-l">
 			<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
 		</div>
@@ -24,7 +24,7 @@
 			{if $edit}
 			<input type="hidden" name="id" value="{$link.id}" />
 			{/if}
-			<span class="Save" id="SendForm_This" ><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
+			<span class="save" id="SendForm_This" ><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
 		</div>
 	</div>
 </form>
