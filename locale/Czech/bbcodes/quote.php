@@ -2,5 +2,5 @@
 
 return array(
 	'Quote' => 'Citování',
-	'Changes the selected text in quote' => 'Zobrazení vybraného textu na citovaný text'
+	'Changes the selected text in quote' => 'Změní vybraný text na citovaný text'
 );
