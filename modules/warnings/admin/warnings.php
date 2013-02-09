@@ -28,6 +28,19 @@ try
 	
 	$_tpl->assign('config', $mod_info);
 	
+	$periods = array(
+		array('value' => 1, 'description' => __('1 day')),
+		array('value' => 2, 'description' => __('2 days')),
+		array('value' => 7, 'description' => __('1 week')),
+		array('value' => 14, 'description' => __('2 weeks')),
+		array('value' => 30, 'description' => __('1 month')),
+		array('value' => 60, 'description' => __('2 months')),
+		array('value' => 90, 'description' => __('3 months')),
+		array('value' => 120, 'description' => __('4 months')),
+		array('value' => 240, 'description' => __('8 months')),
+		array('value' => 360, 'description' => __('1 year'))
+	);
+
 	// Inicjalizacja klas
 	! class_exists('WarningsSett') || $_warnings_sett = New WarningsSett($_system, $_pdo);
 	
@@ -104,12 +117,13 @@ try
 				// Wykonaj zapytania
 				$count = $_pdo->exec('
 					UPDATE [warnings_cats]
-					SET `title` = :title, `description` = :description
+					SET `title` = :title, `description` = :description, `period` = :period
 					WHERE `id` = :id',
 					array(
 						array(':id', $_request->get('id')->show(), PDO::PARAM_INT),
 						array(':title', $_request->post('title')->strip(), PDO::PARAM_STR),
-						array(':description', $_request->post('description')->strip(), PDO::PARAM_STR)
+						array(':description', $_request->post('description')->strip(), PDO::PARAM_STR),
+						array(':period', $_request->post('period')->strip(), PDO::PARAM_STR)
 					)
 				);
 				
@@ -129,10 +143,11 @@ try
 			else
 			{
 				// Tu będą zapytania PDO
-				$count = $_pdo->exec('INSERT INTO [warnings_cats] (`title`, `description`) VALUES (:title, :description)',
+				$count = $_pdo->exec('INSERT INTO [warnings_cats] (`title`, `description`, `period`) VALUES (:title, :description, :period)',
 					array(
 						array(':title', $_request->post('title')->strip(), PDO::PARAM_STR),
-						array(':description', $_request->post('description')->strip(), PDO::PARAM_STR)
+						array(':description', $_request->post('description')->strip(), PDO::PARAM_STR),
+						array(':period', $_request->post('period')->strip(), PDO::PARAM_STR)
 					)
 				);
 				
@@ -154,7 +169,7 @@ try
 		if ($_request->get('action')->show() === 'edit' && $_request->get('id')->isNum(TRUE))
 		{
 			// Pobranie kolumny z danego identyfikatora
-			$row = $_pdo->getRow('SELECT `id`, `title`, `description` FROM [warnings_cats] WHERE `id` = :id',
+			$row = $_pdo->getRow('SELECT `id`, `title`, `description`, `period` FROM [warnings_cats] WHERE `id` = :id',
 				array(':id', $_request->get('id')->show(), PDO::PARAM_INT)
 			);
 			
@@ -165,7 +180,8 @@ try
 				$_tpl->assignGroup(array(
 						'id' => $row['id'],
 						'title' => $row['title'],
-						'description' => $row['description']
+						'description' => $row['description'],
+						'period' => $row['period']
 					)
 				);
 			} 
@@ -176,21 +192,32 @@ try
 			}
 		}
 		
-		$query = $_pdo->getData('SELECT * FROM [warnings_cats] ORDER BY `title`');
-		
-		if ($query)
+		if ($query = $_pdo->getData('SELECT `id`, `title`, `description`, `period` FROM [warnings_cats] ORDER BY `title`'))
 		{
 			foreach($query as $row)
-            {
+            {	
+				foreach ($periods as $val)
+				{
+					if($val['value'] === intval($row['period']))
+					{
+						$period = $val['description'];
+						break;
+					}
+				}
+
 				$cats_list[] = array(
 					'id' => $row['id'],
 					'title' => $row['title'],
-					'description' => HELP::trimlink($row['description'], 100),
+					'description' => HELP::trimlink($row['description'], 50),
+					'period' => $period
 				);
 			
 			}
+			
 			$_tpl->assign('cats_list', $cats_list);
 		}
+		
+		$_tpl->assign('periods', $periods);
 	}
 	elseif($_request->get('page')->show() === 'sett')
 	{
@@ -339,26 +366,33 @@ try
 			}
 		}
 		
-		$cats = array();
-		if ($query = $_pdo->getData('SELECT `id`, `title` FROM [warnings_cats] ORDER BY `title`'))
+		if ($query = $_pdo->getData('SELECT `id`, `title`, `period` FROM [warnings_cats] ORDER BY `title`'))
 		{
 			foreach($query as $row)
 			{
+				foreach ($periods as $val)
+				{
+					if($val['value'] === intval($row['period']))
+					{
+						$period = $val['description'];
+						break;
+					}
+				}
+				
 				$cats[] = array(
 					'title' => $row['title'],
-					'id' => $row['id']
+					'id' => $row['id'],
+					'period' => $period
 				);
 			}
+			
+			$_tpl->assign('cats', $cats);
 		}
-		
-		$_tpl->assign('cats', $cats);
-		
-		$q = $_pdo->getData('SELECT * FROM [warnings] ORDER BY `datestamp`');
-		
+			
 		// Sprawdzanie czy pobrano dane
-		if ($q)
+		if ($query = $_pdo->getData('SELECT * FROM [warnings] ORDER BY `datestamp`'))
 		{
-			foreach($q as $row)
+			foreach($query as $row)
             {
 				// Umieszczenie pobranych danych w templatece
 				$warnings_list[] = array(
