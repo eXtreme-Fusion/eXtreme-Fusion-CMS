@@ -2,5 +2,5 @@
 
 return array(
 	'Small and Alternative' => 'Zmenšení a alternativní styl',
-	'Minimizes the selected text and displays it an alternative font' => 'Zmenšení vybraného textu a zobrazení textu v alternativním fontu'
+	'Minimizes the selected text and displays it an alternative font' => 'Zmenší vybraný text a zobrazí ho v alternativním fontu'
 );

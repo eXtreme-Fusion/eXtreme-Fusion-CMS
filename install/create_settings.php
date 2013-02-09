@@ -47,11 +47,6 @@ $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'news_photo_h', 'v
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'news_image_frontpage', 'value' => 0));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'news_image_readmore', 'value' => 0));
 
-$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'exclude_left', 'value' => ''));
-$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'exclude_upper', 'value' => ''));
-$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'exclude_lower', 'value' => ''));
-$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'exclude_right', 'value' => ''));
-
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'cookie_secure', 'value' => 0));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'cookie_domain', 'value' => $_SERVER['HTTP_HOST']));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'cookie_patch', 'value' => '/'));

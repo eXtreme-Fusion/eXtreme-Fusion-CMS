@@ -2,5 +2,5 @@
 
 return array(
 	'Smiley' => 'Smajlíci',
-	'Displays available smileys' => 'Zobrazuje dostupné smajlíky'
+	'Displays available smileys' => 'Zobrazí dostupné smajlíky'
 );

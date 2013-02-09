@@ -2,5 +2,5 @@
 
 return array(
 	'Center' => 'Vycentrování',
-	'Centers the selected text' => 'Vycentrování vybraného textu'
+	'Centers the selected text' => 'Vycentruje vybraný text'
 );
