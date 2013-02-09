@@ -1,4 +1,4 @@
-<?php
+<?php ini_set('max_execution_time',60);
 /***********************************************************
 | eXtreme-Fusion 5.0 Beta 5
 | Content Management System
