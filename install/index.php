@@ -516,7 +516,7 @@ try
 				$_tpl->assign('empty_form_error', TRUE);
 			}
 
-			if ($success)
+			if (isset($success))
 			{
 				goToStep(5);
 			}
