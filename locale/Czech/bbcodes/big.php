@@ -1,6 +1,6 @@
 <?php defined('EF5_SYSTEM') || exit;
 
 return array(
-	'Big' => 'Zvětšit text',
+	'Big' => 'Zvětšení textu',
 	'Enlarges selected text' => 'Zvětšuje vybraný text'
 );
