@@ -21,10 +21,10 @@ $mod_info = array(
 $new_table[1] = array(
 	"chat_messages",
 	"(
-		`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-		`user_id` MEDIUMINT(8) NOT NULL DEFAULT '0',
+		`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
+		`user_id` MEDIUMINT NOT NULL DEFAULT '0',
 		`content` TEXT NOT NULL,
-		`datestamp` INT(10) NOT NULL DEFAULT '0',
+		`datestamp` INT NOT NULL DEFAULT '0',
 		PRIMARY KEY (`id`)
 	) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;"
 );
@@ -32,10 +32,10 @@ $new_table[1] = array(
 $new_table[2] = array(
 	"chat_settings",
 	"(
-		`refresh` SMALLINT(5) NOT NULL DEFAULT '0',
-		`life_messages` SMALLINT(5) NOT NULL DEFAULT '0',
-		`panel_limit` SMALLINT(5) NOT NULL DEFAULT '0',
-		`archive_limit` SMALLINT(5) NOT NULL DEFAULT '0',
+		`refresh` SMALLINT NOT NULL DEFAULT '0',
+		`life_messages` SMALLINT NOT NULL DEFAULT '0',
+		`panel_limit` SMALLINT NOT NULL DEFAULT '0',
+		`archive_limit` SMALLINT NOT NULL DEFAULT '0',
 		PRIMARY KEY (`refresh`)
 	) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;"
 );

@@ -23,12 +23,12 @@ $mod_info = array(
 $new_table[1] = array(
 	"polls",
 	"(
-		`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+		`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 		`question` VARCHAR(250) NOT NULL DEFAULT '',
 		`response` TEXT NOT NULL DEFAULT '',
 		`show_results` TINYINT UNSIGNED NOT NULL DEFAULT 1,
-		`date_start` INT(10) NOT NULL DEFAULT 0,
-		`date_end` INT(10) NOT NULL DEFAULT 0,
+		`date_start` INT NOT NULL DEFAULT 0,
+		`date_end` INT NOT NULL DEFAULT 0,
 		PRIMARY KEY (`id`)
 	) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;"
 );
@@ -36,11 +36,11 @@ $new_table[1] = array(
 $new_table[2] = array(
 	"polls_vote",
 	"(
-		`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-		`poll_id` MEDIUMINT(8) UNSIGNED NOT NULL,
-		`user_id` MEDIUMINT(8) NOT NULL DEFAULT '0',
-		`response` MEDIUMINT(8) NOT NULL,
-		`date` INT(10) NOT NULL DEFAULT '0',
+		`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
+		`poll_id` MEDIUMINT UNSIGNED NOT NULL,
+		`user_id` MEDIUMINT NOT NULL DEFAULT '0',
+		`response` MEDIUMINT NOT NULL,
+		`date` INT NOT NULL DEFAULT '0',
 		PRIMARY KEY (`id`)
 	) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;"
 );

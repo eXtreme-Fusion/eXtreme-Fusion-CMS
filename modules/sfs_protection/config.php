@@ -34,11 +34,11 @@ $perm[1] = array(
 $new_table[1] = array(
 	"sfs_protection",
 	"(
-		`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+		`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 		`name` VARCHAR(100) NOT NULL DEFAULT '',
 		`email` VARCHAR(100) NOT NULL DEFAULT '',
 		`ip` VARCHAR(20) NOT NULL DEFAULT '0.0.0.0',
-		`datestamp` INT(10) NOT NULL DEFAULT '0',
+		`datestamp` INT NOT NULL DEFAULT '0',
 		PRIMARY KEY (`id`)
 	) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;"
 );

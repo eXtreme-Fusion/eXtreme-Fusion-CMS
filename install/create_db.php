@@ -19,7 +19,7 @@ $result = $_pdo->query("CREATE TABLE ".$db_prefix."pages (
 	`type` SMALLINT UNSIGNED NOT NULL DEFAULT '0',
 	`categories` VARCHAR(255) NOT NULL DEFAULT '',
 	`author` SMALLINT UNSIGNED NOT NULL DEFAULT '0',
-	`date` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+	`date` INT UNSIGNED NOT NULL DEFAULT '0',
 	`url` VARCHAR(255) NOT NULL DEFAULT '',
 	`thumbnail` VARCHAR(255) NOT NULL DEFAULT '',
 	`settings` TINYINT UNSIGNED NOT NULL DEFAULT '0',
@@ -78,21 +78,21 @@ if ( ! $result) $fail = TRUE;
 
 $_pdo->query("DROP TABLE IF EXISTS ".$db_prefix."admin", NULL, FALSE);
 $result = $_pdo->query("CREATE TABLE ".$db_prefix."admin (
-	`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 	`permissions` VARCHAR(127) NOT NULL DEFAULT '',
 	`image` VARCHAR(120) NOT NULL DEFAULT '',
 	`title` VARCHAR(50) NOT NULL DEFAULT '',
 	`link` VARCHAR(100) NOT NULL DEFAULT 'reserved',
-	`page` TINYINT(1) UNSIGNED NOT NULL DEFAULT '1',
+	`page` TINYINT UNSIGNED NOT NULL DEFAULT '1',
 	PRIMARY KEY (`id`)
 ) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";", NULL, FALSE);
 if ( ! $result) $fail = TRUE;
 
 $_pdo->query("DROP TABLE IF EXISTS ".$db_prefix."bbcodes", NULL, FALSE);
 $result = $_pdo->query("CREATE TABLE ".$db_prefix."bbcodes (
-	`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(20) NOT NULL DEFAULT '',
-	`order` SMALLINT(5) UNSIGNED NOT NULL,
+	`order` SMALLINT UNSIGNED NOT NULL,
 	PRIMARY KEY (`id`),
 	KEY `order` (`order`)
 ) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";", NULL, FALSE);
@@ -100,13 +100,13 @@ if ( ! $result) $fail = TRUE;
 
 $_pdo->query("DROP TABLE IF EXISTS ".$db_prefix."blacklist", NULL, FALSE);
 $result = $_pdo->query("CREATE TABLE ".$db_prefix."blacklist (
-	`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`user_id` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '0',
+	`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
+	`user_id` MEDIUMINT UNSIGNED NOT NULL DEFAULT '0',
 	`ip` VARCHAR(45) NOT NULL DEFAULT '',
-	`type` TINYINT(1) UNSIGNED NOT NULL DEFAULT '4',
+	`type` TINYINT UNSIGNED NOT NULL DEFAULT '4',
 	`email` VARCHAR(100) NOT NULL DEFAULT '',
 	`reason` TEXT NOT NULL,
-	`datestamp` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+	`datestamp` INT UNSIGNED NOT NULL DEFAULT '0',
 	PRIMARY KEY (`id`),
 	KEY `type` (`type`)
 ) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";", NULL, FALSE);
@@ -114,13 +114,13 @@ if ( ! $result) $fail = TRUE;
 
 $_pdo->query("DROP TABLE IF EXISTS ".$db_prefix."comments", NULL, FALSE);
 $result = $_pdo->query("CREATE TABLE ".$db_prefix."comments (
-	`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`content_id` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '0',
+	`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
+	`content_id` MEDIUMINT UNSIGNED NOT NULL DEFAULT '0',
 	`content_type` VARCHAR(20) NOT NULL DEFAULT '',
 	`author` VARCHAR(50) NOT NULL DEFAULT '',
 	`author_type` VARCHAR(1) NOT NULL DEFAULT '',
 	`post` TEXT NOT NULL,
-	`datestamp` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+	`datestamp` INT UNSIGNED NOT NULL DEFAULT '0',
 	`ip` VARCHAR(20) NOT NULL DEFAULT '0.0.0.0',
 	PRIMARY KEY (`id`),
 	KEY `datestamp` (`datestamp`)
@@ -129,7 +129,7 @@ if ( ! $result) $fail = TRUE;
 
 $_pdo->query("DROP TABLE IF EXISTS ".$db_prefix."modules", NULL, FALSE);
 $result = $_pdo->query("CREATE TABLE ".$db_prefix."modules (
-	`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 	`title` VARCHAR(100) NOT NULL DEFAULT '',
 	`folder` VARCHAR(100) NOT NULL DEFAULT '',
 	`category` VARCHAR(100) NOT NULL DEFAULT '',
@@ -145,7 +145,7 @@ $result = $_pdo->query("CREATE TABLE ".$db_prefix."links (
 	`file` VARCHAR(100) NOT NULL DEFAULT '',
 	`full_path` VARCHAR(200) NOT NULL DEFAULT '',
 	`short_path` VARCHAR(100) NOT NULL DEFAULT '',
-	`datestamp` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+	`datestamp` INT UNSIGNED NOT NULL DEFAULT '0',
 	PRIMARY KEY (`id`),
 	KEY `datestamp` (`datestamp`)
 ) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";", NULL, FALSE);
@@ -162,14 +162,14 @@ if ( ! $result) $fail = TRUE;
 
 $_pdo->query("DROP TABLE IF EXISTS ".$db_prefix."messages", NULL, FALSE);
 $result = $_pdo->query("CREATE TABLE ".$db_prefix."messages (
-	`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`item_id` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '0',
-	`to` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '0',
-	`from` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '0',
+	`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
+	`item_id` MEDIUMINT UNSIGNED NOT NULL DEFAULT '0',
+	`to` MEDIUMINT UNSIGNED NOT NULL DEFAULT '0',
+	`from` MEDIUMINT UNSIGNED NOT NULL DEFAULT '0',
 	`subject` VARCHAR(100) NOT NULL DEFAULT '',
 	`message` TEXT NOT NULL,
-	`read` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
-	`datestamp` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+	`read` TINYINT UNSIGNED NOT NULL DEFAULT '0',
+	`datestamp` INT UNSIGNED NOT NULL DEFAULT '0',
 	PRIMARY KEY (`id`),
 	KEY `datestamp` (`datestamp`)
 ) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";", NULL, FALSE);
@@ -177,12 +177,12 @@ if ( ! $result) $fail = TRUE;
 
 $_pdo->query("DROP TABLE IF EXISTS ".$db_prefix."navigation", NULL, FALSE);
 $result = $_pdo->query("CREATE TABLE ".$db_prefix."navigation (
-	`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(100) NOT NULL DEFAULT '',
 	`url` VARCHAR(200) NOT NULL DEFAULT '',
 	`visibility` VARCHAR(255) NOT NULL DEFAULT '',
-	`position` TINYINT(1) UNSIGNED NOT NULL DEFAULT '1',
-	`window` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
+	`position` TINYINT UNSIGNED NOT NULL DEFAULT '1',
+	`window` TINYINT UNSIGNED NOT NULL DEFAULT '0',
 	`order` SMALLINT(2) UNSIGNED NOT NULL DEFAULT '0',
 	PRIMARY KEY (`id`)
 ) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";", NULL, FALSE);
@@ -190,24 +190,24 @@ if ( ! $result) $fail = TRUE;
 
 $_pdo->query("DROP TABLE IF EXISTS ".$db_prefix."news", NULL, FALSE);
 $result = $_pdo->query("CREATE TABLE ".$db_prefix."news (
-	`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 	`title` VARCHAR(255) NOT NULL DEFAULT '',
 	`link` VARCHAR(255) NOT NULL DEFAULT '',
-	`category` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '0',
+	`category` MEDIUMINT UNSIGNED NOT NULL DEFAULT '0',
 	`language` VARCHAR(255) NOT NULL DEFAULT 'English',
 	`content` TEXT NOT NULL,
 	`content_extended` TEXT NOT NULL,
-	`author` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '0',
+	`author` MEDIUMINT UNSIGNED NOT NULL DEFAULT '0',
 	`source` TEXT NOT NULL,
 	`description` TEXT NOT NULL,
 	`breaks` CHAR(1) NOT NULL DEFAULT '',
-	`datestamp` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+	`datestamp` INT UNSIGNED NOT NULL DEFAULT '0',
 	`access` VARCHAR(255) NOT NULL DEFAULT '',
-	`reads` INT(10) UNSIGNED NOT NULL DEFAULT '0',
-	`draft` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
-	`sticky` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
-	`allow_comments` TINYINT(1) UNSIGNED NOT NULL DEFAULT '1',
-	`allow_ratings` TINYINT(1) UNSIGNED NOT NULL DEFAULT '1',
+	`reads` INT UNSIGNED NOT NULL DEFAULT '0',
+	`draft` TINYINT UNSIGNED NOT NULL DEFAULT '0',
+	`sticky` TINYINT UNSIGNED NOT NULL DEFAULT '0',
+	`allow_comments` TINYINT UNSIGNED NOT NULL DEFAULT '1',
+	`allow_ratings` TINYINT UNSIGNED NOT NULL DEFAULT '1',
 	PRIMARY KEY (`id`),
 	KEY `datestamp` (`datestamp`),
 	KEY `reads` (`reads`)
@@ -216,7 +216,7 @@ if ( ! $result) $fail = TRUE;
 
 $_pdo->query("DROP TABLE IF EXISTS ".$db_prefix."news_cats", NULL, FALSE);
 $result = $_pdo->query("CREATE TABLE ".$db_prefix."news_cats (
-	`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(100) NOT NULL DEFAULT '',
 	`link` VARCHAR(100) NOT NULL DEFAULT '',
 	`image` VARCHAR(100) NOT NULL DEFAULT '',
@@ -229,9 +229,9 @@ $result = $_pdo->query("CREATE TABLE ".$db_prefix."notes (
 	`id` SMALLINT(4) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`title` VARCHAR(64) NOT NULL,
 	`note` TEXT NOT NULL,
-	`author` MEDIUMINT(8) UNSIGNED NOT NULL,
-	`block` SMALLINT(5) UNSIGNED NOT NULL DEFAULT '0',
-	`datestamp` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+	`author` MEDIUMINT UNSIGNED NOT NULL,
+	`block` SMALLINT UNSIGNED NOT NULL DEFAULT '0',
+	`datestamp` INT UNSIGNED NOT NULL DEFAULT '0',
 	PRIMARY KEY (`id`)
 ) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";", NULL, FALSE);
 if ( ! $result) $fail = TRUE;
@@ -272,16 +272,16 @@ if ( ! $result) $fail = TRUE;
 
 $_pdo->query("DROP TABLE IF EXISTS ".$db_prefix."panels", NULL, FALSE);
 $result = $_pdo->query("CREATE TABLE ".$db_prefix."panels (
-	`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(100) NOT NULL DEFAULT '',
 	`filename` VARCHAR(100) NOT NULL DEFAULT '',
 	`content` TEXT NOT NULL,
-	`side` TINYINT(1) UNSIGNED NOT NULL DEFAULT '1',
-	`order` SMALLINT(5) UNSIGNED NOT NULL DEFAULT '0',
+	`side` TINYINT UNSIGNED NOT NULL DEFAULT '1',
+	`order` SMALLINT UNSIGNED NOT NULL DEFAULT '0',
 	`type` VARCHAR(20) NOT NULL DEFAULT '',
 	`access` VARCHAR(255) NOT NULL DEFAULT '',
-	`display` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
-	`status` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
+	`display` TINYINT UNSIGNED NOT NULL DEFAULT '0',
+	`status` TINYINT UNSIGNED NOT NULL DEFAULT '0',
 	PRIMARY KEY (`id`),
 	KEY `order` (`order`)
 ) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";", NULL, FALSE);
@@ -297,7 +297,7 @@ if ( ! $result) $fail = TRUE;
 
 $_pdo->query("DROP TABLE IF EXISTS ".$db_prefix."smileys", NULL, FALSE);
 $result = $_pdo->query("CREATE TABLE ".$db_prefix."smileys (
-	`id` MEDIUMINT(8) UNSIGNED NOT NULL auto_increment,
+	`id` MEDIUMINT UNSIGNED NOT NULL auto_increment,
 	`code` VARCHAR(50) NOT NULL,
 	`image` VARCHAR(100) NOT NULL,
 	`text` VARCHAR(100) NOT NULL,
@@ -307,7 +307,7 @@ if ( ! $result) $fail = TRUE;
 
 $_pdo->query("DROP TABLE IF EXISTS ".$db_prefix."time_formats", NULL, FALSE);
 $result = $_pdo->query("CREATE TABLE ".$db_prefix."time_formats (
-	`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 	`value` VARCHAR(100) NOT NULL DEFAULT '',
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `value` (`value`)
@@ -316,9 +316,9 @@ if ( ! $result) $fail = TRUE;
 
 $_pdo->query("DROP TABLE IF EXISTS ".$db_prefix."tags", NULL, FALSE);
 $result = $_pdo->query("CREATE TABLE ".$db_prefix."tags (
-	`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 	`supplement` VARCHAR(100) NOT NULL DEFAULT '',
-	`supplement_id` MEDIUMINT(8) UNSIGNED NOT NULL,
+	`supplement_id` MEDIUMINT UNSIGNED NOT NULL,
 	`value` TEXT NOT NULL,
 	`value_for_link` TEXT NOT NULL,
 	`access` VARCHAR(255) NOT NULL DEFAULT '',
@@ -330,61 +330,61 @@ if ( ! $result) $fail = TRUE;
 
 $_pdo->query("DROP TABLE IF EXISTS ".$db_prefix."user_field_cats", NULL, FALSE);
 $result = $_pdo->query("CREATE TABLE ".$db_prefix."user_field_cats (
-	`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT ,
+	`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT ,
 	`name` VARCHAR(200) NOT NULL ,
-	`order` SMALLINT(5) UNSIGNED NOT NULL ,
+	`order` SMALLINT UNSIGNED NOT NULL ,
 	PRIMARY KEY (`id`)
 ) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";", NULL, FALSE);
 if ( ! $result) $fail = TRUE;
 
 $_pdo->query("DROP TABLE IF EXISTS ".$db_prefix."user_fields", NULL, FALSE);
 $result = $_pdo->query("CREATE TABLE ".$db_prefix."user_fields (
-	`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(50) NOT NULL,
 	`index` VARCHAR(50) NOT NULL,
-	`cat` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '1',
-	`type` SMALLINT(5) NOT NULL DEFAULT '0',
+	`cat` MEDIUMINT UNSIGNED NOT NULL DEFAULT '1',
+	`type` SMALLINT NOT NULL DEFAULT '0',
 	`option` TEXT NOT NULL DEFAULT '',
-	`register` TINYINT(1) NOT NULL DEFAULT '0',
-	`hide` TINYINT(1) NOT NULL DEFAULT '0',
-	`edit` TINYINT(1) NOT NULL DEFAULT '0',
+	`register` TINYINT NOT NULL DEFAULT '0',
+	`hide` TINYINT NOT NULL DEFAULT '0',
+	`edit` TINYINT NOT NULL DEFAULT '0',
 	PRIMARY KEY (`id`)
 ) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";", NULL, FALSE);
 if ( ! $result) $fail = TRUE;
 
 $_pdo->query("DROP TABLE IF EXISTS ".$db_prefix."users", NULL, FALSE);
 $result = $_pdo->query("CREATE TABLE ".$db_prefix."users (
-	`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 	`username` VARCHAR(30) NOT NULL DEFAULT '',
 	`password` CHAR(129) NOT NULL DEFAULT '',
 	`salt` CHAR(5) NOT NULL DEFAULT '',
 
 	`user_hash` VARCHAR(10) NOT NULL DEFAULT '',
-	`user_last_logged_in` INT(10) UNSIGNED NOT NULL DEFAULT '0',
-	`user_remember_me` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
+	`user_last_logged_in` INT UNSIGNED NOT NULL DEFAULT '0',
+	`user_remember_me` TINYINT UNSIGNED NOT NULL DEFAULT '0',
 
 	`admin_hash` VARCHAR(10) NOT NULL DEFAULT '',
-	`admin_last_logged_in` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+	`admin_last_logged_in` INT UNSIGNED NOT NULL DEFAULT '0',
 
 	`browser_info` VARCHAR(100) NOT NULL DEFAULT '',
 	`link` VARCHAR(30) NOT NULL DEFAULT '',
 	`email` VARCHAR(100) NOT NULL DEFAULT '',
-	`hide_email` TINYINT(1) UNSIGNED NOT NULL DEFAULT '1',
+	`hide_email` TINYINT UNSIGNED NOT NULL DEFAULT '1',
 	`valid_code` VARCHAR(32) NOT NULL DEFAULT '',
-	`valid` TINYINT(1) NOT NULL DEFAULT '0',
+	`valid` TINYINT NOT NULL DEFAULT '0',
 	`offset` CHAR(5) NOT NULL DEFAULT '0',
 	`avatar` VARCHAR(100) NOT NULL DEFAULT '',
-	`joined` INT(10) UNSIGNED NOT NULL DEFAULT '0',
-	`lastvisit` INT(10) UNSIGNED NOT NULL DEFAULT '0',
-	`datestamp` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+	`joined` INT UNSIGNED NOT NULL DEFAULT '0',
+	`lastvisit` INT UNSIGNED NOT NULL DEFAULT '0',
+	`datestamp` INT UNSIGNED NOT NULL DEFAULT '0',
 	`ip` VARCHAR(20) NOT NULL DEFAULT '0.0.0.0',
-	`status` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
-	`actiontime` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+	`status` TINYINT UNSIGNED NOT NULL DEFAULT '0',
+	`actiontime` INT UNSIGNED NOT NULL DEFAULT '0',
 	`theme` VARCHAR(100) NOT NULL DEFAULT 'Default',
 
 	`roles` TEXT NOT NULL DEFAULT '',
 	`role` INT(11) NOT NULL DEFAULT '2',
-	`lastupdate` INT(10) NOT NULL DEFAULT '0',
+	`lastupdate` INT NOT NULL DEFAULT '0',
 	`lang` VARCHAR(20) NOT NULL,
 	PRIMARY KEY (`id`),
 	KEY name (username),
@@ -395,9 +395,9 @@ if ( ! $result) $fail = TRUE;
 
 $_pdo->query("DROP TABLE IF EXISTS ".$db_prefix."users_online", NULL, FALSE);
 $result = $_pdo->query("CREATE TABLE ".$db_prefix."users_online (
-	`user_id` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '0',
+	`user_id` MEDIUMINT UNSIGNED NOT NULL DEFAULT '0',
 	`ip` VARCHAR(20) NOT NULL DEFAULT '0.0.0.0',
-	`last_activity`INT(10) UNSIGNED NOT NULL DEFAULT '0',
+	`last_activity`INT UNSIGNED NOT NULL DEFAULT '0',
 	UNIQUE `user` (`user_id`, `ip`)
 ) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";", NULL, FALSE);
 if ( ! $result) $fail = TRUE;
