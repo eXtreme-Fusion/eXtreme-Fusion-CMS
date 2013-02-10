@@ -24,5 +24,5 @@ return array(
 	'The user account has been created successfully.' => 'Uživatelský účet byl vytvořen správně',
 	'Security code is not valid.' => 'Bezpečnostní kód není správný.',
 	'Activation e-mail has been sent.' => 'Aktivační e-mail byl odeslán',
-	'Account is waiting for admin activation.' => 'Váš účet čeká na aktivaci administrátorem.',
+	'Account is waiting for an admin activation.' => 'Váš účet čeká na aktivaci administrátorem.',
 );
