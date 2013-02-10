@@ -61,14 +61,14 @@ return array(
 	'Write permissions check passed, click Next to continue.' => 'Oprávnění souborů a adresářů jsou správná, stiskněte pro pokračování tlačítko Další.',
 	'Write permissions check failed, please CHMOD files/folders marked Unwriteable.' => 'Oprávnění souborů a adresářů jsou nesprávná, zkontrolujte oprávnění pro vybrané soubory a adresáře.',
 	'Refresh' => 'Aktualizovat',
-	'PHP Version Error' => 'Twój serwer nie spełnia wymagań systemu: posiada interpreter PHP starszy od wersji :php_required.<br />
-							Co możesz zrobić:
+	'PHP Version Error' => 'Váš server nesplňuje systémové požadavky: PHP interpreter je starší než verze :php_required.<br />
+							Co můžete udělat:
 							<ul>
-							<li>Skorzystaj z Panelu Zarządzania Serwerem i opcji "wybór interpretera PHP", by użyć nowszego - uwaga: nie każdy usługodawca hostingowy udostępnia takie narzędzia</li>
-							<li>Zainstaluj nowszą wersje PHP z pakietów dostępnych na stronie producenta - dla zaawansowanych</li>
-							<li>Skontaktuj się z Działem Pomocy Technicznej twojego serwera, by uzyskać pomoc</li>
+							<li>Použijte Panel Správy serveru  a vyberte "Výběr tlumočníka PHP" pro pozdější použití - poznámka: ne každý poskytovatel hostingu poskytuje takové nástroje</li>
+							<li>Nainstalujte novější verzi PHP ze soubory, jenž jsou k dispozici na webových stránkách výrobce - pro pokročilé</li>
+							<li>Obraťte se na technickou podporu vašeho serveru, aby Vám pomohli</li>
 							</ul>',
-	'Extension error' => 'Nenalezeno požadované rozšíření :extension_error. Należy je załadować przez odpowiednią konfigurację serwera.',
+	'Extension error' => 'Nenalezeno požadované rozšíření :extension_error. Měly by být načteny z vhodné konfigurace serveru',
 	'Files has not been changed.' => 'Soubory nebyly změněny.',
 	// Step 3 - Access criteria
 	'Please enter your MySQL database access settings.' => 'Zadejte nastavení pro databázi MySQL.',
@@ -100,17 +100,17 @@ return array(
 	'Please ensure your MySQL username and password are correct.' => 'Zkontrolujte nastavení, uživatelské jméno a heslo pro databázi MySQL.',
 	'There are empty fields left!' => 'Pole jsou prázdné!',
 	'Please make sure you have filled out all the MySQL connection fields.' => 'Ujistěte se, že všechna pole jsou vyplněna.',
-	'Tables prefix (Advanced settings) is already in use or prefix has not been written, and tables prefix exist in the database with the same name as that system is trying to create. Please enter a different prefix for tables.' => 'Prefiks tabel (Zaawansowane ustawienia) jest już w użyciu lub niepodano prefiksu, a w bazie istnieją tabele o takiej samej nazwie jak te, które system próbuje utworzyć. Należy podać inny prefiks dla tabel.',
+	'Tables prefix (Advanced settings) is already in use or prefix has not been written, and tables prefix exist in the database with the same name as that system is trying to create. Please enter a different prefix for tables.' => 'Předpona tabulek (Pokročilé nastavení)  se již používá nebo předpona nebyla zapsána popřípadě tabulky již existují se stejným názvem v databázi a systém se snaží se je snaží vytvořit. Prosím, zadejte jinou předponu pro tabulky.',
 	'UWAGA! Jeżeli po zakończeniu instalacji wystąpią problemy z linkami i adresami URL (błędy 404), należy przeinstalować system nie zaznaczając poniższego pola lub zmienić ustawienia $_route w pliku config.php.' => 'NOTE! If after installation you experience problems with links and URLs (error 404), you must reinstall the system without checking the box below, or change the $ _route in config.php.',
-	'The names of the files listed below please change with the instructions.' => 'Nazwy poniższych plików proszę zmienić według instrukcji.',
-	'The folders and files listed below must be set writeable (chmod 777).' => 'Poniższym katalogom i plikom należy ustawić zapisywalność (chmod 777).',
-	'modRewrite warning' => 'Instalator nie mógł ustalić, czy twój serwer obsługuje modRewrite.<br />
-	Zaznacz to pole, jeżeli jesteś pewny, że wymieniony moduł jest dostępny. <br />
-	Odpowiada on za tworzenie linków przyjaznych wyszukiwarkom.', 
-	'FURL warning' => 'Instalator rozpoznał, że używasz innego serwera niż Apache.<br />
-	Aby móc korzystać z linków przyjaznych wyszukiwarkom, serwer musi obsługiwać ścieżki PATH_INFO.<br />
-	Po zakończeniu instalacji system spróbuje ustalić, czy są one dostępne, przy czym występuje ryzyko pomyłki.<br />
-	Aby temu zapobiec, zaznacz poniższe pole, jeżeli masz pewność, iż twój serwer obsługuje PATH_INFO.',
+	'The names of the files listed below please change with the instructions.' => 'Jména souborů jsou uvedeny níže prosím změnte je podle pokynů.',
+	'The folders and files listed below must be set writeable (chmod 777).' => 'Složky a soubory uvedené níže musí být zapisovatelné (chmod 777).',
+	'modRewrite warning' => 'Instalační program nemohl zjistit, zda váš server podporuje modRewrite.<br />
+	Zaškrtněte toto políčko, pokud jste si jisti, že výše uvedený modul je k dispozici. <br />
+	Zodpovídá za vytváření odkazů přátelských na vyhledávání.', 
+	'FURL warning' => 'Instalátor rozpoznal, że užíváte jiné server než Apache.<br />
+	Abyste mohli používat odkazy přátelské pro vyhledávače, server musí podporovat cestu PATH_INFO.<br />
+	Po dokončení instalace systém zkusí zjistit, jest-li je cesta dostupná, ale existuje zde riziko záměny.<br />
+	Aby se tomu zabránilo, zaškrtněte políčko níže, pokud jste si jisti, že váš server podporuje PATH_INFO.',
 	// Step 5 - Super Admin login
 	'Super Admin login details' => 'Vytvořte hlavního administrátora stránky',
 	'Username:' => 'Název uživatele:',
