@@ -9,7 +9,7 @@ return array(
 'There are no messages.' => 'Žádné soukromé zprávy.',
 'To:' => 'Pro:',
 'Message:' => 'Zpráva:',
-'Enter a topic name' => 'Vlož název předmětu',
-'Enter your message' => 'Vlož soukromou zprávu',
-  'Chat:' => 'Rozhovor:',
+'Enter a topic name' => 'Vložte název předmětu',
+'Enter your message' => 'Vložte Vaši zprávu',
+  'Chat:' => 'Konverzace:',
 );
