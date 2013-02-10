@@ -3,8 +3,4 @@
 return array(
 	'Tags list' => 'Seznam štítků',
 	'There is no such tag.' => 'Zadaný štítek neexistuje.',
-
-
-
-
 );
