@@ -54,6 +54,8 @@ try
 					array(':id', $_request->get('id')->show(), PDO::PARAM_INT)
 				)
 			);
+			
+			$_pdo->exec('DELETE FROM [comments] WHERE `content_type` = "news" AND `content_id` = '.$_request->get('id')->show());
 
 			if ($count)
 			{
