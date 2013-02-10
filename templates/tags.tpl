@@ -5,7 +5,7 @@
 		</p>
 		<ul class="tagged_elements clearfix">
 		{section=tag}
-			<li><a href="{$tag.tag_url_iteam}" class="light">{$tag.tag_title_iteam}</a></li>
+			<li><a href="{$tag.tag_url_item}" class="light">{$tag.tag_title_item}</a></li>
 		{/section}
 		</ul>
 		<a href="{$url_tag}" class="button">Wróć do listy tagów</a>

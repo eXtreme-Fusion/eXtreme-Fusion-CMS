@@ -29,7 +29,7 @@ try
 		$_sett->update(array(
 			'news_per_page' => $_request->post('news_per_page')->isNum(TRUE),
 			'news_cats_per_page' => $_request->post('news_cats_per_page')->isNum(TRUE),
-			'news_cats_iteam_per_page' => $_request->post('news_cats_iteam_per_page')->isNum(TRUE),
+			'news_cats_item_per_page' => $_request->post('news_cats_item_per_page')->isNum(TRUE),
 			'users_per_page' => $_request->post('users_per_page')->isNum(TRUE),
 			'notes_per_page' => $_request->post('notes_per_page')->isNum(TRUE)
 		));
@@ -40,7 +40,7 @@ try
 	$_tpl->assignGroup(array(
 		'news_per_page' => $_sett->get('news_per_page'),
 		'news_cats_per_page' => $_sett->get('news_cats_per_page'),
-		'news_cats_iteam_per_page' => $_sett->get('news_cats_iteam_per_page'),
+		'news_cats_item_per_page' => $_sett->get('news_cats_item_per_page'),
 		'users_per_page' => $_sett->get('users_per_page'),
 		'notes_per_page' => $_sett->get('notes_per_page')
 	));
