@@ -379,24 +379,24 @@
 								<div class='error'><strong>{i18n('Error:')}</strong> {i18n('Empty fields.')}</div><br />
 							{else}
 								{if $username_error}
-									{i18n('Your login does not appear to be valid.')}
+									<div class='error'><strong>{i18n('Error:')}</strong>{i18n('Your login does not appear to be valid.')}</div><br />
 								{/if}
 
 								{if $password_error}
-									{i18n('Your two login passwords do not match.')}
+									<div class='error'><strong>{i18n('Error:')}</strong>{i18n('Your two login passwords do not match.')}</div><br />
 								{/if}
 
 								{if $email_error}
-									{i18n('Your email address does not appear to be valid.')}
+									<div class='error'><strong>{i18n('Error:')}</strong>{i18n('Your email address does not appear to be valid.')}</div><br />
 								{/if}
 
 								{if $account_creating_error}
-									Konto administratora nie zostało utworzone
+									<div class='error'><strong>{i18n('Error:')}</strong>{i18n('Administrator account has not been created.')}</div><br />
 								{/if}
 							{/if}
 
 							<form action="index.php" method="post" id="This" autocomplete="off">
-								<div class="info">{i18n('Primary Super Admin login details')}</div><br />
+								<div class="info">{i18n('Super Admin login details')}</div><br />
 								<div class="tbl1">
 									<div class="formLabel grid_4"><label for="username">{i18n('Username:')}*</label></div>
 									<div class="formField grid_3"><input id="username" type='text' value='{$username}' name='username' maxlength='30' /></div>

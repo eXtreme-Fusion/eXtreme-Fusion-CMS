@@ -76,8 +76,11 @@ return array(
 	'Database Username:' => 'Nazwa użytkownika:',
 	'Database Password:' => 'Hasło do bazy danych:',
 	'Database Name:' => 'Nazwa bazy danych:',
+	'Database Port:' => 'Port bazy danych:',
 	'Table Prefix:' => 'Prefiks tabeli:',
-	'URL' => 'Adres strony',
+	'Cookie Prefix:' => 'Prefiks ciasteczek:',
+	'Cache Prefix:' => 'Prefiks cache:',
+	'URL:' => 'Adres strony:',
 	// Step 4 - Database Setup
 	'Advanced' => 'Zaawansowane',
 	'Database connection established.' => 'Połączono z bazą danych.',
@@ -117,6 +120,7 @@ return array(
 	// Step 6 - User details validation
 	'User name contains invalid characters.' => 'Nazwa użytkownika zawiera nieobsługiwane znaki.',
 	'User name field can not be left empty.' => 'Pole nazwa użytkownika nie może być puste!',
+	'Your login does not appear to be valid.' => 'Nazwa  użytkownika jest niepoprawna.',
 	'Your two login passwords do not match.' => 'Hasła użytkownika nie pasują do siebie.',
 	'Invalid login password, please use alpha numeric characters only.<br />Password must be a minimum of 6 characters long.' => 'Nieprawidłowe hasło użytkownika, proszę o&nbsp;korzystanie wyłącznie ze znaków alfanumerycznych.<br />Hasło musi zawierać minimum 6 znaków.',
 	'Login password fields can not be left empty' => 'Pole hasło użytkownika nie może być puste!',
@@ -124,6 +128,7 @@ return array(
 	'Email field can not be left empty.' => 'Pole adres e-mail nie może być puste!',
 	'Setup complete' => '<div class="valid">Zakończono instalację. Dziękujemy za wybranie eXtreme-Fusion 5 - Ninja Edition!</div>',
 	'Your user settings are not correct:' => 'Podane dane użytkownika zawierają następujące błędy:',
+	'Administrator account has not been created.' => 'Konto administratora nie zostało utworzone.',
 	//Welcome Message
 	'Welcome to your site' => 'Witaj na nowej stronie.',
 	'Welcome to eXtreme-Fusion CMS. Thank for using our CMS, Please turn off the maintenance mode in security, onces you have finished configuring your site.' => 'Dziękujemy za korzystanie z systemu eXtreme-Fusion. Tryb prac na serwerze można wyłączyć w Panelu Administratora w dziale Polityki bezpieczeństwa.',
@@ -174,13 +179,5 @@ return array(
 	'The installation was interrupted. The system can be unstable.' => 'Instalacja została przerwana. System może nie działać stabilnie.',
 	'Start the installation again.' => 'Zacznij instalację ponownie',
 	'Stop the installation or start from the begining.' => 'Przerwij instalację lub zacznij od nowa.',
-	
-	'' => '',
-	'' => '',
-	'' => '',
-	'' => '',
-	'' => '',
-	'' => '',
-	'' => '',
-	
+	'Stop installation' => 'Przerwij instalację.',
 );
