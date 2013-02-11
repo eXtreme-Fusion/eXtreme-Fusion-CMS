@@ -142,7 +142,7 @@ if ($row)
 		'username' => $_user->getUsername($row['id']),
 		'hide_email' => $row['hide_email'],
 		'role' => $_user->getRoleName($row['role']),
-		'roles' => implode($_user->getUserRolesTitle($row['id']), ', '),
+		'roles' => implode($_user->getUserRolesTitle($row['id'], 3), ', '),
 		'avatar' => $_user->getAvatarAddr($row['id']),
 		'email' => $row['email'],
 		'joined' => HELP::showDate('shortdate', $row['joined']),

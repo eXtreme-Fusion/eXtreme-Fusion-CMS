@@ -40,7 +40,7 @@ class User {
 
 	// Przechowuje adres IP użytkownika
 	protected $_ip;
-	
+
 	protected $_custom_data;
 
 	/**
@@ -1102,8 +1102,6 @@ class User {
 	 * @param   string  nazwa uprawnienia
 	 * @return  bool
 	 */
-	 
-	 // Do sprawdzenia... Komentowanie nie działa prawdopobnie przez to.
 	public function hasPermission($name, $logged_in = TRUE)
 	{
 		$roles = $this->getRoles();
@@ -1126,9 +1124,9 @@ class User {
 	 * @param   boll   zmienna umożliwiająca przeładowanie cache'u uprawnień (grup)
 	 * @return  array
 	 */
-	protected function getRoles($user = NULL, $reload = FALSE)
+	protected function getRoles($user_id = NULL, $reload = FALSE)
 	{
-		if ($user === NULL)
+		if ($user_id === NULL)
 		{
 			if ( ! count($this->_roles) || $reload)
 			{
@@ -1139,7 +1137,7 @@ class User {
 		}
 		else
 		{
-			$roles = $this->getByID($user, 'roles');
+			$roles = $this->getByID($user_id, 'roles');
 		}
 
 		$roles  = implode(',', unserialize($roles));
@@ -1172,30 +1170,9 @@ class User {
 		return $data;
 	}
 
-	/**
-	 * Zwraca gotową dla szablonu tablicę danych istniejących grup
-	 * !! DEPRECATED - metoda do usunięcia, starajmy się nie używać.
-	 *
-	 * @param   void
-	 * @return  array
-	 */
-	public function getViewRoles()
-	{echo 'METODA KLASY USER O NAZWIE getViewRoles JEST PRZESTARZALA. PROSZE UZYWAC MULTI UPRAWNIEN I METODY getViewGroups. PRZYKLAD UZYCIA PODANY W KOMENTARZU DO TEJ METODY.';
-		$roles = array();
-		foreach($this->_all_roles as $val)
-		{
-			$roles[] = array(
-				'ID' => $val['id'],
-				'Title' => $val['title']
-			);
-		}
-
-		return $roles;
-	}
-
-	// Zwraca tablicę, gdzie klucz jest indeksem grupy, a wartością jej nazwa.
+	// Zwraca tablicę istniejących grup, gdzie klucz to ID grupy, a wartością jest jej nazwa.
 	// Metoda znakomicie nadaje się do tworzenia listy dostępu, na przykład do Newsa, w połączeniu z metodą Parsera.
-	// Przykłąd użycia (pochodzi z pliku Stron):
+	// Przykłąd użycia:
 	//		$_tpl->assign('insight_groups', $_tpl->createSelectOpts($_user->getViewGroups(), NULL, TRUE));
 	public function getViewGroups()
 	{
@@ -1209,30 +1186,38 @@ class User {
 	}
 
 	/**
-	 * Zwraca w tablicy nazwy grup, do których użytkownik należy
+	 * Zwraca w tablicy nazwy grup, do których użytkownik należy.
+	 * Drugi parametr to ID grupy, która ma zostać pominięta.
 	 *
 	 * @param   int    identyfikator użytkownika
 	 * @return  array
 	 */
-	public function getUserRolesTitle($id = NULL)
+	public function getUserRolesTitle($id = NULL, $ommit_group_id = NULL)
 	{
-		if ($id === NULL)
+
+		if ($ommit_group_id === NULL)
 		{
-			foreach($this->getRoles() as $val) {
+			foreach($this->getRoles($id) as $val)
+			{
 				$_roles[] = $val['title'];
 			}
 		}
 		else
 		{
-			if (isNum($id))
+			$ommit_group_id = intval($ommit_group_id);
+
+			foreach($this->getRoles($id) as $val)
 			{
-				foreach($this->getRoles($id) as $val) {
+				if (intval($val['id']) !== $ommit_group_id)
+				{
 					$_roles[] = $val['title'];
 				}
 			}
 		}
+
 		return $_roles;
 	}
+
 	/**
 	 * Cache dla grup uprawnień zalogowanego użytkownika
 	 *
@@ -1398,8 +1383,8 @@ class User {
 
 	/**
 	 * Zwraca nazwę grupy o podanym identyfikatorze
-	 * lub tablicę nazw (jeżeli parametr $id jest tablicą),
-	 * gdzie indeksy odpowiadają wartościom tablicy $id.
+	 * lub tablicę nazw (jeżeli parametr $var jest tablicą),
+	 * gdzie indeksy odpowiadają wartościom tablicy $var.
 	 *
 	 * @param   mixed    identyfikator uprawnienia
 	 * @return  mixed
@@ -1504,6 +1489,8 @@ class User {
 		}
 	}
 
+	/** Kontrola logowania **/
+
 	/**
 	 * Ustawia nie udaną próbę logowania
 	 *
@@ -1588,25 +1575,9 @@ class User {
 			$this->_get_users_online = $data;
 			//$this->cleanOnlineDuplicates();
 		}
-		
+
 		return $this->_get_users_online;
 	}
-
-	// deprecated
-	/*protected function cleanOnlineDuplicates()
-	{
-		if ($this->_online_to_remove)
-		{
-			$data = new Edit($this->_online_to_remove);
-			if ($data->isArrayNum(TRUE))
-			{
-				$ids = implode(',', $data->show());
-				//$this->_pdo->exec('DELETE FROM [users_online] WHERE id IN ('.$ids.')');
-			}
-
-			$this->_online_to_remove = array();
-		}
-	}*/
 
 	protected function onlineCleanTable()
 	{
