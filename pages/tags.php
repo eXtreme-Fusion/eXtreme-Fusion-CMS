@@ -42,8 +42,8 @@ if ($_route->getAction())
 				//if($var['value'] === $param[1])
 				//{
 					$cache[] = array(
-						'tag_title_iteam' => $var['title'],
-						'tag_url_iteam' => $_route->path(array('controller' => strtolower($var['supplement']), 'action' => $var['supplement_id'], HELP::Title2Link($var['title'])))
+						'tag_title_item' => $var['title'],
+						'tag_url_item' => $_route->path(array('controller' => strtolower($var['supplement']), 'action' => $var['supplement_id'], HELP::Title2Link($var['title'])))
 					);
 				//}
 			}

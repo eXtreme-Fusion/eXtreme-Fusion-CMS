@@ -121,7 +121,7 @@ class Tag {
 			{
 				if($table = strtolower($row['supplement']))
 				{
-					$iteam = $this->_pdo->getRow('SELECT `title`, `description` FROM ['.$table.'] WHERE id= :id ORDER BY `id` DESC',
+					$item = $this->_pdo->getRow('SELECT `title`, `description` FROM ['.$table.'] WHERE id= :id ORDER BY `id` DESC',
 						array(':id', $row['supplement_id'], PDO::PARAM_INT)
 					);
 				}
@@ -133,8 +133,8 @@ class Tag {
 					'value' => $row['value'],
 					'value_for_link' => $row['value_for_link'],
 					'access' => $row['access'],
-					'title' => $iteam['title'],
-					'description' => $iteam['description']
+					'title' => $item['title'],
+					'description' => $item['description']
 				);
 			}
 
@@ -168,7 +168,7 @@ class Tag {
 			{
 				if($table = strtolower($row['supplement']))
 				{
-					$iteam = $this->_pdo->getRow('SELECT `title`, `description` FROM ['.$table.'] WHERE id= :id ORDER BY `id` DESC',
+					$item = $this->_pdo->getRow('SELECT `title`, `description` FROM ['.$table.'] WHERE id= :id ORDER BY `id` DESC',
 						array(':id', $row['supplement_id'], PDO::PARAM_INT)
 					);
 				}
@@ -180,8 +180,8 @@ class Tag {
 					'value' => $row['value'],
 					'value_for_link' => $row['value_for_link'],
 					'access' => $row['access'],
-					'title' => $iteam['title'],
-					'description' => $iteam['description']
+					'title' => $item['title'],
+					'description' => $item['description']
 				);
 			}
 
@@ -217,7 +217,7 @@ class Tag {
 				{
 					if($table = strtolower($row['supplement']))
 					{
-						$iteam = $this->_pdo->getRow('SELECT `title`, `description` FROM ['.$table.'] WHERE id= :id ORDER BY `id` DESC',
+						$item = $this->_pdo->getRow('SELECT `title`, `description` FROM ['.$table.'] WHERE id= :id ORDER BY `id` DESC',
 							array(':id', $row['supplement_id'], PDO::PARAM_INT)
 						);
 					}
@@ -229,8 +229,8 @@ class Tag {
 						'value' => $row['value'],
 						'value_for_link' => $row['value_for_link'],
 						'access' => $row['access'],
-						'title' => $iteam['title'],
-						'description' => $iteam['description']
+						'title' => $item['title'],
+						'description' => $item['description']
 					);
 				}
 
@@ -276,7 +276,7 @@ class Tag {
 				{
 					if($table = strtolower($row['supplement']))
 					{
-						$iteam = $this->_pdo->getRow('SELECT `title`, `description` FROM ['.$table.'] WHERE id= :id ORDER BY `id` DESC',
+						$item = $this->_pdo->getRow('SELECT `title`, `description` FROM ['.$table.'] WHERE id= :id ORDER BY `id` DESC',
 							array(':id', $row['supplement_id'], PDO::PARAM_INT)
 						);
 					}
@@ -288,8 +288,8 @@ class Tag {
 						'value' => $row['value'],
 						'value_for_link' => $row['value_for_link'],
 						'access' => $row['access'],
-						'title' => $iteam['title'],
-						'description' => $iteam['description']
+						'title' => $item['title'],
+						'description' => $item['description']
 					);
 				}
 
@@ -323,7 +323,7 @@ class Tag {
 			{
 				if($table = strtolower($row['supplement']))
 				{
-					$iteam = $this->_pdo->getRow('SELECT `title`, `description` FROM ['.$table.'] WHERE id= :id ORDER BY `id` DESC',
+					$item = $this->_pdo->getRow('SELECT `title`, `description` FROM ['.$table.'] WHERE id= :id ORDER BY `id` DESC',
 						array(':id', $row['supplement_id'], PDO::PARAM_INT)
 					);
 				}
@@ -335,8 +335,8 @@ class Tag {
 					'value' => $row['value'],
 					'value_for_link' => $row['value_for_link'],
 					'access' => $row['access'],
-					'title' => $iteam['title'],
-					'description' => $iteam['description']
+					'title' => $item['title'],
+					'description' => $item['description']
 				);
 			}
 		}
@@ -368,7 +368,7 @@ class Tag {
 			{
 				if($table = strtolower($row['supplement']))
 				{
-					$iteam = $this->_pdo->getRow('SELECT `title`, `description` FROM ['.$table.'] WHERE id= :id ORDER BY `id` DESC',
+					$item = $this->_pdo->getRow('SELECT `title`, `description` FROM ['.$table.'] WHERE id= :id ORDER BY `id` DESC',
 						array(':id', $row['supplement_id'], PDO::PARAM_INT)
 					);
 				}
@@ -380,8 +380,8 @@ class Tag {
 					'value' => $row['value'],
 					'value_for_link' => $row['value_for_link'],
 					'access' => $row['access'],
-					'title' => $iteam['title'],
-					'description' => $iteam['description']
+					'title' => $item['title'],
+					'description' => $item['description']
 				);
 			}
 
@@ -415,7 +415,7 @@ class Tag {
 			{
 				if($table = strtolower($row['supplement']))
 				{
-					$iteam = $this->_pdo->getRow('SELECT `title`, `description` FROM ['.$table.'] WHERE id= :id ORDER BY `id` DESC',
+					$item = $this->_pdo->getRow('SELECT `title`, `description` FROM ['.$table.'] WHERE id= :id ORDER BY `id` DESC',
 						array(':id', $row['supplement_id'], PDO::PARAM_INT)
 					);
 				}
@@ -427,8 +427,8 @@ class Tag {
 					'value' => $row['value'],
 					'value_for_link' => $row['value_for_link'],
 					'access' => $row['access'],
-					'title' => $iteam['title'],
-					'description' => $iteam['description']
+					'title' => $item['title'],
+					'description' => $item['description']
 				);
 			}
 

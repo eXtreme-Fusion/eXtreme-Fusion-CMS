@@ -11,8 +11,8 @@
 		<div class="grid_4 formField"><input type="text" name="news_cats_per_page" value="{$news_cats_per_page}" id="NewsCatsPerPage" class="num_2" maxlength="2" /></div>
 	</div>
 	<div class="tbl1">
-		<div class="grid_6 formLabel"><label for="NewsCatsIteamPerPage">{i18n('News cats iteam per page:')}</label><small>({i18n('This should be an uneven number.')})</small></div>
-		<div class="grid_4 formField"><input type="text" name="news_cats_iteam_per_page" value="{$news_cats_iteam_per_page}" id="NewsCatsIteamPerPage" class="num_2" maxlength="2" /></div>
+		<div class="grid_6 formLabel"><label for="NewsCatsIteamPerPage">{i18n('News cats item per page:')}</label><small>({i18n('This should be an uneven number.')})</small></div>
+		<div class="grid_4 formField"><input type="text" name="news_cats_item_per_page" value="{$news_cats_item_per_page}" id="NewsCatsIteamPerPage" class="num_2" maxlength="2" /></div>
 	</div>
 	<div class="tbl2">
 		<div class="grid_6 formLabel"><label for="UserPerPage">{i18n('Users per page:')}</label></div>
