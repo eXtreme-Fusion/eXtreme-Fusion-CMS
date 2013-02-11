@@ -18,15 +18,15 @@
 .tagedit-list li.tagedit-listelement-new input:focus {outline: none;}
 .tagedit-list li.tagedit-listelement-new input.tagedit-input-disabled {display: none;}
 /* Item that is put to the List */
-.tagedit-list li.tagedit-listelement-old {background: #DEE7F8 url(../img/disc.png) 4px center no-repeat; border: 1px solid #CAD8F3; padding: 2px 0 2px 13px; -moz-border-radius: 8px 4px 4px 8px; -webkit-border-radius: 8px 4px 4px 8px; border-radius: 8px 4px 4px 8px;}
+.tagedit-list li.tagedit-listelement-old {background: #DEE7F8 url(../images/icons/disc.png) 4px center no-repeat; border: 1px solid #CAD8F3; padding: 2px 0 2px 13px; -moz-border-radius: 8px 4px 4px 8px; -webkit-border-radius: 8px 4px 4px 8px; border-radius: 8px 4px 4px 8px;}
 .tagedit-list li.tagedit-listelement-old:hover {background-color: #D6E4FF;}
 .tagedit-list li.tagedit-listelement-old a.tagedit-close,
 .tagedit-list li.tagedit-listelement-old a.tagedit-break,
 .tagedit-list li.tagedit-listelement-old a.tagedit-delete,
-.tagedit-list li.tagedit-listelement-old a.tagedit-save {font-weight: bold; text-indent: -2000px; display: inline-block; width: 15px; height: 100%; cursor: pointer; border-left: 1px dotted #7E9DD6; margin: 0 2px 0 5px; background: url(../img/cross.png) center center no-repeat;}
-.tagedit-list li.tagedit-listelement-old a.tagedit-save {background-image: url(../img/tick.png); margin-right: 0;}
-.tagedit-list li.tagedit-listelement-old a.tagedit-break {background-image: url(../img/undo.png); margin-right: 0;}
-.tagedit-list li.tagedit-listelement-old a.tagedit-delete {background-image: url(../img/delete.png); margin: 0 5px 0 2px; background-position: right center;}
+.tagedit-list li.tagedit-listelement-old a.tagedit-save {font-weight: bold; text-indent: -2000px; display: inline-block; width: 15px; height: 100%; cursor: pointer; border-left: 1px dotted #7E9DD6; margin: 0 2px 0 5px; background: url(../images/icons/cross.png) center center no-repeat;}
+.tagedit-list li.tagedit-listelement-old a.tagedit-save {background-image: url(../images/icons/tick.png); margin-right: 0;}
+.tagedit-list li.tagedit-listelement-old a.tagedit-break {background-image: url(../images/icons/undo.png); margin-right: 0;}
+.tagedit-list li.tagedit-listelement-old a.tagedit-delete {background-image: url(../images/icons/delete.png); margin: 0 5px 0 2px; background-position: right center;}
 /* Items that are edited */
 .tagedit-list li.tagedit-listelement-edit input.tagedit-edit-input {border: 0; background: transparent; font-size: 11px; color: #666; padding: 0;}
 .tagedit-list li.tagedit-listelement-edit input:focus {outline: none;}
