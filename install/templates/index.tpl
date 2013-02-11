@@ -379,19 +379,19 @@
 								<div class='error'><strong>{i18n('Error:')}</strong> {i18n('Empty fields.')}</div><br />
 							{else}
 								{if $username_error}
-									<div class='error'><strong>{i18n('Error:')}</strong>{i18n('Your login does not appear to be valid.')}</div><br />
+									<div class='error'><strong>{i18n('Error:')}</strong> {i18n('Your login does not appear to be valid.')}</div><br />
 								{/if}
 
 								{if $password_error}
-									<div class='error'><strong>{i18n('Error:')}</strong>{i18n('Your two login passwords do not match.')}</div><br />
+									<div class='error'><strong>{i18n('Error:')}</strong> {i18n('Your two login passwords do not match.')}</div><br />
 								{/if}
 
 								{if $email_error}
-									<div class='error'><strong>{i18n('Error:')}</strong>{i18n('Your email address does not appear to be valid.')}</div><br />
+									<div class='error'><strong>{i18n('Error:')}</strong> {i18n('Your email address does not appear to be valid.')}</div><br />
 								{/if}
 
 								{if $account_creating_error}
-									<div class='error'><strong>{i18n('Error:')}</strong>{i18n('Administrator account has not been created.')}</div><br />
+									<div class='error'><strong>{i18n('Error:')}</strong> {i18n('Administrator account has not been created.')}</div><br />
 								{/if}
 							{/if}
 
