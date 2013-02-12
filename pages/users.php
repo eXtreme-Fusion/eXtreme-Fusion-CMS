@@ -48,7 +48,7 @@ if ($rows)
 	
 		if ($_pdo->getRowsCount($query))
 		{
-			$i = 0;;
+			$i = 0;
 			foreach($query as $row)
 			{
 				$cache[] = array(
@@ -57,7 +57,7 @@ if ($rows)
 					'visit' => HELP::showDate('shortdate', $row['lastvisit']),
 					'link' => HELP::profileLink($row['username'], $row['id']),
 					'role' => $_user->getRoleName($row['role']),
-					'roles' => implode(', ', $_user->getUserRolesTitle($row['id']))
+					'roles' => implode(', ', $_user->getUserRolesTitle($row['id'], 3))
 				);
 				$i++;
 			}

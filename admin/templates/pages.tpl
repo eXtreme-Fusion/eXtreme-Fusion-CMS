@@ -1,6 +1,4 @@
-
-
-<h3>{$SystemVersion} - {i18n('Strony')}</h3>
+<h3>{$SystemVersion} - {i18n('Strony treści')}</h3>
 {if $message}<div class="{$class}">{$message}</div>{/if}
 
 {if $page == 'types'}
@@ -429,12 +427,12 @@
 		{/if}
 	{/if}
 {else}
-	<p class="red center">Moduł Dodatkowych stron nie został jeszcze skończony. Niektóre funkcje jak miniaturki czy zaawansowane ustawienia nie zostały jeszcze wdrożone poza Panelem admina. Mimo tego, publikacja treści w podstawowej formie powinna działać.</p>
+	<p class="red center">Moduł Stron treści nie został jeszcze skończony. Niektóre funkcje jak miniaturki czy zaawansowane ustawienia nie zostały jeszcze wdrożone poza Panelem admina. Mimo tego, publikacja treści w podstawowej formie powinna działać.</p>
 	<div>
 		<ul class="margin-l-10 margin-t-10">
-			<li><a href="{$FILE_SELF}?page=types" title="Zarządzanie typami wpisów">Zarządzanie typami wpisów</a></li>
-			<li><a href="{$FILE_SELF}?page=categories" title="Zarządzanie kategoriami wpisów">Zarządzanie kategoriami wpisów</li>
 			<li><a href="{$FILE_SELF}?page=entries" title="Zarządzanie wpisami">Zarządzanie wpisami</li>
+			<li><a href="{$FILE_SELF}?page=categories" title="Zarządzanie kategoriami wpisów">Zarządzanie kategoriami wpisów</li>
+			<li><a href="{$FILE_SELF}?page=types" title="Zarządzanie typami wpisów">Zarządzanie typami wpisów</a></li>
 		</ul>
 	</div>
 {/if}
