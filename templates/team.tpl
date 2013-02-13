@@ -12,7 +12,7 @@
 			</div>
 			<div class="team-info tbl2">
 				<div><strong>{i18n('Joined')}:</strong>{$site_admin.joined}</div>
-				<div><strong>{i18n('Last Visit')}:</strong>{if $site_admin.is_online == 1}{i18n('Online')}<img src="{$ADDR_IMAGES}online.png" alt="{i18n('Online')}">{else}{$site_admin.last_visit_time}<img src="{$ADDR_IMAGES}offline.png" alt="{i18n('Offline')}">{/if}</div>
+				<div><strong>{i18n('Last Visit')}:</strong>{if $site_admin.is_online == 1}{i18n('Online')}<img src="{$ADDR_IMAGES}profile/online.png" alt="{i18n('Online')}">{else}{$site_admin.last_visit_time}<img src="{$ADDR_IMAGES}profile/offline.png" alt="{i18n('Offline')}">{/if}</div>
 				<div><strong>{i18n('Groups')}:</strong>{$site_admin.roles}</div>
 			</div>
 		</div>
@@ -34,7 +34,7 @@
 				</div>
 				<div class="team-info tbl2">
 					<div><strong>{i18n('Joined')}:</strong>{$admin.joined}</div>
-					<div><strong>{i18n('Last Visit')}:</strong>{if $admin.is_online == 1}{i18n('Online')}<img src="{$ADDR_IMAGES}online.png" alt="{i18n('Online')}">{else}{$admin.last_visit_time}<img src="{$ADDR_IMAGES}offline.png" alt="{i18n('Offline')}">{/if}</div>
+					<div><strong>{i18n('Last Visit')}:</strong>{if $admin.is_online == 1}{i18n('Online')}<img src="{$ADDR_IMAGES}profile/online.png" alt="{i18n('Online')}">{else}{$admin.last_visit_time}<img src="{$ADDR_IMAGES}profile/offline.png" alt="{i18n('Offline')}">{/if}</div>
 					<div><strong>{i18n('Groups')}:</strong>{$admin.roles}</div>
 				</div>
 			</div>
