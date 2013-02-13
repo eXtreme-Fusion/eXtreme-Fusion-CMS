@@ -1,15 +1,15 @@
 <?php defined('EF5_SYSTEM') || exit;
 /***********************************************************
 | eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
+| This product is licensed under the BSD License.
+| http://extreme-fusion.org/ef5/license/
 ***********************************************************/
-$_locale->load('account');
+$_locale->load('search');
 
 $theme = array(
 	'Title' => 'Wyszukiwarka',
@@ -87,7 +87,7 @@ if ($_route->getByID(1) === 'tags' || $_route->getByID(1) === 'all')
 	$query = $_pdo->getData('SELECT * FROM [tags] WHERE `value` LIKE "%":value"%" ORDER BY `value` ASC',
 		array(':value', $tag, PDO::PARAM_STR)
 	);
-	
+
 	$i = 0; $tags = array();
 	foreach ($query as $row)
 	{
@@ -110,7 +110,7 @@ if ($_route->getByID(1) === 'users' || $_route->getByID(1) === 'all')
 	$query = $_pdo->getData('SELECT * FROM [users] WHERE `status` = 0 AND `username` LIKE "%":username"%" ORDER BY `username` ASC',
 		array(':username', $username, PDO::PARAM_STR)
 	);
-	
+
 	$i = 0; $users = array();
 	foreach ($query as $row)
 	{
