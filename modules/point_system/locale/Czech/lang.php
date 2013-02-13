@@ -11,8 +11,10 @@ return array(
 	//Point History
 	'Points History' => 'Historie bodů uživatele',
 	'Points & Rank' => 'Body & Ranky',
-	'Points:&nbsp;' => 'Body:&nbsp;',
-	'Rank:&nbsp;' => 'Rank:&nbsp;',
-	'Date added:&nbsp;' => 'Datum přidání:&nbsp;',
-	'Clear History' => 'Vyčistit historii'
+	'Points:' => 'Punkty:',
+	'Bonus:' => 'Bonus:',
+	'Rank:' => 'Ranga:',
+	'Date added:&nbsp;' => 'Datum přidání',
+	'For:&nbsp;What:&nbsp;' => 'Za&nbsp;co:',
+	'Clear History' => 'Vymazat historii',
 );

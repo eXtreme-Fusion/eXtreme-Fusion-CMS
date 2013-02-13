@@ -8,11 +8,11 @@ return array(
 	'One answer each lane.' => 'Jedna odpověď na jeden řádek.',
 	'Active polls' => 'Aktivní ankety',
 	'Ended polls' => 'Uzavřené ankety',
-	'Date of start:' => 'Začátek hlasování:',
-	'Data of end:' => 'Konec hlasování:',
+	'Start date:' => 'Začátek hlasování:',
+	'End date:' => 'Konec hlasování:',
 	'End' => 'Konec',
-	'There haven\'t been any polls added.' => 'Nebyla vytvořena žádná anketa.',
-	//Messages
+	'There are no polls.' => 'Nebyla vytvořena žádná anketa.',
+	//Logs
 	'Poll has been added.' => 'Anketa byla přidána.',
 	'Poll has been edited.' => 'Anketa byla upravena.',
 	'Poll has been ended.' => 'Anketa byla ukončena.',
