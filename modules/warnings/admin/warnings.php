@@ -264,155 +264,199 @@ try
 			$_log->insertFail('delete',  __('Error! The warnings has not been deleted.'));
 			$_request->redirect(FILE_PATH, array('page' => 'warnings', 'act' => 'delete', 'status' => 'error'));
 		}
-		
-		// Sprawdzanie czy przesłano formularz
-		if ($_request->post('save')->show()) 
+
+		if ($_request->get('action')->show() === 'new')
 		{
-			if ($_request->post('title')->strip() === '')
+			if ($_request->post('step')->show() === 'yes')
 			{
-				throw new systemException('Empty field title');
-			}
-			
-			if ($_request->get('action')->show() === 'edit' && $_request->get('id')->isNum(TRUE)) 
-			{
-				// Wykonaj zapytania
-				$count = $_pdo->exec('
-					UPDATE [warnings]
-					SET `guilty` = :guilty, `title` = :title, `description` = :description, `cat` = :cat, `datestamp` = :datestamp, `expiry` = :expiry, `notification` = :notification
-					WHERE `id` = :id',
+				$_tpl->assign('step', $_request->post('step')->show());
+				$_tpl->assign('sender', 
 					array(
-						array(':id', $_request->get('id')->show(), PDO::PARAM_INT),
-						array(':guilty', $_request->post('guilty')->isNum(TRUE), PDO::PARAM_INT),
-						array(':title', $_request->post('title')->strip(), PDO::PARAM_STR),
-						array(':description', $_request->post('description')->strip(), PDO::PARAM_STR),
-						array(':cat', $_request->post('cat')->strip(), PDO::PARAM_STR),
-						array(':datestamp', time(), PDO::PARAM_INT),
-						array(':expiry', strtotime($_request->post('expiry')->strip()), PDO::PARAM_INT),
-						array(':notification', $_request->post('notification')->show() ? intval($_request->post('notification')->show()) : 0, PDO::PARAM_INT)
+						'id'=> $_request->post('sender')->show()
 					)
 				);
 
-				// Jeśli edytował...
-				if ($count)
-				{
-					// Przekierowanie dla komunikatu sukcesu
-					$_log->insertSuccess('edit', __('The warning has been edited.'));
-					$_request->redirect(FILE_PATH, array('page' => 'warnings', 'act' => 'edit', 'status' => 'ok'));
-				}
-				
-				// Nie dodałeś... Przekierowanie dla komunikatu błędu
-				$_log->insertFail('edit',  __('Error! The warning has not been edited.'));
-				$_request->redirect(FILE_PATH, array('page' => 'warnings', 'act' => 'edit', 'status' => 'error'));
-				
-			}
-			else
-			{		
-				// Tu będą zapytania PDO
-				$count = $_pdo->exec('INSERT INTO [warnings] (`guilty`, `sender`, `title`, `description`, `cat`, `datestamp`, `expiry`, `notification`) VALUES (:guilty, :sender, :title, :description, :cat, :datestamp, :expiry, :notification)',
+				$_tpl->assign('guilty', 
 					array(
-						array(':guilty', $_request->post('guilty')->isNum(TRUE), PDO::PARAM_INT),
-						array(':sender', $_request->post('sender')->isNum(TRUE), PDO::PARAM_STR),
-						array(':title', $_request->post('title')->strip(), PDO::PARAM_STR),
-						array(':description', $_request->post('description')->strip(), PDO::PARAM_STR),
-						array(':cat', $_request->post('cat')->strip(), PDO::PARAM_STR),
-						array(':datestamp', time(), PDO::PARAM_INT),
-						array(':expiry', strtotime($_request->post('expiry')->strip()), PDO::PARAM_INT),
-						array(':notification', $_request->post('notification')->show() ? intval($_request->post('notification')->show()) : 0, PDO::PARAM_INT)
+						'id'=> $_request->post('guilty')->show()
 					)
 				);
 				
-				// Jeśli dodałeś...
-				if ($count)
+				$_tpl->assign('cat', 
+					array(
+						'id'=> $_request->post('cat')->show()
+					)
+				);
+				
+				$row = $_pdo->getRow('SELECT `id`, `title`, `period` FROM [warnings_cats] WHERE `id` = :id',
+					array(':id', $_request->post('cat')->show(), PDO::PARAM_INT)
+				);
+				
+				if ($row)
+				{				
+					$expiry = array(
+						'title' => $row['title'],
+						'id' => $row['id'],
+						'period' => date('d.m.Y', strtotime(date("d.m.Y"))+$row['period']*60*60*24)
+					);
+
+					$_tpl->assign('expiry', $expiry);
+				}
+
+				$_tpl->assign('step', $_request->post('step')->show());
+			}
+
+			// Sprawdzanie czy przesłano formularz
+			if ($_request->post('save')->show()) 
+			{
+				if ($_request->get('action')->show() === 'edit' && $_request->get('id')->isNum(TRUE)) 
 				{
-					// Przekierowanie dla komunikatu sukcesu
-					$_log->insertSuccess('add', __('The warning has been added.'));
-					$_request->redirect(FILE_PATH, array('page' => 'warnings', 'act' => 'add', 'status' => 'ok'));
+					// Wykonaj zapytania
+					$count = $_pdo->exec('
+						UPDATE [warnings]
+						SET `guilty` = :guilty, `title` = :title, `description` = :description, `cat` = :cat, `datestamp` = :datestamp, `expiry` = :expiry, `notification` = :notification
+						WHERE `id` = :id',
+						array(
+							array(':id', $_request->get('id')->show(), PDO::PARAM_INT),
+							array(':guilty', $_request->post('guilty')->isNum(TRUE), PDO::PARAM_INT),
+							array(':title', $_request->post('title')->strip(), PDO::PARAM_STR),
+							array(':description', $_request->post('description')->strip(), PDO::PARAM_STR),
+							array(':cat', $_request->post('cat')->strip(), PDO::PARAM_STR),
+							array(':datestamp', time(), PDO::PARAM_INT),
+							array(':expiry', strtotime($_request->post('expiry')->strip()), PDO::PARAM_INT),
+							array(':notification', $_request->post('notification')->show() ? intval($_request->post('notification')->show()) : 0, PDO::PARAM_INT)
+						)
+					);
+
+					// Jeśli edytował...
+					if ($count)
+					{
+						// Przekierowanie dla komunikatu sukcesu
+						$_log->insertSuccess('edit', __('The warning has been edited.'));
+						$_request->redirect(FILE_PATH, array('page' => 'warnings', 'act' => 'edit', 'status' => 'ok'));
+					}
+					
+					// Nie dodałeś... Przekierowanie dla komunikatu błędu
+					$_log->insertFail('edit',  __('Error! The warning has not been edited.'));
+					$_request->redirect(FILE_PATH, array('page' => 'warnings', 'act' => 'edit', 'status' => 'error'));
+					
+				}
+				else
+				{	
+					// Tu będą zapytania PDO
+					$count = $_pdo->exec('INSERT INTO [warnings] (`guilty`, `sender`, `title`, `description`, `cat`, `datestamp`, `expiry`, `notification`) VALUES (:guilty, :sender, :title, :description, :cat, :datestamp, :expiry, :notification)',
+						array(
+							array(':guilty', $_request->post('guilty')->isNum(TRUE), PDO::PARAM_INT),
+							array(':sender', $_request->post('sender')->isNum(TRUE), PDO::PARAM_STR),
+							array(':title', $_request->post('title')->strip(), PDO::PARAM_STR),
+							array(':description', $_request->post('description')->strip(), PDO::PARAM_STR),
+							array(':cat', $_request->post('cat')->strip(), PDO::PARAM_STR),
+							array(':datestamp', time(), PDO::PARAM_INT),
+							array(':expiry', strtotime($_request->post('expiry')->strip()), PDO::PARAM_INT),
+							array(':notification', $_request->post('notification')->show() ? intval($_request->post('notification')->show()) : 0, PDO::PARAM_INT)
+						)
+					);
+					
+					// Jeśli dodałeś...
+					if ($count)
+					{
+						// Przekierowanie dla komunikatu sukcesu
+						$_log->insertSuccess('add', __('The warning has been added.'));
+						$_request->redirect(FILE_PATH, array('page' => 'warnings', 'act' => 'add', 'status' => 'ok'));
+					}
+					
+					// Nie dodałeś... Przekierowanie dla komunikatu błędu
+					$_log->insertFail('add',  __('Error! The warning has not been added.'));
+					$_request->redirect(FILE_PATH, array('page' => 'warnings', 'act' => 'add', 'status' => 'error'));
+				}
+			}
+			
+			// Sprawdzanie czy przesłano formularz edycji
+			if ($_request->get('action')->show() === 'edit' && $_request->get('id')->isNum(TRUE))
+			{
+				// Pobranie kolumny z danego identyfikatora
+				$row = $_pdo->getRow('SELECT * FROM [warnings] WHERE `id` = :id',
+					array(':id', $_request->get('id')->show(), PDO::PARAM_INT)
+				);
+				
+				// Sprawdzanie czy pobrano dane
+				if ($row)
+				{	
+					// Umieszczenie pobranych danych w templatece
+					$_tpl->assignGroup(array(
+							'id' => $row['id'],
+							'guilty' => $row['guilty'],
+							'sender' => $row['sender'],
+							'title' => $row['title'],
+							'description' => $row['description'],
+							'expiry' => date('d.m.Y', $row['expiry']),
+							'notification' => $row['notification']
+						)
+					);
+					$_tpl->assign('edit', TRUE);
+				} 
+				else
+				{
+					// Wyświetlenie wyjątku o braku identyfikatora
+					throw new userException(__('There is no record with ID: :id!', array(':id' => $_request->get('id')->show())));
+				}
+			}
+			
+			if ($query = $_pdo->getData('SELECT `id`, `title`, `period` FROM [warnings_cats] ORDER BY `title`'))
+			{
+				foreach($query as $row)
+				{
+					foreach ($periods as $val)
+					{
+						if($val['value'] === intval($row['period']))
+						{
+							$period = $val['description'];
+							break;
+						}
+					}
+					
+					$cats[] = array(
+						'title' => $row['title'],
+						'id' => $row['id'],
+						'period' => $period
+					);
 				}
 				
-				// Nie dodałeś... Przekierowanie dla komunikatu błędu
-				$_log->insertFail('add',  __('Error! The warning has not been added.'));
-				$_request->redirect(FILE_PATH, array('page' => 'warnings', 'act' => 'add', 'status' => 'error'));
+				$_tpl->assign('cats', $cats);
 			}
-		}
-		
-		// Sprawdzanie czy przesłano formularz edycji
-		if ($_request->get('action')->show() === 'edit' && $_request->get('id')->isNum(TRUE))
-		{
-			// Pobranie kolumny z danego identyfikatora
-			$row = $_pdo->getRow('SELECT * FROM [warnings] WHERE `id` = :id',
-				array(':id', $_request->get('id')->show(), PDO::PARAM_INT)
-			);
-			
+				
 			// Sprawdzanie czy pobrano dane
-			if ($row)
-			{	
-				// Umieszczenie pobranych danych w templatece
-				$_tpl->assignGroup(array(
+			if ($query = $_pdo->getData('SELECT * FROM [warnings] ORDER BY `datestamp`'))
+			{
+				foreach($query as $row)
+				{
+					// Umieszczenie pobranych danych w templatece
+					$warnings_list[] = array(
 						'id' => $row['id'],
-						'guilty' => $row['guilty'],
-						'sender' => $row['sender'],
 						'title' => $row['title'],
 						'description' => $row['description'],
-						'expiry' => date('d.m.Y', $row['expiry']),
-						'notification' => $row['notification']
-					)
-				);
-				$_tpl->assign('edit', TRUE);
-			} 
-			else
-			{
-				// Wyświetlenie wyjątku o braku identyfikatora
-				throw new userException(__('There is no record with ID: :id!', array(':id' => $_request->get('id')->show())));
-			}
-		}
-		
-		if ($query = $_pdo->getData('SELECT `id`, `title`, `period` FROM [warnings_cats] ORDER BY `title`'))
-		{
-			foreach($query as $row)
-			{
-				foreach ($periods as $val)
-				{
-					if($val['value'] === intval($row['period']))
-					{
-						$period = $val['description'];
-						break;
-					}
+						'datestamp' => $row['datestamp'],
+						'expiry' => $row['expiry'],
+						'guilty' => $_user->getUsername($row['guilty'])
+					);
 				}
-				
-				$cats[] = array(
-					'title' => $row['title'],
-					'id' => $row['id'],
-					'period' => $period
-				);
+				$_tpl->assign('warnings_list', $warnings_list);
 			}
 			
-			$_tpl->assign('cats', $cats);
+			$_tpl->assign('sender', 
+				array(
+					'name' => $_user->getUsername(),
+					'id' => $_user->get('id')
+				)
+			);
+
+			$_tpl->assign('guilty', 
+				array(
+					'name' => $_user->getUsername($_request->get('uid')->isNum(TRUE)),
+					'id' => $_request->get('uid')->isNum(TRUE)
+				)
+			);
 		}
-			
-		// Sprawdzanie czy pobrano dane
-		if ($query = $_pdo->getData('SELECT * FROM [warnings] ORDER BY `datestamp`'))
-		{
-			foreach($query as $row)
-            {
-				// Umieszczenie pobranych danych w templatece
-				$warnings_list[] = array(
-					'id' => $row['id'],
-					'title' => $row['title'],
-					'description' => $row['description'],
-					'datestamp' => $row['datestamp'],
-					'expiry' => $row['expiry'],
-					'guilty' => $_user->getUsername($row['guilty'])
-				);
-			}
-			$_tpl->assign('warnings_list', $warnings_list);
-		}
-		
-		$_tpl->assign('sender', 
-			array(
-				'name' => $_user->getUsername(),
-				'id' => $_user->get('id')
-			)
-		);
 	}
 	else
 	{
@@ -422,7 +466,9 @@ try
 
 	$_tpl->assignGroup(array(
 		'page' => $_request->get('page')->show(),
+		'action' => $_request->get('action')->show(),
 	));	
+	
 	
 	$_tpl->template('admin.tpl');	
 }

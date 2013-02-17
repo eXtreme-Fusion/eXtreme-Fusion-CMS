@@ -2,7 +2,7 @@
 {if $config.development}<div class="error">{i18n($config.developmentMessage)}</div>{/if}
 {if $message}<div class="{$class}">{$message}</div>{/if}
 
-<div class="tbl AdminButtons">
+<div class="tbl Buttons">
 	<div class="center grid_2 button-l">
 		{if $page === 'cats'}
 			<span class="Cancels"><strong>{i18n('Categories')}</strong></span>
@@ -48,7 +48,7 @@
 				</select>
 			</div>
 		</div>
-		<div class="tbl AdminButtons">
+		<div class="tbl Buttons">
 			<div class="center grid_2 button-l">
 				<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
 			</div>
@@ -98,23 +98,7 @@
 {/if}
 
 {if $page === 'warnings'}
-	<div class="center red">
-		<p>W poniższym polu możesz wpisać login, adres e-mail, adres IP lub ID użytkownika, którego kontem chcesz zarządzać.</p>
-		<p>Wyświetli się lista podpowiedzi, z której należy wybrać właściwy element.</p>
-	</div>
-	<div class="buttons-bg">&nbsp;</div>
-	<div class="tbl">
-		<div class="center-box"><label for="search_user">{i18n('Pole wyszukiwania użytkownika')}</label></div>
-		<div class="formField center-box">
-			<input type="text" id="search_user" name="search_user" class="width_3"/>
-			<span id="search_user_result"></span>
-		</div>
-		
-	</div>
-
-	<div class="buttons-bg">&nbsp;</div>
-
-	{if $action === users}
+	{if $action === new}
 		<script>
 			{literal}
 				$(function()
@@ -136,61 +120,78 @@
 				});
 			{/literal}
 		</script>
-		
-		<form id="This" action="{$URL_REQUEST}" method="post">
-			<div class="tbl1">
-				<div class="formLabel sep_1 grid_2"><label for="sender">{i18n('Sender:')}</label></div>
-				<div class="formField grid_6">{$sender.name}<input type="hidden" name="sender" value="{$sender.id}" id="sender"/></div>
-			</div>
-			<div class="tbl2">
-				<div class="formLabel sep_1 grid_2"><label for="guilty">{i18n('Quilty:')}</label></div>
-				<div class="formField grid_6"><input type="text" name="guilty" value="{$guilty}" id="sender" rows="1" /></div>
-			</div>
-			<div class="tbl1">
-				<div class="formLabel sep_1 grid_2"><label for="cat">{i18n('Category:')}</label></div>
-				<div class="formField grid_6">
-					{if $cats}
-					<select name="cat" id="cat">
-						{section=cats}
-							<option value="{$cats.id}"{if $cat == $cats.id} selected="selected"{/if}>{$cats.title} - {$cats.period}</option>
-						{/section}
-					</select>
-					{else}
+		{if $step}
+			<form id="This" action="{$URL_REQUEST}" method="post">
+				<div class="tbl2">
+					<div class="formLabel sep_1 grid_2"><label for="title">{i18n('Title:')}</label></div>
+					<div class="formField grid_6"><input type="text" name="title" value="{$title}" id="title" rows="1" /></div>
+				</div>
+				<div class="tbl1">
+					<div class="formLabel sep_1 grid_2"><label for="description">{i18n('Description:')}</label></div>
+					<div class="formField grid_6"><textarea name="description" id="description" rows="3" class="resize">{$description}</textarea></div>
+				</div>
+				<div class="tbl2">
+					<div class="formLabel sep_1 grid_2"><label for="expiry">{i18n('Expiry:')}</label></div>
+					<div class="formField grid_6"><input type="text" id="expiry" name="expiry" value="{$expiry.period}" rows="1" /></div>
+				</div>
+				<div class="tbl1">
+					<div class="formLabel sep_1 grid_2"><label for="notification">{i18n('Notification:')}</label></div>
+					<div class="formField grid_6">
+						<input type="checkbox" name="notification" value="1" {if $notification == 1}checked=checked{/if} id="notification" />
+					</div>
+				</div>
+				<div class="tbl Buttons">
+					<div class="center grid_2 button-l">
+						<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
+					</div>
+					<div class="center grid_2 button-r">
+						<input type="hidden" name="cat" value="{$cat.id}"/>
+						<input type="hidden" name="guilty" value="{$guilty.id}"/>
+						<input type="hidden" name="sender" value="{$sender.id}"/>
+						<input type="hidden" name="save" value="yes" />
+						{if $id}<input type="hidden" name="edit" value="{$id}" />{/if}
+						<span id="SendForm_This" class="save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
+					</div>
+				</div>
+			</form>
+		{else}
+			<form id="This" action="{$URL_REQUEST}" method="post">
+				<div class="tbl1">
+					<div class="formLabel sep_1 grid_2"><label for="sender">{i18n('Sender:')}</label></div>
+					<div class="formField grid_6">{$sender.name}<input type="hidden" name="sender" value="{$sender.id}" id="sender"/></div>
+				</div>
+				<div class="tbl2">
+					<div class="formLabel sep_1 grid_2"><label for="guilty">{i18n('Quilty:')}</label></div>
+					<div class="formField grid_6">{$guilty.name}<input type="hidden" name="guilty" value="{$guilty.id}" id="guilty"/></div>
+				</div>
+				<div class="tbl1">
+					<div class="formLabel sep_1 grid_2"><label for="cat">{i18n('Category:')}</label></div>
+					<div class="formField grid_6">
+						{if $cats}
 						<select name="cat" id="cat">
-								<option>{i18n('Category was not created')}</option>
+							{section=cats}
+								<option value="{$cats.id}"{if $cat == $cats.id} selected="selected"{/if}>{$cats.title} - {$cats.period}</option>
+							{/section}
 						</select>
-					{/if}
+						{else}
+							<select name="cat" id="cat">
+									<option>{i18n('Category was not created')}</option>
+							</select>
+						{/if}
+					</div>
 				</div>
-			</div>
-			<div class="tbl2">
-				<div class="formLabel sep_1 grid_2"><label for="title">{i18n('Title:')}</label></div>
-				<div class="formField grid_6"><input type="text" name="title" value="{$title}" id="title" rows="1" /></div>
-			</div>
-			<div class="tbl1">
-				<div class="formLabel sep_1 grid_2"><label for="description">{i18n('Description:')}</label></div>
-				<div class="formField grid_6"><textarea name="description" id="description" rows="3" class="resize">{$description}</textarea></div>
-			</div>
-			<div class="tbl2">
-				<div class="formLabel sep_1 grid_2"><label for="expiry">{i18n('Expiry:')}</label></div>
-				<div class="formField grid_6"><input type="text" id="expiry" name="expiry" value="{$expiry}" rows="1" /></div>
-			</div>
-			<div class="tbl1">
-				<div class="formLabel sep_1 grid_2"><label for="notification">{i18n('Notification:')}</label></div>
-				<div class="formField grid_6">
-					<input type="checkbox" name="notification" value="1" {if $notification == 1}checked=checked{/if} id="notification" />
+				<div class="tbl Buttons">
+					<div class="center grid_2 button-l">
+						<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
+					</div>
+					<div class="center grid_2 button-r">
+						<input type="hidden" name="step" value="yes" />
+						{if $id}<input type="hidden" name="edit" value="{$id}" />{/if}
+						<span id="SendForm_This" class="save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
+					</div>
 				</div>
-			</div>
-			<div class="tbl AdminButtons">
-				<div class="center grid_2 button-l">
-					<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
-				</div>
-				<div class="center grid_2 button-r">
-					<input type="hidden" name="save" value="yes" />
-					{if $id}<input type="hidden" name="edit" value="{$id}" />{/if}
-					<span id="SendForm_This" class="save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
-				</div>
-			</div>
-		</form>
+			</form>
+		{/if}
 		<h4>{i18n('Existing warnings')}</h4>
 		{if $warnings_list}
 			<div class="tbl2">
@@ -231,6 +232,25 @@
 				<div class="info">{i18n('There are no warnings.')}</div>
 			</div>
 		{/if}
+	{else}
+		<script>var addr_modules = '{$ADDR_MODULES}';</script>
+		<script src="{$ADDR_MODULES}warnings/templates/javascripts/warnings.js"></script>
+
+		<div class="center red">
+			<p>W poniższym polu możesz wpisać login, adres e-mail, adres IP lub ID użytkownika, którego kontem chcesz zarządzać.</p>
+			<p>Wyświetli się lista podpowiedzi, z której należy wybrać właściwy element.</p>
+		</div>
+		<div class="buttons-bg">&nbsp;</div>
+		<div class="tbl">
+			<div class="center-box"><label for="search_user">{i18n('Pole wyszukiwania użytkownika')}</label></div>
+			<div class="formField center-box">
+				<input type="text" id="search_user" name="search_user" class="width_3"/>
+				<span id="search_user_result"></span>
+			</div>
+			
+		</div>
+
+		<div class="buttons-bg">&nbsp;</div>
 	{/if}
 {/if}
 
@@ -240,7 +260,7 @@
 			<div class="info">{i18n('This section is under construction.')}</div>
 		</div>
 			
-		<div class="tbl AdminButtons">
+		<div class="tbl Buttons">
 			<div class="center grid_2 button-l">
 				<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
 			</div>
@@ -252,6 +272,3 @@
 		</div>
 	</form>
 {/if}
-
-<script>var ADDR_SITE = '{$ADDR_SITE}';</script>
-<script src="{$ADDR_ADMIN_PAGES_JS}users.js"></script>

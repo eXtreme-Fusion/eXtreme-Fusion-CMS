@@ -357,5 +357,33 @@ return array(
 	'English' => 'Angielski',
 	'Czech' => 'Czeski',
 	
-	'Modules under Development.' => 'Moduł w trakcie rozwoju.'
+	'Modules under Development.' => 'Moduł w trakcie rozwoju.',
+	
+	// Error exceptions
+	
+	// Uload
+	'The uploaded file exceeds the upload_max_filesize directive in php.ini.' => 'Wysyłany plik przekracza maksymalny rozmiar ustawiony w dyrektywie \'upload_max_filesize\' w pliku php.ini',
+	'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.' => 'Wysyłany plik przekracza maksymalny rozmiar ustawiony w dyrektywie \'MAX_FILE_SIZE\' przeznaczonej dla formularzy HTML.',
+	'The uploaded file was only partially uploaded.' => 'Wysyłany plik został zapisany tylko w części.',
+	'No file was uploaded.' => 'Żaden plik nie został wysłany.',
+	'Missing a temporary folder.' => 'Brak folderu tymczasowego.',
+	'Failed to write file to disk.' => 'Przerwane zapisywanie pliku na dysku.',
+	'File upload stopped by extension.' => 'Wysyłanie pliku zatrzymane przez wyjątek.',
+	'Unknown upload error.' => 'Wystąpił nie znany błąd podczas wysyłania pliku.',
+	'Upload error' => 'Błąd wysyłanie plików',
+	
+	//System 
+	'System error' => 'Błąd systemu',
+	'Error path' => 'Ścieżka błędu',
+	'In file' => 'W pliku',
+	'Function' => 'Funckja',
+	'Line' => 'Linia',
+	
+	// Arguments
+	'Function argument error' => 'Błąd argumentów funkcji',
+	'Parameter of :parametr is wrong.' => 'Parametr :parametr jest nie prawidłowy.',
+	
+	//User 
+	'User error' => 'Błąd użytkownika',
+	'PDO Error' => 'Błąd interpretera PDO',
 );

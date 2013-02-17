@@ -3,6 +3,7 @@
 return array(
 	'Section' => 'Sekcja',
 	'Categories' => 'Kategorie',
+	'Warning' => 'Ostrzeżenia',
 	'Existing categories' => 'Istniejące kategorie',
 
 	//Form

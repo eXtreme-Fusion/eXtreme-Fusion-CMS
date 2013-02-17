@@ -85,7 +85,7 @@ class Edit
 		{
 			if ($exception)
 			{
-				throw new systemException('Nieprawidłowy typ danych. Oczekiwano wartości numerycznej, a otrzymano: '.$this->_var);
+				throw new systemException('Nieprawidłowy typ danych. Oczekiwano wartości numerycznej, a otrzymano: '.($this->_var === FALSE ? 'boolean FALSE' : print_r($this->_var)));
 			}
 
 			return FALSE;
