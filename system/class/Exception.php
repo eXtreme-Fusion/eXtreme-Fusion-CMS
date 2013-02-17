@@ -272,3 +272,21 @@ function replaceException($text) {
 	return str_replace($search,$replace,$text);
 }
 
+// Duplikat potrzebny bo jesli nie istnieje BD to nie wczytuje jezyka i klasy Locales, powinno brac jezyk przegladarki i nie wymagac BD
+if ( ! function_exists('__'))
+{
+	/**
+	 * Wyszukuje oraz podmienia wartoœci w danym ci¹gu tekstowym.
+	 *
+	 *     echo __('Welcome :username!', array(':username' => 'foobar'));
+	 *
+	 * @uses    Locale::get
+	 * @param   string  szukany ci¹g tekstu
+	 * @param   array   dynamiczne parametry
+	 * @return  string
+	 */
+	function __($key, array $params = array())
+	{
+		return Locales::get($key, $params);
+	}
+}
