@@ -1,88 +1,79 @@
 <?php defined('EF5_SYSTEM') || exit;
 /***********************************************************
 | eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
+| This product is licensed under the BSD License.
+| http://extreme-fusion.org/ef5/license/
 ***********************************************************/
-/* Nie wiem czemu wyskakuje mi tutaj b³¹d o tym ¿e sta³e mog¹ zawieraæ tylko wartoœci skalarne
-//define('MainMenu', TPL::this()->showSubLinks('', 'menu'));
-*/
 
-function render_page($license = FALSE)
+function render_page()
 {
-	// Header
+	// Nazwa strony
 	TPL::this()->assign('Sitename', TPL::this()->_sett->get('site_name'));
 	TPL::this()->assign('Menu', TPL::this()->showSubLinks('', 'menu'));
 
-	// Panels
+	// Panels - o ile istniej¹ na danej pozycji
 	if (LEFT)    TPL::this()->assign('LEFT', LEFT);
 	if (RIGHT)   TPL::this()->assign('RIGHT', RIGHT);
 
+	// Czêœæ œrodkowa strony - panele górne, mainbox, dolne
 	TPL::this()->assign('CONTENT', TOP_CENTER.CONTENT.BOTTOM_CENTER);
 
-	// Footer Desc
-	TPL::this()->assign('Footer', stripslashes(TPL::this()->_sett->get('footer')));
+	// Stopka - pobieranie z ustawieñ
+	TPL::this()->assign('Footer', TPL::this()->_sett->get('footer'));
 
-	if ( ! $license)
-	{
-		TPL::this()->assign('Copyright', TPL::this()->showCopyright(FALSE));
-	}
+	// Wymagane informacje o autorach
+	TPL::this()->assign('Copyright', TPL::this()->showCopyright(FALSE));
 
+	// Link do Panelu Admina widoczny dla Administratorów
 	TPL::this()->assign('AdminLinks', TPL::this()->showAdminLinks());
 
+	// Renderowanie pliku szablonu
 	TPL::this()->template('page.tpl');
 }
 
 
 function render_news()
 {
-	// Plugins
+	// Plugins / Dodatki
 }
 
 function opentable($title)
 {
+	// TODO: wdrozyæ by by³o automatycznie w pliku tpl wrzucane przez klasê odpowiadaj¹c¹ za szablon
 	TPL::this()->assign('Begin', 'begin');
+
+	// Tytu³ panelu
 	TPL::this()->assign('Title', $title);
 
+	// Renderowanie pliku szablonu
 	TPL::this()->template('content.tpl');
 }
 
 function closetable()
 {
+	// Renderowanie pliku szablonu
 	TPL::this()->template('content.tpl');
 }
 
-function openside($title, $collapse = FALSE, $state = 'on')
+function openside($title)
 {
+	// TODO: wdrozyæ by by³o automatycznie w pliku tpl wrzucane przez klasê odpowiadaj¹c¹ za szablon
 	TPL::this()->assign('Begin', 'begin');
 
-	if ($collapse === TRUE)
-	{
-		$boxname = str_replace(' ', '', $title);
-		TPL::this()->assign('Collapse', TPL::this()->panelButton($state,$boxname));
-	}
-
+	// Tytu³ panelu
 	TPL::this()->assign('Title', $title);
 
-	if ($collapse == TRUE)
-	{
-		TPL::this()->assign('State', TPL::this()->panelState($state, $boxname));
-	}
-
+	// Renderowanie pliku szablonu
 	TPL::this()->template('panels.tpl');
 }
 
-function closeside($collapse = FALSE)
+function closeside()
 {
-	if ($collapse === TRUE)
-	{
-		TPL::this()->assign('Collapse', 'collapse');
-	}
-
+	// Renderowanie pliku szablonu
 	TPL::this()->template('panels.tpl');
 }
