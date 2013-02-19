@@ -32,6 +32,8 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 
 	if (isNum($item_id))
 	{
+		$r = $_pdo->exec('UPDATE [news] SET `reads` = `reads`+1 WHERE `id`= :id', array(array(':id', $item_id, PDO::PARAM_INT)));
+		
 		// nazwa pliku bez rozszerzenia, dane do zapisu (jeśli brak to funkcja zwraca dane o ile plik istnieje), czas użyteczności pliku (nadpisanie w przypadku zbyt starej wersji)
 		$data = $_system->cache('news_'.$item_id, NULL, 'news', $_sett->getUns('cache', 'expire_news'));
 		if ($data === NULL)
@@ -97,8 +99,6 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 			
 			$_tpl->assign('news', $d);
 
-			$r = $_pdo->exec('UPDATE [news] SET `reads` = `reads`+1 WHERE `id`= :id', array(array(':id', $item_id, PDO::PARAM_INT)));
-
 			if ($data['allow_comments'] === '1')
 			{
 				$_comment = $ec->comment;
@@ -128,6 +128,8 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 		'bbcode' => $_sbb->bbcodes('post'),
 		'smiley' => $_sbb->smileys('post')
 	));
+	
+	
 }
 // Wszystkie newsy
 else
