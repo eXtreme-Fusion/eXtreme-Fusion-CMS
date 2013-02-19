@@ -12,7 +12,8 @@
 try
 {
 	require_once DIR_CLASS.'Exception.php';
-	
+	require_once DIR_CLASS.'Locales.php';
+
 	if( ! extension_loaded('pdo')) 
 	{
 		throw new systemException('PDO "pdo" extension is required! Please turn it on in your php.ini.');

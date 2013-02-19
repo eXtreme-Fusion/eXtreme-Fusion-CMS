@@ -9,7 +9,6 @@
 | This product is licensed under the BSD License.
 | http://extreme-fusion.org/ef5/license/
 ***********************************************************/
-$_locale->load('search');
 
 $theme = array(
 	'Title' => 'Wyszukiwarka',
@@ -19,6 +18,9 @@ $theme = array(
 
 if ($_request->post('search')->show() && $_request->post('search_type')->show())
 {
+	$_locale->load($_request->post('search_type')->show());
+	$_locale->setSubDir('search');
+	
 	$search_type = $_request->post('search_type')->show();
 	$search_text = $_request->post('search_text')->show();
 	

@@ -85,6 +85,7 @@ try
 	}
 
 	require_once DIR_CLASS.'Exception.php';
+	require_once DIR_CLASS.'Locales.php';
 
 	if( ! extension_loaded('pdo'))
 	{
