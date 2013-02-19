@@ -171,10 +171,14 @@ return array(
 	'Signature' => 'Podpis',
 	'Rewrite info' => 'Twój serwer umożliwia korzystanie z modułu mod_rewrite, lecz nie ma uprawnień do automatycznej zmiany nazwy pliku. Jeśli chcesz z niego skorzystać do tworzenia linków przyjaznych dla wyszukiwarek, zmień nazwę pliku "rewrite" na ".htaccess". W przeciwnym przypadku, po prostu zignoruj ten komunikat.',
 	// Example news
-	'Example news title' => 'Przykładowa treść',
-	'Example news content' => 'Witaj na swojej stronie.',
-	'Example news url' => 'przkladowa-tresc',
-	'Example news description' => 'Tresc podstawowa',
+	'Example news title' => 'Witaj na swojej stronie opartej o eXtreme-Fusion 5',
+	'Example news content' => '<p>To co tu widzisz, jest zbudowane dzięki darmowemu Systemowi Zarządzania Treścią (CMS) <a href="http://extreme-fusion.org/">eXtreme-Fusion 5</a>.<br />
+	Jeśli jesteś Administratorem tej strony, możesz się zalogować do Panelu użytkownika, który znajduje się po prawej stronie. Z&nbsp;niego będziesz mógł przejść do Panelu Zarządzania, dzięki któremu skonfigurujesz odpowiednie elementy, dodasz treść lub utworzysz konta użytkowników. Dzięki modułom możesz urozmaicić funkcjonalność Twojej strony www o&nbsp;system punktacji zachęcający do aktywności, galerie czy download.<br />
+	Prosimy mieć na uwadze, że ta wersja systemu jest testową, więc nie wszystko musi działać prawidłowo, ale dokładamy starań, by tak było.<br />
+	Jeżeli nie jesteś Administratorem tej strony, ale chciałbyś posiadać własny serwis internetowy, to przejdź na nasz <a href="http://extreme-fusion.org/">Support</a>, skąd możesz pobrać system EF5 oraz uzyskać pomoc od Społeczności.<br />
+	&nbsp;</p>',
+	'Example news url' => 'witaj_na_swojej_stronie_opartej_o_extreme-fusion_5',
+	'Example news description' => 'To co tu widzisz, jest zbudowane dzięki darmowemu Systemowi Zarządzania Treścią (CMS) eXtreme-Fusion 5.',
 	// Some additional informations
 	'The installation was interrupted. The system can be unstable.' => 'Instalacja została przerwana. System może nie działać stabilnie.',
 	'Start the installation again.' => 'Zacznij instalację ponownie',

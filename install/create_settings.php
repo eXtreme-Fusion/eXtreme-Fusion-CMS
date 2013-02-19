@@ -248,7 +248,10 @@ $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news  (`id`, `title`, `link`, `
 
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."tags  (`id`, `supplement`, `supplement_id`, `value`, `value_for_link`, `access`) VALUES (1, 'NEWS', 1, 'eXtreme-Fusion', 'extreme_fusion', '1')");
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."tags  (`id`, `supplement`, `supplement_id`, `value`, `value_for_link`, `access`) VALUES (2, 'NEWS', 1, 'eXtreme-Fusion 5', 'extreme_fusion_5', '1')");
-$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."tags  (`id`, `supplement`, `supplement_id`, `value`, `value_for_link`, `access`) VALUES (3, 'NEWS', 1, 'CMS', 'cms', '1')");
+$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."tags  (`id`, `supplement`, `supplement_id`, `value`, `value_for_link`, `access`) VALUES (3, 'NEWS', 1, 'eXtreme-Fusion CMS', 'extreme_fusion_cms', '1')");
+$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."tags  (`id`, `supplement`, `supplement_id`, `value`, `value_for_link`, `access`) VALUES (5, 'NEWS', 1, 'http://extreme-fusion.org', 'http_extreme_fusion_org', '1')");
+$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."tags  (`id`, `supplement`, `supplement_id`, `value`, `value_for_link`, `access`) VALUES (6, 'NEWS', 1, 'eXtreme-Fusion Ninja Edition', 'extreme_fusion_ninja_edition', '1')");
+$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."tags  (`id`, `supplement`, `supplement_id`, `value`, `value_for_link`, `access`) VALUES (7, 'NEWS', 1, 'Ninja Edition', 'ninja_edition', '1')");
 
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."panels (`name`, `filename`, `content`, `side`, `order`, `type`, `access`, `display`, `status`) VALUES ('".__('Navigation')."', 'navigation_panel', '', '1', '1', 'file', '3', '0', '1')");
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."panels (`name`, `filename`, `content`, `side`, `order`, `type`, `access`, `display`, `status`) VALUES ('".__('Online Users')."', 'online_users_panel', '', '1', '2', 'file', '3', '0', '1')");
