@@ -18,8 +18,8 @@ $theme = array(
 
 if ($_request->post('search')->show() && $_request->post('search_type')->show())
 {
-	$_locale->load($_request->post('search_type')->show());
 	$_locale->setSubDir('search');
+	$_locale->load($_request->post('search_type')->show());
 	
 	$search_type = $_request->post('search_type')->show();
 	$search_text = $_request->post('search_text')->show();
