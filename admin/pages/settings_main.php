@@ -105,6 +105,7 @@ try
 		'theme_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'themes', array(), TRUE, 'folders'), $_sett->get('theme'))
 	));
 
+	/*
 	$handle = opendir(DIR_LOCALE.$_sett->get('locale').DS.'search');
 	while (FALSE !== ($entry = readdir($handle)))
 	{
@@ -129,7 +130,7 @@ try
 	closedir($handle);
 
 	$_tpl->assign('search_opts', $search_opts);
-
+	*/
 	$_tpl->template('settings_main');
 }
 catch(optException $exception)

@@ -58,6 +58,7 @@
 			</select>
 		</div>
 	</div>
+	{if $search_opts}
 	<div class="tbl1">
 		<div class="grid_6 formLabel"><label for="DefaultSearch">{i18n('Default search place:')}</label></div>
 		<div class="grid_4 formField">
@@ -68,6 +69,7 @@
 			</select>
 		</div>
 	</div>
+	{/if}
 	<div class="tbl Buttons">
 		<div class="grid_2 center button-l">
 			<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="{i18n('Back')}" /></strong></span>
