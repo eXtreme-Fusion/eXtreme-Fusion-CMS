@@ -11,7 +11,7 @@ $(function() {
 	$('#search_user').searchEngine({'is_here_admin_panel': 1, 'php_file': 'ajax/search_users_extended.php'});
 
 	// Wybieranie adresata wiadomości
-	$('body').on('click', '.defender', function() {
+	$('#defenders').on('click', 'li', function() {
 		var id = $(this).attr('id').split('-')[1];
 		window.location.href = addr_site+'admin/pages/users.php?page=users&user='+id;
 	});
