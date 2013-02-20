@@ -8,7 +8,7 @@
 |
 | This product is licensed under the BSD License.
 | http://extreme-fusion.org/ef5/license/
-**********************************************************
+*********************************************************/
 
 $_locale->load('s');
 
