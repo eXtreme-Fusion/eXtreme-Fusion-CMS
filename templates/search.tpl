@@ -7,10 +7,10 @@
 		<div class="tbl2">
 			<div class="formLabel sep_1 grid_3">{i18n('Miejsce wyszukiwania:')}</div>
 			<div class="formField grid_7">
-				<label for="news"><input type="radio" id="news" name="search_type" value="news"{if $search_type === "news"} checked="checked"{/if} />{i18n('Newsy')}</label>
-				<label for="users"><input type="radio" id="users" name="search_type" value="users"{if $search_type === "users"} checked="checked"{/if} />{i18n('Użytkownicy')}</label>
-				<label for="tags"><input type="radio" id="tags" name="search_type" value="tags"{if $search_type === "tags"} checked="checked"{/if} />{i18n('Tagi')}</label>
-				<label for="all"><input type="radio" id="all" name="search_type" value="all"{if $search_type === "all"} checked="checked"{/if} />{i18n('Cała strona')}</label>
+				<label for="news"><input type="radio" id="news" name="search_type" value="news"{if $search_type == "news"} checked="checked"{/if} />{i18n('Newsy')}</label>
+				<label for="users"><input type="radio" id="users" name="search_type" value="users"{if $search_type == "users"} checked="checked"{/if} />{i18n('Użytkownicy')}</label>
+				<label for="tags"><input type="radio" id="tags" name="search_type" value="tags"{if $search_type == "tags"} checked="checked"{/if} />{i18n('Tagi')}</label>
+				<label for="all"><input type="radio" id="all" name="search_type" value="all"{if $search_type == "all"} checked="checked"{/if} />{i18n('Cała strona')}</label>
 			</div>
 		</div>
 		

@@ -142,5 +142,5 @@ if ($_route->getByID(1) === 'error')
 
 $_tpl->assignGroup(array(
 	'search_text' => $_route->getByID(2) ? HELP::decodingURL($_route->getByID(2)) : '',
-	'search_type' => $_route->getByID(1) ? $_route->getByID(1) : ''
+	'search_type' => $_route->getByID(1) ? $_route->getByID(1) : $_sett->get('default_search')
 ));
