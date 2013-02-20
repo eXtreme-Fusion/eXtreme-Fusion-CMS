@@ -6,7 +6,7 @@
 | Copyright (c) 2005-2013 eXtreme-Fusion Crew
 | http://extreme-fusion.org/ 
 **********************************************************
- 		Some code comes from
+ 	Some open-source code comes from
 ---------------------------------------------------------+
 | PHP-Fusion Content Management System
 | Copyright (C) 2002 - 2011 Nick Jones
