@@ -12,7 +12,6 @@
 | Copyright (C) 2002 - 2011 Nick Jones
 | http://www.php-fusion.co.uk/
 +--------------------------------------------------------+
-| Filename: cronjob.php
 | Author: Nick Jones (Digitanium)
 +--------------------------------------------------------+
 | This program is released as free software under the
