@@ -12,8 +12,8 @@
 | Copyright (C) 2002 - 2011 Nick Jones
 | http://www.php-fusion.co.uk/
 +--------------------------------------------------------+
-| Filename: cronjob.php
-| Author: Nick Jones (Digitanium)
+| Author: Wooya
+| Edited: slawekneo
 +--------------------------------------------------------+
 | This program is released as free software under the
 | Affero GPL license. You can redistribute it and/or
