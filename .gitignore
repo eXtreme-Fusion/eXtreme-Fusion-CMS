@@ -2,3 +2,4 @@
 /upload/.gitignore
 /config.php
 /system/opt/plugins/plugins.php
+/nbproject/private/

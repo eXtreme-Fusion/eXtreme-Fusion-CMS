@@ -143,10 +143,12 @@
 				</ul>
 			</div>
 			<div id="SessionExpire" class="tip" title="Kliknij, by przedłużyć sesję">{i18n('Time to end of session')}: <strong></strong></div>
-			<div id="Footer" class="ui-layout-south">
-				<div id="FooterLeft">2005-{$CurrentYear} &copy; <a href="http://www.extreme-fusion.org/" rel="blank">{$SystemVersion}</a></div>
+			<div id="Footer" class="ui-layout-south">		
+			 	<div id="FooterLeft">2005-{$CurrentYear} &copy; <a href="http://www.extreme-fusion.org/" rel="blank">{$SystemVersion}</a> Copyright 2002-2013 <a href="http://php-fusion.co.uk/">PHP-Fusion</a>. Released as free software without warranties under <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">aGPL v3</a>
+			 </div>
 			</div>
 			<iframe id='mainFrame' name='mainFrame' width='100%' height='600' class="ui-layout-center" frameborder='0' scrolling='auto' src='pages/home.php'></iframe>
+		
 		</body>
     {/if}
 </html>
