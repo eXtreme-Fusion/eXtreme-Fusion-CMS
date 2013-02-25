@@ -11,7 +11,7 @@
 
 $mod_info = array(
 	'title' => 'phpBB3 Bridge',
-	'description' => 'Most łączący eXtreme-Fusion z forum phpbb 3',
+	'description' => 'Most łączący eXtreme-Fusion z forum phpBB3',
 	'developer' => 'eXtreme Crew',
 	'support' => 'http://www.extreme-fusion.org/',
 	'version' => '1.0',
