@@ -2,7 +2,7 @@ $(function() {
   refresh();
   
   $('#chat_form form').submit(function() {
-    $.post('modules/chat/ajax/send.php', {
+    $.post(addr_site+'modules/chat/ajax/send.php', {
         content: $('input[name*="content"]', this).val(),
         send: 'send'
       },
@@ -24,7 +24,7 @@ $(function() {
 function refresh() {
   var posts = $('#chat_post').html();
   $.ajax({
-    url: 'modules/chat/ajax/messages.php', type: 'GET', success: function (html){
+    url: addr_site+'modules/chat/ajax/messages.php', type: 'GET', success: function (html){
       $('#chat_messages section').html(html);
       setTimeout(function(){
         var posts2 = $('#chat_post').html();
