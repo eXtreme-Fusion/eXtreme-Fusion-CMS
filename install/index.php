@@ -46,7 +46,7 @@ try
 	define('DS', DIRECTORY_SEPARATOR);
 
 	define('DIR_BASE', dirname(__FILE__).DS);
-	define('DIR_SITE', realpath(DIR_BASE.'../').DS);
+	define('DIR_SITE', realpath(DIR_BASE.'..').DS);
 
 	define('ADDR_SITE', 'http://'.$HostURL[0]);
 
