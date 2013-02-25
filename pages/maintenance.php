@@ -45,8 +45,10 @@ $_tpl->assign('maintenance',
 	array(
 		'sitebanner' => ADDR_SITE.'templates/'.$_sett->get('site_banner'),
 		'sitename' => $_sett->get('site_name'),
-		'message' => stripslashes(nl2br($_sett->get('maintenance_message'))),
-		'year' => date('Y')
+		'message' => nl2br($_sett->get('maintenance_message')),
+		'year' => date('Y'),
+		'login_form' => $_sett->get('maintenance_form'),
+		'logged_in' => $_user->isLoggedIn()
 	)
 );
 

@@ -126,9 +126,7 @@ try
 	if ( ! $_route->getExitFile())
 	{
 		$row = $_pdo->getRow('SELECT full_path FROM [links] WHERE short_path= :short_path ORDER BY `datestamp` DESC LIMIT 1',
-			array(
-				array(':short_path', $_route->getRequest(), PDO::PARAM_STR)
-			)
+			array(':short_path', $_route->getRequest(), PDO::PARAM_STR)
 		);
 
 		if ($row)
@@ -173,7 +171,14 @@ try
 	}
 
 	// Załączanie predefiniowanych elementów szablonu systemu (panele)
-	require_once DIR_SYSTEM.'panels.php';
+	if ($_route->getFileName() !== 'maintenance')
+	{
+		require_once DIR_SYSTEM.'panels.php';
+	}
+	else
+	{
+		define('LEFT', ''); define('TOP_CENTER', ''); define('BOTTOM_CENTER', ''); define('RIGHT', '');
+	}
 
 	/**
 	 * Konfiguracja sekcji HEAD

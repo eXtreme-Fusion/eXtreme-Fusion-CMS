@@ -56,6 +56,7 @@ try
 			'bad_word_replace' => $_request->post('bad_word_replace')->strip(),
 			'maintenance_level' => $_request->post('maintenance_level')->getNumArray() ? HELP::implode($_request->post('maintenance_level')->show()) : $_sett->get('maintenance_level'),
 			'maintenance' => $_request->post('maintenance')->isNum(TRUE),
+			'maintenance_form' => $_request->post('maintenance_form')->isNum(TRUE),
 			'maintenance_message' => $_request->post('maintenance_message')->show()
 		));
 
@@ -70,6 +71,7 @@ try
 		'bad_word_replace' => $_sett->get('bad_word_replace'),
 		'maintenance_level' => $_tpl->getMultiSelect($_user->getViewGroups(), HELP::explode($_sett->get('maintenance_level')), TRUE),
 		'maintenance' => $_sett->get('maintenance'),
+		'maintenance_form' => $_sett->get('maintenance_form'),
 		'maintenance_message' => $_sett->get('maintenance_message')
 	));
 

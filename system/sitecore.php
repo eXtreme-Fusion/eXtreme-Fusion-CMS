@@ -152,6 +152,8 @@ try
 	# Helper class
 	HELP::init($_pdo, $_sett, $_user, $_url);
 
+	
+			
 	if ($_request->post('login')->show() && $_request->post('username')->show() && $_request->post('password')->show())
 	{
 		// Sprawdzanie danych logowania
@@ -159,10 +161,12 @@ try
 		{
 			$_user->setTryLogin(TRUE);
 		}
-
+		
 		HELP::reload(0);
 	}
 
+
+		
 	// Załączenie wymaganych plików
 	require_once DIR_SYSTEM.'table_list.php';
 
@@ -197,6 +201,13 @@ try
 		}
 	}
 
+	
+	if ($_sett->get('maintenance') === '1' && $_user->isLoggedIn() && !$_user->hasAccess($_sett->get('maintenance_level'), 'df'))
+	{
+		$_user->userLogout();
+		HELP::redirect(ADDR_SITE);
+	}
+	
 	if ($_user->iUSER())
 	{
 		if ($_user->get('theme') !== 'Default' && $_sett->get('userthemes') === '1')

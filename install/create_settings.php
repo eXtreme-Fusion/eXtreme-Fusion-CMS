@@ -121,7 +121,8 @@ $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'change_name', 'va
 
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'maintenance', 'value' => 0));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'maintenance_message', 'value' => __('Welcome to eXtreme-Fusion CMS. Thank for using our CMS, Please turn off the maintenance mode in security, onces you have finished configuring your site.')));
-$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'maintenance_level', 'value' => '1'));
+$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'maintenance_level', 'value' => 1));
+$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'maintenance_form', 'value' => 1));
 
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'default_search', 'value' => 'all'));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'deactivation_period', 'value' => 365));

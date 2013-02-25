@@ -1161,6 +1161,8 @@ class User {
 	// Zwraca w postaci tablicy identyfikatory grup, do których należy zalogowany użytkownik
 	public function getUserGroupsID()
 	{
+		if (!$this->_roles) $this->getRoles();
+		
 		$data = array();
 		foreach($this->_roles as $val)
 		{

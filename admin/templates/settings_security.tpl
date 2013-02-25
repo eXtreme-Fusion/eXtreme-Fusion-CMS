@@ -48,6 +48,11 @@
 		</div>
 	</div>
 	<div class="tbl1">
+		<div class="grid_6 formLabel">{i18n('Maintenance login form:')}</div>
+		<div class="grid_1 formField"><label><input type="radio" name="maintenance_form" value="1"{if $maintenance_form == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
+		<div class="grid_5 formField"><label><input type="radio" name="maintenance_form" value="0"{if $maintenance_form == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
+	</div>
+	<div class="tbl2">
 		<div class="grid_6 formLabel"><label for="MaintenanceMessage">{i18n('Maintenance mode message:')}</label></div>
 		<div class="clear"></div>
 		<div class="sep_1 grid_10 formField"><textarea name="maintenance_message" id="MaintenanceMessage" cols="80" rows="3">{$maintenance_message}</textarea></div>
