@@ -30,12 +30,12 @@ class URL
 	{
 		return $this->ext_allowed;
 	}
-	
+
 	public function setController($controller)
 	{
 		$this->controller = $controller;
 	}
-	
+
 	public function getPathPrefix($not_parse = FALSE)
 	{
 		if ($this->rewrite_loaded || $not_parse)
@@ -51,23 +51,23 @@ class URL
 	}
 
 	/**
-	 * Generator linków dla plików szablonu.
+	 * Generator linkÃ³w dla plikÃ³w szablonu.
 	 *
-	 * Predefiniowane indeksy (niewymagane, mog¹ zostaæ pominiête):
+	 * Predefiniowane indeksy (niewymagane, mogÄ… zostaÄ‡ pominiÄ™te):
 	 * - controller
 	 * - action
 	 * - extension
 	 *
-	 * Pozosta³e to parametry, które mog¹ mieæ nazwê (indeks tablicy)
-	 * lub byæ tylko wartoœci¹. Przyk³ad:
+	 * PozostaÅ‚e to parametry, ktÃ³re mogÄ… mieÄ‡ nazwÄ™ (indeks tablicy)
+	 * lub byÄ‡ tylko wartoÅ›ciÄ…. PrzykÅ‚ad:
 	 *
 	 *	$_route->path(array('param1', 'param2' => 'value_for_param2'));
 	 *
-	 * Przyk³ad u¿ycia dla podstrony profile.html:
+	 * PrzykÅ‚ad uÅ¼ycia dla podstrony profile.html:
 	 *
 	 *	$_route->path(array('controller' => 'profile', 'action' => 'user', 457, 'extension' => 'html'));
 	 *
-	 * Przy za³adowanym "rewrite module" wygenerowany zostanie nastêpuj¹cy link:
+	 * Przy zaÅ‚adowanym "rewrite module" wygenerowany zostanie nastÄ™pujÄ…cy link:
 	 * http://twojastrona/profile/user/457.html
 	 */
 	public function path(array $data)
@@ -129,7 +129,7 @@ class URL
 			$params = '';
 		}
 
-		
+
 		$trace = $this->getPathPrefix();
 
 		return ADDR_SITE.$trace.$ctrl.$action.$params.$ext;

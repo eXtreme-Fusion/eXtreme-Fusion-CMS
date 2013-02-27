@@ -18,7 +18,7 @@
 					<option value="{$access.value}"{if $access.selected} selected="selected"{/if}>{$access.display}</option>
 				{/section}
 			</select>
-			
+
 		</div>
 	</div>
 	<div class="tbl2">
@@ -41,13 +41,13 @@
 		</div>
 	</div>
 	{if $modRewrite_unavailable}
-	<div class="tbl2">
-		<div class="formLabel sep_1 grid_3"><label for="Rewrite">{i18n('Modyfikacja linku przez system:')}</label></div>
-		<div class="formField grid_7">
-			<input type="radio" name="rewrite" value="1" {if $rewrite == 1} checked='checked'{/if} id="Window" /> {i18n('Yes')}
-			<input type="radio" name="rewrite" value="0" {if $rewrite == 0} checked='checked'{/if} id="Window" /> {i18n('No')}
+		<div class="tbl2">
+			<div class="formLabel sep_1 grid_3"><label for="Rewrite">{i18n('Modyfikacja linku przez system:')}</label></div>
+			<div class="formField grid_7">
+				<input type="radio" name="rewrite" value="1" {if $rewrite == 1} checked='checked'{/if} id="Window" /> {i18n('Yes')}
+				<input type="radio" name="rewrite" value="0" {if $rewrite == 0} checked='checked'{/if} id="Window" /> {i18n('No')}
+			</div>
 		</div>
-	</div>
 	{/if}
 	<div class="tbl Buttons">
 		<div class="center grid_2 button-l">
@@ -87,11 +87,11 @@
 						</div>
 						<div class="grid_2">
 							{$data.visibility}
-						</div>			
+						</div>
 						<div class="grid_2">
 							<a href="{$FILE_SELF}?action=edit&amp;id={$data.id}" class="tip" title="{i18n('Edit')}">
 								<img src="{$ADDR_ADMIN_ICONS}edit.png" alt="{i18n('Edit')}" />
-							</a> 
+							</a>
 							<a href="{$FILE_SELF}?action=delete&amp;id={$data.id}" class="tip confirm_button" title="{i18n('Delete')}">
 								<img src="{$ADDR_ADMIN_ICONS}delete.png" alt="{i18n('Delete')}" />
 							</a>

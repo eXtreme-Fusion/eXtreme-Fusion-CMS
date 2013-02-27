@@ -270,7 +270,7 @@ try
 					'id' => $row['id'],
 					'name' => $row['name'],
 					'url' => $row['url'],
-					'perse_url' => strstr($row['url'], "http://") || strstr($row['url'], "https://") ? TRUE : FALSE,
+					'perse_url' => strstr($row['url'], 'http://') || strstr($row['url'], 'https://') ? TRUE : FALSE,
 					'order' => $row['order'],
 					'visibility' => $_user->groupArrIDsToNames(HELP::explode($row['visibility'])),
 					'position' => $row['position'],

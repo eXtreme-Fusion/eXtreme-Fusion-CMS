@@ -39,7 +39,7 @@ if ($_pdo->getRowsCount($query))
 				$name = $ec->sbb->parseBBCode($data['name'], "b|i|u|color");
 				$bullet = THEME_IMAGES.'bullet.png';
 			}
-			
+
 			$nav[] = array(
 				'name' => $name,
 				'type' => $type,

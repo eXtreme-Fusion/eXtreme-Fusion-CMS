@@ -4,7 +4,7 @@
 | Content Management System
 |
 | Copyright (c) 2005-2013 eXtreme-Fusion Crew
-| http://extreme-fusion.org/ 
+| http://extreme-fusion.org/
 **********************************************************
  	Some open-source code comes from
 ---------------------------------------------------------+
