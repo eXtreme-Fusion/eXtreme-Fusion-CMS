@@ -13,6 +13,7 @@ $_locale->moduleLoad('lang', 'tags_panel');
 ! class_exists('Tag') || $_tag = New Tag($_system, $_pdo);
 
 $cache = $_system->cache('tags,'.$_user->getCacheName(), NULL, 'tags_panel', 0);
+
 if ($cache === NULL)
 {
 	if ($query = $_tag->getTagFromSupplement('NEWS'))
@@ -20,17 +21,16 @@ if ($cache === NULL)
 		$temp = array();
 		foreach ($query as $row)
 		{
-			if ( ! in_array($row['value'], $temp)) $temp[] = $row['value'];
+			if ( ! in_array($row['value'], $temp)) $temp[] = array('title' => $row['value'], 'link' => $row['value_for_link']);
 		}
 		
-		if (is_array($keys = array_unique($temp)))
-		{			
-			foreach($keys as $tag)
-			{
-				$filter = new Edit($tag);
+		if (is_array($temp))
+		{
+			foreach($temp as $tag)
+			{		
 				$cache[] = array(
-					'tag' => $tag,
-					'url' => $_route->path(array('controller' => 'tags', 'action' => $filter->setTitleForLinks()))
+					'tag' => $tag['title'],
+					'url' => $_route->path(array('controller' => 'tags', 'action' => $tag['link']))
 				);
 			}
 		}

@@ -250,24 +250,24 @@ $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES ('-.-', 'pinch.png', 'Pinch')");
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (':extreme:', '../favicon.ico', 'eXtreme-Fusion')");
 
-$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('".__('Bugs')."', '".HELP::Title2Link(__('Bugs'))."', 'bugs.png')");
-$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('".__('Downloads')."', '".HELP::Title2Link(__('Downloads'))."', 'downloads.png')");
-$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('".__('eXtreme-Fusion')."', '".HELP::Title2Link(__('eXtreme-Fusion'))."', 'eXtreme-fusion.png')");
-$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('".__('Games')."', '".HELP::Title2Link(__('Games'))."', 'games.png')");
-$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('".__('Graphics')."', '".HELP::Title2Link(__('Graphics'))."', 'graphics.png')");
-$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('".__('Hardware')."', '".HELP::Title2Link(__('Hardware'))."', 'hardware.png')");
-$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('".__('Journal')."', '".HELP::Title2Link(__('Journal'))."', 'journal.png')");
-$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('".__('Users')."', '".HELP::Title2Link(__('Users'))."', 'users.png')");
-$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('".__('Mods')."', '".HELP::Title2Link(__('Mods'))."', 'mods.png')");
-$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('".__('Movies')."', '".HELP::Title2Link(__('Movies'))."', 'movies.png')");
-$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('".__('Network')."', '".HELP::Title2Link(__('Network'))."', 'network.png')");
-$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('".__('News')."', '".HELP::Title2Link(__('News'))."', 'news.png')");
-$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('".__('Security')."', '".HELP::Title2Link(__('Security'))."', 'security.png')");
-$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('".__('Software')."', '".HELP::Title2Link(__('Software'))."', 'software.png')");
-$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('".__('Themes')."', '".HELP::Title2Link(__('Themes'))."', 'themes.png')");
-$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('".__('Windows')."', '".HELP::Title2Link(__('Windows'))."', 'windows.png')");
+$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('Bugs', '".HELP::Title2Link(__('Bugs'))."', 'bugs.png')");
+$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('Downloads', '".HELP::Title2Link(__('Downloads'))."', 'downloads.png')");
+$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('eXtreme-Fusion', '".HELP::Title2Link(__('eXtreme-Fusion'))."', 'eXtreme-fusion.png')");
+$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('Games', '".HELP::Title2Link(__('Games'))."', 'games.png')");
+$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('Graphics', '".HELP::Title2Link(__('Graphics'))."', 'graphics.png')");
+$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('Hardware', '".HELP::Title2Link(__('Hardware'))."', 'hardware.png')");
+$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('Journal', '".HELP::Title2Link(__('Journal'))."', 'journal.png')");
+$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('Users', '".HELP::Title2Link(__('Users'))."', 'users.png')");
+$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('Mods', '".HELP::Title2Link(__('Mods'))."', 'mods.png')");
+$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('Movies', '".HELP::Title2Link(__('Movies'))."', 'movies.png')");
+$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('Network', '".HELP::Title2Link(__('Network'))."', 'network.png')");
+$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('News', '".HELP::Title2Link(__('News'))."', 'news.png')");
+$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('Security', '".HELP::Title2Link(__('Security'))."', 'security.png')");
+$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('Software', '".HELP::Title2Link(__('Software'))."', 'software.png')");
+$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('Themes', '".HELP::Title2Link(__('Themes'))."', 'themes.png')");
+$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('Windows', '".HELP::Title2Link(__('Windows'))."', 'windows.png')");
 
-$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news  (`id`, `title`, `link`, `category`, `content`, `author`, `source`, `breaks`, `description`, `datestamp`, `access`, `reads`, `draft`, `sticky`, `allow_comments`, `allow_ratings`, `language`) VALUES (NULL, '".__('Example news title')."', '".__('Example news url')."', '2', '".__('Example news content')."', '1', 'http://extreme-fusion.org', '0', '".__('Example news description')."', '".time()."', '3', '1', '0', '0', '1', '1', '".$_SESSION['localeset']."')");
+$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news  (`id`, `title`, `link`, `category`, `content`, `author`, `source`, `breaks`, `description`, `datestamp`, `access`, `reads`, `draft`, `sticky`, `allow_comments`, `allow_ratings`, `language`) VALUES (NULL, '".__('Example news title')."', '".__('Example news url')."', '3', '".__('Example news content')."', '1', 'http://extreme-fusion.org', '0', '".__('Example news description')."', '".time()."', '3', '1', '0', '0', '1', '1', '".$_SESSION['localeset']."')");
 
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."tags  (`id`, `supplement`, `supplement_id`, `value`, `value_for_link`, `access`) VALUES (1, 'NEWS', 1, 'eXtreme-Fusion', 'extreme_fusion', '1')");
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."tags  (`id`, `supplement`, `supplement_id`, `value`, `value_for_link`, `access`) VALUES (2, 'NEWS', 1, 'eXtreme-Fusion 5', 'extreme_fusion_5', '1')");

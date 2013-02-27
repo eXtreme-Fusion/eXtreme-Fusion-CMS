@@ -8,11 +8,43 @@
 | This product is licensed under the BSD License.				 |
 | http://extreme-fusion.org/ef5/license/						 |
 +---------------------------------------------------------------*/
+try
+{
+	require_once '../../../config.php';
+	require DIR_SITE.'bootstrap.php';
+	require_once DIR_SYSTEM.'admincore.php';
 
-$request = '<br />Zostałeś wpisany na listę<br />&nbsp;';
+	if ($_request->post('email')->show())
+	{
+		if ( ! filter_var($_request->post('email')->show(), FILTER_VALIDATE_EMAIL)) {
+			$request = __('Please enter a valid email address');
+		}
+		else
+		{
+			$request = __('Have been included in the list');
+		}
+	} 
+	else
+	{
+		$request = __('Enter your email address');
+	}
+	if ( ! $_request->post('rules')->show()) $request = __('Accept the rules');
 
-if ( ! isset($_POST['email']) || $_POST['email'] == '') $request = '<br />Podaj swój adres email<br />&nbsp;';
-if ( ! isset($_POST['rules'])) $request = '<br />Zaakceptuj regulamin<br />&nbsp;';
-	
-	
-echo $request;
+	echo $request;
+}
+catch(optException $exception)
+{
+    optErrorHandler($exception);
+}
+catch(systemException $exception)
+{
+    systemErrorHandler($exception);
+}
+catch(userException $exception)
+{
+    userErrorHandler($exception);
+}
+catch(PDOException $exception)
+{
+    PDOErrorHandler($exception);
+}

@@ -1,7 +1,7 @@
 {if $page == 'category'}
 	{php} opentable(__('News categories').' &raquo; '.$this->data['category']['cat_name']) {/php}
 		<p class="cat_top dark text_dark">
-			<a href="{$all_news_url}">Newsy</a> <img src="{$THEME_IMAGES}bullet.png" alt=""> <a href="{$all_news_cats_url}">Kategorie newsów</a> <img src="{$THEME_IMAGES}bullet.png" alt=""> <strong>{$category.cat_name}</strong> ({$category.cat_news_count})
+			<a href="{$all_news_url}">{i18n('News')}</a> <img src="{$THEME_IMAGES}bullet.png" alt=""> <a href="{$all_news_cats_url}">{i18n('News categories')}</a> <img src="{$THEME_IMAGES}bullet.png" alt=""> <strong>{i18n($category.cat_name)}</strong> ({$category.cat_news_count})
 		</p>
 		{if $rows}
 			<div class="clearfix">
@@ -28,7 +28,7 @@
 {elseif $page == 'overview'}
 	{php} opentable(__('News categories')) {/php}
 		<p class="cat_top dark text_dark">
-			<a href="{$all_news_url}">Newsy</a> <img src="{$THEME_IMAGES}bullet.png" alt=""> <strong>Kategorie newsów</strong>
+			<a href="{$all_news_url}">{i18n('News')}</a> <img src="{$THEME_IMAGES}bullet.png" alt=""> <strong>{i18n('News categories')}</strong>
 		</p>
 		{if $i}
 			<ul class="cat_list">
@@ -36,7 +36,7 @@
 					<li>
 						<a href="{$i.url}" title="{$i.cat_title_name}" class="dark">
 							<span>
-								<strong>{$i.cat_title_name}</strong>
+								<strong>{i18n($i.cat_title_name)}</strong>
 								<img src="{$NEWS_CAT_IMAGES}{$i.cat_image}" alt="{$i.cat_title_name}">
 								<small class="text_dark">{i18n('News:')} {$i.cat_count_news}</small>
 							</span>

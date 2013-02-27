@@ -6,16 +6,16 @@
 			<div class="InfoBoxCon">
 				<div id="NewsletterIcon"></div>
 				<div class="InfoBoxCenterRight">
-					Chcesz być informowany o nowościach, postępie prac nad eXtreme-Fusion 5?
+					{i18n('Do you want to be informed about news, the progress of the eXtreme-Fusion 5?')}
 				</div>
 			</div>
 			<div class="InfoBoxEnd"></div>
 		</div>
-		Twój adres e-mail:
+		{i18n('Your e-mail:')}
 		<form id="NewsletterForm">
 			<input type="text" name="UserEmail"/>
-			<label><input class="input" type="checkbox" name="NewsletterZgoda" value="Yes" />Akceptuję <a href="">regulamin</a></label>
-			<input type="submit" id="NewsletterZapisz" value="Zapisz się" />
+			<label><input class="input" type="checkbox" name="NewsletterZgoda" value="Yes" />{i18n('I accept')} <a href="{$rules}">{i18n('rules')}</a></label>
+			<input type="submit" id="NewsletterZapisz" value="{i18n('Save')}" />
 		</form>
 	</div>
 	{php} closeside() {/php}

@@ -386,4 +386,22 @@ return array(
 	//User 
 	'User error' => 'Błąd użytkownika',
 	'PDO Error' => 'Błąd interpretera PDO',
+	
+	//News Categories
+	'Bugs' => 'Błędy',
+	'Downloads' => 'Download',
+	'eXtreme-Fusion' => 'eXtreme-Fusion',
+	'Games' => 'Gry',
+	'Graphics' => 'Grafika',
+	'Hardware' => 'Sprzęt',
+	'Journal' => 'Dziennik',
+	'Members' => 'Użytkownicy',
+	'Mods' => 'Modyfikacje',
+	'Movies' => 'Filmy',
+	'Network' => 'Sieć',
+	'News' => 'Newsy',
+	'Security' => 'Bezpieczeństwo',
+	'Software' => 'Oprogramowanie',
+	'Themes' => 'Skórki',
+	'Windows' => 'Windows',
 );

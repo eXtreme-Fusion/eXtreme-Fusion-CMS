@@ -11,3 +11,5 @@
 $_locale->moduleLoad('lang', 'newsletter_panel');
 
 $_head->set('<script src="'.ADDR_SITE.'modules/newsletter_panel/templates/newsletter.js"></script>');
+
+$_panel->assign('rules', $_route->path(array('controller' => 'rules')));

@@ -157,7 +157,7 @@ class Tag {
 	{
 		$this->_data = new Edit($supplement);
 
-		$query = $this->_pdo->getData('SELECT `id`, `supplement`, `supplement_id`, `value`, `value_for_link`, `access` FROM [tags] WHERE supplement = :supplement ORDER BY `id` DESC',
+		$query = $this->_pdo->getData('SELECT `id`, `supplement`, `supplement_id`, `value`, `value_for_link`, `access` FROM [tags] WHERE supplement = :supplement ORDER BY RAND() DESC',
 			array(':supplement', $this->_data->filters('trim', 'strip'), PDO::PARAM_STR)
 		);
 
