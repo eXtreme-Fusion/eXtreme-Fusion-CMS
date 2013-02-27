@@ -109,7 +109,7 @@ try
 			$position =  $_request->post('position')->isNum(TRUE);
 			$window =  $_request->post('window')->isNum(TRUE);
 			$order = $_request->post('order')->isNum(TRUE);
-			if ($rewrite_unavailable)
+			if (isset($rewrite_unavailable))
 			{
 				$rewrite = $_request->post('rewrite')->isNum(TRUE);
 			}
@@ -120,7 +120,7 @@ try
 
 			if ($name && $url)
 			{
-				if (($_request->get('action')->show() === 'edit') && $_request->get('id')->isNum())
+				if ($_request->get('action')->show() === 'edit' && $_request->get('id')->isNum())
 				{
 					$row = $_pdo->getRow('SELECT `order` FROM [navigation] WHERE `id`= :id',
 						array(
@@ -216,77 +216,77 @@ try
 		}
 
 
-		
-			if ($_request->get('action')->show() === 'edit' && $_request->get('id')->isNum())
-			{
-				$row = $_pdo->getRow('SELECT * FROM [navigation] WHERE `id` = :id',
-					array(':id', $_request->get('id')->show(), PDO::PARAM_INT)
-				);
 
-				if ($row)
-				{
-					$name = $row['name'];
-					$url = $row['url'];
-					$visibility = $row['visibility'];
-					$order = $row['order'];
-					$position = $row['position'];
-					$window = $row['window'];
-					$rewrite = $row['rewrite'];
-				}
-				else
-				{
-					$_request->redirect(FILE_SELF);
-				}
+		if ($_request->get('action')->show() === 'edit' && $_request->get('id')->isNum())
+		{
+			$row = $_pdo->getRow('SELECT * FROM [navigation] WHERE `id` = :id',
+				array(':id', $_request->get('id')->show(), PDO::PARAM_INT)
+			);
+
+			if ($row)
+			{
+				$name = $row['name'];
+				$url = $row['url'];
+				$visibility = $row['visibility'];
+				$order = $row['order'];
+				$position = $row['position'];
+				$window = $row['window'];
+				$rewrite = $row['rewrite'];
 			}
 			else
 			{
-				$name = '';
-				$url = '';
-				$visibility = '';
-				$order = $_pdo->getMaxValue('SELECT MAX(`order`) FROM [navigation]') + 1;
-				$position = '';
-				$window = '';
-				$rewrite = 1;
+				$_request->redirect(FILE_SELF);
 			}
+		}
+		else
+		{
+			$name = '';
+			$url = '';
+			$visibility = '';
+			$order = $_pdo->getMaxValue('SELECT MAX(`order`) FROM [navigation]') + 1;
+			$position = '';
+			$window = '';
+			$rewrite = 1;
+		}
 
-			$_tpl->assignGroup(array(
-				'name' => $name,
-				'url' => $url,
-				'access' => $_tpl->getMultiSelect($_user->getViewGroups(), HELP::explode($visibility), TRUE),
-				'order' => $order,
-				'position' => $position,
-				'window' => $window,
-				'rewrite' => $rewrite
-			));
-		
-			$query = $_pdo->getData('SELECT * FROM [navigation] ORDER BY `order`');
+		$_tpl->assignGroup(array(
+			'name' => $name,
+			'url' => $url,
+			'access' => $_tpl->getMultiSelect($_user->getViewGroups(), HELP::explode($visibility), TRUE),
+			'order' => $order,
+			'position' => $position,
+			'window' => $window,
+			'rewrite' => $rewrite
+		));
 
-			if ($query)
+		$query = $_pdo->getData('SELECT * FROM [navigation] ORDER BY `order`');
+
+		if ($query)
+		{
+			$data = array();
+			foreach($query as $row)
 			{
-				$data = array();
-				foreach($query as $row)
-				{
-					$data[] = array(
-						'id' => $row['id'],
-						'name' => $row['name'],
-						'url' => $row['url'],
-						'perse_url' => strstr($row['url'], "http://") || strstr($row['url'], "https://") ? TRUE : FALSE,
-						'order' => $row['order'],
-						'visibility' => $_user->groupArrIDsToNames(HELP::explode($row['visibility'])),
-						'position' => $row['position'],
-						'rewrite' => $row['rewrite']
-					);
-				}
-
-				$_tpl->assign('data', $data);
+				$data[] = array(
+					'id' => $row['id'],
+					'name' => $row['name'],
+					'url' => $row['url'],
+					'perse_url' => strstr($row['url'], "http://") || strstr($row['url'], "https://") ? TRUE : FALSE,
+					'order' => $row['order'],
+					'visibility' => $_user->groupArrIDsToNames(HELP::explode($row['visibility'])),
+					'position' => $row['position'],
+					'rewrite' => $row['rewrite']
+				);
 			}
-		
+
+			$_tpl->assign('data', $data);
+		}
 	}
 
-	if ($rewrite_unavailable)
+	if (isset($rewrite_unavailable))
 	{
 		$_tpl->assign('modRewrite_unavailable', TRUE);
 	}
+
 	$_tpl->template('navigations');
 }
 catch(optException $exception)

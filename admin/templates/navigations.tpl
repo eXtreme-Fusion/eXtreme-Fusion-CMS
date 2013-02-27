@@ -42,7 +42,7 @@
 	</div>
 	{if $modRewrite_unavailable}
 	<div class="tbl2">
-		<div class="formLabel sep_1 grid_3"><label for="Rewrite">{i18n('Modyfikuj przez system link:')}</label></div>
+		<div class="formLabel sep_1 grid_3"><label for="Rewrite">{i18n('Modyfikacja linku przez system:')}</label></div>
 		<div class="formField grid_7">
 			<input type="radio" name="rewrite" value="1" {if $rewrite == 1} checked='checked'{/if} id="Window" /> {i18n('Yes')}
 			<input type="radio" name="rewrite" value="0" {if $rewrite == 0} checked='checked'{/if} id="Window" /> {i18n('No')}
