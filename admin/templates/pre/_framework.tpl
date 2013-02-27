@@ -80,17 +80,10 @@
 				</div>
 				<div id="NavOuterRepeat">
 					<div class="NavHolder">
-						<div id="NavRight">
-							<div class="divider">&nbsp;</div>
-							<a href="{$ADDR_ADMIN}pages/settings_ef.php" target="mainFrame" id="SystemSettings">
-								<img src="{$ADMIN_TEMPLATE_IMAGES}shared/nav/settings.gif" alt="Settings">
-							</a>
-							<div class="clear">&nbsp;</div>
-						</div>
 						<div id="Navigation">
 							<div class="table">
-								<ul class="select current">
-									<li><a href="{$ADDR_ADMIN}pages/home.php" target="mainFrame"><strong><span>{i18n('Panel')}</span></strong></a></li>
+								<ul class="select page-6">
+									<li><a id="Menu-6" href="#"><strong><span>{i18n('Panel')}</span></strong></a></li>
 								</ul>
 								{if $Count.1 > 0}
 									<ul class="select page-1">
@@ -114,6 +107,9 @@
 								{/if}
 								<ul class="select page-5">
 									<li><a id="Menu-5" href="#"><strong><span>{i18n('Modules')}</span></strong></a></li>
+								</ul>
+								<ul class="select page-7">
+									<li><a id="Menu-7" href="#"><strong><span>{i18n('System')}</span></strong></a></li>
 								</ul>
 							</div>
 						</div>

@@ -113,6 +113,7 @@ try
 							break;
 						}
 					}
+					var_dump($DefaultPageNum, $page_links);
 					$tpl->assign('Count', $page_links);
 					$tpl->assign('DefaultPageNum', $DefaultPageNum);
 				}

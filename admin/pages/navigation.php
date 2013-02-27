@@ -67,6 +67,15 @@ try
 			case 4:
 				$_tpl->assign('NavigationTitle', __('Settings'));
 				break;
+			case 5:
+				$_tpl->assign('NavigationTitle', __('Modules'));
+				break;
+			case 6:
+				$_tpl->assign('NavigationTitle', __('Panel'));
+				break;
+			case 7:
+				$_tpl->assign('NavigationTitle', __('System'));
+				break;
 			default:
 				$_tpl->assign('NavigationTitle', 'N/A');
 		}
@@ -91,8 +100,6 @@ try
 			}
 		}
 		
-		
-		
 		if ($_request->get('PageNum')->show() === '5')
 		{	
 			if (count($link))
@@ -107,11 +114,20 @@ try
 				require DIR_ADMIN.'pages/modules.php';
 			}
 		}
+		elseif ($_request->get('PageNum')->show() === '6')
+		{
+			require DIR_ADMIN.'pages/home.php';
+		}
+		elseif ($_request->get('PageNum')->show() === '7')
+		{
+			require DIR_ADMIN.'pages/settings_ef.php';
+		}
 		else
 		{
 			$_tpl->assign('AdminLink', $link);
 			$_tpl->template('navigation');
 		}
+
 	}
 	else
 	{
