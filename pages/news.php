@@ -45,6 +45,15 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 
 	if ( ! file_exists(DIR_THEME.'templates'.DS.'pages'.DS.'news.tpl'))
 	{
+		$_head->set('<link href="'.ADDR_TEMPLATES.'stylesheet/common/facebox.css" rel="stylesheet">');
+		$_head->set('<script src="'.ADDR_TEMPLATES.'javascripts/common/facebox.js"></script> ');
+		$_head->set('
+		<script>
+			jQuery(document).ready(function() {
+				jQuery(\'a[rel*=facebox]\').facebox()
+			})
+		</script>
+		');
 		$_head->set('<link href="'.ADDR_TEMPLATES.'stylesheet/news.css" rel="stylesheet">');
 	}
 

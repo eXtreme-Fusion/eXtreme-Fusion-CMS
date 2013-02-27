@@ -42,7 +42,7 @@ if ($_request->get('action')->show() === 'delete')
 	{
 		if ($_comment->canDelete($_request->get('id')->show()))
 		{
-			_e('<div id="ajax"><p class="delete center" id="'.$_request->get('id')->show().'"><span class="pointer">Usuń ten komentarz</span></p></div>');
+			_e('<div id="ajax"><p class="delete center" id="'.$_request->get('id')->show().'"><span class="pointer button">Usuń ten komentarz</span></p></div>');
 		}
 	}
 }
@@ -73,7 +73,7 @@ elseif ($_request->get('action')->show() === 'edit')
 
 			<form id="ajax">
 				<textarea class="cm_textarea" cols="40" rows="4" name="post" id="post"><?php echo $post ?></textarea><br />
-				<p id="<?php echo $_request->get('id')->show() ?>" class="update center"><span class="pointer">Zaktualizuj</span></p>
+				<p id="<?php echo $_request->get('id')->show() ?>" class="update center"><span class="pointer button">Zaktualizuj</span></p>
 			</form>
 
 			<?php
