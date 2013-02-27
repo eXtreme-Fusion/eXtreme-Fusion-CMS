@@ -73,7 +73,7 @@ elseif ($_request->get('action')->show() === 'edit')
 
 			<form id="ajax">
 				<textarea class="cm_textarea" cols="40" rows="4" name="post" id="post"><?php echo $post ?></textarea><br />
-				<p id="<?php echo $_request->get('id')->show() ?>" class="update center"><span class="pointer">Zaktualizuj</span></p>
+				<p id="<?php echo $_request->get('id')->show() ?>" class="update center"><span class="pointer button">Zaktualizuj</span></p>
 			</form>
 
 			<?php
