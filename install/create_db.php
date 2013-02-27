@@ -206,6 +206,7 @@ $result = $_pdo->query("CREATE TABLE ".$db_prefix."navigation (
 	`position` TINYINT UNSIGNED NOT NULL DEFAULT '1',
 	`window` TINYINT UNSIGNED NOT NULL DEFAULT '0',
 	`order` SMALLINT(2) UNSIGNED NOT NULL DEFAULT '0',
+	`rewrite` TINYINT UNSIGNED NOT NULL DEFAULT '1',
 	PRIMARY KEY (`id`)
 ) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";", NULL, FALSE);
 if ( ! $result) $fail = TRUE;

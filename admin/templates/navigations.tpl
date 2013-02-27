@@ -40,6 +40,15 @@
 			<input type="radio" name="window" value="0" {if $window == 0} checked='checked'{/if} id="Window" /> {i18n('No')}
 		</div>
 	</div>
+	{if $modRewrite_unavailable}
+	<div class="tbl2">
+		<div class="formLabel sep_1 grid_3"><label for="Rewrite">{i18n('Modyfikuj przez system link:')}</label></div>
+		<div class="formField grid_7">
+			<input type="radio" name="rewrite" value="1" {if $rewrite == 1} checked='checked'{/if} id="Window" /> {i18n('Yes')}
+			<input type="radio" name="rewrite" value="0" {if $rewrite == 0} checked='checked'{/if} id="Window" /> {i18n('No')}
+		</div>
+	</div>
+	{/if}
 	<div class="tbl Buttons">
 		<div class="center grid_2 button-l">
 			<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>

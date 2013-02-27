@@ -163,7 +163,7 @@
       return false
     }
 
-    return $('body').on('click', 'a[rel="facebox"]', clickHandler);
+    return $('body').on('click', 'a[rel*="facebox"]', clickHandler);
   }
 
   /*

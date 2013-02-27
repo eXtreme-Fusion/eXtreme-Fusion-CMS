@@ -11,7 +11,7 @@
 $_locale->moduleLoad('lang', 'navigation_panel');
 
 $query = $_pdo->getData("
-	SELECT `name`, `url`, `window`, `visibility` FROM [navigation]
+	SELECT `name`, `url`, `window`, `visibility`, `rewrite` FROM [navigation]
 	WHERE `position` = 1 OR `position` = 3 ORDER BY `order`
 ");
 
@@ -44,7 +44,7 @@ if ($_pdo->getRowsCount($query))
 				'name' => $name,
 				'type' => $type,
 				'link_target' => $link_target,
-				'url' => HELP::createNaviLink($data['url']),
+				'url' => HELP::createNaviLink($data['url'], !$data['rewrite']),
 				'bullet' => $bullet
 			);
 

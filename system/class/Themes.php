@@ -214,7 +214,7 @@ class Theme extends optClass
 	public function showSubLinks($sep = "&middot;", $class = "") 
 	{
 		$query = $this->_pdo->getData(
-			"SELECT `name`, `url`, `window`, `visibility` FROM [navigation]
+			"SELECT `name`, `url`, `window`, `visibility`, `rewrite` FROM [navigation]
 			WHERE `position`='2' OR `position`='3' ORDER BY `order`"
 		);
 		if ($this->_pdo->getRowsCount($query))
@@ -226,7 +226,7 @@ class Theme extends optClass
 				{
 					$menu[] = array(
 						'sep' => $sep,
-						'link' => HELP::createNaviLink($sdata['url']),
+						'link' => HELP::createNaviLink($sdata['url'], !$sdata['rewrite']),
 						//'name' => HELP::parseBBCode($sdata['name'], "b|i|u|color"),
 						'name' => $sdata['name'],
 						'target' => $sdata['window'] == '1' ? TRUE : FALSE,

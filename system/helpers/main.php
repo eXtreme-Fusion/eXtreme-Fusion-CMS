@@ -132,13 +132,13 @@ Class HELP
 		return $data;
 	}
 	// TODO:: Przerobic na metodę routera
-	public static function createNaviLink($url)
+	public static function createNaviLink($url, $not_parse = FALSE)
 	{
 		if (!preg_match('/^http:/i', $url))
 		{
 			if ($url)
 			{
-				return ADDR_SITE.self::$_url->getPathPrefix().$url;
+				return ADDR_SITE.self::$_url->getPathPrefix($not_parse).$url;
 			}
 
 			return ADDR_SITE;

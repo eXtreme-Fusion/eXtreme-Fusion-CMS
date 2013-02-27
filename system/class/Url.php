@@ -36,14 +36,14 @@ class URL
 		$this->controller = $controller;
 	}
 	
-	public function getPathPrefix()
+	public function getPathPrefix($not_parse = FALSE)
 	{
-		if ($this->rewrite_loaded)
+		if ($this->rewrite_loaded || $not_parse)
 		{
 			return '';
 		}
 		elseif ($this->path_info_exists)
-		{//echo 4; exit;
+		{
 			return 'index.php/';
 		}
 
