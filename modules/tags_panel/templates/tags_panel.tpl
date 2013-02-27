@@ -1,4 +1,4 @@
-{php} openside(__('Tag Cloud')) {/php}
+{php} openside(__('Cloud of tags')) {/php}
 	<div class="center">
 		{if $tags}
 			{section=tags}

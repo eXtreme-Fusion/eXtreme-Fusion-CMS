@@ -21,7 +21,7 @@
 
 jQuery(function() {
 	var val = jQuery('form #author').val();
-
+	
 	// Usunięcie
 	jQuery('body').on('click', '.delete', function() {
 		var id = this.id;
@@ -30,14 +30,14 @@ jQuery(function() {
 			url: addr_site + 'pages/ajax/comments.php',
 			data: {action: 'delete', request: 'confirm', id: id},
 			success: function(response) {
-				if (response == 'deleted')
-				{
+				if (response == 'deleted') {
 					jQuery('#comments #body_'+id).hide();
 					jQuery('#facebox').hide();
 					jQuery('#facebox_overlay').hide();
 				}
 			}
 		});
+		return false;
 	});
 
 	// Aktualizacja
@@ -49,13 +49,10 @@ jQuery(function() {
 			url: addr_site + 'pages/ajax/comments.php',
 			data: {action: 'edit', request: 'confirm', post: post, id: id},
 			success: function(response) {
-				if (response == '1')
-				{
+				if (response == '1') {
 					jQuery.facebox.close();
 					jQuery('#comments #content_'+id).html(post);
-				}
-				else
-				{
+				} else {
 					jQuery('#facebox .content').html(response);
 				}
 			}
@@ -64,11 +61,9 @@ jQuery(function() {
 
 	// Dodawanie komentarza
 	jQuery('#comment_form #send').click(function() {
-
 		var post = jQuery('#comment_form #post').val();
-		
-		if (post != '')
-		{
+
+		if (post != '') {
 			if (jQuery('#comment_form #author').length == 1) {
 				var author = jQuery('#comment_form #author').val();
 				if (author == val) {
@@ -78,11 +73,10 @@ jQuery(function() {
 				var author = '';
 			}
 
-			
+
 			var item = jQuery('#comment_form #item').val();
 			var type = jQuery('#comment_form #type').val();
 
-			//jQuery('#comment_form form').fadeOut();
 			jQuery('#comment_form #loading').fadeIn().html('Ładowanie...');
 
 			jQuery.ajax({
@@ -90,8 +84,7 @@ jQuery(function() {
 				url: addr_site + 'pages/ajax/comments.php',
 				data: {action: 'save', author: author, post: post, item: item, type: type},
 				success: function(response) {
-					if (response == '1')
-					{
+					if (response == '1') {
 						jQuery('#comment_form #loading').hide();
 						jQuery('#comment_form #post').val('');
 						jQuery('#comment_form #added').fadeIn();
@@ -103,7 +96,7 @@ jQuery(function() {
 				}
 			});
 		}
-		
+
 		return false;
 	});
 });

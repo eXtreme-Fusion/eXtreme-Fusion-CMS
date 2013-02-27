@@ -6,7 +6,7 @@
 			<div class="InfoBoxCon">
 				<div id="NewsletterIcon"></div>
 				<div class="InfoBoxCenterRight">
-					{i18n('Do you want to be informed about news, the progress of the eXtreme-Fusion 5?')}
+					{i18n('Do you want to be informed about progress of the eXtreme-Fusion 5?')}
 				</div>
 			</div>
 			<div class="InfoBoxEnd"></div>

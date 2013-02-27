@@ -13,7 +13,7 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
+|
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------+
@@ -45,16 +45,16 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 
 	if ( ! file_exists(DIR_THEME.'templates'.DS.'pages'.DS.'news.tpl'))
 	{
-		$_head->set('<link href="'.ADDR_TEMPLATES.'stylesheet/common/facebox.css" rel="stylesheet">');
-		$_head->set('<script src="'.ADDR_TEMPLATES.'javascripts/common/facebox.js"></script> ');
+		$_head->set('<link href="'.ADDR_COMMON_CSS.'facebox.css" rel="stylesheet">');
+		$_head->set('<script src="'.ADDR_COMMON_JS.'facebox.js"></script> ');
 		$_head->set('
-		<script>
-			jQuery(document).ready(function() {
-				jQuery(\'a[rel*=facebox]\').facebox()
-			})
-		</script>
+			<script>
+				$(document).ready(function() {
+					$(\'a[rel*="facebox"]\').facebox();
+				})
+			</script>
 		');
-		$_head->set('<link href="'.ADDR_TEMPLATES.'stylesheet/news.css" rel="stylesheet">');
+		$_head->set('<link href="'.ADDR_CSS.'news.css" rel="stylesheet">');
 	}
 
 	! class_exists('Tag') || $_tag = New Tag($_system, $_pdo);
@@ -64,7 +64,7 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 	if (isNum($item_id))
 	{
 		$r = $_pdo->exec('UPDATE [news] SET `reads` = `reads`+1 WHERE `id`= :id', array(array(':id', $item_id, PDO::PARAM_INT)));
-		
+
 		// nazwa pliku bez rozszerzenia, dane do zapisu (jeśli brak to funkcja zwraca dane o ile plik istnieje), czas użyteczności pliku (nadpisanie w przypadku zbyt starej wersji)
 		$data = $_system->cache('news_'.$item_id, NULL, 'news', $_sett->getUns('cache', 'expire_news'));
 		if ($data === NULL)
@@ -95,7 +95,7 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 			}
 
 			$keyword = Html::arrayToLinks($keyword, ', ');
-			
+
 			$theme = array(
 				'Title' => $data['title'].' &raquo; '.$_sett->get('site_name'),
 				'Keys' => implode(', ', $k),
@@ -122,12 +122,12 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 				'allow_comments' => $data['allow_comments'],
 				'sticky' => $data['sticky']
 			);
-			
+
 			if ($_user->hasPermission('admin.news'))
 			{
 				$_tpl->assign('access_edit', TRUE);
 			}
-			
+
 			$_tpl->assign('news', $d);
 
 			if ($data['allow_comments'] === '1')
@@ -159,8 +159,8 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 		'bbcode' => $_sbb->bbcodes('post'),
 		'smiley' => $_sbb->smileys('post')
 	));
-	
-	
+
+
 }
 // Wszystkie newsy
 else
@@ -231,7 +231,7 @@ else
 							);
 						}
 					}
-					
+
 					$keyword = Html::arrayToLinks($keyword, ', ');
 
 					$cache[] = array(
@@ -281,7 +281,7 @@ else
 		}
 
 		$_pagenav = new PageNav(new Paging($rows, $_GET['current'], $items_per_page), $_tpl, 5, array($_route->getFileName(), 'page', FALSE));
-		
+
 		if (file_exists(DIR_THEME.'templates'.DS.'paging'.DS.'news_page_nav.tpl'))
 		{
 			$_pagenav->get($_pagenav->create(), 'news_page_nav', DIR_THEME.'templates'.DS.'paging'.DS);

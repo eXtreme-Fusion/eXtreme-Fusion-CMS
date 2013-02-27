@@ -21,7 +21,7 @@ try
 		}
 		else
 		{
-			$request = __('Have been included in the list');
+			$request = __('You have been added to the list of newsletter members.');
 		}
 	} 
 	else
