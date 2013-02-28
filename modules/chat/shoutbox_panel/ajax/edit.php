@@ -18,7 +18,7 @@ try
 	));
 	?>
 				<input type="hidden" value="<?php echo $_request->get('post')->show() ?>" name="post_edit_id" />
-				<textarea class="InfoBoxInput" type="text" name="content" autocomplete="off"><?= $msg ?></textarea>
+				<textarea class="InfoBoxInput" type="text" name="content" autocomplete="off"><?php echo $msg; ?></textarea>
 				<input class="InfoBoxButton" type="submit" name="edit" value="Wyślij" />
 	<?php
 	
