@@ -87,8 +87,8 @@
     settings: {
       opacity      : 0.2,
       overlay      : true,
-      loadingImage : '../../templates/images/loading.gif',
-      closeImage   : '../../templates/images/closelabel.png',
+      loadingImage : 'templates/images/loading.gif',
+      closeImage   : 'templates/images/closelabel.png',
       imageTypes   : [ 'png', 'jpg', 'jpeg', 'gif' ],
       faceboxHtml  : '\
     <div id="facebox" style="display:none;"> \
@@ -98,7 +98,7 @@
                 <div class="content"></div> \
                 <div> \
                   <a href="#" class="close"> \
-                    <img src="../../facebox/closelabel.png" title="close" class="close_image" /> \
+                    <img src="templates/images/closelabel.png" title="close" class="close_image" /> \
                   </a> \
                 </div> \
               </div> </div> \
