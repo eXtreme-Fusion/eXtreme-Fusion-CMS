@@ -101,6 +101,31 @@ Class HELP
 		self::$_url = $url;
 	}
 
+	public static function wordsProtect($string)
+	{
+		if (self::$_sett->get('bad_words_enabled'))
+		{
+			$to_replace = explode(PHP_EOL, self::$_sett->get('bad_words'));
+			foreach($to_replace as $key => $val)
+			{
+				if ($val)
+				{
+					$new = '';
+					if ($val[strlen($val)-1] === ' ')
+					{
+						$new = ' ';
+					}
+					
+					$to_replace[$key] = trim($val).$new;
+				}
+			}
+			
+			return str_replace($to_replace, self::$_sett->get('bad_word_replace'), $string);
+		}
+		
+		return $string;
+	}
+	
 	/** METODY NAPISANE PRZEZ EF TEAM: **/
 	public static function daysToSeconds($time, $conv = FALSE)
 	{

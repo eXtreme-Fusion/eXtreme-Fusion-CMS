@@ -16,20 +16,20 @@ function render_page()
 	TPL::this()->assign('Sitename', TPL::this()->_sett->get('site_name'));
 	TPL::this()->assign('Menu', TPL::this()->showSubLinks('', 'menu'));
 
-	// Panels - o ile istniej¹ na danej pozycji
+	// Panels - o ile istniejÄ… na danej pozycji
 	if (LEFT)    TPL::this()->assign('LEFT', LEFT);
 	if (RIGHT)   TPL::this()->assign('RIGHT', RIGHT);
 
-	// Czêœæ œrodkowa strony - panele górne, mainbox, dolne
+	// CzÄ™Å›Ä‡ Å›rodkowa strony - panele gÃ³rne, mainbox, dolne
 	TPL::this()->assign('CONTENT', TOP_CENTER.CONTENT.BOTTOM_CENTER);
 
-	// Stopka - pobieranie z ustawieñ
+	// Stopka - pobieranie z ustawieÅ„
 	TPL::this()->assign('Footer', TPL::this()->_sett->get('footer'));
 
 	// Wymagane informacje o autorach
 	TPL::this()->assign('Copyright', TPL::this()->showCopyright(FALSE));
 
-	// Link do Panelu Admina widoczny dla Administratorów
+	// Link do Panelu Admina widoczny dla AdministratorÃ³w
 	TPL::this()->assign('AdminLinks', TPL::this()->showAdminLinks());
 
 	TPL::this()->assign('VisitsCount', TPL::this()->getVisitsCount());
@@ -46,10 +46,10 @@ function render_news()
 
 function opentable($title)
 {
-	// TODO: wdrozyæ by by³o automatycznie w pliku tpl wrzucane przez klasê odpowiadaj¹c¹ za szablon
+	// TODO: wdrozyÄ‡ by byÅ‚o automatycznie w pliku tpl wrzucane przez klasÄ™ odpowiadajÄ…cÄ… za szablon
 	TPL::this()->assign('Begin', 'begin');
 
-	// Tytu³ panelu
+	// TytuÅ‚ panelu
 	TPL::this()->assign('Title', $title);
 
 	// Renderowanie pliku szablonu
@@ -64,10 +64,10 @@ function closetable()
 
 function openside($title)
 {
-	// TODO: wdrozyæ by by³o automatycznie w pliku tpl wrzucane przez klasê odpowiadaj¹c¹ za szablon
+	// TODO: wdrozyÄ‡ by byÅ‚o automatycznie w pliku tpl wrzucane przez klasÄ™ odpowiadajÄ…cÄ… za szablon
 	TPL::this()->assign('Begin', 'begin');
 
-	// Tytu³ panelu
+	// TytuÅ‚ panelu
 	TPL::this()->assign('Title', $title);
 
 	// Renderowanie pliku szablonu

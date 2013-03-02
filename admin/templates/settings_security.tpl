@@ -2,7 +2,7 @@
 {if $message}<div class="{$class}">{$message}</div>{/if}
 
 <form action="{$URL_REQUEST}" method="post" id="This">
-	<h4>{i18n('Flood settings')}</h4>
+	{*<h4>{i18n('Flood settings')}</h4>
 	<div class="tbl1">
 		<div class="grid_6 formLabel"><label for="FloodInterval">{i18n('Flood interval (seconds):')}</label></div>
 		<div class="grid_4 formField"><input type="text" name="flood_interval" value="{$flood_interval}" id="FloodInterval" class="num_2" maxlength="2" /></div>
@@ -11,7 +11,7 @@
 		<div class="grid_6 formLabel">{i18n('Flood auto ban:')}</div>
 		<div class="grid_1 formField"><label><input type="radio" name="flood_autoban" value="1"{if $flood_autoban == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
 		<div class="grid_5 formField"><label><input type="radio" name="flood_autoban" value="0"{if $flood_autoban == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
-	</div>
+	</div>*}
 	<h4>{i18n('Bad Words')}</h4>
 	<div class="tbl1">
 		<div class="grid_6 formLabel">{i18n('Bad words filter enabled:')}</div>

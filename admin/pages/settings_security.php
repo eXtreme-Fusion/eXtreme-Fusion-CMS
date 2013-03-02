@@ -49,8 +49,8 @@ try
 	if ($_request->post('save')->show())
 	{
 		$_sett->update(array(
-			'flood_interval' => $_request->post('flood_interval')->isNum(TRUE),
-			'flood_autoban' => $_request->post('flood_autoban')->isNum(TRUE),
+			//'flood_interval' => $_request->post('flood_interval')->isNum(TRUE),
+			//'flood_autoban' => $_request->post('flood_autoban')->isNum(TRUE),
 			'bad_words_enabled' => $_request->post('bad_words_enabled')->isNum(TRUE),
 			'bad_words' => $_request->post('bad_words')->strip(),
 			'bad_word_replace' => $_request->post('bad_word_replace')->strip(),
@@ -64,9 +64,9 @@ try
 	}
 
 	$_tpl->assignGroup(array(
-		'flood_interval' => $_sett->get('flood_interval'),
-		'flood_autoban' => $_sett->get('flood_autoban'),
-		'badWords_enabled' => $_sett->get('bad_words_enabled'),
+		//'flood_interval' => $_sett->get('flood_interval'),
+		//'flood_autoban' => $_sett->get('flood_autoban'),
+		'bad_words_enabled' => $_sett->get('bad_words_enabled'),
 		'bad_words' => $_sett->get('bad_words'),
 		'bad_word_replace' => $_sett->get('bad_word_replace'),
 		'maintenance_level' => $_tpl->getMultiSelect($_user->getViewGroups(), HELP::explode($_sett->get('maintenance_level')), TRUE),

@@ -14,14 +14,14 @@ try
 	if ($_request->post('send')->show() == 'send' && $_request->post('content')->show() != '' && $_user->iUser())
 	{
 		$result = $_pdo->exec('INSERT INTO [chat_messages] (`user_id`, `content`, `datestamp`) VALUES ('.$_user->get('id').', :content, '.time().')',array(
-			array(':content', $_request->post('content')->filters('trim', 'strip'), PDO::PARAM_STR)
+			array(':content', HELP::wordsProtect($_request->post('content')->filters('trim', 'strip')), PDO::PARAM_STR)
 		));
 	}
 	
 	if ($_request->post('send')->show() == 'edit' && $_request->post('content')->show() != '' && $_user->iAdmin())
 	{
 		$result = $_pdo->exec('UPDATE [chat_messages] SET `content` = :content WHERE `id` = :id', array(
-			array(':content', $_request->post('content')->filters('trim', 'strip'), PDO::PARAM_STR),
+			array(':content', HELP::wordsProtect($_request->post('content')->filters('trim', 'strip')), PDO::PARAM_STR),
 			array(':id', $_request->post('post_id')->show(), PDO::PARAM_INT)
 		));
 	}

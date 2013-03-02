@@ -187,7 +187,7 @@ public function hasPermission($writer, $author)
 			if ($author !== NULL)
 			{
 				$count = $this->_pdo->exec('UPDATE [comments] SET content = :content, author = :author'.$time.' WHERE id = :id', array(
-					array(':content', $content, PDO::PARAM_STR),
+					array(':content', HELP::wordsProtect($content), PDO::PARAM_STR),
 					array(':author', $author, PDO::PARAM_INT),
 					array(':id', $id, PDO::PARAM_INT)
 				));
@@ -195,7 +195,7 @@ public function hasPermission($writer, $author)
 			else
 			{
 				$count = $this->_pdo->exec('UPDATE [comments] SET content = :content'.$time.' WHERE id = :id', array(
-					array(':content', $content, PDO::PARAM_STR),
+					array(':content', HELP::wordsProtect($content), PDO::PARAM_STR),
 					array(':id', $id, PDO::PARAM_INT)
 				));
 			}
@@ -297,6 +297,8 @@ public function hasPermission($writer, $author)
 				$author_type = 'g';
 			}
 
+			$post = HELP::wordsProtect($post);
+			
 			return $this->_pdo->exec('
 				INSERT INTO [comments] (content_id, post, content_type, author, author_type, datestamp, ip)
 				VALUES (:content_id, :post, :type, :author, \''.$author_type.'\', '.time().', \''.$this->_user->getIP().'\')',
