@@ -33,7 +33,10 @@ function render_page()
 	// Link do Panelu Admina widoczny dla Administratorów
 	TPL::this()->assign('AdminLinks', TPL::this()->showAdminLinks());
 
-	TPL::this()->assign('VisitsCount', TPL::this()->getVisitsCount());
+	if (TPL::this()->_sett->get('visits_counter_enabled'))
+	{
+		TPL::this()->assign('VisitsCount', TPL::this()->getVisitsCount());
+	}
 	
 	// Renderowanie pliku szablonu
 	TPL::this()->template('page.tpl');
