@@ -64,4 +64,9 @@ class Container extends ServiceContainerBuilder
 	{
 		return new Modules($this->getService('Pdo'), $this->getService('Sett'), $this->getService('User'), $this->getService('Tag'), $this->getService('Locales'));
 	}
+	
+	protected function getStatisticsService()
+	{
+		return new Statistics($this->getService('Pdo'), $this->getService('System'));
+	}
 }

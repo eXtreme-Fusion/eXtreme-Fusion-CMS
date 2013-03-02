@@ -16,7 +16,7 @@ class System {
 	private $_rewrite = FALSE;
 	// Wyłączenie szyfrowania cache wersja jedynie dla DEV
 	// Pamiętaj o ręcznym usunięciu cache po zmianie parametru FALSE/TRUE
-	private $code = FALSE;
+	private $code = TRUE;
 
 	/**
 	 * Tworzenie środowiska pracy systemu

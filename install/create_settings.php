@@ -88,8 +88,8 @@ $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'logger_save_remov
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'cache_active', 'value' => 0));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'cache_expire', 'value' => 86400));
 
-$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'comments_enabled', 'value' => 1));
-$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'comment_edit', 'value' => 1));
+//$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'comments_enabled', 'value' => 1));
+//$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'comment_edit', 'value' => 1));
 
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'bad_words_enabled', 'value' => 1));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'bad_words', 'value' => ''));
@@ -106,9 +106,9 @@ $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'enable_deactivati
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'login_method', 'value' => 'sessions'));
 
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'enable_terms', 'value' => 0));
-$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'tinymce_enabled', 'value' => 0));
-$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'ratings_enabled', 'value' => 1));
-$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'visitorcounter_enabled', 'value' => 1));
+//$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'tinymce_enabled', 'value' => 0));
+//$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'ratings_enabled', 'value' => 1));
+$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'visits_counter_enabled', 'value' => 1));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'email_verification', 'value' => 1));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'admin_activation', 'value' => 0));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'validation', 'value' => 'a:1:{s:8:"register";s:1:"0";}'));

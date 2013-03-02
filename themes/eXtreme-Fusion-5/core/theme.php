@@ -32,6 +32,8 @@ function render_page()
 	// Link do Panelu Admina widoczny dla Administratorów
 	TPL::this()->assign('AdminLinks', TPL::this()->showAdminLinks());
 
+	TPL::this()->assign('VisitsCount', TPL::this()->getVisitsCount());
+	
 	// Renderowanie pliku szablonu
 	TPL::this()->template('page.tpl');
 }

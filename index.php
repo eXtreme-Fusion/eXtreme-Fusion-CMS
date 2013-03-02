@@ -138,6 +138,13 @@ try
 	TPL::build($_theme = new Theme($_sett, $_system, $_user, $_pdo, $_request, $_route, $_route->getTplFileName()));
 
 	//$_theme->registerFunction('url', 'Url');
+	
+	$_theme->setStatisticsInst($ec->statistics);
+	
+	if ($_sett->get('visits_counter_enabled'))
+	{
+		$ec->statistics->saveUniqueVisit($_user->getIP());
+	}
 
 	// Ładowanie pliku startowego modułu
 	if ($row = $ec->modules->getModuleBootstrap($_system))

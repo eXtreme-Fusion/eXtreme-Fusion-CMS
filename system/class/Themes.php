@@ -16,6 +16,8 @@ class Theme extends optClass
 	private $_tpl_file_name;
 
 	protected $_system;
+	
+	protected $_statistics;
 
 
 	/**
@@ -36,6 +38,11 @@ class Theme extends optClass
 		$this->_theme = $sett->get('theme');
 		$this->setConfig();
 		$this->_tpl_file_name = $tpl_file_name;
+	}
+	
+	public function setStatisticsInst($_inst)
+	{
+		$this->_statistics = $_inst;
 	}
 
 	protected function setConfig()
@@ -238,6 +245,16 @@ class Theme extends optClass
 			}
 			return $menu;
 		}
+	}
+	
+	public function getVisitsCount()
+	{
+		if ($this->_statistics)
+		{
+			return $this->_statistics->getUniqueVisitsCount();
+		}
+		
+		return NULL;
 	}
 }
 

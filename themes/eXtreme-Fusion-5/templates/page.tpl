@@ -26,4 +26,6 @@
 	{if $Footer}<p>{$Footer}</p>{/if}
 	<address>Theme by <a href="http://nlds-group.com/" title="NLDS-Group.com"><img src="{$THEME_IMAGES}nlds_logo.png" alt="NLDS-Group.com"></a></address>
 	{if $AdminLinks}<p>{$AdminLinks}</p>{/if}
+	
+	<p>Unikalnych wizyt: {$VisitsCount}</p>
 </footer>
