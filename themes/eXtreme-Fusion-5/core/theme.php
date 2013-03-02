@@ -15,6 +15,7 @@ function render_page()
 	// Nazwa strony
 	TPL::this()->assign('Sitename', TPL::this()->_sett->get('site_name'));
 	TPL::this()->assign('Menu', TPL::this()->showSubLinks('', 'menu'));
+	TPL::this()->assign('Logo', TPL::this()->showBanners());
 
 	// Panels - o ile istnieją na danej pozycji
 	if (LEFT)    TPL::this()->assign('LEFT', LEFT);

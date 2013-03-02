@@ -43,8 +43,8 @@ $theme = array(
 
 $data = new Edit(
 	array(
-		'current' => $_route->getByID(1) ? $_route->getByID(1) : 1,
-		'sort' => is_string($_route->getByID(2)) ? $_route->getByID(2) : 'all'
+		'current' => $_route->getByID(2) ? $_route->getByID(2) : 1,
+		'sort' => is_string($_route->getByID(1)) ? $_route->getByID(1) : 'all'
 	)
 );
 
@@ -111,7 +111,7 @@ for ($i = 0, $c = count($sort); $i < $c; $i++)
 	$sort_sel[$i] = array(
 		'disp' => $sort[$i],
 		'val' => strtolower($sort[$i]),
-		'link' => $_route->path(array('controller' => 'users', 'action' => $data->arr('current')->isNum(TRUE, FALSE), strtolower($sort[$i])))
+		'link' => $_route->path(array('controller' => 'users', 'action' => strtolower($sort[$i])))
 	);
 
 	if ($data->arr('sort')->filters('trim', 'strip') === $sort_sel[$i]['val'])
@@ -126,6 +126,6 @@ if ($data->arr('sort')->filters('trim', 'strip') !== 'all')
 {
 	$_tpl->assignGroup(array(
 		'show_all' => TRUE,
-		'link' => $_route->path(array('controller' => 'users', 'action' => $data->arr('current')->isNum(TRUE, FALSE)))
+		'link' => $_route->path(array('controller' => 'users'))
 	));
 }

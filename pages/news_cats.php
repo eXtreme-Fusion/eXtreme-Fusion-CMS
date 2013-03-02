@@ -153,7 +153,7 @@ if ($_route->getAction())
 		// Sprawdzanie, czy istnieją newsy w danej kategorii
 		if ($cache)
 		{
-			$_pagenav = new PageNav(new Paging(count($cache), $current, $items_per_page), $_tpl, 5, array($_route->getFileName(), $_route->getByID(1).$_sett->getUns('routing', 'main_sep').$_route->getByID(2), FALSE));
+			$_pagenav = new PageNav(new Paging($category['cat_news_count'], $current, $items_per_page), $_tpl, 5, array($_route->getFileName(), $_route->getByID(1).$_sett->getUns('routing', 'main_sep').$_route->getByID(2), FALSE));
 
 			if (file_exists(DIR_THEME.'templates'.DS.'paging'.DS.'news_cats_nav.tpl'))
 			{

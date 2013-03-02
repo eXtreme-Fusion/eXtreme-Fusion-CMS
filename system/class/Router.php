@@ -436,13 +436,13 @@ class Router
 		}
 		else
 		{
-			$this->_path = 'news';
+			$this->_path = $this->getOpeningPage();
 			return TRUE;
 		}
 
 		if ($path === 'index')
 		{
-			$path = 'news';
+			$path = $this->getOpeningPage();
 		}
 
 		$this->_path = $path;

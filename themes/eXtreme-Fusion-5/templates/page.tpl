@@ -1,5 +1,5 @@
 <header id="site_top">
-	<h1><a href="{$ADDR_SITE}" title="{$Sitename}"><img src="{$THEME_IMAGES}header_logo.png" alt="{$Sitename}"></a></h1>
+	<h1>{$Logo}</h1>
 </header>
 
 <nav id="main_nav">
