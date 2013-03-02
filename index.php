@@ -13,7 +13,7 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
+|
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------+
@@ -61,19 +61,23 @@ try
 	// Tryb prac na serwerze
 	if ($_user->get('id') !== '1')
 	{
+		// Tryb maintenance?
 		if ($_sett->get('maintenance') === '1')
 		{
+			// Jeśli jest się na innej podstronie niz maintenance
 			if ($_route->getFileName() !== 'maintenance')
 			{
+				// Jeśli nie ma się uprawnień do bycia na innej podstronie
 				if (! $_user->hasAccess($_sett->get('maintenance_level')))
 				{
-					HELP::redirect(ADDR_SITE.'maintenance.html');
+					$_route->redirect(array('controller' => 'maintenance'));
 				}
 			}
 			else
-			{
+			{	// Jesli ma się prawa do bycia na innej podstronie
 				if ($_user->hasAccess($_sett->get('maintenance_level')))
 				{
+					// Przekierowanie na strone główną
 					HELP::redirect(ADDR_SITE);
 				}
 			}
@@ -138,9 +142,9 @@ try
 	TPL::build($_theme = new Theme($_sett, $_system, $_user, $_pdo, $_request, $_route, $_route->getTplFileName()));
 
 	//$_theme->registerFunction('url', 'Url');
-	
+
 	$_theme->setStatisticsInst($ec->statistics);
-	
+
 	if ($_sett->get('visits_counter_enabled'))
 	{
 		$ec->statistics->saveUniqueVisit($_user->getIP());
