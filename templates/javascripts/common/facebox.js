@@ -2,7 +2,7 @@
  * Facebox (for jQuery)
  * version: 1.2 (05/05/2008)
  *
- * MODIFIED by Inscure <drimer.eco@gmail.com>: added live events from jQuery 1.7
+ * MODIFIED by Inscure <drimer.eco@gmail.com>: added live events
  *
  * @requires jQuery v1.7.1 or later
  *
@@ -87,8 +87,8 @@
     settings: {
       opacity      : 0.2,
       overlay      : true,
-      loadingImage : 'templates/images/loading.gif',
-      closeImage   : 'templates/images/closelabel.png',
+      loadingImage : addr_site+'templates/images/loading.gif',
+      closeImage   : addr_site+'templates/images/closelabel.png',
       imageTypes   : [ 'png', 'jpg', 'jpeg', 'gif' ],
       faceboxHtml  : '\
     <div id="facebox" style="display:none;"> \
@@ -98,7 +98,7 @@
                 <div class="content"></div> \
                 <div> \
                   <a href="#" class="close"> \
-                    <img src="templates/images/closelabel.png" title="close" class="close_image" /> \
+                    <img src="'+addr_site+'templates/images/closelabel.png" title="close" class="close_image" /> \
                   </a> \
                 </div> \
               </div> </div> \
