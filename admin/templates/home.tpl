@@ -1,7 +1,7 @@
 <div class="ui-corner-all grid_6">
 	<h3 class="ui-corner-all top17">{i18n('Update')}</h3>
 	<div class="HomeBox"><div class="valid">{i18n('You&nbsp;have&nbsp;currently&nbsp;version&nbsp;eXtreme&nbsp;-&nbsp;Fusion&nbsp;:version', array(':version' => $version))}</div></div>
-	
+
 	<h3 class="ui-corner-all">{i18n('History')}</h3>
 	<div class="HomeBox">
 	{if $logs}
@@ -19,7 +19,7 @@
 		<div class="error">{i18n('There are no logs.')}</div>
 	{/if}
 	</div>
-	
+
 	<h3 class="ui-corner-all">{i18n('Download')}</h3>
 	<div class="HomeBox"><div class="error">{i18n('Not&nbsp;plugged.')}</div></div>
 </div>
@@ -78,7 +78,7 @@
 				<div class="Buttons">
 					<div class="center grid_2 button-c">
 						<input type="hidden" name="note_add" value="yes" />
-						<span {if $current < $notes_per_page}id="SendForm_ThisNotes"{/if} class="{if $current < $notes_per_page}Save{/if}"><strong>{if $current < $notes_per_page}{i18n('Add')}{else}{i18n('You have reached maximum number of notes. Remove some.')}{/if}<img src="{$ADDR_ADMIN_ICONS}pixel/plus.png" alt="" /></strong></span>
+						<span {if $current < $notes_per_page}id="SendForm_ThisNotes"{/if} class="{if $current < $notes_per_page}save{/if}"><strong>{if $current < $notes_per_page}{i18n('Add')}{else}{i18n('You have reached maximum number of notes. Remove some.')}{/if}<img src="{$ADDR_ADMIN_ICONS}pixel/plus.png" alt="" /></strong></span>
 					</div>
 				</div>
 			</form>
@@ -87,7 +87,7 @@
 
 		<div class="clear"></div>
 		</div>
-	
+
 	<h3 class="ui-corner-all">{i18n('Quick&nbsp;news')}</h3>
 	{if $message && $quick_news_log}<div class="{$class}">{$message}</div>{/if}
 	<form id="ThisQuickNews" action="{$URL_REQUEST}" method="post">
