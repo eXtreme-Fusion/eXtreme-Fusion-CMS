@@ -13,7 +13,7 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
+|
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------+
@@ -33,7 +33,7 @@
 +--------------------------------------------------------*/
 
 $theme = array(
-	'Title' => 'Tryb prac na serwerze. Zapraszamy wkrótce &raquo; '.$_sett->get('site_name'),
+	'Title' => 'Tryb prac na serwerze. Zapraszamy wkrÃ³tce &raquo; '.$_sett->get('site_name'),
 	'Keys' => 'Tryb serwisowy, przerwa techniczna, usterka, aktualizacja',
 	'Desc' => ''
 );
@@ -41,9 +41,9 @@ $theme = array(
 // Blokuje wykonywanie pliku TPL z katalogu szablonu.
 define('THIS', TRUE);
 
-$_tpl->assign('maintenance', 
+$_tpl->assign('maintenance',
 	array(
-		'sitebanner' => ADDR_SITE.'templates/'.$_sett->get('site_banner'),
+		'sitebanner' => ADDR_SITE.$_sett->get('site_banner'),
 		'sitename' => $_sett->get('site_name'),
 		'message' => nl2br($_sett->get('maintenance_message')),
 		'year' => date('Y'),
@@ -53,6 +53,6 @@ $_tpl->assign('maintenance',
 );
 
 /*
-	Nale¿y zablokowaæ wyœwietlanie siê wszystkiego poza plikiem maintenance
-	Mianowicie wszystkie panele, top, stopka do usuniêcia z podgl¹du.
+	NaleÅ¼y zablokowaÄ‡ wyÅ›wietlanie siÄ™ wszystkiego poza plikiem maintenance
+	Mianowicie wszystkie panele, top, stopka do usuniÄ™cia z podglÄ…du.
 */
