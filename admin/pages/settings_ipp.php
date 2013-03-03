@@ -53,7 +53,7 @@ try
 			//'news_cats_per_page' => $_request->post('news_cats_per_page')->isNum(TRUE),
 			'news_cats_item_per_page' => $_request->post('news_cats_item_per_page')->isNum(TRUE),
 			'users_per_page' => $_request->post('users_per_page')->isNum(TRUE),
-			//'notes_per_page' => $_request->post('notes_per_page')->isNum(TRUE)
+			'notes_per_page' => $_request->post('notes_per_page')->isNum(TRUE)
 		));
 		
 		$_tpl->printMessage('valid', $_log->insertSuccess('edit', __('Data has been saved.')));
@@ -64,7 +64,7 @@ try
 		//'news_cats_per_page' => $_sett->get('news_cats_per_page'),
 		'news_cats_item_per_page' => $_sett->get('news_cats_item_per_page'),
 		'users_per_page' => $_sett->get('users_per_page'),
-		//'notes_per_page' => $_sett->get('notes_per_page')
+		'notes_per_page' => $_sett->get('notes_per_page')
 	));
 
 	$_tpl->template('settings_ipp');
