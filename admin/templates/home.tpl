@@ -60,7 +60,7 @@
 				<div id="notes">
 
 					{section=notes}
-					<h3><a href="#" class="{if $notes.block == 1}{if $notes.author_id == $notes.user_id}edit{/if}{else}edit{/if}" id="{$notes.id}">{$notes.title}</a></h4>
+					<h4><a href="#" class="{if $notes.block == 1}{if $notes.author_id == $notes.user_id}edit{/if}{else}edit{/if}" id="{$notes.id}">{$notes.title}</a></h4>
 					<div>
 						<p>{if $notes.block == 1}<img src="{$ADDR_ADMIN_ICONS}logout.png" alt="">{/if}<small>{i18n('Added')} {$notes.datestamp} {i18n('by')} <a href="{$SITE_ADDRESS}profile,{$notes.author_id}.html">{$notes.author}</a></small></p>
 						<br>
