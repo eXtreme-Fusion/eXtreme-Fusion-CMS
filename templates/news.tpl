@@ -7,7 +7,7 @@
 					<h3>
 						<a href="{$news.url}" title="{$news.title_name}">{$news.title_name}</a>
 						{if $access_edit}
-							<a href="javascript:void(0);" class="admin-box" rel="{$ADDR_ADMIN}pages/news.php?page=news&amp;action=edit&amp;id={$news.title_id}&amp;fromPage=true" title="{i18n('Edit')}">[{i18n('Edit')}]</a>
+							<a href="{$ADDR_ADMIN}pages/news.php?page=news&amp;action=edit&amp;id={$news.title_id}&amp;fromPage=true" class="admin-box" title="{i18n('Edit')}">[{i18n('Edit')}]</a>
 						{/if}
 					</h3>
 					{if $news.allow_comments}<a href="#comments" class="news_comments" title="{i18n('Comments:')} {$news.num_comments}">{$news.num_comments}</a>{/if}
