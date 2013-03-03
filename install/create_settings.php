@@ -130,7 +130,7 @@ $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'deactivation_resp
 //$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'news_cats_per_page', 'value' => 25));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'news_cats_item_per_page', 'value' => 10));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'news_per_page', 'value' => 11));
-//$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'notes_per_page', 'value' => 4));
+$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'notes_per_page', 'value' => 4));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'users_per_page', 'value' => 10));
 //$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'flood_interval', 'value' => 15));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'version', 'value' => 5.0));
