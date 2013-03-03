@@ -170,7 +170,7 @@ try
 				VALUES (:title, :link, :content, :language, :author, :access, :datestamp, :draft, :sticky, :allow_comments, :allow_ratings)',
 				array(
 					array(':title', $_request->post('quick_news_title')->filters('trim', 'strip'), PDO::PARAM_STR),
-					array(':link', $_request->post('quick_news_title')->filters('setTitleForLinks'), PDO::PARAM_STR),
+					array(':link', HELP::Title2Link($_request->post('quick_news_title')->filters('trim', 'strip')), PDO::PARAM_STR),
 					array(':content', $_request->post('quick_news_content')->show(), PDO::PARAM_STR),
 					array(':language', $_sett->get('locale'), PDO::PARAM_STR),
 					array(':author', $_user->get('id'), PDO::PARAM_INT),
