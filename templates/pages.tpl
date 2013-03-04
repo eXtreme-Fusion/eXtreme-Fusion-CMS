@@ -38,10 +38,10 @@
 {else}
 
 	{if $page == 'main'}
-		{php} opentable('Przegląd treści na stronie'); {/php}
+		{php} opentable('Przegląd treści'); {/php}
 			{if $data}
-
-				<p>Rodzaje materiałów zamieszczanych na stronie:</p>
+				<p class="center"><a href="{url('controller=>', 'pages', 'action=>', 'categories')}" title="Kategorie treści">Wyświetl wszystkie kategorie</a></p>
+				<p>Na tej stronie znajdują się nastepujące rodzaje materiałów:</p>
 				<ul class="margin-b-10">
 					{section=data}
 						<div class="tbl">
@@ -49,9 +49,7 @@
 						</div>
 					{/section}
 				</ul>
-
-				<p class="center"><a href="{url('controller=>', 'pages', 'action=>', 'categories')}" title="Kategorie treści">Wszystkie kategorie treści</a></p>
-
+				<p class="center">Wybierz jeden z nich, by zobaczyć przypisane mu kategorie.</p>
 			{else}
 				Brak materiałów na stronie
 			{/if}

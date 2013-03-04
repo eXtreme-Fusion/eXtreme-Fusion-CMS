@@ -139,7 +139,7 @@ try
 		}
 	}
 	// Tworzenie emulatora statyczności klasy OPT
-	TPL::build($_theme = new Theme($_sett, $_system, $_user, $_pdo, $_request, $_route, $_route->getTplFileName()));
+	TPL::build($_theme = new Theme($_sett, $_system, $_user, $_pdo, $_request, $_route, $_head, $_route->getTplFileName()));
 
 	//$_theme->registerFunction('url', 'Url');
 

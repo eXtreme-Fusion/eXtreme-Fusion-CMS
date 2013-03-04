@@ -49,7 +49,7 @@ class Theme extends optClass
 	 * @param   Database  klasa bazy danych
 	 * @return  void
 	 */
-	public function __construct(Sett $sett, System $system, $user, $pdo, $request, $route, $tpl_file_name = NULL)
+	public function __construct(Sett $sett, System $system, $user, $pdo, $request, $route, $head, $tpl_file_name = NULL)
 	{
 		$this->_sett = $sett;
 		$this->_user = $user;
@@ -57,9 +57,19 @@ class Theme extends optClass
 		$this->_system = $system;
 		$this->_request = $request;
 		$this->_route = $route;
+		$this->_head = $head;
 		$this->_theme = $sett->get('theme');
 		$this->setConfig();
 		$this->_tpl_file_name = $tpl_file_name;
+		
+		$this->_head->set('
+			<link href="'.ADDR_COMMON_CSS.'facebox.css" rel="stylesheet">'.PHP_EOL.'
+			<script src="'.ADDR_COMMON_JS.'facebox.js"></script>'.PHP_EOL.'
+			<script>$(function() {
+				$(\'a[rel*=facebox]\').facebox();
+			});</script>
+		');
+	
 	}
 	
 	public function setStatisticsInst($_inst)

@@ -45,15 +45,6 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 
 	if ( ! file_exists(DIR_THEME.'templates'.DS.'pages'.DS.'news.tpl'))
 	{
-		$_head->set('<link href="'.ADDR_COMMON_CSS.'facebox.css" rel="stylesheet">');
-		$_head->set('<script src="'.ADDR_COMMON_JS.'facebox.js"></script> ');
-		$_head->set('
-			<script>
-				$(document).ready(function() {
-					$(\'a[rel*="facebox"]\').facebox();
-				})
-			</script>
-		');
 		$_head->set('<link href="'.ADDR_CSS.'news.css" rel="stylesheet">');
 	}
 

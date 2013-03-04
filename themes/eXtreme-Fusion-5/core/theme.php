@@ -14,7 +14,6 @@
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
 *********************************************************/
-
 function render_page()
 {
 	// Nazwa strony
