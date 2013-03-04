@@ -60,10 +60,13 @@
 								<div class="clear"></div>
 								<div id="footer">
 									2005-{$CurrentYear} &copy; <a href="http://www.extreme-fusion.org/" rel="blank">{$SystemVersion}</a>
+									<p>Copyright 2002-2013 <a href="http://php-fusion.co.uk/">PHP-Fusion</a>. Released as free software without warranties under <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">aGPL v3</a>.</p>
 								</div>
+								
 							</div>
 						</div>
 					</form>
+					
 				</div>
 		</body>
 	{else}

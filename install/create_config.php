@@ -32,18 +32,7 @@
 | written permission from the original author(s).
 +--------------------------------------------------------*/
 
-$config = '<?php'.PHP_EOL;
-$config .= '/*---------------------------------------------------------------+'.PHP_EOL;
-$config .= '| eXtreme-Fusion - Content Management System - version 5         |'.PHP_EOL;
-$config .= '+----------------------------------------------------------------+'.PHP_EOL;
-$config .= '| Copyright (c) 2005-2012 The eXtreme-Fusion Crew                |'.PHP_EOL;
-$config .= '| http://extreme-fusion.org/                              	     |'.PHP_EOL;
-$config .= '+----------------------------------------------------------------+'.PHP_EOL;
-$config .= '| This product is licensed under the BSD License.				 |'.PHP_EOL;
-$config .= '| http://extreme-fusion.org/ef5/license/						 |'.PHP_EOL;
-$config .= '+---------------------------------------------------------------*/'.PHP_EOL;
-$config .= 'defined(\'DS\') || define(\'DS\', DIRECTORY_SEPARATOR);'.PHP_EOL.PHP_EOL;
-
+$config = '<?php'.PHP_EOL.PHP_EOL;
 
 $config .= '#Database'.PHP_EOL.PHP_EOL;
 

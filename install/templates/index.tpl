@@ -98,8 +98,8 @@
 							<div class="center">
 								<label>
 									<input type="checkbox" name="AcceptCC" value="yes">
-									<a id="AcceptLink" href="http://extreme-fusion.org/ef5/license/" target="_blank">
-									{i18n('I accept BSD License')}
+									<a id="AcceptLink" href="{$ADDR_SITE}LICENSE" target="_blank">
+									{i18n('I accept aGPL v3 License')}
 									</a>
 								</label>
 							</div>
@@ -494,6 +494,10 @@
 							</a>
 						</form>
 					{/if}
+					<div class="center">
+						<p>Copyright © 2005 - 2013 by the <a href="http://extreme-fusion.org/" rel="copyright">eXtreme-Fusion</a> Crew</p>
+						<p>Copyright 2002-2013 <a href="http://php-fusion.co.uk/">PHP-Fusion</a>. Released as free software without warranties under <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">aGPL v3</a>.</p>
+					</div>
 				</div>
 				<div class="clear"></div>
 
@@ -501,5 +505,6 @@
 		</div>
 		<div class='cfl'><div class='cfr'><div class='cfc'></div></div></div></div>
 	</div>
+
 </body>
 </html>

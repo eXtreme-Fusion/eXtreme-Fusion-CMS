@@ -53,7 +53,7 @@ return array(
 	//Step 1
 	'Please select the required locale (language):' => 'Wybierz język strony:',
 	'Download more locales from <a href="http://www.extreme-fusion.org/">extreme-fusion.org</a>' => 'Inne wersje językowe do pobrania na stonie <a href="http://www.extreme-fusion.org/">extreme-fusion.org</a>',
-	'I accept BSD License' => 'Akceptuje warunki licencji BSD',
+	'I accept aGPL v3 License' => 'Akceptuje warunki licencji aGPL v3',
 	//Step 2
 	'Writeable' => 'Zapisywalny',
 	'Unwriteable' => 'Niezapisywalny',
