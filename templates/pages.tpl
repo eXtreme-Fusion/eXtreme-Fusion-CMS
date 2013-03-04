@@ -50,7 +50,7 @@
 					{/section}
 				</ul>
 				
-				<p class="center"><a href="{url('controller=>', 'page', 'action=>', 'categories')}" title="Kategorie treści">Wszystkie kategorie treści</a></p>
+				<p class="center"><a href="{url('controller=>', 'pages', 'action=>', 'categories')}" title="Kategorie treści">Wszystkie kategorie treści</a></p>
 			
 			{else}
 				Brak materiałów na stronie
