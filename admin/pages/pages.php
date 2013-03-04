@@ -13,7 +13,7 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
+|
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------+
@@ -136,7 +136,7 @@ try
                  * Musimy przesłać trzy razy to samo, gdyż jest ten sam formularz edycji i dodawania materiału.
 				 * Przy edycji pola te mogą mieć odmienne wartości, stąd są różne indeksy.
 				 */
-				'insight_groups' => $groups,
+				'insight_groups' => $_tpl->getMultiSelect($_user->getViewGroups(), '3', TRUE),
 				'editing_groups' => $groups,
 				'submitting_groups' => $groups,
 				// Ustawianie wartości domyślnych
@@ -352,8 +352,8 @@ try
 						array(':content', $_request->post('content')->show(), PDO::PARAM_STR),
 						array(':preview', $_request->post('preview')->show(), PDO::PARAM_STR)
 					);
-					
-					
+
+
 					if ($_request->upload('thumbnail'))
 					{
 						// Uploaduje plik na serwer i zwracana nazwę po zapisaniu w miejscu docelowym
@@ -363,12 +363,12 @@ try
 					{
 						$thumbnail = '';
 					}
-					
+
 					if (isset($thumbnail))
 					{
 						$bind[] = array(':thumbnail', $thumbnail, PDO::PARAM_STR);
 					}
-					
+
 					if ($keyword = $_request->post('keywords')->strip())
 					{
 						// Pobiera informację, kto będzie miał dostęp do słów kluczowych
@@ -393,7 +393,7 @@ try
 							if ($old_thumbnail = $_pdo->getField('SELECT `thumbnail` FROM [pages] WHERE `id` = '.$_request->get('id')->show()))
 							{
 								$file = realpath(DIR_UPLOAD.'images'.DS.$old_thumbnail);
-								
+
 								if (file_exists($file) && is_file($file))
 								{
 									unlink(DIR_UPLOAD.'images'.DS.$old_thumbnail);
@@ -403,7 +403,7 @@ try
 
 						$_pdo->exec('UPDATE [pages] SET `title` = :title, `description` = :description, `url` = :url, `categories` = :categories, `type` = :type, '.(isset($thumbnail) ? '`thumbnail` = :thumbnail, ' : '').'`content` = :content, `preview` = :preview WHERE `id` = '.$_request->get('id')->show(), $bind);
 						$_log->insertSuccess('edit', __('Data has been updated.'));
-						
+
 						if (isset($access))
 						{
 							$_tag->updTag('PAGES', $_request->get('id')->show(), $keyword, $access);
@@ -412,7 +412,7 @@ try
 						{
 							$_tag->delTag('PAGES', $_request->get('id')->show());
 						}
-						
+
 						$_request->redirect(FILE_PATH, array('page' => 'entries', 'act' => 'edit', 'status' => 'ok'));
 					}
 					// Zapis nowego wpisu
@@ -425,13 +425,13 @@ try
 						);
 
 						$_log->insertSuccess('edit', __('Data has been saved.'));
-						
+
 						// Czy mają zostać zapisane jakieś słowa kluczowe?
 						if (isset($access))
-						{	
+						{
 							$_tag->addTag('PAGES', $_pdo->getMaxValue('SELECT max(`id`) FROM [pages]'), $keyword, $access);
 						}
-						
+
 						$_request->redirect(FILE_PATH, array('page' => 'entries', 'act' => 'add', 'status' => 'ok'));
 					}
 				}
@@ -459,13 +459,13 @@ try
 					$type[$row['id']] = $row['name'];
 				}
 			}
-			
+
 			// Tworzenie nowego wpisu
 			if ($_request->get('action')->show() === 'add')
 			{
 				// Przesyłanie danych do routera
 				$_tpl->assignGroup(array(
-					'categories' => $_tpl->getMultiSelect($category, '1', TRUE),
+					'categories' => $_tpl->getMultiSelect($category, '1', FALSE),
 					'types' => $_tpl->createSelectOpts($type, NULL, TRUE),
 				));
 
@@ -476,29 +476,27 @@ try
 				if ($row = $_pdo->getRow('SELECT * FROM [pages] WHERE id = '.$_request->get('id')->show()))
 				{
 					! class_exists('Tag') || $_tag = New Tag($_system, $_pdo);
-					
+
 					$keywords = array();
 					if ($keys = $_tag->getTag('PAGES', $_request->get('id')->show())){
-						foreach($keys as $var){
+						foreach($keys as $var)
+						{
 							$keywords[] = $var['value'];
 						}
 					}
-					
+
 					$_tpl->assignGroup(array(
 						'title' => $row['title'],
 						'description' => $row['description'],
 						'type' => $row['type'],
 						'content' => $row['content'],
 						'preview' => $row['preview'],
-						'categories' => $_tpl->getMultiSelect($category, HELP::explode($row['categories']), TRUE),
+						'categories' => $_tpl->getMultiSelect($category, HELP::explode($row['categories']), FALSE),
 						'types' => $_tpl->createSelectOpts($type, $row['type'], TRUE),
 						'thumbnail' => $row['thumbnail'],
 						'url' => $row['url'],
-						
 						'keywords' => $keywords
 					));
-					
-					
 				}
 			}
 			// Usuwanie kategorii z zabezpieczeniem przed usunięciem systemowej

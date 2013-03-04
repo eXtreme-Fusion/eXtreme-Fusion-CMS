@@ -40,7 +40,7 @@
 	{if $page == 'main'}
 		{php} opentable('Przegląd treści na stronie'); {/php}
 			{if $data}
-			
+
 				<p>Rodzaje materiałów zamieszczanych na stronie:</p>
 				<ul class="margin-b-10">
 					{section=data}
@@ -49,9 +49,9 @@
 						</div>
 					{/section}
 				</ul>
-				
+
 				<p class="center"><a href="{url('controller=>', 'pages', 'action=>', 'categories')}" title="Kategorie treści">Wszystkie kategorie treści</a></p>
-			
+
 			{else}
 				Brak materiałów na stronie
 			{/if}
@@ -60,23 +60,23 @@
 		{php} opentable('Nawigacja'); {/php}
 		<p>Jesteś tutaj: <a href="{url()}" title="Materiały na stronie">Materiały na stronie</a> &raquo; {$type} &raquo; Kategorie treści wybranego typu</p>
 		{php} closetable(); {/php}
-		
-		
+
+
 			{if $data}
 				{php} $i = 0; {/php}
 				{section=data}
 					{php} opentable('Kategoria &raquo; '.$this->data['data'][$i]['name']); {/php}
 						<div class="tbl">
-							
+
 							{if $data.thumbnail}
 								<img src="{$data.thumbnail}" />
 							{/if}
 							<section id="content">{$data.description}</section>
-							
+
 							<p><a href="{$data.link}" title="{$data.name}">Materiały w kategorii...</a></p>
 						</div>
 					{php} $i++; closetable(); {/php}
-				
+
 				{/section}
 			{else}
 				{php} opentable('Kategorie treści'); {/php}
@@ -88,7 +88,7 @@
 		{php} opentable('Nawigacja'); {/php}
 		<p>Jesteś tutaj: <a href="{url()}" title="Materiały na stronie">Materiały na stronie</a> &raquo; <a href="{$type.link}" title="{$type.name}">{$type.name}</a> &raquo; Materiały w kategorii: {$category}</p>
 		{php} closetable(); {/php}
-			
+
 			{if $data}
 				{php} $i = 0; {/php}
 				{section=data}
@@ -109,7 +109,7 @@
 		{php} opentable('Nawigacja'); {/php}
 		<p>Jesteś tutaj: <a href="{url()}" title="Materiały na stronie">Materiały na stronie</a> &raquo; Przeglądana kategoria: {$category}</p>
 		{php} closetable(); {/php}
-			
+
 			{if $data}
 				{php} $i = 0; {/php}
 				{section=data}
@@ -130,7 +130,7 @@
 		{php} opentable('Nawigacja'); {/php}
 		<p>Jesteś tutaj: <a href="{url()}" title="Materiały na stronie">Materiały na stronie</a> &raquo; Przegląd kategorii</p>
 		{php} closetable(); {/php}
-			
+
 			{if $data}
 				{php} $i = 0; {/php}
 				{section=data}
@@ -150,24 +150,24 @@
 		{php} opentable('Nawigacja'); {/php}
 		<p>Jesteś tutaj: <a href="{url()}" title="Materiały na stronie">Materiały na stronie</a> &raquo; <a href="{$type.url}" title="{$type.name}">{$type.name}</a> &raquo; Czytasz: {$entry}</p>
 		{php} closetable(); {/php}
-		
+
 		{php} opentable($this->data['data']['title']); {/php}
 			<div class="margin-b-10">
 				<small>Dodane przez {$data.author} dnia {$data.date}</small>
-				
+
 					{if $keyword}
-						<small>Słowa kluczowe: </small> 
+						<small>Słowa kluczowe: </small>
 						{section=keyword}
 							<a href="{$keyword.url}" title="{$keyword.name}" class="small">{$keyword.name}</a>,
 						{/section}
 					{/if}
 					{if $cats}
-						<small>Kategorie: </small> 
+						<small>Kategorie: </small>
 						{section=cats}
 							<a href="{$cats.url}" title="{$cats.name}" class="small">{$cats.name}</a>,
 						{/section}
 					{/if}
-				
+
 			</div>
 			{if $data}
 				<div>{$data.content}</div>
@@ -175,9 +175,7 @@
 				Wystąpił błąd. Przepraszamy za utrudnienia.
 			{/if}
 		{php} closetable(); {/php}
-		
-		{php} opentable('Komentarze'); {/php}
-			{$comments}
-		{php} closetable(); {/php}
+
+		{$comments}
 	{/if}
 {/if}
