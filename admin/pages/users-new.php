@@ -13,7 +13,6 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------+
@@ -22,6 +21,8 @@
 | http://www.php-fusion.co.uk/
 +--------------------------------------------------------+
 | Author: Nick Jones (Digitanium)
+| Author: Paul Buek (Muscapaul)
+| Author: Hans Kristian Flaatten (Starefossen)
 +--------------------------------------------------------+
 | This program is released as free software under the
 | Affero GPL license. You can redistribute it and/or

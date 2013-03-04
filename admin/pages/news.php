@@ -22,6 +22,7 @@
 | http://www.php-fusion.co.uk/
 +--------------------------------------------------------+
 | Author: Nick Jones (Digitanium)
+| Author: Starefossen
 +--------------------------------------------------------+
 | This program is released as free software under the
 | Affero GPL license. You can redistribute it and/or

@@ -1,5 +1,10 @@
 <?php defined('EF5_SYSTEM') || exit;
-
+/*
+English Language Fileset
+Produced by Nick Jones (Digitanium)
+Email: digitanium@php-fusion.co.uk
+Web: http://www.php-fusion.co.uk
+*/
 return array(
 	'Charset' => 'UTF-8',
 	'xml_lang' => 'en',

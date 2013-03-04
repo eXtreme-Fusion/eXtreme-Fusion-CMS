@@ -22,6 +22,8 @@
 | http://www.php-fusion.co.uk/
 +--------------------------------------------------------+
 | Author: Nick Jones (Digitanium)
+| Co Author: WEC
+| Author: Hans Kristian Flaatten {Starefossen}
 +--------------------------------------------------------+
 | This program is released as free software under the
 | Affero GPL license. You can redistribute it and/or

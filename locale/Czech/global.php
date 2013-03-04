@@ -7,7 +7,20 @@
 * @see http://php-fusion.pl
 * @license Affero GPL license
 */
+// Official SVN Trunk Rev: 2364
+/*English Language Fileset
+ Produced by Nick Jones (Digitanium)
+ Email: digitanium@php-fusion.co.uk
+ Web: http://www.php-fusion.co.uk
 
+ Polish (UTF-8) Language Fileset for PHP-Fusion v7.02.03, based at translation for PHP-Fusion v7.01.xx
+ Translations from english, modifications and tests:
+ PHP-Fusion po Polsku (PHP-Fusion in Polish)
+ https://launchpad.net/pf-pl
+ Main translator: Tomasz Jankowski (jantom)
+ Translator and tester: Michał Pospieszyński (sony)
+ This program is released as free software under the
+ Affero GPL license.*/
 /** TODO: Konfiguracja języka w osobnym pliku (`locale.php`) ***/
 setlocale(LC_TIME, array('cs_CS.UTF-8', 'Czech'));
 

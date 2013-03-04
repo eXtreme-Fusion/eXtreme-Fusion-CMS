@@ -351,7 +351,7 @@ try
 			DIR_SITE.'upload'.DS.'movies'.DS => FALSE,
 			DIR_SITE.'system'.DS.'opt'.DS.'plugins'.DS => FALSE,
 			DIR_SITE.'templates'.DS.'images'.DS => FALSE,
-			DIR_SITE.'templates'.DS.'images'.DS.'imagelist.js' => FALSE,
+			//DIR_SITE.'templates'.DS.'images'.DS.'imagelist.js' => FALSE,
 			DIR_SITE.'templates'.DS.'images'.DS.'avatars'.DS => FALSE,
 			DIR_SITE.'templates'.DS.'images'.DS.'news'.DS => FALSE,
 			DIR_SITE.'templates'.DS.'images'.DS.'news'.DS.'thumbs'.DS => FALSE,

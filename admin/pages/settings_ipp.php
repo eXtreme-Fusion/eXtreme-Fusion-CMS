@@ -21,7 +21,7 @@
 | Copyright (C) 2002 - 2011 Nick Jones
 | http://www.php-fusion.co.uk/
 +--------------------------------------------------------+
-| Author: Nick Jones (Digitanium)
+| Author: Hans Kristian Flaatten (Starefossen)
 +--------------------------------------------------------+
 | This program is released as free software under the
 | Affero GPL license. You can redistribute it and/or
