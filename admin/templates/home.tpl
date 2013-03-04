@@ -36,7 +36,7 @@
 <div class="ui-corner-all grid_6">
 	<h3 class="ui-corner-all top17">{i18n('Update')}</h3>
 	<div class="HomeBox"><div class="valid">{i18n('You&nbsp;have&nbsp;currently&nbsp;version&nbsp;eXtreme&nbsp;-&nbsp;Fusion&nbsp;:version', array(':version' => $version))}</div></div>
-	
+
 	<h3 class="ui-corner-all">{i18n('History')}</h3>
 	<div class="HomeBox">
 	{if $logs}
@@ -54,7 +54,7 @@
 		<div class="error">{i18n('There are no logs.')}</div>
 	{/if}
 	</div>
-	
+
 	<h3 class="ui-corner-all">{i18n('Download')}</h3>
 	<div class="HomeBox"><div class="error">{i18n('Not&nbsp;plugged.')}</div></div>
 </div>
@@ -95,7 +95,7 @@
 				<div id="notes">
 
 					{section=notes}
-					<h3><a href="#" class="{if $notes.block == 1}{if $notes.author_id == $notes.user_id}edit{/if}{else}edit{/if}" id="{$notes.id}">{$notes.title}</a></h4>
+					<h4><a href="#" class="{if $notes.block == 1}{if $notes.author_id == $notes.user_id}edit{/if}{else}edit{/if}" id="{$notes.id}">{$notes.title}</a></h4>
 					<div>
 						<p>{if $notes.block == 1}<img src="{$ADDR_ADMIN_ICONS}logout.png" alt="">{/if}<small>{i18n('Added')} {$notes.datestamp} {i18n('by')} <a href="{$SITE_ADDRESS}profile,{$notes.author_id}.html">{$notes.author}</a></small></p>
 						<br>
@@ -113,7 +113,7 @@
 				<div class="Buttons">
 					<div class="center grid_2 button-c">
 						<input type="hidden" name="note_add" value="yes" />
-						<span {if $current < $notes_per_page}id="SendForm_ThisNotes"{/if} class="{if $current < $notes_per_page}Save{/if}"><strong>{if $current < $notes_per_page}{i18n('Add')}{else}{i18n('You have reached maximum number of notes. Remove some.')}{/if}<img src="{$ADDR_ADMIN_ICONS}pixel/plus.png" alt="" /></strong></span>
+						<span {if $current < $notes_per_page}id="SendForm_ThisNotes"{/if} class="{if $current < $notes_per_page}save{/if}"><strong>{if $current < $notes_per_page}{i18n('Add')}{else}{i18n('You have reached maximum number of notes. Remove some.')}{/if}<img src="{$ADDR_ADMIN_ICONS}pixel/plus.png" alt="" /></strong></span>
 					</div>
 				</div>
 			</form>
@@ -122,7 +122,7 @@
 
 		<div class="clear"></div>
 		</div>
-	
+
 	<h3 class="ui-corner-all">{i18n('Quick&nbsp;news')}</h3>
 	{if $message && $quick_news_log}<div class="{$class}">{$message}</div>{/if}
 	<form id="ThisQuickNews" action="{$URL_REQUEST}" method="post">
