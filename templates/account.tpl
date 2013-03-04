@@ -36,7 +36,7 @@
 {php} opentable(__('Edit account')) {/php}
 {if $message}<div class="{$class}">{$message}</div>{/if}
 	<h4>{i18n('Edit account')}</h4>
-	
+
 	<form id="This" action="{$URL_REQUEST}" method="post" enctype="multipart/form-data" name="account">
 		{if $ChangeName == 1}
 			<div class="tbl1">
@@ -104,9 +104,9 @@
 				</select>
 			</div>
 		</div>
-		
+
 		<h4>{i18n('Additional informations')}</h4>
-		
+
 		{section=Cats}
 			<div class="tbl1">
 				<div class="formField sep_1 grid_10">{$Cats.name}</div>
@@ -123,7 +123,7 @@
 							<select name="{$Fields.index}" class="textbox">
 								{foreach=$Fields.option; value}
 									<option value="{@value.value}"{if @value.selected} selected="selected"{/if}>{@value.display}</option>
-								{/foreach}							
+								{/foreach}
 							</select>
 						</div>
 					{else}
@@ -145,11 +145,11 @@
 				</div>
 			{/section}
 		{/section}
-		
+
 		<div class="tbl Buttons">
 			<div class="center grid_2">
 				<input type="hidden" name="save" value="yes" />
-				<span id="SendForm_This" class="save button"><strong>{i18n('Edit account')}</strong></span>
+				<span id="SendForm_This" class="save"><strong>{i18n('Edit account')}</strong></span>
 			</div>
 		</div>
 	</form>
