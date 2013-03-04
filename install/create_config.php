@@ -13,7 +13,7 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
+|
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------+
@@ -33,6 +33,8 @@
 +--------------------------------------------------------*/
 
 $config = '<?php'.PHP_EOL.PHP_EOL;
+
+$config .= 'defined(\'DS\') || define(\'DS\', DIRECTORY_SEPARATOR);'.PHP_EOL.PHP_EOL;
 
 $config .= '#Database'.PHP_EOL.PHP_EOL;
 
