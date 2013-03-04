@@ -13,17 +13,17 @@
 				<label for="all"><input type="radio" id="all" name="search_type" value="all"{if $search_type == "all"} checked="checked"{/if} />{i18n('Cała strona')}</label>
 			</div>
 		</div>
-		
+
 		<div class="tbl Buttons">
 			<div class="center grid_2">
 				<input type="hidden" name="search" value="yes" />
-				<span id="SendForm_This" class="save button"><strong>{i18n('Search')}</strong></span>
+				<span id="SendForm_This" class="save"><strong>{i18n('Search')}</strong></span>
 			</div>
 		</div>
 	</form>
-	
+
 	{if $message}<div class="{$class}">{$message}</div>{/if}
-	
+
 	{if $all}
 		<h4>Newsy</h4>
 	{/if}
@@ -53,7 +53,7 @@
 	{elseif $searched_type === "news" || ($all && $news === array())}
 		<div class="info">Nie znaleziono newsów pasujących do następującego kryterium "<strong>{$search_text}</strong>"</div>
 	{/if}
-	
+
 	{if $all}
 		<h4>Tagi</h4>
 	{/if}
@@ -70,7 +70,7 @@
 	{elseif $searched_type === "tags" || ($all && $tags === array())}
 		<div class="info">Nie znaleziono tagów pasujących do następującego kryterium "<strong>{$search_text}</strong>"</div>
 	{/if}
-	
+
 	{if $all}
 		<h4>Użytkownicy</h4>
 	{/if}
