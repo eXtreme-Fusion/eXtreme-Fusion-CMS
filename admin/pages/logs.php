@@ -48,20 +48,12 @@ try
 		// Czy zapisaæ w Rejestrze usuniêcie wpisu?
 		if ($_sett->get('logger_save_removal_action'))
 		{
-			$_log->insertSuccess('delete', $info);
-			$_tpl->getMessage($_request->get('status')->show(), $_request->get('act')->show(),
-				array(
-					'delete' => $info
-				)
-			);
+			$_log->insertSuccess('delete', $info[0]);
+			$_tpl->getMessage($_request->get('status')->show(), $_request->get('act')->show(), array('delete' => $info));
 		}
 		else
 		{
-			$_tpl->getMessage($_request->get('status')->show(), $_request->get('act')->show(),
-				array(
-					'delete' => $info
-				)
-			);
+			$_tpl->getMessage($_request->get('status')->show(), $_request->get('act')->show(), array('delete' => $info));
 		}
     }
 
