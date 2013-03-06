@@ -13,7 +13,7 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
+|
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------+
@@ -31,7 +31,7 @@
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
 +--------------------------------------------------------*/
-try 
+try
 {
 	require_once '../../config.php';
 	require DIR_SITE.'bootstrap.php';
@@ -47,7 +47,7 @@ try
 
 	if ($_request->get(array('status', 'act'))->show())
 	{
-		$_tpl->getMessage($_request->get('status')->show(), $_request->get('act')->show(), 
+		$_tpl->getMessage($_request->get('status')->show(), $_request->get('act')->show(),
 			array(
 				'add' => array(
 					__('Category has been added.'), __('Error! Category has not been added.')
@@ -61,30 +61,33 @@ try
 			)
 		);
 	}
-  
+
+  	$cat_name = '';
+	$cat_order = '';
+
     if ($_request->get('action')->show() === 'delete' && $_request->get('id')->isNum())
     {
-		$query = $_pdo->getRow('SELECT * FROM [user_fields] WHERE `cat` = :cat', 
+		$query = $_pdo->getRow('SELECT * FROM [user_fields] WHERE `cat` = :cat',
 			array(':cat', $_request->get('id')->show(), PDO::PARAM_INT)
 		);
-	
+
         if ( ! $query)
         {
 			$query = $_pdo->exec('DELETE FROM [user_field_cats] WHERE `id` = :id',
 				array(':id', $_request->get('id')->show(), PDO::PARAM_INT)
 			);
-			
+
 			$row = $_pdo->exec('UPDATE [user_field_cats] SET `order` = `order`-1 WHERE `order` > :order',
 					array(':order', $_request->get('order')->isNum(TRUE), PDO::PARAM_INT)
 			);
-			
+
         	if ($query)
 			{
 				$_system->clearCache('profiles');
 				$_log->insertSuccess('delete', __('Category has been deleted.'));
 				$_request->redirect(FILE_PATH, array('act' => 'delete', 'status' => 'ok'));
 			}
-			
+
 			$_log->insertFail('delelete', __('Error! Category has nor been deleted.'));
 			$_request->redirect(FILE_PATH, array('act' => 'delete', 'status' => 'error'));
         }
@@ -121,7 +124,7 @@ try
 						array(':name', $cat_name, PDO::PARAM_STR)
 					)
 				);
-	
+
 	            if ($query)
 				{
 					$_system->clearCache('profiles');
@@ -142,37 +145,18 @@ try
 		$query = $_pdo->getRow('SELECT `id`, `name`, `order` FROM [user_field_cats] WHERE `id` = :id',
 			array(':id', $_request->get('id')->show(), PDO::PARAM_INT)
 		);
-		
+
 		if ($query)
 		{
 			$cat_name = $query['name'];
             $cat_order = $query['order'];
         }
     }
-	else
-	{
-	$cat_name = '';
-	$cat_order = '';
-	}
-	
+
+    $_tpl->assign('data', $_pdo->getData('SELECT `id`, `name`, `order` FROM [user_field_cats] ORDER by `order`'));
+
 	$_tpl->assign('cat_name', $cat_name);
 	$_tpl->assign('cat_order', $cat_order);
-
-	$query = $_pdo->getData('SELECT * FROM [user_field_cats] ORDER by `id`');
-    if ($query) 
-	{
-		$data = array();
-        foreach($query as $row)
-		{
-            $data[] = array(
-                'id' => $row['id'],
-                'name' => $row['name'],
-                'order' => $row['order']
-            );
-        }
-		
-        $_tpl->assign('data', $data);
-    }
 
     $_tpl->template('user_field_cats');
 
