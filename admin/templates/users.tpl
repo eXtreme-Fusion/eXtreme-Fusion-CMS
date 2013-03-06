@@ -37,22 +37,20 @@
 
 <h3 class="ui-corner-all">{$SystemVersion} - {i18n('Users')}</h3>
 <link href="{$ADDR_ADMIN_CSS}user.css" media="screen" rel="stylesheet" />
-	{if $page !== 'users'}
+	
 		<div class="center tbl Buttons">
 			<div class="center grid_2 button-l">
-				{if $page === 'users'}
-					<span class="Cancels"><strong>{i18n('Users')}<img src="{$ADDR_ADMIN_ICONS}pixel/user.png" alt="" /></strong></span>
-				{else}
-					<span><a href="{$FILE_SELF}?page=users"><strong>{i18n('Users')}<img src="{$ADDR_ADMIN_ICONS}pixel/user.png" alt="" /></strong></a></span>
-				{/if}
-			</div>
-			<div class="center grid_2 button-c">
 				{if $page === 'add'}
 					<span class="Cancels"><strong>{i18n('Create account')}<img src="{$ADDR_ADMIN_ICONS}pixel/plus.png" alt="" /></strong></span>
 				{else}
 					<span><a href="{$FILE_SELF}?page=add"><strong>{i18n('Create account')}<img src="{$ADDR_ADMIN_ICONS}pixel/plus.png" alt="" /></strong></a></span>
 				{/if}
 			</div>
+			{if $page !== 'users'}
+				<div class="center grid_2 button-c">
+					<span><a href="{$FILE_SELF}?page=users"><strong>{i18n('Users')}<img src="{$ADDR_ADMIN_ICONS}pixel/user.png" alt="" /></strong></a></span>
+				</div>
+			{/if}
 			<div class="center grid_2 button-r">
 				{if $page === 'mail'}
 					<span class="Cancels"><strong>{i18n('Send e-mail')}<img src="{$ADDR_ADMIN_ICONS}pixel/mail.png" alt="" /></strong></span>
@@ -66,7 +64,7 @@
 		
 		{if $page !== 'mail'}
 			<div class="tbl">
-				<div class="sep_1 grid_2">{i18n('Find user:')}</div>
+				<div class="grid_5 right">{i18n('Find user:')}</div>
 				<div class="grid_7"><input type="text" id="search_user" style="width:300px;" /></div>
 			</div>
 			<div class="tbl">
@@ -76,14 +74,14 @@
 			<div class="buttons-bg">&nbsp;</div>
 		{/if}
 		
-	{elseif $page === 'users'}
+	{if $page === 'users'}
 		{if $action !== 'edit'}
-			<div class="center tbl Buttons">
-				<div class="center grid_2 button-l">
-					{if $page === 'users'}
-						<span class="Cancels"><a href="{$FILE_SELF}?page=users"><strong>{i18n('Users')}<img src="{$ADDR_ADMIN_ICONS}pixel/user.png" alt="" /></strong></a></span>
+				<div class="center tbl Buttons">
+					<div class="center grid_2 button-l">
+					{if $page === 'users' && !$status}
+						<span class="Cancels"><strong>{i18n('Aktywne')}<img src="{$ADDR_ADMIN_ICONS}pixel/user.png" alt="" /></strong></span>
 					{else}
-						<span><a href="{$FILE_SELF}?page=users"><strong>{i18n('Users')}<img src="{$ADDR_ADMIN_ICONS}pixel/user.png" alt="" /></strong></a></span>
+						<span><a href="{$FILE_SELF}?page=users"><strong>{i18n('Aktywne')}<img src="{$ADDR_ADMIN_ICONS}pixel/user.png" alt="" /></strong></a></span>
 					{/if}
 				</div>
 				<div class="center grid_2 button-c">
@@ -102,9 +100,9 @@
 				</div>
 				<div class="center grid_2 button-c">
 					{if $page === 'users' && $status === 'required'}
-						<span class="Cancels"><strong>{i18n('Activation required')}</strong></span>
+						<span class="Cancels"><strong>{i18n('Nieczynne')}</strong></span>
 					{else}
-						<span><a href="{$FILE_SELF}?page=users&amp;status=required"><strong>{i18n('Activation required')}</strong></a></span>
+						<span><a href="{$FILE_SELF}?page=users&amp;status=required"><strong>{i18n('Nieczynne')}</strong></a></span>
 					{/if}
 				</div>
 				<div class="center grid_2 button-r">

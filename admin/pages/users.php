@@ -832,6 +832,9 @@ try
 		}
 	}
 
+	
+	$_tpl->assign('status', $_request->get('status')->show());
+			
   $_tpl->template('users');
 }
 catch(optException $exception)
