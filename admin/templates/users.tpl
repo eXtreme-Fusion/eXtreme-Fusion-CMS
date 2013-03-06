@@ -13,7 +13,7 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
+|
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------+
@@ -37,7 +37,7 @@
 
 <h3 class="ui-corner-all">{$SystemVersion} - {i18n('Users')}</h3>
 <link href="{$ADDR_ADMIN_CSS}user.css" media="screen" rel="stylesheet" />
-	
+
 		<div class="center tbl Buttons">
 			<div class="center grid_2 button-l">
 				{if $page === 'add'}
@@ -59,9 +59,9 @@
 				{/if}
 			</div>
 		</div>
-		
+
 		<div class="buttons-bg">&nbsp;</div>
-		
+
 		{if $page !== 'mail'}
 			<div class="tbl">
 				<div class="grid_5 right">{i18n('Find user:')}</div>
@@ -70,15 +70,15 @@
 			<div class="tbl">
 				<div id="search_user_result" class="sep_3 grid_7"></div>
 			</div>
-			
+
 			<div class="buttons-bg">&nbsp;</div>
 		{/if}
-		
+
 	{if $page === 'users'}
 		{if $action !== 'edit'}
 				<div class="center tbl Buttons">
 					<div class="center grid_2 button-l">
-					{if $page === 'users' && !$status}
+					{if $page === 'users' && $status === 'active'}
 						<span class="Cancels"><strong>{i18n('Aktywne')}<img src="{$ADDR_ADMIN_ICONS}pixel/user.png" alt="" /></strong></span>
 					{else}
 						<span><a href="{$FILE_SELF}?page=users"><strong>{i18n('Aktywne')}<img src="{$ADDR_ADMIN_ICONS}pixel/user.png" alt="" /></strong></a></span>
@@ -114,12 +114,12 @@
 				</div>
 			</div>
 		{/if}
-		
+
 		<div class="buttons-bg">&nbsp;</div>
 			{if $message}<div class="{$class}">{$message}</div>{/if}
 			<div class="info">{$info}</div>
 		<div class="buttons-bg">&nbsp;</div>
-		
+
 		{if $action === 'edit'}
 			<h4>{i18n('Edit account :username', array(':username' => $user.username))}{$Error}</h4>
 			<form id="This" class="UserAdd" action="{$URL_REQUEST}" method="post">
@@ -171,7 +171,7 @@
 
 					<input type="hidden" name="roles[]" value="2" />
 					<input type="hidden" name="roles[]" value="3" />
-				
+
 				<div class="tbl2">
 					<div class="formLabel sep_1 grid_3">{i18n('Roles:')}{i18n('Default roles')}</div>
 					<div class="formField grid_7">
@@ -234,7 +234,7 @@
 					</div>
 					<div class="data">
 						<div>{i18n('User ID: ')}{$account.id}</div>
-						<div>{i18n('Status:')} 
+						<div>{i18n('Status:')}
 							{if $account.status === '0'}<span style="color:#177d0a">{i18n('Active')}</span>{/if}
 							{if $account.status === '1'}<span style="color:#fd7903">{i18n('E-mail verification required')}</span>{/if}
 							{if $account.status === '2'}<span style="color:#06c8cf">{i18n('Administrator activation required')}</span>{/if}
@@ -247,7 +247,7 @@
 						<div>Skórka: {$account.theme}</div>
 						<div>Grupy użytkownika: {$account.roles}</div>
 					</div>
-					
+
 					{if $account.id !== '1'}
 						<div class="box">
 							<h4>{i18n('Administration options')}</h4>
@@ -342,7 +342,7 @@
 				<span>{i18n('There are no users.')}</span>
 			</div>
 		{/if}
-		
+
 		{if $action !== 'edit'}
 			<div class="tb1 Buttons">
 				<div class="center grid_2 button-l">
@@ -353,10 +353,10 @@
 				</div>
 			</div>
 		{/if}
-		
+
 		<div class="buttons-bg">&nbsp;</div>
 	{/if}
-	
+
 	{if $page === 'add'}
 		{if $message}<div class="{$class}">{$message}</div>{/if}
 		<h4>{i18n('Adding an user')}</h4>
@@ -391,7 +391,7 @@
 
 			<input type="hidden" name="roles[]" value="2" />
 			<input type="hidden" name="roles[]" value="3" />
-			
+
 			<div class="tbl1">
 				<div class="formLabel sep_1 grid_3">{i18n('Uprawnienia grup:')}<small>{i18n('Przytrzymaj klawisz Ctrl, aby wybrać kilka opcji z listy.')}</small></div>
 				<div class="formField grid_7">
@@ -452,7 +452,7 @@
 			</div>
 		</form>
 	{/if}
-	
+
 	{if $page === 'mail'}
 		<script src="{$ADDR_ADMIN_TEMPLATES}javascripts/jquery.users.js"></script>
 		<script>
@@ -473,9 +473,9 @@
 				});
 			{/literal}
 		</script>
-		
+
 		{if $message}<div class="{$class}">{$message}</div>{/if}
-		
+
 		<form id="This" class="users-full" action="{$URL_REQUEST}" method="post">
 			<div class="tbl2">
 				<div class="formLabel sep_1 grid_2">{i18n('Recipients')}</div>

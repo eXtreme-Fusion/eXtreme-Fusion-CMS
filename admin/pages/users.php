@@ -13,7 +13,7 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
+|
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------+
@@ -580,7 +580,7 @@ try
 					}
 				}
 
-				
+
 				$_pagenav = new PageNav(new Paging($rows, $current, intval($_sett->get('users_per_page'))), $_tpl, 10, array('page=users', 'current=', FALSE));
 
 				$_pagenav->get($_pagenav->create(), 'page_nav', DIR_ADMIN_TEMPLATES.'paging'.DS);
@@ -677,7 +677,7 @@ try
 
 				$status = 0;
 				$valid = '';
-				
+
 				if ( ! $_request->post('active')->show())
 				{
 					if ($_sett->get('email_verification') === '1')
@@ -792,7 +792,7 @@ try
 			}
 			$_tpl->assign('data', $data);
 		}
-		
+
 		if ($_sett->get('email_verification') === '1' || $_sett->get('admin_activation') === '1')
 		{
 			$_tpl->assign('active', TRUE);
@@ -832,9 +832,9 @@ try
 		}
 	}
 
-	
-	$_tpl->assign('status', $_request->get('status')->show());
-			
+
+	$_tpl->assign('status', $_request->get('status', NULL)->show() === NULL && $_request->get('user', NULL)->show() === NULL ?'active' : $_request->get('status')->show());
+
   $_tpl->template('users');
 }
 catch(optException $exception)

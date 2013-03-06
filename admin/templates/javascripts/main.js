@@ -70,7 +70,7 @@ $(function(){
 	$('.Buttons .Cancel').click(function() {
 		history.back();
 	});
-	
+
 	$('.Buttons img').css({'position': 'absolute'});
 
 	// ============================
