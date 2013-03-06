@@ -60,9 +60,7 @@ try
 			array(':id', $_request->get('id')->show(), PDO::PARAM_INT)
 		);
 		
-		$query = $_pdo->exec('ALTER TABLE [users_data] DROP :index',
-			array(':index', $data['index'], PDO::PARAM_STR)
-		);
+		$query = $_pdo->exec('ALTER TABLE [users_data] DROP '.HELP::strip($data['index']));
 	
 		$query = $_pdo->exec('DELETE FROM [user_fields] WHERE `id` = :id',
 			array(':id', $_request->get('id')->show(), PDO::PARAM_INT)
