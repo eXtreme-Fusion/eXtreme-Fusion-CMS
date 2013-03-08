@@ -97,7 +97,7 @@ class sign_protection implements Security_Intf
 		$this->_tpl = $_tpl;
 
 		$this->_tpl->root = DIR_MODULES.'sign_protection'.DS.'templates'.DS;
-		$this->_tpl->compile = DIR_MODULES.'sign_protection'.DS.'templates_c'.DS;
+		$this->_tpl->compile = DIR_CACHE;
 
 		$this->_ommit = (bool) $this->_pdo->getField('SELECT `validation_type` FROM [sign_protection]');
 

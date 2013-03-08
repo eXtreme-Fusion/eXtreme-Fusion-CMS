@@ -112,7 +112,7 @@ class sfs_protection implements Security_Intf
 		$this->_tpl = $_tpl;
 
 		$this->_tpl->root = DIR_MODULES.'sfs_protection'.DS.'templates'.DS;
-		$this->_tpl->compile = DIR_MODULES.'sfs_protection'.DS.'templates_c'.DS;
+		$this->_tpl->compile = DIR_CACHE;
 	}
 
 	private function checkEmail()
