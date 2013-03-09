@@ -33,7 +33,7 @@
 +--------------------------------------------------------*/
 $_locale->moduleLoad('lang', 'online_users_panel');
 
-openside(__('global_010'));
+openside(__('Users Online'));
 
 	$online = $_user->getOnline();
 	/*$robots = array(
@@ -42,37 +42,37 @@ openside(__('global_010'));
 		)
 	);
 	*/
-	
-	echo '		<div>'.__('global_011').': '.$_user->getGuests().'</div>
+
+	echo '		<div>'.__('Guests Online').': '.$_user->getGuests().'</div>
 	';
-	//echo '<div>'.__('global_012').': '.((count($online))+(count($robots))).'</div>';
-	echo '				<div>'.__('global_012').': '.(count($online)).'</div>
+	//echo '<div>'.__('Members Online').': '.((count($online))+(count($robots))).'</div>';
+	echo '				<div>'.__('Members Online').': '.(count($online)).'</div>
 	';
 
 	$data = array();
 	if ($online)
 	//if ($online || $robots)
 	{
-		
+
 		foreach($online as $user)
 		{
 			$data[] = HELP::profileLink($user['username'], $user['id']);
 		}
-		
+
 		/*
 		foreach($robots as $robot)
 		{
 			$data[] = $robot['username'];
 		}
 		*/
-		
+
 		echo '<div>'.implode($data, ', ').'</div>';
 	}
-	
+
 	echo '					<br />
 	';
-	
-	echo '				<div>'.__('global_014').': '.number_format($_pdo->getMatchRowsCount('SELECT `id` FROM [users] WHERE status = 0')).'</div>
+
+	echo '				<div>'.__('Total Members').': '.number_format($_pdo->getMatchRowsCount('SELECT `id` FROM [users] WHERE status = 0')).'</div>
 	';
 
 	if ($_sett->get('admin_activation') === '1' && $_user->hasPermission('admin.members'))
@@ -81,5 +81,5 @@ openside(__('global_010'));
 		echo ': '.$_pdo->getMatchRowsCount('SELECT `id` FROM [users] WHERE status<=2')."<br />\n";
 	}
 	$data = $_pdo->getRow('SELECT `id`, `username` FROM [users] WHERE `status` != 1 AND `status` !=2 ORDER BY `joined` DESC LIMIT 1');
-	echo '				'.__('global_016').': <span class="side">'.HELP::profileLink($data['username'], $data['id'])."</span>\n";
+	echo '				'.__('Newest Member').': <span class="side">'.HELP::profileLink($data['username'], $data['id'])."</span>\n";
 closeside();
