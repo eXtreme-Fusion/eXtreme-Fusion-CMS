@@ -134,14 +134,6 @@ return array(
 	// Navigation
 	'global_001' => 'Nawigacja',
 	'global_002' => 'Brak linków\n',
-	// Users Online
-	'global_010' => 'Aktualnie online',
-	'global_011' => 'Gości online',
-	'global_012' => 'Użytkowników online',
-	'global_013' => 'Brak użytkowników online',
-	'global_014' => 'Łącznie użytkowników',
-	'global_015' => 'Nieaktywnych użytkowników',
-	'global_016' => 'Najnowszy użytkownik',
 	// Forum Side panel
 	'global_020' => 'Ostatnio na forum',
 	'global_021' => 'Najnowsze tematy',
