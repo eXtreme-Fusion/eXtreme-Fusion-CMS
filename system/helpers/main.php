@@ -892,6 +892,7 @@ Class HELP
 	// Format the date & time accordingly
 	public static function showDate($format, $val)
 	{
+		$val += intval(self::$_sett->get('offset_timezone')) * 3600;
 		if ($format === 'shortdate' || $format == 'longdate')
 		{
 			return strftime(self::$_sett->get($format), $val);
@@ -947,18 +948,4 @@ Class HELP
 
 		return $return;
 	}
-}
-
-// Funkcje do przepisania....
-// Format the date & time accordingly
-function showdate($format, $val) {
-    global $_sett, $_user;
-    if ( ! $offset = $_user->get('offset')) {
-        $offset = $_sett->get('offset_timezone');
-    }
-    if ($format == "shortdate" || $format == "longdate") {
-        return strftime($_sett->get($format), $val + ($offset * 3600));
-    } else {
-        return strftime($format, $val + ($offset * 3600));
-    }
 }

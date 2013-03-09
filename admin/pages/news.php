@@ -266,7 +266,7 @@ try
 		{
 			$_tpl->assignGroup(array(
 				'category' => $_tpl->createSelectOpts($category, NULL, TRUE, TRUE),
-				'access' => $_tpl->getMultiSelect($_user->getViewGroups(), NULL, TRUE),
+				'access' => $_tpl->getMultiSelect($_user->getViewGroups(), '3', TRUE),
 				'language' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'locale', array(), TRUE, 'folders'), $_sett->get('locale'), FALSE, TRUE)
 			));
 		}

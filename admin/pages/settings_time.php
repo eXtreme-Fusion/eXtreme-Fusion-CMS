@@ -116,7 +116,7 @@ try
 		'-2.0'		=> '(GMT -2:00) Mid-Atlantic',
 		'-1.0'		=> '(GMT -1:00 hour) Azores, Cape Verde Islands',
 		'0.0'		=> '(GMT) Western Europe Time, London, Lisbon, Casablanca',
-		'1.0'		=> '(GMT +1:00) Brussels, Copenhagen, Madrid, Paris',
+		'1.0'		=> '(GMT +1:00) Warsaw, Brussels, Copenhagen, Madrid, Paris',
 		'2.0'		=> '(GMT +2:00) Kaliningrad, South Africa',
 		'3.0'		=> '(GMT +3:00) Baghdad, Riyadh, Moscow, St. Petersburg',
 		'3.5'		=> '(GMT +3:30) Tehran',
