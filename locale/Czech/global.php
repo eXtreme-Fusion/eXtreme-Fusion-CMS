@@ -133,14 +133,6 @@ return array(
 	// Navigation
 	'global_001' => 'Navigace',
 	'global_002' => 'Žádné odkazy\n',
-	// Users Online
-	'global_010' => 'Aktuálně online',
-	'global_011' => 'Hosté online',
-	'global_012' => 'Uživatelé online',
-	'global_013' => 'Žádný uživatel online',
-	'global_014' => 'Celkem uživatelů',
-	'global_015' => 'Neaktivní uživatelé',
-	'global_016' => 'Nejnovější uživatel',
 	// Forum Side panel
 	'global_020' => 'Poslední témata',
 	'global_021' => 'Nejnovější témata',
