@@ -13,7 +13,7 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
+|
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------+
@@ -36,7 +36,7 @@ try
 	require_once '../../config.php';
 	require DIR_SITE.'bootstrap.php';
 	require_once DIR_SYSTEM.'admincore.php';
-	
+
 	$_locale->load('pages');
 
     if ( ! $_user->isLoggedIn())
@@ -83,7 +83,7 @@ try
 		$query = $_pdo->getData('SELECT * FROM [admin] WHERE `page` = :page ORDER BY `title`',
 			array(':page', $_request->get('PageNum')->show(), PDO::PARAM_INT)
 		);
-		
+
 		$link = array();
 		if ($_pdo->getRowsCount($query))
 		{
@@ -99,9 +99,9 @@ try
 				}
 			}
 		}
-		
+
 		if ($_request->get('PageNum')->show() === '5')
-		{	
+		{
 			if (count($link))
 			{
 				$_tpl->assign('NavigationTitle', __('Modules'));

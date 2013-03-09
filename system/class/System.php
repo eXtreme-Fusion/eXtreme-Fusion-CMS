@@ -22,7 +22,7 @@ class System {
 
 	// Wyłączenie szyfrowania cache wersja jedynie dla DEV
 	// Pamiętaj o ręcznym usunięciu cache po zmianie parametru FALSE/TRUE
-	private $code = FALSE;
+	private $code = TRUE;
 
 	protected $dir_cache = DIR_CACHE;
 

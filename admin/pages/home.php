@@ -52,34 +52,6 @@ try
 	
 	$_tpl = new Iframe;
 	
-	if ($_request->get('act')->show() && $_request->get('status')->show() && $_request->get('quick_news')->show())
-    {
-		$_tpl->getMessage($_request->get('status')->show(), $_request->get('act')->show(), 
-			array(
-				'add' => array(
-					__('Quick news has been added.'), __('Error! Quick news has not been added.')
-				)
-			)
-		);
-		$_tpl->assign('quick_news_log', TRUE);
-    }
-
-	if ($_request->get('act')->show() && $_request->get('status')->show() && $_request->get('note')->show())
-    {
-		$_tpl->getMessage($_request->get('status')->show(), $_request->get('act')->show(), 
-			array(
-				'delete' => array(
-					__('Note has been deleted.'), __('Error! Note has not been deleted.')
-				),
-				'add' => array(
-					__('Note has been added.'), __('Error! Note has not been added.')
-				)
-			)
-		);
-		
-		$_tpl->assign('notes_log', TRUE);
-    }
-	
 	if ($_request->post('note_add_save')->show() === 'yes')
 	{
 		$count = $_pdo->getMatchRowsCount('
@@ -96,11 +68,15 @@ try
 		if ($count)
 		{
 			$_log->insertSuccess('add', __('Note has been added.'));
-			$_request->redirect(FILE_PATH, array('act' => 'add', 'status' => 'ok', 'note' => TRUE));
+			$_tpl->printMessage('valid', __('Note has been added.'));
+		}
+		else
+		{
+			$_log->insertFail('add', __('Error! Note has not been added.'));
+			$_tpl->printMessage('error', __('Error! Note has not been added.'));
 		}
 		
-		$_log->insertFail('add', __('Error! Note has not been added.'));
-		$_request->redirect(FILE_PATH, array('act' => 'add', 'status' => 'error', 'note' => TRUE));
+		$_tpl->assign('notes_log', TRUE);
 	}
 
 	if ($_request->get('action')->show() === 'delete' && $_request->get('note_id')->isNum())
@@ -112,11 +88,15 @@ try
 		if ($count)
         {
 			$_log->insertSuccess('delete', __('Note has been deleted.'));
-			$_request->redirect(FILE_PATH, array('act' => 'delete', 'status' => 'ok', 'note' => TRUE));
+			$_tpl->printMessage('valid', __('Note has been deleted.'));
         }
+		else
+		{
+			$_log->insertFail('delete', __('Error! Note has not been deleted.'));
+			$_tpl->printMessage('valid', __('Error! Note has not been deleted.'));
+		}
 		
-		$_log->insertFail('delete', __('Error! Note has not been deleted.'));
-        $_request->redirect(FILE_PATH, array('act' => 'delete', 'status' => 'error', 'note' => TRUE));
+		$_tpl->assign('notes_log', TRUE);
 	}
 
 	if ($_request->post('note_add')->show() === 'yes')
@@ -135,7 +115,7 @@ try
 					'id' => $row['id'],
 					'title' => $row['title'],
 					'note' => $row['note'],
-					'author' => $_user->getusername($row['author']),
+					'author' => HELP::profileLink(NULL, $row['author']),
 					'author_id' => $row['author'],
 					'user_id' => $_user->get('id'),
 					'block' => $row['block'],
@@ -187,13 +167,20 @@ try
 			{
 				$_system->clearCache('news');
 				$_log->insertSuccess('add', __('Quick news has been added.'));
-				$_request->redirect(FILE_PATH, array('act' => 'add', 'status' => 'ok', 'quick_news' => TRUE));
+				$_tpl->printMessage('valid', __('Quick news has been added.'));
 			}
-			$_log->insertFail('add', __('Error! Quick news has not been added.'));
-			$_request->redirect(FILE_PATH, array('act' => 'add', 'status' => 'error', 'quick_news' => TRUE));
+			else
+			{
+				$_log->insertFail('add', __('Error! Quick news has not been added.'));
+				$_tpl->printMessage('error', __('Error! Quick news has not been added.'));
+			}
+		}
+		else
+		{
+			$_tpl->printMessage('error', $_log->insertFail('add', __('News już istnieje w bazie danych.')));
 		}
 		
-		$_tpl->printMessage('error', $_log->insertFail('add', __('News już istnieje w bazie danych.')));
+		$_tpl->assign('quick_news_log', TRUE);
 	}
 
 	$query = $_pdo->getData('SELECT * FROM [logs] ORDER BY `datestamp` DESC LIMIT 0,7');
