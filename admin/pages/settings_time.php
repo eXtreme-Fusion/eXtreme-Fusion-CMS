@@ -66,6 +66,8 @@ try
 			'user_custom_offset_timezone' => $_request->post('user_custom_offset_timezone')->isNum(TRUE)
 		));
 		
+		$_system->clearCacheRecursive($_files);
+		
 		$_tpl->printMessage('valid', $_log->insertSuccess('edit', __('Data has been saved.')));
 		$_tpl->assign('view', 'settings');
 	}

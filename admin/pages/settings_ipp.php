@@ -56,6 +56,8 @@ try
 			'notes_per_page' => $_request->post('notes_per_page')->isNum(TRUE)
 		));
 		
+		$_system->clearCache(array('news', 'news_cats', 'users'));
+		
 		$_tpl->printMessage('valid', $_log->insertSuccess('edit', __('Data has been saved.')));
 	}
 

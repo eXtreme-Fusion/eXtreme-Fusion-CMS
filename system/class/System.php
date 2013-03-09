@@ -19,9 +19,12 @@ class System {
 	private $_rewrite_available;
 	private $_furl = FALSE;
 	private $_rewrite = FALSE;
+
 	// Wyłączenie szyfrowania cache wersja jedynie dla DEV
 	// Pamiętaj o ręcznym usunięciu cache po zmianie parametru FALSE/TRUE
-	private $code = TRUE;
+	private $code = FALSE;
+
+	protected $dir_cache = DIR_CACHE;
 
 	/**
 	 * Tworzenie środowiska pracy systemu
@@ -144,24 +147,66 @@ class System {
 	}
 
 	/**
-	 * Opróżnia katalog pamięci podręcznej szablonów.
+	 * Usuwa pamięć podręczną ze wszystkich podkatalogów katalogu pamięci podręcznej
 	 *
-	 *     // Usuwa całą pamięć podręczną szablonów.
+	 * @param   object   obiekt do zarzadzania plikami
+	 * @return  boolean
+	 */
+	public function clearCacheRecursive(Files $_files)
+	{
+		return $_files->rmDirRecursive($this->dir_cache);
+	}
+
+	/**
+	 * Opróżnia katalog pamięci podręcznej usuwając tylko pliki o roszerzeniach tpl, php lub txt.
+	 *
+	 *     // Usuwa całą pamięć podręczną z głównego katalogu pamięci podręcznej.
 	 *     $_system->clearCache();
 	 *
-	 *     // Usuwa pliki `foo.tpl` oraz `bar.tpl` z pamięci podręcznej.
-	 *     $_system->clearCache(NULL, array('foo.tpl', 'bar.tpl'));
+	 *     // Usuwa pliki `foo` oraz `bar` z głównego katalogu pamięci podręcznej.
+	 *     $_system->clearCache(NULL, array('foo', 'bar'));
 	 *
 	 *     // Usuwa pamięć podręczną z podkatalogu `dir`.
 	 *     $_system->clearCache('dir');
 	 *
+	 *		// Usuwa pamięć podręczną z podkatalogów `dir` oraz `folder`.
+	 *     $_system->clearCache(array('dir', 'folder'));
+	 *
+	 *		// Usuwa pliki pamięci podręcznej `foo` oraz `bar` z podkatalogu `dir` oraz wszystkie pliki z podkatalogów `addr` oraz `folder`.
+	 *     $_system->clearCache(array('addr', 'dir', 'folder'), array(1 => array('foo', 'bar')));
+	 *
+	 *
 	 * @param   mixed    nazwa podkatalogu z cache
 	 * @param   mixed    pliki pamięci podręcznej do usunięcia
-	 * @param   string   ścieżka do głównego katalogu z pamięcią podręczną
 	 * @return  boolean  zawsze zwróci TRUE
 	 */
-	public function clearCache($dir = NULL, $cache = array(), $path = DIR_CACHE)
+	public function clearCache($dir = NULL, $cache = array())
 	{
+		if (is_array($dir))
+		{
+			$i = 0;
+			foreach($dir as $val)
+			{
+				if (isset($cache[$i]))
+				{
+					$new_cache = $cache[$i];
+				}
+				else
+				{
+					$new_cache = array();
+				}
+
+				if (!$this->clearCache($val, $new_cache, $this->dir_cache))
+				{
+					$error = TRUE;
+				}
+
+				$i++;
+			}
+
+			return !isset($error);
+		}
+
 		if ($cache && !is_array($cache))
 		{
 			$cache = array($cache);
@@ -182,17 +227,17 @@ class System {
 			}
 		}
 
-		if (file_exists($path.$dir))
+		if (file_exists($this->dir_cache.$dir))
 		{
 			// Przeszukuje katalog pamięci podręcznej
-			$files = new DirectoryIterator($path.$dir);
+			$files = new DirectoryIterator($this->dir_cache.$dir);
 
 			foreach ($files as $file)
 			{
 				// Sprawdza rozszerzenie pliku pamięci podręcznej
 				$extension = pathinfo($file->getPathname(), PATHINFO_EXTENSION);
 
-				if ( ! $file->isDot() && $file->isFile() && ($extension === 'tpl' || $extension === 'txt'))
+				if ( ! $file->isDot() && $file->isFile() && ($extension === 'tpl' || $extension === 'txt' || $extension === 'php'))
 				{
 					if (in_array(pathinfo($file->getPathname(), PATHINFO_FILENAME), $cache) || empty($cache))
 					{
