@@ -109,14 +109,20 @@
 				<br>
 				{/if}
 
-			<form id="ThisNotes" action="{$URL_REQUEST}" method="post">
-				<div class="Buttons">
-					<div class="center grid_2 button-c">
-						<input type="hidden" name="note_add" value="yes" />
-						<span {if $current < $notes_per_page}id="SendForm_ThisNotes"{/if} class="{if $current < $notes_per_page}save{/if}"><strong>{if $current < $notes_per_page}{i18n('Add')}{else}{i18n('You have reached maximum number of notes. Remove some.')}{/if}<img src="{$ADDR_ADMIN_ICONS}pixel/plus.png" alt="" /></strong></span>
-					</div>
-				</div>
-			</form>
+				{if $current < $notes_per_page}
+					<form id="ThisNotes" action="{$URL_REQUEST}" method="post">
+						<div class="Buttons">
+							<div class="center grid_2 button-c">
+								<input type="hidden" name="note_add" value="yes" />
+								
+								<span id="SendForm_ThisNotes" class="save"><strong>{i18n('Add')}<img src="{$ADDR_ADMIN_ICONS}pixel/plus.png" alt="" /></strong></span>
+								
+							</div>
+						</div>
+					</form>
+				{else}
+					<p class="center bold">{i18n('You have reached maximum number of notes. Remove some.')}</p>
+				{/if}
 
 			{/if}
 
