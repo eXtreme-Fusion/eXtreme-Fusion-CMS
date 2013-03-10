@@ -13,7 +13,7 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
+|
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------+
@@ -68,7 +68,7 @@ $row = $_pdo->getRow('SELECT * FROM [users] WHERE `id` = 1');
 		'last_visit_time' => $row['lastvisit'] ? HELP::showDate('longdate', $row['lastvisit']) : NULL,
 		'is_online' => inArray($row['id'], $_user->getOnline(), 'id') ? 1 : 0,
 	);
-	
+
 $_tpl->assign('site_admin', $admin);
 
 // Admins
@@ -86,7 +86,7 @@ if ($_pdo->getRowsCount($query))
 		{
 			$last_visit = HELP::showDate('shortdate', $row['lastvisit']);
 		}
-		
+
 
 
 		$data[] = array(
@@ -102,7 +102,7 @@ if ($_pdo->getRowsCount($query))
 			'is_online' => inArray($row['id'], $_user->getOnline(), 'id') ? 1 : 0,
 		);
 	}
-		
+
 	$_tpl->assign('admin', $data);
 }
 
@@ -150,7 +150,7 @@ if($groups != NULL)
 					{
 						$last_visit = HELP::showDate('shortdate', $user['lastvisit']);
 					}
-				
+
 					$all_users[$key][$i] = array(
 						'id' => $user['id'],
 						'username' => $_user->getUsername($user['id']),
@@ -169,7 +169,7 @@ if($groups != NULL)
 		}
 		else
 		{
-			$_tpl->printMessage('info', __('Nie znaleziono użytkowników należących do tej grupy'));
+			$_tpl->printMessage('info', __('There are no users who belongs to this group.'));
 		}
 	}
 
@@ -189,15 +189,15 @@ foreach($query as $group)
 	$groups[] = array(
 		'Title' => $group['title']
 	);
-	
+
 	$query2 = $_pdo->getData('SELECT * FROM [users] WHERE `role` = '.$group['id']);
 	foreach($query2 as $user)
 	{
 		$users[] = $user;
 	}
 	$_tpl->assign('Users', $users);
-	
+
 	$i++;
 }
-	
+
 $_tpl->assign('Groups', $groups);*/
