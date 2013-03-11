@@ -112,6 +112,7 @@ try
 
 				if ($query)
 				{
+					$_system->clearCache('profiles');
 					$_request->redirect(FILE_PATH, array('act' => 'edit', 'status' => 'ok'));
 				}
 
