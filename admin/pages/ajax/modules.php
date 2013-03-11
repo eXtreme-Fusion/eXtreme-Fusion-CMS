@@ -341,6 +341,7 @@ try
 
 					$i++;
 				}
+				$_system->clearCache('profiles');
 				_e(__('Dane zostały pomyślnie zapisane'));
 			}
 
