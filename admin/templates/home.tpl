@@ -34,7 +34,7 @@
 *}
 
 <div class="ui-corner-all grid_6">
-	<h3 class="ui-corner-all top17">{i18n('Update')}</h3>
+	<h3 class="ui-corner-all">{i18n('Update')}</h3>
 	<div class="HomeBox"><div class="valid">{i18n('You&nbsp;have&nbsp;currently&nbsp;version&nbsp;eXtreme&nbsp;-&nbsp;Fusion&nbsp;:version', array(':version' => $version))}</div></div>
 
 	<h3 class="ui-corner-all">{i18n('History')}</h3>
@@ -54,12 +54,9 @@
 		<div class="error">{i18n('There are no logs.')}</div>
 	{/if}
 	</div>
-
-	<h3 class="ui-corner-all">{i18n('Download')}</h3>
-	<div class="HomeBox"><div class="error">{i18n('Not&nbsp;plugged.')}</div></div>
 </div>
 <div class="ui-corner-all grid_6">
-	<h3 class="ui-corner-all">{i18n('Notes')} {if $current}({$current}/{$notes_per_page}){/if}</h3>
+	<!--<h3 class="ui-corner-all">{i18n('Notes')} {if $current}({$current}/{$notes_per_page}){/if}</h3>
 		<div class="HomeBox">
 
 			{if $message && $notes_log}<div class="{$class}">{$message}</div>{/if}
@@ -126,28 +123,13 @@
 
 			{/if}
 
-		<div class="clear"></div>
+			<div class="clear"></div>
 		</div>
-
-	<h3 class="ui-corner-all">{i18n('Quick&nbsp;news')}</h3>
-	{if $message && $quick_news_log}<div class="{$class}">{$message}</div>{/if}
-	<form id="ThisQuickNews" action="{$URL_REQUEST}" method="post">
-		<div class="HomeBox">
-				<div class="formField grid_5">
-					<input type="text" id="quick_news_title" name="quick_news_title" maxlength="200" class="num_200" value="" />
-				</div>
-				<div class="clear"></div>
-				<div class="formField grid_5">
-					<textarea cols="80" name="quick_news_content" id="quick_news_content" class="num_255 resize" rows="4"></textarea>
-				</div>
-				<div class="clear"></div>
-				<div class="tbl Buttons">
-					<div class="center grid_2 button-c"><input type="hidden" name="quick_news_add" value="yes" />
-						<span id="SendForm_ThisQuickNews" class="save"><strong>{i18n('Add')}<img src="{$ADDR_ADMIN_ICONS}pixel/plus.png" alt="" /></strong></span>
-					</div>
-				</div>
-				<div class="clear"></div>
-		</div>
-	</form>
+		-->
+		<h3 class="ui-corner-all">{i18n('Statistics')}</h3>
+		<div class="HomeBox"><div class="error">{i18n('Not&nbsp;plugged.')}</div></div>
+		
+		<h3 class="ui-corner-all">{i18n('Latest comments')}</h3>
+		<div class="HomeBox"><div class="error">{i18n('Not&nbsp;plugged.')}</div></div>
 </div>
 <div class="clear"></div>

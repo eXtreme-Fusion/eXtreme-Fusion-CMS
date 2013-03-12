@@ -89,11 +89,13 @@ try
         {
 			$_log->insertSuccess('delete', __('Note has been deleted.'));
 			$_tpl->printMessage('valid', __('Note has been deleted.'));
+			
         }
 		else
 		{
 			$_log->insertFail('delete', __('Error! Note has not been deleted.'));
 			$_tpl->printMessage('valid', __('Error! Note has not been deleted.'));
+			
 		}
 		
 		$_tpl->assign('notes_log', TRUE);
@@ -130,57 +132,6 @@ try
 			'notes_per_page' => $_sett->get('notes_per_page'),
 			'current' => $count
 		));
-	}
-
-	if ($_request->post('quick_news_add')->show() && $_request->post('quick_news_title')->show() && $_request->post('quick_news_content')->show())
-	{
-		if ( ! $_user->hasPermission('admin.news'))
-		{
-			throw new userException(__('Access Denied'));
-		}
-		
-		$count = $_pdo->getRow('SELECT `id` FROM [news] WHERE `title` = :title', 
-			array(':title', $_request->post('quick_news_title')->filters('trim', 'strip'), PDO::PARAM_STR)
-		);
-
-		if ( ! $count)
-		{
-			$count = $_pdo->exec('
-				INSERT INTO [news] (`title`, `link`, `content`, `language`, `author`, `access`, `datestamp`, `draft`, `sticky`, `allow_comments`, `allow_ratings`)
-				VALUES (:title, :link, :content, :language, :author, :access, :datestamp, :draft, :sticky, :allow_comments, :allow_ratings)',
-				array(
-					array(':title', $_request->post('quick_news_title')->filters('trim', 'strip'), PDO::PARAM_STR),
-					array(':link', HELP::Title2Link($_request->post('quick_news_title')->filters('trim', 'strip')), PDO::PARAM_STR),
-					array(':content', $_request->post('quick_news_content')->show(), PDO::PARAM_STR),
-					array(':language', $_sett->get('locale'), PDO::PARAM_STR),
-					array(':author', $_user->get('id'), PDO::PARAM_INT),
-					array(':access', 3, PDO::PARAM_INT),
-					array(':datestamp', time(), PDO::PARAM_INT),
-					array(':draft', 0, PDO::PARAM_INT),
-					array(':sticky', 0, PDO::PARAM_INT),
-					array(':allow_comments', 1, PDO::PARAM_INT),
-					array(':allow_ratings', 1, PDO::PARAM_INT)
-				)
-			);
-	
-			if ($count)
-			{
-				$_system->clearCache('news');
-				$_log->insertSuccess('add', __('Quick news has been added.'));
-				$_tpl->printMessage('valid', __('Quick news has been added.'));
-			}
-			else
-			{
-				$_log->insertFail('add', __('Error! Quick news has not been added.'));
-				$_tpl->printMessage('error', __('Error! Quick news has not been added.'));
-			}
-		}
-		else
-		{
-			$_tpl->printMessage('error', $_log->insertFail('add', __('News już istnieje w bazie danych.')));
-		}
-		
-		$_tpl->assign('quick_news_log', TRUE);
 	}
 
 	$query = $_pdo->getData('SELECT * FROM [logs] ORDER BY `datestamp` DESC LIMIT 0,7');
