@@ -13,7 +13,9 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-*********************************************************/
+| 
+**********************************************************/
+$_locale->load('search');
 
 $theme = array(
 	'Title' => 'Wyszukiwarka',

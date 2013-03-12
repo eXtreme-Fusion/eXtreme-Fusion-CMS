@@ -37,12 +37,12 @@
 	<h4>{i18n('Main Administrator')}</h4>
 	{if $site_admin}
 		<div class="team tbl2">
-			<div class="team-title tbl1"><img src="{$ADDR_IMAGES}profile/info.png"><span id="team-username">{i18n('User')} {$site_admin.link}</span><p id="team-status">{$site_admin.role}</p></div>
+			<div class="team-title tbl1"><img src="{$ADDR_IMAGES}profile/info.png" alt="Profile"><span id="team-username">{i18n('User')} {$site_admin.link}</span><p id="team-status">{$site_admin.role}</p></div>
 			<div class="team-avatar">
 				{if $site_admin.avatar}
-					<img src="{$ADDR_IMAGES}avatars/{$site_admin.avatar}" class="avatar">
+					<img src="{$ADDR_IMAGES}avatars/{$site_admin.avatar}" alt="Avatar" class="avatar">
 				{else}
-					<img src="{$ADDR_IMAGES}avatars/none.jpg" class="avatar">
+					<img src="{$ADDR_IMAGES}avatars/none.gif" alt="No Avatar" class="avatar">
 				{/if}
 			</div>
 			<div class="team-info tbl2">
@@ -52,19 +52,19 @@
 			</div>
 		</div>
 	{else}
-		<div class="info">{i18n('It was impossible to find users.')}</div>
+		<div class="info">{i18n('There are no users who belongs to this group.')}</div>
 	{/if}
-	
+
 	{if $admin}
 		<h4>{i18n('Administrators')}</h4>
 		{section=admin}
 			<div class="team tbl2">
-				<div class="team-title tbl1"><img src="{$ADDR_IMAGES}profile/info.png"><span id="team-username">{i18n('User')} {$admin.link}</span><p id="team-status">{$admin.role}</p></div>
+				<div class="team-title tbl1"><img src="{$ADDR_IMAGES}profile/info.png" alt="Profile"><span id="team-username">{i18n('User')} {$admin.link}</span><p id="team-status">{$admin.role}</p></div>
 				<div class="team-avatar">
 					{if $sdmin.svatar}
-						<img src="{$ADDR_IMAGES}avatars/{$sdmin.svatar}" class="avatar">
+						<img src="{$ADDR_IMAGES}avatars/{$sdmin.svatar}" alt="Avatar" class="avatar">
 					{else}
-						<img src="{$ADDR_IMAGES}avatars/none.jpg" class="avatar">
+						<img src="{$ADDR_IMAGES}avatars/none.gif" alt="No Avatar" class="avatar">
 					{/if}
 				</div>
 				<div class="team-info tbl2">
@@ -75,7 +75,7 @@
 			</div>
 		{/section}
 	{/if}
-	
+
 	{if $groups}
 		{section=groups}
 			<h4>{$groups.title}</h4>
@@ -83,12 +83,12 @@
 			{if $users}
 				{section=users}
 					<div class="team tbl2">
-						<div class="team-title tbl1"><img src="{$ADDR_IMAGES}profile/info.png"><span id="team-username">{i18n('User')} {$users.link}</span><p id="team-status">{$users.role}</p></div>
+						<div class="team-title tbl1"><img src="{$ADDR_IMAGES}profile/info.png" alt="Profile"><span id="team-username">{i18n('User')} {$users.link}</span><p id="team-status">{$users.role}</p></div>
 						<div class="team-avatar">
 							{if $users.avatar}
-								<img src="{$ADDR_IMAGES}avatars/{$users.avatar}" class="avatar">
+								<img src="{$ADDR_IMAGES}avatars/{$users.avatar}" alt="Avatar" class="avatar">
 							{else}
-								<img src="{$ADDR_IMAGES}avatars/none.jpg" class="avatar">
+								<img src="{$ADDR_IMAGES}avatars/none.gif" alt="No Avatar" class="avatar">
 							{/if}
 						</div>
 						<div class="team-info tbl2">
@@ -99,7 +99,7 @@
 					</div>
 				{/section}
 			{else}
-				<div class="info">{i18n('It was impossible to find users.')}</div>
+				<div class="info">{i18n('There are no users who belongs to this group.')}</div>
 			{/if}
 		{/section}
 	{/if}
