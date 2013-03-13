@@ -8,7 +8,7 @@
 		<link rel="stylesheet" href="{$ADDR_COMMON_CSS}grid.text.css" media="screen" />
 		<link rel="stylesheet" href="{$ADDR_COMMON_CSS}grid.960.css" media="screen" />
 		<link rel="stylesheet" href="{$ADDR_ADMIN_CSS}_framework.css" media="screen" />
-		
+
 		<script src="{$ADDR_COMMON_JS}jquery.js"></script>
 		<script src="{$ADDR_COMMON_JS}jquery-ui.js"></script>
 		<script src="{$ADDR_COMMON_JS}jquery.tooltip.js"></script>
@@ -23,12 +23,14 @@
 				if (self != top) top.location.href = self.location.href;
 				$(function() {
 					$('#SessionExpire strong').countdown({until: '{/literal}{$SessionExpire}{literal}', onTick: highlightLast5, format: 'HMS', significant: 3});
-			
+
 					{/literal}{if $History}{literal}
 						$('#mainFrame').attr('src', '{/literal}{$ADDR_SITE}{$History.Page}{literal}');
 						$("#Navigation ul").removeClass("current");
-						$("#Navigation .page-"+{/literal}{$History.Current}{literal}).addClass('current');
-					{/literal}{/if}{literal}
+						{/literal}{if $History.Current}{literal}
+							$("#Navigation .page-"+{/literal}{$History.Current}{literal}).addClass('current');
+						{/literal}{/if}
+					{/if}{literal}
 				});
 			{/literal}
 		</script>
@@ -62,11 +64,11 @@
 									2005-{$CurrentYear} &copy; <a href="http://www.extreme-fusion.org/" rel="blank">{$SystemVersion}</a>
 									<p>Copyright 2002-2013 <a href="http://php-fusion.co.uk/">PHP-Fusion</a>. Released as free software without warranties under <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">aGPL v3</a>.</p>
 								</div>
-								
+
 							</div>
 						</div>
 					</form>
-					
+
 				</div>
 		</body>
 	{else}
@@ -142,12 +144,12 @@
 				</ul>
 			</div>
 			<div id="SessionExpire" class="tip" title="Kliknij, by przedłużyć sesję">{i18n('Time to end of session')}: <strong></strong></div>
-			<div id="Footer" class="ui-layout-south">		
+			<div id="Footer" class="ui-layout-south">
 			 	<div id="FooterLeft">2005-{$CurrentYear} &copy; <a href="http://www.extreme-fusion.org/" rel="blank">{$SystemVersion}</a> Copyright 2002-2013 <a href="http://php-fusion.co.uk/">PHP-Fusion</a>. Released as free software without warranties under <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">aGPL v3</a>
 			 </div>
 			</div>
 			<iframe id='mainFrame' name='mainFrame' width='100%' height='600' class="ui-layout-center" frameborder='0' scrolling='auto' src='pages/home.php'></iframe>
-		
+
 		</body>
     {/if}
 </html>
