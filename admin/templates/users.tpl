@@ -251,7 +251,7 @@
 					{if $account.id !== '1'}
 						<div class="box">
 							<h4>{i18n('Administration options')}</h4>
-							<div class="center">
+							<div class="center Buttons">
 								{if $action === 'edit'}
 									<p><span class="Cancels"><strong>{i18n('Edit the account')}<img src="{$ADDR_ADMIN_ICONS}pixel/edit.png" alt="" /></strong></span></p>
 								{else}
