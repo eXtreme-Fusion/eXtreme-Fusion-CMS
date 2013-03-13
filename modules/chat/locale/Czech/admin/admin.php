@@ -34,6 +34,7 @@
 +--------------------------------------------------------*/
 return array(
 	'Chat' => 'CHAT',
+	'Panels managment' => 'Administrace panelů',
 	'Refresh (seconds):' => 'Obnovení chatu (sekundy):',
 	'Life of messages (days):' => 'Životnost zpráv (dny):',
 	'Enter 0 if you do not want to delete messages.' => 'Zadejte 0, pokud nechcete, aby zprávy byly odstraněny.'

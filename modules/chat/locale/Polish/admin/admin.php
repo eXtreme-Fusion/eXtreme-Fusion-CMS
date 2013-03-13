@@ -34,6 +34,7 @@
 +--------------------------------------------------------*/
 return array(
 	'Chat' => 'Czat',
+	'Panels managment' => 'Zarządzanie panelem',
 	'Refresh (seconds):' => 'Czas odświeżania wiadomości (w sekundach):',
 	'Life of messages (days):' => 'Czas życia wiadomości (w dniach):',
 	'Enter 0 if you do not want to delete messages.' => 'Wpisz 0 jeśli nie chcesz, by wiadmości były usuwane.',
