@@ -39,7 +39,7 @@
 <link href="{$ADDR_ADMIN_CSS}user.css" media="screen" rel="stylesheet" />
 
 		<div class="center tbl Buttons">
-			<div class="center grid_2 button-l">
+			<div class="grid_2 center button-l">
 				{if $page === 'add'}
 					<span class="Cancels"><strong>{i18n('Create account')}<img src="{$ADDR_ADMIN_ICONS}pixel/plus.png" alt="" /></strong></span>
 				{else}
@@ -51,7 +51,7 @@
 					<span><a href="{$FILE_SELF}?page=users"><strong>{i18n('Users')}<img src="{$ADDR_ADMIN_ICONS}pixel/user.png" alt="" /></strong></a></span>
 				</div>
 			{/if}
-			<div class="center grid_2 button-r">
+			<div class="grid_2 center button-r">
 				{if $page === 'mail'}
 					<span class="Cancels"><strong>{i18n('Send e-mail')}<img src="{$ADDR_ADMIN_ICONS}pixel/mail.png" alt="" /></strong></span>
 				{else}
@@ -77,7 +77,7 @@
 	{if $page === 'users'}
 		{if $action !== 'edit'}
 				<div class="center tbl Buttons">
-					<div class="center grid_2 button-l">
+					<div class="grid_2 center button-l">
 					{if $page === 'users' && $status === 'active'}
 						<span class="Cancels"><strong>{i18n('Aktywne')}<img src="{$ADDR_ADMIN_ICONS}pixel/user.png" alt="" /></strong></span>
 					{else}
@@ -105,7 +105,7 @@
 						<span><a href="{$FILE_SELF}?page=users&amp;status=required"><strong>{i18n('Nieczynne')}</strong></a></span>
 					{/if}
 				</div>
-				<div class="center grid_2 button-r">
+				<div class="grid_2 center button-r">
 					{if $page === 'users' && $status === 'hidden'}
 						<span class="Cancels"><strong>{i18n('Hidden')}</strong></span>
 					{else}
@@ -216,10 +216,10 @@
 					{/section}
 				{/if}
 				<div class="tbl Buttons">
-					<div class="center grid_2 button-l">
+					<div class="grid_2 center button-l">
 						<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
 					</div>
-					<div class="center grid_2 button-r">
+					<div class="grid_2 center button-r">
 						<input type="hidden" name="save" value="yes" />
 						<span id="SendForm_This" class="save"><strong>{i18n('Edit account')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
 					</div>
@@ -251,47 +251,47 @@
 					{if $account.id !== '1'}
 						<div class="box">
 							<h4>{i18n('Administration options')}</h4>
-							<div class="center Buttons">
+							<div class="center">
 								{if $action === 'edit'}
-									<span class="Cancels"><strong>{i18n('Edit the account')}<img src="{$ADDR_ADMIN_ICONS}pixel/edit.png" alt="" /></strong></span>
+									<p><span class="Cancels"><strong>{i18n('Edit the account')}<img src="{$ADDR_ADMIN_ICONS}pixel/edit.png" alt="" /></strong></span></p>
 								{else}
-									<span><a href="{$FILE_SELF}?page=users&amp;user={$account.id}&amp;edit"><strong>{i18n('Edit the account')}<img src="{$ADDR_ADMIN_ICONS}pixel/edit.png" alt="" /></strong></a></span>
+									<p><span><a href="{$FILE_SELF}?page=users&amp;user={$account.id}&amp;edit"><strong>{i18n('Edit the account')}<img src="{$ADDR_ADMIN_ICONS}pixel/edit.png" alt="" /></strong></a></span></p>
 								{/if}
 								{if $account.status == 1}
-									<span><a href="{$FILE_SELF}?page=users&amp;user={$account.id}&amp;active"><strong>{i18n('Activate the account')}<img src="{$ADDR_ADMIN_ICONS}pixel/against.png" alt="" /></strong></a></span>
+									<p><span><a href="{$FILE_SELF}?page=users&amp;user={$account.id}&amp;active"><strong>{i18n('Activate the account')}<img src="{$ADDR_ADMIN_ICONS}pixel/against.png" alt="" /></strong></a></span></p>
 								{else}
 									{if $action === 'suspend' || $account.status == 2 || $account.status == 4}
-										<span class="Cancels"><strong>{i18n('Ban the account')}<img src="{$ADDR_ADMIN_ICONS}pixel/lock.png" alt="" /></strong></span>
+										<p><span class="Cancels"><strong>{i18n('Ban the account')}<img src="{$ADDR_ADMIN_ICONS}pixel/lock.png" alt="" /></strong></span></p>
 									{else}
 										{if $account.status === '3'}
-											<span><a href="{$FILE_SELF}?page=users&amp;user={$account.id}&amp;suspend"><strong>{i18n('Unban the account')}<img src="{$ADDR_ADMIN_ICONS}pixel/lock.png" alt="" /></strong></a></span>
+											<p><span><a href="{$FILE_SELF}?page=users&amp;user={$account.id}&amp;suspend"><strong>{i18n('Unban the account')}<img src="{$ADDR_ADMIN_ICONS}pixel/lock.png" alt="" /></strong></a></span></p>
 										{else}
-											<span><a href="{$FILE_SELF}?page=users&amp;user={$account.id}&amp;suspend"><strong>{i18n('Ban the account')}<img src="{$ADDR_ADMIN_ICONS}pixel/lock.png" alt="" /></strong></a></span>
+											<p><span><a href="{$FILE_SELF}?page=users&amp;user={$account.id}&amp;suspend"><strong>{i18n('Ban the account')}<img src="{$ADDR_ADMIN_ICONS}pixel/lock.png" alt="" /></strong></a></span></p>
 										{/if}
 									{/if}
 									{if $action === 'unactive' || $account.status == 3 || $account.status == 4}
-										<span class="Cancels"><strong>{i18n('Deactivate the account')}<img src="{$ADDR_ADMIN_ICONS}pixel/against.png" alt="" /></strong></span>
+										<p><span class="Cancels"><strong>{i18n('Deactivate the account')}<img src="{$ADDR_ADMIN_ICONS}pixel/against.png" alt="" /></strong></span></p>
 									{else}
 										{if $account.status === '2' || $account.status === '1'}
-											<span><a href="{$FILE_SELF}?page=users&amp;user={$account.id}&amp;unactive"><strong>{i18n('Activate the account')}<img src="{$ADDR_ADMIN_ICONS}pixel/against.png" alt="" /></strong></a></span>
+											<p><span><a href="{$FILE_SELF}?page=users&amp;user={$account.id}&amp;unactive"><strong>{i18n('Activate the account')}<img src="{$ADDR_ADMIN_ICONS}pixel/against.png" alt="" /></strong></a></span></p>
 										{else}
-											<span><a href="{$FILE_SELF}?page=users&amp;user={$account.id}&amp;unactive"><strong>{i18n('Deactivate the account')}<img src="{$ADDR_ADMIN_ICONS}pixel/against.png" alt="" /></strong></a></span>
+											<p><span><a href="{$FILE_SELF}?page=users&amp;user={$account.id}&amp;unactive"><strong>{i18n('Deactivate the account')}<img src="{$ADDR_ADMIN_ICONS}pixel/against.png" alt="" /></strong></a></span></p>
 										{/if}
 									{/if}
 									{if $action === 'hide' || $account.status == 2 || $account.status == 3}
-										<span class="Cancels"><strong>{i18n('Hide the account')}<img src="{$ADDR_ADMIN_ICONS}pixel/bulb.png" alt="" /></strong></span>
+										<p><span class="Cancels"><strong>{i18n('Hide the account')}<img src="{$ADDR_ADMIN_ICONS}pixel/bulb.png" alt="" /></strong></span></p>
 									{else}
 										{if $account.status === '4'}
-											<span><a href="{$FILE_SELF}?page=users&amp;user={$account.id}&amp;hide"><strong>{i18n('Make the account visible')}<img src="{$ADDR_ADMIN_ICONS}pixel/bulb.png" alt="" /></strong></a></span>
+											<p><span><a href="{$FILE_SELF}?page=users&amp;user={$account.id}&amp;hide"><strong>{i18n('Make the account visible')}<img src="{$ADDR_ADMIN_ICONS}pixel/bulb.png" alt="" /></strong></a></span></p>
 										{else}
-											<span><a href="{$FILE_SELF}?page=users&amp;user={$account.id}&amp;hide"><strong>{i18n('Hide the account')}<img src="{$ADDR_ADMIN_ICONS}pixel/bulb.png" alt="" /></strong></a></span>
+											<span><a href="{$FILE_SELF}?page=users&amp;user={$account.id}&amp;hide"><strong>{i18n('Hide the account')}<img src="{$ADDR_ADMIN_ICONS}pixel/bulb.png" alt="" /></strong></a></span></p>
 										{/if}
 									{/if}
 								{/if}
 								{if $action === 'delete'}
-									<span class="Cancels"><strong>{i18n('Delete the account')}<img src="{$ADDR_ADMIN_ICONS}pixel/x.png" alt="" /></strong></span>
+									<p><span class="Cancels"><strong>{i18n('Delete the account')}<img src="{$ADDR_ADMIN_ICONS}pixel/x.png" alt="" /></strong></span></p>
 								{else}
-									<span><a href="{$FILE_SELF}?page=users&amp;user={$account.id}&amp;delete"  class="confirm_button"><strong>{i18n('Delete the account')}<img src="{$ADDR_ADMIN_ICONS}pixel/x.png" alt="" /></strong></a></span>
+									<p><span><a href="{$FILE_SELF}?page=users&amp;user={$account.id}&amp;delete"  class="confirm_button"><strong>{i18n('Delete the account')}<img src="{$ADDR_ADMIN_ICONS}pixel/x.png" alt="" /></strong></a></span></p>
 								{/if}
 							</div>
 						</div>
@@ -345,10 +345,10 @@
 
 		{if $action !== 'edit'}
 			<div class="tb1 Buttons">
-				<div class="center grid_2 button-l">
+				<div class="grid_2 center button-l">
 					<span class="Cancels"><a href="{$FILE_SELF}"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></a></span>
 				</div>
-				<div class="center grid_2 button-r">
+				<div class="grid_2 center button-r">
 					<span class="save"><a href="{$FILE_SELF}?page=add"><strong>{i18n('Create account')}<img src="{$ADDR_ADMIN_ICONS}pixel/plus.png" alt="" /></strong></a></span>
 				</div>
 			</div>
@@ -442,10 +442,10 @@
 				{/section}
 			{/if}
 			<div class="tbl Buttons">
-				<div class="sep_1 center grid_2 button-l">
+				<div class="grid_2 center button-l">
 					<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
 				</div>
-				<div class="center grid_2 button-r">
+				<div class="grid_2 center button-r">
 					<input type="hidden" name="create_account" value="yes" />
 					<span id="SendForm_This" class="save"><strong>{i18n('Create account')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
 				</div>
@@ -514,10 +514,10 @@
 				<div class="grid_6 formField"><label><input type="radio" name="hide" value="0" /> {i18n('No')}</label></div>
 			</div>
 			<div class="tbl Buttons">
-				<div class="sep_1 center grid_2 button-l">
+				<div class="grid_2 center button-l">
 					<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
 				</div>
-				<div class="center grid_2 button-r">
+				<div class="grid_2 center button-r">
 					<input type="hidden" name="send" value="yes" />
 					<span id="SendForm_This" class="save"><strong>{i18n('Send message')}<img src="{$ADDR_ADMIN_ICONS}pixel/mail.png" alt="" /></strong></span>
 				</div>
