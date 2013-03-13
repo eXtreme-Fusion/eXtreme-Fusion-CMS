@@ -39,7 +39,7 @@
 
 	<div class="tbl Buttons">
 		<div class="center grid_4 button-c">
-			<span class="save"><a href="{$ADDR_ADMIN_PAGES}panels.php"><strong>Zarządzanie panelem</strong></a></span>
+			<span class="save"><a href="{$ADDR_ADMIN_PAGES}panels.php"><strong>{i18n('Panels managment')}</strong></a></span>
 		</div>
 	</div>
 
@@ -56,7 +56,7 @@
       {i18n('Enter 0 if you do not want to delete messages.')}
       </small>
     </div>
-		<div class="formField grid_7"><input type="text" name="life_messages" id="life_messages" value="{$life_messages}" />    </div>
+		<div class="formField grid_7"><input type="text" name="life_messages" id="life_messages" value="{$life_messages}" /></div>
 	</div>
 
 	<div class="tbl1">
