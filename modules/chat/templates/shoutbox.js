@@ -16,16 +16,16 @@
 		},function() {
 			clearInterval(interval);
 		});
-		
+
 
 		refresh2();
-	  
+
 		$('form#ShoutBoxForm').submit(function() {
-		 
+
 			var action = $('input.InfoBoxButton').attr('name');
-			
+
 			$('input.InfoBoxButton').attr('name', 'send');
-			
+
 			$.post(addr_site+'modules/chat/ajax/send.php', {
 				content: $('textarea[name*="content"]', this).val(),
 				post_id: $('input[name*="post_edit_id"]', this).val(),
@@ -35,10 +35,10 @@
 				$('textarea[name*="content"]').val('');
 				refresh2();
 			  }
-			); 
+			);
 			return false;
 		});
-		
+
 		/* Usuwanie postów */
 		$('#post_shoutbox_delete').live('click', function() {
 			var href = $(this).attr('href');
@@ -47,18 +47,18 @@
 				  refresh2();
 				}, error:function(){
 					$('#ShoutBoxPosts').html('Wystąpił błąd! Odśwież stronę.');
-				}          
+				}
 			  });
 				$('#delete_shoutbox_confirm').remove();
 				$('#ShoutBoxForm').show();
 			return false;
 		});
-		
+
 		$('#post_shoutbox_cancel').live('click', function() {
 			$('#delete_shoutbox_confirm').remove();
 			$('#ShoutBoxForm').show();
 		});
-		
+
 		$('.shoutbox_delete_post').live('click', function() {
 			$('#delete_shoutbox_confirm').remove();
 			var href = $(this).attr('href');
@@ -66,9 +66,9 @@
 			$('#ShoutBoxForm').before('<div id="delete_shoutbox_confirm" class="InfoBoxInput">Na pewno chcesz usunąć ten post? <a href="'+href+'" id="post_shoutbox_delete" class="InfoBoxButton">Tak</a> <a href="javascript:void(0)" id="post_shoutbox_cancel" class="InfoBoxButton">Nie</a></div>');
 			return false;
 		});
-		
-		
-		
+
+
+
 		/* Edycja */
 		$('.shoutbox_edit_post').live('click', function() {
 			var href = $(this).attr('href');
@@ -77,17 +77,17 @@
 				  $('form#ShoutBoxForm').html(html);
 				}, error:function(){
 					$('#ShoutBoxPosts').html('Wystąpił błąd! Odśwież stronę.');
-				}          
+				}
 			  });
-			
+
 			return false;
-			
+
 		});
-		  
+
 		setInterval(function() {
 			refresh2();
 		},120000);
-		
+
 		var refresh = false;
 		$('#ShoutBoxPosts').hover(function() {
 			if (!refresh) {
@@ -97,7 +97,7 @@
 		}, function() {
 			refresh = false;
 		});
-	  
+
 	});
 
 function refresh2() {
