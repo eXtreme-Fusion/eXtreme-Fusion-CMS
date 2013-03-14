@@ -42,7 +42,7 @@
 		<div class="InfoBoxPanel">
 			{if $IsLoggedIn}
 			<form action="{$URL_REQUEST}" method="post" id="ShoutBoxForm">
-				<textarea class="InfoBoxInput" type="text" name="content" autocomplete="off"></textarea>
+				<textarea class="InfoBoxInput" name="content"></textarea>
 				<input class="InfoBoxButton" type="submit" name="send" value="{i18n('Send')}" />
 			</form>
 			{else}
@@ -50,7 +50,7 @@
 			<div class="InfoBoxCon">
 				<div id="ShoutboxIcon"></div>
 				<div class="InfoBoxCenterRight">
-					<p class="center margin-vertical-10"><strong>{i18n('You must be logged in to post a message!')}</strong></p>
+					<p class="center margin-vertical-10"><strong>{i18n('You must login to post a message!')}</p>
 				</div>
 			</div>
 			<div class="InfoBoxEnd"></div>
@@ -58,7 +58,7 @@
 		</div>
 		<div id="ShoutBoxPosts">
 		</div>
-		<div class="center margin-top-10"><a href="{$url_chat}">{i18n('ARCHIVES')}</a></div>
+		<div class="center margin-top-10"><a href="{$url_chat}">{i18n('ARCHIVE')}</a></div>
 
 	<div id="ShoutBoxDownArrow"></div>
 	{php} closeside() {/php}

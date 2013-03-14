@@ -34,8 +34,9 @@
 +--------------------------------------------------------*/
 return array(
 	'Chat' => 'Czat',
-	'Avaible only for registered users.' => 'Dostęp wyłącznie dla zalogowanych.',
-	'Send' => 'Wyślij'
-
-
+	'You must login to post a message.' => 'Musisz zalogować się, aby móc dodać wiadomość.',
+	'No messages have been posted.' => 'Brak wiadomości.',
+	'Send' => 'Wyślij',
+	'Delete' => 'Usuń',
+	'Edit' => 'Edytuj'
 );

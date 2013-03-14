@@ -34,7 +34,9 @@
 +--------------------------------------------------------*/
 return array(
 	'Chat' => 'Chat',
-	'Avaible only for registered users.' => 'Dostupný pouze pro registrované uživatele.',
-	'Send' => 'Odeslat'
-
+	'You must login to post a message.' => 'Dostupný pouze pro registrované uživatele.',
+	'No messages have been posted.' => 'Nejsou žádné zprávy.',
+	'Send' => 'Odeslat',
+	'Delete' => 'Smazat',
+	'Edit' => 'Upravit'
 );
