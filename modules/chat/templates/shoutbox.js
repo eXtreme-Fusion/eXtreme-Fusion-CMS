@@ -46,7 +46,7 @@
 				url: href, type: 'GET', success: function (html){
 				  refresh2();
 				}, error:function(){
-					$('#ShoutBoxPosts').html('Wystąpił błąd! Odśwież stronę.');
+					$('#ShoutBoxPosts').html('An error occurred! Refresh the page.');
 				}
 			  });
 				$('#delete_shoutbox_confirm').remove();
@@ -63,7 +63,7 @@
 			$('#delete_shoutbox_confirm').remove();
 			var href = $(this).attr('href');
 			$('#ShoutBoxForm').hide();
-			$('#ShoutBoxForm').before('<div id="delete_shoutbox_confirm" class="InfoBoxInput">Na pewno chcesz usunąć ten post? <a href="'+href+'" id="post_shoutbox_delete" class="InfoBoxButton">Tak</a> <a href="javascript:void(0)" id="post_shoutbox_cancel" class="InfoBoxButton">Nie</a></div>');
+			$('#ShoutBoxForm').before('<div id="delete_shoutbox_confirm" class="InfoBoxInput">Delete this shout? <a href="'+href+'" id="post_shoutbox_delete" class="InfoBoxButton">Yes</a> <a href="javascript:void(0)" id="post_shoutbox_cancel" class="InfoBoxButton">No</a></div>');
 			return false;
 		});
 
@@ -76,7 +76,7 @@
 				url: href, type: 'GET', success: function (html){
 				  $('form#ShoutBoxForm').html(html);
 				}, error:function(){
-					$('#ShoutBoxPosts').html('Wystąpił błąd! Odśwież stronę.');
+					$('#ShoutBoxPosts').html('An error occurred! Refresh the page.');
 				}
 			  });
 
@@ -106,7 +106,7 @@ function refresh2() {
     url: addr_site+'modules/chat/shoutbox_panel/ajax/messages.php', type: 'GET', success: function (html){
       $('#ShoutBoxPosts').html(html);
     }, error:function(){
-      $('#ShoutBoxPosts').html('Wystąpił błąd! Odśwież stronę.');
+      $('#ShoutBoxPosts').html('An error occurred! Refresh the page.');
     }
   });
 }

@@ -1,6 +1,6 @@
 $(function() {
   refresh();
-  
+
   $('#chat_form form').submit(function() {
     $.post(addr_site+'modules/chat/ajax/send.php', {
         content: $('input[name*="content"]', this).val(),
@@ -11,14 +11,14 @@ $(function() {
         $('input[name*="content"]').val('');
         refresh();
       }
-    ); 
+    );
     return false;
   });
-  
+
   setInterval(function() {
     refresh();
   },+refresh_chat);
-  
+
 });
 
 function refresh() {
@@ -34,7 +34,7 @@ function refresh() {
         }
       },400);
     }, error:function(){
-      $('#chat_messages section').html('Wystąpił błąd! Odśwież stronę.');
+      $('#chat_messages section').html('An error occurred! Refresh the page.');
     }
   });
 }
