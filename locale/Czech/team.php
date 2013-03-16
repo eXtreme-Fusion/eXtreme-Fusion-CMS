@@ -6,9 +6,9 @@ return array(
 	'Administrators' => 'Administrátoři',
 	'User' => 'Uživatel',
 	'Joined' => 'Registrace',
-	'Last visit' => 'Poslední návštěva',
+	'Last Visit' => 'Poslední návštěva',
 	'Online' => 'Připojen',
 	'Offline' => 'Odpojen',
 	'Groups' => 'Skupiny uživatele',
-	'There are no users who belongs to this group.' => 'V této skupině není žádný uživatel.',
+	'There are no users who belongs to this group.' => 'V této skupině není žádný uživatel.'
 );

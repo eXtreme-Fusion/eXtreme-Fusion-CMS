@@ -40,7 +40,7 @@ if ($_user->isLoggedIn())
 	{
 		HELP::redirect(base64_decode($_route->getParam('page')));
 	}
-	
+
 	$_panel->assign('is_logged_in', TRUE);
 	$_panel->assign('username', $_user->getUsername());
 
@@ -49,17 +49,17 @@ if ($_user->isLoggedIn())
 			array(':id', $_user->get('id'), PDO::PARAM_INT)
 		)
 	);
-	
+
 	if ($count)
 	{
-		$_panel->assign('messages', __('Nieprzeczytanych wiadomości: :msg', array(':msg' => $count)));
+		$_panel->assign('messages', __('Unread messages: :msg', array(':msg' => $count)));
 	}
 
 	if ($_user->hasPermission('admin.login'))
 	{
 		$_panel->assign('is_admin', TRUE);
 	}
-	
+
 	$_panel->assign('url_logout', $_route->path(array('controller' => 'account', 'action' => 'logout')));
 	$_panel->assign('url_account', $_route->path(array('controller' => 'account')));
 	$_panel->assign('url_messages', $_route->path(array('controller' => 'messages')));
@@ -70,7 +70,7 @@ else
 	if ($_sett->get('enable_registration'))
 	{
 		$_panel->assign('enable_reg', TRUE);
-		
+
 		$_panel->assign('url_register', $_route->path(array('controller' => 'register')));
 		$_panel->assign('url_password', $_route->path(array('controller' => 'password')));
 	}
