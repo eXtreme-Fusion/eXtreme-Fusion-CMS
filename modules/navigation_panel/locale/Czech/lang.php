@@ -33,4 +33,5 @@
 +--------------------------------------------------------*/
 return array(
 	'Navigation Panel' => 'Navigace',
+	'No site links' => 'Žádné odkazy'
 );
