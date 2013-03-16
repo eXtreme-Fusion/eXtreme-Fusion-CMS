@@ -1,3 +1,0 @@
-{foreach=$news.keyword; value}
-	<a href="{@value.tag_url}" rel="tag">{@value.keyword_name}</a>,
-{/foreach}

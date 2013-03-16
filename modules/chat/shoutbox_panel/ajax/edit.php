@@ -40,12 +40,13 @@ try
 	$msg = $_pdo->getField('SELECT content FROM [chat_messages] WHERE id = :id', array(
 		array(':id', $_request->get('post')->show(), PDO::PARAM_INT)
 	));
+
 	?>
 				<input type="hidden" value="<?php echo $_request->get('post')->show() ?>" name="post_edit_id" />
-				<textarea class="InfoBoxInput" type="text" name="content" autocomplete="off"><?php echo $msg; ?></textarea>
-				<input class="InfoBoxButton" type="submit" name="edit" value="Wyślij" />
+				<textarea class="InfoBoxInput" name="content"><?php echo $msg; ?></textarea>
+				<input class="InfoBoxButton" type="submit" name="edit" value="Send" />
 	<?php
-	
+
 	}
 
 }

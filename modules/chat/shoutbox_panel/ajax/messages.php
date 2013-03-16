@@ -15,6 +15,7 @@
 | written permission from the original author(s).
 *********************************************************/
 require_once '../../../../system/sitecore.php';
+$_locale->moduleLoad('shoutbox', 'chat');
 
 $_ajax = new Ajax(DIR_MODULES.DS.'chat'.DS.'shoutbox_panel'.DS.'ajax'.DS);
 $_sbb =  $ec->sbb;
@@ -27,16 +28,16 @@ $_sbb =  $ec->sbb;
 	$posts = array();
 	if ($rows)
 	{
-		if ($chat_settings['panel_limit'] == 0) 
+		if ($chat_settings['panel_limit'] == 0)
 		{
-			$result = $_pdo->getData('SELECT * FROM [chat_messages] ORDER BY `id` DESC'); 
+			$result = $_pdo->getData('SELECT * FROM [chat_messages] ORDER BY `id` DESC');
 		}
 		else
 		{
-			$result = $_pdo->getData('SELECT * FROM [chat_messages] ORDER BY `id` DESC LIMIT 0,'.intval($chat_settings['panel_limit'])); 
+			$result = $_pdo->getData('SELECT * FROM [chat_messages] ORDER BY `id` DESC LIMIT 0,'.intval($chat_settings['panel_limit']));
 		}
 
-		foreach ($result as $row) 
+		foreach ($result as $row)
 		{
 			$posts[] = array(
 				'id' => $row['id'],

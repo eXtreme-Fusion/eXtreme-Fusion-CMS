@@ -44,9 +44,9 @@
 		</div>
 		<div class="InfoBoxEndd">
 		{$posts.user}
-		{if $iAdmin}<div style="float:right;"><a href="{$ADDR_SITE}modules/chat/shoutbox_panel/ajax/delete.php?post={$posts.id}" class="shoutbox_delete_post">Usuń</a> <a href="{$ADDR_SITE}modules/chat/shoutbox_panel/ajax/edit.php?post={$posts.id}" class="shoutbox_edit_post">Edytuj</a></div>{/if}
+		{if $iAdmin}<div style="float:right;"><a href="{$ADDR_SITE}modules/chat/shoutbox_panel/ajax/delete.php?post={$posts.id}" class="shoutbox_delete_post">{i18n('Delete')}</a> <a href="{$ADDR_SITE}modules/chat/shoutbox_panel/ajax/edit.php?post={$posts.id}" class="shoutbox_edit_post">{i18n('Edit')}</a></div>{/if}
 		</div>
 	</div>
 {sectionelse}
-	<p class="center margin-vertical-10">Brak dodanych postów.</p>
+	<p class="center margin-vertical-10">{i18n('No messages have been posted.')}</p>
 {/section}
