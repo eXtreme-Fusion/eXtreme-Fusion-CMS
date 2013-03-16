@@ -173,7 +173,8 @@
 				Wystąpił błąd. Przepraszamy za utrudnienia.
 			{/if}
 		{php} closetable(); {/php}
-
-		{$comments}
+		{if $user_allow_comments}
+			{$comments}
+		{/if}
 	{/if}
 {/if}

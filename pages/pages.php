@@ -281,7 +281,7 @@ elseif (isNum($_route->getAction(), FALSE))
 	if ($row = $_pdo->getRow('SELECT * FROM [pages] WHERE `id` = '.$_route->getAction()))
 	{
 
-		$type = $_pdo->getRow('SELECT `id`, `name`, `insight_groups` FROM [pages_types] WHERE id = :id', array(':id', $row['type'], PDO::PARAM_INT));
+		$type = $_pdo->getRow('SELECT `id`, `name`, `insight_groups`, `user_allow_comments` FROM [pages_types] WHERE id = :id', array(':id', $row['type'], PDO::PARAM_INT));
 
 		if ($_user->hasAccess($type['insight_groups']))
 		{
@@ -335,7 +335,8 @@ elseif (isNum($_route->getAction(), FALSE))
 					'name' => $type['name']
 				),
 				'keyword' => $keyword,
-				'cats' => $cats_data
+				'cats' => $cats_data,
+				'user_allow_comments' => $type['user_allow_comments']
 				//'category' => $category
 			));
 

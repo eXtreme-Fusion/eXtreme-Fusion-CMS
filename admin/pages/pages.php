@@ -102,13 +102,14 @@ try
 				array(':show_date', $_request->post('show_date')->isNum(TRUE), PDO::PARAM_INT),
 				array(':show_category', $_request->post('show_category')->isNum(TRUE), PDO::PARAM_INT),
 				array(':show_tags', $_request->post('show_tags')->isNum(TRUE), PDO::PARAM_INT),
-				array(':show_type', $_request->post('show_type')->isNum(TRUE), PDO::PARAM_INT)
+				array(':show_type', $_request->post('show_type')->isNum(TRUE), PDO::PARAM_INT),
+				array(':user_allow_comments', $_request->post('user_allow_comments')->isNum(TRUE), PDO::PARAM_INT)
 			);
 
 			// Zapis edycji
 			if ($_request->get('action')->show() === 'edit' && $_request->get('id')->isNum())
 			{
-				$_pdo->exec('UPDATE [pages_types] SET `name` = :name, `for_news_page` = :for_news_page, `user_allow_edit_own` = :user_allow_edit_own, `user_allow_use_wysiwyg` = :user_allow_use_wysiwyg, `insight_groups` = :insight_groups, `editing_groups` = :editing_groups, `submitting_groups` = :submitting_groups, `show_preview` = :show_preview, `add_author` = :add_author, `change_author` = :change_author, `add_last_editing_date` = :add_last_editing_date, `change_date` = :change_date, `show_author` = :show_author, `show_date` = :show_date, `show_category` = :show_category, `show_tags` = :show_tags, `show_type` = :show_type WHERE `id` = '.$_request->get('id')->show(), $bind);
+				$_pdo->exec('UPDATE [pages_types] SET `name` = :name, `for_news_page` = :for_news_page, `user_allow_edit_own` = :user_allow_edit_own, `user_allow_use_wysiwyg` = :user_allow_use_wysiwyg, `insight_groups` = :insight_groups, `editing_groups` = :editing_groups, `submitting_groups` = :submitting_groups, `show_preview` = :show_preview, `add_author` = :add_author, `change_author` = :change_author, `add_last_editing_date` = :add_last_editing_date, `change_date` = :change_date, `show_author` = :show_author, `show_date` = :show_date, `show_category` = :show_category, `show_tags` = :show_tags, `show_type` = :show_type, `user_allow_comments` = :user_allow_comments WHERE `id` = '.$_request->get('id')->show(), $bind);
 				$_log->insertSuccess('edit', __('Data has been updated.'));
 				$_request->redirect(FILE_PATH, array('page' => 'types', 'act' => 'edit', 'status' => 'ok'));
 			}
@@ -116,8 +117,8 @@ try
 			else
 			{
 				$_pdo->exec('
-					INSERT INTO [pages_types] (`name`, `for_news_page`, `user_allow_edit_own`, `user_allow_use_wysiwyg`, `insight_groups`, `editing_groups`, `submitting_groups`, `show_preview`, `add_author`, `change_author`, `add_last_editing_date`, `change_date`, `show_author`, `show_date`, `show_category`, `show_tags`, `show_type`)
-					VALUES (:name, :for_news_page, :user_allow_edit_own, :user_allow_use_wysiwyg, :insight_groups, :editing_groups, :submitting_groups, :show_preview, :add_author, :change_author, :add_last_editing_date, :change_date, :show_author, :show_date, :show_category, :show_tags, :show_type)',
+					INSERT INTO [pages_types] (`name`, `for_news_page`, `user_allow_edit_own`, `user_allow_use_wysiwyg`, `insight_groups`, `editing_groups`, `submitting_groups`, `show_preview`, `add_author`, `change_author`, `add_last_editing_date`, `change_date`, `show_author`, `show_date`, `show_category`, `show_tags`, `show_type`, `user_allow_comments`)
+					VALUES (:name, :for_news_page, :user_allow_edit_own, :user_allow_use_wysiwyg, :insight_groups, :editing_groups, :submitting_groups, :show_preview, :add_author, :change_author, :add_last_editing_date, :change_date, :show_author, :show_date, :show_category, :show_tags, :show_type, :user_allow_comments)',
 					$bind
 				);
 
@@ -146,7 +147,8 @@ try
 				'show_date' => 1,
 				'show_category' => 1,
 				'show_tags' => 1,
-				'show_type' => 1
+				'show_type' => 1,
+				'user_allow_comments' => 1
 			));
 
 		}
@@ -172,7 +174,8 @@ try
 					'show_date' => $row['show_date'],
 					'show_category' => $row['show_category'],
 					'show_tags' => $row['show_tags'],
-					'show_type' => $row['show_type']
+					'show_type' => $row['show_type'],
+					'user_allow_comments' => $row['user_allow_comments']
 				));
 			}
 		}

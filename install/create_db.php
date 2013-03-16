@@ -73,6 +73,7 @@ $result = $_pdo->query("CREATE TABLE ".$db_prefix."pages_types (
 	`show_date` TINYINT UNSIGNED NOT NULL DEFAULT '1',
 	`show_tags` TINYINT UNSIGNED NOT NULL DEFAULT '1',
 	`show_type` TINYINT UNSIGNED NOT NULL DEFAULT '1',
+	`user_allow_comments` TINYINT UNSIGNED NOT NULL DEFAULT '1',
 	PRIMARY KEY (`id`)
 ) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";", NULL, FALSE);
 if ( ! $result) $fail = TRUE;
