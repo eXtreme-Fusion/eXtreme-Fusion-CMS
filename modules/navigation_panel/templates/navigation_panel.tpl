@@ -47,7 +47,7 @@
 				{/if}
 			{/section}
 		{else}
-			<div class="error center">No site links</div>
+			<div class="error center">{i18n('No site links')}</div>
 		{/if}
 	</ul>
 </nav>
