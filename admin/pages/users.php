@@ -207,8 +207,7 @@ try
 						'role' => $data['role']
 					);
 
-					//print_r(unserialize($data['roles']));
-					$_tpl->assign('all_groups', $_tpl->getMultiSelect($_user->getViewGroups(), unserialize($data['roles']), TRUE));
+					$_tpl->assign('all_groups', $_tpl->getMultiSelect($_user->getViewGroups(), unserialize($data['roles']), false));
 					$_tpl->assign('insight_groups', $_tpl->createSelectOpts($_user->getViewGroups(), unserialize($data['roles']), TRUE));
 
 					$_tpl->assignGroup(array(
@@ -227,16 +226,18 @@ try
 							{
 								if ($row['type'] == 3)
 								{
-									$n = 0;
-									foreach(unserialize($row['option']) as $keys => $val)
+									$n = 0;  $option = array();
+									if ($temp = unserialize($row['option']))
 									{
-										$option[$i][$keys] = array(
-											'value' => $val,
-											'n' => $n
-										);
-										$n++;
+										foreach($temp as $val)
+										{
+											$option[$n] = array(
+												'value' => $val
+											);
+											$n++;
+										}
+										$_tpl->assign('option', $option);
 									}
-									$_tpl->assign('option', $option);
 								}
 
 								$data[] = array(
@@ -250,7 +251,7 @@ try
 								$i++;
 							}
 						}
-						$_tpl->assign('data', $data);
+						$_tpl->assign('fields', $data);
 					}
 				}
 				elseif ($_request->get('suspend')->show() === '')
@@ -501,7 +502,7 @@ try
 				}
 
 				$_tpl->assign('cats', $cats);
-
+			
 				$_tpl->assignGroup(array(
 					'id' => $_user->get('id'),
 					'account' => $users,

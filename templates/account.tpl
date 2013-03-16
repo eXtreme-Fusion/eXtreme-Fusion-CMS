@@ -107,36 +107,36 @@
 
 		<h4>{i18n('Additional informations')}</h4>
 
-		{section=Cats}
+		{section=cats}
 			<div class="tbl1">
 				<div class="formField sep_1 grid_10">{$Cats.name}</div>
 			</div>
-			{section=Fields}
+			{section=fields}
 				<div class="tbl2">
-					<div class="formLabel sep_1 grid_3"><label for="{$Fields.name}">{i18n($Fields.name)}</label></div>
-					{if $Fields.type == 1}
+					<div class="formLabel sep_1 grid_3"><label for="{$fields.name}">{i18n($fields.name)}</label></div>
+					{if $fields.type == 1}
 						<div class="formField grid_7">
-							<input type="text" name="{$Fields.index}" value="{if $Fields.value}{$Fields.value}{/if}" id="{$Fields.name}" />
+							<input type="text" name="{$fields.index}" value="{if $fields.value}{$fields.value}{/if}" id="{$fields.name}" />
 						</div>
-					{elseif $Fields.type == 3}
+					{elseif $fields.type == 3}
 						<div class="formField grid_7">
-							<select name="{$Fields.index}" class="textbox">
-								{foreach=$Fields.option; value}
+							<select name="{$fields.index}" class="textbox">
+								{foreach=$fields.option; value}
 									<option value="{@value.value}"{if @value.selected} selected="selected"{/if}>{@value.display}</option>
 								{/foreach}
 							</select>
 						</div>
 					{else}
 						<div class="formField grid_7">
-							<div><textarea name="{$Fields.index}" id="{$Fields.name}" rows="3" class="resize">{$Fields.value}</textarea></div>
+							<div><textarea name="{$fields.index}" id="{$fields.name}" rows="3" class="resize">{$fields.value}</textarea></div>
 							<div>
 								{section=bbcode}
-									<button type="button" onClick="addText('{$Fields.index}', '[{$bbcode.value}]', '[/{$bbcode.value}]', 'account');"><img src="{$bbcode.image}" title="{$bbcode.description}" class="tip"></button>
+									<button type="button" onClick="addText('{$fields.index}', '[{$bbcode.value}]', '[/{$bbcode.value}]', 'account');"><img src="{$bbcode.image}" title="{$bbcode.description}" class="tip"></button>
 								{/section}
 							</div>
 							<div>
 								{section=smiley}
-									<img src="{$ADDR_IMAGES}smiley/{$smiley.image}" title="{$smiley.text}" class="tip" onclick="insertText('{$Fields.index}', '{$smiley.code}', 'account');">
+									<img src="{$ADDR_IMAGES}smiley/{$smiley.image}" title="{$smiley.text}" class="tip" onclick="insertText('{$fields.index}', '{$smiley.code}', 'account');">
 									{if $smiley.i % 10 == 0}</div><div">{/if}
 								{/section}
 							</div>

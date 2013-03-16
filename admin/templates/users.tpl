@@ -195,26 +195,46 @@
 							{/section}
 						</select>
 					</div>
-				</div>
-				{if $data}
-					<h4>{i18n('Additional informations')}</h4>
-					{section=data}
-						<div class="{$data.row_color}">
-							<div class="formLabel sep_1 grid_3"><label for="{$data.id}">{$data.name}</label></div>
-							<div class="formField grid_7">
-								{if $data.type == 1}<input type="text" name="{$data.index}" value="{$data.value}" id="{$data.id}"/>{/if}
-								{if $data.type == 2}<textarea name="{$data.index}" id="{$data.name}" rows="3" class="resize">{$data.value}</textarea>{/if}
-								{if $data.type == 3}
-									<select name="{$data.index}" class="textbox">
-										{section=option}
-											<option value="{$option.value}"{if $data.value == $option.value} selected="selected"{/if}>{$option.value}</option>
-										{/section}
+				</div>			
+				{section=cats}
+					<div class="tbl1">
+						<div class="formField sep_1 grid_10">{$cats.name}</div>
+					</div>
+					{section=fields}
+						<div class="tbl2">
+							<div class="formLabel sep_1 grid_3"><label for="{$fields.name}">{i18n($fields.name)}</label></div>
+							{if $fields.type == 1}
+								<div class="formField grid_7">
+									<input type="text" name="{$fields.index}" value="{if $fields.value}{$fields.value}{/if}" id="{$fields.name}" />
+								</div>
+							{elseif $fields.type == 3}
+								<div class="formField grid_7">
+									<select name="{$fields.index}" class="textbox">
+										{foreach=$option; var}
+											<option value="{@var.value}"{if $fields.value == @var.value} selected="selected"{/if}>{@var.value}</option>
+										{/foreach}
 									</select>
-								{/if}
-							</div>
+								</div>
+							{else}
+								<div class="formField grid_7">
+									<div><textarea name="{$fields.index}" id="{$fields.name}" rows="3" class="resize">{$fields.value}</textarea></div>
+									<div>
+										{section=bbcode}
+											<button type="button" onClick="addText('{$fields.index}', '[{$bbcode.value}]', '[/{$bbcode.value}]', 'account');"><img src="{$bbcode.image}" title="{$bbcode.description}" class="tip"></button>
+										{/section}
+									</div>
+									<div>
+										{section=smiley}
+											<img src="{$ADDR_IMAGES}smiley/{$smiley.image}" title="{$smiley.text}" class="tip" onclick="insertText('{$fields.index}', '{$smiley.code}', 'account');">
+											{if $smiley.i % 10 == 0}</div><div">{/if}
+										{/section}
+									</div>
+								</div>
+							{/if}
 						</div>
 					{/section}
-				{/if}
+				{/section}
+				
 				<div class="tbl Buttons">
 					<div class="grid_2 center button-l">
 						<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
@@ -248,7 +268,7 @@
 						<div>Grupy użytkownika: {$account.roles}</div>
 					</div>
 
-					{if $account.id !== '1'}
+					{if $account.id !== '1' || $id === '1'}
 						<div class="box">
 							<h4>{i18n('Administration options')}</h4>
 							<div class="center Buttons">

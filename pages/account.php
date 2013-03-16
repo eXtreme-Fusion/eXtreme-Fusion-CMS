@@ -193,101 +193,101 @@ if ($_request->post('save')->show() && $_request->post('email')->show())
 	HELP::redirect($_route->path(array('controller' => 'account', 'action' => 'ok')));
 }
 
-	$user = array(
-		'ID' => $_user->get('id'),
-		'Username' => $_user->get('username'),
-		'Email' => $_user->get('email'),
-		'HideEmail' => $_user->get('hide_email'),
-		'Theme' => $_user->get('theme'),
-		'Avatar' => $_user->get('avatar')
-	);
+$user = array(
+	'ID' => $_user->get('id'),
+	'Username' => $_user->get('username'),
+	'Email' => $_user->get('email'),
+	'HideEmail' => $_user->get('hide_email'),
+	'Theme' => $_user->get('theme'),
+	'Avatar' => $_user->get('avatar')
+);
 
-	$_tpl->assignGroup(array(
-		'theme_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'themes', array('templates'), TRUE, 'folders'), $_user->get('theme')),
-		'locale_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'locale', array(), TRUE, 'folders'), $_user->get('lang')),
-		'User' => $user,
-		'ChangeName' => $_sett->get('change_name')
-	));
+$_tpl->assignGroup(array(
+	'theme_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'themes', array('templates'), TRUE, 'folders'), $_user->get('theme')),
+	'locale_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'locale', array(), TRUE, 'folders'), $_user->get('lang')),
+	'User' => $user,
+	'ChangeName' => $_sett->get('change_name')
+));
 
-	//print_r($_user->getLang());
-	// Pobieranie kategorii
-	$query = $_pdo->getData('SELECT * FROM [user_field_cats] ORDER BY `order` ASC');
-	$cats = array();
+//print_r($_user->getLang());
+// Pobieranie kategorii
+$query = $_pdo->getData('SELECT * FROM [user_field_cats] ORDER BY `order` ASC');
+$cats = array();
 
-	// Przepisywanie pobranych danych na zwykłą tablicę
-	foreach($query as $data)
+// Przepisywanie pobranych danych na zwykłą tablicę
+foreach($query as $data)
+{
+	$cats[] = $data;
+}
+
+// Pobieranie pól
+$query = $_pdo->getData('SELECT * FROM [user_fields] WHERE `edit` = 0');
+
+// Przepisywanie pobranych pól na zwykłą tablicę
+foreach($query as $data)
+{
+	$fields[] = $data;
+}
+
+// Pobieranie wszystkich dodatkowych pól uzytkowników
+$data = $_pdo->getRow('SELECT * FROM [users_data] WHERE `user_id` = '.$_user->get('id').' LIMIT 1');
+
+// Przepisywanie pobranych pól na zwykłą tablicę
+$i = 0;
+
+# Segregacja danych
+if (isset($fields))
+{
+	$_new_fields = array();
+
+	foreach($cats as $key => &$cat)
 	{
-		$cats[] = $data;
-	}
-
-	// Pobieranie pól
-	$query = $_pdo->getData('SELECT * FROM [user_fields] WHERE `edit` = 0');
-
-	// Przepisywanie pobranych pól na zwykłą tablicę
-	foreach($query as $data)
-	{
-		$fields[] = $data;
-	}
-
-	// Pobieranie wszystkich dodatkowych pól uzytkowników
-	$data = $_pdo->getRow('SELECT * FROM [users_data] WHERE `user_id` = '.$_user->get('id').' LIMIT 1');
-
-	// Przepisywanie pobranych pól na zwykłą tablicę
-	$i = 0;
-
-	# Segregacja danych
-	if (isset($fields))
-	{
-		$_new_fields = array();
-
-		foreach($cats as $key => &$cat)
+		$has_data = FALSE;
+		foreach($fields as $field)
 		{
-			$has_data = FALSE;
-			foreach($fields as $field)
+			if ($field['cat'] === $cat['id'])
 			{
-				if ($field['cat'] === $cat['id'])
+				$option = array();
+				if ($field['type'] == 3)
 				{
-					$option = array();
-					if ($field['type'] == 3)
+					$n = 1;
+					foreach(unserialize($field['option']) as $val)
 					{
-						$n = 1;
-						foreach(unserialize($field['option']) as $val)
-						{
-							$option[$n] = $val;
-							$n++;
-						}
+						$option[$n] = $val;
+						$n++;
 					}
-
-					$new_fields[$key][$i] = array(
-						'name' => $field['name'],
-						'index' => $field['index'],
-						'type' => $field['type'],
-						'value' => ($data[$field['index']] ? $data[$field['index']] : NULL),
-						'option' => $_tpl->createSelectOpts($option, $data[$field['index']], FALSE, FALSE),
-					);
-
-					$has_data = TRUE;
-
-					$i++;
 				}
-			}
 
-			if ($has_data)
-			{
-				$cat['has_fields'] = '1';
-			}
-			else
-			{
-				$cat['has_fields'] = '0';
+				$new_fields[$key][$i] = array(
+					'name' => $field['name'],
+					'index' => $field['index'],
+					'type' => $field['type'],
+					'value' => ($data[$field['index']] ? $data[$field['index']] : NULL),
+					'option' => $_tpl->createSelectOpts($option, $data[$field['index']], FALSE, FALSE),
+				);
+
+				$has_data = TRUE;
+
+				$i++;
 			}
 		}
-		$_tpl->assign('Fields', $new_fields);
+
+		if ($has_data)
+		{
+			$cat['has_fields'] = '1';
+		}
+		else
+		{
+			$cat['has_fields'] = '0';
+		}
 	}
+	$_tpl->assign('fields', $new_fields);
+}
 
-	$_tpl->assign('Cats', $cats);
-	#************
+$_tpl->assign('cats', $cats);
+#************
 
-	$_tpl->assignGroup(array(
-		'bbcode' => $ec->sbb->bbcodes(),
-		'smiley' => $ec->sbb->smileys()
-	));
+$_tpl->assignGroup(array(
+	'bbcode' => $ec->sbb->bbcodes(),
+	'smiley' => $ec->sbb->smileys()
+));
