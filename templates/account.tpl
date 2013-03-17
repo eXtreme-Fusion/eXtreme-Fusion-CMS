@@ -109,7 +109,7 @@
 
 		{section=cats}
 			<div class="tbl1">
-				<div class="formField sep_1 grid_10">{$Cats.name}</div>
+				<div class="formField sep_1 grid_10">{$cats.name}</div>
 			</div>
 			{section=fields}
 				<div class="tbl2">
