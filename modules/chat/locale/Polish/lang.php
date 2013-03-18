@@ -35,7 +35,6 @@
 return array(
 	'Chat' => 'Czat',
 	'You must login to post a message.' => 'Musisz zalogować się, aby móc dodać wiadomość.',
-	'No messages have been posted.' => 'Brak wiadomości.',
 	'Send' => 'Wyślij',
 	'Delete' => 'Usuń',
 	'Edit' => 'Edytuj'
