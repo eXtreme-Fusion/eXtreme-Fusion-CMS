@@ -55,7 +55,6 @@
 		<link href="{$ADDR_COMMON_CSS}jquery.uniform.css" media="screen" rel="stylesheet">
 		<link href="{$ADDR_COMMON_CSS}jquery.table.css" media="screen" rel="stylesheet">
 		<link href="{$ADDR_COMMON_CSS}jquery.validationEngine.css" media="screen" rel="stylesheet">
-		<link href="{$ADDR_COMMON_CSS}jquery.colorpicker.css" media="screen" rel="stylesheet">
 		<link href="{$ADDR_CSS}main.css" media="screen" rel="stylesheet">
 		<link href="{$ADDR_COMMON_CSS}facebox.css" media="screen" rel="stylesheet">
 		<link href="{$THEME_CSS}styles.css" media="screen" rel="stylesheet">

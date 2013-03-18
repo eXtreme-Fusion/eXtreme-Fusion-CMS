@@ -70,6 +70,7 @@ return array(
 							</ul>',
 	'Extension error' => 'Nie znaleziono wymaganego rozszerzenia :extension_error. Należy je załadować przez odpowiednią konfigurację serwera.',
 	'Files has not been changed.' => 'Nie zmieniono plików.',
+	'Not found' => 'Nie znaleziono',
 	// Step 3 - Access criteria
 	'Please enter your MySQL database access settings.' => 'Wpisz ustawienia dla Twojej bazy danych MySQL.',
 	'Database Hostname:' => 'Adres hosta:',
@@ -106,7 +107,7 @@ return array(
 	'The folders and files listed below must be set writeable (chmod 777).' => 'Poniższym katalogom i plikom należy ustawić zapisywalność (chmod 777).',
 	'modRewrite warning' => 'Instalator nie mógł ustalić, czy twój serwer obsługuje modRewrite.<br />
 	Zaznacz to pole, jeżeli jesteś pewny, że wymieniony moduł jest dostępny. <br />
-	Odpowiada on za tworzenie linków przyjaznych wyszukiwarkom.', 
+	Odpowiada on za tworzenie linków przyjaznych wyszukiwarkom.',
 	'FURL warning' => 'Instalator rozpoznał, że używasz innego serwera niż Apache.<br />
 	Aby móc korzystać z linków przyjaznych wyszukiwarkom, serwer musi obsługiwać ścieżki PATH_INFO.<br />
 	Po zakończeniu instalacji system spróbuje ustalić, czy są one dostępne, przy czym występuje ryzyko pomyłki.<br />
