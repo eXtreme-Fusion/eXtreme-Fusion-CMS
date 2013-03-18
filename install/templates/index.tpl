@@ -13,7 +13,7 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
+|
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------+
@@ -41,13 +41,13 @@
 		<link rel="stylesheet" href="{$ADDR_SITE}templates/stylesheet/common/grid.reset.css">
 		<link rel="stylesheet" href="{$ADDR_SITE}templates/stylesheet/common/grid.text.css">
 		<link rel="stylesheet" href="{$ADDR_SITE}templates/stylesheet/common/grid.960.css">
+		<link rel="stylesheet" href="{$ADDR_SITE}templates/stylesheet/common/jquery.uniform.css">
+		<link rel="stylesheet" href="{$ADDR_SITE}templates/stylesheet/common/jquery.table.css">
 		<link rel="stylesheet" href="{$ADDR_INSTALL}stylesheet/jquery.ui.css">
-		<link rel="stylesheet" href="{$ADDR_INSTALL}stylesheet/jquery.uniform.css">
-		<link rel="stylesheet" href="{$ADDR_INSTALL}stylesheet/jquery.table.css">
 		<link rel="stylesheet" href="{$ADDR_INSTALL}stylesheet/main.css">
 		<script src="{$ADDR_SITE}templates/javascripts/common/jquery.js"></script>
 		<script src="{$ADDR_SITE}templates/javascripts/common/jquery.uniform.js"></script>
-		<script src="{$ADDR_INSTALL}javascripts/passwordStrengthMeter.js"></script>
+		<script src="{$ADDR_SITE}templates/javascripts/common/jquery.passwordStrengthMeter.js"></script>
 		<script src="{$ADDR_INSTALL}javascripts/main.js"></script>
 	</head>
 	<body>
@@ -78,7 +78,7 @@
 
 					{if $step == 0}
 						<p>{i18n('The installation was interrupted. The system can be unstable.')}</p>
-						<p><a href={$ADDR_INSTALL} title={i18n('Start the installation again.')}>{i18n('Start the installation again.')}</a></p>
+						<p><a href={$ADDR_INSTALL} title="{i18n('Start the installation again.')}">{i18n('Start the installation again.')}</a></p>
 					{elseif $step == 1}
 						<form action="index.php" method="post" id="This" autocomplete="off">
 
@@ -212,7 +212,7 @@
 							<a class="CancelButton" style="width:100px;margin:0 auto;">
 								<strong class="o">
 									<strong class="m">
-										<strong title={i18n('Stop the installation or start from the begining.')}>{i18n('Stop installation')}</strong>
+										<strong title="{i18n('Stop the installation or start from the begining.')}">{i18n('Stop installation')}</strong>
 									</strong>
 								</strong>
 							</a>
@@ -267,7 +267,7 @@
 						<a class="CancelButton" style="width:100px;margin:0 auto;">
 							<strong class="o">
 								<strong class="m">
-									<strong title={i18n('Stop the installation or start from the begining.')}>{i18n('Stop installation')}</strong>
+									<strong title="{i18n('Stop the installation or start from the begining.')}">{i18n('Stop installation')}</strong>
 								</strong>
 							</strong>
 						</a>
@@ -321,8 +321,8 @@
 								<div class="clear"></div>
 							</div>
 							<div class="tbl1">
-								<div class="formLabel grid_4"><label for="03">{i18n('Password:')}</label></div>
-								<div class="formField grid_3"><input id="03" type='password' name='db_pass' /></div>
+								<div class="formLabel grid_4"><label for="01">{i18n('Password:')}</label></div>
+								<div class="formField grid_3"><input id="01" type='password' name='db_pass' /></div>
 								<div class="clear"></div>
 							</div>
 
@@ -349,33 +349,33 @@
 								{/if}
 
 								<div class="tbl1">
-									<div class="formLabel grid_4"><label for="01">{i18n('Database Hostname:')}*</label></div>
-									<div class="formField grid_3"><input id="01" type='text' value='{$db_host}' name='db_host' /></div>
+									<div class="formLabel grid_4"><label for="07">{i18n('Database Hostname:')}*</label></div>
+									<div class="formField grid_3"><input id="07" type='text' value='{$db_host}' name='db_host' /></div>
 									<div class="clear"></div>
 								</div>
 								<div class="tbl2">
-									<div class="formLabel grid_4"><label for="01">{i18n('Database Port:')}*</label></div>
-									<div class="formField grid_3"><input id="01" type='text' value='{$db_port}' name='db_port' /></div>
+									<div class="formLabel grid_4"><label for="08">{i18n('Database Port:')}*</label></div>
+									<div class="formField grid_3"><input id="08" type='text' value='{$db_port}' name='db_port' /></div>
 									<div class="clear"></div>
 								</div>
 								<div class="tbl1">
-									<div class="formLabel grid_4"><label for="05">{i18n('Table Prefix:')}</label></div>
-									<div class="formField grid_3"><input id="05" type='text' value='{$db_prefix}' name='db_prefix' /></div>
+									<div class="formLabel grid_4"><label for="09">{i18n('Table Prefix:')}</label></div>
+									<div class="formField grid_3"><input id="09" type='text' value='{$db_prefix}' name='db_prefix' /></div>
 									<div class="clear"></div>
 								</div>
 								<div class="tbl2">
-									<div class="formLabel grid_4"><label for="06">{i18n('Cookie Prefix:')}</label></div>
-									<div class="formField grid_3"><input id="06" type='text' value='{$cookie_prefix}' name='cookie_prefix' /></div>
+									<div class="formLabel grid_4"><label for="10">{i18n('Cookie Prefix:')}</label></div>
+									<div class="formField grid_3"><input id="10" type='text' value='{$cookie_prefix}' name='cookie_prefix' /></div>
 									<div class="clear"></div>
 								</div>
 								<div class="tbl1">
-									<div class="formLabel grid_4"><label for="06">{i18n('Cache Prefix:')}</label></div>
-									<div class="formField grid_3"><input id="06" type='text' value='{$cache_prefix}' name='cache_prefix' /></div>
+									<div class="formLabel grid_4"><label for="11">{i18n('Cache Prefix:')}</label></div>
+									<div class="formField grid_3"><input id="11" type='text' value='{$cache_prefix}' name='cache_prefix' /></div>
 									<div class="clear"></div>
 								</div>
 								<div class="tbl2">
-									<div class="formLabel grid_4"><label for="06">{i18n('URL:')}*</label></div>
-									<div class="formField grid_3"><input id="06" type='text' value='{$site_url}' name='site_url' /></div>
+									<div class="formLabel grid_4"><label for="12">{i18n('URL:')}*</label></div>
+									<div class="formField grid_3"><input id="12" type='text' value='{$site_url}' name='site_url' /></div>
 									<div class="clear"></div>
 								</div>
 							</div>
@@ -396,7 +396,7 @@
 						<a class="CancelButton" style="width:100px;margin:0 auto;">
 							<strong class="o">
 								<strong class="m">
-									<strong title={i18n('Stop the installation or start from the begining.')}>{i18n('Stop installation')}</strong>
+									<strong title="{i18n('Stop the installation or start from the begining.')}">{i18n('Stop installation')}</strong>
 								</strong>
 							</strong>
 						</a>
@@ -475,7 +475,7 @@
 							<a class="CancelButton" style="width:100px;margin:0 auto;">
 								<strong class="o">
 									<strong class="m">
-										<strong title={i18n('Stop the installation or start from the begining.')}>{i18n('Stop installation')}</strong>
+										<strong title="{i18n('Stop the installation or start from the begining.')}">{i18n('Stop installation')}</strong>
 									</strong>
 								</strong>
 							</a>
