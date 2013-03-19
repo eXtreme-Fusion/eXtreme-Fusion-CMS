@@ -253,7 +253,14 @@
 			</div>
 			<div class="tbl2">
 				<div class="grid_6 formLabel"><label for="Thumbnail">{i18n('Category thumbnail:')}</label></div>
+				{if ! $thumbnail}
 				<div class="grid_4 formField"><input type="file" name="thumbnail" value="{$thumbnail}" id="Thumbnail" /></div>
+				{else}
+				<div class="grid_4 formField"><img src="{$ADDR_UPLOAD}images/{$thumbnail}">
+					<p><input type="checkbox" name="delete_thumbnail" />Usuń aktualną miniaturkę</p>
+					<input type="hidden" name="thumbnail" value="{$thumbnail}" />
+				</div>
+				{/if}
 			</div>
 			<div class="tbl Buttons">
 				<div class="grid_2 center button-l">
@@ -387,10 +394,13 @@
 				</div>
 				<div class="tbl2">
 					<div class="grid_6 formLabel"><label for="Thumbnail">{i18n('Thumbnail:')}</label></div>
-					<div class="grid_4 formField"><input type="file" name="thumbnail" id="Thumbnail" /></div>
-					{if $thumbnail}
-					 {*dostosować*}
+					{if ! $thumbnail}
+					<div class="grid_4 formField"><input type="file" name="thumbnail" value="{$thumbnail}" id="Thumbnail" /></div>
+					{else}
+					<div class="grid_4 formField"><img src="{$ADDR_UPLOAD}images/{$thumbnail}">
 						<p><input type="checkbox" name="delete_thumbnail" />Usuń aktualną miniaturkę</p>
+						<input type="hidden" name="thumbnail" value="{$thumbnail}" />
+					</div>
 					{/if}
 				</div>
 				<div class="tbl1">

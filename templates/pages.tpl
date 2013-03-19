@@ -65,12 +65,7 @@
 				{section=data}
 					{php} opentable('Kategoria &raquo; '.$this->data['data'][$i]['name']); {/php}
 						<div class="tbl">
-
-							{if $data.thumbnail}
-								<img src="{$data.thumbnail}" />
-							{/if}
-							<section id="content">{$data.description}</section>
-
+							<section id="content">{if $data.thumbnail}<img src="{$ADDR_UPLOAD}images/{$data.thumbnail}">{/if}{$data.description}</section>
 							<p><a href="{$data.link}" title="{$data.name}">Materiały w kategorii...</a></p>
 						</div>
 					{php} $i++; closetable(); {/php}
@@ -134,7 +129,7 @@
 				{section=data}
 					{php} opentable('Kategoria &raquo; '.$this->data['data'][$i]['name']); {/php}
 						<div class="tbl">
-							<section id="preview">{$data.description}</section>
+							<section id="preview">{if $data.thumbnail}<img src="{$ADDR_UPLOAD}images/{$data.thumbnail}">{/if}{$data.description}</section>
 							<div><a href="{$data.link}">Więcej...</a></div>
 						</div>
 					{php} $i++; closetable(); {/php}
@@ -168,7 +163,7 @@
 
 			</div>
 			{if $data}
-				<div>{$data.content}</div>
+				<div>{if $data.thumbnail}<img src="{$ADDR_UPLOAD}images/{$data.thumbnail}">{/if}{$data.content}</div>
 			{else}
 				Wystąpił błąd. Przepraszamy za utrudnienia.
 			{/if}

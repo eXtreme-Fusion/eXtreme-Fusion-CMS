@@ -185,6 +185,7 @@ try
 			$_pdo->exec('DELETE FROM [pages_types] WHERE id = '.$_request->get('id')->show());
 			$_log->insertSuccess('edit', __('Data has been removed.'));
 			$_request->redirect(FILE_PATH, array('page' => 'types', 'act' => 'delete', 'status' => 'ok'));
+			
 		}
 		// Przegląd wszystkich materiałów
 		else if ($_request->get('action', NULL)->show() === NULL)
@@ -226,14 +227,28 @@ try
 				array(':name', $_request->post('name')->strip(), PDO::PARAM_STR),
 				array(':description', $_request->post('description')->strip(), PDO::PARAM_STR),
 				array(':submitting_groups', $_request->post('submitting_groups')->filters('getNumArray', 'implode'), PDO::PARAM_STR),
-				array(':thumbnail', $_request->post('thumbnail')->strip(), PDO::PARAM_STR),
-				//array(':show_image', $_request->post('show_image')->isNum(TRUE), PDO::PARAM_STR)
 			);
 
+			if ($_request->upload('thumbnail'))
+			{
+				// Uploaduje plik na serwer i zwracana nazwę po zapisaniu w miejscu docelowym
+				$thumbnail = Image::sendFile($_request->_file('thumbnail')->show(), DIR_UPLOAD.'images'.DS, 'custom_pages_', TRUE);
+			}
+			elseif ($_request->post('delete_thumbnail')->show())
+			{
+				$thumbnail = '';
+				Image::delFile(DIR_UPLOAD.'images'.DS.$_request->post('thumbnail')->strip());
+			}
+
+			if (isset($thumbnail))
+			{
+				$bind[] = array(':thumbnail', $thumbnail, PDO::PARAM_STR);
+			}
+			
 			// Zapis edycji
 			if ($_request->get('action')->show() === 'edit' && $_request->get('id')->isNum())
 			{
-				$_pdo->exec('UPDATE [pages_categories] SET `name` = :name, `description` = :description, `submitting_groups` = :submitting_groups, `thumbnail` = :thumbnail WHERE `id` = '.$_request->get('id')->show(), $bind);
+				$_pdo->exec('UPDATE [pages_categories] SET `name` = :name, `description` = :description, `submitting_groups` = :submitting_groups '.(isset($thumbnail) ? ', `thumbnail` = :thumbnail' : '').' WHERE `id` = '.$_request->get('id')->show(), $bind);
 				$_log->insertSuccess('edit', __('Data has been updated.'));
 				$_request->redirect(FILE_PATH, array('page' => 'categories', 'act' => 'edit', 'status' => 'ok'));
 			}
@@ -356,7 +371,6 @@ try
 						array(':preview', $_request->post('preview')->show(), PDO::PARAM_STR)
 					);
 
-
 					if ($_request->upload('thumbnail'))
 					{
 						// Uploaduje plik na serwer i zwracana nazwę po zapisaniu w miejscu docelowym
@@ -365,6 +379,7 @@ try
 					elseif ($_request->post('delete_thumbnail')->show())
 					{
 						$thumbnail = '';
+						Image::delFile(DIR_UPLOAD.'images'.DS.$_request->post('thumbnail')->strip());
 					}
 
 					if (isset($thumbnail))
@@ -505,13 +520,19 @@ try
 			// Usuwanie kategorii z zabezpieczeniem przed usunięciem systemowej
 			elseif ($_request->get('action')->show() === 'delete' && $_request->get('id')->isNum())
 			{
-				$_pdo->exec('DELETE FROM [pages_categories] WHERE id = '.$_request->get('id')->show().' AND `is_system` = 0');
-
+				$row = $_pdo->getRow('SELECT `thumbnail` FROM [pages] WHERE `id` = :id',
+					array(
+						array(':id', $_request->get('id')->show(), PDO::PARAM_INT)
+					)
+				);
+				$_pdo->exec('DELETE FROM [comments] WHERE `content_type` = "pages" AND `content_id` = '.$_request->get('id')->show());
+				Image::delFile(DIR_UPLOAD.'images'.DS.$row['thumbnail']);
+				$_pdo->exec('DELETE FROM [pages] WHERE id = '.$_request->get('id')->show());
 
 				////$_tag->delTag('NEWS', $_request->get('id')->show());
 
 				$_log->insertSuccess('edit', __('Data has been removed.'));
-				$_request->redirect(FILE_PATH, array('page' => 'categories', 'act' => 'delete', 'status' => 'ok'));
+				$_request->redirect(FILE_PATH, array('page' => 'entries', 'act' => 'delete', 'status' => 'ok'));
 			}
 			// Przegląd wszystkich kategorii
 			else if ($_request->get('action', NULL)->show() === NULL)

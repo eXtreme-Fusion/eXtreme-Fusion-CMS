@@ -120,6 +120,7 @@ defined('ADDR_COMMON_JS') || define('ADDR_COMMON_JS', ADDR_TEMPLATES.'javascript
 defined('ADDR_COMMON_CSS') || define('ADDR_COMMON_CSS', ADDR_TEMPLATES.'stylesheet/common/');
 defined('ADDR_BBCODE') || define('ADDR_BBCODE', ADDR_SITE.'system/bbcodes/');
 defined('ADDR_MODULES') || define('ADDR_MODULES', ADDR_SITE.'modules/');
+defined('ADDR_UPLOAD') || define('ADDR_UPLOAD', ADDR_SITE.'upload/');
 
 // URL to admin section
 defined('ADDR_ADMIN') || define('ADDR_ADMIN', ADDR_SITE.'admin/');

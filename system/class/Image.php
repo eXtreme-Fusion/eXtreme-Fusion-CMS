@@ -2,25 +2,25 @@
 
 class Image
 {
-	// Œcie¿ka do obrazka wraz z nazw¹ i rozszerzeniem
+	// ÅšcieÅ¼ka do obrazka wraz z nazwÄ… i rozszerzeniem
 	protected $file;
 
-	// Rozszerzenie pliku Ÿród³owego
+	// Rozszerzenie pliku ÅºrÃ³dÅ‚owego
 	protected $ext;
 
 	// Identyfikator zasobu obrazu
 	protected $image;
 
-	// Wysokoœæ obrazu Ÿród³owego
+	// WysokoÅ›Ä‡ obrazu ÅºrÃ³dÅ‚owego
 	protected $height;
 
-	// D³ugoœæ obrazu Ÿród³owego
+	// DÅ‚ugoÅ›Ä‡ obrazu ÅºrÃ³dÅ‚owego
 	protected $width;
 
-	// Katalog do zapisu nowych obrazów
+	// Katalog do zapisu nowych obrazÃ³w
 	protected $destination_dir;
 
-	// Ustawienie odpowiadaj¹ce za niszczenie identyfikatora zasobu po wykonaniu zadania
+	// Ustawienie odpowiadajÄ…ce za niszczenie identyfikatora zasobu po wykonaniu zadania
 	protected $destroy_source;
 
 	public function __construct($file, $destination_dir = '', $destroy_source = FALSE)
@@ -38,29 +38,29 @@ class Image
 			}
 			else
 			{
-				throw new Exception('B³¹d klasy Image: Rozszerzenie pliku jest nieprawid³owe.');
+				throw new Exception('BÅ‚Ä…d klasy Image: Rozszerzenie pliku jest nieprawidÅ‚owe.');
 			}
 		}
 		else
 		{
-			throw new Exception('B³¹d klasy Image: podana œcie¿ka nie prowadzi do pliku.');
+			throw new Exception('BÅ‚Ä…d klasy Image: podana Å›cieÅ¼ka nie prowadzi do pliku.');
 		}
 	}
 
-	// Metoda statyczna: nie u¿ywaæ w kontekœcie konstruktora, ale jako samodzieln¹ metodê
+	// Metoda statyczna: nie uÅ¼ywaÄ‡ w kontekÅ›cie konstruktora, ale jako samodzielnÄ… metodÄ™
 	public static function sendFile($file, $dest, $prefix = '', $check_exists = TRUE)
 	{
-		// Zwrócenie pustej wartoœci w bazie jeœli nie wybrano obrazka do uploadu
+		// ZwrÃ³cenie pustej wartoÅ›ci w bazie jeÅ›li nie wybrano obrazka do uploadu
 		if ($file == NULL) return TRUE;
 		
 		if (!file_exists($dest))
 		{
-			throw new systemException('¯¹dany katalog uploadu pliku nie istnieje');
+			throw new systemException('Å»Ä…dany katalog uploadu pliku nie istnieje');
 		}
 
 		if (is_uploaded_file($file['tmp_name']))
 		{
-			// Zamiana znaków na ma³e w nazwie
+			// Zamiana znakÃ³w na maÅ‚e w nazwie
 			$file['name'] = strtolower($file['name']);
 
 			$ext = substr(strstr($file['name'], '.'), 1);
@@ -70,7 +70,7 @@ class Image
 			{
 				// Nowa nazwa pliku
 				$new_name = $prefix.str_replace(' ', '-', $name).'['.time().'].'.$ext;
-				// Nowa nazwa pliku wraz ze œcie¿k¹
+				// Nowa nazwa pliku wraz ze Å›cieÅ¼kÄ…
 				$new_path_name = $dest.$new_name;
 
 				if (! file_exists($new_path_name) || ! $check_exists)
@@ -85,7 +85,7 @@ class Image
 				}
 				else
 				{
-					throw new userException('Plik o podanej nazwie ju¿ istnieje.');
+					throw new userException('Plik o podanej nazwie juÅ¼ istnieje.');
 				}
 			}
 			else
@@ -95,14 +95,16 @@ class Image
 		}
 	}
 	
-	function delFile($file)
+	public static function delFile($file)
 	{
-		// Nowa nazwa pliku wraz ze œcie¿k¹
-		$new_path_name = PAGE_FILES.$file;
-
-		if (file_exists($new_path_name))
+		
+		if (file_exists($file))
 		{
-			unlink($new_path_name);
+			unlink($file);
+		}
+		else
+		{
+			throw new userException('Plik o podanej nazwie('.$file.') nie istnieje.');
 		}
 	}
 
@@ -129,7 +131,7 @@ class Image
 		$this->width = imagesx($this->image);
 	}
 
-	// Wyodrêbnia rozszerzenie pliku graficznego
+	// WyodrÄ™bnia rozszerzenie pliku graficznego
 	protected function setExtension()
 	{
 		$this->ext = strtolower(str_replace('.', '', strrchr($this->file, '.')));

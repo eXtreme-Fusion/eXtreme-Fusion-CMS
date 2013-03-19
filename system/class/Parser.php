@@ -69,6 +69,7 @@ class Parser extends optClass
 		$this->assign('ADDR_JS', ADDR_JS);
 		$this->assign('ADDR_COMMON_JS', ADDR_COMMON_JS);
 		$this->assign('ADDR_COMMON_CSS', ADDR_COMMON_CSS);
+		$this->assign('ADDR_UPLOAD', ADDR_UPLOAD);
 		$this->assignGroup(
 			array(
 				'ADDR_ADMIN_TEMPLATES' => ADDR_ADMIN_TEMPLATES,
@@ -363,7 +364,8 @@ class Iframe extends Parser
 			'ADDR_ADMIN_JS' => ADDR_ADMIN_TEMPLATES.'javascripts/',
 			'ADDR_ADMIN_PAGES' => ADDR_ADMIN.'pages/'
 		));
-
+		$this->assign('ADDR_UPLOAD', ADDR_UPLOAD);
+		
 		$this->parse('pre'.DS.'iframe_header'.$this->ext);
 		$this->parse($iframe.$this->ext);
 		$this->parse('pre'.DS.'iframe_footer'.$this->ext);
@@ -485,6 +487,7 @@ class Site extends Parser
 		$this->assign('ADDR_COMMON_JS', ADDR_COMMON_JS);
 		$this->assign('ADDR_CSS', ADDR_CSS);
 		$this->assign('ADDR_MODULES', ADDR_SITE.'modules/');
+		$this->assign('ADDR_UPLOAD', ADDR_UPLOAD);
 		$this->assign('ADDR_INCLUDES', ADDR_SITE.'system/includes/');
 		$this->assign('ADDR_ICONS', ADDR_IMAGES.'icons/');
 		$this->assign('ADDR_ADMIN_ICONS', ADDR_ADMIN_IMAGES.'icons/');
@@ -592,6 +595,7 @@ class Panel extends Parser
 		$this->assign('ADDR_JS', ADDR_JS);
 		$this->assign('ADDR_COMMON_JS', ADDR_COMMON_JS);
 		$this->assign('ADDR_MODULES', ADDR_SITE.'modules/');
+		$this->assign('ADDR_UPLOAD', ADDR_UPLOAD);
 		$this->assign('ADDR_INCLUDES', ADDR_SITE.'system/includes/');
 		$this->assign('ADDR_ICONS', ADDR_IMAGES.'icons/');
 		$this->assign('ADDR_ADMIN_ICONS', ADDR_ADMIN_IMAGES.'icons/');
@@ -664,6 +668,7 @@ class Ajax extends Parser
 		$this->assign('ADDR_JS', ADDR_JS);
 		$this->assign('ADDR_COMMON_JS', ADDR_COMMON_JS);
 		$this->assign('ADDR_MODULES', ADDR_SITE.'modules/');
+		$this->assign('ADDR_UPLOAD', ADDR_UPLOAD);
 		$this->assign('ADDR_INCLUDES', ADDR_SITE.'system/includes/');
 		$this->assign('ADDR_ICONS', ADDR_IMAGES.'icons/');
 		$this->assign('ADDR_ADMIN_ICONS', ADDR_ADMIN_IMAGES.'icons/');
@@ -715,6 +720,7 @@ class AdminModuleIframe extends Parser
 	public function template($iframe)
 	{
 		$this->assign('ADDR_MODULES', ADDR_SITE.'modules/');
+		$this->assign('ADDR_UPLOAD', ADDR_UPLOAD);
 		$this->assign('ADDR_INCLUDES', ADDR_SITE.'system/includes/');
 		$this->assign('ADDR_ADMIN_ICONS', ADDR_ADMIN_IMAGES.'icons/');
 		$this->assign('ADDR_ADMIN_CSS', ADDR_ADMIN_TEMPLATES.'stylesheet/');
