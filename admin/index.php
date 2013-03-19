@@ -39,6 +39,11 @@ try
 
 	$tpl = new AdminMainEngine;
 
+	if ($_user->bannedByIP())
+	{
+		$_request->redirect(ADDR_SITE);
+	}
+	
 	$tpl->assign('Action', $_request->get('action')->show());
 	
 	if ($_request->session(array('history', 'Page'))->show())

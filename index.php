@@ -56,6 +56,11 @@ try
 		exit('eXtreme-Fusion 5 Beta 6');
 	}
 
+	if ($_user->bannedByIP())
+	{
+		$_route->trace(array('controller' => 'error', 'action' => 404, 'params' => NULL)); exit('Banned...');
+	}
+	
 	StaticContainer::register('route', $_route);
 
 	// Tryb prac na serwerze

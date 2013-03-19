@@ -123,6 +123,16 @@ if ($_request->post('create_account')->show())
 			if ($_user->bannedByEmail($_request->post('user_email')->show()))
 			{
 				$error[] = '7';
+				
+				$_pdo->exec('INSERT INTO [blacklist] (`ip`, `type`, `user_id`, `email`, `reason`, `datestamp`) VALUES (:ip, :type, :user_id, :email, :reason, '.time().')',
+					array(
+						array(':ip', $_user->getIP(), PDO::PARAM_STR),
+						array(':type', $_user->getIPType(), PDO::PARAM_INT),
+						array(':user_id', 1, PDO::PARAM_INT),
+						array(':email', $_request->post('user_email')->show(), PDO::PARAM_STR),
+						array(':reason', __('Gość próbował się rejestrować na zablokowany email lub domenę, jego adres IP został dodany do bazy danych jako podejrzany!'), PDO::PARAM_STR)
+					)
+				);
 			}
 		}
 	}

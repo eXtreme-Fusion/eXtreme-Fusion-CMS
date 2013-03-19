@@ -108,7 +108,7 @@ try
 		
 		if ( ! $email || ! $ip)
 		{
-			$count = TRUE;
+			
 			if ( ! $_request->post('id')->show())
 			{
 				if ($ip)
@@ -125,54 +125,48 @@ try
 				}
 			}
 			
-			if ( ! $count)
+			
+			if ($_request->post('save')->show() === 'yes' && $_request->post('id')->show())
 			{
-				if ($_request->post('save')->show() === 'yes' && $_request->post('id')->show())
+				$count = $_pdo->exec('UPDATE [blacklist] SET `ip` = :ip, `type` = :type, `email` = :email, `reason` = :reason WHERE `id` = :id',
+					array(
+						array(':id', $_request->post('id')->show(), PDO::PARAM_INT),
+						array(':ip', $ip, PDO::PARAM_STR),
+						array(':type', $ip_type, PDO::PARAM_INT),
+						array(':email', $email, PDO::PARAM_STR),
+						array(':reason', $reason, PDO::PARAM_STR)
+					)
+				);
+
+				if ($count)
 				{
-					$count = $_pdo->exec('UPDATE [blacklist] SET `ip` = :ip, `type` = :type, `email` = :email, `reason` = :reason WHERE `id` = :id',
-						array(
-							array(':id', $_request->post('id')->show(), PDO::PARAM_INT),
-							array(':ip', $ip, PDO::PARAM_STR),
-							array(':type', $ip_type, PDO::PARAM_INT),
-							array(':email', $email, PDO::PARAM_STR),
-							array(':reason', $reason, PDO::PARAM_STR)
-						)
-					);
-
-					if ($count)
-					{
-						$_log->insertSuccess('edit', __('Blocked address has been edited.'));
-						$_request->redirect(FILE_PATH, array('act' => 'edit', 'status' => 'ok'));
-					}
-
-					$_log->insertFail('edit', __('Error! Blockd address has not been edited.'));
-					$_request->redirect(FILE_PATH, array('act' => 'edit', 'status' => 'error'));
+					$_log->insertSuccess('edit', __('Blocked address has been edited.'));
+					$_request->redirect(FILE_PATH, array('act' => 'edit', 'status' => 'ok'));
 				}
-				else
-				{
-					$count = $_pdo->exec('INSERT INTO [blacklist] (`ip`, `type`, `user_id`, `email`, `reason`, `datestamp`) VALUES (:ip, :type, :user_id, :email, :reason, '.time().')',
-						array(
-							array(':ip', $ip, PDO::PARAM_STR),
-							array(':type', $ip_type, PDO::PARAM_INT),
-							array(':user_id', $_user->get('id'), PDO::PARAM_INT),
-							array(':email', $email, PDO::PARAM_STR),
-							array(':reason', $reason, PDO::PARAM_STR)
-						)
-					);
 
-					if ($count)
-					{
-						$_log->insertSuccess('add', __('Address has been added to the blacklist.'));
-						$_request->redirect(FILE_PATH, array('act' => 'add', 'status' => 'ok'));
-					}
-
-					$_log->insertFail('add', __('Error! Address has not been added to the blacklist.'));
-					$_request->redirect(FILE_PATH, array('act' => 'add', 'status' => 'error'));
-				}
+				$_log->insertFail('edit', __('Error! Blockd address has not been edited.'));
+				$_request->redirect(FILE_PATH, array('act' => 'edit', 'status' => 'error'));
 			}
 			else
 			{
-				throw new userException(__('Error! Specified address already is in database.'));
+				$count = $_pdo->exec('INSERT INTO [blacklist] (`ip`, `type`, `user_id`, `email`, `reason`, `datestamp`) VALUES (:ip, :type, :user_id, :email, :reason, '.time().')',
+					array(
+						array(':ip', $ip, PDO::PARAM_STR),
+						array(':type', $ip_type, PDO::PARAM_INT),
+						array(':user_id', $_user->get('id'), PDO::PARAM_INT),
+						array(':email', $email, PDO::PARAM_STR),
+						array(':reason', $reason, PDO::PARAM_STR)
+					)
+				);
+
+				if ($count)
+				{
+					$_log->insertSuccess('add', __('Address has been added to the blacklist.'));
+					$_request->redirect(FILE_PATH, array('act' => 'add', 'status' => 'ok'));
+				}
+
+				$_log->insertFail('add', __('Error! Address has not been added to the blacklist.'));
+				$_request->redirect(FILE_PATH, array('act' => 'add', 'status' => 'error'));
 			}
 		}
 		else

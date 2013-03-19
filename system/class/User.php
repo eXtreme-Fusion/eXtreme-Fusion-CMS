@@ -46,6 +46,15 @@ class User {
 	// Przechowuje adres IP użytkownika
 	protected $_ip;
 
+	// Przechowuje typ IP użytkownika
+	protected $_ip_type;
+
+	// Przechowuje IP 6 użytkownika
+	protected $_ip_v6;
+
+	// Przechowuje typ 4 użytkownika
+	protected $_ip_v4;
+
 	protected $_custom_data;
 
 	/**
@@ -112,7 +121,31 @@ class User {
 
 		if (filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP))
 		{
-			$this->_ip = $_SERVER['REMOTE_ADDR'];
+			if (strpos($_SERVER['REMOTE_ADDR'], ".")) 
+			{
+				if (strpos($_SERVER['REMOTE_ADDR'], ":") === FALSE) 
+				{
+					// IPv4
+					$this->_ip_type = 4;
+					$this->_ip = $_SERVER['REMOTE_ADDR'];
+				} 
+				else
+				{
+					// Mixed IPv4 and IPv6
+					$this->_ip_type = 5;
+					$last_pos = strrpos($_SERVER['REMOTE_ADDR'], ':');
+					$ipv4 = substr($_SERVER['REMOTE_ADDR'], $last_pos + 1);
+					$ipv6 = substr($_SERVER['REMOTE_ADDR'], 0, $last_pos);
+					$ipv6 = $this->IPv6($ipv6, 5);
+					$this->_ip_v6 = $ipv6;
+					$this->_ip_v4 = $ipv4;
+					$this->_ip = $ipv6.':'.$ipv4;
+				}
+			} else {
+				// IPv6
+				$this->_ip_type = 6;
+				$this->_ip = $this->IPv6($_SERVER['REMOTE_ADDR'], 7);
+			}
 		}
 		else
 		{
@@ -926,6 +959,16 @@ class User {
 	}
 
 	/**
+	 * Zwraca typ IP użytkownika.
+	 *
+	 * @return  string
+	 */
+	public function getIPType()
+	{
+		return $this->_ip_type;
+	}
+
+	/**
 	 * Sprawdza, czy użytkownik jest zalogowany.
 	 *
 	 * @return  bool
@@ -1707,12 +1750,7 @@ class User {
 
 	public function getEmailHost($email)
 	{
-		if (strlen($string = strrchr($email, '@')))
-		{
-			return substr($string, 1);
-		}
-
-		return FALSE;
+		return substr(strrchr($email, "@"), 1);
 	}
 
 	public function bannedByEmail($email, $validation = FALSE)
@@ -1729,6 +1767,43 @@ class User {
 		}
 
 		return TRUE;
+	}
+	
+	private function IPv6($ip, $limit)
+	{
+		if (strpos($ip, "::") !== FALSE) 
+		{
+			$ip = str_replace("::", str_repeat(":", $limit + 2 - substr_count($ip, ":")), $ip);
+		}
+		$tmp = explode(":", $ip);
+		foreach ($tmp as &$value) {
+			$value = str_pad($value, 4, '0', STR_PAD_LEFT);	
+		}
+		return implode(":", $tmp);
+	}
+	
+	public function bannedByIP()
+	{
+		if ($this->_ip)
+		{
+			if($this->_ip_type === 4)
+			{	
+				
+				return $this->_pdo->getMatchRowsCount('SELECT `id` FROM [blacklist] WHERE type=4 AND ip REGEXP "^'.str_replace(".", ".(", $this->_ip, $i).str_repeat(")?", $i).'$"');
+			}
+			elseif($this->_ip_type === 5)
+			{
+				return $this->_pdo->getMatchRowsCount('SELECT `id` FROM [blacklist] WHERE (type=4 AND ip REGEXP "^'.str_replace(".", ".(", $this->_ip_v4, $i).str_repeat(")?", $i).'$") OR (type=6 AND ip REGEXP "^'.str_replace(":", ":(", $this->_ip_v6, $i).str_repeat(")?", $i).'$") OR (type=5 AND ip=\''.$this->_ip.'\')');
+			}
+			elseif($this->_ip_type === 6)
+			{
+				return $this->_pdo->getMatchRowsCount('SELECT `id` FROM [blacklist] WHERE type=6 AND ip REGEXP "^'.str_replace(":", ":(", $this->_ip, $i).str_repeat(")?", $i).'$"');
+			}
+			else
+			{
+				throw new userException(__('Your IP address is not valid!'));
+			}
+		}
 	}
 
 	// Przekierowanie na logowanie z zachowaniem adresu do przeglądanej strony
