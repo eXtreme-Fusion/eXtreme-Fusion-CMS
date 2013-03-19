@@ -26,7 +26,7 @@
 			</form>
 		</div>
 	{else}
-		<p class="center">{i18n('Commenting has been disabled for Your group permissions')}</p>
+		<p class="center">{i18n('Commenting has been disabled for your group permissions')}</p>
 	{/if}
 	{php} closetable() {/php}
 	<div id="comment-block">
