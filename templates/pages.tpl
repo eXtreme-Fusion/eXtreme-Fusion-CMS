@@ -64,7 +64,7 @@
 				{php} $i = 0; {/php}
 				{section=data}
 					{php} opentable('Kategoria &raquo; '.$this->data['data'][$i]['name']); {/php}
-						<div class="tbl">
+						<div class="tbl formated_text clearfix">
 							<section id="content">{if $data.thumbnail}<img src="{$ADDR_UPLOAD}images/{$data.thumbnail}">{/if}{$data.description}</section>
 							<p><a href="{$data.link}" title="{$data.name}">Materiały w kategorii...</a></p>
 						</div>
@@ -86,7 +86,7 @@
 				{php} $i = 0; {/php}
 				{section=data}
 					{php} opentable('Materiał &raquo; '.$this->data['data'][$i]['title']); {/php}
-						<div class="tbl">
+						<div class="tbl formated_text clearfix">
 							<p class="margin-b-10"><small>Dodane przez {$data.author} dnia {$data.date}</small></p>
 							<section id="preview">{$data.preview}</section>
 							<div><a href="{$data.link}">Czytaj więcej...</a></div>
@@ -107,7 +107,7 @@
 				{php} $i = 0; {/php}
 				{section=data}
 					{php} opentable('Materiał &raquo; '.$this->data['data'][$i]['title']); {/php}
-						<div class="tbl">
+						<div class="tbl formated_text clearfix">
 							<p class="margin-b-10"><small>Dodane przez {$data.author} dnia {$data.date}</small></p>
 							<section id="preview">{$data.preview}</section>
 							<div><a href="{$data.link}">Czytaj więcej...</a></div>
@@ -128,7 +128,7 @@
 				{php} $i = 0; {/php}
 				{section=data}
 					{php} opentable('Kategoria &raquo; '.$this->data['data'][$i]['name']); {/php}
-						<div class="tbl">
+						<div class="tbl formated_text clearfix">
 							<section id="preview">{if $data.thumbnail}<img src="{$ADDR_UPLOAD}images/{$data.thumbnail}">{/if}{$data.description}</section>
 							<div><a href="{$data.link}">Więcej...</a></div>
 						</div>
@@ -163,7 +163,7 @@
 
 			</div>
 			{if $data}
-				<div>{if $data.thumbnail}<img src="{$ADDR_UPLOAD}images/{$data.thumbnail}">{/if}{$data.content}</div>
+				<div class="formated_text clearfix">{if $data.thumbnail}<img src="{$ADDR_UPLOAD}images/{$data.thumbnail}">{/if}{$data.content}</div>
 			{else}
 				Wystąpił błąd. Przepraszamy za utrudnienia.
 			{/if}
