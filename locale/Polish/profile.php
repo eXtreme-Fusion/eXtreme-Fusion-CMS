@@ -6,5 +6,4 @@ return array(
 	'e-Mail' => 'Adres e-mail',
 	'Joined' => 'Dołączył',
 	'Last Visit' => 'Ostatnia wizyta',
-	'E-Mail hidden to the request' => 'E-mail ukryty na prośbę',
 );
