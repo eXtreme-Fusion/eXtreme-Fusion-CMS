@@ -34,7 +34,7 @@
 * {margin: 0;padding: 0;}
 a {color:#666;text-decoration:none;}
 a img {border:none;}
-body {background:url(../../templates/stylesheet/images/ui/iframe-shadow-top.png) repeat-x 0 81px;color:#333;font-size:12px;font-family:Tahoma,Geneva,Kalimati,sans-serif;margin:0;padding:0;}
+body {background:url(../../admin/templates/images/ui/iframe-shadow-top.png) repeat-x 0 81px;color:#333;font-size:12px;font-family:Tahoma,Geneva,Kalimati,sans-serif;margin:0;padding:0;}
 /* * table tr td, table tr td {margin:0;padding:0;border-spacing:0;width:100%} */
 .clear {clear:both;overflow:hidden;width:0;height:0;}
 .tab-cont{display:none}
@@ -92,7 +92,7 @@ h1	{
 	padding:0 0 0 26px;
 	}
 #simpleTooltip {
-	background:#3C3C3C url(../../templates/stylesheet/images/shared/nav/repeat.jpg) repeat-x 0 -37px;
+	background:#3C3C3C url(../../admin/templates/images/shared/nav/repeat.jpg) repeat-x 0 -37px;
 	max-width:260px;
 	line-height:1.4em;
 	color:#fff;
@@ -105,12 +105,12 @@ h1	{
 /*=======================
 	Corner 4px
 ========================*/
-.corner4px .ctl {background:url(../../templates/stylesheet/images/shared/corner4px.png) no-repeat left -8px;font-size:1px;height:4px;}
-.corner4px .ctl .ctr {background:url(../../templates/stylesheet/images/shared/corner4px.png) no-repeat right 0;font-size:1px;margin:0 0 0 4px;}
+.corner4px .ctl {background:url(../../admin/templates/images/shared/corner4px.png) no-repeat left -8px;font-size:1px;height:4px;}
+.corner4px .ctl .ctr {background:url(../../admin/templates/images/shared/corner4px.png) no-repeat right 0;font-size:1px;margin:0 0 0 4px;}
 .corner4px .ctl .ctr .ctc {background:#fbfbfb;border-top:1px #ddd solid;height:4px;margin:0 4px 0 0;}
 .corner4px .cc {background:#fbfbfb;border-left:1px #ddd solid;border-right:1px #ddd solid;padding:3px 6px 0px 6px;}
-.corner4px .cfl {background:url(../../templates/stylesheet/images/shared/corner4px.png) no-repeat left -12px;font-size:1px;height:4px;}
-.corner4px .cfl .cfr {background:url(../../templates/stylesheet/images/shared/corner4px.png) no-repeat right -3px;font-size:1px;margin:0 0 0 4px;}
+.corner4px .cfl {background:url(../../admin/templates/images/shared/corner4px.png) no-repeat left -12px;font-size:1px;height:4px;}
+.corner4px .cfl .cfr {background:url(../../admin/templates/images/shared/corner4px.png) no-repeat right -3px;font-size:1px;margin:0 0 0 4px;}
 .corner4px .cfl .cfr .cfc {background:#fbfbfb;border-bottom:1px #ddd solid;height:4px;margin:0 4px 0 0;}
 
 
@@ -143,13 +143,13 @@ div.status div, div.info div, div.error div, div.valid div {margin:0 65px 0 10px
 div.status a, div.info a, div.error a, div.valid a {font-weight:normal;text-decoration:underline;}
 .status-right, .info-right, .error-right, .valid-right {width:55px;position:absolute;top:0;right:-6px;}
 .status-right a, .info-right a, .error-right a, .valid-right a {cursor:pointer;}
-div.status {background:url(../../templates/stylesheet/images/table/messages-sprite.png) no-repeat 0 -70px;color:#e79300;}
+div.status {background:url(images/messages-sprite.png) no-repeat 0 -70px;color:#e79300;}
 div.status a {color:#e79300;}
-div.info {background:url(../../templates/stylesheet/images/table/messages-sprite.png) no-repeat 0 -105px;color:#2e74b2;}
+div.info {background:url(images/messages-sprite.png) no-repeat 0 -105px;color:#2e74b2;}
 div.info a {color:#2e74b2;}
-div.error	{background: url(../../templates/stylesheet/images/table/messages-sprite.png) no-repeat 0 -35px;color:#ce2700;}
+div.error	{background: url(images/messages-sprite.png) no-repeat 0 -35px;color:#ce2700;}
 div.error a {color:#ce2700;}
-div.valid {background: url(../../templates/stylesheet/images/table/messages-sprite.png) no-repeat 0 0;color: #6da827;}
+div.valid {background: url(images/messages-sprite.png) no-repeat 0 0;color: #6da827;}
 div.valid a {color:#6da827;}
 
 #InstalationSteps {

@@ -12,7 +12,6 @@
 		<link href="{$ADDR_COMMON_CSS}jquery.table.css" media="screen" rel="stylesheet" />
 		<link href="{$ADDR_COMMON_CSS}jquery.validationEngine.css" media="screen" rel="stylesheet" />
 		<link href="{$ADDR_COMMON_CSS}jquery.tipTip.css" media="screen" rel="stylesheet" />
-		<link href="{$ADDR_COMMON_CSS}jquery.colorpicker.css" media="screen" rel="stylesheet" />
 		<link href="{$ADDR_ADMIN_CSS}jquery.tagedit.css" media="screen" rel="stylesheet" />
 		<link href="{$ADDR_ADMIN_CSS}main.css" media="screen" rel="stylesheet" />
 
