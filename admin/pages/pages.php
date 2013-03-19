@@ -295,11 +295,22 @@ try
 		// Usuwanie kategorii z zabezpieczeniem przed usunięciem systemowej
 		elseif ($_request->get('action')->show() === 'delete' && $_request->get('id')->isNum())
 		{
+			$row = $_pdo->getRow('SELECT `thumbnail` FROM [pages_categories] WHERE `id` = :id',
+				array(
+					array(':id', $_request->get('id')->show(), PDO::PARAM_INT)
+				)
+			);
+			
+			Image::delFile(DIR_UPLOAD.'images'.DS.$row['thumbnail']);
+			
+			$_pdo->exec('UPDATE [pages] SET `categories` = :categories WHERE `id` = :id',
+				array(
+					array(':categories', 1, PDO::PARAM_INT),
+					array(':id', $_request->get('id')->show(), PDO::PARAM_INT)
+				)
+			);
+			
 			$_pdo->exec('DELETE FROM [pages_categories] WHERE id = '.$_request->get('id')->show().' AND `is_system` = 0');
-
-			//TODO:: materiały moga być w kilku kategoriach. Trzeba zrobić ich analize i tym,
-			//TODO:: które są przypisane tylko od wlaśnie usunietej kategorii, dać przypisanie do kategorii systemowej.
-
 
 			$_log->insertSuccess('edit', __('Data has been removed.'));
 			$_request->redirect(FILE_PATH, array('page' => 'categories', 'act' => 'delete', 'status' => 'ok'));
