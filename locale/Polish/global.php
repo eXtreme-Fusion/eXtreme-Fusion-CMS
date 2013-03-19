@@ -395,12 +395,12 @@ return array(
 	
 	//Comments 
 	'Add comments' => 'Skomentuj',
-	'Identification' => 'Identyfikator',
+	'Your name' => 'Twoja ksywka',
 	'Enter a comment' => 'Wpisz komentarz...',
 	'Add replay' => 'Dodaj odpowiedź',
 	'Adding your comment' => 'Dodawanie komentarza',
 	'Comment has been added' => 'Komentarz został dodany',
-	'Commenting has been disabled for Your group permissions' => 'Komentowanie zostało wyłączone dla Twojej grupy uprawnień',
+	'Commenting has been disabled for your group permissions' => 'Komentowanie zostało wyłączone dla twojej grupy uprawnień',
 	
 	//News Categories
 	'Bugs' => 'Błędy',

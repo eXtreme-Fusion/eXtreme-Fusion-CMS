@@ -296,9 +296,7 @@ try
 		elseif ($_request->get('action')->show() === 'delete' && $_request->get('id')->isNum())
 		{
 			$row = $_pdo->getRow('SELECT `thumbnail` FROM [pages_categories] WHERE `id` = :id',
-				array(
-					array(':id', $_request->get('id')->show(), PDO::PARAM_INT)
-				)
+				array(':id', $_request->get('id')->show(), PDO::PARAM_INT)
 			);
 			
 			Image::delFile(DIR_UPLOAD.'images'.DS.$row['thumbnail']);
@@ -532,9 +530,7 @@ try
 			elseif ($_request->get('action')->show() === 'delete' && $_request->get('id')->isNum())
 			{
 				$row = $_pdo->getRow('SELECT `thumbnail` FROM [pages] WHERE `id` = :id',
-					array(
-						array(':id', $_request->get('id')->show(), PDO::PARAM_INT)
-					)
+					array(':id', $_request->get('id')->show(), PDO::PARAM_INT)
 				);
 				$_pdo->exec('DELETE FROM [comments] WHERE `content_type` = "pages" AND `content_id` = '.$_request->get('id')->show());
 				Image::delFile(DIR_UPLOAD.'images'.DS.$row['thumbnail']);
