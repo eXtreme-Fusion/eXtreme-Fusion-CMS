@@ -8,8 +8,6 @@ return array(
 	'Site URL:' => 'Adres strony:',
 	'Banner:' => 'Logo:',
 	'This banner will be displayed if only design author will use correct template methods.' => 'Logo z tego pola zostanie wyświetlone tylko wtedy, gdy twórca szablonu korzysta z odpowiednich do tego metod.',
-	'Admin e-mail address:' => 'Adres e-mail administratora:',
-	'Your nick:' => 'Twój nick:',
 	'Welcome message:' => 'Wiadomość powitalna:',
 	'Optional, field can be empty. HTML code is allowed.' => 'Nieobowiązkowe, pole może pozostać puste. Kod HTML dozwolony.',
 	'Site Description' => 'Opis strony:',

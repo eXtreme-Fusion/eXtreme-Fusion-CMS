@@ -54,14 +54,6 @@
 		<div class="grid_4 formField"><input type="text" name="site_banner" value="{$site_banner}" id="SiteBanner" class="num_255" maxlength="255" /></div>
 	</div>
 	<div class="tbl2">
-		<div class="grid_6 formLabel"><label for="SiteEmail">{i18n('Admin e-mail address:')}</label></div>
-		<div class="grid_4 formField"><input type="text" name="siteemail" value="{$siteemail}" id="SiteEmail" class="num_128" maxlength="128" /></div>
-	</div>
-	<div class="tbl1">
-		<div class="grid_6 formLabel"><label for="SiteUsername">{i18n('Your nick:')}</label></div>
-		<div class="grid_4 formField"><input type="text" name="siteusername" value="{$siteusername}" id="SiteUsername" class="num_32" maxlength="32" /></div>
-	</div>
-	<div class="tbl2">
 		<div class="grid_6 formLabel"><label for="SiteIntro">{i18n('Welcome message:')}</label><small>{i18n('Optional, field can be empty. HTML code is allowed.')}</small></div>
 		<div class="grid_4 formField"><textarea name="siteintro" id="SiteIntro" class="resize" rows="1">{$siteintro}</textarea></div>
 	</div>
