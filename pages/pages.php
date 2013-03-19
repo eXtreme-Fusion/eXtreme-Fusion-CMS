@@ -111,7 +111,7 @@ elseif ($_route->getAction() === 'type')
 								'name' => $row['name'],
 								'description' => $row['description'],
 								'link' => $_route->path(array('action' => 'category', $_route->getParamVoid(1), $row['id'], HELP::Title2Link($row['name']))),
-								'thumbnail' => $row['thumbnail'] ? DIR_UPLOAD.'images'.DS.$row['thumbnail'] : FALSE
+								'thumbnail' => $row['thumbnail']
 							);
 						}
 
@@ -158,6 +158,7 @@ elseif ($_route->getAction() === 'category')
 						$data[] = array(
 							'title' => $row['title'],
 							'preview' => $row['preview'],
+							'thumbnail' => $row['thumbnail'],
 							'date' => HELP::showdate('longdate', $row['date']),
 							'author' => HELP::profileLink(NULL, $row['author']),
 							'link' => $_route->path(array('action' => $row['id'], HELP::Title2Link($row['title'])))
@@ -224,6 +225,7 @@ elseif ($_route->getAction() === 'categories')
 						$data[] = array(
 							'title' => $row['title'],
 							'preview' => $row['preview'],
+							'thumbnail' => $row['thumbnail'],
 							'date' => HELP::showdate('longdate', $row['date']),
 							'author' => HELP::profileLink(NULL, $row['author']),
 							'link' => $_route->path(array('action' => $row['id'], HELP::Title2Link($row['title'])))
@@ -253,13 +255,14 @@ elseif ($_route->getAction() === 'categories')
 	{
 		$page = 'categories_list';
 
-		$query = $_pdo->getData('SELECT `id`, `name`, `description` FROM [pages_categories] ORDER BY `id` DESC');
+		$query = $_pdo->getData('SELECT `id`, `name`, `description`, `thumbnail` FROM [pages_categories] ORDER BY `id` DESC');
 		$data = array();
 		foreach($query as $row)
 		{
 			$data[] = array(
 				'name' => $row['name'],
 				'description' => $row['description'],
+				'thumbnail' => $row['thumbnail'],
 				'link' => $_route->path(array('action' => 'categories', $row['id'], HELP::Title2Link($row['name'])))
 			);
 		}
@@ -288,6 +291,7 @@ elseif (isNum($_route->getAction(), FALSE))
 			$_tpl->assign('data', array(
 				'title' => $row['title'],
 				'content' => $row['content'],
+				'thumbnail' => $row['thumbnail'],
 				'preview' => $row['preview'],
 				'date' => HELP::showdate('longdate', $row['date']),
 				'author' => HELP::profileLink(NULL, $row['author'])
