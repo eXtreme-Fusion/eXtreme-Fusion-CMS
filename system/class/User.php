@@ -335,7 +335,7 @@ class User {
 		{
 			if (file_exists(DIR_IMAGES.'avatars'.DS.$this->get('avatar')))
 			{
-				unlink(DIR_IMAGES.'avatars'.DS.$avatar);
+				unlink(DIR_IMAGES.'avatars'.DS.$this->get('avatar'));
 			}
 
 			return $this->updateAvatar('', $this->get('id'));

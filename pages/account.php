@@ -209,7 +209,6 @@ $_tpl->assignGroup(array(
 	'ChangeName' => $_sett->get('change_name')
 ));
 
-//print_r($_user->getLang());
 // Pobieranie kategorii
 $query = $_pdo->getData('SELECT * FROM [user_field_cats] ORDER BY `order` ASC');
 $cats = array();
@@ -264,6 +263,7 @@ if (isset($fields))
 					'type' => $field['type'],
 					'value' => ($data[$field['index']] ? $data[$field['index']] : NULL),
 					'option' => $_tpl->createSelectOpts($option, $data[$field['index']], FALSE, FALSE),
+					'label' => preg_replace("{\s+}", '_', strtolower($field['name'])),
 				);
 
 				$has_data = TRUE;

@@ -445,7 +445,6 @@ $result = $_pdo->query("CREATE TABLE ".$db_prefix."users_data (
   `www` VARCHAR(200) NOT NULL DEFAULT '',
   `location` VARCHAR(200) NOT NULL DEFAULT '',
   `sig` TEXT NOT NULL DEFAULT '',
-  `lang` VARCHAR(200) NOT NULL DEFAULT 'English',
   PRIMARY KEY (`user_id`)
 ) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";", NULL, FALSE);
 if ( ! $result) $fail = TRUE;

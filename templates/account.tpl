@@ -74,9 +74,12 @@
 		</div>
 		<div class="tbl1">
 			{if $User.Avatar}
-				<div class="formField sep_3 grid_8"><img src="{$ADDR_IMAGES}avatars/{$User.Avatar}"></div>
-				<div id="DelAvatarBox">
-					<div class="formField sep_3 grid_8"><label for="DelAvatar"><input type="checkbox" name="del_avatar" value="del" id="DelAvatar" /> {i18n('Usuń aktualny avatar')}</label></div>
+				<div class="formLabel sep_1 grid_3">{i18n('Avatar:')}</div>
+				<div class="formField grid_7">
+					<img src="{$ADDR_IMAGES}avatars/{$User.Avatar}">
+					<p>
+						<label for="DelAvatar"><input type="checkbox" name="del_avatar" value="del" id="DelAvatar" /> {i18n('Usuń aktualny avatar')}</label>
+					</p>
 				</div>
 			{else}
 				<div class="formLabel sep_1 grid_3"><label for="Avatar">{i18n('Avatar:')}</label></div>
@@ -113,10 +116,10 @@
 			</div>
 			{section=fields}
 				<div class="tbl2">
-					<div class="formLabel sep_1 grid_3"><label for="{$fields.name}">{i18n($fields.name)}</label></div>
+					<div class="formLabel sep_1 grid_3"><label for="{$fields.label}">{i18n($fields.name)}</label></div>
 					{if $fields.type == 1}
 						<div class="formField grid_7">
-							<input type="text" name="{$fields.index}" value="{if $fields.value}{$fields.value}{/if}" id="{$fields.name}" />
+							<input type="text" name="{$fields.index}" value="{if $fields.value}{$fields.value}{/if}" id="{$fields.label}" />
 						</div>
 					{elseif $fields.type == 3}
 						<div class="formField grid_7">
@@ -147,9 +150,9 @@
 		{/section}
 
 		<div class="tbl Buttons">
-			<div class="center grid_2">
+			<div class="grid_4 center button-c">
 				<input type="hidden" name="save" value="yes" />
-				<span id="SendForm_This" class="save"><strong>{i18n('Edit account')}</strong></span>
+				<span id="SendForm_This" class="save center"><strong>{i18n('Save')}</strong></span>
 			</div>
 		</div>
 	</form>
