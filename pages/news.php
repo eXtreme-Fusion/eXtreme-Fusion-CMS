@@ -124,7 +124,7 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 			if ($data['allow_comments'] === '1')
 			{
 				$_comment = $ec->comment;
-				$_tpl->assign('comments', $_comment->get($_route->getFileName(), $data['news_id']));
+				$_tpl->assign('comments', $_comment->get($_route->getFileName(), $data['news_id'], 0, 100));
 
 				if (isset($_POST['comment']['save']))
 				{

@@ -328,7 +328,7 @@ elseif (isNum($_route->getAction(), FALSE))
 			$_comment = $ec->comment;
 			
 			$_tpl->assignGroup(array(
-				'comments' => $_comment->get($_route->getFileName(), $_route->getAction()),
+				'comments' => $_comment->get($_route->getFileName(), $_route->getAction(), 0, 100),
 				'entry' => $row['title'],
 				'type' => array(
 					'url' => $_route->path(array('action' => 'type', $type['id'], HELP::Title2Link($type['name']))),

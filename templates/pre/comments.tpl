@@ -1,12 +1,33 @@
 {if ! $only_comments}
-	{php} opentable(__('Add Comments')) {/php}
+	{php} opentable(__('Add comments')) {/php}
 	{if $can_comment}
+		<script>
+		{literal}
+			$(function() 
+			{
+				$("input[type='text'], textarea").each(function() 
+				{
+					$(this).addClass('defValue');
+				});
+
+				$("input[type='text'], textarea").focus(function() 
+				{
+					var a = $(this);
+					if (a.hasClass('defValue')) {
+						a.val('');
+						a.removeClass('defValue');
+					};
+				});
+			});{/literal}
+		</script>
 		<div id="comment_form">
+			<p id="loading" class="center hide info close-valid">{i18n('Adding your comment')}</p>
+			<p id="added" class="center hide valid close-valid">{i18n('Comment has been added')}</p>
 			<form method="post" action="{$URL_REQUEST}" class="center" name="comment">
 				{if $iGUEST}
-					<div><input id="author" type="text" name="author" value="Your nick" /></div>
+					<div><input id="author" type="text" name="author" value="{i18n('Identification')}" /></div>
 				{/if}
-				<div><textarea id="post" rows="4" class="cm_textarea" name="post"></textarea></div>
+				<div><textarea id="post" rows="4" class="cm_textarea" name="post">{i18n('Enter a comment')}</textarea></div>
 				<div>
 					{section=bbcode}
 						<button type="button" onClick="addText('{$bbcode.textarea}', '[{$bbcode.value}]', '[/{$bbcode.value}]', 'comment');"><img src="{$bbcode.image}" title="{$bbcode.description}" class="tip"></button>
@@ -20,13 +41,11 @@
 				</div>
 				<input id="item" type="hidden" name="item" value="{$item}" />
 				<input id="type" type="hidden" name="type" value="{$type}" />
-				<div class="center"><span id="send" class="pointer underline">{i18n('Save')}</span></div>
+				<div class="center"><span id="send" class="button">{i18n('Add replay')}</span></div>
 			</form>
-			<p id="loading" class="center hide">{i18n('Dodawanie komentarza')}</p>
-			<p id="added" class="center hide">{i18n('Komentarz został dodany.')}</p>
 		</div>
 	{else}
-		<p class="center">{i18n('Komentowanie zostało wyłączone dla Twojej grupy uprawnień.')}</p>
+		<p class="center">{i18n('Commenting has been disabled for your group permissions')}</p>
 	{/if}
 	{php} closetable() {/php}
 	<div id="comment-block">

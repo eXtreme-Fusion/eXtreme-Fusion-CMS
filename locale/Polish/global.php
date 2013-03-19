@@ -393,6 +393,15 @@ return array(
 	'User error' => 'Błąd użytkownika',
 	'PDO Error' => 'Błąd interpretera PDO',
 	
+	//Comments 
+	'Add comments' => 'Skomentuj',
+	'Identification' => 'Identyfikator',
+	'Enter a comment' => 'Wpisz komentarz...',
+	'Add replay' => 'Dodaj odpowiedź',
+	'Adding your comment' => 'Dodawanie komentarza',
+	'Comment has been added' => 'Komentarz został dodany',
+	'Commenting has been disabled for Your group permissions' => 'Komentowanie zostało wyłączone dla Twojej grupy uprawnień',
+	
 	//News Categories
 	'Bugs' => 'Błędy',
 	'Downloads' => 'Download',

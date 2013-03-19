@@ -113,5 +113,5 @@ elseif ($_request->post('action')->show() === 'save')
 }
 elseif ($_request->get('action')->show() === 'load')
 {
-	_e($_comment->get($_request->get('comment_type')->show(), $_request->get('comment_item')->show(), 0, TRUE));
+	_e($_comment->get($_request->get('comment_type')->show(), $_request->get('comment_item')->show(), 0, 100, TRUE));
 }

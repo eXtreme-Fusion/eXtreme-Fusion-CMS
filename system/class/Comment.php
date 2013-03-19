@@ -56,9 +56,9 @@ class Comment
 		$this->_tpl->compile = DIR_CACHE;
 	}
 
-	public function get($type, $item, $rowstart = 0, $only_comments = FALSE)
+	public function get($type, $item, $rowstart = 0, $limit = 10, $only_comments = FALSE)
 	{
-		if ($d = $this->getData($type, $item, $rowstart))
+		if ($d = $this->getData($type, $item, $rowstart, $limit))
 		{
 			foreach ($d as &$val)
 			{
@@ -137,9 +137,9 @@ class Comment
 		return FALSE;
 	}
 
-	private function getData($type, $item, $rowstart)
+	private function getData($type, $item, $rowstart, $limit)
 	{
-		return $this->_pdo->getData('SELECT * FROM [comments] WHERE content_type = :type AND content_id = :item ORDER BY `id` DESC LIMIT '.$rowstart.',10', array(
+		return $this->_pdo->getData('SELECT * FROM [comments] WHERE content_type = :type AND content_id = :item ORDER BY `id` DESC LIMIT '.$rowstart.','.$limit, array(
 			array(':type', $type, PDO::PARAM_STR),
 			array(':item', $item, PDO::PARAM_INT)
 		));
