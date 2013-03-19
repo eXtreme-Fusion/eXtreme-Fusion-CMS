@@ -9,7 +9,7 @@
 				<img src="{$ADDR_IMAGES}profile/info.png" alt="Profile"><span id="profile_username">{i18n('Member Profile :Username', array(':Username' => $user.username))}</span>{if $user.myid > 0 && $user.id != $user.myid}<a href="{$user.pm_link}" title="Wyślij wiadomość" class="text_dark">[ Wyślij wiadomość ]</a>{/if}<span id="profile_status" class="text_dark">{$user.role}</span>
 			</div>
             <ul class="light border_top_other">
-                {if ! $user.hide_email}<li><strong>{i18n('e-Mail')}:</strong><span>{$user.email}</span></li>{/if}
+                {if ! $user.hide_email || $iAdmin}<li><strong>{i18n('e-Mail')}:</strong><span>{$user.email}</span></li>{/if}
                 <li><strong>{i18n('Joined')}:</strong><time datetime="{$user.joined_datetime}">{$user.joined}</time></li>
                 <li><strong>{i18n('Groups')}:</strong><span>{$user.roles}</span></li>
             </ul>

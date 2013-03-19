@@ -23,6 +23,7 @@ $row = $_pdo->getRow('SELECT `id`, `username`, `avatar`, `email`, `hide_email`, 
 if ($row)
 {
 	$_tpl->assign('profile', TRUE);
+	$_tpl->assign('iAdmin', $_user->iAdmin());
 	
 	$theme = array(
 		'Title' => __('Profil użytkownika - :Username', array(':Username' => $row['username'])).' &raquo; '.$_sett->get('site_name'),
