@@ -1116,17 +1116,17 @@ class User {
 	}
 
 	public function iADMIN()
-	{echo 'depr';
+	{
 		return $this->isInGroup(1);
 	}
 
 	public function iUSER()
-	{echo 'depr';
+	{
 		return $this->isLoggedIn();
 	}
 
 	public function iGUEST()
-	{echo 'depr';
+	{
 		return ! $this->isLoggedIn();
 	}
 
@@ -1136,8 +1136,6 @@ class User {
 		{
 			$user = $this->get('id');
 		}
-
-		//$roles = array_keys($roles);
 
 		return $this->update(array(
 			'roles' => serialize($roles),
@@ -1793,9 +1791,8 @@ class User {
 	{
 		if ($this->_ip)
 		{
-			if($this->_ip_type === 4)
+			if ($this->_ip_type === 4)
 			{
-
 				return $this->_pdo->getMatchRowsCount('SELECT `id` FROM [blacklist] WHERE type=4 AND ip REGEXP "^'.str_replace(".", ".(", $this->_ip, $i).str_repeat(")?", $i).'$"');
 			}
 			elseif($this->_ip_type === 5)
