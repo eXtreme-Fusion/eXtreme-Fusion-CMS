@@ -1756,7 +1756,7 @@ class User {
 			return substr(strrchr($email, '@'), 1);
 		}
 
-		return FALSE;
+		return '';
 	}
 
 	public function bannedByEmail($email, $validation = FALSE)
