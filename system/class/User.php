@@ -119,16 +119,17 @@ class User {
 		// Przed edycją należy przeczytać opis przy deklaracji zmiennej
 		$this->_cookie_life_time = time() + 60*60*24*31;
 
+		// Źródło?
 		if (filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP))
 		{
-			if (strpos($_SERVER['REMOTE_ADDR'], ".")) 
+			if (strpos($_SERVER['REMOTE_ADDR'], "."))
 			{
-				if (strpos($_SERVER['REMOTE_ADDR'], ":") === FALSE) 
+				if (strpos($_SERVER['REMOTE_ADDR'], ":") === FALSE)
 				{
 					// IPv4
 					$this->_ip_type = 4;
 					$this->_ip = $_SERVER['REMOTE_ADDR'];
-				} 
+				}
 				else
 				{
 					// Mixed IPv4 and IPv6
@@ -405,7 +406,7 @@ class User {
 	}
 
 	//Aktualizuje dane pól użytkowników
-	public function updateField($field, $id = NULL, $index_val = NULL, $field_val = NULL)
+	/*public function updateField($field, $id = NULL, $index_val = NULL, $field_val = NULL)
 	{
 		echo 'depr';
 		if($id === NULL)
@@ -417,7 +418,7 @@ class User {
 			$this->_pdo->exec('INSERT INTO [users_data] (`user_id`, '.$index_val.') VALUES ('.$id.', '.$field_val.') ON DUPLICATE KEY UPDATE '.$field.'');
 		}
 		return TRUE;
-	}
+	}*/
 
 	// Setter klasy Users
 	// To co tu trafia musi być wcześniej przefiltrowane,
@@ -1115,17 +1116,17 @@ class User {
 	}
 
 	public function iADMIN()
-	{
+	{echo 'depr';
 		return $this->isInGroup(1);
 	}
 
 	public function iUSER()
-	{
+	{echo 'depr';
 		return $this->isLoggedIn();
 	}
 
 	public function iGUEST()
-	{
+	{echo 'depr';
 		return ! $this->isLoggedIn();
 	}
 
@@ -1210,7 +1211,7 @@ class User {
 	public function getUserGroupsID()
 	{
 		if (!$this->_roles) $this->getRoles();
-		
+
 		$data = array();
 		foreach($this->_roles as $val)
 		{
@@ -1750,7 +1751,12 @@ class User {
 
 	public function getEmailHost($email)
 	{
-		return substr(strrchr($email, "@"), 1);
+		if ($this->validEmail($mail))
+		{
+			return substr(strrchr($email, '@'), 1);
+		}
+
+		return FALSE;
 	}
 
 	public function bannedByEmail($email, $validation = FALSE)
@@ -1768,27 +1774,28 @@ class User {
 
 		return TRUE;
 	}
-	
+
+	// Źródło?
 	private function IPv6($ip, $limit)
 	{
-		if (strpos($ip, "::") !== FALSE) 
+		if (strpos($ip, "::") !== FALSE)
 		{
 			$ip = str_replace("::", str_repeat(":", $limit + 2 - substr_count($ip, ":")), $ip);
 		}
 		$tmp = explode(":", $ip);
 		foreach ($tmp as &$value) {
-			$value = str_pad($value, 4, '0', STR_PAD_LEFT);	
+			$value = str_pad($value, 4, '0', STR_PAD_LEFT);
 		}
 		return implode(":", $tmp);
 	}
-	
+
 	public function bannedByIP()
 	{
 		if ($this->_ip)
 		{
 			if($this->_ip_type === 4)
-			{	
-				
+			{
+
 				return $this->_pdo->getMatchRowsCount('SELECT `id` FROM [blacklist] WHERE type=4 AND ip REGEXP "^'.str_replace(".", ".(", $this->_ip, $i).str_repeat(")?", $i).'$"');
 			}
 			elseif($this->_ip_type === 5)
