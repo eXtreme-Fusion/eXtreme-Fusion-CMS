@@ -150,7 +150,7 @@
 				</div>
 				<div class="line">
 					<label for="message_subject">{i18n('Subject:')}</label> 
-					<input type="text" name="subject" value="{i18n('Enter a topic name')}..." id="message_subject" required>
+					<input type="text" name="subject" class="valueSystem" value="{i18n('Enter a topic name')}..." id="message_subject" required>
 				</div>
 			{else}
 				<div class="line">
@@ -161,7 +161,7 @@
 			{/if}
 			<div class="line">
 				<label for="message">{i18n('Message:')}</label> 
-				<textarea name="message" rows="5" id="message" required>{i18n('Enter your message')}...</textarea>
+				<textarea name="message" rows="5" id="message" class="valueSystem" required>{i18n('Enter your message')}...</textarea>
 			</div>
 			<div class="line center">
 				{section=bbcode}

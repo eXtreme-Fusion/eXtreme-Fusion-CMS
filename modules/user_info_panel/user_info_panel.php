@@ -32,7 +32,7 @@
 | written permission from the original author(s).
 +--------------------------------------------------------*/
 $_locale->moduleLoad('lang', 'user_info_panel');
-$_head->set('	<link href="'.ADDR_MODULES.'user_info_panel/templates/stylesheet/user_info_panel.css" rel="stylesheet">');
+$_head->set('<link href="'.ADDR_MODULES.'user_info_panel/templates/stylesheet/user_info_panel.css" rel="stylesheet">');
 
 if ($_user->isLoggedIn())
 {
@@ -42,7 +42,7 @@ if ($_user->isLoggedIn())
 	}
 
 	$_panel->assign('is_logged_in', TRUE);
-	$_panel->assign('username', $_user->getUsername());
+	$_panel->assign('avatar', file_exists(DIR_IMAGES.'avatars'.DS.$_user->get('avatar')) ? $_user->get('avatar') : FALSE);
 
 	$count = $_pdo->getMatchRowsCount('SELECT `id` FROM [messages] WHERE `to` = :id AND `read` = 0',
 		array(

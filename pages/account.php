@@ -173,8 +173,8 @@ if ($_request->post('save')->show() && $_request->post('email')->show())
 
 	$query = $_pdo->getData('SELECT * FROM [user_fields] WHERE `edit` = 0');
 	$match = $_pdo->getRowsCount($query);
-	$i = 0; $field = '';
-	if($match != NULL)
+	$i = 0; $field = ''; $index_val = ''; $field_val = '';
+	if($match !== NULL)
 	{
 		foreach($query as $data)
 		{
@@ -186,7 +186,14 @@ if ($_request->post('save')->show() && $_request->post('email')->show())
 			$i++;
 		}
 
-		$_user->updateField($field, $_user->get('id'), $index_val, $field_val);
+		if($_user->get('id') === NULL)
+		{
+			$_pdo->exec('UPDATE [users_data] SET '.$field);
+		}
+		else
+		{
+			$_pdo->exec('INSERT INTO [users_data] (`user_id`, '.$index_val.') VALUES ('.$_user->get('id').', '.$field_val.') ON DUPLICATE KEY UPDATE '.$field.'');
+		}
 	}
 
 	$_system->clearCache('profiles');
@@ -199,7 +206,7 @@ $user = array(
 	'Email' => $_user->get('email'),
 	'HideEmail' => $_user->get('hide_email'),
 	'Theme' => $_user->get('theme'),
-	'Avatar' => $_user->get('avatar')
+	'Avatar' => file_exists(DIR_IMAGES.'avatars'.DS.$_user->get('avatar')) ? $_user->get('avatar') : FALSE
 );
 
 $_tpl->assignGroup(array(
@@ -263,7 +270,7 @@ if (isset($fields))
 					'type' => $field['type'],
 					'value' => ($data[$field['index']] ? $data[$field['index']] : NULL),
 					'option' => $_tpl->createSelectOpts($option, $data[$field['index']], FALSE, FALSE),
-					'label' => preg_replace("{\s+}", '_', strtolower($field['name'])),
+					'label' => HELP::stripfilename($field['name']),
 				);
 
 				$has_data = TRUE;

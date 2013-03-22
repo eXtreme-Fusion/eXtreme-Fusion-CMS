@@ -2,13 +2,13 @@
 	{php} openside(__('User Panel')) {/php}
         <div id="user_info_panel">
 					<div class="top">
-						<strong>{i18n('Hello :username!', array(':username' => $username))}</strong>
+						<strong>{i18n('Hello :username!', array(':username' => $user['username']))}</strong>
 						<a href="{$url_messages}"{if $messages} class="message"{/if}></a>
 					</div>
 					<div class="mid">
 						<div class="avatar">
-                        {if $user.avatar}
-							<img src="{$ADDR_IMAGES}avatars/{$user.avatar}" alt="Avatar" />
+                        {if $avatar}
+							<img src="{$ADDR_IMAGES}avatars/{$avatar}" alt="Avatar" />
 						{else}
 							<img src="{$ADDR_IMAGES}avatars/none.gif" alt="No Avatar" />
 						{/if}

@@ -405,21 +405,6 @@ class User {
 		return $this->update(array('avatar' => ''), FALSE);
 	}
 
-	//Aktualizuje dane pól użytkowników
-	/*public function updateField($field, $id = NULL, $index_val = NULL, $field_val = NULL)
-	{
-		echo 'depr';
-		if($id === NULL)
-		{
-			$this->_pdo->exec('UPDATE [users_data] SET '.$field);
-		}
-		else
-		{
-			$this->_pdo->exec('INSERT INTO [users_data] (`user_id`, '.$index_val.') VALUES ('.$id.', '.$field_val.') ON DUPLICATE KEY UPDATE '.$field.'');
-		}
-		return TRUE;
-	}*/
-
 	// Setter klasy Users
 	// To co tu trafia musi być wcześniej przefiltrowane,
 	// gdyż w metodzie nie ma bindowania PDO!!

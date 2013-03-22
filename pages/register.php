@@ -196,7 +196,7 @@ if ($_request->post('create_account')->show())
 		$query = $_pdo->getData('SELECT * FROM [user_fields] WHERE `register` = 1');
 		$match = $_pdo->getRowsCount($query);
 		$i = 0; $field = ''; $index_val = ''; $field_val = '';
-		if($match != NULL)
+		if($match !== NULL)
 		{
 			foreach($query as $data)
 			{
@@ -207,8 +207,15 @@ if ($_request->post('create_account')->show())
 				$field .= '`'.$index.'` = "'.$val.'"'.($i < $match-1 ? ', ' : '');
 				$i++;
 			}
-
-			$_user->updateField($field, $lastuser['id'], $index_val, $field_val);
+			
+			if($lastuser['id'] === NULL)
+			{
+				$_pdo->exec('UPDATE [users_data] SET '.$field);
+			}
+			else
+			{
+				$_pdo->exec('INSERT INTO [users_data] (`user_id`, '.$index_val.') VALUES ('.$id.', '.$field_val.') ON DUPLICATE KEY UPDATE '.$field.'');
+			}
 		}
 
 		if ($_sett->get('email_verification') === '1')

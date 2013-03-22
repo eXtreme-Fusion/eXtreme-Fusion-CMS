@@ -276,6 +276,7 @@ class System {
 		{
 			$var = explode(';', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
 			$var = explode(',', $var[0]);
+			$var = explode('-', $var[0]);
 
 			foreach($var as $data)
 			{

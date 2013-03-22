@@ -131,7 +131,7 @@
 						</div>
 					{else}
 						<div class="formField grid_7">
-							<div><textarea name="{$fields.index}" id="{$fields.name}" rows="3" class="resize">{$fields.value}</textarea></div>
+							<div><textarea name="{$fields.index}" id="{$fields.label}" rows="3" class="resize">{$fields.value}</textarea></div>
 							<div>
 								{section=bbcode}
 									<button type="button" onClick="addText('{$fields.index}', '[{$bbcode.value}]', '[/{$bbcode.value}]', 'account');"><img src="{$bbcode.image}" title="{$bbcode.description}" class="tip"></button>

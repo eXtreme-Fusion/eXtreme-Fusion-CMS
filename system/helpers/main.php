@@ -808,7 +808,9 @@ Class HELP
 	// Strip file name
 	public static function stripfilename($filename)
 	{
-		$filename = strtolower(str_replace(" ", "_", $filename));
+		$a = array("Ą","Ś","Ę","Ó","Ł","Ż","Ź","Ć","Ń","ą","ś","ę","ó","ł","ż","ź","ć","ń","ü","&quot"," - "," ",".","!",";",":","(",")","[","]","{","}","|","?",",","+","=","#","@","$","%","^","&","*");
+		$b = array("A","S","E","O","L","Z","Z","C","N","a","s","e","o","l","z","z","c","n","u","","-","_","","","","","","","","","","","","","","","","","","","","","","");
+		$filename = strtolower(str_replace($a,$b,$filename));
 		$filename = preg_replace("/[^a-zA-Z0-9_-]/", "", $filename);
 		$filename = preg_replace("/^\W/", "", $filename);
 		$filename = preg_replace('/([_-])\1+/', '$1', $filename);
