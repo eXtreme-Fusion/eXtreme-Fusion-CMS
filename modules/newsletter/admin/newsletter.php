@@ -38,13 +38,13 @@ try
 		if ($res = $_pdo->getRowsCount($query))
 		{	
 			$_mail = new Mailer($_sett->get('smtp_username'), $_sett->get('smtp_password'), $_sett->get('smtp_host'));
-			$data = array();
+			$mail = array();
 			foreach ($query as $row)
 			{
-				$data[] = $row['email'];
+				$mail[] = $row['email'];
 			}
-			var_dump($data);
-			//$count = $_mail->sendBcc($_request->post('mail')->show(), $_sett->get('contact_email'), $_request->post('subject')->show(), $_request->post('message')->show());
+			var_dump($mail);
+			$count = $_mail->sendBcc($mail, $_sett->get('contact_email'), $_request->post('subject')->show(), $_request->post('message')->show());
 		}
 	}
 	

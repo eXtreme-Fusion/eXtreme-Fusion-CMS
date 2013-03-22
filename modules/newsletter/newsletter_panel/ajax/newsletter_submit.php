@@ -27,26 +27,32 @@ try
 	{
 		if ($_user->bannedByEmail($_request->post('email')->show(), TRUE)) 
 		{
-			$request = __('Please enter a valid email address');
+			$request = '<div class="error">'.__('Please enter a valid email address').'</div>';
 		}
 		else
 		{
-			$request = __('You have been added to the list of newsletter members.');
-			
-			$_pdo->exec('INSERT INTO [newsletter] (`email`, `ip`, `datestamp`, `value`) VALUES (:email, :ip, '.time().', :value)',
-				array(
-					array(':email', $_request->post('email')->show(), PDO::PARAM_STR),
-					array(':ip', $_user->getIP(), PDO::PARAM_STR),
-					array(':value', '1', PDO::PARAM_STR)
-				)
-			);
+			if ( ! $_pdo->getMatchRowsCount('SELECT `id` FROM [newsletter] WHERE `email` = "'.$_request->post('email')->show().'"'))
+			{
+				$request = '<div class="valid">'.__('You have been added to the list of newsletter members.').'</div>';
+				$_pdo->exec('INSERT INTO [newsletter] (`email`, `ip`, `datestamp`, `value`) VALUES (:email, :ip, '.time().', :value)',
+					array(
+						array(':email', $_request->post('email')->show(), PDO::PARAM_STR),
+						array(':ip', $_user->getIP(), PDO::PARAM_STR),
+						array(':value', '1', PDO::PARAM_STR)
+					)
+				);
+			}
+			else
+			{
+				$request = '<div class="info">'.__('Your email is already in list.').'</div>';
+			}
 		}
 	} 
 	else
 	{
-		$request = __('Enter your email address');
+		$request = '<div class="error">'.__('Enter your email address').'</div>';
 	}
-	if ( ! $_request->post('rules')->show()) $request = __('Accept the rules');
+	if ( ! $_request->post('rules')->show()) $request = '<div class="error">'.__('Accept the rules').'</div>';
 
 	echo $request;
 }
