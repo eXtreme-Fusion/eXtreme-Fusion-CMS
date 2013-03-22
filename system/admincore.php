@@ -79,9 +79,17 @@ try
 	# Admin action logger
     $_log = new Logger($_user, $_pdo, $_sett->get('logger_active'));
 
+	# Admin login session
+    if (isset($_SESSION['admin']))
+    {
+        $_user->adminLoggedIn($_SESSION['admin']['id'], $_SESSION['admin']['hash']);
+    }
+	
 	# Language files
-    $_locale = new Locales($_sett->get('locale'), DIR_LOCALE);
+    $_locale = new Locales($_user->getLang(), DIR_LOCALE);
 	$_locale->setSubDir('admin');
+	
+	$_locale->load('admin');
 	
 	# Requests
 	$_request = new Request;
@@ -98,14 +106,6 @@ try
 	
     # Timezone settings
     date_default_timezone_set($_sett->get('timezone'));
-
-	# Admin login session
-	
-    if (isset($_SESSION['admin']))
-    {
-        $_user->adminLoggedIn($_SESSION['admin']['id'], $_SESSION['admin']['hash']);
-		$_locale->load('admin');
-    }
 
 	#Parser
 	Parser::config($_pdo, $_sett, $_user, $_request, $_log);

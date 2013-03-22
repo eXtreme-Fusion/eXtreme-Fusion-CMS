@@ -127,12 +127,13 @@ try
 
     $ec = new Container(array('pdo.config' => $_dbconfig));
 
-
 	# PHP Data Object
     $_pdo = $ec->pdo;
 
 	$_system = $ec->system;
 
+	$_request = $ec->request;
+	
 	// Checking whether there are required database tables
 	require_once DIR_SYSTEM.'table_list.php';
 
@@ -140,28 +141,9 @@ try
 	//2. way:
 	$_sett = $ec->sett;
 
-
 	//1. way:
     $_user = $ec->register('User')->setArguments(array(new Reference('sett'), new Reference('pdo')))->get();
-
-    $_locale = new Locales($_sett->get('locale'), DIR_LOCALE);
-
-	define('URL_REQUEST', isset($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'] != '' ? HELP::cleanurl($_SERVER['REQUEST_URI']) : $_SERVER['SCRIPT_NAME']);
-	define('URL_QUERY', isset($_SERVER['QUERY_STRING']) ? HELP::cleanurl($_SERVER['QUERY_STRING']) : '');
-
-	# Requests
-	$_request = new Request;
-
-	# Files class
-	$_files = new Files;
-
-	$_url = new Url($_sett->getUns('routing', 'url_ext'), $_sett->getUns('routing', 'main_sep'), $_sett->getUns('routing', 'param_sep'), $_system->rewriteAvailable(), $_system->pathInfoExists());
-
-	# Helper class
-	HELP::init($_pdo, $_sett, $_user, $_url);
-
 	
-			
 	if ($_request->post('login')->show() && $_request->post('username')->show() && $_request->post('password')->show())
 	{
 		// Sprawdzanie danych logowania
@@ -172,9 +154,35 @@ try
 		
 		HELP::reload(0);
 	}
+	
+	# User login session
+	if (strpos($_SERVER['PHP_SELF'], 'admin') === FALSE)
+	{
+		if (isset($_SESSION['user']))
+		{
+			$_user->userLoggedInBySession($_SESSION['user']['id'], $_SESSION['user']['hash']);
+		}
+		elseif (isset($_COOKIE['user']))
+		{
+			$_user->userLoggedInByCookie($_COOKIE['user']);
+		}
+	}
+	
+    $_locale = new Locales($ec->getService('User')->getLang(), DIR_LOCALE);
 
+	define('URL_REQUEST', isset($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'] != '' ? HELP::cleanurl($_SERVER['REQUEST_URI']) : $_SERVER['SCRIPT_NAME']);
+	define('URL_QUERY', isset($_SERVER['QUERY_STRING']) ? HELP::cleanurl($_SERVER['QUERY_STRING']) : '');
 
-		
+	# Requests
+	
+	# Files class
+	$_files = new Files;
+
+	$_url = new Url($_sett->getUns('routing', 'url_ext'), $_sett->getUns('routing', 'main_sep'), $_sett->getUns('routing', 'param_sep'), $_system->rewriteAvailable(), $_system->pathInfoExists());
+
+	# Helper class
+	HELP::init($_pdo, $_sett, $_user, $_url);
+			
 	// Załączenie wymaganych plików
 	require_once DIR_SYSTEM.'table_list.php';
 
@@ -195,26 +203,13 @@ try
 
     // Settings dependent functions
     date_default_timezone_set($_sett->get('timezone'));
-
-	# User login session
-	if (strpos($_SERVER['PHP_SELF'], 'admin') === FALSE)
-	{
-		if (isset($_SESSION['user']))
-		{
-			$_user->userLoggedInBySession($_SESSION['user']['id'], $_SESSION['user']['hash']);
-		}
-		elseif (isset($_COOKIE['user']))
-		{
-			$_user->userLoggedInByCookie($_COOKIE['user']);
-		}
-	}
-
 	
 	if ($_sett->get('maintenance') === '1' && $_user->isLoggedIn() && !$_user->hasAccess($_sett->get('maintenance_level'), 'df'))
 	{
 		$_user->userLogout();
 		HELP::redirect(ADDR_SITE);
 	}
+
 	
 	if ($_user->iUSER())
 	{

@@ -50,7 +50,7 @@ try
 	{
 		$tpl->assign('History', $_SESSION['history']);
 	}
-
+	
 	if ($_request->get('action')->show() === 'login')
     {
 		if ($_request->post('login')->show())
