@@ -1746,11 +1746,11 @@ class User {
 		return $pass1 === $pass2 && $strlen > 5 && $strlen < 21 && $pass1;
 	}
 
-	public function getEmailHost($email)
+	public function getEmailHost($mail)
 	{
 		if ($this->validEmail($mail))
 		{
-			return substr(strrchr($email, '@'), 1);
+			return substr(strrchr($mail, '@'), 1);
 		}
 
 		return '';
@@ -1758,7 +1758,7 @@ class User {
 
 	public function bannedByEmail($email, $validation = FALSE)
 	{
-		if ( ! $validation || $this->validEmail($var))
+		if ( ! $validation || $this->validEmail($email))
 		{
 			return (bool)
 				$this->_pdo->getMatchRowsCount('SELECT `id` FROM [blacklist] WHERE `email` = :email OR `email` = :host',
