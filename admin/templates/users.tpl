@@ -168,7 +168,7 @@
 						</select>
 					</div>
 				</div>
-
+				
 					<input type="hidden" name="roles[]" value="2" />
 					<input type="hidden" name="roles[]" value="3" />
 
@@ -178,7 +178,7 @@
 						<select name="roles[]" multiple id="InsightGroups" class="select-multi" size="5" >
 							{section=all_groups}
 								{if $all_groups.value != 2 && $all_groups.value != 3}
-									<option value="{$all_groups.value}"{if $all_groups.value == $user.roles} selected="selected"{/if}>{$all_groups.display}</option>
+									<option value="{$all_groups.value}"{if $all_groups.selected} selected="selected"{/if}>{$all_groups.display}</option>
 								{/if}
 							{/section}
 						</select>
@@ -190,12 +190,22 @@
 						<select name="role">
 							{section=insight_groups}
 								{if $insight_groups.value != 3}
-									<option value="{$insight_groups.value}"{if $insight_groups.value == $user.role} selected="selected"{/if}>{$insight_groups.display}</option>
+									<option value="{$insight_groups.value}"{if $insight_groups.selected} selected="selected"{/if}>{$insight_groups.display}</option>
 								{/if}
 							{/section}
 						</select>
 					</div>
-				</div>			
+				</div>
+				<div class="tbl1">
+					<div class="formLabel sep_1 grid_3"><label for="language">{i18n('Language:')}</label></div>
+					<div class="formField grid_7">
+						<select name="language" class="textbox" id="language">
+							{section=locale_set}
+								<option value="{$locale_set.value}" {if $locale_set.selected}selected="selected"{/if}>{$locale_set.display}</option>
+							{/section}
+						</select>
+					</div>
+				</div>
 				{section=cats}
 					<div class="tbl1">
 						<div class="formField sep_1 grid_10">{$cats.name}</div>
@@ -418,7 +428,7 @@
 					<select name="roles[]" multiple id="InsightGroups" class="select-multi" size="5" >
 						{section=insight_groups}
 							{if $insight_groups.value != 2 && $insight_groups.value != 3}
-								<option value="{$insight_groups.value}"{if $insight_groups.value == $user.roles} selected="selected"{/if}>{$insight_groups.display}</option>
+								<option value="{$insight_groups.value}"{if $insight_groups.selected} selected="selected"{/if}>{$insight_groups.display}</option>
 							{/if}
 						{/section}
 					</select>

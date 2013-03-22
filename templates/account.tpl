@@ -76,7 +76,7 @@
 			{if $User.Avatar}
 				<div class="formLabel sep_1 grid_3">{i18n('Avatar:')}</div>
 				<div class="formField grid_7">
-					<img src="{$ADDR_IMAGES}avatars/{$User.Avatar}">
+					<img src="{$User.Avatar}">
 					<p>
 						<label for="DelAvatar"><input type="checkbox" name="del_avatar" value="del" id="DelAvatar" /> {i18n('Usuń aktualny avatar')}</label>
 					</p>

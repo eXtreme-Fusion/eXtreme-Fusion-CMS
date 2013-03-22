@@ -237,8 +237,6 @@ try
 					}
 				}
 				
-		
-
 				$_tpl->assignGroup(array(
 					'id' => $row['id'],
 					'title' => $row['title'],

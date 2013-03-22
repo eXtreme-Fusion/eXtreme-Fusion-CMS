@@ -171,7 +171,8 @@ try
 						$count = $_user->update(
 							array(
 								'hide_email' => $_request->post('hide_email')->isNum(TRUE),
-								'theme' => $_request->post('theme_set')->show()
+								'theme' => $_request->post('theme_set')->show(),
+								'lang' => $_request->post('language')->show()
 							), $_request->get('user')->show()
 						);
 
@@ -206,13 +207,14 @@ try
 						'roles' => unserialize($data['roles']),
 						'role' => $data['role']
 					);
-
-					$_tpl->assign('all_groups', $_tpl->getMultiSelect($_user->getViewGroups(), unserialize($data['roles']), false));
-					$_tpl->assign('insight_groups', $_tpl->createSelectOpts($_user->getViewGroups(), unserialize($data['roles']), TRUE));
-
+								
+					$_tpl->assign('all_groups', $_tpl->getMultiSelect($_user->getViewGroups(), $_user->convertRoles($data['roles'])), FALSE);
+					$_tpl->assign('insight_groups', $_tpl->createSelectOpts($_user->getViewGroups(), intval($data['role']), TRUE, TRUE), TRUE);
+					
 					$_tpl->assignGroup(array(
 						'user' => $user,
-						'theme_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'themes', array('templates'), TRUE, 'folders'), $data['theme'])
+						'theme_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'themes', array('templates'), TRUE, 'folders'), $data['theme']),
+						'locale_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'locale', array(), TRUE, 'folders'), $_user->get('lang'))
 					));
 
 					$result = $_pdo->getData('SELECT `id`, `name`, `index`, `type`, `option` FROM [user_fields] ORDER by `id`');
@@ -756,7 +758,6 @@ try
 		}
 
 		$_tpl->assign('insight_groups', $_tpl->createSelectOpts($_user->getViewGroups(), NULL, TRUE));
-		//print_r($_tpl->createSelectOpts($_user->getViewGroups(), NULL, TRUE)); exit;
 
 		$result = $_pdo->getData('SELECT `id`, `name`, `index`, `type`, `option` FROM [user_fields] ORDER by `id`');
 		if ($result)

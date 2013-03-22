@@ -152,8 +152,8 @@ if ($_request->post('save')->show() && $_request->post('email')->show())
 
 	$count = $_user->update(array(
 		'hide_email' => $_request->post('hideemail')->isNum(TRUE),
-		'theme' => $_request->post('theme')->strip(),
-		'lang' => $_request->post('language')->strip()
+		'theme' => $_request->post('theme')->show(),
+		'lang' => $_request->post('language')->show()
 		), $_user->get('id')
 	);
 
@@ -206,7 +206,7 @@ $user = array(
 	'Email' => $_user->get('email'),
 	'HideEmail' => $_user->get('hide_email'),
 	'Theme' => $_user->get('theme'),
-	'Avatar' => file_exists(DIR_IMAGES.'avatars'.DS.$_user->get('avatar')) ? $_user->get('avatar') : FALSE
+	'Avatar' => $_user->get('avatar') ? $_user->getAvatarAddr() : FALSE
 );
 
 $_tpl->assignGroup(array(

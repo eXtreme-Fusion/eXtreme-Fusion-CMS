@@ -307,7 +307,7 @@ class User {
 						if (in_array($ext, $extensions_allowed = array('gif', 'jpg', 'jpeg', 'png')))
 						{
 							// Nowa nazwa pliku
-							$new_name = str_replace(' ', '-', $name).'['.$id.'].'.$ext;
+							$new_name = str_replace(' ', '-', $name).'-'.$id.'-.'.$ext;
 							// Nowa nazwa pliku wraz ze ścieżką
 							$new_path_name = DIR_IMAGES.'avatars'.DS.$new_name;
 
@@ -1202,6 +1202,20 @@ class User {
 		}
 
 		return $data;
+	}
+	
+	public function convertRoles($data)
+	{
+		$roles = array();
+		if($uns = unserialize($data))
+		{	
+			foreach($uns as $row)
+			{
+				$roles[] = (string) $row;
+			}
+		}
+		
+		return $roles;
 	}
 
 	// Zwraca tablicę istniejących grup, gdzie klucz to ID grupy, a wartością jest jej nazwa.

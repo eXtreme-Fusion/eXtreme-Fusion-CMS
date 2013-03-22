@@ -42,7 +42,8 @@ if ($_user->isLoggedIn())
 	}
 
 	$_panel->assign('is_logged_in', TRUE);
-	$_panel->assign('avatar', file_exists(DIR_IMAGES.'avatars'.DS.$_user->get('avatar')) ? $_user->get('avatar') : FALSE);
+	$_panel->assign('avatar', $_user->getAvatarAddr());
+	$_panel->assign('username', $_user->getUsername()); 
 
 	$count = $_pdo->getMatchRowsCount('SELECT `id` FROM [messages] WHERE `to` = :id AND `read` = 0',
 		array(

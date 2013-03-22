@@ -130,8 +130,10 @@ try
 	# PHP Data Object
     $_pdo = $ec->pdo;
 
+	# System
 	$_system = $ec->system;
 
+	# Requests
 	$_request = $ec->request;
 	
 	// Checking whether there are required database tables
@@ -173,8 +175,6 @@ try
 	define('URL_REQUEST', isset($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'] != '' ? HELP::cleanurl($_SERVER['REQUEST_URI']) : $_SERVER['SCRIPT_NAME']);
 	define('URL_QUERY', isset($_SERVER['QUERY_STRING']) ? HELP::cleanurl($_SERVER['QUERY_STRING']) : '');
 
-	# Requests
-	
 	# Files class
 	$_files = new Files;
 
