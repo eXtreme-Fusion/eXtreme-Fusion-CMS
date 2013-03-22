@@ -58,6 +58,8 @@ try
 		$_sett->update(array(
 			'site_name' => $_request->post('site_name')->strip(),
 			'site_banner' => $_request->post('site_banner')->strip(),
+			'contact_email' => $_request->post('siteemail')->strip(),
+			'site_username' => $_request->post('siteusername')->strip(),
 			'site_intro' => $_request->post('siteintro')->show(),
 			'description' => $_request->post('description')->strip(),
 			'keywords' => $_request->post('keywords')->strip(),
@@ -112,6 +114,8 @@ try
 	$_tpl->assignGroup(array(
 		'site_name' => $_sett->get('site_name'),
 		'site_banner' => $_sett->get('site_banner'),
+		'siteemail' => $_sett->get('contact_email'),
+		'siteusername' => $_sett->get('site_username'),
 		'siteintro' => $_sett->get('site_intro'),
 		'footer' => $_sett->get('footer'),
 		'description' => $_sett->get('description'),

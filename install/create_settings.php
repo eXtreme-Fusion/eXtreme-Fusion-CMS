@@ -42,6 +42,8 @@ $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'site_name', 'valu
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'description', 'value' => ''));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'keywords', 'value' => ''));
 
+$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'contact_email', 'value' => $email));
+$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'site_username', 'value' => $username));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'site_intro', 'value' => '<div style="text-align:center">'.__('Welcome to your site').'</div>'));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'footer', 'value' => 'Copyright &copy; 2005 - '.date('Y').' by the eXtreme-Fusion Crew'));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'opening_page', 'value' => 'news'));
