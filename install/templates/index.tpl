@@ -281,7 +281,7 @@
 						{else}
 							{if $database_connection_error}
 								<div class='error'><strong>{i18n('Error:')}</strong> {i18n('Unable to connect with MySQL database.')}</div><br />
-								<div class='status'>{i18n('Sprawdź, czy podane dane są prawidłowe lub skontaktuj się z dostawcą hostingu.')}</div>
+								<div class='status'>{i18n('Please ensure your MySQL username and password are correct.')}</div>
 							{else}
 								{if $table_prefix_error}
 									<div class='error'><strong>{i18n('Error:')}</strong> {i18n('Table prefix error.')}</div><br />
@@ -321,7 +321,7 @@
 								<div class="clear"></div>
 							</div>
 							<div class="tbl1">
-								<div class="formLabel grid_4"><label for="01">{i18n('Password:')}</label></div>
+								<div class="formLabel grid_4"><label for="01">{i18n('Database Password:')}</label></div>
 								<div class="formField grid_3"><input id="01" type='password' name='db_pass' /></div>
 								<div class="clear"></div>
 							</div>
@@ -411,7 +411,7 @@
 							{/if}
 
 							{if $empty_form_error}
-								<div class='error'><strong>{i18n('Error:')}</strong> {i18n('Empty fields.')}</div><br />
+								<div class='error'><strong>{i18n('Error:')}</strong> {i18n('There are empty fields left!')}</div><br />
 							{else}
 								{if $username_error}
 									<div class='error'><strong>{i18n('Error:')}</strong> {i18n('Your login does not appear to be valid.')}</div><br />

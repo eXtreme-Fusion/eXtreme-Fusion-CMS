@@ -13,7 +13,7 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
+|
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------+
@@ -283,11 +283,11 @@ $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."panels (`name`, `filename`, `co
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('Home')."', '', '3', '3', '0', '1')");
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('News Cats')."', 'news_cats.html', '3', '3', '0', '2')");
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('Users')."', 'users.html', '3', '3', '0', '3')");
-$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('Administracja')."', 'team.html', '3', '2', '0', '3')");
+$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('Team')."', 'team.html', '3', '2', '0', '3')");
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('Rules')."', 'rules.html', '3', '2', '0', '4')");
-$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('Słowa kluczowe')."', 'tags.html', '3', '1', '0', '4')");
+$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('Tags')."', 'tags.html', '3', '1', '0', '4')");
 //$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('Login')."', 'login', '3', '1', '0', '4')");
-$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('Materiały i wpisy')."', 'pages.html', '3', '3', '0', '5')");
+$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('Pages')."', 'pages.html', '3', '3', '0', '5')");
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."navigation (`name`, `url`, `visibility`, `position`, `window`, `order`) VALUES ('".__('Search')."', 'search.html', '3', '3', '0', '6')");
 
 
