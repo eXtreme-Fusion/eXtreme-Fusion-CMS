@@ -238,7 +238,7 @@ class Mailer
 					$this->addHeaders(array('To: '.$rcpt.$this->_eol));
 					if ( ! $this->sendBySMTP())
 					{
-						return FALSE;
+						throw new systemException(__('System nie może nawiązać polączenia z serwerem :host :port lub nazwa użytkownika i hasło jest nie prawidłowe.', array(':host' => $this->_data['smtp_host'],':port' => $this->_data['smtp_port'],)));
 					}
 
 					// Usuwanie odbiorcy wysłanego maila z tablicy nagłówka
@@ -250,9 +250,9 @@ class Mailer
 				foreach($to as $rcpt)
 				{
 					// Wysyłanie wiadomości przez funkcję mail()
-					if ( ! mail($rcpt, $this->_subject, $this->_message, implode('', $this->_headers)))
+					if ( ! @mail($rcpt, $this->_subject, $this->_message, implode('', $this->_headers)))
 					{
-						return FALSE;
+						throw new systemException(__('System nie ma skonfigurowanej opcji \'mail\', zmień ustawienia w php.ini lub użyj funkcji ini_set()'));
 					}
 				}
 			}

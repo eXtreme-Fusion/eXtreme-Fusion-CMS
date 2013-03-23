@@ -43,7 +43,7 @@ try
 			{
 				$mail[] = $row['email'];
 			}
-			var_dump($mail);
+			
 			$count = $_mail->sendBcc($mail, $_sett->get('contact_email'), $_request->post('subject')->show(), $_request->post('message')->show());
 		}
 	}
@@ -80,7 +80,6 @@ try
 			$i = 0;
 			foreach ($query as $row)
 			{
-				
 				$data[] = array(
 					'row_color' => $i % 2 == 0 ? 'tbl1' : 'tbl2',
 					'id' => $row['id'],
