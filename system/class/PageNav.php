@@ -17,10 +17,17 @@
 
 # THIS CLASS IS A VIEW
 
+/**
+ * Dziêki Bogu, po ciêzkiej pracy, uda³o siê przebudowaæ stronicowanie.
+ * HOW TO USE:
+ * 		$ec->paging->setPagesCount($rows_count, $current_page, $per_page);
+ *		$ec->pageNav->get($ec->pageNav->create($_tpl, $buttons_count), 'tpl_filename');
+ */
+ 
 interface PageNavIntf
 {
 	// Wyœwietla stronicowanie
-	public function create($show_go_to_first = TRUE, $show_go_to_last = TRUE);
+	public function create($_tpl, $links_count, $show_go_to_first = TRUE, $show_go_to_last = TRUE);
 
 	public function get(array $paging, $filename, $dir = NULL);
 
@@ -45,23 +52,9 @@ class PageNav implements PageNavIntf
 		$_default_ext = 'html';
 
 	// Nalezy pamiêtaæ, aby parametr $links_count przes³any do konstruktora by³ parsowany przez funkcjê intval()!!
-	public function __construct(Paging $paging, $tpl, $links_count = 5, $route)
+	public function __construct(Paging $paging)
 	{
-		if ($links_count >= 1)
-		{
-			$this->_links_count = $links_count;
-		}
-		else
-		{
-			throw new systemException('B³¹d! Parametr czwarty nie mo¿e przyjmowaæ wartoœci mniejszej od <span class="italic">1</span>.');
-		}
-
-		$this->_route = $route;
-
 		$this->_paging = $paging;
-		$this->_tpl = $tpl;
-
-		$this->createListToDisplay();
 	}
 
 	private function createListToDisplay()
@@ -117,8 +110,21 @@ class PageNav implements PageNavIntf
 		}
 	}
 
-	public function create($show_go_to_first = TRUE, $show_go_to_last = TRUE)
+	public function create($_tpl, $links_count = 5, $show_go_to_first = TRUE, $show_go_to_last = TRUE)
 	{
+		$this->_tpl = $_tpl;
+		
+		if ($links_count >= 1)
+		{
+			$this->_links_count = $links_count;
+		}
+		else
+		{
+			throw new systemException('B³¹d! Parametr czwarty nie mo¿e przyjmowaæ wartoœci mniejszej od <span class="italic">1</span>.');
+		}
+
+		$this->createListToDisplay();
+				
 		$page_nav['nums'] = $this->getPagesNums();
 
 		// Nadawanie domyœlnej wartoœci
@@ -136,7 +142,6 @@ class PageNav implements PageNavIntf
 		}
 
 		$page_nav['current'] = $this->_paging->getCurrentPage();
-		$page_nav['route'] = $this->_route;
 
 		$page_nav['prev'] = $this->_paging->getPrevPage();
 		$page_nav['next'] = $this->_paging->getNextPage();
@@ -149,15 +154,6 @@ class PageNav implements PageNavIntf
 	{
 		if ($paging)
 		{
-
-			/* TO DO
-				Notice: Undefined index: route in C:\ef5gif\system\class\StaticContainer.php on line 14
-				Call Stack
-				#	Time	Memory	Function	Location
-				1	0.0020	965336	{main}( )	..\news.php:0
-				2	0.0447	4520680	PageNav->get( )	..\news.php:275
-				3	0.0451	4543680	StaticContainer->get( )	..\PageNav.php:147
-			*/
 			$_tpl = new pageNavParser(StaticContainer::has('route') ? StaticContainer::get('route') : NULL);
 
 			$_tpl->assignGroup(array(
@@ -167,8 +163,6 @@ class PageNav implements PageNavIntf
 				'prev' => $paging['prev'],
 				'next' => $paging['next'],
 				'current' => $paging['current'],
-				'page' => isset($paging['route'][0]) ? $paging['route'][0] : NULL,
-				'id' => isset($paging['route'][1]) ? $paging['route'][1] : NULL,
 				'ext' => isset($paging['route'][2]) ? $this->_route === FALSE ? '.'.$paging['route'][2] : '' : $this->_route === FALSE ? '.'.$this->_default_ext : ''
 			));
 
@@ -182,6 +176,12 @@ class PageNav implements PageNavIntf
 
 			$this->_tpl->assign('page_nav', $out);
 		}
+	}
+	
+	public function getComments(array $paging, $filename, $data)
+	{
+		$this->get($paging, $filename);
+		$this->_tpl->assign('comments', $data);
 	}
 
 	public function getPagesNums()

@@ -13,7 +13,7 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
+|
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------+
@@ -56,9 +56,14 @@ class Comment
 		$this->_tpl->compile = DIR_CACHE;
 	}
 
-	public function get($type, $item, $rowstart = 0, $limit = 10, $only_comments = FALSE)
+	public function getLimit()
 	{
-		if ($d = $this->getData($type, $item, $rowstart, $limit))
+		return $this->_sett->get('comments_per_page');
+	}
+
+	public function get($type, $item, $current_page = 0, $limit = 10, $only_comments = FALSE)
+	{
+		if ($d = $this->getData($type, $item, ($current_page-1)*$limit, $limit))
 		{
 			foreach ($d as &$val)
 			{
@@ -321,7 +326,7 @@ public function hasPermission($writer, $author)
 			}
 
 			$post = HELP::wordsProtect($post);
-			
+
 			return $this->_pdo->exec('
 				INSERT INTO [comments] (content_id, post, content_type, author, author_type, datestamp, ip)
 				VALUES (:content_id, :post, :type, :author, \''.$author_type.'\', '.time().', \''.$this->_user->getIP().'\')',

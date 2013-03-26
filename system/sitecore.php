@@ -86,6 +86,21 @@ try
 		return '';
 	}
 
+	function OptRouter(OptClass &$_tpl, $key)
+	{
+		if ($key === 'controller')
+		{
+			return $_tpl->route()->getFilename();
+		}
+		
+		if ($key === 'action')
+		{
+			return $_tpl->route()->getAction();
+		}
+		
+		return $_tpl->route()->getByID(intval($key));
+	}
+
 	define('DIR_BASE', realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..').DIRECTORY_SEPARATOR);
 
 	if ( ! file_exists(DIR_BASE.'config.php'))

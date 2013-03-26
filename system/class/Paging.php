@@ -59,8 +59,8 @@ class Paging implements PagingIntf
 		$_current,						// Aktualna podstrona
 		$_per_page;						// Ilość materiałów wyświetlana na podstronie
 
-	// Nalezy pamiętać, aby każdy parametr przesłany do konstruktora był parsowany przez funkcję intval()!!
-	public function __construct($count, $current, $per_page)
+	// Zapisuje ilość podstron, jaka może zostać wygenerowana
+	public function setPagesCount($count, $current, $per_page)
 	{
 		if ($count == 0)
 		{
@@ -69,7 +69,7 @@ class Paging implements PagingIntf
 
 		if ($current > 0)
 		{
-			$this->_current = $current;
+			$this->_current = intval($current);
 		}
 		else
 		{
@@ -78,20 +78,14 @@ class Paging implements PagingIntf
 
 		if ($per_page > 0)
 		{
-			$this->_per_page = $per_page;
+			$this->_per_page = intval($per_page);
 		}
 		else
 		{
 			throw new systemException('Błąd! Parametr trzeci nie może być zerem.');
 		}
-
-		$this->setPagesCount($count, $per_page);
-	}
-
-	// Zapisuje ilość podstron, jaka może zostać wygenerowana
-	private function setPagesCount($count, $per_page)
-	{
-		$this->_count = ceil($count/$per_page);
+		
+		$this->_count = ceil(intval($count)/$this->_per_page);
 
 		if ($this->getCurrentPage() > $this->getPagesCount())
 		{
@@ -149,5 +143,13 @@ class Paging implements PagingIntf
 	public static function getRowStart($current, $per_page)
 	{	
 		return ($current-1)*$per_page;
+	}
+	
+	public function getLimit($filename)
+	{
+		if (in_array($filename, array('news', 'comments')))
+		{
+			return intval($this->_sett->get($filename.'_per_page'));
+		}
 	}
 }

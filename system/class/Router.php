@@ -629,5 +629,4 @@ class Router
 	{
 		return $this->_url->path($data);
 	}
-
 }

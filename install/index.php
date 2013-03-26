@@ -32,7 +32,7 @@
 | written permission from the original author(s).
 +--------------------------------------------------------*/
 error_reporting(E_ALL | E_STRICT);
-
+echo $_SERVER['HTTP_ACCEPT_LANGUAGE']; //echo $_SERVER['';]
 try
 {
 	// Instalowana wersja systemu - wyświetlana w nagłówku nawigacji

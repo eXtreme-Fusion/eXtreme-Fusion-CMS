@@ -123,8 +123,9 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 
 			if ($data['allow_comments'] === '1')
 			{
-				$_comment = $ec->comment;
-				$_tpl->assign('comments', $_comment->get($_route->getFileName(), $data['news_id'], 0, 100));
+				$_comment = new commentPageNav($ec, $_pdo, $_tpl, $_route->getByID(3));
+				$_comment->create($data['news_id'], $_route->getByID(3), $ec->comment->getLimit(), 5, $_route->getFileName(), $_route->getAction());
+				
 
 				if (isset($_POST['comment']['save']))
 				{
@@ -133,6 +134,7 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 						'author'  => $_user->get('id'),
 						'content' => $_POST['comment']['content']
 					));
+
 					// Usuwania cache po dodaniu komentarza
 					$_system->clearCache('news');
 				}
@@ -272,19 +274,9 @@ else
 				throw new systemException('Error! User has not accesible for him material in CACHE memory.');
 			}
 		}
-
-		$_pagenav = new PageNav(new Paging($rows, $_GET['current'], $items_per_page), $_tpl, 5, array($_route->getFileName(), 'page', FALSE));
-
-		if (file_exists(DIR_THEME.'templates'.DS.'paging'.DS.'news_page_nav.tpl'))
-		{
-			$_pagenav->get($_pagenav->create(), 'news_page_nav', DIR_THEME.'templates'.DS.'paging'.DS);
-		}
-		else
-		{
-			$_pagenav->get($_pagenav->create(), 'page_nav');
-			// or  - not remove, it's example :) //
-			//$_pagenav->get($_pagenav->create(), 'news_page_nav');
-		}
+		
+		$ec->paging->setPagesCount($rows, $_GET['current'], $items_per_page);
+ 		$ec->pageNav->get($ec->pageNav->create($_tpl, 5), 'news_page_nav');
 
 		$_tpl->assign('news', $cache);
 	}

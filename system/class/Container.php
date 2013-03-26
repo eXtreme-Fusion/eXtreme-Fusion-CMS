@@ -35,6 +35,16 @@ class Container extends ServiceContainerBuilder
 	{
 		return new System;
 	}
+	
+	protected function getPagingService()
+	{
+		return new Paging;
+	}
+	
+	protected function getPageNavService()
+	{
+		return new PageNav($this->getService('Paging'));
+	}
 
 	protected function getPDOService()
 	{

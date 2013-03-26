@@ -221,6 +221,11 @@ class pageNavParser extends optClass
 		{
 			$this->registerFunction('url', 'Url');
 		}
+		
+		if (function_exists('optRouter'))
+		{
+			$this->registerFunction('Router', 'Router');
+		}
 
 		$this->httpHeaders(OPT_HTML);
 
