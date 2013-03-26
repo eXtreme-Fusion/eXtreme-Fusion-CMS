@@ -13,7 +13,7 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
+|
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------+
@@ -36,7 +36,7 @@ try
 	require_once '../../config.php';
 	require DIR_SITE.'bootstrap.php';
 	require_once DIR_SYSTEM.'admincore.php';
-	
+
 	$_locale->load('settings_ipp');
 
 	if ( ! $_user->haspermission('admin.settings_ipp'))
@@ -53,11 +53,12 @@ try
 			//'news_cats_per_page' => $_request->post('news_cats_per_page')->isNum(TRUE),
 			'news_cats_item_per_page' => $_request->post('news_cats_item_per_page')->isNum(TRUE),
 			'users_per_page' => $_request->post('users_per_page')->isNum(TRUE),
-			'notes_per_page' => $_request->post('notes_per_page')->isNum(TRUE)
+			//'notes_per_page' => $_request->post('notes_per_page')->isNum(TRUE),
+			'comments_per_page' => $_request->post('comments_per_page')->isNum(TRUE)
 		));
-		
+
 		$_system->clearCache(array('news', 'news_cats', 'users'));
-		
+
 		$_tpl->printMessage('valid', $_log->insertSuccess('edit', __('Data has been saved.')));
 	}
 
@@ -66,7 +67,8 @@ try
 		//'news_cats_per_page' => $_sett->get('news_cats_per_page'),
 		'news_cats_item_per_page' => $_sett->get('news_cats_item_per_page'),
 		'users_per_page' => $_sett->get('users_per_page'),
-		'notes_per_page' => $_sett->get('notes_per_page')
+		//'notes_per_page' => $_sett->get('notes_per_page'),
+		'comments_per_page' => $_sett->get('comments_per_page')
 	));
 
 	$_tpl->template('settings_ipp');

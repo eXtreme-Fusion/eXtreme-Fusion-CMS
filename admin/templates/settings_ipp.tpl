@@ -13,7 +13,7 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
+|
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------+
@@ -53,9 +53,13 @@
 		<div class="grid_6 formLabel"><label for="UserPerPage">{i18n('Users per page:')}</label></div>
 		<div class="grid_4 formField"><input type="text" name="users_per_page" value="{$users_per_page}" id="UserPerPage" class="num_2" maxlength="2" /></div>
 	</div>
-	<div class="tbl2">
+	{*<div class="tbl2">
 		<div class="grid_6 formLabel"><label for="NotesPerPage">{i18n('Notes per page:')}</label></div>
 		<div class="grid_4 formField"><input type="text" name="notes_per_page" value="{$notes_per_page}" id="NotesPerPage" class="num_2" maxlength="2" /></div>
+	</div>*}
+	<div class="tbl2">
+		<div class="grid_6 formLabel"><label for="CommentsPerPage">{i18n('Comments per page:')}</label></div>
+		<div class="grid_4 formField"><input type="text" name="comments_per_page" value="{$comments_per_page}" id="CommentsPerPage" class="num_2" maxlength="2" /></div>
 	</div>
 	<div class="tbl Buttons">
 		<div class="grid_2 center button-l">
