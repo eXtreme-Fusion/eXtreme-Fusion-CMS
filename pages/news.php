@@ -123,9 +123,8 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 
 			if ($data['allow_comments'] === '1')
 			{
-				$_comment = new commentPageNav($ec, $_pdo, $_tpl, $_route->getByID(3));
+				$_comment = new CommentPageNav($ec, $_pdo, $_tpl, $_route->getByID(3));
 				$_comment->create($data['news_id'], $_route->getByID(3), $ec->comment->getLimit(), 5, $_route->getFileName(), $_route->getAction());
-				
 
 				if (isset($_POST['comment']['save']))
 				{
@@ -274,7 +273,7 @@ else
 				throw new systemException('Error! User has not accesible for him material in CACHE memory.');
 			}
 		}
-		
+
 		$ec->paging->setPagesCount($rows, $_GET['current'], $items_per_page);
  		$ec->pageNav->get($ec->pageNav->create($_tpl, 5), 'news_page_nav');
 
