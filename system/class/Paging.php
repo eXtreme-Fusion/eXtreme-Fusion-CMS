@@ -45,10 +45,10 @@ interface PagingIntf
 
 	// Zwraca numer pierwszej podstrony, jaką możemy przejrzeć
 	public function getFirstPage();
-	
+
 	// Zwraca ilośc materiałów wyświetlanych na jednej podstronie
 	public function getPerPage();
-	
+
 	//public function getRowStart();
 }
 
@@ -58,9 +58,9 @@ class Paging implements PagingIntf
 		$_count,						// Ilość wszystkich materiałów, które trzeba rozłożyć na podstrony
 		$_current,						// Aktualna podstrona
 		$_per_page;						// Ilość materiałów wyświetlana na podstronie
-		
+
 	protected $options = array();
-	
+
 	public function __construct()
 	{
 		$this->options['current_page_intval'] = TRUE;
@@ -98,7 +98,7 @@ class Paging implements PagingIntf
 		{
 			throw new systemException('Błąd! Parametr trzeci nie może być zerem.');
 		}
-		
+
 		$this->_count = ceil(intval($count)/$this->_per_page);
 
 		if ($this->getCurrentPage() > $this->getPagesCount())
@@ -126,39 +126,39 @@ class Paging implements PagingIntf
 	{
 		return 1;
 	}
-	
+
 	public function getPrevPage()
 	{
 		if ($this->_current > 1)
 		{
 			return $this->_current-1;
 		}
-		
+
 		return NULL;
 	}
-	
+
 	public function getNextPage()
 	{
 		$next = $this->_current + 1;
-		
+
 		if ($next <= $this->getLastPage())
 		{
 			return $next;
 		}
-		
+
 		return NULL;
 	}
-	
+
 	public function getPerPage()
 	{
 		return $this->_per_page;
 	}
 
 	public static function getRowStart($current, $per_page)
-	{	
+	{
 		return ($current-1)*$per_page;
 	}
-	
+
 	public function getLimit($filename)
 	{
 		if (in_array($filename, array('news', 'comments')))

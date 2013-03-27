@@ -23,7 +23,7 @@
  * 		$ec->paging->setPagesCount($rows_count, $current_page, $per_page);
  *		$ec->pageNav->get($ec->pageNav->create($_tpl, $buttons_count), 'tpl_filename');
  */
- 
+
 interface PageNavIntf
 {
 	// Wyœwietla stronicowanie
@@ -113,7 +113,7 @@ class PageNav extends Observer implements PageNavIntf
 	public function create($_tpl, $links_count = 5, $show_go_to_first = TRUE, $show_go_to_last = TRUE)
 	{
 		$this->_tpl = $_tpl;
-		
+
 		if ($links_count >= 1)
 		{
 			$this->_links_count = $links_count;
@@ -124,7 +124,7 @@ class PageNav extends Observer implements PageNavIntf
 		}
 
 		$this->createListToDisplay();
-				
+
 		$page_nav['nums'] = $this->getPagesNums();
 
 		// Nadawanie domyœlnej wartoœci
@@ -181,7 +181,7 @@ class PageNav extends Observer implements PageNavIntf
 			$this->_tpl->assign('page_nav', $out);
 		}
 	}
-	
+
 	public function getComments(array $paging, $filename, $data)
 	{
 		$this->get($paging, $filename);

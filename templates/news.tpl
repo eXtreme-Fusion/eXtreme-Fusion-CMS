@@ -73,7 +73,6 @@
 				</footer>
 			</article>
 		{php} closetable() {/php}
-		
 		{$comments}
 	{else}
 		{php} opentable(__('Error')) {/php}

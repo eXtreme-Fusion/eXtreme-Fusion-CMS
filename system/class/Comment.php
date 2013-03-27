@@ -126,7 +126,7 @@ class Comment extends Observer
 		{
 			$this->_head->set('<script src="'.ADDR_JS.'comments.js"></script>');
 		}
-		
+
 		ob_start();
 		$this->_tpl->template('comments.tpl');
 		$data = ob_get_contents();

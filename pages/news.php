@@ -123,9 +123,8 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 
 			if ($data['allow_comments'] === '1')
 			{
-				$_comment = new commentPageNav($ec, $_pdo, $_tpl, $_route->getByID(3));
-				$_comment->create($data['news_id'], $_route->getByID(3), $ec->comment->getLimit(), 5, $_route->getFileName(), $_route->getAction());
-				
+				$_comment = new commentPageNav($ec, $_pdo, $_tpl);
+				$_comment->create($data['news_id'], $_route->getByID(3), $ec->comment->getLimit(), 5, $_route->getFileName());
 
 				if (isset($_POST['comment']['save']))
 				{
@@ -179,13 +178,13 @@ else
 	{
 		// Newsów na stronie
 		$items_per_page = intval($_user->get('itemnews') ? $_user->get('itemnews') : $_sett->get('news_per_page'));
-		
+
 		// Aktualna strona
 		$current_page = $_route->getByID(2, 1);
-		
+
 		// Pobieranie danych z cache
 		$cache = $_system->cache('news,'.$_user->getCacheName().',page-'.$current_page, NULL, 'news', $_sett->getUns('cache', 'expire_news'));
-		
+
 		if ($cache === NULL)
 		{
 			$query = $_pdo->getData('
@@ -251,7 +250,7 @@ else
 		}
 
 		$comments = $_pdo->getData('SELECT Count(`id`) AS count, `content_id` AS news_id FROM [comments] WHERE `content_type` = \'news\' GROUP BY `content_id`');
-		
+
 		foreach($cache as $key => $news)
 		{
 			foreach($comments as $comment)
@@ -262,7 +261,7 @@ else
 					continue 2;
 				}
 			}
-			
+
 			$cache[$key]['num_comments'] = 0;
 		}
 

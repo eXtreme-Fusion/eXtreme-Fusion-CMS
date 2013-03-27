@@ -35,12 +35,12 @@ class Container extends ServiceContainerBuilder
 	{
 		return new System;
 	}
-	
+
 	protected function getPagingService()
 	{
 		return new Paging;
 	}
-	
+
 	protected function getPageNavService()
 	{
 		return new PageNav($this->getService('Paging'));
@@ -88,7 +88,7 @@ class Container extends ServiceContainerBuilder
 	{
 		return new Modules($this->getService('Pdo'), $this->getService('Sett'), $this->getService('User'), $this->getService('Tag'), $this->getService('Locales'));
 	}
-	
+
 	protected function getStatisticsService()
 	{
 		return new Statistics($this->getService('Pdo'), $this->getService('System'));

@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-abstract class Observer 
+abstract class Observer
 {
 	protected static $_obj;
 }
