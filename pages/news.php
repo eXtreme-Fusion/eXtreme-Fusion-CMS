@@ -170,34 +170,22 @@ else
 		'table' => __('News')
 	);
 
-	! class_exists('Tag') || $_tag = New Tag($_system, $_pdo);
+	$_tag = $ec->tag;
 
 	// Sprawdzanie, czy użytkownik ma prawo do zobaczenia jakiegokolwiek newsa
 	$rows = $_pdo->getMatchRowsCount('SELECT `id` FROM [news] WHERE `access` IN ('.$_user->listRoles().') AND `draft` = 0');
-	/*
-	$rows = $_pdo->getMatchRowsCount('SELECT `id` FROM [news] WHERE `access` IN ('.$_user->listRoles().') AND `draft` = 0 AND `language` = :lang',
-		array(':lang', $_user->getLang(), PDO::PARAM_STR)
-	);
-	*/
 
 	if ($rows)
 	{
-		# STRONICOWANIE #
+		// Newsów na stronie
 		$items_per_page = intval($_user->get('itemnews') ? $_user->get('itemnews') : $_sett->get('news_per_page'));
-
-		if ( ! $_route->getByID(2))
-		{
-			$_GET['current'] = 1;
-		}
-		else
-		{
-			$_GET['current'] = $_route->getByID(2);
-		}
-
-		$_GET['rowstart'] = Paging::getRowStart($_GET['current'], $items_per_page);
-
-		# / STRONICOWANIE #
-		$cache = $_system->cache('news,'.$_user->getCacheName().',page-'.$_GET['current'], NULL, 'news', $_sett->getUns('cache', 'expire_news'));
+		
+		// Aktualna strona
+		$current_page = $_route->getByID(2, 1);
+		
+		// Pobieranie danych z cache
+		$cache = $_system->cache('news,'.$_user->getCacheName().',page-'.$current_page, NULL, 'news', $_sett->getUns('cache', 'expire_news'));
+		
 		if ($cache === NULL)
 		{
 			$query = $_pdo->getData('
@@ -207,7 +195,7 @@ else
 				WHERE tn.`draft` = 0 AND tn.`access` IN ('.$_user->listRoles().')
 				ORDER BY tn.`sticky` DESC, tn.`datestamp` DESC, tn.`title` ASC LIMIT :rowstart,:items_per_page',
 				array(
-					array(':rowstart', $_GET['rowstart'], PDO::PARAM_INT),
+					array(':rowstart', Paging::getRowStart($current_page, $items_per_page), PDO::PARAM_INT),
 					array(':items_per_page', $items_per_page, PDO::PARAM_INT),
 				)
 			);
@@ -251,7 +239,6 @@ else
 						'content' => $data['content'],
 						'content_ext' => $data['content_extended'],
 						'reads' => $data['reads'],
-						'num_comments' => $_pdo->getMatchRowsCount('SELECT `id` FROM [comments] WHERE `content_type` = "news" AND `content_id`='.$data['news_id']),
 						'allow_comments' => $data['allow_comments'],
 						'sticky' => $data['sticky'],
 						'url' => $_route->path(array('controller' => 'news', 'action' => $data['news_id'], HELP::Title2Link($data['title'])))
@@ -260,22 +247,26 @@ else
 
 			}
 
-			$_system->cache('news,'.$_user->getCacheName().',page-'.$_GET['current'], $cache, 'news');
+			$_system->cache('news,'.$_user->getCacheName().',page-'.$current_page, $cache, 'news');
 		}
 
-		foreach($cache as &$news)
-		{
-			if ($_user->hasAccess($news['access']))
-			{
-				$news['num_comments'] = $_pdo->getMatchRowsCount('SELECT `id` FROM [comments] WHERE `content_type` = "news" AND `content_id`='.$news['id']);
-			}
-			else
-			{
-				throw new systemException('Error! User has not accesible for him material in CACHE memory.');
-			}
-		}
+		$comments = $_pdo->getData('SELECT Count(`id`) AS count, `content_id` AS news_id FROM [comments] WHERE `content_type` = \'news\' GROUP BY `content_id`');
 		
-		$ec->paging->setPagesCount($rows, $_GET['current'], $items_per_page);
+		foreach($cache as $key => $news)
+		{
+			foreach($comments as $comment)
+			{
+				if ($comment['news_id'] === $news['id'])
+				{
+					$cache[$key]['num_comments'] = intval($comment['count']);
+					continue 2;
+				}
+			}
+			
+			$cache[$key]['num_comments'] = 0;
+		}
+
+		$ec->paging->setPagesCount($rows, $current_page, $items_per_page);
  		$ec->pageNav->get($ec->pageNav->create($_tpl, 5), 'news_page_nav');
 
 		$_tpl->assign('news', $cache);

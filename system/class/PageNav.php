@@ -39,7 +39,7 @@ interface PageNavIntf
 	public function getLinksCount();
 }
 
-class PageNav implements PageNavIntf
+class PageNav extends Observer implements PageNavIntf
 {
 	private
 		$_paging,
@@ -150,7 +150,7 @@ class PageNav implements PageNavIntf
 	}
 
 	// W odrêbnym stosie OPT tworzy szablon, który przechwycony przez bufor danych jest zwracany przez metodê
-	public function get(array $paging, $filename, $dir = NULL)
+	public function get(array $paging, $filename, $dir = NULL, $comments = TRUE)
 	{
 		if ($paging)
 		{
@@ -174,6 +174,10 @@ class PageNav implements PageNavIntf
 
 			ob_end_clean();
 
+			if (isset(parent::$_obj))
+			{
+				parent::$_obj->assign('page_nav', $out);
+			}
 			$this->_tpl->assign('page_nav', $out);
 		}
 	}

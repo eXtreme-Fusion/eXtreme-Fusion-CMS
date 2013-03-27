@@ -75,7 +75,6 @@
 		{php} closetable() {/php}
 		
 		{$comments}
-		{$page_nav}
 	{else}
 		{php} opentable(__('Error')) {/php}
 			<p class="status">{i18n('No data!')}</p>

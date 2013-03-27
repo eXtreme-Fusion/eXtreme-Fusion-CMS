@@ -58,19 +58,33 @@ class Paging implements PagingIntf
 		$_count,						// Ilość wszystkich materiałów, które trzeba rozłożyć na podstrony
 		$_current,						// Aktualna podstrona
 		$_per_page;						// Ilość materiałów wyświetlana na podstronie
+		
+	protected $options = array();
+	
+	public function __construct()
+	{
+		$this->options['current_page_intval'] = TRUE;
+	}
 
 	// Zapisuje ilość podstron, jaka może zostać wygenerowana
-	public function setPagesCount($count, $current, $per_page)
+	public function setPagesCount($count, $current, $per_page, $default = NULL)
 	{
 		if ($count == 0)
 		{
 			throw new systemException('Błąd! Parametr pierwszy nie może być zerem.');
 		}
 
-		if ($current > 0)
+		// NULL jest zwracany przez metody getParam oraz getByID Routera, gdy parametr nie zostanie odnaleziony.
+		if ($current === $default)
+		{
+			$this->_current = 1;
+		}
+		// Sprawdzanie, czy parametr jest numeryczny.
+		elseif (is_numeric($current) && $current)
 		{
 			$this->_current = intval($current);
 		}
+		// Zwracanie błędu gdy parametr nie jest numeryczny lub jest równy 0 i inny niż NULL.
 		else
 		{
 			throw new systemException('Błąd! Parametr drugi nie może być zerem.');

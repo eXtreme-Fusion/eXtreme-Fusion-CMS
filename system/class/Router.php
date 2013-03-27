@@ -600,9 +600,9 @@ class Router
 		return $this->_ext['url'];
 	}
 
-	public function getByID($id)
+	public function getByID($id, $default = NULL)
 	{
-		return isset($this->_values[$id]) ? $this->_values[$id] : FALSE;
+		return isset($this->_values[$id]) ? $this->_values[$id] : $default;
 	}
 
 	public function getRequest()

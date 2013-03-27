@@ -33,7 +33,7 @@
 | written permission from the original author(s).
 +--------------------------------------------------------*/
 
-class Comment
+class Comment extends Observer
 {
 	protected $_tpl;
 	protected $_pdo;
@@ -54,6 +54,7 @@ class Comment
 
 		$this->_tpl->root = DIR_TEMPLATES.'pre'.DS;
 		$this->_tpl->compile = DIR_CACHE;
+		parent::$_obj = $_tpl;
 	}
 
 	public function getLimit()
@@ -61,8 +62,9 @@ class Comment
 		return $this->_sett->get('comments_per_page');
 	}
 
-	public function get($type, $item, $current_page = 0, $limit = 10, $only_comments = FALSE)
+	public function get($type, $item, $current_page = 1, $limit = 10, $only_comments = FALSE)
 	{
+		if (!$current_page) $current_page = 1;
 		if ($d = $this->getData($type, $item, ($current_page-1)*$limit, $limit))
 		{
 			foreach ($d as &$val)
@@ -108,7 +110,9 @@ class Comment
 				'comment' => $d,
 				'type' => $type,
 				'item' => $item,
-				'only_comments' => $only_comments
+				'only_comments' => $only_comments,
+				'count' => count($d),
+				'limit' => $limit
 			)
 		);
 
@@ -122,7 +126,7 @@ class Comment
 		{
 			$this->_head->set('<script src="'.ADDR_JS.'comments.js"></script>');
 		}
-
+		
 		ob_start();
 		$this->_tpl->template('comments.tpl');
 		$data = ob_get_contents();
@@ -150,8 +154,7 @@ class Comment
 		));
 	}
 
-
-public function hasPermission($writer, $author)
+	public function hasPermission($writer, $author)
 	{
 		if ($writer === 'user')
 		{
