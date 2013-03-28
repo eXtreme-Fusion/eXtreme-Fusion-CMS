@@ -123,7 +123,7 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 
 			if ($data['allow_comments'] === '1')
 			{
-				$_comment = new commentPageNav($ec, $_pdo, $_tpl);
+				$_comment = new CommentPageNav($ec, $_pdo, $_tpl);
 				$_comment->create($data['news_id'], $_route->getByID(3), $ec->comment->getLimit(), 5, $_route->getFileName());
 
 				if (isset($_POST['comment']['save']))
@@ -271,7 +271,7 @@ else
 		$_tpl->assign('news', $cache);
 	}
 
-	// Załaczanie pluginów
+	// Załączanie pluginów
 	if (function_exists('render_news'))
 	{
 		render_news();
