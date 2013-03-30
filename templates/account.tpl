@@ -66,7 +66,7 @@
 			<div class="formField grid_7"><input type="text" name="email" value="{$User.Email}" id="Email" /></div>
 		</div>
 		<div class="tbl2">
-			<div class="formLabel sep_1 grid_3"><label for="UserName">{i18n('Hide e-mail:')}</label></div>
+			<div class="formLabel sep_1 grid_3"><label for="HideEmail">{i18n('Hide e-mail:')}</label></div>
 			<div class="formField grid_7">
 				<label for="HideEmail_1"><input type="radio" id="HideEmail_1" name="hideemail" value="1"{if $User.HideEmail == 1} checked="checked"{/if}>{i18n('Yes')}</label>
 				<label for="HideEmail_0"><input type="radio" id="HideEmail_0" name="hideemail" value="0"{if $User.HideEmail == 0} checked="checked"{/if}>{i18n('No')}</label>
@@ -76,7 +76,7 @@
 			{if $User.Avatar}
 				<div class="formLabel sep_1 grid_3">{i18n('Avatar:')}</div>
 				<div class="formField grid_7">
-					<img src="{$User.Avatar}">
+					<img src="{$User.Avatar}" alt="Avatar">
 					<p>
 						<label for="DelAvatar"><input type="checkbox" name="del_avatar" value="del" id="DelAvatar" /> {i18n('Usuń aktualny avatar')}</label>
 					</p>

@@ -93,7 +93,7 @@
 						</div>
 						<div class="team-info tbl2">
 							<div><strong>{i18n('Joined')}:</strong>{$users.joined}</div>
-							<div><strong>{i18n('Last Visit')}:</strong>{if $users.is_online == 1}{i18n('Online')}<img src="{$ADDR_IMAGES}online.png" alt="{i18n('Online')}">{else}{$users.last_visit_time}<img src="{$ADDR_IMAGES}offline.png" alt="{i18n('Offline')}">{/if}</div>
+							<div><strong>{i18n('Last Visit')}:</strong>{if $user.is_online == 1}{i18n('Online')}<img src="{$ADDR_IMAGES}profile/online.png" alt="{i18n('Online')}">{else}{$user.last_visit_time}<img src="{$ADDR_IMAGES}profile/offline.png" alt="{i18n('Offline')}">{/if}</div>
 							<div><strong>{i18n('Groups')}:</strong>{$users.roles}</div>
 						</div>
 					</div>
