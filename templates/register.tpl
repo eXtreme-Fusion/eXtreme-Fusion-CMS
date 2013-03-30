@@ -2,7 +2,7 @@
 	{if $error}
 		<div class="error">
 			{section=error}
-				<p>	
+				<p>
 					{if $error == 1}
 						{i18n('Fields marked with an asterisk are required.')}
 					{elseif $error == 2}
@@ -10,27 +10,27 @@
 					{elseif $error == 3}
 						{i18n('The passwords do not match.')}
 					{elseif $error == 4}
-						{i18n('Incorrect e-mail.')}
+						{i18n('Incorrect e-mail address.')}
 					{elseif $error == 5}
-						{i18n('Username is in use.')}
+						{i18n('Username is already in use.')}
 					{elseif $error == 6}
-						{i18n('E-Mail is to use.')}
+						{i18n('E-mail address is already in use.')}
 					{elseif $error == 7}
-						{i18n('E-Mail znajduje się na czarnej liście')}
+						{i18n('E-mail address is on blacklist.')}
 					{elseif $error == 8}
-						{i18n('Wpisany kod jest nieprawidłowy.')}
+						{i18n('Security code is not valid.')}
 					{/if}
 				</p>
 			{/section}
 		</div>
 	{/if}
-	
+
 	{if $create}
-		<div class="valid">{i18n('The user account has been created correctly.')}</div>
+		<div class="valid">{i18n('The user account has been created successfully.')}</div>
 	{elseif $email_send}
-		<div class="valid">{i18n('Activation email has been sent.')}</div>
+		<div class="valid">{i18n('Activation e-mail has been sent.')}</div>
 	{elseif $active}
-		<div class="info">{i18n('Account is waiting for admin activation.')}</div>
+		<div class="info">{i18n('Account is waiting for an admin activation.')}</div>
 	{else}
 		<div class="tbl">
 			<div class="center grid_12">{i18n('Welcome to', array(':portal' => $portal))}</div>
@@ -72,20 +72,20 @@
 					</select>
 				</div>
 			</div>
-			
+
 			{if $enable_terms == '1'}
 				<hr />
-				<h4>Regulamin</h4>
-				
+				<h4>{i18n('Rules')}</h4>
+
 				<div class="tbl">
 					<div class="center rules">{$license_agreement}</div>
 				</div>
-				
+
 				<hr />
 			{/if}
-			
+
 			{if $data}
-				<h4>{i18n('Dodatkowe informacje')}</h4>
+				<h4>{i18n('Additional information')}</h4>
 				{section=data}
 					<div class="{$data.row_color}">
 						<div class="formLabel sep_1 grid_3"><label for="{$data.id}">{i18n($data.name)}</label></div>
@@ -103,9 +103,9 @@
 					</div>
 				{/section}
 			{/if}
-			
+
 			{if $security}{$security}{/if}
-			
+
 			<div class="tbl PageButtons">
 				<div class="center grid_12 buttons">
 					<input type="hidden" name="FieldMax" value="{$i}"/>
