@@ -31,8 +31,8 @@
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
 +--------------------------------------------------------*/
-error_reporting(E_ALL | E_STRICT);
-echo $_SERVER['HTTP_ACCEPT_LANGUAGE']; //echo $_SERVER['';]
+error_reporting(-1);
+
 try
 {
 	// Instalowana wersja systemu - wyświetlana w nagłówku nawigacji
