@@ -780,7 +780,7 @@ Class HELP
 	public static function MonthsPL($months)
 	{
 		$en = array("January","February","March","April","May","June","July","August","September","October","November","December","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday");
-		$pl = array("Styczeń","Luty","Marzec","Kwiercień","Maj","Czerwiec","Lipiec","Sierpień","Wrzesień","Październik","Listopad","Grudzień","poniedziałek","wtorek","środa","czwartek","piątek","sobota","niedziela");
+		$pl = array("Styczeń","Luty","Marzec","Kwiecień","Maj","Czerwiec","Lipiec","Sierpień","Wrzesień","Październik","Listopad","Grudzień","poniedziałek","wtorek","środa","czwartek","piątek","sobota","niedziela");
 		$months = str_replace($en,$pl,$months);
 		return $months;
 	}
@@ -897,11 +897,11 @@ Class HELP
 		$val += intval(self::$_sett->get('offset_timezone')) * 3600;
 		if ($format === 'shortdate' || $format == 'longdate')
 		{
-			return strftime(self::$_sett->get($format), $val);
+			return iconv('ISO-8859-2', 'UTF-8', strftime(self::$_sett->get($format), $val));
 		}
 		else
 		{
-			return strftime('shortdate', $val);
+			return iconv('ISO-8859-2', 'UTF-8', strftime('shortdate', $val));
 		}
 	}
 

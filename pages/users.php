@@ -13,7 +13,7 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
+|
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------+
@@ -41,34 +41,40 @@ $theme = array(
 	'Desc' => 'Lista aktywnych kont na stronie '.$_sett->get('site_name')
 );
 
-$data = new Edit(
-	array(
-		'current' => $_route->getByID(2) ? $_route->getByID(2) : 1,
-		'sort' => is_string($_route->getByID(1)) ? $_route->getByID(1) : 'all'
-	)
-);
+// Aktualne filtrowanie
+if ($_route->getAction() && is_string($_route->getAction()))
+{
+	$data = new Edit($_route->getAction());
+	$filter = $data->filters('trim', 'strip');
+}
+else
+{
+	$filter = 'all';
+	$_route->trace(array('action' => 'all'));
+}
 
-$rows = $_pdo->getMatchRowsCount('SELECT * FROM [users] WHERE `status` = 0 '.($data->arr('sort')->filters('trim', 'strip') !== 'all' ? 'AND `username` LIKE "'.$data->arr('sort')->filters('trim', 'strip').'%"' : '').'');
+// Aktualna podstrona filtrowania 
+$current_page = $_route->getByID(2, 1);
+
+$rows = $_pdo->getMatchRowsCount('SELECT * FROM [users] WHERE `status` = 0 '.($filter !== 'all' ? 'AND `username` LIKE "'.$filter.'%"' : '').'');
 
 if ($rows)
 {
-	$rowstart = $data->arr('current')->isNum(TRUE, FALSE) ? Paging::getRowStart($data->arr('current')->isNum(TRUE, FALSE), intval($_sett->get('users_per_page'))) : 0;
-
-	$cache = $_system->cache('users,'.$_user->getCacheName().',sort_by-'.$data->arr('sort')->filters('trim', 'strip').',page-'.$data->arr('current')->isNum(TRUE, FALSE), NULL, 'users', $_sett->getUns('cache', 'expire_pages'));
+	$cache = $_system->cache('users,'.$_user->getCacheName().',sort_by-'.$filter.',page-'.$current_page, NULL, 'users', $_sett->getUns('cache', 'expire_pages'));
 	if ($cache === NULL)
 	{
 		$query = $_pdo->getData('
 			SELECT `id`, `username`, `role`, `status`, `lastvisit`
-			FROM [users] WHERE `status` = 0 '.($data->arr('sort')->filters('trim', 'strip') !== 'all' ? 'AND `username` LIKE "'.$data->arr('sort')->filters('trim', 'strip').'%"' : '').'
+			FROM [users] WHERE `status` = 0 '.($filter !== 'all' ? 'AND `username` LIKE "'.$filter.'%"' : '').'
 			ORDER BY `role` ASC, `username`
 			LIMIT :rowstart,:users_per_page',
 			array(
+				array(':rowstart', Paging::getRowStart($current_page, $_sett->get('users_per_page')), PDO::PARAM_INT),
 				array(':users_per_page', intval($_sett->get('users_per_page')), PDO::PARAM_INT),
-				array(':rowstart', $rowstart, PDO::PARAM_INT)
 			)
 		);
-	
-		if ($_pdo->getRowsCount($query))
+
+		if ($query)
 		{
 			$i = 0;
 			foreach($query as $row)
@@ -84,18 +90,17 @@ if ($rows)
 				$i++;
 			}
 		}
-		$_system->cache('users,'.$_user->getCacheName().',sort_by-'.$data->arr('sort')->filters('trim', 'strip').',page-'.$data->arr('current')->isNum(TRUE, FALSE), $cache, 'users');
+		$_system->cache('users,'.$_user->getCacheName().',sort_by-'.$filter.',page-'.$current_page, $cache, 'users');
 	}
 
-	$_pagenav = new PageNav(new Paging($rows, $data->arr('current')->isNum(TRUE, FALSE), intval($_sett->get('users_per_page'))), $_tpl, 10, array($_route->getFileName(), $data->arr('sort')->filters('trim', 'strip'), FALSE));
-
+	$ec->paging->setPagesCount($rows, $current_page, $_sett->get('users_per_page'));
 	if (file_exists(DIR_THEME.'templates'.DS.'paging'.DS.'users_page_nav.tpl'))
 	{
-		$_pagenav->get($_pagenav->create(), 'users_page_nav', DIR_THEME.'templates'.DS.'paging'.DS);
+ 		$ec->pageNav->get($ec->pageNav->create($_tpl, 10), 'users_page_nav', DIR_THEME.'templates'.DS.'paging'.DS);
 	}
 	else
 	{
-		$_pagenav->get($_pagenav->create(), 'page_nav');
+ 		$ec->pageNav->get($ec->pageNav->create($_tpl, 10), 'users_page_nav');
 	}
 
 	$_tpl->assign('users', $cache);
@@ -114,15 +119,14 @@ for ($i = 0, $c = count($sort); $i < $c; $i++)
 		'link' => $_route->path(array('controller' => 'users', 'action' => strtolower($sort[$i])))
 	);
 
-	if ($data->arr('sort')->filters('trim', 'strip') === $sort_sel[$i]['val'])
+	if ($filter === $sort_sel[$i]['val'])
 	{
 		$sort_sel[$i]['sel'] = TRUE;
 	}
 }
 
 $_tpl->assign('sort', $sort_sel);
-
-if ($data->arr('sort')->filters('trim', 'strip') !== 'all')
+if ($filter !== 'all')
 {
 	$_tpl->assignGroup(array(
 		'show_all' => TRUE,
