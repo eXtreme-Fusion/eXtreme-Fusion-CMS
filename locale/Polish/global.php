@@ -343,7 +343,7 @@ return array(
 	'Access denied' => 'Odmowa dostępu',
 	'Options' => 'Opcje',
 	'Done' => 'Gotowe',
-	'Show all' => 'Bez sortowania',
+	'Show all' => 'Bez filtrowania',
 	'Refresh' => 'Odśwież',
 	'Management' => 'Zarządzanie',
 	'Added by' => 'Dodane przez',
