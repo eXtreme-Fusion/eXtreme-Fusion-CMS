@@ -111,6 +111,14 @@ $(function() {
 	})
 	
 
+	$('.buttone').click(function(e) {
+		e.preventDefault();
+		$.ajax({
+			url: addr_site+'ajax/index.php?file=news',
+			type: 'GET',
+			data: {'current': 2}
+		});
+	});
 	// Manipulowanie domyślną zawartością pola
 	
 	$('.valueSystem').each(function() {

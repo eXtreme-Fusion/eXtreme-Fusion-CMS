@@ -13,7 +13,7 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
+|
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------+
@@ -54,20 +54,13 @@ if ($_route->getAction())
 	$_tpl->assign('page', 'category');
 
 	// Aktualna podstrona w danej kategorii
-	if ( ! $_route->getByID(3))
-	{
-		$current = 1;
-	}
-	else
-	{
-		$current = $_route->getByID(3);
-	}
+	$current_page = $_route->getByID(3, 1);
 
 	/**
 	 * Pobieranie danych z cache.
 	 * Zawiera: cat_id, cat_name, cat_image, cat_news_count
 	 **/
-	$category = $_system->cache('news_cats,cat-'.$_route->getAction().','.$_user->getCacheName().',page-'.$current, NULL, 'news_cats', $_sett->getUns('cache', 'expire_news_cats'));
+	$category = $_system->cache('news_cats,cat-'.$_route->getAction().','.$_user->getCacheName().',page-'.$current_page, NULL, 'news_cats', $_sett->getUns('cache', 'expire_news_cats'));
 
 	// Sprawdzanie, czy cache nie istnieje
 	if ($category === NULL)
@@ -94,7 +87,7 @@ if ($_route->getAction())
 		}
 
 		// Zapis danych do cache ze zmiennej $category
-		$_system->cache('news_cats,cat-'.$_route->getAction().','.$_user->getCacheName().',page-'.$current, $category, 'news_cats');
+		$_system->cache('news_cats,cat-'.$_route->getAction().','.$_user->getCacheName().',page-'.$current_page, $category, 'news_cats');
 	}
 
 	// Sprawdzanie, czy kategoria istnieje
@@ -104,7 +97,7 @@ if ($_route->getAction())
 		$items_per_page = intval($_sett->get('news_cats_item_per_page'));
 
 		// Pobieranie danych z cache dla występujących newsów w danej kategorii, do których użytkownik ma wgląd
-		$cache = $_system->cache('news,cat-'.$_route->getAction().','.$_user->getCacheName().',page-'.$current, NULL, 'news_cats', $_sett->getUns('cache', 'expire_news_cats'));
+		$cache = $_system->cache('news,cat-'.$_route->getAction().','.$_user->getCacheName().',page-'.$current_page, NULL, 'news_cats', $_sett->getUns('cache', 'expire_news_cats'));
 
 		// Sprawdzanie, czy cache nie istnieje
 		if ($cache === NULL)
@@ -118,7 +111,7 @@ if ($_route->getAction())
 				ORDER BY tn.`datestamp` ASC, tn.`title` LIMIT :rowstart,:items_per_page',
 				array(
 					array(':category', $_route->getAction(), PDO::PARAM_INT),
-					array(':rowstart', Paging::getRowStart($current, $items_per_page), PDO::PARAM_INT),
+					array(':rowstart', Paging::getRowStart($current_page, $items_per_page), PDO::PARAM_INT),
 					array(':items_per_page', $items_per_page, PDO::PARAM_INT)
 				)
 			);
@@ -147,21 +140,21 @@ if ($_route->getAction())
 			}
 
 			// Zapisywanie danych ze zmiennej $cache do cache
-			$_system->cache('news,cat-'.$_route->getAction().','.$_user->getCacheName().',page-'.$current, $cache, 'news_cats');
+			$_system->cache('news,cat-'.$_route->getAction().','.$_user->getCacheName().',page-'.$current_page, $cache, 'news_cats');
 		}
 
 		// Sprawdzanie, czy istnieją newsy w danej kategorii
 		if ($cache)
 		{
-			$_pagenav = new PageNav(new Paging($category['cat_news_count'], $current, $items_per_page), $_tpl, 5, array($_route->getFileName(), $_route->getByID(1).$_sett->getUns('routing', 'main_sep').$_route->getByID(2), FALSE));
+			$ec->paging->setPagesCount($category['cat_news_count'], $current_page, $items_per_page);
 
 			if (file_exists(DIR_THEME.'templates'.DS.'paging'.DS.'news_cats_nav.tpl'))
 			{
-				$_pagenav->get($_pagenav->create(), 'news_cats_nav', DIR_THEME.'templates'.DS.'paging'.DS);
+				$ec->pageNav->get($ec->pageNav->create($_tpl, 5), 'news_cats_nav', DIR_THEME.'templates'.DS.'paging'.DS);
 			}
 			else
 			{
-				$_pagenav->get($_pagenav->create(), 'news_cats_nav');
+				$ec->pageNav->get($ec->pageNav->create($_tpl, 5), 'page_nav');
 			}
 
 			// Przesyłanie do szablonu danych o newsach
