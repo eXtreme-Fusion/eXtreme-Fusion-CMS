@@ -208,13 +208,16 @@ if ($_request->post('create_account')->show())
 				$i++;
 			}
 			
-			if($lastuser['id'] === NULL)
+			if ($field)
 			{
-				$_pdo->exec('UPDATE [users_data] SET '.$field);
-			}
-			else
-			{
-				$_pdo->exec('INSERT INTO [users_data] (`user_id`, '.$index_val.') VALUES ('.$id.', '.$field_val.') ON DUPLICATE KEY UPDATE '.$field.'');
+				if ($lastuser['id'] === NULL)
+				{
+					$_pdo->exec('UPDATE [users_data] SET '.$field);
+				}
+				else
+				{
+					$_pdo->exec('INSERT INTO [users_data] (`user_id`, '.$index_val.') VALUES ('.$lastuser['id'].', '.$field_val.') ON DUPLICATE KEY UPDATE '.$field.'');
+				}
 			}
 		}
 
