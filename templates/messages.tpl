@@ -39,17 +39,17 @@
 	<div id="messages_page">
 		{if $data}
 			<p class="info light text_other">{i18n('Messages are deleted automatically after 60 days from the time they were sent.')}</p>
-			
+
 			<nav class="tab_menu">
 				<p><a href="{$url_new_message}" class="button">{i18n('Write a message')}</a></p>
 				<ul>
 					<li><a href="javascript:void(0)" id="tab_all" class="tab">Wszystkie</a></li>
 					{if $has_messages.inbox}<li><a href="javascript:void(0)" id="tab_inbox" class="tab">Odebrane</a></li>{/if}
 					{if $has_messages.outbox}<li><a href="javascript:void(0)" id="tab_outbox" class="tab">Wysłane</a></li>{/if}
-					{if $has_messages.draft}<li><a href="javascript:void(0)" id="tab_draft" class="tab">Robocze</a></li>{/if}
+					{*{if $has_messages.draft}<li><a href="javascript:void(0)" id="tab_draft" class="tab">Robocze</a></li>{/if}*}
 				</ul>
 			</nav>
-			
+
 			<div class="tab_cont" id="tab_cont_all">
 				{section=data}
 					<article class="short_post light_all_child clearfix">
@@ -149,7 +149,7 @@
 					{/if}
 				</div>
 				<div class="line">
-					<label for="message_subject">{i18n('Subject:')}</label> 
+					<label for="message_subject">{i18n('Subject:')}</label>
 					<input type="text" name="subject" class="valueSystem" value="{i18n('Enter a topic name')}..." id="message_subject" required>
 				</div>
 			{else}
@@ -160,7 +160,7 @@
 				</div>
 			{/if}
 			<div class="line">
-				<label for="message">{i18n('Message:')}</label> 
+				<label for="message">{i18n('Message:')}</label>
 				<textarea name="message" rows="5" id="message" class="valueSystem" required>{i18n('Enter your message')}...</textarea>
 			</div>
 			<div class="line center">
@@ -175,7 +175,7 @@
 				{/section}
 			</div>
 			<div class="line center">
-				<a href="{$ADDR_SITE}messages.html" class="button">{i18n('Back')}</a>
+				<a href="{url('controller=>', 'messages')}" class="button">{i18n('Back')}</a>
 				<input type="submit" name="send" class="button" value="{i18n('Send')}">
 				{* Zmienna item_id istnieje tylko dla podstrony `entry`. Przy nowej konwersacji jest otrzymywane przez żądanie Ajax. *}
 				<input type="hidden" value="{$item_id}" name="item_id">

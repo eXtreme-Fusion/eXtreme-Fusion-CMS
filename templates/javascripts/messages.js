@@ -42,10 +42,14 @@ $(function() {
 	});
 	
 	// Wyszukiwanie użytkownika po jego loginie
-	searchUser(false, false);
+	//searchUser(false, false);
+	
+	// Wyszukiwanie użytkownika po jego loginie
+	$('#search_user').searchEngine({'is_here_admin_panel': 0, 'self_search': 0, 'php_file': 'ajax/search_users_extended.php'});
+
 
 	// Wybieranie adresata wiadomości
-	$('body').on('click', '.defender', function() {
+	$('body').on('click', '#defenders li', function() {
 		var id = $(this).attr('id').split('-')[1];
 		var username = $(this).text();
 
