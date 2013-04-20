@@ -110,7 +110,7 @@ class PageNav extends Observer implements PageNavIntf
 		}
 	}
 
-	public function create($_tpl, $links_count = 5, $show_go_to_first = TRUE, $show_go_to_last = TRUE)
+	public function create($_tpl, $links_count, $show_go_to_first = TRUE, $show_go_to_last = TRUE)
 	{
 		$this->_tpl = $_tpl;
 
