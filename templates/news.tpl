@@ -104,7 +104,7 @@
 						{/if}
 						{if $news.keyword}
 							<p>
-								<strong>{i18n('Tags:')}</strong>
+								<strong>{i18n('Słowa kluczowe:')}</strong>
 								{$news.keyword}
 							</p>
 						{/if}

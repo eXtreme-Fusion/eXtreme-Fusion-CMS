@@ -86,7 +86,7 @@ if ($_route->getAction())
 }
 else
 {
-	$cache = $_system->cache('tags,'.$_user->getCacheName(), NULL, 'tags', $_sett->getUns('cache', 'expire_tags')); $k = array();
+	$cache = $_system->cache('tags,'.$_user->getCacheName(), NULL, 'tags', $_sett->getUns('cache', 'expire_tags'));
 	$f = array(); $g = array();
 	if ($cache === NULL)
 	{
@@ -117,9 +117,13 @@ else
 		}
 	}
 	
-	foreach($cache as $vk)
+	$k = array();
+	if ($cache)
 	{
-		$k[] = $vk['tag_name'];
+		foreach($cache as $vk)
+		{
+			$k[] = $vk['tag_name'];
+		}
 	}
 	
 	$k = implode(', ', $k);
