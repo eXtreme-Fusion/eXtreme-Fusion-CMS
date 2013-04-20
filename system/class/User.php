@@ -168,7 +168,10 @@ class User {
 	{
 		if ($this->isLoggedIn())
 		{
-			return $this->get('lang');
+			if ($this->get('lang'))
+			{
+				return $this->get('lang');
+			}
 		}
 
 		if ($this->_sett->get('language_detection'))

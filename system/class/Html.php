@@ -60,7 +60,7 @@ abstract class HtmlAbstract
 	// Return PHP: Tworzenie tablicy danych dla listy formularza
 	// Parametr trzeci ustawiony na TRUE powoduje, że indeksy w zwróconej tablicy będą takie same, jak w źródłowej.
 	// Ustawienie na FALSE powoduje, że indeksem stanie się wartość z tablicy źródłowej.
-	public static function createSelectOpts($data, $selected = NULL, $key_value = FALSE, $no_select_option = FALSE)
+	public static function createSelectOpts($data, $selected = NULL, $key_value = FALSE, $no_select_option = FALSE, $default)
 	{
 		$i = 0; $assign = array();
 
@@ -69,12 +69,12 @@ abstract class HtmlAbstract
 		{
 			$assign[$i] = array(
 				'value' => '',
-				'display' => __('--Brak wyboru--'),
+				'display' => __($default),
 				'selected' => ''
 			);
+
 			$i++;
 		}
-
 
 		if ($key_value)
 		{
@@ -113,6 +113,26 @@ abstract class HtmlAbstract
 				$i++;
 			}
 		}
+
+		// Oznaczanie opcji Brak wyboru jako selected jeżeli żadna inna nie jest selected.
+		if ($no_select_option)
+		{
+			$selected = FALSE;
+			foreach($assign as $opt)
+			{
+				if ($opt['selected'])
+				{
+					$selected = TRUE;
+					break;
+				}
+			}
+
+			if (!$selected)
+			{
+				$assign[0]['selected'] = TRUE;
+			}
+		}
+
 		return $assign;
 	}
 
@@ -140,6 +160,9 @@ abstract class HtmlAbstract
 // Helpery dla plików szablonu
 class Html extends HtmlAbstract
 {
+	const SELECT_DEFAULT = '--Default--';
+	const SELECT_NO_SELECTION = '--Brak wyboru--';
+	
 	// Opcje listy wyboru
 	public static function getSelectOpts($data, $selected = NULL, $key_value = FALSE, $no_select_option = FALSE)
 	{
@@ -151,33 +174,33 @@ class Html extends HtmlAbstract
 
 		return $ret;
 	}
-	
+
 	// Konwertuje tablicę do postaci linków html
 	public static function arrayToLinks($data, $implode = FALSE)
 	{
 		$is_array = is_array($data);
-		
+
 		if (!$data || ($is_array && (!isset($data[0]['name']) || !isset($data[0]['url']))))
 		{
 			return FALSE;
 		}
-		
+
 		if (!$is_array)
 		{
 			$data = array($data);
 		}
-		
+
 		$ret = array();
 		foreach($data as $entity)
 		{
 			$ret[] = '<a href="'.$entity['url'].'"'.(isset($entity['title']) ? ' title="'.$entity['title'].'"' : '').' rel="tag">'.$entity['name'].'</a>';
 		}
-		
+
 		if ($implode !== FALSE)
 		{
 			return implode($implode, $ret);
 		}
-		
+
 		return $ret;
 	}
 }

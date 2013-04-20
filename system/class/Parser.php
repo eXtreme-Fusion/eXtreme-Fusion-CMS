@@ -193,9 +193,9 @@ class Parser extends optClass
 	// Tworzenie tablicy danych dla listy formularza
 	// Parametr trzeci ustawiony na TRUE powoduje, że indeksy w zwróconej tablicy będą takie same, jak w źródłowej.
 	// Ustawienie na FALSE powoduje, że indeksem stanie się wartość z tablicy źródłowej.
-	public function createSelectOpts($data, $selected = NULL, $key_value = FALSE, $no_select_option = FALSE)
+	public function createSelectOpts($data, $selected = NULL, $key_value = FALSE, $no_select_option = FALSE, $default = HTML::SELECT_NO_SELECTION)
 	{
-		return Html::createSelectOpts($data, $selected, $key_value, $no_select_option);
+		return Html::createSelectOpts($data, $selected, $key_value, $no_select_option, $default);
 	}
 
 	// LISTA MULTI SELECT

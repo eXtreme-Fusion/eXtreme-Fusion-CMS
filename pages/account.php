@@ -211,7 +211,10 @@ $user = array(
 
 $_tpl->assignGroup(array(
 	'theme_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'themes', array('templates'), TRUE, 'folders'), $_user->get('theme')),
-	'locale_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'locale', array(), TRUE, 'folders'), $_user->get('lang')),
+	// Opcja Brak wyboru jest dodawana, by nie było przekłamywania informacji o wybranym języku, gdy preferowany zostanie usunięty z systemu.
+	// Wtedy, w zależności od ustawień, użyty zostanie język wykryty w przeglądarce lub domyślny język strony, zaś w tym polu zaznaczona będzie opcja Brak wyboru.
+	// Ze względu na to, podczas rejestracji użytkownik może nie wybrać preferowanego języka.
+	'locale_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'locale', array(), TRUE, 'folders'), $_user->get('lang'), FALSE, TRUE, HTML::SELECT_DEFAULT),
 	'User' => $user,
 	'ChangeName' => $_sett->get('change_name')
 ));

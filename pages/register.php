@@ -310,7 +310,10 @@ $_tpl->assignGroup(array(
 	'portal' => $_sett->get('site_name'),
 	'validation' => (bool) $_protection,
 	'enable_terms' => $_sett->get('enable_terms'),
-	'locale_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'locale', array(), TRUE, 'folders'), NULL, FALSE, TRUE)
+	// Opcja Brak wyboru jest dodawana, by nie było przekłamywania informacji o wybranym języku, gdy preferowany zostanie usunięty z systemu.
+	// Wtedy, w zależności od ustawień, użyty zostanie język wykryty w przeglądarce lub domyślny język strony, zaś w tym polu zaznaczona będzie opcja Brak wyboru.
+	// Ze względu na to, podczas rejestracji użytkownik może nie wybrać preferowanego języka.
+	'locale_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'locale', array(), TRUE, 'folders'), NULL, FALSE, TRUE, HTML::SELECT_NO_SELECTION)
 ));
 
 if ($_protection)
