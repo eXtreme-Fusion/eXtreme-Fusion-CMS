@@ -299,7 +299,7 @@
 				<tr>
 					<th style="width:20%">{i18n('Id:')}</th>
 					<th style="width:20%">{i18n('Name:')}</th>
-					<th style="width:25%">{i18n('Wyświetlanie jako news:')}</th>
+					<th style="width:25%">{i18n('Opis:')}</th>
 					<th style="width:25%">{i18n('Options:')}</th>
 				</tr>
 			</thead>

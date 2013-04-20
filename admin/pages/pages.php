@@ -256,8 +256,8 @@ try
 			else
 			{
 				$_pdo->exec('
-					INSERT INTO [pages_categories] (`name`, `description`, `submitting_groups`, `thumbnail`)
-					VALUES (:name, :description, :submitting_groups, :thumbnail)',
+					INSERT INTO [pages_categories] (`name`, `description`, `submitting_groups`'.(isset($thumbnail) ? ', `thumbnail`' : '').')
+					VALUES (:name, :description, :submitting_groups'.(isset($thumbnail) ? ', :thumbnail' : '').')',
 					$bind
 				);
 
