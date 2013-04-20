@@ -762,13 +762,13 @@ try
 			$user = array();
 			if ($rows)
 			{
-				$rowstart = Paging::getRowStart($current, intval($_sett->get('users_per_page')));
+				$items_per_page = intval($_sett->get('users_per_page'));
 
 				$query = $_pdo->getData('SELECT * FROM [users] WHERE `status` = :status ORDER BY `username` ASC LIMIT :rowstart,:items_per_page',
 					array(
 						array(':status', $status, PDO::PARAM_INT),
-						array(':rowstart', $rowstart, PDO::PARAM_INT),
-						array(':items_per_page', intval($_sett->get('users_per_page')), PDO::PARAM_INT)
+						array(':rowstart', Paging::getRowStart($current_page, $items_per_page), PDO::PARAM_INT),
+						array(':items_per_page', $items_per_page, PDO::PARAM_INT)
 					)
 				);
 
@@ -786,10 +786,8 @@ try
 					}
 				}
 
-
-				$_pagenav = new PageNav(new Paging($rows, $current, intval($_sett->get('users_per_page'))), $_tpl, 10, array('page=users', 'current=', FALSE));
-
-				$_pagenav->get($_pagenav->create(), 'page_nav', DIR_ADMIN_TEMPLATES.'paging'.DS);
+				$ec->paging->setPagesCount($rows, $current_page, $items_per_page);
+				$ec->pageNav->get($ec->pageNav->create($_tpl, 10), 'page_nav', DIR_ADMIN_TEMPLATES.'paging'.DS);
 			}
 			$_tpl->assignGroup(array(
 					'user' => $user,

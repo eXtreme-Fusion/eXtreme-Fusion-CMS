@@ -210,8 +210,9 @@ class pageNavParser extends optClass
 	private $_ext = '.tpl';
 
 	private $_route;
+	private $_request;
 
-	public function __construct($_route = NULL)
+	public function __construct($_route = NULL, $_request = NULL)
 	{
 		$this->plugins = OPT_DIR.'plugins'.DS;
 		$this->gzipCompression = FALSE;
@@ -233,11 +234,17 @@ class pageNavParser extends optClass
 		$this->compile = DIR_CACHE;
 
 		$this->_route = $_route;
+		$this->_request = $_request;
 	}
 
 	public function route()
 	{
 		return $this->_route;
+	}
+	
+	public function request()
+	{
+		return $this->_request;
 	}
 
 	// Parametr drugi to katalog, w którym znajduje się szablon.

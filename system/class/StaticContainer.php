@@ -23,14 +23,19 @@ class StaticContainer
 		self::$shared[$name] = $value;
 	}
 
-	public static function get($name)
+	public static function get($name, $default = 0)
 	{
 		if (isset(self::$shared[$name]))
 		{
 			return self::$shared[$name];
 		}
 
-		throw new argumentException('StaticContainer::get()');
+		if ($default === 0)
+		{
+			throw new argumentException('StaticContainer::get()');
+		}
+		
+		return $default;
 	}
 
 	public static function has($name)

@@ -270,7 +270,7 @@ try
 		}
 
 		$items_per_page = 20;
-		$current = intval($_request->get('current', NULL)->show() !== NULL ? $_request->get('current')->show() : 1);
+		$current_page = intval($_request->get('current', NULL)->show() !== NULL ? $_request->get('current')->show() : 1);
 
 		$rows = $_pdo->getMatchRowsCount('SELECT `id`, `title`, `datestamp`, `author`, `access` FROM [news] ORDER BY `datestamp`');
 
@@ -302,9 +302,10 @@ try
 
 			}
 
-			$_pagenav = new PageNav(new Paging($rows, $current, $items_per_page), $_tpl, 10, array('page=news', 'current=', FALSE));
-			$_pagenav->get($_pagenav->create(), 'page_nav', DIR_ADMIN_TEMPLATES.'paging'.DS);
-
+			
+			$ec->paging->setPagesCount($rows, $current_page, $items_per_page);
+			$ec->pageNav->get($ec->pageNav->create($_tpl, 10), 'page_nav', DIR_ADMIN_TEMPLATES.'paging'.DS);
+		
 			$_tpl->assign('news_list', $news_list);
 		}
 	}

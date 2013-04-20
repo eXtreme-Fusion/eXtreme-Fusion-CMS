@@ -207,10 +207,10 @@ try
 						'roles' => unserialize($data['roles']),
 						'role' => $data['role']
 					);
-								
+
 					$_tpl->assign('all_groups', $_tpl->getMultiSelect($_user->getViewGroups(), $_user->convertRoles($data['roles'])), FALSE);
 					$_tpl->assign('insight_groups', $_tpl->createSelectOpts($_user->getViewGroups(), intval($data['role']), TRUE, TRUE), TRUE);
-					
+
 					$_tpl->assignGroup(array(
 						'user' => $user,
 						'theme_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'themes', array('templates'), TRUE, 'folders'), $data['theme']),
@@ -504,7 +504,7 @@ try
 				}
 
 				$_tpl->assign('cats', $cats);
-			
+
 				$_tpl->assignGroup(array(
 					'id' => $_user->get('id'),
 					'account' => $users,
@@ -550,7 +550,7 @@ try
 				$status = 0;
 			}
 
-			$current = intval($_request->get('current')->show() ? $_request->get('current')->show() : 1);
+			$current_page = intval($_request->get('current')->show() ? $_request->get('current')->show() : 1);
 
 			$rows = $_pdo->getMatchRowsCount('SELECT * FROM [users] WHERE `status` = :status ORDER BY `username` ASC',
 				array(':status', $status, PDO::PARAM_INT)
@@ -559,13 +559,13 @@ try
 			$user = array();
 			if ($rows)
 			{
-				$rowstart = Paging::getRowStart($current, intval($_sett->get('users_per_page')));
+				$items_per_page = intval($_sett->get('users_per_page'));
 
 				$query = $_pdo->getData('SELECT * FROM [users] WHERE `status` = :status ORDER BY `username` ASC LIMIT :rowstart,:items_per_page',
 					array(
 						array(':status', $status, PDO::PARAM_INT),
-						array(':rowstart', $rowstart, PDO::PARAM_INT),
-						array(':items_per_page', intval($_sett->get('users_per_page')), PDO::PARAM_INT)
+						array(':rowstart', Paging::getRowStart($current_page, $items_per_page), PDO::PARAM_INT),
+						array(':items_per_page', $items_per_page, PDO::PARAM_INT)
 					)
 				);
 
@@ -583,15 +583,14 @@ try
 					}
 				}
 
-
-				$_pagenav = new PageNav(new Paging($rows, $current, intval($_sett->get('users_per_page'))), $_tpl, 10, array('page=users', 'current=', FALSE));
-
-				$_pagenav->get($_pagenav->create(), 'page_nav', DIR_ADMIN_TEMPLATES.'paging'.DS);
+				$ec->paging->setPagesCount($rows, $current_page, $items_per_page);
+				$ec->pageNav->get($ec->pageNav->create($_tpl, 10), 'page_nav', DIR_ADMIN_TEMPLATES.'paging'.DS);
 			}
+
 			$_tpl->assignGroup(array(
-					'user' => $user,
-					'info' => $info
-				));
+				'user' => $user,
+				'info' => $info
+			));
 		}
 	}
 	elseif ($_request->get('page')->show() === 'add')

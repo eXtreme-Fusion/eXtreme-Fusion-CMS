@@ -154,7 +154,7 @@ class PageNav extends Observer implements PageNavIntf
 	{
 		if ($paging)
 		{
-			$_tpl = new pageNavParser(StaticContainer::has('route') ? StaticContainer::get('route') : NULL);
+			$_tpl = new pageNavParser(StaticContainer::get('route', NULL), StaticContainer::get('request', NULL));
 
 			$_tpl->assignGroup(array(
 				'nums' => count($paging['nums']) > 1 ? $paging['nums'] : NULL,
