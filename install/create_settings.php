@@ -49,6 +49,7 @@ $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'footer', 'value' 
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'opening_page', 'value' => 'news'));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'theme', 'value' => 'eXtreme-Fusion-5'));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'locale', 'value' => $localeset));
+$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'language_detection', 'value' => 0));
 
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'site_banner', 'value' => 'themes/eXtreme-Fusion-5/templates/images/header_logo.png'));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'site_banner1', 'value' => ''));

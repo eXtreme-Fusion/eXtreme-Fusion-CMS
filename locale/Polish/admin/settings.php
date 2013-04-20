@@ -20,8 +20,9 @@ return array(
 	'News style:' => 'Styl newsów:',
 	'Single Column' => 'jednokolumnowy',
 	'Double Column' => 'dwukolumnowy',
-	'Default language:' => 'Język strony:',
-	'Default theme:' => 'Skórka strony:',
+	'Enable language detection by browser?' => 'Włączyć wykrywanie języka?',
+	'Default language:' => 'Domyślny język strony:',
+	'Default theme:' => 'Domyślna skórka strony:',
 	'Default search place:' => 'Domyślne miejsce wyszukiwania:',
 	//Logs
 	'The language chosen is not avaible.' => 'Wybrany język nie jest dostępny.',

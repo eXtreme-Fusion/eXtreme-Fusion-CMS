@@ -66,6 +66,7 @@ try
 			'footer' => $_request->post('footer')->strip(),
 			'opening_page' => $_request->post('opening_page')->strip(),
 			'default_search' => $_request->post('default_search')->strip(),
+			'language_detection' => $_request->post('language_detection')->isNum(TRUE),
 		));
 
 		$_files->rmDirRecursive(DIR_CACHE);
@@ -74,7 +75,7 @@ try
 		 * Poniższe sprawdzanie czy szablon istnieje jest zabezpieczeniem przed następującą sytuacją:
 		 * Administrator wchodzi w Ustawienia główne. Nie zamyka przeglądarki i przechodzi na serwer FTP.
 		 * Nadaje nową nazwę jednemu z katalogów, które przechowują szablon.
-		 * Następnie wraca do Ustawień głownych i zmienia szablon strony na nieistniejący (bo zmienił jego nazwę na serwerze FTP).
+		 * Następnie wraca do Ustawień głównych i zmienia szablon strony na nieistniejący (bo zmienił jego nazwę na serwerze FTP).
 		 * Poniższy kod spowoduje, że wyświetlony zostanie komunikat o błędzie, zamiast blokady całej strony z powodu braku szablonu.
 		 *
 		 * W podobny sposób działa zabezpieczenie języka systemowego.
@@ -87,7 +88,7 @@ try
 		}
 		else
 		{
-			throw new userException('The language chosen is not available.');
+			throw new userException('The language which has been chosen is not available.');
 		}
 
 		// Czy wybrany szablon istnieje?
@@ -122,7 +123,8 @@ try
 		'keywords' => $_sett->get('keywords'),
 		'opening_page' => $_sett->get('opening_page'),
 		'default_search' => $_sett->get('default_search'),
-		'old_locale' => $_sett->get('locale'),
+		//'old_locale' => $_sett->get('locale'),
+		'language_detection' => $_sett->get('language_detection'),
 		'locale_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'locale', array(), TRUE, 'folders'), $_sett->get('locale')),
 		'theme_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'themes', array(), TRUE, 'folders'), $_sett->get('theme'))
 	));

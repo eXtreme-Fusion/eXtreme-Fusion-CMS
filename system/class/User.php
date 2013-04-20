@@ -171,7 +171,12 @@ class User {
 			return $this->get('lang');
 		}
 
-		return System::detectBrowserLanguage(TRUE);
+		if ($this->_sett->get('language_detection'))
+		{
+			return System::detectBrowserLanguage(TRUE);
+		}
+		
+		return $this->_sett->get('locale');
 
 	}
 	// Sprawdzanie dostępności nazwy użytkownika i ewentualna zmiana
