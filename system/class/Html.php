@@ -60,7 +60,7 @@ abstract class HtmlAbstract
 	// Return PHP: Tworzenie tablicy danych dla listy formularza
 	// Parametr trzeci ustawiony na TRUE powoduje, że indeksy w zwróconej tablicy będą takie same, jak w źródłowej.
 	// Ustawienie na FALSE powoduje, że indeksem stanie się wartość z tablicy źródłowej.
-	public static function createSelectOpts($data, $selected = NULL, $key_value = FALSE, $no_select_option = FALSE, $default)
+	public static function createSelectOpts($data, $selected = NULL, $key_value = FALSE, $no_select_option = FALSE, $default = HTML::SELECT_NO_SELECTION)
 	{
 		$i = 0; $assign = array();
 
