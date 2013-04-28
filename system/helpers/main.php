@@ -870,7 +870,7 @@ Class HELP
 		}
 	}
 
-	public function formatOrphan($content)
+	public static function formatOrphan($content)
 	{
 		return $content = preg_replace("/\s([aiouwzAIOUWZ])\s/", " $1&nbsp;", $content);
 
