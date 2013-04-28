@@ -164,10 +164,10 @@ class Html extends HtmlAbstract
 	const SELECT_NO_SELECTION = '--Brak wyboru--';
 	
 	// Opcje listy wyboru
-	public static function getSelectOpts($data, $selected = NULL, $key_value = FALSE, $no_select_option = FALSE)
+	public static function getSelectOpts($data, $selected = NULL, $key_value = FALSE, $no_select_option = FALSE, $default = HTML::SELECT_NO_SELECTION)
 	{
 		$ret = '';
-		foreach(self::createSelectOpts($data, $selected, $key_value, $no_select_option) as $opt)
+		foreach(self::createSelectOpts($data, $selected, $key_value, $no_select_option, $default) as $opt)
 		{
 			$ret .= '<option value="'.$opt['value'].'"'.($opt['selected'] ? ' selected="selected"' : '').'>'.$opt['display'].'</option>';
 		}
