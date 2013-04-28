@@ -258,6 +258,7 @@ try
 
 		if ($_pdo->getRowsCount($query))
 		{
+			
 	        foreach($query as $group)
 	        {
 				$row['id'] = $group['id'];

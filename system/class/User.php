@@ -701,11 +701,12 @@ class User {
 			$role = $this->_pdo->getRow('SELECT `format` FROM [groups] WHERE `id` = :role', array(
 				array(':role', $role, PDO::PARAM_STR)
 			));
-		}
-
-		if ($role)
-		{
+			
 			return str_replace('{username}', $username, $role['format']);
+		}
+		else
+		{
+			return str_replace('{username}', $username, $role);
 		}
 
 		return $username;
