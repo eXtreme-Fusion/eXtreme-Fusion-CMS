@@ -60,12 +60,12 @@ $row = $_pdo->getRow('SELECT * FROM [users] WHERE `id` = 1');
 		'id' => $row['id'],
 		'username' => $_user->getUsername($row['id']),
 		'role' => $_user->getRoleName($row['role']),
-		'roles' => implode($_user->getUserRolesTitle($row['id']), ', '),
+		'roles' => implode(', ', $_user->getUserRolesTitle($row['id'], 3)),
 		'avatar' => $row['avatar'],
 		'joined' => HELP::showDate('shortdate', $row['joined']),
 		'last_visit' => $last_visit,
 		'link' => HELP::profileLink($row['username'], $row['id']),
-		'last_visit_time' => $row['lastvisit'] ? HELP::showDate('longdate', $row['lastvisit']) : NULL,
+		'last_visit_time' => ($row['lastvisit'] != 0 ? HELP::showDate('shortdate', $row['lastvisit']) : __('Nie był na stronie')),
 		'is_online' => inArray($row['id'], $_user->getOnline(), 'id') ? 1 : 0,
 	);
 
@@ -87,25 +87,23 @@ if ($_pdo->getRowsCount($query))
 			$last_visit = HELP::showDate('shortdate', $row['lastvisit']);
 		}
 
-
-
 		$data[] = array(
 			'id' => $row['id'],
 			'username' => $_user->getUsername($row['id']),
 			'role' => $_user->getRoleName($row['role']),
-			'roles' => implode($_user->getUserRolesTitle($row['id']), ', '),
+			'roles' => implode(', ', $_user->getUserRolesTitle($row['id'], 3)),
 			'avatar' => $row['avatar'],
 			'joined' => HELP::showDate('shortdate', $row['joined']),
 			'last_visit' => $last_visit,
 			'link' => HELP::profileLink($row['username'], $row['id']),
-			'last_visit_time' => $row['lastvisit'] ? HELP::showDate('longdate', $row['lastvisit']) : NULL,
+			'last_visit_time' => ($row['lastvisit'] != 0 ? HELP::showDate('shortdate', $row['lastvisit']) : __('Nie był na stronie')),
 			'is_online' => inArray($row['id'], $_user->getOnline(), 'id') ? 1 : 0,
 		);
 	}
 
 	$_tpl->assign('admin', $data);
 }
-
+/* Do poprawki ~Rafik
 // Other groups
 $groups = '';
 $query = $_pdo->getData('SELECT * FROM [groups] WHERE `id` != 1 AND `team` = 1');
@@ -155,12 +153,12 @@ if($groups != NULL)
 						'id' => $user['id'],
 						'username' => $_user->getUsername($user['id']),
 						'role' => $_user->getRoleName($user['role']),
-						'roles' => implode($_user->getUserRolesTitle($user['id']), ', '),
+						'roles' => implode(', ', $_user->getUserRolesTitle($row['id'], 3)),
 						'avatar' => $user['avatar'],
 						'joined' => HELP::showDate('shortdate', $user['joined']),
 						'last_visit' => $last_visit,
 						'link' => HELP::profileLink($user['username'], $user['id']),
-						'last_visit_time' => $row['lastvisit'] ? HELP::showDate('longdate', $row['lastvisit']) : NULL,
+						'last_visit_time' => ($row['lastvisit'] != 0 ? HELP::showDate('shortdate', $row['lastvisit']) : __('Nie był na stronie')),
 						'is_online' => inArray($row['id'], $_user->getOnline(), 'id') ? 1 : 0
 					);
 					$i++;
