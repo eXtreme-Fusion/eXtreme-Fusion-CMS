@@ -34,19 +34,19 @@ class System {
 	 */
 	public function __construct($cleaning = TRUE)
 	{
-		// Zabezpieczenie przed atakami XSS.
-		if ($cleaning && HELP::stripget($_GET))
-		{
-			throw new systemException(die('Podejrzewany atak XSS po zmiennej $_GET!'));
-		}
-
 		if (file_exists(DIR_SITE.'config.php'))
 		{
 			require DIR_SITE.'config.php';
 			$this->_furl = isset($_route['custom_furl']) && $_route['custom_furl'] === TRUE;
 			$this->_rewrite = isset($_route['custom_rewrite']) && $_route['custom_rewrite'] === TRUE;
+			
+			// Zabezpieczenie przed atakami XSS.
+			if ($cleaning)
+			{
+				HELP::stripget($_dbconfig);
+			}
 		}
-
+		
 		$_SERVER['SERVER_SOFTWARE'] = isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : '';
 		$_SERVER['SERVER_SIGNATURE'] = isset($_SERVER['SERVER_SIGNATURE']) ? $_SERVER['SERVER_SIGNATURE'] : '';
 	}

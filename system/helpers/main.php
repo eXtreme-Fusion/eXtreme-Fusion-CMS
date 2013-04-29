@@ -703,28 +703,15 @@ Class HELP
 	//==================================
 	// Prevent any possible XSS attacks via $_GET.
 	//==================================
-	public static function stripget($check_url)
+	public static function stripget($_dbconfig)
 	{
-		$return = FALSE;
-		if (is_array($check_url))
+		$request = strtolower(urldecode($_SERVER['QUERY_STRING']));
+		$protarray = array('union','drop','select','into','where','update','from','/*','set ',$_dbconfig['prefix'].'users',$_dbconfig['prefix'].'users(',$_dbconfig['prefix'].'groups','phpinfo','escapeshellarg','exec','fopen','fwrite','escapeshellcmd','passthru','proc_close','proc_get_status','proc_nice','proc_open','proc_terminate','shell_exec','system','telnet','ssh','cmd','mv','chmod','chdir','locate','killall','passwd','kill','script','bash','perl','mysql','~root','.history','~nobody','getenv');
+		$check = str_replace($protarray, '*', $request);
+		if ($request !== $check)
 		{
-			foreach ($check_url as $value)
-			{
-				if (HELP::stripget($value) == TRUE)
-				{
-					return TRUE;
-				}
-			}
+			throw new systemException(die('Podejrzewany atak XSS!'));
 		}
-		else
-		{
-			$check_url = str_replace(array("\"", "\'"), array("", ""), urldecode($check_url));
-			if (preg_match("/<[^<>]+>/i", $check_url))
-			{
-				return TRUE;
-			}
-		}
-		return $return;
 	}
 
 	public static function quotes_gpc()
