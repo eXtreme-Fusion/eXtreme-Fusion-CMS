@@ -60,7 +60,7 @@ abstract class HtmlAbstract
 	// Return PHP: Tworzenie tablicy danych dla listy formularza
 	// Parametr trzeci ustawiony na TRUE powoduje, że indeksy w zwróconej tablicy będą takie same, jak w źródłowej.
 	// Ustawienie na FALSE powoduje, że indeksem stanie się wartość z tablicy źródłowej.
-	public static function createSelectOpts($data, $selected = NULL, $key_value = FALSE, $no_select_option = FALSE, $default = HTML::SELECT_NO_SELECTION)
+	public static function createSelectOpts($data, $selected = NULL, $key_value = FALSE, $no_select_option = FALSE, $default = Html::SELECT_NO_SELECTION)
 	{
 		$i = 0; $assign = array();
 
@@ -162,9 +162,9 @@ class Html extends HtmlAbstract
 {
 	const SELECT_DEFAULT = '--Default--';
 	const SELECT_NO_SELECTION = '--Brak wyboru--';
-	
+
 	// Opcje listy wyboru
-	public static function getSelectOpts($data, $selected = NULL, $key_value = FALSE, $no_select_option = FALSE, $default = HTML::SELECT_NO_SELECTION)
+	public static function getSelectOpts($data, $selected = NULL, $key_value = FALSE, $no_select_option = FALSE, $default = Html::SELECT_NO_SELECTION)
 	{
 		$ret = '';
 		foreach(self::createSelectOpts($data, $selected, $key_value, $no_select_option, $default) as $opt)
