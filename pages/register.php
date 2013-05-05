@@ -25,10 +25,10 @@ $_locale->load('register');
 $theme = array(
 	'Title' => __('Register').' &raquo; '.$_sett->get('site_name'),
 	'Keys' => 'Rejestracja, stwórz konto, uzyskaj dostęp',
-	'Desc' => 'Chcesz zarejesstrować się na: '.$_sett->get('site_name').'? Możesz to zrobić już teraz.'
+	'Desc' => 'Chcesz zarejestrować się na: '.$_sett->get('site_name').'? Możesz to zrobić już teraz.'
 );
 
-if ($_sett->get('enable_registration') != 1)
+if ($_sett->get('enable_registration') !== '1')
 {
 	// Rejestracja wyłaczona, wyświetlę komunikat
 	throw new userException('Rejestra została wyłączona przez Administratora.');
@@ -238,9 +238,14 @@ if ($_request->post('create_account')->show())
 				<hr />
 				Wiadomość wysłana automatycznie. Proszę nie odpisywać.';
 
-			$_mail->send($_request->post('user_email')->show(), $_sett->get('contact_email'), __('Aktywacja konta'), $message, array(), TRUE);
-
-			$_tpl->assign('email_send', TRUE);
+			if ($_mail->send($_request->post('user_email')->show(), $_sett->get('contact_email'), __('Aktywacja konta'), $message, array(), TRUE))
+			{
+				$_tpl->assign('email_send', TRUE);
+			}
+			else
+			{
+				$_tpl->assign('email_not_send', TRUE);
+			}
 		}
 		elseif ($_sett->get('admin_activation') == 1)
 		{
@@ -310,9 +315,7 @@ $_tpl->assignGroup(array(
 	'portal' => $_sett->get('site_name'),
 	'validation' => (bool) $_protection,
 	'enable_terms' => $_sett->get('enable_terms'),
-	// Podczas rejestracji użytkownik może nie wybrać preferowanego języka.
-	// Wtedy, w zależności od ustawień i dostępności w systemie, użyty zostanie język wykryty w przeglądarce lub domyślny język strony.
-	'locale_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'locale', array(), TRUE, 'folders'), NULL, FALSE, TRUE, HTML::SELECT_NO_SELECTION)
+	'locale_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'locale', array(), TRUE, 'folders'), $_user->getLang(), FALSE, TRUE, HTML::SELECT_NO_SELECTION)
 ));
 
 if ($_protection)

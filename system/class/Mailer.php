@@ -144,7 +144,14 @@ class Mailer
 			}
 
 			// Wysyłanie wiadomości przez funkcję mail()
-			return mail($this->_to, $this->_subject, $this->_message, implode('', $this->_headers));
+			if (@mail($this->_to, $this->_subject, $this->_message, implode('', $this->_headers)))
+			{
+				return TRUE;
+			}
+			else
+			{
+				return FALSE;
+			}
 		}
 
 		throw new userException('Nieprawidłowe dane do wysyłki maila.');

@@ -50,11 +50,11 @@ if ($_user->isLoggedIn())
 	{
 		if ($_request->post('self_search')->show())
 		{
-			$data = $_pdo->getData('SELECT `id`, `username` FROM [users] WHERE `username` LIKE "'.$username.'%" ORDER BY `username` ASC LIMIT 0,10');
+			$data = $_pdo->getData('SELECT `id`, `username` FROM [users] WHERE `username` LIKE "'.$username.'%" AND `status` = 0 ORDER BY `username` ASC LIMIT 0,10');
 		}
 		else
 		{
-			$data = $_pdo->getData('SELECT `id`, `username` FROM [users] WHERE `username` LIKE "'.$username.'%" AND id != '.$_user->get('id').' ORDER BY `username` ASC LIMIT 0,10');
+			$data = $_pdo->getData('SELECT `id`, `username` FROM [users] WHERE `username` LIKE "'.$username.'%" AND id != '.$_user->get('id').' AND `status` = 0 ORDER BY `username` ASC LIMIT 0,10');
 		}
 		if ($data)
 		{ ?>

@@ -31,6 +31,12 @@
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
 +--------------------------------------------------------*/
+/*
+Do zrobienie
+Sprawdzanie czy po wpisaniu w polu nazwa użytkownika jest wpisana nazwa użytkownika istniejącego konta użytkownica
+Bo w przeciwnym wypadku powinien być zablokowany klawisz wyślij, po wpisaniu pierwszej lepszej nazwy i kliknięciu 
+wyślij wyskakuje informacja o podejrzewanym ataku XSS
+*/
 $_user->onlyForUsers($_route);
 
 $_head->set('<meta name="robots" content="noindex">');

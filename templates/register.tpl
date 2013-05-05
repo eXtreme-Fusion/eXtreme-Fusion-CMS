@@ -29,6 +29,8 @@
 		<div class="valid">{i18n('The user account has been created successfully.')}</div>
 	{elseif $email_send}
 		<div class="valid">{i18n('Activation e-mail has been sent.')}</div>
+	{elseif $email_not_send}
+		<div class="error">{i18n('The user account has been created successfully however activation e-mail has not been sent. Please contact an administrator and report the problem to him')}</div>
 	{elseif $active}
 		<div class="info">{i18n('Account is waiting for an admin activation.')}</div>
 	{else}
