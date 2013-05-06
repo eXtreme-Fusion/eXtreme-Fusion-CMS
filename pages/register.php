@@ -56,7 +56,7 @@ if ($_route->getByID(1) === 'active' && $_route->getByID(2))
 		array(':code', $_route->getByID(2), PDO::PARAM_STR)
 	);
 
-	if ($_sett->get('admin_activation') == 1)
+	if ($_sett->get('admin_activation') === '1')
 	{
 		$status = 2;
 	}
@@ -147,12 +147,12 @@ if ($_request->post('create_account')->show())
 
 	if ( ! $error)
 	{
-		if ($_sett->get('email_verification') == 1)
+		if ($_sett->get('email_verification') === '1')
 		{
 			$status = 1;
 			$valid = md5(uniqid(time()));
 		}
-		elseif ($_sett->get('admin_activation') == 1)
+		elseif ($_sett->get('admin_activation') === '1')
 		{
 			$status = 2;
 			$valid = md5(uniqid(time()));
@@ -247,7 +247,7 @@ if ($_request->post('create_account')->show())
 				$_tpl->assign('email_not_send', TRUE);
 			}
 		}
-		elseif ($_sett->get('admin_activation') == 1)
+		elseif ($_sett->get('admin_activation') === '1')
 		{
 			$_tpl->assign('active', TRUE);
 		}
@@ -306,7 +306,7 @@ if ($result)
 	));
 }
 
-if ($_sett->get('enable_terms') == 1)
+if ($_sett->get('enable_terms') === '1')
 {
 	$_tpl->assign('license_agreement', $_sett->get('license_agreement'));
 }
