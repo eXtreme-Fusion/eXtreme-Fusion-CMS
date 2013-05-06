@@ -40,12 +40,12 @@ $(function() {
 
 		return false;
 	});
-	
+
 	// Wyszukiwanie użytkownika po jego loginie
 	//searchUser(false, false);
-	
+
 	// Wyszukiwanie użytkownika po jego loginie
-	$('#search_user').searchEngine({'is_here_admin_panel': 0, 'self_search': 0, 'php_file': 'ajax/search_users_extended.php'});
+	$('#search_user').searchEngine({'is_here_admin_panel': 0, 'self_search': 0, 'only_active': 1, 'php_file': 'ajax/search_users_extended.php'});
 
 
 	// Wybieranie adresata wiadomości

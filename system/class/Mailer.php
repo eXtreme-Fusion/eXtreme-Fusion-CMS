@@ -103,8 +103,8 @@ class Mailer
 		/**
 		 * Niektóre systemy pocztowe blokują odbiór wiadomości pochodzących z adresu e-mail
 		 * nie należacego do domeny, z której wiadomość jest wysyłana.
-		 * Dlatego jako nadawce wiadomości (MAIL FROM przy komunikacji z SMTP) zamieszcza się 
-		 * no-reply@domain.com, natomiast w nagłówku Reply-To przesyła się adres e-mail, 
+		 * Dlatego jako nadawce wiadomości (MAIL FROM przy komunikacji z SMTP) zamieszcza się
+		 * no-reply@domain.com, natomiast w nagłówku Reply-To przesyła się adres e-mail,
 		 * na który mają być wysyłane odpowiedzi pisane przez adresata.
 		 */
 		$this->_reply_to = $this->_from = $from;
@@ -144,14 +144,8 @@ class Mailer
 			}
 
 			// Wysyłanie wiadomości przez funkcję mail()
-			if (@mail($this->_to, $this->_subject, $this->_message, implode('', $this->_headers)))
-			{
-				return TRUE;
-			}
-			else
-			{
-				return FALSE;
-			}
+			// todo: co się dzieje bez @? Wg dokumentacji funkcja zwraca false albo true bez (bool) i bez @.
+			return (bool) @mail($this->_to, $this->_subject, $this->_message, implode('', $this->_headers));
 		}
 
 		throw new userException('Nieprawidłowe dane do wysyłki maila.');

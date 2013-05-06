@@ -13,7 +13,7 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
+|
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------+
@@ -45,7 +45,7 @@ else
 if ($_user->isLoggedIn())
 {
 	$request = new Edit($_request->post('to')->trim());
-	
+
 	if ($request->show())
 	{
 		if ($request->isNum(FALSE, FALSE))
@@ -68,23 +68,37 @@ if ($_user->isLoggedIn())
 			$field = 'username';
 			$value = $request->strip();
 		}
-	
+
 
 		if ($value)
 		{
 			if ($_request->post('self_search')->show())
 			{
-				$data = $_pdo->getData('SELECT `id`, `username` FROM [users] WHERE `'.$field.'` LIKE "'.$value.'%" AND `status` = 0 ORDER BY `username` ASC LIMIT 0,10');
+				if ($_request->post('only_active')->show())
+				{
+					$data = $_pdo->getData('SELECT `id`, `username` FROM [users] WHERE `'.$field.'` LIKE "'.$value.'%" AND `status` = 0 ORDER BY `username` ASC LIMIT 0,10');
+				}
+				else
+				{
+					$data = $_pdo->getData('SELECT `id`, `username` FROM [users] WHERE `'.$field.'` LIKE "'.$value.'%" AND ORDER BY `username` ASC LIMIT 0,10');
+				}
 			}
 			else
 			{
-				$data = $_pdo->getData('SELECT `id`, `username` FROM [users] WHERE `'.$field.'` LIKE "'.$value.'%" AND id != '.$_user->get('id').' AND `status` = 0 ORDER BY `username` ASC LIMIT 0,10');
+				if ($_request->post('only_active')->show())
+				{
+					$data = $_pdo->getData('SELECT `id`, `username` FROM [users] WHERE `'.$field.'` LIKE "'.$value.'%" AND id != '.$_user->get('id').' AND `status` = 0 ORDER BY `username` ASC LIMIT 0,10');
+				}
+				else
+				{
+					$data = $_pdo->getData('SELECT `id`, `username` FROM [users] WHERE `'.$field.'` LIKE "'.$value.'%" AND id != '.$_user->get('id').' AND ORDER BY `username` ASC LIMIT 0,10');
+				}
 			}
 			if ($data)
 			{ ?>
 				{
 					"status" : 0,
-					"users" : 
+					"users" :
 					[
 						<?php
 						$json = array();
@@ -105,7 +119,7 @@ if ($_user->isLoggedIn())
 			}
 		}
 	}
-	
+
 	echo '{"status" : 2}'; exit; // brak reakcji - nie przesłano danych
 }
 
