@@ -80,7 +80,7 @@ if ($_user->isLoggedIn())
 				}
 				else
 				{
-					$data = $_pdo->getData('SELECT `id`, `username` FROM [users] WHERE `'.$field.'` LIKE "'.$value.'%" AND ORDER BY `username` ASC LIMIT 0,10');
+					$data = $_pdo->getData('SELECT `id`, `username` FROM [users] WHERE `'.$field.'` LIKE "'.$value.'%" ORDER BY `username` ASC LIMIT 0,10');
 				}
 			}
 			else

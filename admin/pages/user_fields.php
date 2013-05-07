@@ -83,7 +83,8 @@ try
 		$cat = $_request->post('cat')->isNum(TRUE);
 		$type = $_request->post('type')->isNum(TRUE);
 		$option = $_request->post('option')->filters('strip');
-		$option = serialize(explode("\n", $option));
+		
+		$option = serialize(HELP::cleanSelectOptions(explode("\n", $option)));
 		$register = $_request->post('register', '0')->show();
 		$hide = $_request->post('hide', '0')->show();
 		$edit = $_request->post('edit', '0')->show();

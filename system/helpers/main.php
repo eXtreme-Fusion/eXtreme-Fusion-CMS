@@ -135,6 +135,40 @@ Class HELP
 		return $string;
 	}
 	
+	public static function cleanSelectOptions($data)
+	{
+		$data = (array) $data;
+		$type = (int) is_array($data);
+		
+		$option_new = array();
+		foreach($data as $val)
+		{
+			$val = trim($val);
+			if ($val)
+			{
+				$val_new = array();
+				for($i = 0, $c = strlen($val); $i < $c; $i++)
+				{
+					if ($val[$i] === ' ' && isset($val[$i+1]) && $val[$i+1] === ' ')
+					{
+						continue;
+					}
+					$val_new[] = $val[$i];
+					
+				}
+
+				$option_new[] = implode('', $val_new);
+			}
+		}
+		
+		if ($type === 1)
+		{
+			return $option_new;
+		}
+		
+		return isset($option_new[0]) ? $option_new[0] : array();
+	}
+	
 	/** METODY NAPISANE PRZEZ EF TEAM: **/
 	public static function daysToSeconds($time, $conv = FALSE)
 	{
