@@ -13,7 +13,7 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
+|
 **********************************************************
  	Some open-source code comes from
 ---------------------------------------------------------+
@@ -124,28 +124,33 @@ Class HELP
 					{
 						$new = ' ';
 					}
-					
+
 					$to_replace[$key] = trim($val).$new;
 				}
 			}
-			
+
 			return str_replace($to_replace, self::$_sett->get('bad_word_replace'), $string);
 		}
-		
+
 		return $string;
 	}
-	
+
 	public static function cleanSelectOptions($data)
 	{
+		// Rzutowanie typów w celu konwersji stringa na tablicę.
 		$data = (array) $data;
+
+		// Zapisywanie typu danych wejściowych w celu zwrócenia return w odpowiednim.
 		$type = (int) is_array($data);
-		
+
 		$option_new = array();
 		foreach($data as $val)
 		{
 			$val = trim($val);
 			if ($val)
 			{
+				// Usuwanie spacji pomiędzy wyrazami
+
 				$val_new = array();
 				for($i = 0, $c = strlen($val); $i < $c; $i++)
 				{
@@ -153,22 +158,22 @@ Class HELP
 					{
 						continue;
 					}
+
 					$val_new[] = $val[$i];
-					
 				}
 
 				$option_new[] = implode('', $val_new);
 			}
 		}
-		
+
 		if ($type === 1)
 		{
 			return $option_new;
 		}
-		
+
 		return isset($option_new[0]) ? $option_new[0] : array();
 	}
-	
+
 	/** METODY NAPISANE PRZEZ EF TEAM: **/
 	public static function daysToSeconds($time, $conv = FALSE)
 	{

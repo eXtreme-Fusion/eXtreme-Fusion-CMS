@@ -39,7 +39,7 @@
 	<h3>{i18n('Routing')}</h3>
 	
 	<div class="tbl1">
-		<div class="grid_6 formLabel"><label for="ParamSeparator">{i18n('Separator of parameters:')}</label><small>{i18n('The default is `-`.')}</small></div>
+		<div class="grid_6 formLabel"><label for="ParamSeparator">{i18n('Separator of parameters:')}</label><small>{i18n('The default is `/`.')}</small></div>
 		<div class="grid_4 formField"><input type="text" name="param_sep" value="{$param_sep}" id="ParamSeparator" class="num_10" maxlength="10" /></div>
 	</div>
 	<div class="tbl2">

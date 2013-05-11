@@ -122,7 +122,7 @@
 
 		{if $action === 'edit'}
 			<h4>{i18n('Edit account :username', array(':username' => $user.username))}{$Error}</h4>
-			<form id="This" class="UserAdd" action="{$URL_REQUEST}" method="post">
+			<form id="This" class="UserAdd" action="{$URL_REQUEST}" method="post" enctype="multipart/form-data">
 				<div class="tbl1">
 					<div class="formLabel sep_1 grid_3"><label for="username">{i18n('Username:')}</label></div>
 					<div class="formField grid_7"><input type="text" name="username" value="{$user.username}" id="username" /></div>

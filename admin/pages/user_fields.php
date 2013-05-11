@@ -79,7 +79,7 @@ try
     elseif ($_request->post('save')->show())
     {
 		$name = $_request->post('name')->filters('trim', 'strip');
-		$index = $_request->post('index')->filters('trim', 'strip');
+		$index = $_request->post('index')->filters('trim', 'removeSpecial', 'strip');
 		$cat = $_request->post('cat')->isNum(TRUE);
 		$type = $_request->post('type')->isNum(TRUE);
 		$option = $_request->post('option')->filters('strip');

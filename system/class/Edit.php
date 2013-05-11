@@ -68,6 +68,34 @@ class Edit
 		return html_entity_decode($this->_var);
 	}
 
+	public function removeSpecial($remove_spaces = TRUE)
+	{
+		$new = array();
+		
+		if ($remove_spaces)
+		{
+			for($i = 0, $c = strlen($this->_var); $i < $c; $i++)
+			{
+				if ($this->_var[$i] !== ' ' && ctype_alnum($this->_var[$i]))
+				{
+					$new[] = $this->_var[$i];
+				}
+			}
+		}
+		else
+		{
+			for($i = 0, $c = strlen($this->_var); $i < $c; $i++)
+			{
+				if (ctype_alnum($this->_var[$i]))
+				{
+					$new[] = $this->_var[$i];
+				}
+			}
+		}
+		
+		return implode('', $new);
+	}
+	
 	// Zamienia tablicę na ciąg łącząc poszczególne wartości separatorem.
 	public function implode($sep = DBS)
 	{
