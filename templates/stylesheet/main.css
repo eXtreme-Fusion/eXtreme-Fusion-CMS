@@ -22,6 +22,7 @@
 .margin-top-10{margin-top:10px !important}
 textarea {resize:none;}
 .clear {clear: both;}
+.error-field {border:1px solid red !important;}
 
 table {
 	margin:0;

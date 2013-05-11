@@ -81,6 +81,12 @@
 							return methods['hideTip'].apply( this, Array.prototype.slice.call( o, 1 ))
 						}
 					});
+				}).focus(function() {
+					value = $(this).val();
+					if (last_value != value && value) {
+						last_value =  value;
+						return methods['searchIt'].apply( this, Array.prototype.slice.call( o, 1 ))
+					}
 				});
             });
         }

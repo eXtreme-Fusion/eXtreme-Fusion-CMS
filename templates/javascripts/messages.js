@@ -1,43 +1,54 @@
 $(function() {
 
-	$('#messages_page form').submit(function() {
+	$('#messages_page form').submit(function(e) {
 
-		var new_message = $('#message_subject').length;
-
-		if (new_message) {
-			new_message = $('#message_subject').val();
-			if (new_message == '') {
-				alert('Nie podano tematu wiadomości');
-				return false;
-			}
+		if ($(this).find('#search_user').is(':visible'))
+		{ 
+			//$('messages_page').addClass('error');
+			$(this).find('#search_user').focus();
+			$(this).find('#search_user').addClass('error-field');
+			return false;
 		} else {
-			new_message = '';
-		}
+			if ($('#search_user'))
+			var new_message = $('#message_subject').length;
+			
+			$('#defender_user').find('img').remove();
 
-		var to_user = $('input[name*="to"]', this).val();
-
-		$.post(addr_site+'pages/ajax/messages.php', {
-			message: $('#message', this).val(),
-			to: to_user,
-			item_id: $('input[name*="item_id"]', this).val(),
-			send: true,
-			message_subject: new_message,
-			action: 'send'
-		},
-		function(data) {
-			$('#message').val('');
 			if (new_message) {
-				$('#message_subject').parent().remove();
-				$('input[name*="item_id"]').val(data);
+				new_message = $('#message_subject').val();
+				if (new_message == '') {
+					alert('Nie podano tematu wiadomości');
+					return false;
+				}
+			} else {
+				new_message = '';
 			}
-			// co to? zakomentować
-			//else
-			//{
-			//	$('#form_request').html(data);
-			//}
-			refresh_pw();
-		});
 
+			var to_user = $('input[name*="to"]', this).val();
+
+			$.post(addr_site+'pages/ajax/messages.php', {
+				message: $('#message', this).val(),
+				to: to_user,
+				item_id: $('input[name*="item_id"]', this).val(),
+				send: true,
+				message_subject: new_message,
+				action: 'send'
+			},
+			function(data) {
+				$('#message').val('');
+				if (new_message) {
+					$('#message_subject').parent().remove();
+					$('input[name*="item_id"]').val(data);
+				}
+				// co to? zakomentować
+				//else
+				//{
+				//	$('#form_request').html(data);
+				//}
+				refresh_pw();
+			});
+		}
+		
 		return false;
 	});
 
@@ -45,8 +56,7 @@ $(function() {
 	//searchUser(false, false);
 
 	// Wyszukiwanie użytkownika po jego loginie
-	$('#search_user').searchEngine({'is_here_admin_panel': 0, 'self_search': 0, 'only_active': 1, 'php_file': 'ajax/search_users_extended.php'});
-
+	$('#search_user').searchEngine({'is_here_admin_panel': 0, 'self_search': 0, 'only_active': 1, 'php_file': 'ajax/search_users_extended.php'});	
 
 	// Wybieranie adresata wiadomości
 	$('body').on('click', '#defenders li', function() {
