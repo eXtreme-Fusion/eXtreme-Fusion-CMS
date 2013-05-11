@@ -57,7 +57,7 @@ $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'site_banner2', 'v
 
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'avatar_width', 'value' => 100));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'avatar_height', 'value' => 100));
-$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'avatar_filesize', 'value' => 15000));
+$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'avatar_filesize', 'value' => 1024100));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'avatar_ratio', 'value' => 0));
 
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'smtp_host', 'value' => ''));
@@ -197,7 +197,7 @@ $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, 
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.settings_time', 'settings_time.png', 'Time and Date', 'settings_time.php', 4)");
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.settings_registration', 'registration.png', 'Registration', 'settings_registration.php', 4)");
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.settings_misc', 'settings_misc.png', 'Miscellaneous', 'settings_misc.php', 4)");
-//$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.settings_users', 'settings_users.png', 'User Management', 'settings_users.php', 4)");
+$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.settings_users', 'settings_users.png', 'User Management', 'settings_users.php', 4)");
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.settings_ipp', 'settings_ipp.png', 'Item per Page', 'settings_ipp.php', 4)");
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.settings_logs', 'logs.png', 'Logs', 'settings_logs.php', 4)");
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.settings_login', 'login.png', 'Login', 'settings_login.php', 4)");
