@@ -50,6 +50,8 @@ $theme = array(
 	'Desc' => 'W tym miescju możesz dokonać aktualizacji swoich danych osobowych.'
 );
 
+$_sbb = $ec->getService('Sbb');
+
 if(isset($status) && $status == 'ok')
 {
 	$_tpl->printMessage('valid', __('Konto edytowane prawidłowo'));
@@ -174,12 +176,17 @@ if ($_request->post('save')->show() && $_request->post('email')->show())
 	$query = $_pdo->getData('SELECT * FROM [user_fields] WHERE `edit` = 0');
 	$match = $_pdo->getRowsCount($query);
 	$i = 0; $field = ''; $index_val = ''; $field_val = '';
+		$data = new Edit(
+			array(
+			'current' => $_route->getByID(5) ? $_route->getByID(5) : 1
+			)
+		);
 	if($match !== NULL)
 	{
 		foreach($query as $data)
 		{
 			$index = $data['index'];
-			$val = $_request->post($index)->show();
+			$val = HELP::wordsProtect($_request->post($index)->filters('trim', 'strip'));
 			$index_val .= '`'.$index.'`'.($i < $match-1 ? ', ' : '');
 			$field_val .= '"'.$val.'"'.($i < $match-1 ? ', ' : '');
 			$field .= '`'.$index.'` = "'.$val.'"'.($i < $match-1 ? ', ' : '');
@@ -191,8 +198,23 @@ if ($_request->post('save')->show() && $_request->post('email')->show())
 			$_pdo->exec('UPDATE [users_data] SET '.$field);
 		}
 		else
-		{
-			$_pdo->exec('INSERT INTO [users_data] (`user_id`, '.$index_val.') VALUES ('.$_user->get('id').', '.$field_val.') ON DUPLICATE KEY UPDATE '.$field.'');
+		{	
+			$field_var = explode(', ', $field_val);
+			$index_var = explode(', ', $index_val);
+			foreach($field_var as $data_field_var)
+			{
+				foreach($index_var as $data_index_var)
+				{
+					// Todo 
+					// Zmienna $data_field_var która przechowuje np otagowanie bbcode jest trafiana przez
+					// return parent::exec(str_replace(array('[', ']'), array($this->_prefix, ''), $query));
+					// z klasy Data z lini 172
+					// Wiec bbcode [b]pogrob[/b] jest zamieniane na $db_prefix_pogrob/$db_prefix
+					// Trzeba dane z tej zmiennej zbindować, lecz nie wiem jak to uczynić ~ Rafik
+					$_pdo->exec('INSERT INTO [users_data] (`user_id`, '.$data_index_var.') VALUES ('.$_user->get('id').', '.$data_field_var.') ON DUPLICATE KEY UPDATE '.$field.'');
+				}
+			}
+			
 		}
 	}
 
@@ -272,6 +294,8 @@ if (isset($fields))
 					'value' => ($data[$field['index']] ? $data[$field['index']] : NULL),
 					'option' => $_tpl->createSelectOpts($option, $data[$field['index']], FALSE, FALSE),
 					'label' => HELP::stripfilename($field['name']),
+					'bbcode' => $_sbb->bbcodes(),
+					'smiley' => $_sbb->smileys()
 				);
 
 				$has_data = TRUE;
@@ -293,9 +317,3 @@ if (isset($fields))
 }
 
 $_tpl->assign('cats', $cats);
-#************
-
-$_tpl->assignGroup(array(
-	'bbcode' => $ec->sbb->bbcodes(),
-	'smiley' => $ec->sbb->smileys()
-));
