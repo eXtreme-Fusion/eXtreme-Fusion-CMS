@@ -42,19 +42,24 @@
 
 		<div id="chat_form">
 			<form action="{$URL_REQUEST}" method="post" name="chat">
-				<input type="text" name="content" style="width:90%;" autocomplete="off" class="textbox" /><br />
-				<div>
+				<div class="line center">
+					<input type="text" name="content" style="width:90%;" autocomplete="off" class="textbox" /><br />
+				</div>
+				<div class="line center">
 					{section=bbcode}
 						<button type="button" onclick="addText('{$bbcode.textarea}', '[{$bbcode.value}]', '[/{$bbcode.value}]', 'chat');"><img src="{$bbcode.image}" alt="{$bbcode.value}" title="{$bbcode.description}" class="tip" /></button>
 					{/section}
 				</div>
-				<div>
+				<div class="line center">
 					{section=smiley}
-						<img src="{$ADDR_IMAGES}smiley/{$smiley.image}" alt="{$smiley.text}" class="tip" onclick="insertText('{$smiley.textarea}', '{$smiley.code}', 'chat');" />
-						{if $smiley.i % 10 == 0}</div><div>{/if}
+						<img src="{$ADDR_IMAGES}smiley/{$smiley.image}" title="{$smiley.text}" class="tip" onclick="insertText('{$smiley.textarea}', '{$smiley.code}', 'chat');">
+						{if $smiley.i % 10 == 0}</div><div class="line center">{/if}
 					{/section}
+					
 				</div>
-				<input type="submit" name="send" class="button" value="{i18n('Send')}" style="float:right" />
+				<div class="line center">
+					<input type="submit" name="send" class="button" value="{i18n('Send')}" />
+				</div>
 			</form>
 		</div>
     {else}

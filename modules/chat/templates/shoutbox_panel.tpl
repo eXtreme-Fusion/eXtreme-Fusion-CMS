@@ -42,8 +42,10 @@
 		<div class="InfoBoxPanel">
 			{if $IsLoggedIn}
 			<form action="{$URL_REQUEST}" method="post" id="ShoutBoxForm">
-				<textarea class="InfoBoxInput" name="content"></textarea>
-				<input class="InfoBoxButton" type="submit" name="send" value="{i18n('Send')}" />
+				<div class="line center">
+					<textarea class="InfoBoxInput" name="content"></textarea>
+					<input class="InfoBoxButton" type="submit" name="send" value="{i18n('Send')}" />
+				</div>
 			</form>
 			{else}
 			<div class="InfoBoxTop"></div>
