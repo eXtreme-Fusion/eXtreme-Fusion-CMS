@@ -331,27 +331,27 @@ class User {
 							}
 							else
 							{
-								throw new userException('Plik o podanej nazwie już istnieje.');
+								throw new userException(__('Plik o podanej nazwie już istnieje.'));
 							}
 						}
 						else
 						{
-							throw new userException('You must upload file with one of the following extensions: :extensions', array(':extensions' => implode(', ', $extensions_allowed)));
+							throw new userException(__('You must upload file with one of the following extensions: :extensions', array(':extensions' => implode(', ', $extensions_allowed))));
 						}
 					}
 					else
 					{
-						throw new userException('Rozmiary obrazka są nieprawidłowe. Dopuszczalna szerokość: :width, wysokość: :height', array(':width' => $this->_sett->get('avatar_width'), ':height' => $this->_sett->get('avatar_height')));
+						throw new userException(__('Rozmiary obrazka są nieprawidłowe. Dopuszczalna rozmiary: :width x :height px', array(':width' => $this->_sett->get('avatar_width'), ':height' => $this->_sett->get('avatar_height'))));
 					}
 				}
 				else
 				{
-					throw new userException('The uploaded image has got to large file size.');
+					throw new userException(__('The uploaded image has got to large file size.'));
 				}
 			}
 			else
 			{
-				throw new userException('The uploaded file seems not to be an image.');
+				throw new userException(__('The uploaded file seems not to be an image.'));
 			}
 		}
 	}

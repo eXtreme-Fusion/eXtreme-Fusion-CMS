@@ -15,6 +15,7 @@
 .hide{display:none}
 .red {color:red}
 .green{color:#1a5005}
+.small{font-size:9px;}
 .margin100{margin-left:100px;}
 .margin-b-10{margin-bottom:10px}
 .margin-top-100{margin-top:100px !important}
@@ -262,4 +263,12 @@ table {
 	width:90%;
 	margin:auto;
 	border-radius:8px;
+}
+
+.quote {
+    /*Dopisać style dla cytatów */
+}
+
+.code {
+	/*Dopisać style dla kodu */
 }

@@ -38,7 +38,7 @@ if($bbcode_used)
 		{
 			if (substr($matches[3], -1, 1) != "/")
 			{
-				return '<span style="display: block; width: 300px; max-height: 300px; overflow: auto;" class="forum-img-wrapper"><img src="'.$matches[1].str_replace(array("?","&amp;","&","="), "", $matches[3]).$matches[4].'" alt="'.$matches[3].$matches[4].'" style="border:0px" class="forum-img" /></span>';
+				return '<span style="display: block; width: 300px; max-height: 300px;" class="forum-img-wrapper"><img src="'.$matches[1].str_replace(array("?","&amp;","&","="), "", $matches[3]).$matches[4].'" alt="'.$matches[3].$matches[4].'" style="border:0px" class="forum-img" /></span>';
 			}
 			else 
 			{

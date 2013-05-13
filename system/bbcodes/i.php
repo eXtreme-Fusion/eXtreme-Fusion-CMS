@@ -32,5 +32,5 @@ $bbcode_info = array(
 
 if($bbcode_used)
 {
-	$text = preg_replace('#\[i\](.*?)\[/i\]#si', '<em>\1</em>', $text);
+	$text = preg_replace('#\[i\](.*?)\[/i\]#si', '<span class=\'italic\'>\1</span>', $text);
 }

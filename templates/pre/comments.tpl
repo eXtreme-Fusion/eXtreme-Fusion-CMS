@@ -6,15 +6,16 @@
 				<p id="added" class="center hide valid close-valid">{i18n('Comment has been added')}</p>
 				<form method="post" action="{$URL_REQUEST}" class="center" name="comment">
 					{if $iGUEST}
-						<div><input id="author" type="text" class="valueSystem" name="author" value="{i18n('Your name')}" /></div>
+						<div class="line center"><input id="author" type="text" class="valueSystem" name="author" value="{i18n('Your name')}" /></div>
 					{/if}
-					<div><textarea id="post" rows="4" class="cm_textarea valueSystem" name="post">{i18n('Enter a comment')}</textarea></div>
-					<div>
+					{*<div><textarea id="post" rows="4" class="cm_textarea valueSystem" name="post">{i18n('Enter a comment')}</textarea></div>*}
+					<div><textarea id="post" rows="4" class="cm_textarea" name="post">{i18n('Enter a comment')}</textarea></div>
+					<div class="line center">
 						{section=bbcode}
 							<button type="button" onClick="addText('{$bbcode.textarea}', '[{$bbcode.value}]', '[/{$bbcode.value}]', 'comment');"><img src="{$bbcode.image}" title="{$bbcode.description}" class="tip"></button>
 						{/section}
 					</div>
-					<div>
+					<div class="line center">
 						{section=smiley}
 							<img src="{$ADDR_IMAGES}smiley/{$smiley.image}" title="{$smiley.text}" class="tip" onclick="insertText('{$smiley.textarea}', '{$smiley.code}', 'comment');">
 							{if $smiley.i % 10 == 0}</div><div>{/if}
@@ -22,7 +23,7 @@
 					</div>
 					<input id="item" type="hidden" name="item" value="{$item}" />
 					<input id="type" type="hidden" name="type" value="{$type}" />
-					<div class="center"><span id="send" class="button">{i18n('Add replay')}</span></div>
+					<div class="line center"><span id="send" class="button">{i18n('Add replay')}</span></div>
 				</form>
 			</div>
 		{else}

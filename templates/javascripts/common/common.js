@@ -144,3 +144,6 @@ $(function() {
 		});
 	});
 });
+
+function addText(f,i,a,e){if(e==undefined){e="inputform"}if(f==undefined){f="message"}element=document.forms[e].elements[f];element.focus();if(document.selection){var c=document.selection.createRange();var h=c.text.length;c.text=i+c.text+a;return false}else{if(element.setSelectionRange){var b=element.selectionStart,g=element.selectionEnd;var d=element.scrollTop;element.value=element.value.substring(0,b)+i+element.value.substring(b,g)+a+element.value.substring(g);element.setSelectionRange(b+i.length,g+i.length);element.scrollTop=d;element.focus()}else{var d=element.scrollTop;element.value+=i+a;element.scrollTop=d;element.focus()}}}
+function insertText(f,h,e){if(e==undefined){e="inputform"}if(document.forms[e].elements[f].createTextRange){document.forms[e].elements[f].focus();document.selection.createRange().duplicate().text=h}else{if((typeof document.forms[e].elements[f].selectionStart)!="undefined"){var a=document.forms[e].elements[f];var g=a.selectionEnd;var d=a.value.length;var c=a.value.substring(0,g);var i=a.value.substring(g,d);var b=a.scrollTop;a.value=c+h+i;a.selectionStart=c.length+h.length;a.selectionEnd=c.length+h.length;a.scrollTop=b;a.focus()}else{document.forms[e].elements[f].value+=h;document.forms[e].elements[f].focus()}}}

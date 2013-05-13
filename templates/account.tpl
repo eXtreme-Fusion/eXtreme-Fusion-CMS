@@ -130,20 +130,22 @@
 							</select>
 						</div>
 					{else}
-						<div class="formField grid_7">
-							<div><textarea name="{$fields.index}" id="{$fields.label}" rows="3" class="resize">{$fields.value}</textarea></div>
-							<div>
-								{section=bbcode}
-									<button type="button" onClick="addText('{$fields.index}', '[{$bbcode.value}]', '[/{$bbcode.value}]', 'account');"><img src="{$bbcode.image}" title="{$bbcode.description}" class="tip"></button>
-								{/section}
-							</div>
-							<div>
-								{section=smiley}
-									<img src="{$ADDR_IMAGES}smiley/{$smiley.image}" title="{$smiley.text}" class="tip" onclick="insertText('{$fields.index}', '{$smiley.code}', 'account');">
-									{if $smiley.i % 10 == 0}</div><div">{/if}
-								{/section}
+							<div class="formField grid_7">
+								<div><textarea name="{$fields.index}" id="{$fields.label}" rows="3" class="resize">{$fields.value}</textarea></div>
 							</div>
 						</div>
+						<div class="tbl2">
+							<div class="line center">
+								{foreach=$fields.bbcode; bbcode}
+									<button type="button" onClick="addText('{$fields.index}', '[{@bbcode.value}]', '[/{@bbcode.value}]', 'account');"><img src="{@bbcode.image}" title="{@bbcode.description}" class="tip"></button>
+								{/foreach}
+							</div>
+							<div class="line center">
+								{foreach=$fields.smiley; smiley}
+									<img src="{$ADDR_IMAGES}smiley/{@smiley.image}" title="{@smiley.text}" class="tip" onclick="insertText('{$fields.index}', '{@smiley.code}', 'account');">
+									{if @smiley.i % 20 == 0}</div><div">{/if}
+								{/foreach}
+							</div>
 					{/if}
 				</div>
 			{/section}

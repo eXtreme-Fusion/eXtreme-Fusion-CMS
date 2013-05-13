@@ -25,5 +25,5 @@ $bbcode_info = array(
 
 if($bbcode_used)
 {
-	$text = preg_replace('#\[s\](.*?)\[/s\]#si', '<s>\1</s>', $text);
+	$text = preg_replace('#\[s\](.*?)\[/s\]#si', '<span class=\'cross\'>\1</span>', $text);
 }
