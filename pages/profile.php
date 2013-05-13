@@ -150,7 +150,7 @@ if ($row)
 		'role' => $_user->getRoleName($row['role']),
 		'roles' => implode($_user->getUserRolesTitle($row['id'], 3), ', '),
 		'avatar' => $_user->getAvatarAddr($row['id']),
-		'email' => $row['email'],
+		'email' => HELP::hide_email($row['email']),
 		'joined' => HELP::showDate('shortdate', $row['joined']),
 		'joined_datetime' => date('c', $row['joined']),
 		'last_visit_time' => $row['lastvisit'] ? HELP::showDate('longdate', $row['lastvisit']) : NULL,

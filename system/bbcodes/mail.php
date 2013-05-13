@@ -32,6 +32,6 @@ $bbcode_info = array(
 
 if($bbcode_used)
 {
-	$text = preg_replace('#\[mail\]([\r\n]*)([^\s\'\";:\+]*?)([\r\n]*)\[/mail\]#sie', "'\\2'", $text);
-	$text = preg_replace('#\[mail=([\r\n]*)([^\s\'\";:\+]*?)\](.*?)([\r\n]*)\[/mail\]#sie', "'\\2'", $text);
+	$text = preg_replace('#\[mail=([\r\n]*)([^\s\'\";:\+]*?)\](.*?)([\r\n]*)\[/mail\]#sie', "'<a href=\'http://mailto:'.HELP::hide_email('\\2').'\' target=\'_blank\' title=\''.HELP::hide_email('\\2', '\\2').'\'>'.HELP::hide_email('\\2').'</a>'", $text);
+	$text = preg_replace('#\[mail\]([\r\n]*)([^\s\'\";:\+]*?)([\r\n]*)\[/mail\]#sie', "'<a href=\'http://mailto:'.HELP::hide_email('\\2').'\' target=\'_blank\' title=\''.HELP::hide_email('\\2').'\'>'.HELP::hide_email('\\2').'</a>'", $text);
 }

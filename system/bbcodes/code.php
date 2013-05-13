@@ -32,5 +32,5 @@ $bbcode_info = array(
 
 if($bbcode_used)
 {
-	$text = preg_replace("#\[code\](.*?)\[/code\]#sie", "'<div class=\"code_bbcode\"><div class=\"tbl-border tbl2\" style=\"width:400px\"><strong>".__('Code')."</strong></div><div class=\"tbl-border tbl1\" style=\"width:400px;white-space:nowrap;overflow:auto\"><code style=\"white-space:nowrap\">'.'\\1'.'<br /><br /><br /></code></div></div>'", $text, 1);
+	$text = preg_replace("#\[code\](.*?)\[/code\]#sie", "'<div class=\'quote\'>\1</div>'", $text, 1);
 }

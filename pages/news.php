@@ -144,15 +144,6 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 	{
 		HELP::redirect(ADDR_SITE);
 	}
-
-	$_sbb = $ec->sbb;
-
-	$_tpl->assignGroup(array(
-		'bbcode' => $_sbb->bbcodes('post'),
-		'smiley' => $_sbb->smileys('post')
-	));
-
-
 }
 // Wszystkie newsy
 else

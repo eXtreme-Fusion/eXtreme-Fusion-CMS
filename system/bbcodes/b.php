@@ -32,5 +32,5 @@ $bbcode_info = array(
 
 if($bbcode_used)
 {
-	$text = preg_replace('#\[b\](.*?)\[/b\]#si', '<strong>\1</strong>', $text);
+	$text = preg_replace('#\[b\](.*?)\[/b\]#si', '<span class=\'bold\'>\1</span>', $text);
 }

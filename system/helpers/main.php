@@ -444,51 +444,25 @@ Class HELP
 	/** koniec METODY NAPISANE PRZEZ EF TEAM **/
 
 
-	// Javascript email encoder by Tyler Akins
-	// http://rumkin.com/tools/mailto_encoder/
-	public static function hide_email($email, $title = "", $subject = "")
+	// Javascript email encoder by Maurits van der Schee
+	// http://www.maurits.vdschee.nl/php_hide_email/
+	public static function hide_email($email)
 	{
 		if (strpos($email, "@"))
 		{
-			$parts = explode("@", $email);
-			$MailLink = "<a href='mailto:".$parts[0]."@".$parts[1];
-			if ($subject != "")
-			{
-				$MailLink .= "?subject=".urlencode($subject);
-			}
-			$MailLink .= "'>".($title?$title:$parts[0]."@".$parts[1])."</a>";
-			$MailLetters = "";
-			for ($i = 0; $i < strlen($MailLink); $i++)
-			{
-				$l = substr($MailLink, $i, 1);
-				if (strpos($MailLetters, $l) === FALSE)
-				{
-					$p = rand(0, strlen($MailLetters));
-					$MailLetters = substr($MailLetters, 0, $p).$l.substr($MailLetters, $p, strlen($MailLetters));
-				}
-			}
-			$MailLettersEnc = str_replace("\\", "\\\\", $MailLetters);
-			$MailLettersEnc = str_replace("\"", "\\\"", $MailLettersEnc);
-			$MailIndexes = "";
-			for ($i = 0; $i < strlen($MailLink); $i ++)
-			{
-				$index = strpos($MailLetters, substr($MailLink, $i, 1));
-				$index += 48;
-				$MailIndexes .= chr($index);
-			}
-			$MailIndexes = str_replace("\\", "\\\\", $MailIndexes);
-			$MailIndexes = str_replace("\"", "\\\"", $MailIndexes);
-
-			$res = "<script type='text/javascript'>";
-			$res .= "ML=\"".str_replace("<", "xxxx", $MailLettersEnc)."\";";
-			$res .= "MI=\"".str_replace("<", "xxxx", $MailIndexes)."\";";
-			$res .= "ML=ML.replace(/xxxx/g, '<');";
-			$res .= "MI=MI.replace(/xxxx/g, '<');";	$res .= "OT=\"\";";
-			$res .= "for(j=0;j < MI.length;j++){";
-			$res .= "OT+=ML.charAt(MI.charCodeAt(j)-48);";
-			$res .= "}document.write(OT);";
-			$res .= "</script>";
-			return $res;
+			$character_set = '+-.0123456789@ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz'; 
+			$key = str_shuffle($character_set); 
+			$cipher_text = ''; 
+			$id = 'e'.rand(1,999999999); 
+			for ($i=0;$i<strlen($email);$i+=1)
+			$cipher_text.= $key[strpos($character_set, $email[$i])]; 
+			$script = 'var a="'.$key.'";var b=a.split("").sort().join("");var c="'.$cipher_text.'";var d="";'; 
+			$script.= 'for(var e=0;e<c.length;e++)d+=b.charAt(a.indexOf(c.charAt(e)));'; 
+			$script.= 'document.getElementById("'.$id.'").innerHTML="<a href=\\"mailto:"+d+"\\">"+d+"</a>"'; 
+			$script = "eval(\"".str_replace(array("\\", '"'),array("\\\\", '\"'), $script)."\")"; 
+			$script = '<script type="text/javascript">/*<![CDATA[*/'.$script.'/*]]>*/</script>'; 
+	
+			return '<span id="'.$id.'">[N/A]</span>'.$script; 
 		}
 		else
 		{

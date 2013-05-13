@@ -32,5 +32,5 @@ $bbcode_info = array(
 
 if($bbcode_used)
 {
-	$text = preg_replace('#\[u\](.*?)\[/u\]#si', '<u>\1</u>', $text);
+	$text = preg_replace('#\[u\](.*?)\[/u\]#si', '<span class=\'underline\'>\1</span>', $text);
 }

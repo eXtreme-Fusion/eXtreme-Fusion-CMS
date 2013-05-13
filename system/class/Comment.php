@@ -112,7 +112,9 @@ class Comment extends Observer
 				'item' => $item,
 				'only_comments' => $only_comments,
 				'count' => count($d),
-				'limit' => $limit
+				'limit' => $limit,
+				'bbcode' => $this->_sbb->bbcodes('post'),
+				'smiley' => $this->_sbb->smileys('post')
 			)
 		);
 
