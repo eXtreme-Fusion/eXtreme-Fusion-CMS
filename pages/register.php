@@ -315,7 +315,7 @@ $_tpl->assignGroup(array(
 	'portal' => $_sett->get('site_name'),
 	'validation' => (bool) $_protection,
 	'enable_terms' => $_sett->get('enable_terms'),
-	'locale_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'locale', array(), TRUE, 'folders'), $_user->getLang(), FALSE, TRUE, HTML::SELECT_NO_SELECTION)
+	'locale_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'locale', array(), TRUE, 'folders'), $_user->getLang(), FALSE, TRUE, Html::SELECT_NO_SELECTION)
 ));
 
 if ($_protection)
