@@ -67,7 +67,7 @@
 		<div class="grid_2 formField"><input type="text" name="avatar_height" value="{$avatar_height}" id="AvatarHeight" class="num_3" maxlength="3" /></div>
 	</div>
 	<div class="tbl1">
-		<div class="grid_6 formLabel"><label for="AvatarFilesize">{i18n('Maximum avatar size (kilobytes):')}</label><small>{i18n("1 KB = 1024 bytes")}</small></div>
+		<div class="grid_6 formLabel"><label for="AvatarFilesize">{i18n('Maximum avatar size (kilobytes):')}</label></div>
 		<div class="grid_4 formField"><input type="text" name="avatar_filesize" value="{$avatar_filesize}" id="AvatarFilesize" class="num_10" maxlength="10" /></div>
 	</div>
 	{*<div class="tbl2">
