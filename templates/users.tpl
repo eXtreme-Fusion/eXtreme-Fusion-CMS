@@ -35,20 +35,26 @@
 
 {php} opentable(__('Members List')) {/php}
 	{if $users}
-		<div class="tbl2">
-			<div class="grid_4 bold">{i18n('Username')}</div>
-			<div class="grid_2 bold">{i18n('User Level')}</div>
-			<div class="grid_3 bold">{i18n('Groups')}</div>
-			<div class="grid_3 bold">{i18n('Last visit')}</div>
-		</div>
-		{section=users}
-			<div class="tbl {$users.row}">
-				<div class="grid_4">{$users.link}</div>
-				<div class="grid_2">{$users.role}</div>
-				<div class="grid_3">{$users.roles}</div>
-				<div class="grid_3">{$users.visit}</div>
-			</div>
-		{/section}
+		<table class="tbl2">
+			<thead>
+				<tr>
+					<th class="grid_4 bold">{i18n('Username')}</th>
+					<th class="grid_2 bold">{i18n('User Level')}</th>
+					<th class="grid_3 bold">{i18n('Groups')}</th>
+					<th class="grid_3 bold">{i18n('Last visit')}</th>
+				</tr>
+			</thead>
+			<tbody>
+			{section=users}
+				<tr class="{$users.row}">
+					<td>{$users.link}</td>
+					<td>{$users.role}</td>
+					<td>{$users.roles}</td>
+					<td>{$users.visit}</td>
+				</tr>
+			{/section}
+			</tbody>
+		</table>
 	{else}
 		<div class="tbl2">
 			<div class="sep_2 center">{i18n('No members have been found')}</div>
