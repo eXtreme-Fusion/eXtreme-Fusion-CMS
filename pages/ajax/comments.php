@@ -86,16 +86,26 @@ elseif ($_request->post('action')->show() === 'edit')
 	{
 		if ($_request->post('request')->show() === 'confirm')
 		{
+			$r = array(
+				'status'  => 0,
+				'content' => 'Błąd: nie podano treści komentarza.',
+			);
+
 			if ($_request->post('post')->show())
 			{
-				$r = $_pdo->exec('UPDATE [comments] SET post = :post WHERE id = '.$_request->post('id')->show(),
+				$_pdo->exec('UPDATE [comments] SET post = :post WHERE id = '.$_request->post('id')->show(),
 					array(':post', $_request->post('post')->strip(), PDO::PARAM_STR)
 				);
 
-				_e($r);
+				$_sbb = SmileyBBcode::getInstance($_sett, $_pdo, $_locale, $_head, $_user, $_system);
+
+				$r = array(
+					'status'  => 1,
+					'content' => $_sbb->parseAllTags(nl2br($_request->post('post')->strip())),
+				);
 			}
 
-			_e('Błąd: nie podano treści komentarza.');
+			_e(json_encode($r));
 		}
 	}
 }
