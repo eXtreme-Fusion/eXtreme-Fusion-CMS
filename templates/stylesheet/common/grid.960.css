@@ -641,3 +641,10 @@ body {
 .clearfix {
 	zoom: 1;
 }
+
+th[class*="grid_"],
+td[class*="grid_"] {
+	display: table-cell;
+	float: none;
+	text-align: left;
+}
