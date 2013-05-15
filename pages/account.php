@@ -183,38 +183,38 @@ if ($_request->post('save')->show() && $_request->post('email')->show())
 		);
 	if($match !== NULL)
 	{
+		$fields = array();
+
 		foreach($query as $data)
 		{
 			$index = $data['index'];
 			$val = HELP::wordsProtect($_request->post($index)->filters('trim', 'strip'));
-			$index_val .= '`'.$index.'`'.($i < $match-1 ? ', ' : '');
-			$field_val .= '"'.$val.'"'.($i < $match-1 ? ', ' : '');
-			$field .= '`'.$index.'` = "'.$val.'"'.($i < $match-1 ? ', ' : '');
+			$fields[$index] = $val;
+			$field .= '`'.$index.'` = :'.$index.($i < $match-1 ? ', ' : '');
 			$i++;
 		}
 
+		$keys   = implode(array_keys($fields), '`, `');
+		$values = $params = array();
+
+		foreach($fields as $key => $value)
+		{
+			$params[] = $key;
+			$values[] = array(':'.$key, $value, PDO::PARAM_STR);
+		}
+
+		$params = implode($params, ', :');
+
 		if($_user->get('id') === NULL)
 		{
-			$_pdo->exec('UPDATE [users_data] SET '.$field);
+			$_pdo->exec('UPDATE [users_data] SET '.$field, $values);
 		}
 		else
-		{	
-			$field_var = explode(', ', $field_val);
-			$index_var = explode(', ', $index_val);
-			foreach($field_var as $data_field_var)
-			{
-				foreach($index_var as $data_index_var)
-				{
-					// Todo 
-					// Zmienna $data_field_var która przechowuje np otagowanie bbcode jest trafiana przez
-					// return parent::exec(str_replace(array('[', ']'), array($this->_prefix, ''), $query));
-					// z klasy Data z lini 172
-					// Wiec bbcode [b]pogrob[/b] jest zamieniane na $db_prefix_pogrob/$db_prefix
-					// Trzeba dane z tej zmiennej zbindować, lecz nie wiem jak to uczynić ~ Rafik
-					$_pdo->exec('INSERT INTO [users_data] (`user_id`, '.$data_index_var.') VALUES ('.$_user->get('id').', '.$data_field_var.') ON DUPLICATE KEY UPDATE '.$field.'');
-				}
-			}
-			
+		{
+			$_pdo->exec('INSERT INTO [users_data] (`user_id`, `'.$keys.'`) VALUES (:user_id, :'.$params.') ON DUPLICATE KEY UPDATE '.$field, array_merge(
+				array(array(':user_id', $_user->get('id'), PDO::PARAM_INT)),
+				$values
+			));
 		}
 	}
 
