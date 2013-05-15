@@ -168,23 +168,24 @@ try
 							$_user->saveNewAvatar($_request->get('user')->show(), $_request->files('avatar')->show());
 						}
 
-						$count = $_user->update(
-							array(
-								'hide_email' => $_request->post('hide_email')->isNum(TRUE),
-								'theme' => $_request->post('theme_set')->show(),
-								'lang' => $_request->post('language')->show()
-							), $_request->get('user')->show()
-						);
+						$_fields = array();
 
-						if ($query = $_pdo->getData('SELECT * FROM [user_fields]'))
+						if ($fields = $_pdo->getData('SELECT * FROM [user_fields]'))
 						{
-							foreach($query as $data)
+							foreach($fields as $field)
 							{
-								$custom_data[$data['index']] = $_request->post($data['index'])->show();
-							}
+								$key   = $field['index'];
+								$value = $_request->post($key)->show();
 
-							$count = $_user->customData()->update($custom_data, $_request->get('user')->show());
+								$_fields[$key] = $value;
+							}
 						}
+
+						$count = $_user->update($_request->get('user')->show(), array(
+							'hide_email' => $_request->post('hide_email')->isNum(TRUE),
+							'theme'      => $_request->post('theme_set')->show(),
+							'lang'       => $_request->post('language')->show(),
+						), $_fields);
 
 						if ($count)
 						{
@@ -715,15 +716,20 @@ try
 					array(':user', $username, PDO::PARAM_STR)
 				);
 
-				if ($query = $_pdo->getData('SELECT * FROM [user_fields]'))
-				{
-					foreach($query as $data)
-					{
-						$custom_data[$data['index']] = $_request->post($data['index'])->show();
-					}
+				$_fields = array();
 
-					$count = $_user->customData()->update($custom_data, $last_user_id);
+				if ($fields = $_pdo->getData('SELECT * FROM [user_fields]'))
+				{
+					foreach($fields as $field)
+					{
+						$key   = $field['index'];
+						$value = $_request->post($key)->show();
+
+						$_fields[$key] = $value;
+					}
 				}
+
+				$count = $_user->update($last_user_id, array(), $_fields);
 
 				if ($_request->post('active')->show() !== 'yes' && $_sett->get('email_verification'))
 				{

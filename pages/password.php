@@ -103,7 +103,7 @@ if ($_user->iGuest())
 					if ($data['status'] <= 1)
 					{
 						$hash = time().'_'.substr(uniqid(md5(time())), 1, 10);
-						$_user->update(array('valid_code' => $hash), $data['id']);
+						$_user->update($data['id'], array('valid_code' => $hash));
 
 						// Do Tymcio - jak bedziesz robił tutaj locale, to zrób short_index - myślę że wiesz co mam na myśli ;)
 						$_mail->send($_request->post('email')->show(), $_sett->get('contact_email'), __('Generowanie nowego hasła'),
@@ -163,7 +163,7 @@ if ($_user->iGuest())
 					{
 						if ($_sett->get('admin_activation') || $data['status'] === '2')
 						{
-							if ($_user->update(array('password' => sha512($salt.'^'.$password), 'salt' => $salt, 'status' => 2, 'valid_code' => ''), $_route->getParam('user')))
+							if ($_user->update($_route->getParam('user'), array('password' => sha512($salt.'^'.$password), 'salt' => $salt, 'status' => 2, 'valid_code' => '')))
 							{
 								// Do Tymcio - jak bedziesz robił tutaj locale, to zrób short_index - myślę że wiesz co mam na myśli ;)
 								$_mail->send($data['email'], $_sett->get('contact_email'), __('Nowe hasło'), '<p>Twoje nowe hasło: '.$password.'</p><p>Dziękujemy za skorzystanie z Systemu odzyskiwania konta.</p>');
@@ -173,7 +173,7 @@ if ($_user->iGuest())
 						}
 						else
 						{
-							if ($_user->update(array('password' => sha512($salt.'^'.$password), 'salt' => $salt, 'status' => 0, 'valid_code' => ''), $_route->getParam('user')))
+							if ($_user->update($_route->getParam('user'), array('password' => sha512($salt.'^'.$password), 'salt' => $salt, 'status' => 0, 'valid_code' => '')))
 							{
 								// Do Tymcio - jak bedziesz robił tutaj locale, to zrób short_index - myślę że wiesz co mam na myśli ;)
 								$_mail->send($data['email'], $_sett->get('contact_email'), __('Nowe hasło'), '<p>Twoje nowe hasło: '.$password.'</p><p>Dziękujemy za skorzystanie z Systemu odzyskiwania konta.</p>');
@@ -184,7 +184,7 @@ if ($_user->iGuest())
 					}
 					elseif ($data['status'] === '3')
 					{
-						if ($_user->update(array('password' => sha512($salt.'^'.$password), 'salt' => $salt, 'valid_code' => ''), $_route->getParam('user')))
+						if ($_user->update($_route->getParam('user'), array('password' => sha512($salt.'^'.$password), 'salt' => $salt, 'valid_code' => '')))
 						{
 							// Do Tymcio - jak bedziesz robił tutaj locale, to zrób short_index - myślę że wiesz co mam na myśli ;)
 							$_mail->send($data['email'], $_sett->get('contact_email'), __('Nowe hasło'), '<p>Twoje nowe hasło: '.$password.'</p><p>Dziękujemy za skorzystanie z Systemu odzyskiwania konta.</p>');
@@ -194,7 +194,7 @@ if ($_user->iGuest())
 					}
 					else
 					{
-						if ($_user->update(array('password' => sha512($salt.'^'.$password), 'salt' => $salt, 'valid_code' => ''), $_route->getParam('user')))
+						if ($_user->update($_route->getParam('user'), array('password' => sha512($salt.'^'.$password), 'salt' => $salt, 'valid_code' => '')))
 						{
 							// Do Tymcio - jak bedziesz robił tutaj locale, to zrób short_index - myślę że wiesz co mam na myśli ;)
 							$_mail->send($data['email'], $_sett->get('contact_email'), __('Nowe hasło'), '<p>Twoje nowe hasło: '.$password.'</p><p>Dziękujemy za skorzystanie z Systemu odzyskiwania konta.</p>');

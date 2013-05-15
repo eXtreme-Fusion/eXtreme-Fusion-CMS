@@ -97,7 +97,7 @@ elseif ($_request->post('action')->show() === 'edit')
 					array(':post', $_request->post('post')->strip(), PDO::PARAM_STR)
 				);
 
-				$_sbb = SmileyBBcode::getInstance($_sett, $_pdo, $_locale, $_head, $_user, $_system);
+				$_sbb = $ec->getService('Sbb');
 
 				$r = array(
 					'status'  => 1,

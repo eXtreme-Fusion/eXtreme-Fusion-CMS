@@ -195,7 +195,7 @@ class User {
 			{
 				if ($id !== NULL)
 				{
-					return $this->update(array('username' => $username), $id);
+					return $this->update($id, array('username' => $username));
 				}
 				return TRUE;
 			}
@@ -217,7 +217,7 @@ class User {
 			{
 				if ($id !== NULL)
 				{
-					return $this->update(array('email' => $email), $id);
+					return $this->update($id, array('email' => $email));
 				}
 				return TRUE;
 			}
@@ -240,13 +240,13 @@ class User {
 		{
 			if ($old_pass === NULL)
 			{
-				return $this->update(array('password' => $this->createUserHash($id, $new_pass)), $id);
+				return $this->update($id, array('password' => $this->createUserHash($id, $new_pass)));
 			}
 			else
 			{
 				if ($this->checkNewPass($id, $new_pass, $old_pass, $con_new_pass))
 				{
-					return $this->update(array('password' => $this->createUserHash($id, $new_pass)), $id);
+					return $this->update($id, array('password' => $this->createUserHash($id, $new_pass)));
 				}
 			}
 		}
@@ -410,37 +410,88 @@ class User {
 			}
 		}
 
-		return $this->update(array('avatar' => ''), FALSE);
+		return $this->update(FALSE, array('avatar' => ''));
 	}
 
 	// Setter klasy Users
 	// To co tu trafia musi być wcześniej przefiltrowane,
 	// gdyż w metodzie nie ma bindowania PDO!!
-	public function update(array $data, $id = NULL)
+	public function update($id = NULL, array $data, array $fields = NULL)
 	{
-		foreach($data as $key => $val)
+		if (empty($data) AND empty($fields))
 		{
-			$temp[] = $key." = '".$val."'";
+			throw new systemException(__('Both arrays cannot be empty'));
 		}
 
-		$update = implode(', ', $temp);
-
-
-
-		if ($id === FALSE) // Aktualizacja wiersza wszystkich użytkowników
+		if ($id === NULL)
 		{
-			return $this->_pdo->exec('UPDATE [users] SET '.$update.', lastupdate = '.time());
-		}
-		elseif ($id === NULL) // Aktualizacja własnego wiersza
-		{
-			return $this->_pdo->exec('UPDATE [users] SET '.$update.', lastupdate = '.time().' WHERE `id` = '.$this->get('id'));
-		}
-		elseif (isNum($id)) // Aktualizacja wiersza użytkownika o podanym ID
-		{
-			return $this->_pdo->exec('UPDATE [users] SET '.$update.', lastupdate = '.time().' WHERE `id` = '.$id);
+			// Używamy ID aktualnie zalogowanego użytkownika
+			$id = $this->get('id');
 		}
 
-		return FALSE;
+		if ( ! empty($fields))
+		{
+			$fields = $this->_params($fields);
+
+			if ($id === FALSE)
+			{
+				$count = $this->_pdo->exec('UPDATE [users_data] SET '.$fields['fields'], $fields['values']);
+			}
+			else
+			{
+				$count = $this->_pdo->exec('INSERT INTO [users_data] (`user_id`, `'.$fields['keys'].'`) VALUES (:user_id, :'.$fields['params'].') ON DUPLICATE KEY UPDATE '.$fields['fields'], array_merge(
+					array(array(':user_id', $id, PDO::PARAM_INT)),
+					$fields['values']
+				));
+			}
+		}
+
+		if ( ! empty($data))
+		{
+			$data['lastupdate'] = time();
+
+			// Rozbijanie tablicy na kolumny, parametry, wartości i pola
+			$data = $this->_params($data);
+
+			if ($id === FALSE)
+			{
+				// Aktualizacja danych wszystkich użytkowników
+				return $this->_pdo->exec('UPDATE [users] SET '.$data['fields'], $data['values']);
+			}
+			else
+			{
+				// Aktualizacja danych użytkownika o podanym ID
+				return $this->_pdo->exec('UPDATE [users] SET '.$data['fields'].' WHERE `id` = '.$id, $data['values']);
+			}
+		}
+
+		return empty($data) ? $count : FALSE;
+	}
+
+	protected function _params(array $data)
+	{
+		$keys   = implode(array_keys($data), '`, `');
+		$values = $params = $fields = array();
+
+		foreach($data as $key => $value)
+		{
+			$type  = is_array($value) ? $value[1] : PDO::PARAM_STR;
+			$value = is_array($value) ? $value[0] : $value;
+
+			$params[] = $key;
+			$values[] = array(':'.$key, $value, $type);
+			$fields[] = '`'.$key.'` = :'.$key;
+		}
+
+		$params = implode($params, ', :');
+		$fields = implode($fields, ', ');
+
+		return array(
+			'keys'   => $keys,
+			'params' => $params,
+			'values' => $values,
+			'fields' => $fields,
+		);
 	}
 	/************koniec wersji do testów */
 
@@ -1131,10 +1182,10 @@ class User {
 			$user = $this->get('id');
 		}
 
-		return $this->update(array(
+		return $this->update($user, array(
 			'roles' => serialize($roles),
 			'role' => $role
-		), $user);
+		));
 	}
 
 	/**

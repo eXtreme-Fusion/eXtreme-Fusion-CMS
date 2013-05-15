@@ -374,22 +374,23 @@ try
 							$_user->saveNewAvatar($_request->get('user')->show(), $_request->files('avatar')->show());
 						}
 
-						$count = $_user->update(
-							array(
-								'hide_email' => $_request->post('hide_email')->isNum(TRUE),
-								'theme' => $_request->post('theme_set')->show()
-							), $_request->get('user')->show()
-						);
+						$_fields = array();
 
-						if ($query = $_pdo->getData('SELECT * FROM [user_fields]'))
+						if ($fields = $_pdo->getData('SELECT * FROM [user_fields]'))
 						{
-							foreach($query as $data)
+							foreach($fields as $field)
 							{
-								$custom_data[$data['index']] = $_request->post($data['index'])->show();
-							}
+								$key   = $field['index'];
+								$value = $_request->post($key)->show();
 
-							$count = $_user->customData()->update($custom_data, $_request->get('user')->show());
+								$_fields[$key] = $value;
+							}
 						}
+
+						$count = $_user->update($_request->get('user')->show(), array(
+							'hide_email' => $_request->post('hide_email')->isNum(TRUE),
+							'theme'      => $_request->post('theme_set')->show(),
+						), $_fields);
 
 						if ($count)
 						{
