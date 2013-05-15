@@ -43,12 +43,13 @@ jQuery(function() {
 			type: 'POST',
 			url: addr_site + 'pages/ajax/comments.php',
 			data: {action: 'edit', request: 'confirm', post: post, id: id},
+			dataType: 'json',
 			success: function(response) {
-				if (response == '1') {
+				if (response.status == 1) {
 					jQuery.facebox.close();
-					jQuery('#comments #content_'+id).html(post);
+					jQuery('#comments #content_'+id).html(response.content);
 				} else {
-					jQuery('#facebox .content').html(response);
+					jQuery('#facebox .content').html(response.content);
 				}
 			}
 		});
