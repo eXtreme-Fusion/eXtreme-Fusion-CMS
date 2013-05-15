@@ -413,28 +413,36 @@ class User {
 		return $this->update(FALSE, array('avatar' => ''));
 	}
 
-	// Setter klasy Users
-	// To co tu trafia musi być wcześniej przefiltrowane,
-	// gdyż w metodzie nie ma bindowania PDO!!
-	public function update($id = NULL, array $data, array $fields = NULL)
+	/**
+	 * Aktualizuje dane oraz dodatkowe pola użytkownika/ów.
+	 *
+	 * @param   mixed    $id      ID użytkownika; NULL dla aktualnie zalogowanego; FALSE dla wszystkich
+	 * @param   array    $data    Dane do zapisania; Pusta tablica, w przypadku zmiany samych dodatkowych pól
+	 * @param   array    $fields  Dodatkowe dane do zapisania
+	 * @return  boolean
+	 * @throws  systemException
+	 */
+	public function update($id = NULL, array $data, array $fields = array())
 	{
-		if (empty($data) AND empty($fields))
+		if (empty($data) && empty($fields))
 		{
 			throw new systemException(__('Both arrays cannot be empty'));
 		}
 
 		if ($id === NULL)
 		{
-			// Używamy ID aktualnie zalogowanego użytkownika
+			// Używa ID aktualnie zalogowanego użytkownika
 			$id = $this->get('id');
 		}
 
 		if ( ! empty($fields))
 		{
+			// Rozbija tablicę na kolumny, parametry, wartości i pola
 			$fields = $this->_params($fields);
 
 			if ($id === FALSE)
 			{
+				// Aktualizuje dodatkowe pola wszystkich użytkowników
 				$count = $this->_pdo->exec('UPDATE [users_data] SET '.$fields['fields'], $fields['values']);
 			}
 			else
@@ -450,24 +458,33 @@ class User {
 		{
 			$data['lastupdate'] = time();
 
-			// Rozbijanie tablicy na kolumny, parametry, wartości i pola
+			// Rozbija tablicę na kolumny, parametry, wartości i pola
 			$data = $this->_params($data);
 
 			if ($id === FALSE)
 			{
-				// Aktualizacja danych wszystkich użytkowników
-				return $this->_pdo->exec('UPDATE [users] SET '.$data['fields'], $data['values']);
+				// Aktualizuje dane wszystkich użytkowników
+				$count = $this->_pdo->exec('UPDATE [users] SET '.$data['fields'], $data['values']);
 			}
 			else
 			{
-				// Aktualizacja danych użytkownika o podanym ID
-				return $this->_pdo->exec('UPDATE [users] SET '.$data['fields'].' WHERE `id` = '.$id, $data['values']);
+				$count = $this->_pdo->exec('UPDATE [users] SET '.$data['fields'].' WHERE `id` = :user_id', array_merge(
+					array(array(':user_id', $id, PDO::PARAM_INT)),
+					$data['values']
+				));
 			}
 		}
 
-		return empty($data) ? $count : FALSE;
+		return ($count !== NULL);
 	}
 
+	/**
+	 * Metoda pomocnicza, która rozbija tablice na kolumny, parametry,
+	 * wartości i pola.
+	 *
+	 * @param   array  $data  Tablica zawierająca dane
+	 * @return  array
+	 */
 	protected function _params(array $data)
 	{
 		$keys   = implode(array_keys($data), '`, `');
