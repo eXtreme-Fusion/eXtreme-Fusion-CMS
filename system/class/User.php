@@ -475,7 +475,7 @@ class User {
 			}
 		}
 
-		return ($count !== NULL);
+		return PDO::MYSQL_ATTR_FOUND_ROWS;
 	}
 
 	/**
