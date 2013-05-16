@@ -443,11 +443,11 @@ class User {
 			if ($id === FALSE)
 			{
 				// Aktualizuje dodatkowe pola wszystkich użytkowników
-				$count = $this->_pdo->exec('UPDATE [users_data] SET '.$fields['fields'], $fields['values']);
+				$this->_pdo->exec('UPDATE [users_data] SET '.$fields['fields'], $fields['values']);
 			}
 			else
 			{
-				$count = $this->_pdo->exec('INSERT INTO [users_data] (`user_id`, `'.$fields['keys'].'`) VALUES (:user_id, :'.$fields['params'].') ON DUPLICATE KEY UPDATE '.$fields['fields'], array_merge(
+				$this->_pdo->exec('INSERT INTO [users_data] (`user_id`, `'.$fields['keys'].'`) VALUES (:user_id, :'.$fields['params'].') ON DUPLICATE KEY UPDATE '.$fields['fields'], array_merge(
 					array(array(':user_id', $id, PDO::PARAM_INT)),
 					$fields['values']
 				));
@@ -464,18 +464,18 @@ class User {
 			if ($id === FALSE)
 			{
 				// Aktualizuje dane wszystkich użytkowników
-				$count = $this->_pdo->exec('UPDATE [users] SET '.$data['fields'], $data['values']);
+				$this->_pdo->exec('UPDATE [users] SET '.$data['fields'], $data['values']);
 			}
 			else
 			{
-				$count = $this->_pdo->exec('UPDATE [users] SET '.$data['fields'].' WHERE `id` = :user_id', array_merge(
+				$this->_pdo->exec('UPDATE [users] SET '.$data['fields'].' WHERE `id` = :user_id', array_merge(
 					array(array(':user_id', $id, PDO::PARAM_INT)),
 					$data['values']
 				));
 			}
 		}
 
-		return ($count !== NULL);
+		return TRUE;
 	}
 
 	/**
