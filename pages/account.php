@@ -31,7 +31,7 @@
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
 +--------------------------------------------------------*/
-if(!iUSER) HELP::redirect(ADDR_SITE);
+if ( ! iUSER) HELP::redirect(ADDR_SITE);
 
 if ($_route->getAction() === 'logout')
 {
@@ -42,43 +42,43 @@ if ($_route->getAction() === 'logout')
 $_locale->load('account');
 
 $status = $_route->getByID(1);
-$error = $_route->getByID(2);
+$error  = $_route->getByID(2);
 
 $theme = array(
 	'Title' => 'Ustawienia konta użytkownika - '.$_user->get('username').' &raquo; '.$_sett->get('site_name'),
-	'Keys' => 'Ustawienia profilu, ustawienia konta, edycja konta, profil',
-	'Desc' => 'W tym miescju możesz dokonać aktualizacji swoich danych osobowych.'
+	'Keys'  => 'Ustawienia profilu, ustawienia konta, edycja konta, profil',
+	'Desc'  => 'W tym miescju możesz dokonać aktualizacji swoich danych osobowych.',
 );
 
 $_sbb = $ec->getService('Sbb');
 
-if(isset($status) && $status == 'ok')
+if (isset($status) && $status == 'ok')
 {
 	$_tpl->printMessage('valid', __('Konto edytowane prawidłowo'));
 }
-elseif(isset($status) && $status == 'error')
+elseif (isset($status) && $status == 'error')
 {
-	if(isset($status) && $status == 'error' && isset($error) && $error == 1)
+	if (isset($status) && $status == 'error' && isset($error) && $error == 1)
 	{
 		$_tpl->printMessage('error', __('Pola z nazwą użytkownika i emailem nie mogą być puste.'));
 	}
-	elseif(isset($status) && $status == 'error' && isset($error) && $error == 2)
+	elseif (isset($status) && $status == 'error' && isset($error) && $error == 2)
 	{
 		$_tpl->printMessage('error', __('Nazwa użytkownika zawiera niedozwolone znaki.'));
 	}
-	elseif(isset($status) && $status == 'error' && isset($error) && $error == 3)
+	elseif (isset($status) && $status == 'error' && isset($error) && $error == 3)
 	{
 		$_tpl->printMessage('error', __('Podano nieprawidłowe aktualne hasło.'));
 	}
-	elseif(isset($status) && $status == 'error' && isset($error) && $error == 4)
+	elseif (isset($status) && $status == 'error' && isset($error) && $error == 4)
 	{
 		$_tpl->printMessage('error', __('Hasła użytkownika nie pasują do siebie.'));
 	}
-	elseif(isset($status) && $status == 'error' && isset($error) && $error == 5)
+	elseif (isset($status) && $status == 'error' && isset($error) && $error == 5)
 	{
 		$_tpl->printMessage('error', __('Wystąpił błąd przy próbie zmiany hasła. Prosimy o kontakt z Administracją.'));
 	}
-	elseif(isset($status) && $status == 'error' && isset($error) && $error == 6)
+	elseif (isset($status) && $status == 'error' && isset($error) && $error == 6)
 	{
 		$_tpl->printMessage('error', __('Adres email zawiera niedozwolone znaki.'));
 	}
@@ -152,13 +152,6 @@ if ($_request->post('save')->show() && $_request->post('email')->show())
 		}
 	}
 
-	$count = $_user->update(array(
-		'hide_email' => $_request->post('hideemail')->isNum(TRUE),
-		'theme' => $_request->post('theme')->show(),
-		'lang' => $_request->post('language')->show()
-		), $_user->get('id')
-	);
-
 	if ($_request->post('del_avatar')->show())
 	{
 		$_user->delAvatar();
@@ -169,79 +162,50 @@ if ($_request->post('save')->show() && $_request->post('email')->show())
 		$avatar = $_user->saveNewAvatar($_user->get('id'), $_request->files('avatar')->show());
 	}
 
-	$data = $_pdo->getRow('SELECT `user_id` FROM [users_data] WHERE `user_id` = :id',
-		array(':id', $_user->get('id'), PDO::PARAM_INT)
-	);
+	$fields  = $_pdo->getData('SELECT * FROM [user_fields] WHERE `edit` = 0');
+	$_fields = array();
 
-	$query = $_pdo->getData('SELECT * FROM [user_fields] WHERE `edit` = 0');
-	$match = $_pdo->getRowsCount($query);
-	$i = 0; $field = ''; $index_val = ''; $field_val = '';
-		$data = new Edit(
-			array(
-			'current' => $_route->getByID(5) ? $_route->getByID(5) : 1
-			)
-		);
-	if($match !== NULL)
+	if ($_pdo->getRowsCount($fields))
 	{
-		$fields = array();
-
-		foreach($query as $data)
+		foreach($fields as $field)
 		{
-			$index = $data['index'];
-			$val = HELP::wordsProtect($_request->post($index)->filters('trim', 'strip'));
-			$fields[$index] = $val;
-			$field .= '`'.$index.'` = :'.$index.($i < $match-1 ? ', ' : '');
-			$i++;
-		}
+			$key   = $field['index'];
+			$value = HELP::wordsProtect($_request->post($key)->filters('trim', 'strip'));
 
-		$keys   = implode(array_keys($fields), '`, `');
-		$values = $params = array();
-
-		foreach($fields as $key => $value)
-		{
-			$params[] = $key;
-			$values[] = array(':'.$key, $value, PDO::PARAM_STR);
-		}
-
-		$params = implode($params, ', :');
-
-		if($_user->get('id') === NULL)
-		{
-			$_pdo->exec('UPDATE [users_data] SET '.$field, $values);
-		}
-		else
-		{
-			$_pdo->exec('INSERT INTO [users_data] (`user_id`, `'.$keys.'`) VALUES (:user_id, :'.$params.') ON DUPLICATE KEY UPDATE '.$field, array_merge(
-				array(array(':user_id', $_user->get('id'), PDO::PARAM_INT)),
-				$values
-			));
+			$_fields[$key] = $value;
 		}
 	}
+
+	$_user->update(NULL, array(
+		'hide_email' => $_request->post('hideemail')->isNum(TRUE),
+		'theme'      => $_request->post('theme')->show(),
+		'lang'       => $_request->post('language')->show(),
+	), $_fields);
 
 	$_system->clearCache('profiles');
 	HELP::redirect($_route->path(array('controller' => 'account', 'action' => 'ok')));
 }
 
 $user = array(
-	'ID' => $_user->get('id'),
-	'Username' => $_user->get('username'),
-	'Email' => $_user->get('email'),
+	'ID'        => $_user->get('id'),
+	'Username'  => $_user->get('username'),
+	'Email'     => $_user->get('email'),
 	'HideEmail' => $_user->get('hide_email'),
-	'Theme' => $_user->get('theme'),
-	'Avatar' => $_user->get('avatar') ? $_user->getAvatarAddr() : FALSE
+	'Theme'     => $_user->get('theme'),
+	'Avatar'    => $_user->get('avatar') ? $_user->getAvatarAddr() : FALSE,
 );
 
 $_tpl->assignGroup(array(
-	'theme_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'themes', array('templates'), TRUE, 'folders'), $_user->get('theme')),
+	'theme_set'  => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'themes', array('templates'), TRUE, 'folders'), $_user->get('theme')),
 	// Zaznaczony zostanie język w zależności od preferencji użytkownika, dostępności danego języka w systemie oraz ustawień.
 	'locale_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'locale', array(), TRUE, 'folders'), $_user->getLang()),
-	'User' => $user,
+	'User'       => $user,
 	'ChangeName' => $_sett->get('change_name')
 ));
 
 // Pobieranie kategorii
 $query = $_pdo->getData('SELECT * FROM [user_field_cats] ORDER BY `order` ASC');
-$cats = array();
+$cats  = array();
 
 // Przepisywanie pobranych danych na zwykłą tablicę
 foreach($query as $data)
@@ -264,7 +228,7 @@ $data = $_pdo->getRow('SELECT * FROM [users_data] WHERE `user_id` = '.$_user->ge
 // Przepisywanie pobranych pól na zwykłą tablicę
 $i = 0;
 
-# Segregacja danych
+// Segregacja danych
 if (isset($fields))
 {
 	$_new_fields = array();
