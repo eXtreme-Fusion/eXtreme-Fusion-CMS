@@ -424,7 +424,7 @@ class User {
 	 */
 	public function update($id = NULL, array $data, array $fields = array())
 	{
-		if (empty($data) && empty($fields))
+		if (! $data && ! $fields)
 		{
 			throw new systemException(__('Both arrays cannot be empty'));
 		}
@@ -435,7 +435,8 @@ class User {
 			$id = $this->get('id');
 		}
 
-		if ( ! empty($fields))
+		// Aktualizacja/zapis danych z dodatkowych pól
+		if ($fields)
 		{
 			// Rozbija tablicę na kolumny, parametry, wartości i pola
 			$fields = $this->_params($fields);
@@ -447,6 +448,7 @@ class User {
 			}
 			else
 			{
+				// Zapisuje dane użytkownika o podanym ID
 				$this->_pdo->exec('INSERT INTO [users_data] (`user_id`, `'.$fields['keys'].'`) VALUES (:user_id, :'.$fields['params'].') ON DUPLICATE KEY UPDATE '.$fields['fields'], array_merge(
 					array(array(':user_id', $id, PDO::PARAM_INT)),
 					$fields['values']
@@ -454,8 +456,10 @@ class User {
 			}
 		}
 
-		if ( ! empty($data))
+		// Aktualizacja podstawowych danych
+		if ($data)
 		{
+			// Czas ostatniej aktualizacji konta, który zostanie zapisany w bazie
 			$data['lastupdate'] = time();
 
 			// Rozbija tablicę na kolumny, parametry, wartości i pola
@@ -468,6 +472,7 @@ class User {
 			}
 			else
 			{
+				// Aktualizuje dane użytkownika o podanym ID
 				$this->_pdo->exec('UPDATE [users] SET '.$data['fields'].' WHERE `id` = :user_id', array_merge(
 					array(array(':user_id', $id, PDO::PARAM_INT)),
 					$data['values']
