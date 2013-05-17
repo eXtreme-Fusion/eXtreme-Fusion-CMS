@@ -109,6 +109,7 @@ jQuery(function() {
 	// From EF4/PF6
 	Flipbox written by CrappoMan
 	simonpatterson@dsl.pipex.com
+	This code maybe is not a flipbox, but we add this info about author becuse it has been written in original file in EF4
 	------------------------------------------
 	*/
 	function addText(elname, wrap1, wrap2, form) {
