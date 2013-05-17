@@ -87,7 +87,7 @@ jQuery(function() {
 						setTimeout(function() {
 							jQuery('#comment_form #added').fadeOut();
 						}, 1000);
-						jQuery('#comment-block').load(addr_site + 'pages/ajax/comments.php?action=load&comment_type='+type+'&comment_item='+item);
+						jQuery('#comment-block').load(document.location+' #comments');
 					}
 				}
 			});
