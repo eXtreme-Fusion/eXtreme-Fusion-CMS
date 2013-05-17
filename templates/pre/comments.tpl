@@ -33,35 +33,35 @@
 
 	<div id="comment-block">
 {/if}
-		{if $comment}
+	{if $comment}
+		<div id="comments">
 			{$page_nav}
-			<div id="comments">
-				{section=comment}
-					<div class="comment" id="body_{$comment.id}">
-						<div class="cm_avatar center">
-							<img src="{$comment.avatar}" alt="none_avatar" width="60px" />
-						</div>
-						<div class="cm_content">
-							<div class="cm_content2">
-								<div class="details">
-									{$comment.author}, {$comment.datestamp}
-									{if $comment.edit}
-										<a href="{$ADDR_AJAX}comments.php?id={$comment.id}&amp;action=edit&amp;request=get" id="{$comment.id}" rel="facebox" class="facebox">[Edycja]</a>
-									{/if}
-									{if $comment.delete}
-										<a href="{$ADDR_AJAX}comments.php?id={$comment.id}&amp;action=delete&amp;request=get" id="{$comment.id}" rel="facebox">[Usuń]</a>
-									{/if}
-								</div>
-								<div class="cm_post" id="content_{$comment.id}">
-									{$comment.post}
-								</div>
+			{section=comment}
+				<div class="comment" id="body_{$comment.id}">
+					<div class="cm_avatar center">
+						<img src="{$comment.avatar}" alt="none_avatar" width="60px" />
+					</div>
+					<div class="cm_content">
+						<div class="cm_content2">
+							<div class="details">
+								{$comment.author}, {$comment.datestamp}
+								{if $comment.edit}
+									<a href="{$ADDR_AJAX}comments.php?id={$comment.id}&amp;action=edit&amp;request=get" id="{$comment.id}" rel="facebox" class="facebox">[Edycja]</a>
+								{/if}
+								{if $comment.delete}
+									<a href="{$ADDR_AJAX}comments.php?id={$comment.id}&amp;action=delete&amp;request=get" id="{$comment.id}" rel="facebox">[Usuń]</a>
+								{/if}
+							</div>
+							<div class="cm_post" id="content_{$comment.id}">
+								{$comment.post}
 							</div>
 						</div>
 					</div>
-				{/section}
-			</div>
+				</div>
+			{/section}
 			{if $count/2 >= $limit/2}{$page_nav}{/if}
-		{/if}
+		</div>
+	{/if}
 {if ! $only_comments}
 	</div>
 {/if}
