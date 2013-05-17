@@ -48,6 +48,12 @@ table td {
 	width:30%;
 }
 
+.formLabel small {
+	margin-right: 0;
+	padding-right: 0;
+	border-right: none;
+}
+
 /* Zewnętrzene */
 #simpleTooltip {
 	padding:4px 10px 6px;

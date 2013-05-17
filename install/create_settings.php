@@ -57,8 +57,8 @@ $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'site_banner2', 'v
 
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'avatar_width', 'value' => 100));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'avatar_height', 'value' => 100));
-$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'avatar_filesize', 'value' => 1048576));
-$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'avatar_ratio', 'value' => 0));
+$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'avatar_filesize', 'value' => 102400));
+//$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'avatar_ratio', 'value' => 0));
 
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'smtp_host', 'value' => ''));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'smtp_port', 'value' => 587));

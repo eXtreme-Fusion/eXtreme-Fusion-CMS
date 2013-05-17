@@ -188,19 +188,22 @@ if ($_request->post('save')->show() && $_request->post('email')->show())
 
 $user = array(
 	'ID'        => $_user->get('id'),
-	'Username'  => $_user->get('username'),
-	'Email'     => $_user->get('email'),
-	'HideEmail' => $_user->get('hide_email'),
-	'Theme'     => $_user->get('theme'),
-	'Avatar'    => $_user->get('avatar') ? $_user->getAvatarAddr() : FALSE,
+	'username'  => $_user->get('username'),
+	'email'     => $_user->get('email'),
+	'hide_email' => $_user->get('hide_email'),
+	'theme'     => $_user->get('theme'),
+	'avatar'    => $_user->get('avatar') ? $_user->getAvatarAddr() : FALSE,
 );
 
 $_tpl->assignGroup(array(
 	'theme_set'  => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'themes', array('templates'), TRUE, 'folders'), $_user->get('theme')),
 	// Zaznaczony zostanie język w zależności od preferencji użytkownika, dostępności danego języka w systemie oraz ustawień.
 	'locale_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'locale', array(), TRUE, 'folders'), $_user->getLang()),
-	'User'       => $user,
-	'ChangeName' => $_sett->get('change_name')
+	'user'       => $user,
+	'change_name' => $_sett->get('change_name'),
+	'avatar_filesize' => $_sett->get('avatar_filesize')/1024,
+	'avatar_height' => $_sett->get('avatar_height'),
+	'avatar_width' => $_sett->get('avatar_width')
 ));
 
 // Pobieranie kategorii

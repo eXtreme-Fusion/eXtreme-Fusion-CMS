@@ -38,15 +38,15 @@
 	<h4>{i18n('Edit account')}</h4>
 
 	<form id="This" action="{$URL_REQUEST}" method="post" enctype="multipart/form-data" name="account">
-		{if $ChangeName == 1}
+		{if $change_name == 1}
 			<div class="tbl1">
 				<div class="formLabel sep_1 grid_3"><label for="UserName">{i18n('Username:')}</label></div>
-				<div class="formField grid_7"><input type="text" name="username" value="{$User.Username}" id="UserName" /></div>
+				<div class="formField grid_7"><input type="text" name="username" value="{$user.username}" id="UserName" /></div>
 			</div>
 		{else}
 			<div class="tbl1">
 				<div class="formLabel sep_1 grid_3"><label for="UserName">{i18n('Username:')}</label></div>
-				<div class="formField grid_7"><strong>{$User.Username}</strong></div>
+				<div class="formField grid_7"><strong>{$user.username}</strong></div>
 			</div>
 		{/if}
 		<div class="tbl2">
@@ -63,26 +63,26 @@
 		</div>
 		<div class="tbl1">
 			<div class="formLabel sep_1 grid_3"><label for="Email">{i18n('E-mail address:')}</label></div>
-			<div class="formField grid_7"><input type="text" name="email" value="{$User.Email}" id="Email" /></div>
+			<div class="formField grid_7"><input type="text" name="email" value="{$user.email}" id="Email" /></div>
 		</div>
 		<div class="tbl2">
 			<div class="formLabel sep_1 grid_3"><label for="HideEmail">{i18n('Hide e-mail:')}</label></div>
 			<div class="formField grid_7">
-				<label for="HideEmail_1"><input type="radio" id="HideEmail_1" name="hideemail" value="1"{if $User.HideEmail == 1} checked="checked"{/if}>{i18n('Yes')}</label>
-				<label for="HideEmail_0"><input type="radio" id="HideEmail_0" name="hideemail" value="0"{if $User.HideEmail == 0} checked="checked"{/if}>{i18n('No')}</label>
+				<label for="HideEmail_1"><input type="radio" id="HideEmail_1" name="hideemail" value="1"{if $user.hide_email == 1} checked="checked"{/if}>{i18n('Yes')}</label>
+				<label for="HideEmail_0"><input type="radio" id="HideEmail_0" name="hideemail" value="0"{if $user.hide_email == 0} checked="checked"{/if}>{i18n('No')}</label>
 			</div>
 		</div>
 		<div class="tbl1">
-			{if $User.Avatar}
+			{if $user.avatar}
 				<div class="formLabel sep_1 grid_3">{i18n('Avatar:')}</div>
 				<div class="formField grid_7">
-					<img src="{$User.Avatar}" alt="Avatar">
+					<img src="{$user.avatar}" alt="Avatar">
 					<p>
 						<label for="DelAvatar"><input type="checkbox" name="del_avatar" value="del" id="DelAvatar" /> {i18n('Usuń aktualny avatar')}</label>
 					</p>
 				</div>
 			{else}
-				<div class="formLabel sep_1 grid_3"><label for="Avatar">{i18n('Avatar:')}</label></div>
+				<div class="formLabel sep_1 grid_3"><label for="Avatar">{i18n('Avatar:')}</label><small>{i18n('Avatar requirements', array(':filesize' => $avatar_filesize, ':width' => $avatar_width, ':height' => $avatar_height))}</small></div>
 				<div class="formField grid_7"><input type="file" name="avatar" value="" id="Avatar" rows="1" /></div>
 			{/if}
 		</div>
