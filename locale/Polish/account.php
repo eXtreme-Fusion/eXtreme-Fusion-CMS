@@ -9,8 +9,6 @@ return array(
 	'Confirm new password:' => 'Powtórz nowe hasło:',
 	'Email Address:' => 'Adres e-mail:',
 	'Hide e-Mail?' => 'Ukryć e-mail?',
-	
 	'Additional informations' => 'Dodatkowe informacje',
 	'Avatar requirements' => 'Wymagania: :filesize KB, :width x :height px',
-	//'Requirements: :filesize KB, :width x :height px' => 'Wymagania: :filesize KB, :width x :height px'
 );

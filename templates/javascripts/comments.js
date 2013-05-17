@@ -26,9 +26,10 @@ jQuery(function() {
 			data: {action: 'delete', request: 'confirm', id: id},
 			success: function(response) {
 				if (response == 'deleted') {
-					jQuery('#comments #body_'+id).hide();
+					//jQuery('#comments #body_'+id).hide();
 					jQuery('#facebox').hide();
 					jQuery('#facebox_overlay').hide();
+					jQuery('#comment-block').load(document.location+' #comments');
 				}
 			}
 		});

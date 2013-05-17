@@ -13,7 +13,7 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
+|
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------+
