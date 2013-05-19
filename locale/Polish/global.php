@@ -355,7 +355,6 @@ return array(
 	'Current password:' => 'Aktualne hasło:',
 	'New password:' => 'Nowe hasło:',
 	'Confirm new password:' => 'Potwierdź nowe hasło:',
-	'Avatar:' => 'Awatar:',
 	'Edit account' => 'Edytuj konto',
 	'Language:' => 'Język:',
 	

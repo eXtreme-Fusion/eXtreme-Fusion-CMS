@@ -11,4 +11,6 @@ return array(
 	'Hide e-Mail?' => 'Ukryć e-mail?',
 	'Additional informations' => 'Dodatkowe informacje',
 	'Avatar requirements' => 'Wymagania: :filesize KB, :width x :height px',
+	'Avatar:' => 'Zdjęcie profilowe:',
+	'Theme:' => 'Skórka:',
 );

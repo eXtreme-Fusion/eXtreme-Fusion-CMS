@@ -50,7 +50,7 @@
 			</div>
 		{/if}
 		<div class="tbl2">
-			<div class="formLabel sep_1 grid_3"><label for="OldPassword">{i18n('Current password:')}</label></div>
+			<div class="formLabel sep_1 grid_3"><label for="OldPassword">{i18n('Current password:')}<sup>*</sup></label></div>
 			<div class="formField grid_7"><input type="password" name="old_password" id="OldPassword" class="long_textbox" /></div>
 		</div>
 		<div class="tbl1">
@@ -73,18 +73,17 @@
 			</div>
 		</div>
 		<div class="tbl1">
-			{if $user.avatar}
-				<div class="formLabel sep_1 grid_3">{i18n('Avatar:')}</div>
-				<div class="formField grid_7">
+			<div class="formLabel sep_1 grid_3">{i18n('Avatar:')}<small>{i18n('Avatar requirements', array(':filesize' => $avatar_filesize, ':width' => $avatar_width, ':height' => $avatar_height))}</small></div>
+			<div class="formField grid_7">
+				{if $user.avatar}
 					<img src="{$user.avatar}" alt="Avatar">
-					<p>
-						<label for="DelAvatar"><input type="checkbox" name="del_avatar" value="del" id="DelAvatar" /> {i18n('Usuń aktualny avatar')}</label>
-					</p>
-				</div>
-			{else}
-				<div class="formLabel sep_1 grid_3"><label for="Avatar">{i18n('Avatar:')}</label><small>{i18n('Avatar requirements', array(':filesize' => $avatar_filesize, ':width' => $avatar_width, ':height' => $avatar_height))}</small></div>
-				<div class="formField grid_7"><input type="file" name="avatar" value="" id="Avatar" rows="1" /></div>
-			{/if}
+				{/if}
+				<p>
+					<input type="file" name="avatar" value="" id="Avatar" rows="1" />
+					
+				</p>
+				
+			</div>
 		</div>
 		<div class="tbl2">
 			<div class="formLabel sep_1 grid_3"><label for="Theme">{i18n('Theme:')}</label></div>

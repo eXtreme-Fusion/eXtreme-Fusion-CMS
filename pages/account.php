@@ -90,100 +90,98 @@ elseif (isset($status) && $status == 'error')
 
 if ($_request->post('save')->show() && $_request->post('email')->show())
 {
-	if ($_sett->get('change_name') == 1)
+	if ($_user->checkOldPass($_user->get('id'), $_request->post('old_password')->show()))
 	{
-		$username = trim(preg_replace("/ +/i", " ", $_request->post('username')->show()));
-	}
-	else
-	{
-		$username = $_user->get('username');
-	}
-
-	if ($username === '' || trim($_request->post('email')->show()) === '')
-	{
-		HELP::redirect($_route->path(array('controller' => 'account', 'action' => 'error', '1')));
-	}
-
-	if ( ! preg_match("/^[-0-9A-Z_@\s]+$/i", $username))
-	{
-		HELP::redirect($_route->path(array('controller' => 'account', 'action' => 'error', '2')));
-	}
-
-	if ( ! $_request->post('email')->isEmail())
-	{
-		HELP::redirect($_route->path(array('controller' => 'account', 'action' => 'error', '6')));
-	}
-
-	// Aktualizacja nazwy użytkownika
-	if ($_sett->get('change_name') == 1)
-	{
-		if ($username != $_user->get('username'))
+		if ($_sett->get('change_name') == 1)
 		{
-			$_user->newName($username, $_user->get('id'));
-		}
-	}
-
-	// Aktualizacja adresu e-mail
-	if ($_request->post('email') != $_user->get('email'))
-	{
-		$_user->newEmail($_request->post('email')->show(), $_user->get('id'));
-	}
-
-	// Aktualizuje hasło użytkownika
-	if ($_request->post('old_password')->show() && $_request->post('password1')->show())
-	{
-		if ( ! $_user->checkOldPass($_user->get('id'), $_request->post('old_password')->show()))
-		{
-			HELP::redirect($_route->path(array('controller' => 'account', 'action' => 'error', '3')));
-		}
-
-		if ($_request->post('password1')->show() !== $_request->post('password2')->show())
-		{
-			HELP::redirect($_route->path(array('controller' => 'account', 'action' => 'error', '4')));
-		}
-
-		if ($_user->changePass($_user->get('id'), $_request->post('password1')->show()))
-		{
-			//deprecated $_user->updateLoginSession($_request->post('password1')->show());
+			$username = trim(preg_replace("/ +/i", " ", $_request->post('username')->show()));
 		}
 		else
 		{
-			HELP::redirect($_route->path(array('controller' => 'account', 'action' => 'error', '5')));
+			$username = $_user->get('username');
 		}
-	}
 
-	if ($_request->post('del_avatar')->show())
-	{
-		$_user->delAvatar();
-	}
-
-	if ($_request->files('avatar')->show())
-	{
-		$avatar = $_user->saveNewAvatar($_user->get('id'), $_request->files('avatar')->show());
-	}
-
-	$fields  = $_pdo->getData('SELECT * FROM [user_fields] WHERE `edit` = 0');
-	$_fields = array();
-
-	if ($_pdo->getRowsCount($fields))
-	{
-		foreach($fields as $field)
+		if ($username === '' || trim($_request->post('email')->show()) === '')
 		{
-			$key   = $field['index'];
-			$value = HELP::wordsProtect($_request->post($key)->filters('trim', 'strip'));
-
-			$_fields[$key] = $value;
+			HELP::redirect($_route->path(array('controller' => 'account', 'action' => 'error', '1')));
 		}
+
+		if ( ! preg_match("/^[-0-9A-Z_@\s]+$/i", $username))
+		{
+			HELP::redirect($_route->path(array('controller' => 'account', 'action' => 'error', '2')));
+		}
+
+		if ( ! $_request->post('email')->isEmail())
+		{
+			HELP::redirect($_route->path(array('controller' => 'account', 'action' => 'error', '6')));
+		}
+
+		// Aktualizacja nazwy użytkownika
+		if ($_sett->get('change_name') == 1)
+		{
+			if ($username != $_user->get('username'))
+			{
+				$_user->newName($username, $_user->get('id'));
+			}
+		}
+
+		// Aktualizacja adresu e-mail
+		if ($_request->post('email') != $_user->get('email'))
+		{
+			$_user->newEmail($_request->post('email')->show(), $_user->get('id'));
+		}
+
+		// Aktualizuje hasło użytkownika
+		if ($_request->post('old_password')->show() && $_request->post('password1')->show())
+		{
+			if ($_request->post('password1')->show() !== $_request->post('password2')->show())
+			{
+				HELP::redirect($_route->path(array('controller' => 'account', 'action' => 'error', '4')));
+			}
+
+			if ($_user->changePass($_user->get('id'), $_request->post('password1')->show()))
+			{
+				//deprecated $_user->updateLoginSession($_request->post('password1')->show());
+			}
+			else
+			{
+				HELP::redirect($_route->path(array('controller' => 'account', 'action' => 'error', '5')));
+			}
+		}
+
+		if ($_request->files('avatar')->show()['name'] ==! '')
+		{
+			$_user->delAvatar();
+			$_user->saveNewAvatar($_user->get('id'), $_request->files('avatar')->show());
+		}
+
+		$fields  = $_pdo->getData('SELECT * FROM [user_fields] WHERE `edit` = 0');
+		$_fields = array();
+
+		if ($_pdo->getRowsCount($fields))
+		{
+			foreach($fields as $field)
+			{
+				$key   = $field['index'];
+				$value = HELP::wordsProtect($_request->post($key)->filters('trim', 'strip'));
+
+				$_fields[$key] = $value;
+			}
+		}
+
+		$_user->update(NULL, array(
+			'hide_email' => $_request->post('hideemail')->isNum(TRUE),
+			'theme'      => $_request->post('theme')->show(),
+			'lang'       => $_request->post('language')->show(),
+		), $_fields);
+
+		$_system->clearCache('profiles');
+		HELP::redirect($_route->path(array('controller' => 'account', 'action' => 'ok')));
 	}
-
-	$_user->update(NULL, array(
-		'hide_email' => $_request->post('hideemail')->isNum(TRUE),
-		'theme'      => $_request->post('theme')->show(),
-		'lang'       => $_request->post('language')->show(),
-	), $_fields);
-
-	$_system->clearCache('profiles');
-	HELP::redirect($_route->path(array('controller' => 'account', 'action' => 'ok')));
+	else
+	{
+		HELP::redirect($_route->path(array('controller' => 'account', 'action' => 'error', '3')));
+	}
 }
 
 $user = array(
