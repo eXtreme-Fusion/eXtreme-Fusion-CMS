@@ -43,7 +43,7 @@
 					</div>
 					<div class="cm_content">
 						<div class="cm_content2">
-							<div class="details">
+							<div class="details right">
 								{$comment.author}, {$comment.datestamp}
 								{if $comment.edit}
 									<a href="{$ADDR_AJAX}comments.php?id={$comment.id}&amp;action=edit&amp;request=get" id="{$comment.id}" rel="facebox" class="facebox">[Edycja]</a>
@@ -51,6 +51,7 @@
 								{if $comment.delete}
 									<a href="{$ADDR_AJAX}comments.php?id={$comment.id}&amp;action=delete&amp;request=get" id="{$comment.id}" rel="facebox">[Usuń]</a>
 								{/if}
+								<a href="#body_{$comment.id}">[#{$comment.id}]</a>
 							</div>
 							<div class="cm_post" id="content_{$comment.id}">
 								{$comment.post}
