@@ -37,7 +37,7 @@
 {if $message}<div class="{$class}">{$message}</div>{/if}
 	<h4>{i18n('Edit account')}</h4>
 
-	<form id="This" action="{$URL_REQUEST}" method="post" enctype="multipart/form-data" name="account">
+	<form action="{$URL_REQUEST}" method="post" enctype="multipart/form-data" name="account">
 		{if $change_name == 1}
 			<div class="tbl1">
 				<div class="formLabel sep_1 grid_3"><label for="UserName">{i18n('Username:')}</label></div>
@@ -45,7 +45,7 @@
 			</div>
 		{else}
 			<div class="tbl1">
-				<div class="formLabel sep_1 grid_3"><label for="UserName">{i18n('Username:')}</label></div>
+				<div class="formLabel sep_1 grid_3"><label>{i18n('Username:')}</label></div>
 				<div class="formField grid_7"><strong>{$user.username}</strong></div>
 			</div>
 		{/if}
@@ -116,7 +116,7 @@
 			</div>
 			{section=fields}
 				<div class="tbl2">
-					<div class="formLabel sep_1 grid_3"><label for="{$fields.label}">{i18n($fields.name)}</label></div>
+					<div class="formLabel sep_1 grid_3"><label for="{$fields.label}">{i18n($fields.name)}:</label></div>
 					{if $fields.type == 1}
 						<div class="formField grid_7">
 							<input type="text" name="{$fields.index}" value="{if $fields.value}{$fields.value}{/if}" id="{$fields.label}" />
@@ -150,12 +150,9 @@
 				</div>
 			{/section}
 		{/section}
-
-		<div class="tbl Buttons">
-			<div class="grid_4 center button-c">
-				<input type="hidden" name="save" value="yes" />
-				<span id="SendForm_This" class="save center"><strong>{i18n('Save')}</strong></span>
-			</div>
+		<div class="tbl center">
+			<input type="hidden" name="save" value="yes" />
+			<input type="submit" name="save" class="button" value="{i18n('Save')}">
 		</div>
 	</form>
 {php} closetable() {/php}

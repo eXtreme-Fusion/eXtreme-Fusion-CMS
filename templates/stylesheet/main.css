@@ -46,6 +46,20 @@ table td {
 
 .formLabel {
 	width:30%;
+	padding:0;
+}
+
+.formLabel label {
+	line-height:45px;
+}
+
+.formField .uploader,
+.formField .selector {
+	margin:5px 0;
+}
+
+.formField {
+	line-height:32px;
 }
 
 .formLabel small {
