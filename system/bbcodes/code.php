@@ -32,5 +32,5 @@ $bbcode_info = array(
 
 if($bbcode_used)
 {
-	$text = preg_replace("#\[code\](.*?)\[/code\]#sie", "'<div class=\'quote\'>\1</div>'", $text, 1);
+	$text = preg_replace("#\[code\](.*?)\[/code\]#sie", "'<div class=\'code\'>\\1</div>'", $text, 1);
 }
