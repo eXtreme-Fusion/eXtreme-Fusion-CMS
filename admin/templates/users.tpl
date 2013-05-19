@@ -147,15 +147,11 @@
 					</div>
 				</div>
 				<div class="tbl2">
-					{if $user.avatar}
-						<div class="formField sep_3 grid_8"><img src="{$ADDR_IMAGES}avatars/{$user.avatar}"></div>
-						<div id="DelAvatarBox">
-							<div class="formField sep_3 grid_8"><label for="DelAvatar"><input type="checkbox" name="del_avatar" value="del" id="DelAvatar" /> {i18n('Usuń aktualny avatar')}</label></div>
-						</div>
-					{else}
-						<div class="formLabel sep_1 grid_3"><label for="Avatar">{i18n('Avatar:')}</label></div>
-						<div class="formField grid_7"><input type="file" name="avatar" value="" id="Avatar" rows="1" /></div>
-					{/if}
+					
+						
+					
+					<div class="formLabel sep_1 grid_3">{if $user.avatar}<img src="{$ADDR_IMAGES}avatars/{$user.avatar}"><br />{/if}<label for="Avatar">{i18n('Avatar:')}</label></div>
+					<div class="formField grid_7"><input type="file" name="avatar" value="" id="Avatar" rows="1" /></div>
 				</div>
 				<div class="tbl1">
 					<div class="formLabel sep_1 grid_3">{i18n('Theme')}:</div>

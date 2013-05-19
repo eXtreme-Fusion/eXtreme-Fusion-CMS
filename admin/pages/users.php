@@ -158,12 +158,7 @@ try
 						asort ($role);
 						$_user->setRoles($role, $_request->post('role')->show(), $_request->get('user')->show());
 
-						if ($_request->post('del_avatar')->show())
-						{
-							$_user->delAvatar($_request->get('user')->show());
-						}
-
-						if ($_request->files('avatar')->show())
+						if ($_request->upload('avatar'))
 						{
 							$_user->saveNewAvatar($_request->get('user')->show(), $_request->files('avatar')->show());
 						}
