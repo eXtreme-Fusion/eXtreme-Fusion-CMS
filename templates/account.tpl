@@ -73,7 +73,7 @@
 			</div>
 		</div>
 		<div class="tbl1">
-			<div class="formLabel sep_1 grid_3">{i18n('Avatar:')}<small>{i18n('Avatar requirements', array(':filesize' => $avatar_filesize, ':width' => $avatar_width, ':height' => $avatar_height))}</small></div>
+			<div class="formLabel sep_1 grid_3"><label>{i18n('Avatar:')}</label><small>{i18n('Avatar requirements', array(':filesize' => $avatar_filesize, ':width' => $avatar_width, ':height' => $avatar_height))}</small></div>
 			<div class="formField grid_7">
 				{if $user.avatar}
 					<img src="{$user.avatar}" alt="Avatar">

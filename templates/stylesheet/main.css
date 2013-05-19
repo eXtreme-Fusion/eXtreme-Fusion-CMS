@@ -39,8 +39,8 @@ table td {
 }
 
 // Formularze
-.formField, .formLabel
-{
+.formField,
+.formLabel {
 	float:left;
 }
 
@@ -63,7 +63,7 @@ table td {
 }
 
 .formLabel small {
-	margin-right: 0;
+	margin:-10px 0 2px;
 	padding-right: 0;
 	border-right: none;
 }
