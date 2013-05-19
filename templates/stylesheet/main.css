@@ -62,10 +62,16 @@ table td {
 	line-height:32px;
 }
 
+.formField label {
+	display:inline-block;
+	margin-top:8px;
+	line-height:10px;
+}
+
 .formLabel small {
 	margin:-10px 0 2px;
-	padding-right: 0;
-	border-right: none;
+	padding-right:0;
+	border-right:none;
 }
 
 /* Zewnętrzene */
