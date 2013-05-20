@@ -1,5 +1,5 @@
 {if ! $only_comments}
-	{php} opentable(__('Add comments')) {/php}
+	{panel=i18n('Add comments')}
 		{if $can_comment}
 			<div id="comment_form">
 				<p id="loading" class="center hide info close-valid">{i18n('Adding your comment')}</p>
@@ -29,7 +29,7 @@
 		{else}
 			<p class="center">{i18n('Commenting has been disabled for your group permissions')}</p>
 		{/if}
-	{php} closetable() {/php}
+	{/panel}
 
 	<div id="comment-block">
 {/if}

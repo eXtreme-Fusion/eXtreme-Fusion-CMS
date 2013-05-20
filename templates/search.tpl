@@ -1,4 +1,4 @@
-{php} opentable(__('Wyszukiwarka')) {/php}
+{panel=i18n('Wyszukiwarka')}
 	<form action="{$URL_REQUEST}" method="post" />
 		<div class="tbl1">
 			<div class="formLabel sep_1 grid_3"><label for="search_text">{i18n('Wpisz szukaną frazę:')}</label></div>
@@ -88,4 +88,4 @@
 	{elseif $searched_type === "users" || ($all && $users === array())}
 		<div class="info">Nie znaleziono użytkowników pasujących do następującego kryterium "<strong>{$search_text}</strong>"</div>
 	{/if}
-{php} closetable() {/php}
+{/panel}

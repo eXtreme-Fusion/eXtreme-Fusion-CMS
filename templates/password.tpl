@@ -33,7 +33,7 @@
 +--------------------------------------------------------*/
 *}
 
-{php} opentable(__('Odzyskiwanie dostępu do konta')); {/php}
+{panel=i18n('Odzyskiwanie dostępu do konta')}
 {if $message}<p class="{$class}">{$message}</p>{/if}
 
 {if !$action}
@@ -46,4 +46,4 @@
 	</div>
 {/if}
 
-{php} closetable(); {/php}
+{/panel}

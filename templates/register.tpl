@@ -1,4 +1,4 @@
-{php} opentable(__('Register')) {/php}
+{panel=i18n('Register')}
 	{if $error}
 		<div class="error">
 			{section=error}
@@ -116,4 +116,4 @@
 			</div>
 		</form>
 	{/if}
-{php} closetable() {/php}
+{/panel}
