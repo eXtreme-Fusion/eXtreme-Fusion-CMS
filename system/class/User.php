@@ -295,7 +295,7 @@ class User {
 	//Przykład:
 	//$file = $_FILES['avatar'];
 	// Trzeci parametr ustawiony na TRUE sprawia, że istniejący na serwerze avatar nie może zostać nadpisany przez jego własciciela.
-	public function saveNewAvatar($id, $file, $check_exists = FALSE)
+	public function saveNewAvatar($id, $file, $check_exists = FALSE, $delete_file = TRUE)
 	{
 		if ($file && is_uploaded_file($file['tmp_name']))
 		{
@@ -323,6 +323,11 @@ class User {
 							{
 								if (move_uploaded_file($file['tmp_name'], $new_path_name))
 								{
+									if ($delete_file)
+									{	
+										$this->delAvatar($id, FALSE);
+									}
+									
 									return $this->updateAvatar($new_name, $id);
 								}
 
@@ -367,11 +372,11 @@ class User {
 		return FALSE;
 	}
 
-	// Usuwa avatar w bazie i na serwerze.
+	// Usuwa avatar w bazie, o ile nie ustawiono parametru inaczej, i na serwerze.
 	// Nazwy pozyskuje z bazy - jest to zabezpieczenie:
 	// gdyby nazwa pochodziła z formularza, istniałoby zagrożenie, że ktoś bedzie próbował usunąć plik, do którego nie ma prawa
 	// poprzez zamieszczenie w atrybucie value znaków `../`.
-	public function delAvatar($id = NULL)
+	public function delAvatar($id = NULL, $update = TRUE)
 	{
 		if ($id === NULL) // Usuwa własny avatar
 		{
@@ -379,8 +384,13 @@ class User {
 			{
 				unlink(DIR_IMAGES.'avatars'.DS.$this->get('avatar'));
 			}
-
-			return $this->updateAvatar('', $this->get('id'));
+			
+			if ($update)
+			{
+				return $this->updateAvatar('', $this->get('id'));
+			}
+			
+			return TRUE;
 		}
 		elseif (isNum($id)) // Usuwa avatar użytkownika o podanym ID
 		{
@@ -391,7 +401,12 @@ class User {
 				unlink(DIR_IMAGES.'avatars'.DS.$avatar);
 			}
 
-			return $this->updateAvatar('', $id);
+			if ($update)
+			{
+				return $this->updateAvatar('', $id);
+			}
+			
+			return TRUE;
 		}
 
 		return FALSE;

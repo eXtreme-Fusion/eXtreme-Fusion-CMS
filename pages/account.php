@@ -149,9 +149,8 @@ if ($_request->post('save')->show() && $_request->post('email')->show())
 			}
 		}
 
-		if ($_request->files('avatar')->show()['name'] ==! '')
+		if ($_request->upload('avatar'))
 		{
-			$_user->delAvatar();
 			$_user->saveNewAvatar($_user->get('id'), $_request->files('avatar')->show());
 		}
 

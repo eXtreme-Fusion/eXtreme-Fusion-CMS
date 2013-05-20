@@ -10,6 +10,7 @@
 .pointer{cursor:pointer}
 .left{text-align:left}
 .right{text-align:right}
+.block-right{float:right}
 .justify{text-align:justify}
 .indent{text-indent:20px}
 .hide{display:none}
@@ -266,7 +267,7 @@ table td {
 .details span.comment-admin {float:right; padding-right:40px;}
 .cm_avatar {
 	width:10%;
-	margin:10px;
+	margin: 0 10px 10px 10px;
 	float:left;
 	}
 .cm_content {
