@@ -33,7 +33,7 @@
 +--------------------------------------------------------*/
 *}
 
-{php} opentable(__('Site Team')) {/php}
+{panel=i18n('Site Team')}
 	<h4>{i18n('Main Administrator')}</h4>
 	{if $site_admin}
 		<div class="team tbl2">
@@ -103,4 +103,4 @@
 			{/if}
 		{/section}
 	{/if}
-{php} closetable() {/php}
+{/panel}

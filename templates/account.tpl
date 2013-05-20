@@ -33,7 +33,7 @@
 +--------------------------------------------------------*/
 *}
 
-{php} opentable(__('Edit account')) {/php}
+{panel=i18n('Edit account')}
 {if $message}<div class="{$class}">{$message}</div>{/if}
 	<h4>{i18n('Edit account')}</h4>
 
@@ -154,4 +154,4 @@
 			<input type="submit" name="save" class="button" value="{i18n('Save')}">
 		</div>
 	</form>
-{php} closetable() {/php}
+{/panel}

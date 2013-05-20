@@ -33,7 +33,7 @@
 +--------------------------------------------------------*/
 *}
 
-{php} opentable(__('Members List')) {/php}
+{panel=i18n('Members List')}
 	{if $users}
 		<table class="tbl2">
 			<thead>
@@ -72,4 +72,4 @@
 		<div class="buttons-bg">&nbsp;</div>
 	</div>
 	{$page_nav}
-{php} closetable() {/php}
+{/panel}

@@ -34,7 +34,7 @@
 *}
 
 {if $is_logged_in}
-	{php} opentable(__('User Panel')) {/php}
+	{panel=i18n('User Panel')}
 		<div class="center">
 			<ul>
 				<li><a href="{$url_account}" class="side">{i18n("Edit profile")}</a></li>
@@ -49,9 +49,9 @@
 				<p class="bold"><a href="{$url_messages}" class="side">{$messages}</a></p>
 			{/if}
 		</div>
-	{php} closetable() {/php}
+	{/panel}
 {else}
-	{php} opentable(__('Login')) {/php}
+	{panel=i18n('Login')}
 		<div style="text-align:center"><br />
 			<form method="post" action="{$URL_REQUEST}">
 				<div>
@@ -71,5 +71,5 @@
 			{if $enable_reg}<div><a href="{$url_register}" class="side"><span>{i18n("Register")}</span></a></div>{/if}
 			<div><a href="{$url_password}" class="side"><span>{i18n("Forgot password")}</span></a></div>
 		</div>
-	{php} closetable() {/php}
+	{/panel}
 {/if}
