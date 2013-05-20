@@ -1,4 +1,4 @@
-{php} opentable('Błąd wewnętrzny'); {/php}
+{panel='Błąd wewnętrzny'}
 
 <div class="error">{$Message}</div>
 
@@ -24,4 +24,4 @@
 		</tbody>
 	</table>
 </div>
-{php} closetable(); {/php}
+{/panel}

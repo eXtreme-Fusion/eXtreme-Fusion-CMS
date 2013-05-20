@@ -34,6 +34,7 @@
 *}
 
 {if $page == 'category'}
+	{* Do przerobienia *}
 	{php} opentable(__('News categories').' &raquo; '.$this->data['category']['cat_name']) {/php}
 		<p class="cat_top dark text_dark">
 			<a href="{$all_news_url}">{i18n('News')}</a> <img src="{$THEME_IMAGES}bullet.png" alt=""> <a href="{$all_news_cats_url}">{i18n('News categories')}</a> <img src="{$THEME_IMAGES}bullet.png" alt=""> <strong>{i18n($category.cat_name)}</strong> ({$category.cat_news_count})
@@ -61,7 +62,7 @@
 		{/if}
 	{php} closetable() {/php}
 {elseif $page == 'overview'}
-	{php} opentable(__('News categories')) {/php}
+	{panel=i18n('News categories')}
 		<p class="cat_top dark text_dark">
 			<a href="{$all_news_url}">{i18n('News')}</a> <img src="{$THEME_IMAGES}bullet.png" alt=""> <strong>{i18n('News categories')}</strong>
 		</p>
@@ -82,5 +83,5 @@
 		{else}
 			<p class="status">{i18n('There are no categories.')}</p>
 		{/if}
-	{php} closetable() {/php}
+	{/panel}
 {/if}

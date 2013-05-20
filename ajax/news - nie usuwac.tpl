@@ -35,7 +35,7 @@
 
 {if $action && $action !== 'page'}
 	{if $rows}
-		{php} opentable(__('News preview')) {/php}
+		{panel=i18n('News preview')}
 			<article class="news dark border_top_other">
 				<header>
 					<p class="text_dark">{i18n('Date:')} <time datetime="{$news.datetime}" pubdate="pubdate">{$news.date}</time></p>
@@ -72,15 +72,15 @@
 					{/if}
 				</footer>
 			</article>
-		{php} closetable() {/php}
+		{/panel}
 		{$comments}
 	{else}
-		{php} opentable(__('Error')) {/php}
+		{panel=i18n('Error')}
 			<p class="status">{i18n('No data!')}</p>
-		{php} closetable() {/php}
+		{/panel}
 	{/if}
 {else}
-	{php} opentable(__('News')); {/php}
+	{panel=i18n('News')}
 		{if $news}
 			{section=news}
 				<article class="news dark border_top_other">
@@ -118,5 +118,5 @@
 	{else}
 		<p class="status">{i18n('No News has been posted yet')}</p>
 	{/if}
-{php} closetable(); {/php}
+{/panel}
 {/if}

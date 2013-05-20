@@ -38,7 +38,7 @@
 {else}
 
 	{if $page == 'main'}
-		{php} opentable('Przegląd treści'); {/php}
+		{panel='Przegląd treści'}
 			{if $data}
 				<p class="center"><a href="{url('controller=>', 'pages', 'action=>', 'categories')}" title="Kategorie treści">Wyświetl wszystkie kategorie</a></p>
 				<p>Na tej stronie znajdują się nastepujące rodzaje materiałów:</p>
@@ -53,14 +53,15 @@
 			{else}
 				Brak materiałów na stronie
 			{/if}
-		{php} closetable(); {/php}
+		{/panel}
 	{elseif $page == 'type'}
-		{php} opentable('Nawigacja'); {/php}
+		{panel='Nawigacja'}
 		<p>Jesteś tutaj: <a href="{url()}" title="Materiały na stronie">Materiały na stronie</a> &raquo; {$type} &raquo; Kategorie treści wybranego typu</p>
-		{php} closetable(); {/php}
+		{/panel}
 
 
 			{if $data}
+				{* Do przerobienia *}
 				{php} $i = 0; {/php}
 				{section=data}
 					{php} opentable('Kategoria &raquo; '.$this->data['data'][$i]['name']); {/php}
@@ -72,17 +73,19 @@
 
 				{/section}
 			{else}
-				{php} opentable('Kategorie treści'); {/php}
+				{panel='Kategorie treści'}
 					Brak materiałów dla tego typu treści
-				{php} closetable(); {/php}
+				{/panel}
 			{/if}
+		{* Skąd to się to wzięło? *}
 		{php} closetable(); {/php}
 	{elseif $page == 'category'}
-		{php} opentable('Nawigacja'); {/php}
+		{panel='Nawigacja'}
 		<p>Jesteś tutaj: <a href="{url()}" title="Materiały na stronie">Materiały na stronie</a> &raquo; <a href="{$type.link}" title="{$type.name}">{$type.name}</a> &raquo; Materiały w kategorii: {$category}</p>
-		{php} closetable(); {/php}
+		{/panel}
 
 			{if $data}
+				{* Do przerobienia *}
 				{php} $i = 0; {/php}
 				{section=data}
 					{php} opentable('Materiał &raquo; '.$this->data['data'][$i]['title']); {/php}
@@ -94,14 +97,15 @@
 					{php} $i++; closetable(); {/php}
 				{/section}
 			{else}
+				{* Do przerobienia *}
 				{php} opentable('Materiały w kategorii '.$this->data['category']); {/php}
 					Brak materiałów w tej kategorii
 				{php} closetable(); {/php}
 			{/if}
 	{elseif $page == 'categories'}
-		{php} opentable('Nawigacja'); {/php}
+		{panel='Nawigacja'}
 		<p>Jesteś tutaj: <a href="{url()}" title="Materiały na stronie">Materiały na stronie</a> &raquo; Przeglądana kategoria: {$category}</p>
-		{php} closetable(); {/php}
+		{/panel}
 
 			{if $data}
 				{php} $i = 0; {/php}
@@ -120,9 +124,9 @@
 				{php} closetable(); {/php}
 			{/if}
 	{elseif $page == 'categories_list'}
-		{php} opentable('Nawigacja'); {/php}
+		{panel='Nawigacja'}
 		<p>Jesteś tutaj: <a href="{url()}" title="Materiały na stronie">Materiały na stronie</a> &raquo; Przegląd kategorii</p>
-		{php} closetable(); {/php}
+		{/panel}
 
 			{if $data}
 				{php} $i = 0; {/php}
@@ -140,9 +144,9 @@
 				{php} closetable(); {/php}
 			{/if}
 	{elseif $page == 'entry'}
-		{php} opentable('Nawigacja'); {/php}
+		{panel='Nawigacja'}
 		<p>Jesteś tutaj: <a href="{url()}" title="Materiały na stronie">Materiały na stronie</a> &raquo; <a href="{$type.url}" title="{$type.name}">{$type.name}</a> &raquo; Czytasz: {$entry}</p>
-		{php} closetable(); {/php}
+		{/panel}
 
 		{php} opentable($this->data['data']['title']); {/php}
 			<div class="margin-b-10">

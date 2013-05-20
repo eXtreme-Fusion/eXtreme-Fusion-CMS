@@ -33,7 +33,7 @@
 +--------------------------------------------------------*/
 *}
 
-	{php} opentable(__('News')); {/php}
+	{panel=i18n('News')}
 		{if $news}
 			{section=news}
 				<article class="news dark border_top_other">
@@ -71,5 +71,4 @@
 	{else}
 		<p class="status">{i18n('No News has been posted yet')}</p>
 	{/if}
-{php} closetable(); {/php}
-
+{/panel}
