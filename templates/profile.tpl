@@ -1,5 +1,5 @@
 {if $profile}
-    {php} opentable(__('Member Profile')) {/php}
+    {panel=i18n('Member Profile')}
         <div id="profile" class="dark">
             <div class="profile_avatar">
                 <img src="{$user.avatar}" alt="Avatar" class="light border_light">
@@ -82,10 +82,10 @@
             {/if}
         {/section}
 
-    {php} closetable() {/php}
+    {/panel}
     
     {if $points}
-        {php} opentable('Punktacja - admin') {/php}
+        {panel='Punktacja - admin'}
         <div class="tbl">
             <form id="This" action="{$URL_REQUEST}" method="post">
                 <h4>Dodaj punkty użytkownikowi</h4>
@@ -127,10 +127,10 @@
                 </div>
             </form>
         </div>
-        {php} closetable() {/php}
+        {/panel}
     {/if}
 {else}
-    {php} opentable(__('Error 404')) {/php}
+    {panel=i18n('Error 404')}
         <p class="status">{i18n('Nie znaleziono profilu.')}</p>
-    {php} closetable() {/php}
+    {/panel}
 {/if}
