@@ -35,8 +35,8 @@
 
 {panel=i18n('Rules')}
 	{if $license_agreement}
-		{$license_agreement}
+	{$license_agreement}
 	{else}
-		<div class="error">{i18n('The Rules has not been written yet.')}</div>
+	<div class="error">{i18n('The Rules has not been written yet.')}</div>
 	{/if}
 {/panel}
