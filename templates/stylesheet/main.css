@@ -40,19 +40,39 @@ table td {
 }
 
 // Formularze
-.formField, .formLabel
-{
+.formField,
+.formLabel {
 	float:left;
 }
 
 .formLabel {
 	width:30%;
+	padding:0;
+}
+
+.formLabel label {
+	line-height:45px;
+}
+
+.formField .uploader,
+.formField .selector {
+	margin:5px 0;
+}
+
+.formField {
+	line-height:32px;
+}
+
+.formField label {
+	display:inline-block;
+	margin-top:8px;
+	line-height:10px;
 }
 
 .formLabel small {
-	margin-right: 0;
-	padding-right: 0;
-	border-right: none;
+	margin:-10px 0 2px;
+	padding-right:0;
+	border-right:none;
 }
 
 /* Zewnętrzene */

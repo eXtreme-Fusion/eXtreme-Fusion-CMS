@@ -107,10 +107,11 @@ h4 {
 
 input[type=submit], 
 .button {
+	min-height: 25px;
+	border: 1px solid #77A600;
+	color: #272727;
 	background: url(../images/button_bg.png) repeat-x;
-    border: 1px solid #77A600;
-    color: #272727;
-	}
+}
 	
 input[type=submit]:hover, 
 .button:hover {background-position: 0 -40px; color: #373738;}

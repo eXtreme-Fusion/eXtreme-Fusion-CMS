@@ -1,11 +1,11 @@
 {php} opentable(__('Wyszukiwarka')) {/php}
-	<form id="This" action="{$URL_REQUEST}" method="post" />
+	<form action="{$URL_REQUEST}" method="post" />
 		<div class="tbl1">
 			<div class="formLabel sep_1 grid_3"><label for="search_text">{i18n('Wpisz szukaną frazę:')}</label></div>
 			<div class="formField grid_7"><input type="text" name="search_text" value="{$search_text}" id="search_text" /></div>
 		</div>
 		<div class="tbl2">
-			<div class="formLabel sep_1 grid_3">{i18n('Miejsce wyszukiwania:')}</div>
+			<div class="formLabel sep_1 grid_3"><label>{i18n('Miejsce wyszukiwania:')}</label></div>
 			<div class="formField grid_7">
 				<label for="news"><input type="radio" id="news" name="search_type" value="news"{if $search_type == "news"} checked="checked"{/if} />{i18n('Newsy')}</label>
 				<label for="users"><input type="radio" id="users" name="search_type" value="users"{if $search_type == "users"} checked="checked"{/if} />{i18n('Użytkownicy')}</label>
@@ -13,12 +13,9 @@
 				<label for="all"><input type="radio" id="all" name="search_type" value="all"{if $search_type == "all"} checked="checked"{/if} />{i18n('Cała strona')}</label>
 			</div>
 		</div>
-
-		<div class="tbl Buttons">
-			<div class="center grid_2">
-				<input type="hidden" name="search" value="yes" />
-				<span id="SendForm_This" class="save"><strong>{i18n('Search')}</strong></span>
-			</div>
+		<div class="tbl center">
+			<input type="hidden" name="search" value="yes" />
+			<input type="submit" name="save" class="button" value="{i18n('Search')}">
 		</div>
 	</form>
 
