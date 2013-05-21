@@ -278,15 +278,17 @@ class Request
 		return new Edit($array);
 	}
 
-	public function redirect($file, array $params = array())
-	{
+	public function redirect($file, array $params = array(), $lonely = '')
+	{	
+		$lonely = (array) $lonely;
+		
 		if ($params)
 		{
-			$params = '?'.http_build_query($params);
+			$params = '?'.http_build_query($params).($lonely ? '&'.implode('&', $lonely) : '');
 		}
 		else
 		{
-			$params = '';
+			$params = $lonely ? '?'.implode('&', $lonely) : '';
 		}
 
 		header('Location: '.$file.$params);

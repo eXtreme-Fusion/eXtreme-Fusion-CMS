@@ -27,9 +27,9 @@ return array(
 	'Additional informations' => 'Dodatkowe informacje',
 	'Administration options' => 'Opcje administracyjne',
 	'Adding an user' => 'Dodawanie użytkownika',
-	
-	
-	
+
+
+
 	//Logs
 	'User account has been edited.' => 'Konto użytkownika zostało edytowane.',
 	'User account has been deleted.' => 'Konto użytkownika zostało usunięte.',
@@ -86,7 +86,7 @@ return array(
 	'Hidden users' => 'Użytkownicy z ustawionym statusem <em>Ukryty</em> nie będą wyświetlani w liście użytkowników online.<br />Żeby przywrócić użytkownika w grono widocznych wystarczy kliknąć przycisk <em>Przywróć</em>.',
 	'On this page there are displayed active users and administrators.' => 'Na tej podstronie wyświetlani są wszyscy aktywni użytkownicy i administratorzy.',
 
-	
+
 	//Types
 	'Active' => 'Aktywne',
 	'Deactivated' => 'Deaktywowane',
@@ -95,15 +95,16 @@ return array(
 	'Hidden' => 'Ukryte',
 	'E-mail verification required' => 'Oczekuje weryfikacji przez e-mail',
 	'Administrator activation required' => 'Oczekuje weryfikacji przez administratora',
-	
-	
+
+
 	// Create/Edit account
 	'Minimum 6 characters.' => 'Minimum 6 znaków.',
 	'E-mail address:' => 'Adres e-mail:',
 	'Theme:' => 'Skórka:',
 	'Birthdate:' => 'Data urodzenia:',
 	'Default roles' => '<small>Domyślnie przypisane <em>Gość</em> i <em>Użytkownik</em></small>.',
-	
+	'Avatar requirements' => 'Wymagania maksymalne: :filesize KB, :width x :height px',
+
 	//Admin options
 	'Edit the account' => 'Edytuj konto',
 	'Ban the account' => 'Zablokuj konto',
@@ -113,8 +114,8 @@ return array(
 	'Hide the account' => 'Ukryj konto',
 	'Make the account visible' => 'Upublicznij konto',
 	'Delete the account' => 'Usuń konto',
-	
-	
+
+
 	// Message Error
 	'You must enter a username and e-mail.' => 'Musisz podać nazwę użytkownika oraz adres e-mail.',
 	'Username contains unsupported characters.' => 'Nazwa użytkownika zawiera nieobsługiwane znaki.',
@@ -123,7 +124,7 @@ return array(
 	'Provided an incorrect e-mail address.' => 'Podano nieprawidłowy adres e-mail.',
 	'Login is in use' => 'Podany login ('.(isset($_POST['username']) ? $_POST['username'] : '').') jest już w użyciu.',
 	'Email is in use' => 'Podany adres e-mail ('.(isset($_POST['email']) ? $_POST['email'] : '').') jest już w&nbsp;użyciu.',
-	
+
 	// Send e-Mail Message
 	'Welcome!' => 'Witaj!',
 	'Welcome :user!' => 'Witaj :user!',
@@ -156,5 +157,5 @@ return array(
 	'Subject:' => 'Temat wiadomości:',
 	'Message:' => 'Treść wiadomości:',
 	'Hide recipients?' => 'Ukryć odbiorców? <small>Odbiorcy nie będą widzieli do kogo został wysłany mail</small>',
-	
+
 );

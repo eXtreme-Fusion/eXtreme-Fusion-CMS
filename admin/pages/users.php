@@ -83,7 +83,7 @@ try
 				}
 				elseif ($_request->get('act')->show() === 'error4')
 				{
-					$_tpl->printMessage('error', __('Password contains incorrect characters.'));
+					$_tpl->printMessage('error', $_user->getAvatarErrorByCode($_request->get('code')->show()));
 				}
 				elseif ($_request->get('act')->show() === 'error5')
 				{
@@ -107,25 +107,21 @@ try
 						{
 							if ($_request->get('user')->show() === '1')
 							{
-								$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error'));
+								$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error'), 'edit');
 							}
 						}
 
 						if ($_request->post('username')->show() == NULL && $_request->post('user_email')->show() == NULL)
 						{
-							$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error1'));
+							$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error1'), 'edit');
 						}
 
 						$username = trim($_request->post('username')->show());
 
 						if ( ! $_user->validLogin($username))
 						{
-							$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error2'));
+							$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error2'), 'edit');
 						}
-
-
-
-						//todo: error4 dfo usuniecia
 
 						if ( ! $_user->validEmail($_request->post('user_email')->show()))
 						{
@@ -160,7 +156,10 @@ try
 
 						if ($_request->upload('avatar'))
 						{
-							$_user->saveNewAvatar($_request->get('user')->show(), $_request->files('avatar')->show());
+							if ( ! $_user->saveNewAvatar($_request->get('user')->show(), $_request->files('avatar')->show()))
+							{
+								$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error4', 'code' => $_user->getAvatarErrorCode()), 'edit');
+							}
 						}
 
 						$_fields = array();
@@ -189,7 +188,7 @@ try
 							$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'ok'));
 						}
 
-						$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'edit_error'));
+						$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'edit_error'), 'edit');
 					}
 
 					$data = $_pdo->getRow('SELECT * FROM [users] WHERE `id` = '.$_request->get('user')->show());
@@ -210,7 +209,10 @@ try
 					$_tpl->assignGroup(array(
 						'user' => $user,
 						'theme_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'themes', array('templates'), TRUE, 'folders'), $data['theme']),
-						'locale_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'locale', array(), TRUE, 'folders'), $_user->get('lang'))
+						'locale_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'locale', array(), TRUE, 'folders'), $_user->get('lang')),
+						'avatar_filesize' => $_sett->get('avatar_filesize')/1024,
+						'avatar_height' => $_sett->get('avatar_height'),
+						'avatar_width' => $_sett->get('avatar_width')
 					));
 
 					$result = $_pdo->getData('SELECT `id`, `name`, `index`, `type`, `option` FROM [user_fields] ORDER by `id`');

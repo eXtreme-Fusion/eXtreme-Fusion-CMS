@@ -82,6 +82,10 @@ elseif (isset($status) && $status == 'error')
 	{
 		$_tpl->printMessage('error', __('Adres email zawiera niedozwolone znaki.'));
 	}
+	elseif (isset($status) && $status == 'error' && isset($error) && $error == 7 && $_route->getByID(3))
+	{
+		$_tpl->printMessage('error', $_user->getAvatarErrorByCode($_route->getByID(3)));
+	}
 	else
 	{
 		$_tpl->printMessage('error', __('Błąd podczas edycji konta'));
@@ -151,7 +155,10 @@ if ($_request->post('save')->show() && $_request->post('email')->show())
 
 		if ($_request->upload('avatar'))
 		{
-			$_user->saveNewAvatar($_user->get('id'), $_request->files('avatar')->show());
+			if ( ! $_user->saveNewAvatar($_user->get('id'), $_request->files('avatar')->show()))
+			{
+				HELP::redirect($_route->path(array('controller' => 'account', 'action' => 'error', '7', $_user->getAvatarErrorCode())));
+			}
 		}
 
 		$fields  = $_pdo->getData('SELECT * FROM [user_fields] WHERE `edit` = 0');

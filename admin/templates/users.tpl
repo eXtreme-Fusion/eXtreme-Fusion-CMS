@@ -147,11 +147,8 @@
 					</div>
 				</div>
 				<div class="tbl2">
-					
-						
-					
 					<div class="formLabel sep_1 grid_3">{if $user.avatar}<img src="{$ADDR_IMAGES}avatars/{$user.avatar}"><br />{/if}<label for="Avatar">{i18n('Avatar:')}</label></div>
-					<div class="formField grid_7"><input type="file" name="avatar" value="" id="Avatar" rows="1" /></div>
+					<div class="formField grid_7"><input type="file" name="avatar" value="" id="Avatar" rows="1" /><small>{i18n('Avatar requirements', array(':filesize' => $avatar_filesize, ':width' => $avatar_width, ':height' => $avatar_height))}</small></div>
 				</div>
 				<div class="tbl1">
 					<div class="formLabel sep_1 grid_3">{i18n('Theme')}:</div>
@@ -164,7 +161,7 @@
 						</select>
 					</div>
 				</div>
-				
+
 					<input type="hidden" name="roles[]" value="2" />
 					<input type="hidden" name="roles[]" value="3" />
 
@@ -240,7 +237,7 @@
 						</div>
 					{/section}
 				{/section}
-				
+
 				<div class="tbl Buttons">
 					<div class="grid_2 center button-l">
 						<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>

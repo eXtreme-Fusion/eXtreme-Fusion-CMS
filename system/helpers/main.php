@@ -135,6 +135,8 @@ Class HELP
 		return $string;
 	}
 
+
+
 	public static function cleanSelectOptions($data)
 	{
 		// Rzutowanie typów w celu konwersji stringa na tablicę.
@@ -186,6 +188,13 @@ Class HELP
 
 			return $time/(60*60*24);
 		}
+	}
+
+	// Zwraca tę część stringa, która wystąpi przed $needle.
+	public static function strstr_before($haystack, $needle) {
+		$haystack = strrev($haystack);
+		$haystack = strrev(strstr($haystack, '.'));
+		return substr($haystack, 0, -1);
 	}
 
 	public static function truncate($data, $limit = 20)
@@ -450,19 +459,19 @@ Class HELP
 	{
 		if (strpos($email, "@"))
 		{
-			$character_set = '+-.0123456789@ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz'; 
-			$key = str_shuffle($character_set); 
-			$cipher_text = ''; 
-			$id = 'e'.rand(1,999999999); 
+			$character_set = '+-.0123456789@ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz';
+			$key = str_shuffle($character_set);
+			$cipher_text = '';
+			$id = 'e'.rand(1,999999999);
 			for ($i=0;$i<strlen($email);$i+=1)
-			$cipher_text.= $key[strpos($character_set, $email[$i])]; 
-			$script = 'var a="'.$key.'";var b=a.split("").sort().join("");var c="'.$cipher_text.'";var d="";'; 
-			$script.= 'for(var e=0;e<c.length;e++)d+=b.charAt(a.indexOf(c.charAt(e)));'; 
-			$script.= 'document.getElementById("'.$id.'").innerHTML="<a href=\\"mailto:"+d+"\\">"+d+"</a>"'; 
-			$script = "eval(\"".str_replace(array("\\", '"'),array("\\\\", '\"'), $script)."\")"; 
-			$script = '<script type="text/javascript">/*<![CDATA[*/'.$script.'/*]]>*/</script>'; 
-	
-			return '<span id="'.$id.'">[N/A]</span>'.$script; 
+			$cipher_text.= $key[strpos($character_set, $email[$i])];
+			$script = 'var a="'.$key.'";var b=a.split("").sort().join("");var c="'.$cipher_text.'";var d="";';
+			$script.= 'for(var e=0;e<c.length;e++)d+=b.charAt(a.indexOf(c.charAt(e)));';
+			$script.= 'document.getElementById("'.$id.'").innerHTML="<a href=\\"mailto:"+d+"\\">"+d+"</a>"';
+			$script = "eval(\"".str_replace(array("\\", '"'),array("\\\\", '\"'), $script)."\")";
+			$script = '<script type="text/javascript">/*<![CDATA[*/'.$script.'/*]]>*/</script>';
+
+			return '<span id="'.$id.'">[N/A]</span>'.$script;
 		}
 		else
 		{

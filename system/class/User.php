@@ -95,8 +95,11 @@ class User {
 	// Cache gości online
 	protected $_get_guests_online = NULL;
 
-	// Lista ID rekordów do usunięcia jako duplikaty // deprecated
-	//protected $_online_to_remove = array();
+	// Tablica z dozwolonymi rozszerzeniami zdjęć profilowych
+	protected $_avatar_extensions_allowed = array();
+
+	// Zawiera kod błędu zmiany zdjęcia profilowego
+	protected $_avatar_upload_status = array();
 
 	/**
 	 * Przypisuje zmiennym referencje do obiektów klas zewnętrznych
@@ -119,12 +122,12 @@ class User {
 		// Przed edycją należy przeczytać opis przy deklaracji zmiennej
 		$this->_cookie_life_time = time() + 60*60*24*31;
 
-		// Źródło?
+		// From php.net
 		if (filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP))
 		{
-			if (strpos($_SERVER['REMOTE_ADDR'], "."))
+			if (strpos($_SERVER['REMOTE_ADDR'], '.'))
 			{
-				if (strpos($_SERVER['REMOTE_ADDR'], ":") === FALSE)
+				if (strpos($_SERVER['REMOTE_ADDR'], ':') === FALSE)
 				{
 					// IPv4
 					$this->_ip_type = 4;
@@ -148,11 +151,13 @@ class User {
 				$this->_ip = $this->IPv6($_SERVER['REMOTE_ADDR'], 7);
 			}
 		}
+		//
 		else
 		{
 			throw new systemException('Twój adres IP: '.$_SERVER['REMOTE_ADDR'].' jest nie prawidłowy!!!');
 		}
 
+		$this->_avatar_extensions_allowed += array('gif', 'jpg', 'jpeg', 'png');
 	}
 
 	public function __destruct()
@@ -178,7 +183,7 @@ class User {
 		{
 			return System::detectBrowserLanguage(TRUE);
 		}
-		
+
 		return $this->_sett->get('locale');
 
 	}
@@ -303,7 +308,8 @@ class User {
 			$file['name'] = strtolower($file['name']);
 
 			$ext = substr(strstr($file['name'], '.'), 1);
-			$name = strstr($file['name'], '.', TRUE); // As of PHP 5.3.0
+			$name = HELP::strstr_before($file['name'], '.');
+
 			$info = getimagesize($file['tmp_name']);
 
 			if ($info)
@@ -312,53 +318,100 @@ class User {
 				{
 					if ($info[0] <= $this->_sett->get('avatar_width') && $info[1] <= $this->_sett->get('avatar_height'))
 					{
-						if (in_array($ext, $extensions_allowed = array('gif', 'jpg', 'jpeg', 'png')))
+						if (in_array($ext, $this->_avatar_extensions_allowed))
 						{
 							// Nowa nazwa pliku
 							$new_name = str_replace(' ', '-', $name).'-'.$id.'-.'.$ext;
 							// Nowa nazwa pliku wraz ze ścieżką
 							$new_path_name = DIR_IMAGES.'avatars'.DS.$new_name;
 
-							if (! file_exists($new_path_name) || ! $check_exists)
+							if (! $check_exists || ! file_exists($new_path_name))
 							{
 								if (move_uploaded_file($file['tmp_name'], $new_path_name))
 								{
 									if ($delete_file)
-									{	
+									{
 										$this->delAvatar($id, FALSE);
 									}
-									
+
 									return $this->updateAvatar($new_name, $id);
 								}
 
 								unlink($file['tmp_name']);
-								return FALSE;
+								$this->_avatar_upload_status[] = 'upload_error';
 							}
 							else
 							{
-								throw new userException(__('Plik o podanej nazwie już istnieje.'));
+								$this->_avatar_upload_status[] = 'file_error';
 							}
 						}
 						else
 						{
-							throw new userException(__('You must upload file with one of the following extensions: :extensions', array(':extensions' => implode(', ', $extensions_allowed))));
+							$this->_avatar_upload_status[] = 'extension_error';
 						}
 					}
 					else
 					{
-						throw new userException(__('Rozmiary obrazka są nieprawidłowe. Dopuszczalna rozmiary: :width x :height px', array(':width' => $this->_sett->get('avatar_width'), ':height' => $this->_sett->get('avatar_height'))));
+						$this->_avatar_upload_status[] = 'dimensions_error';
 					}
 				}
 				else
 				{
-					throw new userException(__('The uploaded image has got to large file size.'));
+					$this->_avatar_upload_status[] = 'filesize_error';
 				}
 			}
 			else
 			{
-				throw new userException(__('The uploaded file seems not to be an image.'));
+				$this->_avatar_upload_status[] = 'type_error';
 			}
 		}
+
+		return FALSE;
+	}
+
+	protected function getAvatarErrorStatus()
+	{
+	
+	
+
+		return array(
+			'type_error' => __('The avatar seems not to be an image.'),
+			'filesize_error' => __('The avatar has got too large file size.'),
+			'dimensions_error' => __('The avatar has got too large dimensions.'),
+			'extension_error' => __('The avatar has not got an extension from this set: :extensions.', array(':extensions' => implode(', ', $this->_avatar_extensions_allowed))),
+			'file_error' => __('The avatar with that name already exists.'),
+			'upload_error' => __('There was an error during the avatar updating.')
+		);
+	}
+
+	// Status jest pobierany z tablicy, gdyż może być kilka avatarów dodawanych na jednej stronie
+	public function getAvatarError($key = 0, $remove = TRUE)
+	{
+		$status = $this->getAvatarErrorStatus();
+
+		if (isset($this->_avatar_upload_status[$key]))
+		{
+			$status = $status[$this->_avatar_upload_status[$key]];
+			if ($remove)
+			{
+				HELP::arrayRemoveElement($key, $this->_avatar_upload_status);
+			}
+
+			return $status;
+		}
+
+		return '';
+	}
+
+	public function getAvatarErrorCode($key = 0)
+	{
+		return isset($this->_avatar_upload_status[$key]) ? $this->_avatar_upload_status[$key] : '';
+	}
+
+	public function getAvatarErrorByCode($key)
+	{
+		$status = $this->getAvatarErrorStatus();
+		return isset($status[$key]) ? $status[$key] : '';
 	}
 
 	// Aktualizuje avatar użytkownika w bazie.
@@ -384,12 +437,12 @@ class User {
 			{
 				unlink(DIR_IMAGES.'avatars'.DS.$this->get('avatar'));
 			}
-			
+
 			if ($update)
 			{
 				return $this->updateAvatar('', $this->get('id'));
 			}
-			
+
 			return TRUE;
 		}
 		elseif (isNum($id)) // Usuwa avatar użytkownika o podanym ID
@@ -405,7 +458,7 @@ class User {
 			{
 				return $this->updateAvatar('', $id);
 			}
-			
+
 			return TRUE;
 		}
 
@@ -789,7 +842,7 @@ class User {
 			$role = $this->_pdo->getRow('SELECT `format` FROM [groups] WHERE `id` = :role', array(
 				array(':role', $role, PDO::PARAM_STR)
 			));
-			
+
 			return str_replace('{username}', $username, $role['format']);
 		}
 		else
@@ -1300,18 +1353,18 @@ class User {
 
 		return $data;
 	}
-	
+
 	public function convertRoles($data)
 	{
 		$roles = array();
 		if($uns = unserialize($data))
-		{	
+		{
 			foreach($uns as $row)
 			{
 				$roles[] = (string) $row;
 			}
 		}
-		
+
 		return $roles;
 	}
 

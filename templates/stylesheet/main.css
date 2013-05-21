@@ -69,7 +69,7 @@ table td {
 	line-height:10px;
 }
 
-.formLabel small {
+.formLabel small, .formField small  {
 	margin:-10px 0 2px;
 	padding-right:0;
 	border-right:none;
