@@ -31,14 +31,14 @@ return array(
 
 
 	//Logs
-	'User account has been edited.' => 'Konto użytkownika zostało edytowane.',
+	'User account has been edited.' => 'Konto użytkownika zostało zaktualizowane.',
 	'User account has been deleted.' => 'Konto użytkownika zostało usunięte.',
 	'User account has been hidden.' => 'Konto użytkownika zostało ukryte.',
 	'User account has been activated.' => 'Konto użytkownika zostało aktywowane.',
 	'User account has been deactivated.' => 'Konto użytkownika zostało deaktywowane.',
 	'User account has been banned.' => 'Konto użytkownika zostało zbanowane.',
 	'New user account has been added.' => 'Nowe konto użytkownika zostało dodane.',
-	'Error! User account has not been edited.' => 'Wystąpił błąd! Konto użytkownika nie zostało edytowane.',
+	'Error! User account has not been edited.' => 'Wystąpił błąd! Konto użytkownika nie zostało zaktualizowane.',
 	'Error! User account has not been deleted.' => 'Wystąpił błąd! Konto użytkownika nie zostało usunięte.',
 	'Error! User account has not been hidden.' => 'Wystąpił błąd! Konto użytkownika nie zostało ukryte.',
 	'Error! User account has not been activated.' => 'Wystąpił błąd! Konto użytkownika nie zostało aktywowane.',
