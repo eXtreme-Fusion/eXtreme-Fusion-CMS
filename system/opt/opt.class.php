@@ -1204,8 +1204,25 @@
 					}
 				}
 				closedir($dir);
-				file_put_contents($this -> plugins.'plugins.php', '<'."?php\n".$code.'?'.'>');
-				file_put_contents($this -> plugins.'compile.php', '<'."?php\n".$compileCode.'?'.'>');
+				if (file_exists($this -> plugins.'plugins.php'))
+				{
+					file_put_contents($this -> plugins.'plugins.php', '<'."?php\n".$code.'?'.'>');
+				}
+				else
+				{
+					touch($this -> plugins.'plugins.php');
+					file_put_contents($this -> plugins.'plugins.php', '<'."?php\n".$code.'?'.'>');
+					
+				}
+				if (file_exists($this -> plugins.'compile.php'))
+				{
+					file_put_contents($this -> plugins.'compile.php', '<'."?php\n".$compileCode.'?'.'>');
+				}
+				else
+				{
+					touch($this -> plugins.'compile.php');
+					file_put_contents($this -> plugins.'compile.php', '<'."?php\n".$compileCode.'?'.'>');
+				}
 				eval($code);
 			}
 			return true;
