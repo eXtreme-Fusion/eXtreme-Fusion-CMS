@@ -42,6 +42,7 @@ class Parser extends optClass
 	{
 		$this->plugins = OPT_DIR.'plugins'.DS;
 		$this->gzipCompression = FALSE;
+		$this->registerInstruction('optTheme');
 		$this->registerFunction('i18n', 'Locale');
 		if (function_exists('optUrl'))
 		{
@@ -216,6 +217,7 @@ class pageNavParser extends optClass
 	{
 		$this->plugins = OPT_DIR.'plugins'.DS;
 		$this->gzipCompression = FALSE;
+		$this->registerInstruction('optTheme');
 		$this->registerFunction('i18n', 'Locale');
 		$this->setCompilePrefix('page_nav_');
 		if (function_exists('optUrl'))

@@ -33,7 +33,7 @@
 +--------------------------------------------------------*/
 *}
 
-{php} opentable(__('Messages')) {/php}
+{panel=i18n('Messages')}
 
 {if $section == 'overview'}
 	<div id="messages_page">
@@ -186,4 +186,4 @@
 	<p class="status">{i18n('Nie ma takiej podstrony.')}</p>
 {/if}
 
-{php} closetable() {/php}
+{/panel}

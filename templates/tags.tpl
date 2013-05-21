@@ -34,7 +34,7 @@
 *}
 
 {if $tag}
-	{php} opentable(__('Materiały zawierające słowo kluczowe <span class="italic">:tagTitle</span>', array(':tagTitle' => $this->data['tag_name']))) {/php}
+	{panel=i18n('Materiały zawierające słowo kluczowe <span class="italic">:tagTitle</span>', array(':tagTitle' => $this->data['tag_name']))}
 		<p class="tag_top dark text_dark">
 			<a href="{$url_tag}">Słowa kluczowe</a> <img src="{$THEME_IMAGES}bullet.png" alt=""> <strong>{$tag_name}</strong> ({$tag_frequency})
 		</p>
@@ -44,9 +44,9 @@
 		{/section}
 		</ul>
 		<a href="{$url_tag}" class="button">Wróć do listy słów kluczowych</a>
-	{php} closetable() {/php}
+	{/panel}
 {elseif $tags}
-	{php} opentable(__('Lista słów kluczowych')) {/php}
+	{panel=i18n('Lista słów kluczowych')}
 		<div class="tag_cloud">
 			<ul>
 				{section=tags}
@@ -54,9 +54,9 @@
 				{/section}
 			</ul>
 		</div>
-	{php} closetable() {/php}
+	{/panel}
 {else}
-	{php} opentable(__('Słowa kluczowe')) {/php}	
+	{panel=i18n('Słowa kluczowe')}
 		<p class="status">{i18n('Brak utworzonych słów kluczowych')}</p>
-	{php} closetable() {/php}
+	{/panel}
 {/if}

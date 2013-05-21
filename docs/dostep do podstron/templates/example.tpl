@@ -1,3 +1,3 @@
-{php} opentable('Documentation &raquo; Access to sub-pages'); {/php}
+{panel='Documentation &raquo; Access to sub-pages'}
 	Welcome to page accessible only for logged in users ;)
-{php} closetable(); {/php}
+{/panel}
