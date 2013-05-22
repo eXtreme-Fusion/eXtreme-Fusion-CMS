@@ -1,5 +1,6 @@
 /.htaccess
-/upload/.gitignore
+/upload/*
+/cache/*
 /config.php
 /system/opt/plugins/plugins.php
 /system/opt/plugins/compile.php
