@@ -278,10 +278,10 @@ class Request
 		return new Edit($array);
 	}
 
-	public function redirect($file, array $params = array(), $lonely = '')
+	public function redirect($file, array $params = array(), $lonely = NULL)
 	{	
 		$lonely = (array) $lonely;
-		
+
 		if ($params)
 		{
 			$params = '?'.http_build_query($params).($lonely ? '&'.implode('&', $lonely) : '');
