@@ -103,92 +103,146 @@ try
 					$action = 'edit';
 					if ($_request->post('save')->show())
 					{
+						$error = FALSE;
 						if ($_user->get('id') !== '1')
 						{
 							if ($_request->get('user')->show() === '1')
 							{
-								$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error'), 'edit');
+								$_tpl->printMessage('error', __('This action can not be done for user with ID 1.'));
+								$error = TRUE;
+								//$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error'), 'edit');
 							}
 						}
 
-						if ($_request->post('username')->show() == NULL && $_request->post('user_email')->show() == NULL)
+						if (! $_request->post('username')->show() && ! $_request->post('user_email')->show())
 						{
-							$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error1'), 'edit');
+							$_tpl->printMessage('error', __('Error! User name and e-mail fields are emtpy.'));
+							$error = TRUE;
+							//$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error1'), 'edit');
 						}
 
 						$username = trim($_request->post('username')->show());
 
-						if ( ! $_user->validLogin($username))
+						if ($username !== $_user->getByID($_request->get('user')->show(), 'username'))
 						{
-							$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error2'), 'edit');
+							if ( ! $_user->validLogin($username))
+							{
+								$_tpl->printMessage('error', __('User name contains incorrect characters.'));
+								$error = TRUE;
+								//$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error2'), 'edit');
+							}
+							else
+							{
+								// Sprawdzanie dostępności nazwy użytkownika
+								if (! $_user->newName($username))
+								{
+									// TODO: The username
+									$_tpl->printMessage('error', __('This user name is already in use.'));
+									$error = TRUE;
+								}
+								else
+								{
+									$change_username = TRUE;
+								}
+							}
 						}
 
-						if ( ! $_user->validEmail($_request->post('user_email')->show()))
+						if ($_request->post('user_email')->show() !== $_user->getByID($_request->get('user')->show(), 'email'))
 						{
-							$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error5'));
+							if ( ! $_user->validEmail($_request->post('user_email')->show()))
+							{
+								$_tpl->printMessage('error', __('Incorrect e-mail address.'));
+								$error = TRUE;
+								//$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error5'));
+							}
+							else
+							{
+								// Sprawdzanie dostępności nazwy użytkownika
+								if (! $_user->newEmail($_request->post('user_email')->show()))
+								{
+									// TODO: The username
+									$_tpl->printMessage('error', __('This email address is already in use.'));
+									$error = TRUE;
+								}
+								else
+								{
+									$change_email = TRUE;
+								}
+							}
 						}
 
 						if ($_request->post('user_pass')->show() !== '' || $_request->post('user_pass2')->show() !== '')
 						{
 							if (! $_user->validPassword($_request->post('user_pass')->show(), $_request->post('user_pass2')->show()))
 							{
-								$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error3'));
+								$_tpl->printMessage('error', __('Passwords do not match.'));
+								$error = TRUE;
+								//$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error3'));
 							}
-							else
-							{
-								$_user->changePass($_request->get('user')->show(), $_request->post('user_pass')->show(), $_user->getByID($_request->get('user')->show(), 'password'), $_request->post('user_pass2')->show());
-							}
+
+							$change_password = TRUE;
 						}
 
-						if ($username !== $_user->getByID($_request->get('user')->show(), 'username'))
-						{
-							$_user->newName($username, $_request->get('user')->show());
-						}
-
-						if ($_request->post('user_email')->show() !== $_user->getByID($_request->get('user')->show(), 'email'))
-						{
-							$_user->newEmail($_request->post('user_email')->show(), $_request->get('user')->show());
-						}
-
-						$role = $_request->post('roles')->show();
-						asort ($role);
-						$_user->setRoles($role, $_request->post('role')->show(), $_request->get('user')->show());
-
-						if ($_request->upload('avatar'))
+						if (! $error && $_request->upload('avatar'))
 						{
 							if ( ! $_user->saveNewAvatar($_request->get('user')->show(), $_request->files('avatar')->show()))
 							{
-								$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error4', 'code' => $_user->getAvatarErrorCode()), 'edit');
+								$_tpl->printMessage('error', $_user->getAvatarErrorByCode($_request->get('code')->show()));
+								$error = TRUE;
+								//$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error4', 'code' => $_user->getAvatarErrorCode()), 'edit');
 							}
 						}
 
-						$_fields = array();
-
-						if ($fields = $_pdo->getData('SELECT * FROM [user_fields]'))
+						// ! $error są rodzielone, dlatego by w przypadku błędu
+						// przy aktualizacji zdjęcia profilowego, nie wykonywać dalszego kodu.
+						if (! $error)
 						{
-							foreach($fields as $field)
+							if (isset($change_username))
 							{
-								$key   = $field['index'];
-								$value = $_request->post($key)->show();
-
-								$_fields[$key] = $value;
+								$_user->newName($username, $_request->get('user')->show());
 							}
-						}
 
-						$count = $_user->update($_request->get('user')->show(), array(
-							'hide_email' => $_request->post('hide_email')->isNum(TRUE),
-							'theme'      => $_request->post('theme_set')->show(),
-							'lang'       => $_request->post('language')->show(),
-						), $_fields);
+							if (isset($change_email))
+							{
+								$_user->newEmail($_request->post('user_email')->show(), $_request->get('user')->show());
+							}
 
-						if ($count)
-						{
+							if (isset($change_password))
+							{
+								$_user->changePass($_request->get('user')->show(), $_request->post('user_pass')->show(), $_user->getByID($_request->get('user')->show(), 'password'), $_request->post('user_pass2')->show());
+							}
+
+							$role = $_request->post('roles')->show();
+							asort($role);
+							$_user->setRoles($role, $_request->post('role')->show(), $_request->get('user')->show());
+
+							$_fields = array();
+
+							if ($fields = $_pdo->getData('SELECT * FROM [user_fields]'))
+							{
+								foreach($fields as $field)
+								{
+									$key   = $field['index'];
+									$value = $_request->post($key)->show();
+
+									$_fields[$key] = $value;
+								}
+							}
+
+							$_user->update($_request->get('user')->show(), array(
+								'hide_email' => $_request->post('hide_email')->isNum(TRUE),
+								'theme'      => $_request->post('theme_set')->show(),
+								'lang'       => $_request->post('language')->show(),
+							), $_fields);
+
 							$_system->clearCache('profiles');
 							$_log->insertSuccess('edit', __('User :user has been edited.', array(':user' => $_user->getByID($_request->get('user')->show(), 'username'))));
 							$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'ok'));
 						}
-
-						$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'edit_error'), 'edit');
+						else
+						{
+							//TODO: Przesyłanie danych z POST z powrotem do formularza
+						}
 					}
 
 					$data = $_pdo->getRow('SELECT * FROM [users] WHERE `id` = '.$_request->get('user')->show());

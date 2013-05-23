@@ -202,8 +202,10 @@ class User {
 				{
 					return $this->update($id, array('username' => $username));
 				}
+
 				return TRUE;
 			}
+
 			return FALSE;
 		}
 
