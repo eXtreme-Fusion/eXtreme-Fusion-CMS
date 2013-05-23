@@ -135,7 +135,7 @@ $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'notes_per_page', 
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'users_per_page', 'value' => 10));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'comments_per_page', 'value' => 11));
 //$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'flood_interval', 'value' => 15));
-$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'version', 'value' => 5.0));
+$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'version', 'value' => VERSION));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'notes', 'value' => __('')));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'loging', 'value' => serialize(array(
 	'site_normal_loging_time' => 60*60*5,			// 5h
@@ -233,7 +233,6 @@ $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUE
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('small', '8')");
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('code', '9')");
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('quote', '10')");
-$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."bbcodes (`name`, `order`) VALUES ('spo', '11')");
 
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (':)', 'smile.png', 'Smile')");
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."smileys (`code`, `image`, `text`) VALUES (';)', 'wink.png', 'Wink')");
@@ -341,7 +340,6 @@ $_pdo->exec("INSERT INTO `".$_dbconfig['prefix']."permissions` (`name`, `section
 	('admin.settings_logs', 1, '".__('Perm: admin settings_logs')."', 1),
 	('admin.navigations', 1, '".__('Perm: admin navigations')."', 1),
 	('admin.smileys', 1, '".__('Perm: admin smileys')."', 1),
-	('admin.submissions', 1, '".__('Perm: admin submissions')."', 1),
 	('admin.upgrade', 1, '".__('Perm: admin upgrade')."', 1),
 	('admin.user_fields', 1, '".__('Perm: admin user_fields')."', 1),
 	('admin.user_fields_cats', 1, '".__('Perm: admin user_fields_cats')."', 1),

@@ -36,6 +36,7 @@
 {panel=i18n('Rules')}
 	{if $license_agreement}
 	{$license_agreement}
+	<div class="right small">{i18n('Last updated rules:')} {$license_lastupdate}</div>
 	{else}
 	<div class="error">{i18n('The Rules has not been written yet.')}</div>
 	{/if}

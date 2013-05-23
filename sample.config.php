@@ -14,23 +14,7 @@
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
 | 
-**********************************************************
-                ORIGINALLY BASED ON
----------------------------------------------------------+
-| PHP-Fusion Content Management System
-| Copyright (C) 2002 - 2011 Nick Jones
-| http://www.php-fusion.co.uk/
-+--------------------------------------------------------+
-| Author: Nick Jones (Digitanium)
-+--------------------------------------------------------+
-| This program is released as free software under the
-| Affero GPL license. You can redistribute it and/or
-| modify it under the terms of this license which you
-| can read by viewing the included agpl.txt or online
-| at www.gnu.org/licenses/agpl.html. Removal of this
-| copyright header is strictly prohibited without
-| written permission from the original author(s).
-+--------------------------------------------------------*/
+**********************************************************/
 defined('DS') || define('DS', DIRECTORY_SEPARATOR);
 
 // Database
@@ -44,6 +28,15 @@ $_dbconfig = array(
 	'prefix'   => 'extreme_99939b3_',
 	'charset'  => 'utf8',
 	'version'  => 'eXtreme-Fusion CMS - Ninja Edition',
+);
+
+#Routing
+
+$_route = array(
+	//Change this to TRUE if your server has been configured to work with $_SERVER['PATH_INFO']
+    'custom_furl' => FALSE,
+	//Change this to TRUE if your server has got configured modRewrite
+    'custom_rewrite' => FALSE,
 );
 
 // Cookie && cache

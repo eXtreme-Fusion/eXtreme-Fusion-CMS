@@ -117,6 +117,10 @@ try
 							$DefaultPageNum = $i;
 							break;
 						}
+						else
+						{
+							$DefaultPageNum = 1;
+						}
 					}
 					$tpl->assign('Count', $page_links);
 					$tpl->assign('DefaultPageNum', $DefaultPageNum);

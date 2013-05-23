@@ -40,3 +40,4 @@ $theme = array(
 );
 
 $_tpl->assign('license_agreement', $_sett->get('license_agreement'));
+$_tpl->assign('license_lastupdate', HELP::showDate('longdate', $_sett->get('license_lastupdate')));
