@@ -371,9 +371,6 @@ class User {
 
 	protected function getAvatarErrorStatus()
 	{
-	
-	
-
 		return array(
 			'type_error' => __('The avatar seems not to be an image.'),
 			'filesize_error' => __('The avatar has got too large file size.'),
@@ -1687,7 +1684,7 @@ class User {
 		}
 	}
 
-	/** Kontrola logowania **/
+	/** Kontrola logowania **/ //- //TODO: potrzebne?
 
 	/**
 	 * Ustawia nie udaną próbę logowania
@@ -1727,7 +1724,6 @@ class User {
 	 {
 		foreach ($this->_pdo->getData('SELECT o.*, u.username FROM [users_online] o LEFT JOIN [users] u ON o.user_id = u.id ORDER BY o.last_activity DESC') as $user)
 		{
-			//if (in_array($))
 			$this->_online[] = $user;
 		}
 
@@ -1771,7 +1767,6 @@ class User {
 			}
 
 			$this->_get_users_online = $data;
-			//$this->cleanOnlineDuplicates();
 		}
 
 		return $this->_get_users_online;
@@ -1922,7 +1917,7 @@ class User {
 		return TRUE;
 	}
 
-	// Źródło?
+	// From php.net
 	private function IPv6($ip, $limit)
 	{
 		if (strpos($ip, "::") !== FALSE)

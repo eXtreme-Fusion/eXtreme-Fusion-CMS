@@ -15,9 +15,3 @@
 | written permission from the original author(s).
 | 
 **********************************************************/
-if ($_sett->get('cronjob_hour') < (time()-60*60*2))
-{
-	// Usuwanie niepotrzebnych wpisów z tabeli użytkowników online.
-	$_pdo->exec('DELETE FROM [users_online] WHERE `last_activity` < '.(time()-60*60*2));
-	$_sett->update(array('cronjob_hour' => time()));
-}
