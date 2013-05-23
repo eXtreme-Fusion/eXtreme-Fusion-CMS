@@ -648,9 +648,9 @@ try
 	elseif ($_request->get('page')->show() === 'add')
 	{
 		// Errory
-		if ($_request->get('page')->show() === 'add' && $_request->get('act')->show() === 'error')
+		/*if ($_request->get('page')->show() === 'add' && $_request->get('act')->show() === 'error')
 		{
-			$_tpl->printMessage('error', __('Error! There are empty fields in the form.'));
+			//$_tpl->printMessage('error', __('Error! There are empty fields in the form.'));
 		}
 		elseif ($_request->get('page')->show() === 'add' && $_request->get('act')->show() === 'error1')
 		{
@@ -662,11 +662,11 @@ try
 		}
 		elseif ($_request->get('page')->show() === 'add' && $_request->get('act')->show() === 'error3')
 		{
-			$_tpl->printMessage('error', __('Error! Password contains incorrect characters.'));
+
 		}
 		elseif ($_request->get('page')->show() === 'add' && $_request->get('act')->show() === 'error4')
 		{
-			$_tpl->printMessage('error', __('Error! Incorrect e-mail address.'));
+			$_tpl->printMessage('error', );
 		}
 		elseif ($_request->get('page')->show() === 'add' && $_request->get('act')->show() === 'error5')
 		{
@@ -679,59 +679,66 @@ try
 		elseif ($_request->get('page')->show() === 'add' && $_request->get('act')->show() === 'error7')
 		{
 			$_tpl->printMessage('error', __('Error! This e-mail address is banned.'));
-		}
+		}*/
 
 		if ($_request->post('create_account')->show())
 		{
-			if ($_request->post('username')->show() !== '' && $_request->post('user_pass')->trim() !== '' && $_request->post('user_email')->trim() !== '')
+		
+			$username = $_request->post('username')->trim();
+
+			if ( ! $_user->validLogin($username))
 			{
+				$_tpl->printMessage('error', __('Error! User name contains incorrect characters.'));
+				$error = TRUE;
+				//$_request->redirect(FILE_PATH, array('page' => 'add', 'act' => 'error1'));
+			}
+			elseif ( ! $_user->newName($username))
+			{
+				$_tpl->printMessage('error', __('Error! This user name is already in use.'));
+				$error = TRUE;
+				//$_request->redirect(FILE_PATH, array('page' => 'add', 'act' => 'error5'));
+			}
 
-				$username = $_request->post('username')->trim();
+			if ( ! $_user->validPassword($_request->post('user_pass')->show(), $_request->post('user_pass2')->show()))
+			{
+				$_tpl->printMessage('error', __('Error! Passwords do not match.'));
+				$error = TRUE;
+				//$_request->redirect(FILE_PATH, array('page' => 'add', 'act' => 'error2'));
+			}
 
-				if ( ! $_user->validLogin($username))
-				{
-					$_request->redirect(FILE_PATH, array('page' => 'add', 'act' => 'error1'));
-				}
+			if ( ! $_user->validEmail($_request->post('user_email')->show()))
+			{
+				$_tpl->printMessage('error', __('Error! Incorrect e-mail address.'));
+				$error = TRUE;
+				//$_request->redirect(FILE_PATH, array('page' => 'add', 'act' => 'error4'));
+			}
+			elseif ( ! $_user->newEmail($_request->post('user_email')->show()))
+			{
+				$_tpl->printMessage('error', __('Error! This e-mail address is already in use.'));
+				$error = TRUE;
+				//$_request->redirect(FILE_PATH, array('page' => 'add', 'act' => 'error6'));
+			}
 
-				if ( ! $_user->validPassword($_request->post('user_pass')->show(), $_request->post('user_pass2')->show()))
-				{
-					$_request->redirect(FILE_PATH, array('page' => 'add', 'act' => 'error2'));
-				}
+			$count = $_pdo->getMatchRowsCount('SELECT `id` FROM [blacklist] WHERE `email` = :email OR `email` = :domain',
+				array(
+					array(':email', $_request->post('user_email')->show(), PDO::PARAM_STR),
+					array(':domain', substr(strrchr($_request->post('user_email')->show(), "@"), 1), PDO::PARAM_STR)
+				)
+			);
 
-				//todo:error3 do usuniecia
-				if ( ! $_user->validEmail($_request->post('user_email')->show()))
-				{
-					$_request->redirect(FILE_PATH, array('page' => 'add', 'act' => 'error4'));
-				}
+			if ($count)
+			{
+				$_tpl->printMessage('error', __('Error! This e-mail address is banned.'));
+				$error = TRUE;
+				//$_request->redirect(FILE_PATH, array('page' => 'add', 'act' => 'error7'));
+			}
 
-				if ( ! $_user->newName($username))
-				{
-					$_request->redirect(FILE_PATH, array('page' => 'add', 'act' => 'error5'));
-				}
-
-				if ( ! $_user->newEmail($_request->post('user_email')->show()))
-				{
-					$_request->redirect(FILE_PATH, array('page' => 'add', 'act' => 'error6'));
-				}
-
-				$count = $_pdo->getMatchRowsCount('SELECT `id` FROM [blacklist] WHERE `email` = :email OR `email` = :domain',
-					array(
-						array(':email', $_request->post('user_email')->show(), PDO::PARAM_STR),
-						array(':domain', substr(strrchr($_request->post('user_email')->show(), "@"), 1), PDO::PARAM_STR)
-					)
-				);
-
-				if($count)
-				{
-					$_request->redirect(FILE_PATH, array('page' => 'add', 'act' => 'error7'));
-				}
-
+			if (! $error)
+			{
 				$salt = substr(sha512(uniqid(rand(), true)), 0, 5);
 				$password = sha512($salt.'^'.$_request->post('user_pass')->show());
 
-				$status = 0;
-				$valid = '';
-
+				$status = 0; $valid = '';
 				if ( ! $_request->post('active')->show())
 				{
 					if ($_sett->get('email_verification') === '1')
@@ -746,8 +753,8 @@ try
 					}
 				}
 
-				$role = $_request->post('roles')->show();
-				asort ($role);
+				$role = $_request->post('roles')->show(); asort ($role);
+				
 				$count = $_pdo->exec("INSERT INTO [users] (`username`, `password`, `salt`, `link`, `email`, `hide_email`, `valid`, `valid_code`, `offset`, `avatar`, `joined`, `lastvisit`, `ip`, `status`, `theme`, `role`, `roles`) VALUES (:username, :password, :salt, :link, :email, :hidemail, '1', :valid, '0', '', '".time()."', '0', '0.0.0.0', :status, 'Default', :role, :roles)",
 					array(
 						array(':username', $username, PDO::PARAM_STR),
@@ -763,12 +770,9 @@ try
 					)
 				);
 
-				$last_user_id = $_pdo->getField('SELECT `id` FROM [users] WHERE `username` = :user',
-					array(':user', $username, PDO::PARAM_STR)
-				);
+				$last_user_id = $_pdo->getField('SELECT `id` FROM [users] WHERE `username` = :user', array(':user', $username, PDO::PARAM_STR));
 
 				$_fields = array();
-
 				if ($fields = $_pdo->getData('SELECT * FROM [user_fields]'))
 				{
 					foreach($fields as $field)
@@ -780,7 +784,7 @@ try
 					}
 				}
 
-				$count = $_user->update($last_user_id, array(), $_fields);
+				$_user->update($last_user_id, array(), $_fields);
 
 				if ($_request->post('active')->show() !== 'yes' && $_sett->get('email_verification'))
 				{
@@ -800,17 +804,16 @@ try
 
 					$_mail->send($_request->post('user_email')->show(), $_sett->get('contact_email'), __('Account activation'), $message);
 				}
-
-				if ($count)
-				{
-					$_log->insertSuccess('add', $_user->get('username').__(' has created user account ').$username);
-					$_request->redirect(FILE_PATH, array('page' => 'users', 'act' => 'add', 'status' => 'ok'));
-				}
-
+				
+				$_log->insertSuccess('add', $_user->get('username').__(' has created user account ').$username);
+				$_request->redirect(FILE_PATH, array('page' => 'users', 'act' => 'add', 'status' => 'ok'));
+				
 				$_request->redirect(FILE_PATH, array('page' => 'users', 'act' => 'add', 'status' => 'error'));
+			}
+			else
+			{
 
 			}
-			$_request->redirect(FILE_PATH, array('page' => 'add', 'act' => 'error'));
 		}
 
 		$_tpl->assign('insight_groups', $_tpl->createSelectOpts($_user->getViewGroups(), NULL, TRUE));
