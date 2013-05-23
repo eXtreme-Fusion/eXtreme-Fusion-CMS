@@ -1,14 +1,7 @@
 <?php defined('EF5_SYSTEM') || exit;
-/*
-English Language Fileset
-Produced by Nick Jones (Digitanium)
-Email: digitanium@php-fusion.co.uk
-Web: http://www.php-fusion.co.uk
-*/
+
 return array(
-	'Charset' => 'UTF-8',
-	'xml_lang' => 'en',
-	// Function showCopyrights()
+	'html_charset' => 'UTF-8',
 	'Powered by :system' => 'Strona oparta na systemie CMS :system.<br />Copyright 2002-2013 <a href="http://php-fusion.co.uk/">PHP-Fusion</a>. Released as free software without warranties under <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">aGPL v3</a>.',
 	'Powered by :system under :license License' => 'Strona oparta na systemie CMS :system.<br />Copyright 2002-2013 <a href="http://php-fusion.co.uk/">PHP-Fusion</a>. Released as free software without warranties under <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">aGPL v3</a>.',
 );
