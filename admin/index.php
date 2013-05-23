@@ -13,7 +13,7 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
+|
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------+
@@ -43,14 +43,14 @@ try
 	{
 		$_request->redirect(ADDR_SITE);
 	}
-	
+
 	$tpl->assign('Action', $_request->get('action')->show());
-	
+
 	if ($_request->session(array('history', 'Page'))->show())
 	{
 		$tpl->assign('History', $_SESSION['history']);
 	}
-	
+
 	if ($_request->get('action')->show() === 'login')
     {
 		if ($_request->post('login')->show())
@@ -69,7 +69,7 @@ try
     else
     {
 		if ( ! $_user->hasPermission('admin.login'))
-		{//echo 8; exit;
+		{
 			$_user->adminLogout();
 			$_request->redirect(ADDR_ADMIN.'index.php', array('action' => 'login'));
 		}
@@ -78,6 +78,7 @@ try
 			$query = $_pdo->query('SELECT page, permissions FROM [admin]');
 			if ($query)
 			{
+				$page_links = array();
 				foreach($query as $data)
 				{
 					if ($_user->hasPermission($data['permissions']))
@@ -93,42 +94,17 @@ try
 					}
 				}
 
-				/*
-					Póki co moduł prywatnych wiadomości nie jest stworzony.
-					Więc bez sesnu pobierać te dane...
-
-					- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-					$GetMessages = $_pdo->getMatchRowsCount('SELECT `id` FROM [messages] WHERE `to` = :to AND `read`=0 AND `folder`=0', array(
-						array(':to', $_user->get('id'), PDO::PARAM_INT)
-					));
-
-					$tpl->assign('Messages', $GetMessages);
-				*/
-
-				$tpl->assign('UserID', $_user->get('id'));
-
-				if (isset($page_links))
+				if ($page_links)
 				{
-					for ($i = 1, $c = count($page_links); $i <= $c; $i++)
-					{
-						if (isset($page_links[$i]))
-						{
-							$DefaultPageNum = $i;
-							break;
-						}
-						else
-						{
-							$DefaultPageNum = 1;
-						}
-					}
 					$tpl->assign('Count', $page_links);
-					$tpl->assign('DefaultPageNum', $DefaultPageNum);
 				}
 				else
 				{
+					// TODO: przerobić na komunikat o braku uprawnień. Myślę, że można wyświetlić Panel admina.
 					HELP::redirect(ADDR_ADMIN.'index.php?action=login');
 				}
+				
+				$tpl->assign('UserID', $_user->get('id'));
 			}
 			else
 			{

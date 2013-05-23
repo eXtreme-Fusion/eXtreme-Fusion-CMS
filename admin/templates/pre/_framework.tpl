@@ -18,19 +18,21 @@
 		<script src="{$ADDR_ADMIN_JS}jquery.autoGrowInput.js"></script>
 		<script src="{$ADDR_ADMIN_JS}modules.js"></script>
 		<script src="{$ADDR_ADMIN_JS}_framework.js"></script>
+		{$History.Current}
 		<script>
 			{literal}
-				if (self != top) top.location.href = self.location.href;
 				$(function() {
 					$('#SessionExpire strong').countdown({until: '{/literal}{$SessionExpire}{literal}', onTick: highlightLast5, format: 'HMS', significant: 3});
 
 					{/literal}{if $History}{literal}
 						$('#mainFrame').attr('src', '{/literal}{$ADDR_SITE}{$History.Page}{literal}');
-						$("#Navigation ul").removeClass("current");
+						 $("#Navigation ul").removeClass("current");
 						{/literal}{if $History.Current}{literal}
 							$("#Navigation .page-"+{/literal}{$History.Current}{literal}).addClass('current');
 						{/literal}{/if}
-					{/if}{literal}
+					{else}{literal}
+						$("#Navigation ul:first").addClass('current');
+					{/literal}{/if}
 				});
 			{/literal}
 		</script>
