@@ -344,11 +344,11 @@ try
 
 		$check_arr = array(
 			DIR_SITE.'cache'.DS => FALSE,
-			DIR_SITE.'upload'.DS => FALSE,
-			DIR_SITE.'upload'.DS.'archives'.DS => FALSE,
-			DIR_SITE.'upload'.DS.'documents'.DS => FALSE,
-			DIR_SITE.'upload'.DS.'images'.DS => FALSE,
-			DIR_SITE.'upload'.DS.'movies'.DS => FALSE,
+			//DIR_SITE.'upload'.DS => FALSE,
+			//DIR_SITE.'upload'.DS.'archives'.DS => FALSE,
+			//DIR_SITE.'upload'.DS.'documents'.DS => FALSE,
+			//DIR_SITE.'upload'.DS.'images'.DS => FALSE,
+			//DIR_SITE.'upload'.DS.'movies'.DS => FALSE,
 			DIR_SITE.'system'.DS.'opt'.DS.'plugins'.DS => FALSE,
 			DIR_SITE.'templates'.DS.'images'.DS => FALSE,
 			//DIR_SITE.'templates'.DS.'images'.DS.'imagelist.js' => FALSE,

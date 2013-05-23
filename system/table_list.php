@@ -13,7 +13,7 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
+|
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------+
@@ -95,15 +95,15 @@ if ($tables)
 
 	if ($_system->detectBrowserLanguage() === 'pl')
 	{
-		throw new systemException('<div style="text-align:center"><p style="font-weight:bold">PL: Błąd! W bazie danych nie znaleziono poniższych, wymaganych tabel systemowych:</p><br /><p>'.implode(', ', $tables).'</p><br /> <p style="font-weight:bold">Dokonaj <a href="'.ADDR_SITE.'install/" title="eXtreme-Fusion 5 reinstallation">ponownej instalacji</a> systemu <a href="http://pl.extreme-fusion.org/" title="eXtreme-Fusion CMS Support">eXtreme-Fusion 5</a> lub przywróć kopię bazy danych.</p></div>');
+		throw new systemException('<div style="text-align:center"><p style="font-weight:bold">PL: Błąd! W bazie danych nie znaleziono poniższych, wymaganych tabel systemowych:</p><br /><p>'.implode(', ', $tables).'</p><br /> <p style="font-weight:bold">Dokonaj <a href="'.ADDR_SITE.'install/" title="eXtreme-Fusion 5 database error" rel="nofollow">ponownej instalacji</a> systemu <a href="http://pl.extreme-fusion.org/" title="eXtreme-Fusion CMS Support">eXtreme-Fusion 5</a> lub przywróć kopię bazy danych.</p></div>');
 	}
 	elseif ($_system->detectBrowserLanguage() === 'cz')
 	{
-		throw new systemException('<div style="text-align:center"><p style="font-weight:bold">CZ: Error! The following required database tables do not exists:</p><br /><p>'.implode(', ', $tables).'</p><br /> <p style="font-weight:bold">Dokonaj <a href="'.ADDR_SITE.'install/" title="eXtreme-Fusion 5 reinstallation">Make re-installation</a> of <a href="http://pl.extreme-fusion.org/" title="eXtreme-Fusion CMS Support">eXtreme-Fusion 5</a> or restore a copy of the database.</p></div>');
+		throw new systemException('<div style="text-align:center"><p style="font-weight:bold">CZ: Error! The following required database tables do not exists:</p><br /><p>'.implode(', ', $tables).'</p><br /> <p style="font-weight:bold"><a href="'.ADDR_SITE.'install/" title="eXtreme-Fusion 5 database error" rel="nofollow">Make reinstallation</a> of <a href="http://pl.extreme-fusion.org/" title="eXtreme-Fusion CMS Support">eXtreme-Fusion 5</a> or restore a copy of the database.</p></div>');
 	}
 	else
 	{
-		throw new systemException('<div style="text-align:center"><p style="font-weight:bold">EN: Error! The following required database tables do not exists:</p><br /><p>'.implode(', ', $tables).'</p><br /> <p style="font-weight:bold">Dokonaj <a href="'.ADDR_SITE.'install/" title="eXtreme-Fusion 5 reinstallation">Make re-installation</a> of <a href="http://pl.extreme-fusion.org/" title="eXtreme-Fusion CMS Support">eXtreme-Fusion 5</a> or restore a copy of the database.</p></div>');
+		throw new systemException('<div style="text-align:center"><p style="font-weight:bold">EN: Error! The following required database tables do not exists:</p><br /><p>'.implode(', ', $tables).'</p><br /> <p style="font-weight:bold"><a href="'.ADDR_SITE.'install/" title="eXtreme-Fusion 5 database error" rel="nofollow">Make reinstallation</a> of <a href="http://pl.extreme-fusion.org/" title="eXtreme-Fusion CMS Support">eXtreme-Fusion 5</a> or restore a copy of the database.</p></div>');
 	}
 
 	exit;
