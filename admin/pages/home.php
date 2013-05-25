@@ -13,7 +13,7 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
+|
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------+
@@ -42,16 +42,16 @@ try
 	require_once '../../config.php';
 	require DIR_SITE.'bootstrap.php';
 	require_once DIR_SYSTEM.'admincore.php';
-	
+
 	$_locale->load('home');
 
     if ( ! $_user->isLoggedIn())
     {
        $_request->redirect(ADDR_ADMIN.'index.php', array('action' => 'login'));
     }
-	
+
 	$_tpl = new Iframe;
-	
+
 	if ($_request->post('note_add_save')->show() === 'yes')
 	{
 		$count = $_pdo->getMatchRowsCount('
@@ -75,7 +75,7 @@ try
 			$_log->insertFail('add', __('Error! Note has not been added.'));
 			$_tpl->printMessage('error', __('Error! Note has not been added.'));
 		}
-		
+
 		$_tpl->assign('notes_log', TRUE);
 	}
 
@@ -89,15 +89,15 @@ try
         {
 			$_log->insertSuccess('delete', __('Note has been deleted.'));
 			$_tpl->printMessage('valid', __('Note has been deleted.'));
-			
+
         }
 		else
 		{
 			$_log->insertFail('delete', __('Error! Note has not been deleted.'));
 			$_tpl->printMessage('valid', __('Error! Note has not been deleted.'));
-			
+
 		}
-		
+
 		$_tpl->assign('notes_log', TRUE);
 	}
 

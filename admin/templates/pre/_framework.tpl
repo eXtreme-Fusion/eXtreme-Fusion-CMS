@@ -18,7 +18,6 @@
 		<script src="{$ADDR_ADMIN_JS}jquery.autoGrowInput.js"></script>
 		<script src="{$ADDR_ADMIN_JS}modules.js"></script>
 		<script src="{$ADDR_ADMIN_JS}_framework.js"></script>
-		{$History.Current}
 		<script>
 			{literal}
 				$(function() {

@@ -136,7 +136,7 @@
 					<div class="formField grid_7"><input type="password" name="user_pass2" id="password2" /></div>
 				</div>
 				<div class="tbl2">
-					<div class="formLabel sep_1 grid_3"><label for="email">{i18n('E-mail addess:')}</label></div>
+					<div class="formLabel sep_1 grid_3"><label for="email">{i18n('E-mail address:')}</label></div>
 					<div class="formField grid_7"><input type="text" name="user_email" value="{$user.email}" id="email" /></div>
 				</div>
 				<div class="tbl1">
@@ -148,7 +148,7 @@
 				</div>
 				<div class="tbl2">
 					<div class="formLabel sep_1 grid_3">{if $user.avatar}<img src="{$ADDR_IMAGES}avatars/{$user.avatar}"><br />{/if}<label for="Avatar">{i18n('Avatar:')}</label></div>
-					<div class="formField grid_7"><input type="file" name="avatar" value="" id="Avatar" rows="1" /><small>{i18n('Avatar requirements', array(':filesize' => $avatar_filesize, ':width' => $avatar_width, ':height' => $avatar_height))}</small></div>
+					<div class="formField grid_7"><input type="file" name="avatar" id="Avatar" rows="1" /><small>{i18n('Avatar requirements', array(':filesize' => $avatar_filesize, ':width' => $avatar_width, ':height' => $avatar_height))}</small></div>
 				</div>
 				<div class="tbl1">
 					<div class="formLabel sep_1 grid_3">{i18n('Theme')}:</div>
@@ -180,9 +180,9 @@
 				<div class="tbl1">
 					<div class="formLabel sep_1 grid_3"><label for="role">{i18n('Main role:')}</label></div>
 					<div class="formField grid_7">
-						<select name="role">
+						<select name="role" id="user_groups">
 							{section=insight_groups}
-								{if $insight_groups.value != 3}
+								{if $insight_groups.value}
 									<option value="{$insight_groups.value}"{if $insight_groups.selected} selected="selected"{/if}>{$insight_groups.display}</option>
 								{/if}
 							{/section}
@@ -208,19 +208,19 @@
 							<div class="formLabel sep_1 grid_3"><label for="{$fields.name}">{i18n($fields.name)}</label></div>
 							{if $fields.type == 1}
 								<div class="formField grid_7">
-									<input type="text" name="{$fields.index}" value="{if $fields.value}{$fields.value}{/if}" id="{$fields.name}" />
+									<input type="text" name="data[{$fields.index}]" value="{if $fields.value}{$fields.value}{/if}" id="{$fields.name}" />
 								</div>
 							{elseif $fields.type == 3}
 								<div class="formField grid_7">
-									<select name="{$fields.index}" class="textbox">
-										{foreach=$option; var}
+									<select name="data[{$fields.index}]" class="textbox">
+										{foreach=$fields.option; var}
 											<option value="{@var.value}"{if $fields.value == @var.value} selected="selected"{/if}>{@var.value}</option>
 										{/foreach}
 									</select>
 								</div>
 							{else}
 								<div class="formField grid_7">
-									<div><textarea name="{$fields.index}" id="{$fields.name}" rows="3" class="resize">{$fields.value}</textarea></div>
+									<div><textarea name="data[{$fields.index}]" id="{$fields.name}" rows="3" class="resize">{$fields.value}</textarea></div>
 									<div>
 										{section=bbcode}
 											<button type="button" onClick="addText('{$fields.index}', '[{$bbcode.value}]', '[/{$bbcode.value}]', 'account');"><img src="{$bbcode.image}" title="{$bbcode.description}" class="tip"></button>
@@ -386,53 +386,49 @@
 		<form id="This" class="UserAdd" action="{$URL_REQUEST}" method="post">
 			<div class="tbl1">
 				<div class="formLabel sep_1 grid_3"><label for="username">{i18n('Username:')}</label></div>
-				<div class="formField grid_7"><input type="text" name="username" value="{$username}" id="username" /></div>
+				<div class="formField grid_7"><input type="text" name="username" value="{$user.username}" id="username" /></div>
 			</div>
 			<div class="tbl2">
 				<div class="formLabel sep_1 grid_3"><label for="password1">{i18n('Password:')}<br /><small>{i18n('Minimum 6 characters')}</small></label></div>
-				<div class="formField grid_7"><input type="password" name="user_pass" value="{$password1}" id="password1" /></div>
+				<div class="formField grid_7"><input type="password" name="user_pass" value="" id="password1" /></div>
 			</div>
 			<div class="tbl1">
 				<div class="formLabel sep_1 grid_3"><label for="password2">{i18n('Confirm password:')}</label></div>
-				<div class="formField grid_7"><input type="password" name="user_pass2" value="{$password2}" id="password2" /></div>
+				<div class="formField grid_7"><input type="password" name="user_pass2" value="" id="password2" /></div>
 			</div>
 			<div class="tbl2">
 				<div class="formLabel sep_1 grid_3"><label for="email">{i18n('Email:')}</label></div>
-				<div class="formField grid_7"><input type="text" name="user_email" value="{$email}" id="email" /></div>
+				<div class="formField grid_7"><input type="text" name="user_email" value="{$user.email}" id="email" /></div>
 			</div>
 			<div class="tbl1">
 				<div class="formLabel sep_1 grid_3">{i18n('Hide e-mail:')}</div>
 				<div class="formField grid_7">
-					<label for="HideEmail_1"><input type="radio" id="hide_email_1" name="hide_email" value="1"{if $hide_email == 1} checked="checked"{/if}>{i18n('Yes')}</label>
-					<label for="HideEmail_0"><input type="radio" id="hide_email_0" name="hide_email" value="0"{if $hide_email == 0} checked="checked"{/if}>{i18n('No')}</label>
+					<label for="HideEmail_1"><input type="radio" id="hide_email_1" name="hide_email" value="1"{if $user.hide_email == 1} checked="checked"{/if}>{i18n('Yes')}</label>
+					<label for="HideEmail_0"><input type="radio" id="hide_email_0" name="hide_email" value="0"{if $user.hide_email == 0} checked="checked"{/if}>{i18n('No')}</label>
 				</div>
 			</div>
-			<!--<div class="tbl2">
-				<div class="formLabel sep_1 grid_3">Administrator:</div>
-				<div class="formField grid_7"><input type="checkbox" name="roles[]" value="1" /> {i18n('Yes')}</div>
-			</div>-->
 
 			<input type="hidden" name="roles[]" value="2" />
 			<input type="hidden" name="roles[]" value="3" />
 
-			<div class="tbl1">
-				<div class="formLabel sep_1 grid_3">{i18n('Uprawnienia grup:')}<small>{i18n('Przytrzymaj klawisz Ctrl, aby wybrać kilka opcji z listy.')}</small></div>
+			<div class="tbl2">
+				<div class="formLabel sep_1 grid_3">{i18n('Roles:')}{i18n('Default roles')}</div>
 				<div class="formField grid_7">
 					<select name="roles[]" multiple id="InsightGroups" class="select-multi" size="5" >
-						{section=insight_groups}
-							{if $insight_groups.value != 2 && $insight_groups.value != 3}
-								<option value="{$insight_groups.value}"{if $insight_groups.selected} selected="selected"{/if}>{$insight_groups.display}</option>
+						{section=all_groups}
+							{if $all_groups.value != 2 && $all_groups.value != 3}
+								<option value="{$all_groups.value}"{if $all_groups.selected} selected="selected"{/if}>{$all_groups.display}</option>
 							{/if}
 						{/section}
 					</select>
 				</div>
 			</div>
-			<div class="tbl2">
-				<div class="formLabel sep_1 grid_3"><label for="role">{i18n('Główna grupa:')}</label></div>
+			<div class="tbl1">
+				<div class="formLabel sep_1 grid_3"><label for="role">{i18n('Main role:')}</label></div>
 				<div class="formField grid_7">
 					<select name="role" id="user_groups">
 						{section=insight_groups}
-							{if $insight_groups.value == 2}
+							{if $insight_groups.value}
 								<option value="{$insight_groups.value}"{if $insight_groups.selected} selected="selected"{/if}>{$insight_groups.display}</option>
 							{/if}
 						{/section}
@@ -442,26 +438,48 @@
 			{if $active}
 				<div class="tbl1">
 					<div class="formLabel sep_1 grid_3">Aktywuj konto od razu</div>
-					<div class="formField grid_7"><input type="checkbox" name="active" value="yes" /> {i18n('Yes')}</div>
+					<div class="formField grid_7"><input type="checkbox" name="active" value="yes" {if $user.active}checked="checked"{/if}/> {i18n('Yes')}</div>
 				</div>
 			{/if}
-			{if $data}
+			{if $cats}
 				<h4>{i18n('Additional informations')}</h4>
-				{section=data}
-					<div class="{$data.row_color}">
-						<div class="formLabel sep_1 grid_3"><label for="{$data.id}">{$data.name}</label></div>
-						<div class="formField grid_7">
-							{if $data.type == 1}<input type="text" name="{$data.index}" value="{$data.value}" id="{$data.id}"/>{/if}
-							{if $data.type == 2}<textarea name="{$data.index}" id="{$data.name}" rows="3" class="resize">{$data.value}</textarea>{/if}
-							{if $data.type == 3}
-								<select name="{$data.index}" class="textbox">
-									{section=option}
-										<option value="{$option.value}"{if $data.value == $option.value} selected="selected"{/if}>{$option.value}</option>
-									{/section}
-								</select>
+				{section=cats}
+					<div class="tbl1">
+						<div class="formField sep_1 grid_10">{$cats.name}</div>
+					</div>
+					{section=fields}
+						<div class="tbl2">
+							<div class="formLabel sep_1 grid_3"><label for="{$fields.name}">{i18n($fields.name)}</label></div>
+							{if $fields.type == 1}
+								<div class="formField grid_7">
+									<input type="text" name="data[{$fields.index}]" value="{if $fields.value}{$fields.value}{/if}" id="{$fields.name}" />
+								</div>
+							{elseif $fields.type == 3}
+								<div class="formField grid_7">
+									<select name="data[{$fields.index}]" class="textbox">
+										{foreach=$fields.option; var}
+											<option value="{@var.value}"{if $fields.value == @var.value} selected="selected"{/if}>{@var.value}</option>
+										{/foreach}
+									</select>
+								</div>
+							{else}
+								<div class="formField grid_7">
+									<div><textarea name="data[{$fields.index}]" id="{$fields.name}" rows="3" class="resize">{$fields.value}</textarea></div>
+									<div>
+										{section=bbcode}
+											<button type="button" onClick="addText('{$fields.index}', '[{$bbcode.value}]', '[/{$bbcode.value}]', 'account');"><img src="{$bbcode.image}" title="{$bbcode.description}" class="tip"></button>
+										{/section}
+									</div>
+									<div>
+										{section=smiley}
+											<img src="{$ADDR_IMAGES}smiley/{$smiley.image}" title="{$smiley.text}" class="tip" onclick="insertText('{$fields.index}', '{$smiley.code}', 'account');">
+											{if $smiley.i % 10 == 0}</div><div">{/if}
+										{/section}
+									</div>
+								</div>
 							{/if}
 						</div>
-					</div>
+					{/section}
 				{/section}
 			{/if}
 			<div class="tbl Buttons">

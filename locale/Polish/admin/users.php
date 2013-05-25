@@ -54,15 +54,15 @@ return array(
 	'Error! There are empty fields in the form.' => 'Nie wypełniono wszystkich pól w formularzu.',
 	'Incorrect username.' => 'Niepoprawna nazwa użytkownika.',
 	'Incorrect password. Minimum 6 chars length.' => 'Nieprawidłowe hasło. Minimalna długość hasła to 6 znaków.',
-	'Incorrect e-mail address.' => 'Nieprawidłowy adres e-mail.',
+	'Error! Incorrect e-mail address.' => 'Nieprawidłowy adres e-mail.',
 	'This username exist in our database.' => 'Ta nazwa użytkownika istnieje już w bazie danych.',
 	'This e-mail address exists in our database.' => 'Ten adres e-mail istnieje już w bazie danych.',
-	'This action cannot be done for user with ID 1.' => 'Nie można wykonać tej akcji na użytkowniku o ID 1.',
 	'Action was done successfully.' => 'Akcja wykonana prawidłowo.',
-	'Error! User name and e-mail fields are emtpy.' => 'Pola nazwa użytkownika i e-mail są puste.',
-	'Error! User name contains incorrect characters.' => 'Wystąpił błąd! Nazwa użytkownika zawiera nieprawidłowe znaki.',
+	'Error! This action cannot be done for user with ID 1.' => 'Nie można wykonać tej akcji na użytkowniku o ID 1.',
+	'Error! Some required fields are empty.' => 'Niektóre wymagane pola są puste.',
+	'Error! The username contains incorrect characters.' => 'Wystąpił błąd! Nazwa użytkownika zawiera nieprawidłowe znaki.',
 	'Error! Password contains incorrect characters.' => 'Wystąpił błąd! Hasło zawiera nieprawidłowe znaki.',
-	'Error! This user name is already in use.' => 'Nazwa użytkownika jest już w użyciu.',
+	'Error! The username is already in use.' => 'Nazwa użytkownika jest już w użyciu.',
 	'Error! This e-mail address is already in use.' => 'Adres e-mail jest już w użyciu.',
 	'User :user has been edited.' => 'Użytkownik :user został edytowany.',
 	'Error! User with ID :id can not be found.' => 'Wystąpił błąd! Nie można znaleźć użytkownika o id :id.',
@@ -117,7 +117,7 @@ return array(
 
 
 	// Message Error
-	'You must enter a username and e-mail.' => 'Musisz podać nazwę użytkownika oraz adres e-mail.',
+	
 	'Username contains unsupported characters.' => 'Nazwa użytkownika zawiera nieobsługiwane znaki.',
 	'The new passwords not match.' => 'Nowe hasła użytkownika nie pasują do siebie.',
 	'Incorrect password' => 'Nieprawidłowe hasło użytkownika, proszę o korzystanie wyłącznie ze znaków alfanumerycznych.<br />Hasło musi zawierać minimum 6 znaków.',

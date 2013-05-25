@@ -108,41 +108,43 @@ try
 						{
 							if ($_request->get('user')->show() === '1')
 							{
-								$_tpl->printMessage('error', __('This action can not be done for user with ID 1.'));
+								$_tpl->printMessage('error', __('Error! This action can not be done for user with ID 1.'));
 								$error = TRUE;
 								//$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error'), 'edit');
 							}
 						}
 
-						if (! $_request->post('username')->show() && ! $_request->post('user_email')->show())
+						if (! $_request->post('username')->show() || ! $_request->post('user_email')->show())
 						{
-							$_tpl->printMessage('error', __('Error! User name and e-mail fields are emtpy.'));
+							$_tpl->printMessage('error', __('Error! Some required fields are empty.'));
 							$error = TRUE;
 							//$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error1'), 'edit');
 						}
 
 						$username = trim($_request->post('username')->show());
 
+						// Sprawdzanie, czy zmieniono nazwę użytkownika
 						if ($username !== $_user->getByID($_request->get('user')->show(), 'username'))
 						{
+							// Sprawdzanie, czy nowa nazwa użytkownika jest nieprawidłowa
 							if ( ! $_user->validLogin($username))
 							{
-								$_tpl->printMessage('error', __('User name contains incorrect characters.'));
+								$_tpl->printMessage('error', __('Error! The username contains incorrect characters.'));
 								$error = TRUE;
 								//$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error2'), 'edit');
 							}
 							else
 							{
-								// Sprawdzanie dostępności nazwy użytkownika
-								if (! $_user->newName($username))
+								// Sprawdzanie, czy nowa nazwa użytkownika jest dostępna
+								if ($_user->newName($username))
 								{
-									// TODO: The username
-									$_tpl->printMessage('error', __('This user name is already in use.'));
-									$error = TRUE;
+									$change_username = TRUE;
 								}
 								else
 								{
-									$change_username = TRUE;
+									// TODO: The username
+									$_tpl->printMessage('error', __('Error! The username is already in use.'));
+									$error = TRUE;
 								}
 							}
 						}
@@ -151,48 +153,52 @@ try
 						{
 							if ( ! $_user->validEmail($_request->post('user_email')->show()))
 							{
-								$_tpl->printMessage('error', __('Incorrect e-mail address.'));
+								$_tpl->printMessage('error', __('Error! Incorrect e-mail address.'));
 								$error = TRUE;
 								//$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error5'));
 							}
 							else
 							{
 								// Sprawdzanie dostępności nazwy użytkownika
-								if (! $_user->newEmail($_request->post('user_email')->show()))
+								if ($_user->newEmail($_request->post('user_email')->show()))
 								{
-									// TODO: The username
-									$_tpl->printMessage('error', __('This email address is already in use.'));
-									$error = TRUE;
+									$change_email = TRUE;
 								}
 								else
 								{
-									$change_email = TRUE;
+									// TODO: The username
+									$_tpl->printMessage('error', __('Error! This email address is already in use.'));
+									$error = TRUE;
 								}
 							}
 						}
 
 						if ($_request->post('user_pass')->show() !== '' || $_request->post('user_pass2')->show() !== '')
 						{
-							if (! $_user->validPassword($_request->post('user_pass')->show(), $_request->post('user_pass2')->show()))
+							if ($_user->validPassword($_request->post('user_pass')->show(), $_request->post('user_pass2')->show()))
 							{
-								$_tpl->printMessage('error', __('Passwords do not match.'));
-								$error = TRUE;
+								$change_password = TRUE;
 								//$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error3'));
 							}
-
-							$change_password = TRUE;
+							else
+							{
+								$_tpl->printMessage('error', __('Error! Passwords do not match.'));
+								$error = TRUE;
+							}
 						}
 
 						if (! $error && $_request->upload('avatar'))
 						{
 							if ( ! $_user->saveNewAvatar($_request->get('user')->show(), $_request->files('avatar')->show()))
 							{
-								$_tpl->printMessage('error', $_user->getAvatarErrorByCode($_request->get('code')->show()));
+								$_tpl->printMessage('error', $_user->getAvatarErrorByCode($_user->getAvatarErrorCode()));
 								$error = TRUE;
 								//$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error4', 'code' => $_user->getAvatarErrorCode()), 'edit');
 							}
 						}
 
+						
+							
 						// ! $error są rodzielone, dlatego by w przypadku błędu
 						// przy aktualizacji zdjęcia profilowego, nie wykonywać dalszego kodu.
 						if (! $error)
@@ -220,10 +226,11 @@ try
 
 							if ($fields = $_pdo->getData('SELECT * FROM [user_fields]'))
 							{
+								$data = $_request->post('data')->show();
 								foreach($fields as $field)
 								{
 									$key   = $field['index'];
-									$value = $_request->post($key)->show();
+									$value = $data[$key];
 
 									$_fields[$key] = $value;
 								}
@@ -241,72 +248,57 @@ try
 						}
 						else
 						{
-							//TODO: Przesyłanie danych z POST z powrotem do formularza
+							$_tpl->assign('user', array(
+								'username' => $username,
+								'email' => $_request->post('user_email')->show(),
+								'hide_email' => $_request->post('hide_email')->show(),
+								'theme_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'themes', array('templates'), TRUE, 'folders'), $_request->post('theme_set')->show()),
+							));
+
+							$_tpl->assign('locale_set', $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'locale', array(), TRUE, 'folders'), $_request->post('language')->show()));
+
+							$_tpl->assign('all_groups', $_tpl->getMultiSelect($_user->getViewGroups(), $_request->post('roles')->show()), FALSE);
+							$_tpl->assign('insight_groups', $_tpl->createSelectOpts($_user->getViewGroups(), intval($_request->post('role')->show()), TRUE, FALSE), TRUE);
+						
+							// Dodatkowe pola
+							$data = $_user->getCustomData($_request->get('user')->show(), $_request->post('data')->show());
 						}
 					}
+					else
+					{
+						$data = $_pdo->getRow('SELECT * FROM [users] WHERE `id` = '.$_request->get('user')->show());
 
-					$data = $_pdo->getRow('SELECT * FROM [users] WHERE `id` = '.$_request->get('user')->show());
+						$user = array(
+							'username' => $data['username'],
+							'email' => $data['email'],
+							'hide_email' => $data['hide_email'],
+							'theme' => $data['theme'],
+							'avatar' => $data['avatar'],
+							//'roles' => unserialize($data['roles']),
+							//'role' => $data['role']
+						);
 
-					$user = array(
-						'username' => $data['username'],
-						'email' => $data['email'],
-						'hide_email' => $data['hide_email'],
-						'theme' => $data['theme'],
-						'avatar' => $data['avatar'],
-						'roles' => unserialize($data['roles']),
-						'role' => $data['role']
-					);
+						$_tpl->assign('all_groups', $_tpl->getMultiSelect($_user->getViewGroups(), $_user->convertRoles($data['roles'])), FALSE);
+						$_tpl->assign('insight_groups', $_tpl->createSelectOpts($_user->getViewGroups(), intval($data['role']), TRUE, FALSE), TRUE);
 
-					$_tpl->assign('all_groups', $_tpl->getMultiSelect($_user->getViewGroups(), $_user->convertRoles($data['roles'])), FALSE);
-					$_tpl->assign('insight_groups', $_tpl->createSelectOpts($_user->getViewGroups(), intval($data['role']), TRUE, TRUE), TRUE);
+						$_tpl->assignGroup(array(
+							'user' => $user,
+							'theme_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'themes', array('templates'), TRUE, 'folders'), $data['theme']),
+							'locale_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'locale', array(), TRUE, 'folders'), $_user->get('lang')),
+						));
+						
+						// Dodatkowe pola
+						$data = $_user->getCustomData($_request->get('user')->show());
+					}
 
 					$_tpl->assignGroup(array(
-						'user' => $user,
-						'theme_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'themes', array('templates'), TRUE, 'folders'), $data['theme']),
-						'locale_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'locale', array(), TRUE, 'folders'), $_user->get('lang')),
 						'avatar_filesize' => $_sett->get('avatar_filesize')/1024,
 						'avatar_height' => $_sett->get('avatar_height'),
 						'avatar_width' => $_sett->get('avatar_width')
 					));
-
-					$result = $_pdo->getData('SELECT `id`, `name`, `index`, `type`, `option` FROM [user_fields] ORDER by `id`');
-					$val = $_pdo->getRow('SELECT * FROM [users_data] WHERE `user_id` ='.$_request->get('user')->show().' LIMIT 1');
-					if ($result)
-					{
-						if ($_pdo->getRowsCount($result))
-						{
-							$i = 0; $data = array();
-							foreach ($result as $row)
-							{
-								if ($row['type'] == 3)
-								{
-									$n = 0;  $option = array();
-									if ($temp = unserialize($row['option']))
-									{
-										foreach($temp as $val)
-										{
-											$option[$n] = array(
-												'value' => $val
-											);
-											$n++;
-										}
-										$_tpl->assign('option', $option);
-									}
-								}
-
-								$data[] = array(
-									'row_color' => $i % 2 == 0 ? 'tbl2' : 'tbl1',
-									'id' => $row['id'],
-									'name' => $row['name'],
-									'index' => $row['index'],
-									'type' => $row['type'],
-									'value' => isset($val[$row['index']]) && $val[$row['index']] ? $val[$row['index']] : NULL,
-								);
-								$i++;
-							}
-						}
-						$_tpl->assign('fields', $data);
-					}
+					$_tpl->assign('fields', $data['fields']);
+					$_tpl->assign('cats', $data['categories']);
+					
 				}
 				elseif ($_request->get('suspend')->show() === '')
 				{
@@ -496,71 +488,45 @@ try
 					}
 					$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error'));
 				}
-
-				$data = $_pdo->getRow('SELECT * FROM [users] WHERE `id` = :id',
-					array(':id', $_request->get('user')->show(), PDO::PARAM_INT)
-				);
-
-				$info = __('On this page there are displayed all user :user data.', array(':user' => $data['username']));
-
-				if ($data)
+				else
 				{
-					$users = array(
-						'id' => $data['id'],
-						'username' => $_user->getUsername($data['id']),
-						'email' => $data['email'],
-						'role' => $_user->getRoleName($data['role']),
-						'roles' => implode($_user->getUserRolesTitle($data['id']), ', '),
-						'avatar' => $_user->getAvatarAddr($data['id']),
-						'joined' => HELP::showDate('shortdate', $data['joined']),
-						'status' => $data['status'],
-						'visit' => ($data['lastvisit'] != 0 ? HELP::showDate('shortdate', $data['lastvisit']) : __('Nie był na stronie')),
-						'theme' => $data['theme']
+					$data = $_pdo->getRow('SELECT * FROM [users] WHERE `id` = :id',
+						array(':id', $_request->get('user')->show(), PDO::PARAM_INT)
 					);
-				}
 
-				$query = $_pdo->getData('SELECT * FROM [user_field_cats] ORDER BY `order` ASC');
-				$cats = array();
-				foreach($query as $data)
-				{
-					$cats[] = $data;
-				}
+					$info = __('On this page there are displayed all user :user data.', array(':user' => $data['username']));
 
-				$query = $_pdo->getData('SELECT * FROM [user_fields]');
-				foreach($query as $data)
-				{
-					$fields[] = $data;
-				}
-
-				$data = $_pdo->getRow('SELECT * FROM [users_data] WHERE `user_id` ='.$_request->get('user')->show().' LIMIT 1');
-
-				$i = 0;
-				if (isset($fields))
-				{
-					$_new_fields = array();
-
-					foreach($cats as $key => $cat)
+					if ($data)
 					{
-						foreach($fields as $field)
-						{
-							if ($field['cat'] === $cat['id'])
-							{
-								$new_fields[$key][$i] = $field;
-								$new_fields[$key][$i]['value'] = isset($data[$field['index']]) && $data[$field['index']] ? $data[$field['index']] : NULL;
-								$i++;
-							}
-						}
+						$users = array(
+							'id' => $data['id'],
+							'username' => $_user->getUsername($data['id']),
+							'email' => $data['email'],
+							'role' => $_user->getRoleName($data['role']),
+							'roles' => implode($_user->getUserRolesTitle($data['id']), ', '),
+							'avatar' => $_user->getAvatarAddr($data['id']),
+							'joined' => HELP::showDate('shortdate', $data['joined']),
+							'status' => $data['status'],
+							'visit' => ($data['lastvisit'] != 0 ? HELP::showDate('shortdate', $data['lastvisit']) : __('Nie był na stronie')),
+							'theme' => $data['theme']
+						);
 					}
 
-					$_tpl->assign('fields', $new_fields);
+					// Dodatkowe pola
+					$data = $_user->getCustomData($_request->get('user')->show());
+					$_tpl->assign('fields', $data['fields']);
+					$_tpl->assign('cats', $data['categories']);
+						
+					$_tpl->assignGroup(array(
+						'id' => $_user->get('id'),
+						'account' => $users,
+						'info' => $info,
+						'action' => $action
+					));
 				}
-
-				$_tpl->assign('cats', $cats);
-
+				
 				$_tpl->assignGroup(array(
 					'id' => $_user->get('id'),
-					'account' => $users,
-					'info' => $info,
 					'action' => $action
 				));
 			}
@@ -569,6 +535,7 @@ try
 				throw new userException(__('Error! User with ID :id can not be found.', array(':id' => $_request->get('user')->show())));
 			}
 		}
+		// Lista użytkowników
 		else
 		{
 			if ($_request->get('act')->show() === 'delete')
@@ -683,7 +650,6 @@ try
 
 		if ($_request->post('create_account')->show())
 		{
-		
 			$username = $_request->post('username')->trim();
 
 			if ( ! $_user->validLogin($username))
@@ -754,7 +720,7 @@ try
 				}
 
 				$role = $_request->post('roles')->show(); asort ($role);
-				
+
 				$count = $_pdo->exec("INSERT INTO [users] (`username`, `password`, `salt`, `link`, `email`, `hide_email`, `valid`, `valid_code`, `offset`, `avatar`, `joined`, `lastvisit`, `ip`, `status`, `theme`, `role`, `roles`) VALUES (:username, :password, :salt, :link, :email, :hidemail, '1', :valid, '0', '', '".time()."', '0', '0.0.0.0', :status, 'Default', :role, :roles)",
 					array(
 						array(':username', $username, PDO::PARAM_STR),
@@ -775,10 +741,11 @@ try
 				$_fields = array();
 				if ($fields = $_pdo->getData('SELECT * FROM [user_fields]'))
 				{
+					$data = $_request->post('data')->show();
 					foreach($fields as $field)
 					{
 						$key   = $field['index'];
-						$value = $_request->post($key)->show();
+						$value = $data[$key];
 
 						$_fields[$key] = $value;
 					}
@@ -804,56 +771,39 @@ try
 
 					$_mail->send($_request->post('user_email')->show(), $_sett->get('contact_email'), __('Account activation'), $message);
 				}
-				
+
 				$_log->insertSuccess('add', $_user->get('username').__(' has created user account ').$username);
 				$_request->redirect(FILE_PATH, array('page' => 'users', 'act' => 'add', 'status' => 'ok'));
-				
-				$_request->redirect(FILE_PATH, array('page' => 'users', 'act' => 'add', 'status' => 'error'));
 			}
 			else
 			{
+				$_tpl->assign('user', array(
+					'username' => $username,
+					'email' => $_request->post('user_email')->show(),
+					'hide_email' => $_request->post('hide_email')->show(),
+					'active' => $_request->post('active')->show()
+				));
 
+				
+				$_tpl->assign('all_groups', $_tpl->getMultiSelect($_user->getViewGroups(), $_request->post('roles')->show()), FALSE);
+				$_tpl->assign('insight_groups', $_tpl->createSelectOpts($_user->getViewGroups(), intval($_request->post('role')->show()), TRUE, TRUE), TRUE);
+			
+				// Dodatkowe pola
+				$data = $_user->getCustomData(NULL, $_request->post('data')->show());
 			}
 		}
-
-		$_tpl->assign('insight_groups', $_tpl->createSelectOpts($_user->getViewGroups(), NULL, TRUE));
-
-		$result = $_pdo->getData('SELECT `id`, `name`, `index`, `type`, `option` FROM [user_fields] ORDER by `id`');
-		if ($result)
+		else
 		{
-			if ($_pdo->getRowsCount($result))
-			{
-				$i = 0; $data = array();
-				foreach ($result as $row)
-				{
-					if ($row['type'] == 3)
-					{
-						$n = 0;
-						foreach(unserialize($row['option']) as $keys => $val)
-						{
-							$option[$i][$keys] = array(
-								'value' => $val,
-								'n' => $n
-							);
-							$n++;
-						}
-						$_tpl->assign('option', $option);
-					}
-
-					$data[] = array(
-						'row_color' => $i % 2 == 0 ? 'tbl2' : 'tbl1',
-						'id' => $row['id'],
-						'name' => $row['name'],
-						'index' => $row['index'],
-						'type' => $row['type'],
-						'value' => NULL,
-					);
-					$i++;
-				}
-			}
-			$_tpl->assign('data', $data);
+			// Dodatkowe pola
+			$data = $_user->getCustomData();
+			$_tpl->assign('user', array());
+			$_tpl->assign('all_groups', $_tpl->getMultiSelect($_user->getViewGroups(), NULL), FALSE);
+			$_tpl->assign('insight_groups', $_tpl->createSelectOpts($_user->getViewGroups(), NULL, TRUE));
 		}
 
+		$_tpl->assign('fields', $data['fields']);
+		$_tpl->assign('cats', $data['categories']);
+		
 		if ($_sett->get('email_verification') === '1' || $_sett->get('admin_activation') === '1')
 		{
 			$_tpl->assign('active', TRUE);

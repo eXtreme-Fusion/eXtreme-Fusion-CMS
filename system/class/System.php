@@ -300,6 +300,17 @@ class System {
 
 		return $langs[$current];
 	}
+	
+	public function getLangName($short)
+	{
+		$langs = array(
+			'pl' => 'Polish',
+			'en' => 'English',
+			'cz' => 'Czech'
+		);
+		
+		return isset($langs[$short]) ? $langs[$short] : '';
+	}
 
 	// Zwraca informację, czy uzyskanie listy załadowanych modułów Apache jest możliwe
 	public function apacheModulesListingAvailable()

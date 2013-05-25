@@ -193,23 +193,18 @@ class User {
 	// if ($username != $_user->getByID($_request->get('User')->show(), 'username'))
 	public function newName($username, $id = NULL)
 	{
-		if ($this->isValidLogin($username))
+		$row = $this->_pdo->getRow('SELECT `username` FROM [users] WHERE `username` = :username', array(':username', $username, PDO::PARAM_STR));
+		if ( ! $row)
 		{
-			$row = $this->_pdo->getRow('SELECT `username` FROM [users] WHERE `username` = :username', array(':username', $username, PDO::PARAM_STR));
-			if ( ! $row)
+			if ($id !== NULL)
 			{
-				if ($id !== NULL)
-				{
-					return $this->update($id, array('username' => $username));
-				}
-
-				return TRUE;
+				return $this->update($id, array('username' => $username));
 			}
 
-			return FALSE;
+			return TRUE;
 		}
 
-		throw new userException(__('Entered the wrong data type.'));
+		return FALSE;
 	}
 
 	// Sprawdzanie dostępności adresu e-mail i ewentualna zmiana
@@ -217,21 +212,18 @@ class User {
 	// if ($_request->post('email') != $_user->getByID($_request->get('User')->show(), 'email'))
 	public function newEmail($email, $id = NULL)
 	{
-		if (filter_var($email, FILTER_VALIDATE_EMAIL))
+		$row = $this->_pdo->getRow('SELECT `email` FROM [users] WHERE `email`= :email', array(':email', $email, PDO::PARAM_STR));
+		if ( ! $row)
 		{
-			$row = $this->_pdo->getRow('SELECT `email` FROM [users] WHERE `email`= :email', array(':email', $email, PDO::PARAM_STR));
-			if ( ! $row)
+			if ($id !== NULL)
 			{
-				if ($id !== NULL)
-				{
-					return $this->update($id, array('email' => $email));
-				}
-				return TRUE;
+				return $this->update($id, array('email' => $email));
 			}
-			return FALSE;
+
+			return TRUE;
 		}
 
-		throw new userException(__('Entered the wrong data type.'));
+		return FALSE;
 	}
 
 	public function emailExists($email)
@@ -548,6 +540,73 @@ class User {
 		}
 
 		return TRUE;
+	}
+
+	// Zwraca dodatkowe dane użytkownika z możliwością ich nadpisania przez $values.
+	public function getCustomData($user_id = NULL, array $values = array())
+	{
+		$query = $this->_pdo->getData('SELECT * FROM [user_field_cats] ORDER BY `order` ASC');
+		$cats = array();
+		foreach($query as $data)
+		{
+			$cats[] = $data;
+		}
+
+		$query = $this->_pdo->getData('SELECT * FROM [user_fields]');
+		$fields = array();
+		foreach($query as $data)
+		{
+			$fields[] = $data;
+		}
+		
+		$data = array(); 
+		if ($user_id !== NULL)
+		{
+			$data = $this->_pdo->getRow('SELECT * FROM [users_data] WHERE `user_id` = :user_id LIMIT 1', array(
+				array(':user_id', intval($user_id), PDO::PARAM_STR)
+			));
+		}
+		
+		if ($fields)
+		{
+			$_new_fields = array();
+			foreach($cats as $key => $cat)
+			{
+				$i = 0;
+				foreach($fields as $field)
+				{
+					if ($field['cat'] === $cat['id'])
+					{
+						$new_fields[$key][$i] = $field;
+
+						$new_fields[$key][$i]['value'] = '';
+						if (isset($values[$field['index']]))
+						{
+							$new_fields[$key][$i]['value'] = $values[$field['index']];
+						}
+						elseif (isset($data[$field['index']]) && $data[$field['index']])
+						{
+							$new_fields[$key][$i]['value'] = $data[$field['index']];
+						}
+						// Lista
+						if ($field['type'] === '3')
+						{
+							$option = array();
+							foreach(unserialize($field['option']) as $val)
+							{
+								$option[] = $val;
+							}
+
+							$new_fields[$key][$i]['option'] = Html::createSelectOpts($option, $new_fields[$key][$i]['value'], FALSE, FALSE);
+						}
+
+						$i++;
+					}
+				}
+			}
+		}
+
+		return array('categories' => $cats, 'fields' => $new_fields);
 	}
 
 	/**

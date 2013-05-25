@@ -127,7 +127,6 @@ try
 			$_tpl->assign('AdminLink', $link);
 			$_tpl->template('navigation');
 		}
-
 	}
 	else
 	{
