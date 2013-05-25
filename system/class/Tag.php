@@ -1,14 +1,19 @@
 <?php
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
+/*********************************************************
+| eXtreme-Fusion 5
 | Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
 | http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.
-| http://extreme-fusion.org/ef5/license/
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+*********************************************************/
 class Tag {
 
 	// Przechowuje obiekt bazy danych, do późniejszych zapytań
@@ -157,7 +162,7 @@ class Tag {
 	{
 		$this->_data = new Edit($supplement);
 
-		$query = $this->_pdo->getData('SELECT `id`, `supplement`, `supplement_id`, `value`, `value_for_link`, `access` FROM [tags] WHERE supplement = :supplement ORDER BY `id` DESC',
+		$query = $this->_pdo->getData('SELECT `id`, `supplement`, `supplement_id`, `value`, `value_for_link`, `access` FROM [tags] WHERE supplement = :supplement ORDER BY RAND() DESC',
 			array(':supplement', $this->_data->filters('trim', 'strip'), PDO::PARAM_STR)
 		);
 

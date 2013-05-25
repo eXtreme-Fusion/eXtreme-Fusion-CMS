@@ -53,7 +53,7 @@ return array(
 	//Step 1
 	'Please select the required locale (language):' => 'Prosím, vyberte požadovaný jazyk stránky:',
 	'Download more locales from <a href="http://www.extreme-fusion.org/">extreme-fusion.org</a>' => 'Jiné jazykové verze jsou dostupné na adrese <a href="http://www.extreme-fusion.org/">extreme-fusion.org</a>',
-	'I accept BSD License' => 'Souhlasím s licenčními podmínkami BSD',
+	'I accept aGPL v3 License' => 'Souhlasím s licenčními podmínkami aGPL v3',
 	//Step 2
 	'Writeable' => 'Zapisovatelný',
 	'Unwriteable' => 'Nezapisovatelný',

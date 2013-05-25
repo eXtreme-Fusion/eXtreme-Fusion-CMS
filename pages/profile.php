@@ -1,14 +1,19 @@
 <?php defined('EF5_SYSTEM') || exit;
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+*********************************************************/
 $_locale->load('profile');
 $_head->set('<link href="'.ADDR_TEMPLATES.'stylesheet/profile.css" media="screen" rel="stylesheet">');
 $_head->set('<script src="'.ADDR_TEMPLATES.'javascripts/jquery.tabs.js"></script>');
@@ -18,6 +23,7 @@ $row = $_pdo->getRow('SELECT `id`, `username`, `avatar`, `email`, `hide_email`, 
 if ($row)
 {
 	$_tpl->assign('profile', TRUE);
+	$_tpl->assign('iAdmin', $_user->iAdmin());
 	
 	$theme = array(
 		'Title' => __('Profil użytkownika - :Username', array(':Username' => $row['username'])).' &raquo; '.$_sett->get('site_name'),
@@ -144,7 +150,7 @@ if ($row)
 		'role' => $_user->getRoleName($row['role']),
 		'roles' => implode($_user->getUserRolesTitle($row['id'], 3), ', '),
 		'avatar' => $_user->getAvatarAddr($row['id']),
-		'email' => $row['email'],
+		'email' => HELP::hide_email($row['email']),
 		'joined' => HELP::showDate('shortdate', $row['joined']),
 		'joined_datetime' => date('c', $row['joined']),
 		'last_visit_time' => $row['lastvisit'] ? HELP::showDate('longdate', $row['lastvisit']) : NULL,

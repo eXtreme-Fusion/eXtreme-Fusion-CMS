@@ -1,14 +1,38 @@
 <?php
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
+/*********************************************************
+| eXtreme-Fusion 5
 | Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
 | http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.
-| http://extreme-fusion.org/ef5/license/
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+|
+**********************************************************
+                ORIGINALLY BASED ON
+---------------------------------------------------------+
+| PHP-Fusion Content Management System
+| Copyright (C) 2002 - 2011 Nick Jones
+| http://www.php-fusion.co.uk/
++--------------------------------------------------------+
+| Author: Nick Jones (Digitanium)
+| Author: Paul Buek (Muscapaul)
+| Author: Hans Kristian Flaatten (Starefossen)
++--------------------------------------------------------+
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
++--------------------------------------------------------*/
 try
 {
 	require_once '../../config.php';
@@ -59,7 +83,7 @@ try
 				}
 				elseif ($_request->get('act')->show() === 'error4')
 				{
-					$_tpl->printMessage('error', __('Password contains incorrect characters.'));
+					$_tpl->printMessage('error', $_user->getAvatarErrorByCode($_request->get('code')->show()));
 				}
 				elseif ($_request->get('act')->show() === 'error5')
 				{
@@ -79,155 +103,202 @@ try
 					$action = 'edit';
 					if ($_request->post('save')->show())
 					{
+						$error = FALSE;
 						if ($_user->get('id') !== '1')
 						{
 							if ($_request->get('user')->show() === '1')
 							{
-								$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error'));
+								$_tpl->printMessage('error', __('Error! This action can not be done for user with ID 1.'));
+								$error = TRUE;
+								//$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error'), 'edit');
 							}
 						}
 
-						if ($_request->post('username')->show() == NULL && $_request->post('user_email')->show() == NULL)
+						if (! $_request->post('username')->show() || ! $_request->post('user_email')->show())
 						{
-							$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error1'));
+							$_tpl->printMessage('error', __('Error! Some required fields are empty.'));
+							$error = TRUE;
+							//$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error1'), 'edit');
 						}
 
 						$username = trim($_request->post('username')->show());
 
-						if ( ! $_user->validLogin($username))
+						// Sprawdzanie, czy zmieniono nazwę użytkownika
+						if ($username !== $_user->getByID($_request->get('user')->show(), 'username'))
 						{
-							$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error2'));
-						}
-
-
-
-						//todo: error4 dfo usuniecia
-
-						if ( ! $_user->validEmail($_request->post('user_email')->show()))
-						{
-							$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error5'));
-						}
-
-						if ($_request->post('user_pass')->show() !== '' || $_request->post('user_pass2')->show() !== '')
-						{
-							if (! $_user->validPassword($_request->post('user_pass')->show(), $_request->post('user_pass2')->show()))
+							// Sprawdzanie, czy nowa nazwa użytkownika jest nieprawidłowa
+							if ( ! $_user->validLogin($username))
 							{
-								$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error3'));
+								$_tpl->printMessage('error', __('Error! The username contains incorrect characters.'));
+								$error = TRUE;
+								//$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error2'), 'edit');
 							}
 							else
 							{
-								$_user->changePass($_request->get('user')->show(), $_request->post('user_pass')->show(), $_user->getByID($_request->get('user')->show(), 'password'), $_request->post('user_pass2')->show());
+								// Sprawdzanie, czy nowa nazwa użytkownika jest dostępna
+								if ($_user->newName($username))
+								{
+									$change_username = TRUE;
+								}
+								else
+								{
+									// TODO: The username
+									$_tpl->printMessage('error', __('Error! The username is already in use.'));
+									$error = TRUE;
+								}
 							}
-						}
-
-						if ($username !== $_user->getByID($_request->get('user')->show(), 'username'))
-						{
-							$_user->newName($username, $_request->get('user')->show());
 						}
 
 						if ($_request->post('user_email')->show() !== $_user->getByID($_request->get('user')->show(), 'email'))
 						{
-							$_user->newEmail($_request->post('user_email')->show(), $_request->get('user')->show());
-						}
-
-						$role = $_request->post('roles')->show();
-						asort ($role);
-						$_user->setRoles($role, $_request->post('role')->show(), $_request->get('user')->show());
-
-						if ($_request->post('del_avatar')->show())
-						{
-							$_user->delAvatar($_request->get('user')->show());
-						}
-
-						if ($_request->files('avatar')->show())
-						{
-							$_user->saveNewAvatar($_request->get('user')->show(), $_request->files('avatar')->show());
-						}
-
-						$count = $_user->update(
-							array(
-								'hide_email' => $_request->post('hide_email')->isNum(TRUE),
-								'theme' => $_request->post('theme_set')->show()
-							), $_request->get('user')->show()
-						);
-
-						if ($query = $_pdo->getData('SELECT * FROM [user_fields]'))
-						{
-							foreach($query as $data)
+							if ( ! $_user->validEmail($_request->post('user_email')->show()))
 							{
-								$custom_data[$data['index']] = $_request->post($data['index'])->show();
+								$_tpl->printMessage('error', __('Error! Incorrect e-mail address.'));
+								$error = TRUE;
+								//$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error5'));
+							}
+							else
+							{
+								// Sprawdzanie dostępności nazwy użytkownika
+								if ($_user->newEmail($_request->post('user_email')->show()))
+								{
+									$change_email = TRUE;
+								}
+								else
+								{
+									// TODO: The username
+									$_tpl->printMessage('error', __('Error! This email address is already in use.'));
+									$error = TRUE;
+								}
+							}
+						}
+
+						if ($_request->post('user_pass')->show() !== '' || $_request->post('user_pass2')->show() !== '')
+						{
+							if ($_user->validPassword($_request->post('user_pass')->show(), $_request->post('user_pass2')->show()))
+							{
+								$change_password = TRUE;
+								//$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error3'));
+							}
+							else
+							{
+								$_tpl->printMessage('error', __('Error! Passwords do not match.'));
+								$error = TRUE;
+							}
+						}
+
+						if (! $error && $_request->upload('avatar'))
+						{
+							if ( ! $_user->saveNewAvatar($_request->get('user')->show(), $_request->files('avatar')->show()))
+							{
+								$_tpl->printMessage('error', $_user->getAvatarErrorByCode($_user->getAvatarErrorCode()));
+								$error = TRUE;
+								//$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error4', 'code' => $_user->getAvatarErrorCode()), 'edit');
+							}
+						}
+
+						
+							
+						// ! $error są rodzielone, dlatego by w przypadku błędu
+						// przy aktualizacji zdjęcia profilowego, nie wykonywać dalszego kodu.
+						if (! $error)
+						{
+							if (isset($change_username))
+							{
+								$_user->newName($username, $_request->get('user')->show());
 							}
 
-							$count = $_user->customData()->update($custom_data, $_request->get('user')->show());
-						}
+							if (isset($change_email))
+							{
+								$_user->newEmail($_request->post('user_email')->show(), $_request->get('user')->show());
+							}
 
-						if ($count)
-						{
+							if (isset($change_password))
+							{
+								$_user->changePass($_request->get('user')->show(), $_request->post('user_pass')->show(), $_user->getByID($_request->get('user')->show(), 'password'), $_request->post('user_pass2')->show());
+							}
+
+							$role = $_request->post('roles')->show();
+							asort($role);
+							$_user->setRoles($role, $_request->post('role')->show(), $_request->get('user')->show());
+
+							$_fields = array();
+
+							if ($fields = $_pdo->getData('SELECT * FROM [user_fields]'))
+							{
+								$data = $_request->post('data')->show();
+								foreach($fields as $field)
+								{
+									$key   = $field['index'];
+									$value = $data[$key];
+
+									$_fields[$key] = $value;
+								}
+							}
+
+							$_user->update($_request->get('user')->show(), array(
+								'hide_email' => $_request->post('hide_email')->isNum(TRUE),
+								'theme'      => $_request->post('theme_set')->show(),
+								'lang'       => $_request->post('language')->show(),
+							), $_fields);
+
 							$_system->clearCache('profiles');
 							$_log->insertSuccess('edit', __('User :user has been edited.', array(':user' => $_user->getByID($_request->get('user')->show(), 'username'))));
 							$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'ok'));
 						}
+						else
+						{
+							$_tpl->assign('user', array(
+								'username' => $username,
+								'email' => $_request->post('user_email')->show(),
+								'hide_email' => $_request->post('hide_email')->show(),
+								'theme_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'themes', array('templates'), TRUE, 'folders'), $_request->post('theme_set')->show()),
+							));
 
-						$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'edit_error'));
+							$_tpl->assign('locale_set', $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'locale', array(), TRUE, 'folders'), $_request->post('language')->show()));
+
+							$_tpl->assign('all_groups', $_tpl->getMultiSelect($_user->getViewGroups(), $_request->post('roles')->show()), FALSE);
+							$_tpl->assign('insight_groups', $_tpl->createSelectOpts($_user->getViewGroups(), intval($_request->post('role')->show()), TRUE, FALSE), TRUE);
+						
+							// Dodatkowe pola
+							$data = $_user->getCustomData($_request->get('user')->show(), $_request->post('data')->show());
+						}
 					}
+					else
+					{
+						$data = $_pdo->getRow('SELECT * FROM [users] WHERE `id` = '.$_request->get('user')->show());
 
-					$data = $_pdo->getRow('SELECT * FROM [users] WHERE `id` = '.$_request->get('user')->show());
+						$user = array(
+							'username' => $data['username'],
+							'email' => $data['email'],
+							'hide_email' => $data['hide_email'],
+							'theme' => $data['theme'],
+							'avatar' => $data['avatar'],
+							//'roles' => unserialize($data['roles']),
+							//'role' => $data['role']
+						);
 
-					$user = array(
-						'username' => $data['username'],
-						'email' => $data['email'],
-						'hide_email' => $data['hide_email'],
-						'theme' => $data['theme'],
-						'avatar' => $data['avatar'],
-						'roles' => unserialize($data['roles']),
-						'role' => $data['role']
-					);
+						$_tpl->assign('all_groups', $_tpl->getMultiSelect($_user->getViewGroups(), $_user->convertRoles($data['roles'])), FALSE);
+						$_tpl->assign('insight_groups', $_tpl->createSelectOpts($_user->getViewGroups(), intval($data['role']), TRUE, FALSE), TRUE);
 
-					//print_r(unserialize($data['roles']));
-					$_tpl->assign('all_groups', $_tpl->getMultiSelect($_user->getViewGroups(), unserialize($data['roles']), TRUE));
-					$_tpl->assign('insight_groups', $_tpl->createSelectOpts($_user->getViewGroups(), unserialize($data['roles']), TRUE));
+						$_tpl->assignGroup(array(
+							'user' => $user,
+							'theme_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'themes', array('templates'), TRUE, 'folders'), $data['theme']),
+							'locale_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'locale', array(), TRUE, 'folders'), $_user->get('lang')),
+						));
+						
+						// Dodatkowe pola
+						$data = $_user->getCustomData($_request->get('user')->show());
+					}
 
 					$_tpl->assignGroup(array(
-						'user' => $user,
-						'theme_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'themes', array('templates'), TRUE, 'folders'), $data['theme'])
+						'avatar_filesize' => $_sett->get('avatar_filesize')/1024,
+						'avatar_height' => $_sett->get('avatar_height'),
+						'avatar_width' => $_sett->get('avatar_width')
 					));
-
-					$result = $_pdo->getData('SELECT `id`, `name`, `index`, `type`, `option` FROM [user_fields] ORDER by `id`');
-					$val = $_pdo->getRow('SELECT * FROM [users_data] WHERE `user_id` ='.$_request->get('user')->show().' LIMIT 1');
-					if ($result)
-					{
-						if ($_pdo->getRowsCount($result))
-						{
-							$i = 0; $data = array();
-							foreach ($result as $row)
-							{
-								if ($row['type'] == 3)
-								{
-									$n = 0;
-									foreach(unserialize($row['option']) as $keys => $val)
-									{
-										$option[$i][$keys] = array(
-											'value' => $val,
-											'n' => $n
-										);
-										$n++;
-									}
-									$_tpl->assign('option', $option);
-								}
-
-								$data[] = array(
-									'row_color' => $i % 2 == 0 ? 'tbl2' : 'tbl1',
-									'id' => $row['id'],
-									'name' => $row['name'],
-									'index' => $row['index'],
-									'type' => $row['type'],
-									'value' => isset($val[$row['index']]) && $val[$row['index']] ? $val[$row['index']] : NULL,
-								);
-								$i++;
-							}
-						}
-						$_tpl->assign('data', $data);
-					}
+					$_tpl->assign('fields', $data['fields']);
+					$_tpl->assign('cats', $data['categories']);
+					
 				}
 				elseif ($_request->get('suspend')->show() === '')
 				{
@@ -417,71 +488,45 @@ try
 					}
 					$_request->redirect(FILE_PATH, array('page' => 'users', 'user' => $_request->get('user')->show(), 'act' => 'error'));
 				}
-
-				$data = $_pdo->getRow('SELECT * FROM [users] WHERE `id` = :id',
-					array(':id', $_request->get('user')->show(), PDO::PARAM_INT)
-				);
-
-				$info = __('On this page there are displayed all user :user data.', array(':user' => $data['username']));
-
-				if ($data)
+				else
 				{
-					$users = array(
-						'id' => $data['id'],
-						'username' => $_user->getUsername($data['id']),
-						'email' => $data['email'],
-						'role' => $_user->getRoleName($data['role']),
-						'roles' => implode($_user->getUserRolesTitle($data['id']), ', '),
-						'avatar' => $_user->getAvatarAddr($data['id']),
-						'joined' => HELP::showDate('shortdate', $data['joined']),
-						'status' => $data['status'],
-						'visit' => ($data['lastvisit'] != 0 ? HELP::showDate('shortdate', $data['lastvisit']) : __('Nie był na stronie')),
-						'theme' => $data['theme']
+					$data = $_pdo->getRow('SELECT * FROM [users] WHERE `id` = :id',
+						array(':id', $_request->get('user')->show(), PDO::PARAM_INT)
 					);
-				}
 
-				$query = $_pdo->getData('SELECT * FROM [user_field_cats] ORDER BY `order` ASC');
-				$cats = array();
-				foreach($query as $data)
-				{
-					$cats[] = $data;
-				}
+					$info = __('On this page there are displayed all user :user data.', array(':user' => $data['username']));
 
-				$query = $_pdo->getData('SELECT * FROM [user_fields]');
-				foreach($query as $data)
-				{
-					$fields[] = $data;
-				}
-
-				$data = $_pdo->getRow('SELECT * FROM [users_data] WHERE `user_id` ='.$_request->get('user')->show().' LIMIT 1');
-
-				$i = 0;
-				if (isset($fields))
-				{
-					$_new_fields = array();
-
-					foreach($cats as $key => $cat)
+					if ($data)
 					{
-						foreach($fields as $field)
-						{
-							if ($field['cat'] === $cat['id'])
-							{
-								$new_fields[$key][$i] = $field;
-								$new_fields[$key][$i]['value'] = isset($data[$field['index']]) && $data[$field['index']] ? $data[$field['index']] : NULL;
-								$i++;
-							}
-						}
+						$users = array(
+							'id' => $data['id'],
+							'username' => $_user->getUsername($data['id']),
+							'email' => $data['email'],
+							'role' => $_user->getRoleName($data['role']),
+							'roles' => implode($_user->getUserRolesTitle($data['id']), ', '),
+							'avatar' => $_user->getAvatarAddr($data['id']),
+							'joined' => HELP::showDate('shortdate', $data['joined']),
+							'status' => $data['status'],
+							'visit' => ($data['lastvisit'] != 0 ? HELP::showDate('shortdate', $data['lastvisit']) : __('Nie był na stronie')),
+							'theme' => $data['theme']
+						);
 					}
 
-					$_tpl->assign('fields', $new_fields);
+					// Dodatkowe pola
+					$data = $_user->getCustomData($_request->get('user')->show());
+					$_tpl->assign('fields', $data['fields']);
+					$_tpl->assign('cats', $data['categories']);
+						
+					$_tpl->assignGroup(array(
+						'id' => $_user->get('id'),
+						'account' => $users,
+						'info' => $info,
+						'action' => $action
+					));
 				}
-
-				$_tpl->assign('cats', $cats);
-
+				
 				$_tpl->assignGroup(array(
 					'id' => $_user->get('id'),
-					'account' => $users,
-					'info' => $info,
 					'action' => $action
 				));
 			}
@@ -490,6 +535,7 @@ try
 				throw new userException(__('Error! User with ID :id can not be found.', array(':id' => $_request->get('user')->show())));
 			}
 		}
+		// Lista użytkowników
 		else
 		{
 			if ($_request->get('act')->show() === 'delete')
@@ -523,7 +569,7 @@ try
 				$status = 0;
 			}
 
-			$current = intval($_request->get('current')->show() ? $_request->get('current')->show() : 1);
+			$current_page = intval($_request->get('current')->show() ? $_request->get('current')->show() : 1);
 
 			$rows = $_pdo->getMatchRowsCount('SELECT * FROM [users] WHERE `status` = :status ORDER BY `username` ASC',
 				array(':status', $status, PDO::PARAM_INT)
@@ -532,13 +578,13 @@ try
 			$user = array();
 			if ($rows)
 			{
-				$rowstart = Paging::getRowStart($current, intval($_sett->get('users_per_page')));
+				$items_per_page = intval($_sett->get('users_per_page'));
 
 				$query = $_pdo->getData('SELECT * FROM [users] WHERE `status` = :status ORDER BY `username` ASC LIMIT :rowstart,:items_per_page',
 					array(
 						array(':status', $status, PDO::PARAM_INT),
-						array(':rowstart', $rowstart, PDO::PARAM_INT),
-						array(':items_per_page', intval($_sett->get('users_per_page')), PDO::PARAM_INT)
+						array(':rowstart', Paging::getRowStart($current_page, $items_per_page), PDO::PARAM_INT),
+						array(':items_per_page', $items_per_page, PDO::PARAM_INT)
 					)
 				);
 
@@ -556,23 +602,22 @@ try
 					}
 				}
 
-				
-				$_pagenav = new PageNav(new Paging($rows, $current, intval($_sett->get('users_per_page'))), $_tpl, 10, array('page=users', 'current=', FALSE));
-
-				$_pagenav->get($_pagenav->create(), 'page_nav', DIR_ADMIN_TEMPLATES.'paging'.DS);
+				$ec->paging->setPagesCount($rows, $current_page, $items_per_page);
+				$ec->pageNav->get($ec->pageNav->create($_tpl, 10), 'page_nav', DIR_ADMIN_TEMPLATES.'paging'.DS);
 			}
+
 			$_tpl->assignGroup(array(
-					'user' => $user,
-					'info' => $info
-				));
+				'user' => $user,
+				'info' => $info
+			));
 		}
 	}
 	elseif ($_request->get('page')->show() === 'add')
 	{
 		// Errory
-		if ($_request->get('page')->show() === 'add' && $_request->get('act')->show() === 'error')
+		/*if ($_request->get('page')->show() === 'add' && $_request->get('act')->show() === 'error')
 		{
-			$_tpl->printMessage('error', __('Error! There are empty fields in the form.'));
+			//$_tpl->printMessage('error', __('Error! There are empty fields in the form.'));
 		}
 		elseif ($_request->get('page')->show() === 'add' && $_request->get('act')->show() === 'error1')
 		{
@@ -584,11 +629,11 @@ try
 		}
 		elseif ($_request->get('page')->show() === 'add' && $_request->get('act')->show() === 'error3')
 		{
-			$_tpl->printMessage('error', __('Error! Password contains incorrect characters.'));
+
 		}
 		elseif ($_request->get('page')->show() === 'add' && $_request->get('act')->show() === 'error4')
 		{
-			$_tpl->printMessage('error', __('Error! Incorrect e-mail address.'));
+			$_tpl->printMessage('error', );
 		}
 		elseif ($_request->get('page')->show() === 'add' && $_request->get('act')->show() === 'error5')
 		{
@@ -601,59 +646,65 @@ try
 		elseif ($_request->get('page')->show() === 'add' && $_request->get('act')->show() === 'error7')
 		{
 			$_tpl->printMessage('error', __('Error! This e-mail address is banned.'));
-		}
+		}*/
 
 		if ($_request->post('create_account')->show())
 		{
-			if ($_request->post('username')->show() !== '' && $_request->post('user_pass')->trim() !== '' && $_request->post('user_email')->trim() !== '')
+			$username = $_request->post('username')->trim();
+
+			if ( ! $_user->validLogin($username))
 			{
+				$_tpl->printMessage('error', __('Error! User name contains incorrect characters.'));
+				$error = TRUE;
+				//$_request->redirect(FILE_PATH, array('page' => 'add', 'act' => 'error1'));
+			}
+			elseif ( ! $_user->newName($username))
+			{
+				$_tpl->printMessage('error', __('Error! This user name is already in use.'));
+				$error = TRUE;
+				//$_request->redirect(FILE_PATH, array('page' => 'add', 'act' => 'error5'));
+			}
 
-				$username = $_request->post('username')->trim();
+			if ( ! $_user->validPassword($_request->post('user_pass')->show(), $_request->post('user_pass2')->show()))
+			{
+				$_tpl->printMessage('error', __('Error! Passwords do not match.'));
+				$error = TRUE;
+				//$_request->redirect(FILE_PATH, array('page' => 'add', 'act' => 'error2'));
+			}
 
-				if ( ! $_user->validLogin($username))
-				{
-					$_request->redirect(FILE_PATH, array('page' => 'add', 'act' => 'error1'));
-				}
+			if ( ! $_user->validEmail($_request->post('user_email')->show()))
+			{
+				$_tpl->printMessage('error', __('Error! Incorrect e-mail address.'));
+				$error = TRUE;
+				//$_request->redirect(FILE_PATH, array('page' => 'add', 'act' => 'error4'));
+			}
+			elseif ( ! $_user->newEmail($_request->post('user_email')->show()))
+			{
+				$_tpl->printMessage('error', __('Error! This e-mail address is already in use.'));
+				$error = TRUE;
+				//$_request->redirect(FILE_PATH, array('page' => 'add', 'act' => 'error6'));
+			}
 
-				if ( ! $_user->validPassword($_request->post('user_pass')->show(), $_request->post('user_pass2')->show()))
-				{
-					$_request->redirect(FILE_PATH, array('page' => 'add', 'act' => 'error2'));
-				}
+			$count = $_pdo->getMatchRowsCount('SELECT `id` FROM [blacklist] WHERE `email` = :email OR `email` = :domain',
+				array(
+					array(':email', $_request->post('user_email')->show(), PDO::PARAM_STR),
+					array(':domain', substr(strrchr($_request->post('user_email')->show(), "@"), 1), PDO::PARAM_STR)
+				)
+			);
 
-				//todo:error3 do usuniecia
-				if ( ! $_user->validEmail($_request->post('user_email')->show()))
-				{
-					$_request->redirect(FILE_PATH, array('page' => 'add', 'act' => 'error4'));
-				}
+			if ($count)
+			{
+				$_tpl->printMessage('error', __('Error! This e-mail address is banned.'));
+				$error = TRUE;
+				//$_request->redirect(FILE_PATH, array('page' => 'add', 'act' => 'error7'));
+			}
 
-				if ( ! $_user->newName($username))
-				{
-					$_request->redirect(FILE_PATH, array('page' => 'add', 'act' => 'error5'));
-				}
-
-				if ( ! $_user->newEmail($_request->post('user_email')->show()))
-				{
-					$_request->redirect(FILE_PATH, array('page' => 'add', 'act' => 'error6'));
-				}
-
-				$count = $_pdo->getMatchRowsCount('SELECT `id` FROM [blacklist] WHERE `email` = :email OR `email` = :domain',
-					array(
-						array(':email', $_request->post('user_email')->show(), PDO::PARAM_STR),
-						array(':domain', substr(strrchr($_request->post('user_email')->show(), "@"), 1), PDO::PARAM_STR)
-					)
-				);
-
-				if($count)
-				{
-					$_request->redirect(FILE_PATH, array('page' => 'add', 'act' => 'error7'));
-				}
-
+			if (! $error)
+			{
 				$salt = substr(sha512(uniqid(rand(), true)), 0, 5);
 				$password = sha512($salt.'^'.$_request->post('user_pass')->show());
 
-				$status = 0;
-				$valid = '';
-				
+				$status = 0; $valid = '';
 				if ( ! $_request->post('active')->show())
 				{
 					if ($_sett->get('email_verification') === '1')
@@ -668,8 +719,8 @@ try
 					}
 				}
 
-				$role = $_request->post('roles')->show();
-				asort ($role);
+				$role = $_request->post('roles')->show(); asort ($role);
+
 				$count = $_pdo->exec("INSERT INTO [users] (`username`, `password`, `salt`, `link`, `email`, `hide_email`, `valid`, `valid_code`, `offset`, `avatar`, `joined`, `lastvisit`, `ip`, `status`, `theme`, `role`, `roles`) VALUES (:username, :password, :salt, :link, :email, :hidemail, '1', :valid, '0', '', '".time()."', '0', '0.0.0.0', :status, 'Default', :role, :roles)",
 					array(
 						array(':username', $username, PDO::PARAM_STR),
@@ -685,19 +736,22 @@ try
 					)
 				);
 
-				$last_user_id = $_pdo->getField('SELECT `id` FROM [users] WHERE `username` = :user',
-					array(':user', $username, PDO::PARAM_STR)
-				);
+				$last_user_id = $_pdo->getField('SELECT `id` FROM [users] WHERE `username` = :user', array(':user', $username, PDO::PARAM_STR));
 
-				if ($query = $_pdo->getData('SELECT * FROM [user_fields]'))
+				$_fields = array();
+				if ($fields = $_pdo->getData('SELECT * FROM [user_fields]'))
 				{
-					foreach($query as $data)
+					$data = $_request->post('data')->show();
+					foreach($fields as $field)
 					{
-						$custom_data[$data['index']] = $_request->post($data['index'])->show();
-					}
+						$key   = $field['index'];
+						$value = $data[$key];
 
-					$count = $_user->customData()->update($custom_data, $last_user_id);
+						$_fields[$key] = $value;
+					}
 				}
+
+				$_user->update($last_user_id, array(), $_fields);
 
 				if ($_request->post('active')->show() !== 'yes' && $_sett->get('email_verification'))
 				{
@@ -718,56 +772,37 @@ try
 					$_mail->send($_request->post('user_email')->show(), $_sett->get('contact_email'), __('Account activation'), $message);
 				}
 
-				if ($count)
-				{
-					$_log->insertSuccess('add', $_user->get('username').__(' has created user account ').$username);
-					$_request->redirect(FILE_PATH, array('page' => 'users', 'act' => 'add', 'status' => 'ok'));
-				}
-
-				$_request->redirect(FILE_PATH, array('page' => 'users', 'act' => 'add', 'status' => 'error'));
-
+				$_log->insertSuccess('add', $_user->get('username').__(' has created user account ').$username);
+				$_request->redirect(FILE_PATH, array('page' => 'users', 'act' => 'add', 'status' => 'ok'));
 			}
-			$_request->redirect(FILE_PATH, array('page' => 'add', 'act' => 'error'));
-		}
-
-		$_tpl->assign('insight_groups', $_tpl->createSelectOpts($_user->getViewGroups(), NULL, TRUE));
-		//print_r($_tpl->createSelectOpts($_user->getViewGroups(), NULL, TRUE)); exit;
-
-		$result = $_pdo->getData('SELECT `id`, `name`, `index`, `type`, `option` FROM [user_fields] ORDER by `id`');
-		if ($result)
-		{
-			if ($_pdo->getRowsCount($result))
+			else
 			{
-				$i = 0; $data = array();
-				foreach ($result as $row)
-				{
-					if ($row['type'] == 3)
-					{
-						$n = 0;
-						foreach(unserialize($row['option']) as $keys => $val)
-						{
-							$option[$i][$keys] = array(
-								'value' => $val,
-								'n' => $n
-							);
-							$n++;
-						}
-						$_tpl->assign('option', $option);
-					}
+				$_tpl->assign('user', array(
+					'username' => $username,
+					'email' => $_request->post('user_email')->show(),
+					'hide_email' => $_request->post('hide_email')->show(),
+					'active' => $_request->post('active')->show()
+				));
 
-					$data[] = array(
-						'row_color' => $i % 2 == 0 ? 'tbl2' : 'tbl1',
-						'id' => $row['id'],
-						'name' => $row['name'],
-						'index' => $row['index'],
-						'type' => $row['type'],
-						'value' => NULL,
-					);
-					$i++;
-				}
+				
+				$_tpl->assign('all_groups', $_tpl->getMultiSelect($_user->getViewGroups(), $_request->post('roles')->show()), FALSE);
+				$_tpl->assign('insight_groups', $_tpl->createSelectOpts($_user->getViewGroups(), intval($_request->post('role')->show()), TRUE, TRUE), TRUE);
+			
+				// Dodatkowe pola
+				$data = $_user->getCustomData(NULL, $_request->post('data')->show());
 			}
-			$_tpl->assign('data', $data);
 		}
+		else
+		{
+			// Dodatkowe pola
+			$data = $_user->getCustomData();
+			$_tpl->assign('user', array());
+			$_tpl->assign('all_groups', $_tpl->getMultiSelect($_user->getViewGroups(), NULL), FALSE);
+			$_tpl->assign('insight_groups', $_tpl->createSelectOpts($_user->getViewGroups(), NULL, TRUE));
+		}
+
+		$_tpl->assign('fields', $data['fields']);
+		$_tpl->assign('cats', $data['categories']);
 		
 		if ($_sett->get('email_verification') === '1' || $_sett->get('admin_activation') === '1')
 		{
@@ -807,6 +842,9 @@ try
 			$_request->redirect(FILE_PATH, array('page' => 'mail', 'act' => 'error'));
 		}
 	}
+
+
+	$_tpl->assign('status', $_request->get('status', NULL)->show() === NULL && $_request->get('user', NULL)->show() === NULL ?'active' : $_request->get('status')->show());
 
   $_tpl->template('users');
 }

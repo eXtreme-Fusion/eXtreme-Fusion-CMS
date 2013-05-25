@@ -1,14 +1,36 @@
 <?php
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
+/*********************************************************
+| eXtreme-Fusion 5
 | Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
 | http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.
-| http://extreme-fusion.org/ef5/license/
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+| 
+**********************************************************
+                ORIGINALLY BASED ON
+---------------------------------------------------------+
+| PHP-Fusion Content Management System
+| Copyright (C) 2002 - 2011 Nick Jones
+| http://www.php-fusion.co.uk/
++--------------------------------------------------------+
+| Author: Nick Jones (Digitanium)
++--------------------------------------------------------+
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
++--------------------------------------------------------*/
 try
 {
 	require_once '../../config.php';
@@ -44,6 +66,7 @@ try
 			'footer' => $_request->post('footer')->strip(),
 			'opening_page' => $_request->post('opening_page')->strip(),
 			'default_search' => $_request->post('default_search')->strip(),
+			'language_detection' => $_request->post('language_detection')->isNum(TRUE),
 		));
 
 		$_files->rmDirRecursive(DIR_CACHE);
@@ -52,7 +75,7 @@ try
 		 * Poniższe sprawdzanie czy szablon istnieje jest zabezpieczeniem przed następującą sytuacją:
 		 * Administrator wchodzi w Ustawienia główne. Nie zamyka przeglądarki i przechodzi na serwer FTP.
 		 * Nadaje nową nazwę jednemu z katalogów, które przechowują szablon.
-		 * Następnie wraca do Ustawień głownych i zmienia szablon strony na nieistniejący (bo zmienił jego nazwę na serwerze FTP).
+		 * Następnie wraca do Ustawień głównych i zmienia szablon strony na nieistniejący (bo zmienił jego nazwę na serwerze FTP).
 		 * Poniższy kod spowoduje, że wyświetlony zostanie komunikat o błędzie, zamiast blokady całej strony z powodu braku szablonu.
 		 *
 		 * W podobny sposób działa zabezpieczenie języka systemowego.
@@ -65,7 +88,7 @@ try
 		}
 		else
 		{
-			throw new userException('The language chosen is not available.');
+			throw new userException('The language which has been chosen is not available.');
 		}
 
 		// Czy wybrany szablon istnieje?
@@ -100,7 +123,8 @@ try
 		'keywords' => $_sett->get('keywords'),
 		'opening_page' => $_sett->get('opening_page'),
 		'default_search' => $_sett->get('default_search'),
-		'old_locale' => $_sett->get('locale'),
+		//'old_locale' => $_sett->get('locale'),
+		'language_detection' => $_sett->get('language_detection'),
 		'locale_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'locale', array(), TRUE, 'folders'), $_sett->get('locale')),
 		'theme_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'themes', array(), TRUE, 'folders'), $_sett->get('theme'))
 	));
@@ -129,7 +153,7 @@ try
 	closedir($handle);
 
 	$_tpl->assign('search_opts', $search_opts);
-
+	
 	$_tpl->template('settings_main');
 }
 catch(optException $exception)

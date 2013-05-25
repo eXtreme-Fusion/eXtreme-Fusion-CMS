@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
     <head>
-		<meta charset="UTF-8" />
+		<meta charset="{i18n('html_charset')}" />
 		<title>{$SystemVersion}</title>
 		<link rel="shortcut icon" href="{$ADDR_FAVICON}" type="image/x-icon" />
 		<link rel="stylesheet" href="{$ADDR_COMMON_CSS}grid.reset.css" media="screen" />
 		<link rel="stylesheet" href="{$ADDR_COMMON_CSS}grid.text.css" media="screen" />
 		<link rel="stylesheet" href="{$ADDR_COMMON_CSS}grid.960.css" media="screen" />
 		<link rel="stylesheet" href="{$ADDR_ADMIN_CSS}_framework.css" media="screen" />
-		
+
 		<script src="{$ADDR_COMMON_JS}jquery.js"></script>
 		<script src="{$ADDR_COMMON_JS}jquery-ui.js"></script>
 		<script src="{$ADDR_COMMON_JS}jquery.tooltip.js"></script>
@@ -20,15 +20,18 @@
 		<script src="{$ADDR_ADMIN_JS}_framework.js"></script>
 		<script>
 			{literal}
-				if (self != top) top.location.href = self.location.href;
 				$(function() {
 					$('#SessionExpire strong').countdown({until: '{/literal}{$SessionExpire}{literal}', onTick: highlightLast5, format: 'HMS', significant: 3});
-			
+
 					{/literal}{if $History}{literal}
 						$('#mainFrame').attr('src', '{/literal}{$ADDR_SITE}{$History.Page}{literal}');
-						$("#Navigation ul").removeClass("current");
-						$("#Navigation .page-"+{/literal}{$History.Current}{literal}).addClass('current');
-					{/literal}{/if}{literal}
+						 $("#Navigation ul").removeClass("current");
+						{/literal}{if $History.Current}{literal}
+							$("#Navigation .page-"+{/literal}{$History.Current}{literal}).addClass('current');
+						{/literal}{/if}
+					{else}{literal}
+						$("#Navigation ul:first").addClass('current');
+					{/literal}{/if}
 				});
 			{/literal}
 		</script>
@@ -60,10 +63,13 @@
 								<div class="clear"></div>
 								<div id="footer">
 									2005-{$CurrentYear} &copy; <a href="http://www.extreme-fusion.org/" rel="blank">{$SystemVersion}</a>
+									<p>Copyright 2002-2013 <a href="http://php-fusion.co.uk/">PHP-Fusion</a>. Released as free software without warranties under <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">aGPL v3</a>.</p>
 								</div>
+
 							</div>
 						</div>
 					</form>
+
 				</div>
 		</body>
 	{else}
@@ -80,17 +86,10 @@
 				</div>
 				<div id="NavOuterRepeat">
 					<div class="NavHolder">
-						<div id="NavRight">
-							<div class="divider">&nbsp;</div>
-							<a href="{$ADDR_ADMIN}pages/settings_ef.php" target="mainFrame" id="SystemSettings">
-								<img src="{$ADMIN_TEMPLATE_IMAGES}shared/nav/settings.gif" alt="Settings">
-							</a>
-							<div class="clear">&nbsp;</div>
-						</div>
 						<div id="Navigation">
 							<div class="table">
-								<ul class="select current">
-									<li><a href="{$ADDR_ADMIN}pages/home.php" target="mainFrame"><strong><span>{i18n('Panel')}</span></strong></a></li>
+								<ul class="select page-6">
+									<li><a id="Menu-6" href="#"><strong><span>{i18n('Panel')}</span></strong></a></li>
 								</ul>
 								{if $Count.1 > 0}
 									<ul class="select page-1">
@@ -114,6 +113,9 @@
 								{/if}
 								<ul class="select page-5">
 									<li><a id="Menu-5" href="#"><strong><span>{i18n('Modules')}</span></strong></a></li>
+								</ul>
+								<ul class="select page-7">
+									<li><a id="Menu-7" href="#"><strong><span>{i18n('System')}</span></strong></a></li>
 								</ul>
 							</div>
 						</div>
@@ -144,9 +146,11 @@
 			</div>
 			<div id="SessionExpire" class="tip" title="Kliknij, by przedłużyć sesję">{i18n('Time to end of session')}: <strong></strong></div>
 			<div id="Footer" class="ui-layout-south">
-				<div id="FooterLeft">2005-{$CurrentYear} &copy; <a href="http://www.extreme-fusion.org/" rel="blank">{$SystemVersion}</a></div>
+			 	<div id="FooterLeft">2005-{$CurrentYear} &copy; <a href="http://www.extreme-fusion.org/" rel="blank">{$SystemVersion}</a> Copyright 2002-2013 <a href="http://php-fusion.co.uk/">PHP-Fusion</a>. Released as free software without warranties under <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">aGPL v3</a>
+			 </div>
 			</div>
 			<iframe id='mainFrame' name='mainFrame' width='100%' height='600' class="ui-layout-center" frameborder='0' scrolling='auto' src='pages/home.php'></iframe>
+
 		</body>
     {/if}
 </html>

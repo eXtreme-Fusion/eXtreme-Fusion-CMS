@@ -1,5 +1,19 @@
 <?php
-
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
+|
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
+|
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+*********************************************************/
 class URL
 {
 	private
@@ -30,20 +44,20 @@ class URL
 	{
 		return $this->ext_allowed;
 	}
-	
+
 	public function setController($controller)
 	{
 		$this->controller = $controller;
 	}
-	
-	public function getPathPrefix()
+
+	public function getPathPrefix($not_parse = FALSE)
 	{
-		if ($this->rewrite_loaded)
+		if ($this->rewrite_loaded || $not_parse)
 		{
 			return '';
 		}
 		elseif ($this->path_info_exists)
-		{//echo 4; exit;
+		{
 			return 'index.php/';
 		}
 
@@ -51,23 +65,23 @@ class URL
 	}
 
 	/**
-	 * Generator linków dla plików szablonu.
+	 * Generator linkÃ³w dla plikÃ³w szablonu.
 	 *
-	 * Predefiniowane indeksy (niewymagane, mog¹ zostaæ pominiête):
+	 * Predefiniowane indeksy (niewymagane, mogÄ… zostaÄ‡ pominiÄ™te):
 	 * - controller
 	 * - action
 	 * - extension
 	 *
-	 * Pozosta³e to parametry, które mog¹ mieæ nazwê (indeks tablicy)
-	 * lub byæ tylko wartoœci¹. Przyk³ad:
+	 * PozostaÅ‚e to parametry, ktÃ³re mogÄ… mieÄ‡ nazwÄ™ (indeks tablicy)
+	 * lub byÄ‡ tylko wartoÅ›ciÄ…. PrzykÅ‚ad:
 	 *
 	 *	$_route->path(array('param1', 'param2' => 'value_for_param2'));
 	 *
-	 * Przyk³ad u¿ycia dla podstrony profile.html:
+	 * PrzykÅ‚ad uÅ¼ycia dla podstrony profile.html:
 	 *
 	 *	$_route->path(array('controller' => 'profile', 'action' => 'user', 457, 'extension' => 'html'));
 	 *
-	 * Przy za³adowanym "rewrite module" wygenerowany zostanie nastêpuj¹cy link:
+	 * Przy zaÅ‚adowanym "rewrite module" wygenerowany zostanie nastÄ™pujÄ…cy link:
 	 * http://twojastrona/profile/user/457.html
 	 */
 	public function path(array $data)
@@ -129,7 +143,7 @@ class URL
 			$params = '';
 		}
 
-		
+
 		$trace = $this->getPathPrefix();
 
 		return ADDR_SITE.$trace.$ctrl.$action.$params.$ext;

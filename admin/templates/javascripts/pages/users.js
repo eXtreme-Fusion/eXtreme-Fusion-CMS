@@ -11,7 +11,7 @@ $(function() {
 	$('#search_user').searchEngine({'is_here_admin_panel': 1, 'php_file': 'ajax/search_users_extended.php'});
 
 	// Wybieranie adresata wiadomości
-	$('body').on('click', '.defender', function() {
+	$('#defenders').on('click', 'li', function() {
 		var id = $(this).attr('id').split('-')[1];
 		window.location.href = addr_site+'admin/pages/users.php?page=users&user='+id;
 	});
@@ -29,27 +29,34 @@ $(function() {
 		});
 	}
 
-	$('#user_groups option:first').attr('checked', 'checked');
+	//$('#user_groups option:first').attr('checked', 'checked');
 
+	insight($('#InsightGroups'));
+	
 	$('#InsightGroups').change(function() {
+		insight($(this));
+	});
 
-		var $object = $(this);
+	function insight($object) {
 
 		var data = $object.val();
 
-		// Pobieranie wartości `value` dotychczas wybranego elementu
+		// Pobieranie wartości `value` dotychczas wybranego elementu, zanim zostaną one usunięte
 		var checked = $('#user_groups').val();
 
 		// Czyszczenie listy select
 		cleanSelectOptions('#user_groups', 2);
 
+		// Spawdzanie, czy zaznaczono jakąś opcję na liście multi wyboru
 		if (data) {
 			for (i = 0; i < data.length; i++) {
-				if (data[i] == checked) {
-					$('#user_groups').prepend('<option value='+data[i]+' checked=checked>'+$object.find('[value='+data[i]+']').text()+'</option>');
-					$('#user_groups').parent().find('span').text($object.find('[value='+data[i]+']').text());
-				} else {
-					$('#user_groups').prepend('<option value='+data[i]+'>'+$object.find('[value='+data[i]+']').text()+'</option>');
+				if (data[i] != '0') {
+					if (data[i] == checked) {
+						$('#user_groups').prepend('<option value='+data[i]+' selected="selected">'+$object.find('[value='+data[i]+']').text()+'</option>');
+						$('#user_groups').parent().find('span').text($object.find('[value='+data[i]+']').text());
+					} else {
+						$('#user_groups').prepend('<option value='+data[i]+'>'+$object.find('[value='+data[i]+']').text()+'</option>');
+					}
 				}
 			}
 
@@ -73,8 +80,8 @@ $(function() {
 			$('#user_groups').parent().find('span').text($option.text());
 			$option.attr('checked', 'checked');
 		}
-	});
-
+	}
+	
 	// Funkcja dodaje do wybranej opcji listy atrybut `checked`,
 	// by był on widoczny z poziomu konsoli html
 	$('#user_groups').change(function() {

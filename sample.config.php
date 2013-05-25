@@ -1,14 +1,20 @@
 <?php
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
+/*********************************************************
+| eXtreme-Fusion 5
 | Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
 | http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.
-| http://extreme-fusion.org/ef5/license/
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+| 
+**********************************************************/
 defined('DS') || define('DS', DIRECTORY_SEPARATOR);
 
 // Database
@@ -22,6 +28,15 @@ $_dbconfig = array(
 	'prefix'   => 'extreme_99939b3_',
 	'charset'  => 'utf8',
 	'version'  => 'eXtreme-Fusion CMS - Ninja Edition',
+);
+
+#Routing
+
+$_route = array(
+	//Change this to TRUE if your server has been configured to work with $_SERVER['PATH_INFO']
+    'custom_furl' => FALSE,
+	//Change this to TRUE if your server has got configured modRewrite
+    'custom_rewrite' => FALSE,
 );
 
 // Cookie && cache

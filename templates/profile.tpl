@@ -1,5 +1,5 @@
 {if $profile}
-    {php} opentable(__('Member Profile')) {/php}
+    {panel=i18n('Member Profile')}
         <div id="profile" class="dark">
             <div class="profile_avatar">
                 <img src="{$user.avatar}" alt="Avatar" class="light border_light">
@@ -9,7 +9,7 @@
 				<img src="{$ADDR_IMAGES}profile/info.png" alt="Profile"><span id="profile_username">{i18n('Member Profile :Username', array(':Username' => $user.username))}</span>{if $user.myid > 0 && $user.id != $user.myid}<a href="{$user.pm_link}" title="Wyślij wiadomość" class="text_dark">[ Wyślij wiadomość ]</a>{/if}<span id="profile_status" class="text_dark">{$user.role}</span>
 			</div>
             <ul class="light border_top_other">
-                <li><strong>{i18n('e-Mail')}:</strong><span>{$user.email}</span></li>
+                {if ! $user.hide_email || $iAdmin}<li><strong>{i18n('e-Mail')}:</strong><span>{$user.email}</span></li>{/if}
                 <li><strong>{i18n('Joined')}:</strong><time datetime="{$user.joined_datetime}">{$user.joined}</time></li>
                 <li><strong>{i18n('Groups')}:</strong><span>{$user.roles}</span></li>
             </ul>
@@ -82,10 +82,10 @@
             {/if}
         {/section}
 
-    {php} closetable() {/php}
+    {/panel}
     
     {if $points}
-        {php} opentable('Punktacja - admin') {/php}
+        {panel='Punktacja - admin'}
         <div class="tbl">
             <form id="This" action="{$URL_REQUEST}" method="post">
                 <h4>Dodaj punkty użytkownikowi</h4>
@@ -127,10 +127,10 @@
                 </div>
             </form>
         </div>
-        {php} closetable() {/php}
+        {/panel}
     {/if}
 {else}
-    {php} opentable(__('Error 404')) {/php}
+    {panel=i18n('Error 404')}
         <p class="status">{i18n('Nie znaleziono profilu.')}</p>
-    {php} closetable() {/php}
+    {/panel}
 {/if}

@@ -1,14 +1,36 @@
 <?php
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+| 
+**********************************************************
+                ORIGINALLY BASED ON
+---------------------------------------------------------+
+| PHP-Fusion Content Management System
+| Copyright (C) 2002 - 2011 Nick Jones
+| http://www.php-fusion.co.uk/
++--------------------------------------------------------+
+| Author: Nick Jones (Digitanium)
++--------------------------------------------------------+
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
++--------------------------------------------------------*/
 try
 {
 	require_once '../../config.php';
@@ -38,9 +60,7 @@ try
 			array(':id', $_request->get('id')->show(), PDO::PARAM_INT)
 		);
 		
-		$query = $_pdo->exec('ALTER TABLE [users_data] DROP :index',
-			array(':index', $data['index'], PDO::PARAM_STR)
-		);
+		$query = $_pdo->exec('ALTER TABLE [users_data] DROP '.HELP::strip($data['index']));
 	
 		$query = $_pdo->exec('DELETE FROM [user_fields] WHERE `id` = :id',
 			array(':id', $_request->get('id')->show(), PDO::PARAM_INT)
@@ -59,11 +79,12 @@ try
     elseif ($_request->post('save')->show())
     {
 		$name = $_request->post('name')->filters('trim', 'strip');
-		$index = $_request->post('index')->filters('trim', 'strip');
+		$index = $_request->post('index')->filters('trim', 'removeSpecial', 'strip');
 		$cat = $_request->post('cat')->isNum(TRUE);
 		$type = $_request->post('type')->isNum(TRUE);
 		$option = $_request->post('option')->filters('strip');
-		$option = serialize(explode("\n", $option));
+		
+		$option = serialize(HELP::cleanSelectOptions(explode("\n", $option)));
 		$register = $_request->post('register', '0')->show();
 		$hide = $_request->post('hide', '0')->show();
 		$edit = $_request->post('edit', '0')->show();
@@ -87,6 +108,7 @@ try
 
 				if ($query)
 				{
+					$_system->clearCache('profiles');
 					$_request->redirect(FILE_SELF, array('act' => 'edit', 'status' => 'ok'));
 				}
 

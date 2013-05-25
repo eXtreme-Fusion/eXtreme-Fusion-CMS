@@ -1,7 +1,9 @@
 /*
  * Facebox (for jQuery)
- * version: 1.2 (05/05/2008) 
- * MODIFIED by Inscure (22.03.2012): added live events from jQuery 1.7
+ * version: 1.2 (05/05/2008)
+ *
+ * MODIFIED by Inscure <drimer.eco@gmail.com>: added live events
+ *
  * @requires jQuery v1.7.1 or later
  *
  * Examples at http://famspam.com/facebox/
@@ -10,7 +12,6 @@
  *   http://www.opensource.org/licenses/mit-license.php
  *
  * Copyright 2007, 2008 Chris Wanstrath [ chris@ozmm.org ]
- * Copyright of modification 2012 Pawe³ (Inscure) Zegard³o [ drimer.eco@gmail.com ] 
  *
  * Usage:
  *
@@ -82,13 +83,12 @@
   /*
    * Public, $.facebox methods
    */
-
   $.extend($.facebox, {
     settings: {
       opacity      : 0.2,
       overlay      : true,
-      loadingImage : 'templates/images/loading.gif',
-      closeImage   : 'templates/images/closelabel.png',
+      loadingImage : addr_site+'templates/images/loading.gif',
+      closeImage   : addr_site+'templates/images/closelabel.png',
       imageTypes   : [ 'png', 'jpg', 'jpeg', 'gif' ],
       faceboxHtml  : '\
     <div id="facebox" style="display:none;"> \
@@ -98,7 +98,7 @@
                 <div class="content"></div> \
                 <div> \
                   <a href="#" class="close"> \
-                    <img src="/facebox/closelabel.gif" title="close" class="close_image" /> \
+                    <img src="'+addr_site+'templates/images/closelabel.png" title="close" class="close_image" /> \
                   </a> \
                 </div> \
               </div> </div> \
@@ -148,7 +148,6 @@
    */
 
   $.fn.facebox = function(settings) {
-    if ($(this).length == 0) return
 
     init(settings)
 
@@ -159,12 +158,12 @@
       // also supports deprecated "facebox[.inline_popup]" syntax
       var klass = this.rel.match(/facebox\[?\.(\w+)\]?/)
       if (klass) klass = klass[1]
-	
+
       fillFaceboxFromHref(this.href, klass)
       return false
     }
 
-    return $('body').on('click', 'a[rel*=facebox]', clickHandler);
+    return $('body').on('click', 'a[rel*="facebox"]', clickHandler);
   }
 
   /*

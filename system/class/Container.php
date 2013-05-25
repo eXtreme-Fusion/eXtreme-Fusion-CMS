@@ -1,5 +1,19 @@
 <?php
-
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
+|
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
+|
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+*********************************************************/
 class Container extends ServiceContainerBuilder
 {
 	protected function getCommentService()
@@ -20,6 +34,16 @@ class Container extends ServiceContainerBuilder
 	protected function getSystemService()
 	{
 		return new System;
+	}
+
+	protected function getPagingService()
+	{
+		return new Paging;
+	}
+
+	protected function getPageNavService()
+	{
+		return new PageNav($this->getService('Paging'));
 	}
 
 	protected function getPDOService()
@@ -52,7 +76,7 @@ class Container extends ServiceContainerBuilder
 
 	protected function getLocalesService()
 	{
-		return new Locales($this->getService('Sett')->get('locale'), DIR_LOCALE);
+		return new Locales($this->getService('User')->getLang(), DIR_LOCALE);
 	}
 
 	protected function getTagService()
@@ -63,5 +87,10 @@ class Container extends ServiceContainerBuilder
 	protected function getModulesService()
 	{
 		return new Modules($this->getService('Pdo'), $this->getService('Sett'), $this->getService('User'), $this->getService('Tag'), $this->getService('Locales'));
+	}
+
+	protected function getStatisticsService()
+	{
+		return new Statistics($this->getService('Pdo'), $this->getService('System'));
 	}
 }

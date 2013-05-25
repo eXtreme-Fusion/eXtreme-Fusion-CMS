@@ -12,4 +12,6 @@ return array(
 	'Default roles' => '<small>Default <em>Guest</em> and <em>User</em>.</small>',
 	'Recipients' => 'Recipients: <small>Type the name of the user to whom you want to send an e-mail.</small>',
 	'Hide recipients?' => 'Hide recipients? <small>Recipients will not be able to see, who get the e-mail.</small>',
+	// Create/Edit account
+	'Avatar requirements' => 'Maximum requirements: :filesize KB, :width x :height px',
 );

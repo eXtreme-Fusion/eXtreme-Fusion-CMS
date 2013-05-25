@@ -1,3 +1,38 @@
+{*
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
+|
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
+|
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+|
+**********************************************************
+                ORIGINALLY BASED ON
+---------------------------------------------------------+
+| PHP-Fusion Content Management System
+| Copyright (C) 2002 - 2011 Nick Jones
+| http://www.php-fusion.co.uk/
++--------------------------------------------------------+
+| Author: Nick Jones (Digitanium)
++--------------------------------------------------------+
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
++--------------------------------------------------------*/
+*}
+
 <h4>{i18n('Add Navigation Link')}</h4>
 {if $message}<div class="{$class}">{$message}</div>{/if}
 
@@ -18,7 +53,7 @@
 					<option value="{$access.value}"{if $access.selected} selected="selected"{/if}>{$access.display}</option>
 				{/section}
 			</select>
-			
+
 		</div>
 	</div>
 	<div class="tbl2">
@@ -40,6 +75,15 @@
 			<input type="radio" name="window" value="0" {if $window == 0} checked='checked'{/if} id="Window" /> {i18n('No')}
 		</div>
 	</div>
+	{if $modRewrite_unavailable}
+		<div class="tbl2">
+			<div class="formLabel sep_1 grid_3"><label for="Rewrite">{i18n('Modyfikacja linku przez system:')}</label></div>
+			<div class="formField grid_7">
+				<input type="radio" name="rewrite" value="1" {if $rewrite == 1} checked='checked'{/if} id="Window" /> {i18n('Yes')}
+				<input type="radio" name="rewrite" value="0" {if $rewrite == 0} checked='checked'{/if} id="Window" /> {i18n('No')}
+			</div>
+		</div>
+	{/if}
 	<div class="tbl Buttons">
 		<div class="center grid_2 button-l">
 			<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
@@ -78,11 +122,11 @@
 						</div>
 						<div class="grid_2">
 							{$data.visibility}
-						</div>			
+						</div>
 						<div class="grid_2">
 							<a href="{$FILE_SELF}?action=edit&amp;id={$data.id}" class="tip" title="{i18n('Edit')}">
 								<img src="{$ADDR_ADMIN_ICONS}edit.png" alt="{i18n('Edit')}" />
-							</a> 
+							</a>
 							<a href="{$FILE_SELF}?action=delete&amp;id={$data.id}" class="tip confirm_button" title="{i18n('Delete')}">
 								<img src="{$ADDR_ADMIN_ICONS}delete.png" alt="{i18n('Delete')}" />
 							</a>

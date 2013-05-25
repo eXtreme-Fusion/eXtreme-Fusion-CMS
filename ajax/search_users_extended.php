@@ -1,14 +1,36 @@
 <?php // Wyszukiwania uzytkownika po ID, loginie, adresie e-mail bądź IP
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+|
+**********************************************************
+                ORIGINALLY BASED ON
+---------------------------------------------------------+
+| PHP-Fusion Content Management System
+| Copyright (C) 2002 - 2011 Nick Jones
+| http://www.php-fusion.co.uk/
++--------------------------------------------------------+
+| Author: Nick Jones (Digitanium)
++--------------------------------------------------------+
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
++--------------------------------------------------------*/
 if (isset($_POST['from_admin']) && $_POST['from_admin'])
 {
 	require_once '../config.php';
@@ -23,7 +45,7 @@ else
 if ($_user->isLoggedIn())
 {
 	$request = new Edit($_request->post('to')->trim());
-	
+
 	if ($request->show())
 	{
 		if ($request->isNum(FALSE, FALSE))
@@ -46,23 +68,37 @@ if ($_user->isLoggedIn())
 			$field = 'username';
 			$value = $request->strip();
 		}
-	
+
 
 		if ($value)
 		{
 			if ($_request->post('self_search')->show())
 			{
-				$data = $_pdo->getData('SELECT `id`, `username` FROM [users] WHERE `'.$field.'` LIKE "'.$value.'%" ORDER BY `username` ASC LIMIT 0,10');
+				if ($_request->post('only_active')->show())
+				{
+					$data = $_pdo->getData('SELECT `id`, `username` FROM [users] WHERE `'.$field.'` LIKE "'.$value.'%" AND `status` = 0 ORDER BY `username` ASC LIMIT 0,10');
+				}
+				else
+				{
+					$data = $_pdo->getData('SELECT `id`, `username` FROM [users] WHERE `'.$field.'` LIKE "'.$value.'%" ORDER BY `username` ASC LIMIT 0,10');
+				}
 			}
 			else
 			{
-				$data = $_pdo->getData('SELECT `id`, `username` FROM [users] WHERE `'.$field.'` LIKE "'.$value.'%" AND id != '.$_user->get('id').' ORDER BY `username` ASC LIMIT 0,10');
+				if ($_request->post('only_active')->show())
+				{
+					$data = $_pdo->getData('SELECT `id`, `username` FROM [users] WHERE `'.$field.'` LIKE "'.$value.'%" AND id != '.$_user->get('id').' AND `status` = 0 ORDER BY `username` ASC LIMIT 0,10');
+				}
+				else
+				{
+					$data = $_pdo->getData('SELECT `id`, `username` FROM [users] WHERE `'.$field.'` LIKE "'.$value.'%" AND id != '.$_user->get('id').' AND ORDER BY `username` ASC LIMIT 0,10');
+				}
 			}
 			if ($data)
 			{ ?>
 				{
 					"status" : 0,
-					"users" : 
+					"users" :
 					[
 						<?php
 						$json = array();
@@ -83,7 +119,7 @@ if ($_user->isLoggedIn())
 			}
 		}
 	}
-	
+
 	echo '{"status" : 2}'; exit; // brak reakcji - nie przesłano danych
 }
 

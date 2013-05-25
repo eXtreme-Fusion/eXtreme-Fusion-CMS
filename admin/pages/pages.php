@@ -1,14 +1,36 @@
 <?php
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+|
+**********************************************************
+                ORIGINALLY BASED ON
+---------------------------------------------------------+
+| PHP-Fusion Content Management System
+| Copyright (C) 2002 - 2011 Nick Jones
+| http://www.php-fusion.co.uk/
++--------------------------------------------------------+
+| Author: Nick Jones (Digitanium)
++--------------------------------------------------------+
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
++--------------------------------------------------------*/
 
 // Paweł jak będziesz dokańczać strony swoje to pole z nazwą strony niech nie nazywa się 'name' tylko 'title'
 // W innym przypadku koliduje to z API tagów. To samo ma się do opisu tzw. description
@@ -80,13 +102,14 @@ try
 				array(':show_date', $_request->post('show_date')->isNum(TRUE), PDO::PARAM_INT),
 				array(':show_category', $_request->post('show_category')->isNum(TRUE), PDO::PARAM_INT),
 				array(':show_tags', $_request->post('show_tags')->isNum(TRUE), PDO::PARAM_INT),
-				array(':show_type', $_request->post('show_type')->isNum(TRUE), PDO::PARAM_INT)
+				array(':show_type', $_request->post('show_type')->isNum(TRUE), PDO::PARAM_INT),
+				array(':user_allow_comments', $_request->post('user_allow_comments')->isNum(TRUE), PDO::PARAM_INT)
 			);
 
 			// Zapis edycji
 			if ($_request->get('action')->show() === 'edit' && $_request->get('id')->isNum())
 			{
-				$_pdo->exec('UPDATE [pages_types] SET `name` = :name, `for_news_page` = :for_news_page, `user_allow_edit_own` = :user_allow_edit_own, `user_allow_use_wysiwyg` = :user_allow_use_wysiwyg, `insight_groups` = :insight_groups, `editing_groups` = :editing_groups, `submitting_groups` = :submitting_groups, `show_preview` = :show_preview, `add_author` = :add_author, `change_author` = :change_author, `add_last_editing_date` = :add_last_editing_date, `change_date` = :change_date, `show_author` = :show_author, `show_date` = :show_date, `show_category` = :show_category, `show_tags` = :show_tags, `show_type` = :show_type WHERE `id` = '.$_request->get('id')->show(), $bind);
+				$_pdo->exec('UPDATE [pages_types] SET `name` = :name, `for_news_page` = :for_news_page, `user_allow_edit_own` = :user_allow_edit_own, `user_allow_use_wysiwyg` = :user_allow_use_wysiwyg, `insight_groups` = :insight_groups, `editing_groups` = :editing_groups, `submitting_groups` = :submitting_groups, `show_preview` = :show_preview, `add_author` = :add_author, `change_author` = :change_author, `add_last_editing_date` = :add_last_editing_date, `change_date` = :change_date, `show_author` = :show_author, `show_date` = :show_date, `show_category` = :show_category, `show_tags` = :show_tags, `show_type` = :show_type, `user_allow_comments` = :user_allow_comments WHERE `id` = '.$_request->get('id')->show(), $bind);
 				$_log->insertSuccess('edit', __('Data has been updated.'));
 				$_request->redirect(FILE_PATH, array('page' => 'types', 'act' => 'edit', 'status' => 'ok'));
 			}
@@ -94,8 +117,8 @@ try
 			else
 			{
 				$_pdo->exec('
-					INSERT INTO [pages_types] (`name`, `for_news_page`, `user_allow_edit_own`, `user_allow_use_wysiwyg`, `insight_groups`, `editing_groups`, `submitting_groups`, `show_preview`, `add_author`, `change_author`, `add_last_editing_date`, `change_date`, `show_author`, `show_date`, `show_category`, `show_tags`, `show_type`)
-					VALUES (:name, :for_news_page, :user_allow_edit_own, :user_allow_use_wysiwyg, :insight_groups, :editing_groups, :submitting_groups, :show_preview, :add_author, :change_author, :add_last_editing_date, :change_date, :show_author, :show_date, :show_category, :show_tags, :show_type)',
+					INSERT INTO [pages_types] (`name`, `for_news_page`, `user_allow_edit_own`, `user_allow_use_wysiwyg`, `insight_groups`, `editing_groups`, `submitting_groups`, `show_preview`, `add_author`, `change_author`, `add_last_editing_date`, `change_date`, `show_author`, `show_date`, `show_category`, `show_tags`, `show_type`, `user_allow_comments`)
+					VALUES (:name, :for_news_page, :user_allow_edit_own, :user_allow_use_wysiwyg, :insight_groups, :editing_groups, :submitting_groups, :show_preview, :add_author, :change_author, :add_last_editing_date, :change_date, :show_author, :show_date, :show_category, :show_tags, :show_type, :user_allow_comments)',
 					$bind
 				);
 
@@ -114,7 +137,7 @@ try
                  * Musimy przesłać trzy razy to samo, gdyż jest ten sam formularz edycji i dodawania materiału.
 				 * Przy edycji pola te mogą mieć odmienne wartości, stąd są różne indeksy.
 				 */
-				'insight_groups' => $groups,
+				'insight_groups' => $_tpl->getMultiSelect($_user->getViewGroups(), '3', TRUE),
 				'editing_groups' => $groups,
 				'submitting_groups' => $groups,
 				// Ustawianie wartości domyślnych
@@ -124,7 +147,8 @@ try
 				'show_date' => 1,
 				'show_category' => 1,
 				'show_tags' => 1,
-				'show_type' => 1
+				'show_type' => 1,
+				'user_allow_comments' => 1
 			));
 
 		}
@@ -150,7 +174,8 @@ try
 					'show_date' => $row['show_date'],
 					'show_category' => $row['show_category'],
 					'show_tags' => $row['show_tags'],
-					'show_type' => $row['show_type']
+					'show_type' => $row['show_type'],
+					'user_allow_comments' => $row['user_allow_comments']
 				));
 			}
 		}
@@ -160,6 +185,7 @@ try
 			$_pdo->exec('DELETE FROM [pages_types] WHERE id = '.$_request->get('id')->show());
 			$_log->insertSuccess('edit', __('Data has been removed.'));
 			$_request->redirect(FILE_PATH, array('page' => 'types', 'act' => 'delete', 'status' => 'ok'));
+			
 		}
 		// Przegląd wszystkich materiałów
 		else if ($_request->get('action', NULL)->show() === NULL)
@@ -201,14 +227,28 @@ try
 				array(':name', $_request->post('name')->strip(), PDO::PARAM_STR),
 				array(':description', $_request->post('description')->strip(), PDO::PARAM_STR),
 				array(':submitting_groups', $_request->post('submitting_groups')->filters('getNumArray', 'implode'), PDO::PARAM_STR),
-				array(':thumbnail', $_request->post('thumbnail')->strip(), PDO::PARAM_STR),
-				//array(':show_image', $_request->post('show_image')->isNum(TRUE), PDO::PARAM_STR)
 			);
 
+			if ($_request->upload('thumbnail'))
+			{
+				// Uploaduje plik na serwer i zwracana nazwę po zapisaniu w miejscu docelowym
+				$thumbnail = Image::sendFile($_request->_file('thumbnail')->show(), DIR_UPLOAD.'images'.DS, 'custom_pages_', TRUE);
+			}
+			elseif ($_request->post('delete_thumbnail')->show())
+			{
+				$thumbnail = '';
+				Image::delFile(DIR_UPLOAD.'images'.DS.$_request->post('thumbnail')->strip());
+			}
+
+			if (isset($thumbnail))
+			{
+				$bind[] = array(':thumbnail', $thumbnail, PDO::PARAM_STR);
+			}
+			
 			// Zapis edycji
 			if ($_request->get('action')->show() === 'edit' && $_request->get('id')->isNum())
 			{
-				$_pdo->exec('UPDATE [pages_categories] SET `name` = :name, `description` = :description, `submitting_groups` = :submitting_groups, `thumbnail` = :thumbnail WHERE `id` = '.$_request->get('id')->show(), $bind);
+				$_pdo->exec('UPDATE [pages_categories] SET `name` = :name, `description` = :description, `submitting_groups` = :submitting_groups '.(isset($thumbnail) ? ', `thumbnail` = :thumbnail' : '').' WHERE `id` = '.$_request->get('id')->show(), $bind);
 				$_log->insertSuccess('edit', __('Data has been updated.'));
 				$_request->redirect(FILE_PATH, array('page' => 'categories', 'act' => 'edit', 'status' => 'ok'));
 			}
@@ -216,8 +256,8 @@ try
 			else
 			{
 				$_pdo->exec('
-					INSERT INTO [pages_categories] (`name`, `description`, `submitting_groups`, `thumbnail`)
-					VALUES (:name, :description, :submitting_groups, :thumbnail)',
+					INSERT INTO [pages_categories] (`name`, `description`, `submitting_groups`'.(isset($thumbnail) ? ', `thumbnail`' : '').')
+					VALUES (:name, :description, :submitting_groups'.(isset($thumbnail) ? ', :thumbnail' : '').')',
 					$bind
 				);
 
@@ -255,11 +295,20 @@ try
 		// Usuwanie kategorii z zabezpieczeniem przed usunięciem systemowej
 		elseif ($_request->get('action')->show() === 'delete' && $_request->get('id')->isNum())
 		{
+			$row = $_pdo->getRow('SELECT `thumbnail` FROM [pages_categories] WHERE `id` = :id',
+				array(':id', $_request->get('id')->show(), PDO::PARAM_INT)
+			);
+			
+			Image::delFile(DIR_UPLOAD.'images'.DS.$row['thumbnail']);
+			
+			$_pdo->exec('UPDATE [pages] SET `categories` = :categories WHERE `id` = :id',
+				array(
+					array(':categories', 1, PDO::PARAM_INT),
+					array(':id', $_request->get('id')->show(), PDO::PARAM_INT)
+				)
+			);
+			
 			$_pdo->exec('DELETE FROM [pages_categories] WHERE id = '.$_request->get('id')->show().' AND `is_system` = 0');
-
-			//TODO:: materiały moga być w kilku kategoriach. Trzeba zrobić ich analize i tym,
-			//TODO:: które są przypisane tylko od wlaśnie usunietej kategorii, dać przypisanie do kategorii systemowej.
-
 
 			$_log->insertSuccess('edit', __('Data has been removed.'));
 			$_request->redirect(FILE_PATH, array('page' => 'categories', 'act' => 'delete', 'status' => 'ok'));
@@ -330,8 +379,7 @@ try
 						array(':content', $_request->post('content')->show(), PDO::PARAM_STR),
 						array(':preview', $_request->post('preview')->show(), PDO::PARAM_STR)
 					);
-					
-					
+
 					if ($_request->upload('thumbnail'))
 					{
 						// Uploaduje plik na serwer i zwracana nazwę po zapisaniu w miejscu docelowym
@@ -340,13 +388,14 @@ try
 					elseif ($_request->post('delete_thumbnail')->show())
 					{
 						$thumbnail = '';
+						Image::delFile(DIR_UPLOAD.'images'.DS.$_request->post('thumbnail')->strip());
 					}
-					
+
 					if (isset($thumbnail))
 					{
 						$bind[] = array(':thumbnail', $thumbnail, PDO::PARAM_STR);
 					}
-					
+
 					if ($keyword = $_request->post('keywords')->strip())
 					{
 						// Pobiera informację, kto będzie miał dostęp do słów kluczowych
@@ -371,7 +420,7 @@ try
 							if ($old_thumbnail = $_pdo->getField('SELECT `thumbnail` FROM [pages] WHERE `id` = '.$_request->get('id')->show()))
 							{
 								$file = realpath(DIR_UPLOAD.'images'.DS.$old_thumbnail);
-								
+
 								if (file_exists($file) && is_file($file))
 								{
 									unlink(DIR_UPLOAD.'images'.DS.$old_thumbnail);
@@ -381,7 +430,7 @@ try
 
 						$_pdo->exec('UPDATE [pages] SET `title` = :title, `description` = :description, `url` = :url, `categories` = :categories, `type` = :type, '.(isset($thumbnail) ? '`thumbnail` = :thumbnail, ' : '').'`content` = :content, `preview` = :preview WHERE `id` = '.$_request->get('id')->show(), $bind);
 						$_log->insertSuccess('edit', __('Data has been updated.'));
-						
+
 						if (isset($access))
 						{
 							$_tag->updTag('PAGES', $_request->get('id')->show(), $keyword, $access);
@@ -390,7 +439,7 @@ try
 						{
 							$_tag->delTag('PAGES', $_request->get('id')->show());
 						}
-						
+
 						$_request->redirect(FILE_PATH, array('page' => 'entries', 'act' => 'edit', 'status' => 'ok'));
 					}
 					// Zapis nowego wpisu
@@ -403,13 +452,13 @@ try
 						);
 
 						$_log->insertSuccess('edit', __('Data has been saved.'));
-						
+
 						// Czy mają zostać zapisane jakieś słowa kluczowe?
 						if (isset($access))
-						{	
+						{
 							$_tag->addTag('PAGES', $_pdo->getMaxValue('SELECT max(`id`) FROM [pages]'), $keyword, $access);
 						}
-						
+
 						$_request->redirect(FILE_PATH, array('page' => 'entries', 'act' => 'add', 'status' => 'ok'));
 					}
 				}
@@ -437,13 +486,13 @@ try
 					$type[$row['id']] = $row['name'];
 				}
 			}
-			
+
 			// Tworzenie nowego wpisu
 			if ($_request->get('action')->show() === 'add')
 			{
 				// Przesyłanie danych do routera
 				$_tpl->assignGroup(array(
-					'categories' => $_tpl->getMultiSelect($category, '1', TRUE),
+					'categories' => $_tpl->getMultiSelect($category, '1', FALSE),
 					'types' => $_tpl->createSelectOpts($type, NULL, TRUE),
 				));
 
@@ -454,41 +503,43 @@ try
 				if ($row = $_pdo->getRow('SELECT * FROM [pages] WHERE id = '.$_request->get('id')->show()))
 				{
 					! class_exists('Tag') || $_tag = New Tag($_system, $_pdo);
-					
+
 					$keywords = array();
 					if ($keys = $_tag->getTag('PAGES', $_request->get('id')->show())){
-						foreach($keys as $var){
+						foreach($keys as $var)
+						{
 							$keywords[] = $var['value'];
 						}
 					}
-					
+
 					$_tpl->assignGroup(array(
 						'title' => $row['title'],
 						'description' => $row['description'],
 						'type' => $row['type'],
 						'content' => $row['content'],
 						'preview' => $row['preview'],
-						'categories' => $_tpl->getMultiSelect($category, HELP::explode($row['categories']), TRUE),
+						'categories' => $_tpl->getMultiSelect($category, HELP::explode($row['categories']), FALSE),
 						'types' => $_tpl->createSelectOpts($type, $row['type'], TRUE),
 						'thumbnail' => $row['thumbnail'],
 						'url' => $row['url'],
-						
 						'keywords' => $keywords
 					));
-					
-					
 				}
 			}
 			// Usuwanie kategorii z zabezpieczeniem przed usunięciem systemowej
 			elseif ($_request->get('action')->show() === 'delete' && $_request->get('id')->isNum())
 			{
-				$_pdo->exec('DELETE FROM [pages_categories] WHERE id = '.$_request->get('id')->show().' AND `is_system` = 0');
-
+				$row = $_pdo->getRow('SELECT `thumbnail` FROM [pages] WHERE `id` = :id',
+					array(':id', $_request->get('id')->show(), PDO::PARAM_INT)
+				);
+				$_pdo->exec('DELETE FROM [comments] WHERE `content_type` = "pages" AND `content_id` = '.$_request->get('id')->show());
+				Image::delFile(DIR_UPLOAD.'images'.DS.$row['thumbnail']);
+				$_pdo->exec('DELETE FROM [pages] WHERE id = '.$_request->get('id')->show());
 
 				////$_tag->delTag('NEWS', $_request->get('id')->show());
 
 				$_log->insertSuccess('edit', __('Data has been removed.'));
-				$_request->redirect(FILE_PATH, array('page' => 'categories', 'act' => 'delete', 'status' => 'ok'));
+				$_request->redirect(FILE_PATH, array('page' => 'entries', 'act' => 'delete', 'status' => 'ok'));
 			}
 			// Przegląd wszystkich kategorii
 			else if ($_request->get('action', NULL)->show() === NULL)

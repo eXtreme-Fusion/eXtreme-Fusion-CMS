@@ -7,14 +7,29 @@
  * @see      http://php-fusion.pl
  * @license  Affero GPL license
  */
+// Official SVN Trunk Rev: 2364
+/*English Language Fileset
+ Produced by Nick Jones (Digitanium)
+ Email: digitanium@php-fusion.co.uk
+ Web: http://www.php-fusion.co.uk
+
+ Polish (UTF-8) Language Fileset for PHP-Fusion v7.02.03, based at translation for PHP-Fusion v7.01.xx
+ Translations from english, modifications and tests:
+ PHP-Fusion po Polsku (PHP-Fusion in Polish)
+ https://launchpad.net/pf-pl
+ Main translator: Tomasz Jankowski (jantom)
+ Translator and tester: Michał Pospieszyński (sony)
+ This program is released as free software under the
+ Affero GPL license.*/
 
 /** TODO: Konfiguracja języka w osobnym pliku (`locale.php`) ***/
 setlocale(LC_TIME, array('pl_PL.UTF-8', 'Polish'));
 
 return array(
-	'Charset' => 'UTF-8',
-	'xml_lang' => 'pl',
 
+	// Tutaj zamieszczać locale pisane tylko przez EF Team, tak by przepisać ten plik na własny
+	'html_charset' => 'UTF-8',
+	// Koniec locali EF Team
 
 	'An unexpected error occurred' => 'Wystąpił nieoczekiwany błąd',
 
@@ -23,31 +38,28 @@ return array(
 	'Action error' => 'Wystąpił błąd :( Akcja nie została wykonana poprawnie',
 	'Action success' => 'Wszystko wporzo :) Akcja wykonana poprawnie',
 
-	# 'Deleting error' => 'An unexpected error occurred: element has not been deleted',
-	# 'Deleting success' => 'All is OK: element has been successfully deleted',
-
 
 	/* INDEKSY JUŻ GOTOWE DLA EXTREME-FUSION 5 */
-	
+
 	// Zarządzanie (edycja, usuń)
 	'Management' => 'Zarządzanie',
 	'Author' => 'Autor',
 	'Title:' => 'Tytuł:',
-	'Content' => 'Treść', 
+	'Content' => 'Treść',
 	// userException class
 	'Entered the wrong data type.' => 'Wprowadzono dane o niepoprawnym typie',
-	
+
 	'Username' => 'Nazwa użytkownika',
 	'Online' => 'na stronie',
 	'Offline' => 'poza stroną',
-	
+
 	// Dla listy wyboru ochrony formularza przed spamem
 	'Without protection' => 'bez ochrony',
-	
-	
+
+
 	'Statistics' => 'Statystyki',
 	/* koniec indeksów EF5, poniżej indeksy z PF lub namieszane */
-	
+
 	'Description:' => 'Opis:',
 	'Keywords:' => 'Słowa kluczowe:',
 	'Select all' => 'Zaznacz wszystko',
@@ -71,7 +83,7 @@ return array(
 	'Options:' => 'Opcje:',
 
 	'Database error' => 'Błąd podczas aktualizacji danych: ustawienia nie zostały zmienione!',
-	
+
 	//Informations
 	'Author:' => 'Autor:',
 	'Date:' => 'Data dodania:',
@@ -99,12 +111,12 @@ return array(
 	// Full & Short Months
 	'months' => '&nbsp|styczeń|luty|marzec|kwiecień|maj|czerwiec|lipiec|sierpień|wrzesień|październik|listopad|grudzień',
 	'shortmonths' => '&nbsp|st.|lt.|mar.|kwi.|maj|czer.|lip.|sier.|wrz.|paź.|lis.|gru.',
-	
+
 	//Paging
 	'Go to first page' => 'Idź do pierwszej podstrony',
 	'Go to page' => 'Idź do podstrony',
 	'Go to last page' => 'Idź do ostatniej podstrony',
-	
+
 
 	// Standard User Levels
 	'Guest' => 'Gość',
@@ -120,14 +132,6 @@ return array(
 	// Navigation
 	'global_001' => 'Nawigacja',
 	'global_002' => 'Brak linków\n',
-	// Users Online
-	'global_010' => 'Aktualnie online',
-	'global_011' => 'Gości online',
-	'global_012' => 'Użytkowników online',
-	'global_013' => 'Brak użytkowników online',
-	'global_014' => 'Łącznie użytkowników',
-	'global_015' => 'Nieaktywnych użytkowników',
-	'global_016' => 'Najnowszy użytkownik',
 	// Forum Side panel
 	'global_020' => 'Ostatnio na forum',
 	'global_021' => 'Najnowsze tematy',
@@ -247,24 +251,7 @@ return array(
 	'global_302' => 'Wybrana przez Ciebie skórka nie istnieje lub jest niekompletna!',
 	// JavaScript Not Enabled
 	'global_303' => '<p>O&nbsp;nie! Ta strona potrzebuje włączonej obsługi języka <strong>JavaScript</strong>!</p>',
-	/*'global_303' => '<p>O&nbsp;nie! Ta strona potrzebuje włączonej obsługi języka <strong>JavaScript</strong>!</p><p>Twoja przeglądarka nie obsługuje tego języka lub ma wyłączoną jego obsługę. <strong>Włącz wykonywanie kodu JavaScript</strong> w swojej przeglądarce internetowej, aby skorzystać ze wszystkich funkcji strony<br /> lub <strong>skorzystaj</strong> z&nbsp;programu obsługującego język JavaScript, np. <a href="http://firefox.com" rel='nofollow' title='Mozilla Firefox'>Mozilla Firefox</a>, <a href='http://apple.com/safari/' rel='nofollow' title='Apple Safari'>Apple Safari</a>, <a href='http://opera.com' rel='nofollow' title='Opera Web Browser'>Opera</a>, <a href='http://www.google.com/chrome' rel='nofollow' title='Google Chrome'>Google Chrome</a> lub <a href='http://www.microsoft.com/windows/internet-explorer/' rel='nofollow' title='Windows Internet Explorer'>Windows Internet Explorer</a> w&nbsp;wersji wyższej niż 6.</p>', /*
-	// User Management
-	// Member status
-	'global_400' => 'zawieszone',
-	'global_401' => 'zablokowane',
-	'global_402' => 'wyłączone',
-	'global_403' => 'konto wyłączone',
-	'global_404' => 'konto anonimizowane',
-	'global_405' => 'anonimowe',
-	'global_406' => 'Konto zostało zbanowane z&nbsp;następujących powodów:',
-	'global_407' => 'Konto jest zawieszone do ',
-	'global_408' => ' z&nbsp;następujących powodów:',
-	'global_409' => 'Konto zostało zablokowane ze względów bezpieczeństwa.',
-	'global_410' => 'Powód: ',
-	'global_411' => 'Konto zostało zablokowane zp. bezczynności',
-	'global_412' => 'Konto zostało anonimizowane, prawdopodobnie z&nbsp;powodu bezczynności',
-	// Banning due to flooding
-	'global_440' => 'Automatyczne zbanowanie przez blokadę antyfloodową',
+
 
 	/**** TODO: Pliki językowe powinny być logic-less, czyli bez kodu PHP w tłumaczeniach, tym zajmą się dynamiczne parametry *****/
 	/**** TODO: Pliki językowe nie powinny zawierać szablonów wiadomości email, powinny znajdować się w tym katalogu, lecz w osobnych plikach które będą obsłużone przez OPY ****/
@@ -314,10 +301,10 @@ return array(
 	//Czas sesji
 
 	// Function showCopyrights()
-	'Powered by :system' => 'Strona oparta na systemie CMS :system',
-	
-	'Powered by :system under :license License' => 'Strona oparta na systemie CMS :system na licencji :license',
-	
+	'Powered by :system' => 'Strona oparta na systemie CMS :system.<br />Copyright 2002-2013 <a href="http://php-fusion.co.uk/">PHP-Fusion</a>. Released as free software without warranties under <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">aGPL v3</a>.',
+
+	'Powered by :system under :license License' => 'Strona oparta na systemie CMS :system.<br />Copyright 2002-2013 <a href="http://php-fusion.co.uk/">PHP-Fusion</a>. Released as free software without warranties under <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">aGPL v3</a>.',
+
 	'Yes' => 'Tak',
 	'No' => 'Nie',
 	'Add' => 'Dodaj',
@@ -337,7 +324,7 @@ return array(
 	'Access denied' => 'Odmowa dostępu',
 	'Options' => 'Opcje',
 	'Done' => 'Gotowe',
-	'Show all' => 'Bez sortowania',
+	'Show all' => 'Bez filtrowania',
 	'Refresh' => 'Odśwież',
 	'Management' => 'Zarządzanie',
 	'Added by' => 'Dodane przez',
@@ -349,13 +336,67 @@ return array(
 	'Current password:' => 'Aktualne hasło:',
 	'New password:' => 'Nowe hasło:',
 	'Confirm new password:' => 'Potwierdź nowe hasło:',
-	'Avatar:' => 'Awatar:',
 	'Edit account' => 'Edytuj konto',
 	'Language:' => 'Język:',
-	
+
 	'Polish' => 'Polski',
 	'English' => 'Angielski',
 	'Czech' => 'Czeski',
-	
-	'Modules under Development.' => 'Moduł w trakcie rozwoju.'
+
+	'Modules under Development.' => 'Moduł w trakcie rozwoju.',
+
+	// Error exceptions
+
+	// Uload
+	'The uploaded file exceeds the upload_max_filesize directive in php.ini.' => 'Wysyłany plik przekracza maksymalny rozmiar ustawiony w dyrektywie \'upload_max_filesize\' w pliku php.ini',
+	'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.' => 'Wysyłany plik przekracza maksymalny rozmiar ustawiony w dyrektywie \'MAX_FILE_SIZE\' przeznaczonej dla formularzy HTML.',
+	'The uploaded file was only partially uploaded.' => 'Wysyłany plik został zapisany tylko w części.',
+	'No file was uploaded.' => 'Żaden plik nie został wysłany.',
+	'Missing a temporary folder.' => 'Brak folderu tymczasowego.',
+	'Failed to write file to disk.' => 'Przerwane zapisywanie pliku na dysku.',
+	'File upload stopped by extension.' => 'Wysyłanie pliku zatrzymane przez wyjątek.',
+	'Unknown upload error.' => 'Wystąpił nie znany błąd podczas wysyłania pliku.',
+	'Upload error' => 'Błąd wysyłanie plików',
+
+	//System
+	'System error' => 'Błąd systemu',
+	'Error path' => 'Ścieżka błędu',
+	'In file' => 'W pliku',
+	'Function' => 'Funckja',
+	'Line' => 'Linia',
+
+	// Arguments
+	'Function argument error' => 'Błąd argumentów funkcji',
+	'Parameter of :parametr is wrong.' => 'Parametr :parametr jest nie prawidłowy.',
+
+	//User
+	'User error' => 'Błąd użytkownika',
+	'PDO Error' => 'Błąd interpretera PDO',
+
+	//Comments
+	'Add comments' => 'Skomentuj',
+	'Your name' => 'Twoja ksywka',
+	'Enter a comment' => 'Wpisz komentarz...',
+	'Add replay' => 'Dodaj odpowiedź',
+	'Adding your comment' => 'Dodawanie komentarza',
+	'Comment has been added' => 'Komentarz został dodany',
+	'Commenting has been disabled for your group permissions' => 'Komentowanie zostało wyłączone dla twojej grupy uprawnień',
+
+	//News Categories
+	'Bugs' => 'Błędy',
+	'Downloads' => 'Download',
+	'eXtreme-Fusion' => 'eXtreme-Fusion',
+	'Games' => 'Gry',
+	'Graphics' => 'Grafika',
+	'Hardware' => 'Sprzęt',
+	'Journal' => 'Dziennik',
+	'Members' => 'Użytkownicy',
+	'Mods' => 'Modyfikacje',
+	'Movies' => 'Filmy',
+	'Network' => 'Sieć',
+	'News' => 'Newsy',
+	'Security' => 'Bezpieczeństwo',
+	'Software' => 'Oprogramowanie',
+	'Themes' => 'Skórki',
+	'Windows' => 'Windows',
 );

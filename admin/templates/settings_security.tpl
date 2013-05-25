@@ -1,8 +1,43 @@
+{*
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
+|
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
+|
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+| 
+**********************************************************
+                ORIGINALLY BASED ON
+---------------------------------------------------------+
+| PHP-Fusion Content Management System
+| Copyright (C) 2002 - 2011 Nick Jones
+| http://www.php-fusion.co.uk/
++--------------------------------------------------------+
+| Author: Paul Beuk (muscapaul)
++--------------------------------------------------------+
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
++--------------------------------------------------------*/
+*}
+
 <h3>{$SystemVersion} - {i18n('Settings')} &raquo; {i18n('Security')}</h3>
 {if $message}<div class="{$class}">{$message}</div>{/if}
 
 <form action="{$URL_REQUEST}" method="post" id="This">
-	<h4>{i18n('Flood settings')}</h4>
+	{*<h4>{i18n('Flood settings')}</h4>
 	<div class="tbl1">
 		<div class="grid_6 formLabel"><label for="FloodInterval">{i18n('Flood interval (seconds):')}</label></div>
 		<div class="grid_4 formField"><input type="text" name="flood_interval" value="{$flood_interval}" id="FloodInterval" class="num_2" maxlength="2" /></div>
@@ -11,7 +46,7 @@
 		<div class="grid_6 formLabel">{i18n('Flood auto ban:')}</div>
 		<div class="grid_1 formField"><label><input type="radio" name="flood_autoban" value="1"{if $flood_autoban == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
 		<div class="grid_5 formField"><label><input type="radio" name="flood_autoban" value="0"{if $flood_autoban == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
-	</div>
+	</div>*}
 	<h4>{i18n('Bad Words')}</h4>
 	<div class="tbl1">
 		<div class="grid_6 formLabel">{i18n('Bad words filter enabled:')}</div>
@@ -48,6 +83,11 @@
 		</div>
 	</div>
 	<div class="tbl1">
+		<div class="grid_6 formLabel">{i18n('Maintenance login form:')}</div>
+		<div class="grid_1 formField"><label><input type="radio" name="maintenance_form" value="1"{if $maintenance_form == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
+		<div class="grid_5 formField"><label><input type="radio" name="maintenance_form" value="0"{if $maintenance_form == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
+	</div>
+	<div class="tbl2">
 		<div class="grid_6 formLabel"><label for="MaintenanceMessage">{i18n('Maintenance mode message:')}</label></div>
 		<div class="clear"></div>
 		<div class="sep_1 grid_10 formField"><textarea name="maintenance_message" id="MaintenanceMessage" cols="80" rows="3">{$maintenance_message}</textarea></div>

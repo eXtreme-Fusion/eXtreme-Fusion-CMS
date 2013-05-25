@@ -27,18 +27,18 @@ return array(
 	'Additional informations' => 'Dodatkowe informacje',
 	'Administration options' => 'Opcje administracyjne',
 	'Adding an user' => 'Dodawanie użytkownika',
-	
-	
-	
+
+
+
 	//Logs
-	'User account has been edited.' => 'Konto użytkownika zostało edytowane.',
+	'User account has been edited.' => 'Konto użytkownika zostało zaktualizowane.',
 	'User account has been deleted.' => 'Konto użytkownika zostało usunięte.',
 	'User account has been hidden.' => 'Konto użytkownika zostało ukryte.',
 	'User account has been activated.' => 'Konto użytkownika zostało aktywowane.',
 	'User account has been deactivated.' => 'Konto użytkownika zostało deaktywowane.',
 	'User account has been banned.' => 'Konto użytkownika zostało zbanowane.',
 	'New user account has been added.' => 'Nowe konto użytkownika zostało dodane.',
-	'Error! User account has not been edited.' => 'Wystąpił błąd! Konto użytkownika nie zostało edytowane.',
+	'Error! User account has not been edited.' => 'Wystąpił błąd! Konto użytkownika nie zostało zaktualizowane.',
 	'Error! User account has not been deleted.' => 'Wystąpił błąd! Konto użytkownika nie zostało usunięte.',
 	'Error! User account has not been hidden.' => 'Wystąpił błąd! Konto użytkownika nie zostało ukryte.',
 	'Error! User account has not been activated.' => 'Wystąpił błąd! Konto użytkownika nie zostało aktywowane.',
@@ -54,15 +54,15 @@ return array(
 	'Error! There are empty fields in the form.' => 'Nie wypełniono wszystkich pól w formularzu.',
 	'Incorrect username.' => 'Niepoprawna nazwa użytkownika.',
 	'Incorrect password. Minimum 6 chars length.' => 'Nieprawidłowe hasło. Minimalna długość hasła to 6 znaków.',
-	'Incorrect e-mail address.' => 'Nieprawidłowy adres e-mail.',
+	'Error! Incorrect e-mail address.' => 'Nieprawidłowy adres e-mail.',
 	'This username exist in our database.' => 'Ta nazwa użytkownika istnieje już w bazie danych.',
 	'This e-mail address exists in our database.' => 'Ten adres e-mail istnieje już w bazie danych.',
-	'This action cannot be done for user with ID 1.' => 'Nie można wykonać tej akcji na użytkowniku o ID 1.',
 	'Action was done successfully.' => 'Akcja wykonana prawidłowo.',
-	'Error! User name and e-mail fields are emtpy.' => 'Pola nazwa użytkownika i e-mail są puste.',
-	'Error! User name contains incorrect characters.' => 'Wystąpił błąd! Nazwa użytkownika zawiera nieprawidłowe znaki.',
+	'Error! This action cannot be done for user with ID 1.' => 'Nie można wykonać tej akcji na użytkowniku o ID 1.',
+	'Error! Some required fields are empty.' => 'Niektóre wymagane pola są puste.',
+	'Error! The username contains incorrect characters.' => 'Wystąpił błąd! Nazwa użytkownika zawiera nieprawidłowe znaki.',
 	'Error! Password contains incorrect characters.' => 'Wystąpił błąd! Hasło zawiera nieprawidłowe znaki.',
-	'Error! This user name is already in use.' => 'Nazwa użytkownika jest już w użyciu.',
+	'Error! The username is already in use.' => 'Nazwa użytkownika jest już w użyciu.',
 	'Error! This e-mail address is already in use.' => 'Adres e-mail jest już w użyciu.',
 	'User :user has been edited.' => 'Użytkownik :user został edytowany.',
 	'Error! User with ID :id can not be found.' => 'Wystąpił błąd! Nie można znaleźć użytkownika o id :id.',
@@ -86,7 +86,7 @@ return array(
 	'Hidden users' => 'Użytkownicy z ustawionym statusem <em>Ukryty</em> nie będą wyświetlani w liście użytkowników online.<br />Żeby przywrócić użytkownika w grono widocznych wystarczy kliknąć przycisk <em>Przywróć</em>.',
 	'On this page there are displayed active users and administrators.' => 'Na tej podstronie wyświetlani są wszyscy aktywni użytkownicy i administratorzy.',
 
-	
+
 	//Types
 	'Active' => 'Aktywne',
 	'Deactivated' => 'Deaktywowane',
@@ -95,15 +95,16 @@ return array(
 	'Hidden' => 'Ukryte',
 	'E-mail verification required' => 'Oczekuje weryfikacji przez e-mail',
 	'Administrator activation required' => 'Oczekuje weryfikacji przez administratora',
-	
-	
+
+
 	// Create/Edit account
 	'Minimum 6 characters.' => 'Minimum 6 znaków.',
 	'E-mail address:' => 'Adres e-mail:',
 	'Theme:' => 'Skórka:',
 	'Birthdate:' => 'Data urodzenia:',
 	'Default roles' => '<small>Domyślnie przypisane <em>Gość</em> i <em>Użytkownik</em></small>.',
-	
+	'Avatar requirements' => 'Wymagania maksymalne: :filesize KB, :width x :height px',
+
 	//Admin options
 	'Edit the account' => 'Edytuj konto',
 	'Ban the account' => 'Zablokuj konto',
@@ -113,17 +114,17 @@ return array(
 	'Hide the account' => 'Ukryj konto',
 	'Make the account visible' => 'Upublicznij konto',
 	'Delete the account' => 'Usuń konto',
-	
-	
+
+
 	// Message Error
-	'You must enter a username and e-mail.' => 'Musisz podać nazwę użytkownika oraz adres e-mail.',
+	
 	'Username contains unsupported characters.' => 'Nazwa użytkownika zawiera nieobsługiwane znaki.',
 	'The new passwords not match.' => 'Nowe hasła użytkownika nie pasują do siebie.',
 	'Incorrect password' => 'Nieprawidłowe hasło użytkownika, proszę o korzystanie wyłącznie ze znaków alfanumerycznych.<br />Hasło musi zawierać minimum 6 znaków.',
 	'Provided an incorrect e-mail address.' => 'Podano nieprawidłowy adres e-mail.',
 	'Login is in use' => 'Podany login ('.(isset($_POST['username']) ? $_POST['username'] : '').') jest już w użyciu.',
 	'Email is in use' => 'Podany adres e-mail ('.(isset($_POST['email']) ? $_POST['email'] : '').') jest już w&nbsp;użyciu.',
-	
+
 	// Send e-Mail Message
 	'Welcome!' => 'Witaj!',
 	'Welcome :user!' => 'Witaj :user!',
@@ -156,5 +157,5 @@ return array(
 	'Subject:' => 'Temat wiadomości:',
 	'Message:' => 'Treść wiadomości:',
 	'Hide recipients?' => 'Ukryć odbiorców? <small>Odbiorcy nie będą widzieli do kogo został wysłany mail</small>',
-	
+
 );

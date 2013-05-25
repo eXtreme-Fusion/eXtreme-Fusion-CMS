@@ -1,14 +1,19 @@
 <?php
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
+/*********************************************************
+| eXtreme-Fusion 5
 | Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
 | http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.
-| http://extreme-fusion.org/ef5/license/
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+*********************************************************/
 
 /* DEBUGOWANIE:
 echo 'Akcja ^: '.var_dump($_route->getAction()).'<br />';
@@ -436,13 +441,13 @@ class Router
 		}
 		else
 		{
-			$this->_path = 'news';
+			$this->_path = $this->getOpeningPage();
 			return TRUE;
 		}
 
 		if ($path === 'index')
 		{
-			$path = 'news';
+			$path = $this->getOpeningPage();
 		}
 
 		$this->_path = $path;
@@ -595,9 +600,9 @@ class Router
 		return $this->_ext['url'];
 	}
 
-	public function getByID($id)
+	public function getByID($id, $default = NULL)
 	{
-		return isset($this->_values[$id]) ? $this->_values[$id] : FALSE;
+		return isset($this->_values[$id]) ? $this->_values[$id] : $default;
 	}
 
 	public function getRequest()
@@ -624,5 +629,4 @@ class Router
 	{
 		return $this->_url->path($data);
 	}
-
 }

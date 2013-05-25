@@ -1204,8 +1204,10 @@
 					}
 				}
 				closedir($dir);
+				
 				file_put_contents($this -> plugins.'plugins.php', '<'."?php\n".$code.'?'.'>');
 				file_put_contents($this -> plugins.'compile.php', '<'."?php\n".$compileCode.'?'.'>');
+				
 				eval($code);
 			}
 			return true;

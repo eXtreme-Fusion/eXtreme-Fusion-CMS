@@ -1,14 +1,36 @@
 <?php defined('EF5_SYSTEM') || exit;
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+|
+**********************************************************
+                ORIGINALLY BASED ON
+---------------------------------------------------------+
+| PHP-Fusion Content Management System
+| Copyright (C) 2002 - 2011 Nick Jones
+| http://www.php-fusion.co.uk/
++--------------------------------------------------------+
+| Author: Nick Jones (Digitanium)
++--------------------------------------------------------+
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
++--------------------------------------------------------*/
 $_locale->load('users');
 
 define('THIS', FALSE);
@@ -19,34 +41,40 @@ $theme = array(
 	'Desc' => 'Lista aktywnych kont na stronie '.$_sett->get('site_name')
 );
 
-$data = new Edit(
-	array(
-		'current' => $_route->getByID(1) ? $_route->getByID(1) : 1,
-		'sort' => is_string($_route->getByID(2)) ? $_route->getByID(2) : 'all'
-	)
-);
+// Aktualne filtrowanie
+if ($_route->getAction() && is_string($_route->getAction()))
+{
+	$data = new Edit($_route->getAction());
+	$filter = $data->filters('trim', 'strip');
+}
+else
+{
+	$filter = 'all';
+	$_route->trace(array('action' => 'all'));
+}
 
-$rows = $_pdo->getMatchRowsCount('SELECT * FROM [users] WHERE `status` = 0 '.($data->arr('sort')->filters('trim', 'strip') !== 'all' ? 'AND `username` LIKE "'.$data->arr('sort')->filters('trim', 'strip').'%"' : '').'');
+// Aktualna podstrona filtrowania 
+$current_page = $_route->getByID(2, 1);
+
+$rows = $_pdo->getMatchRowsCount('SELECT * FROM [users] WHERE `status` = 0 '.($filter !== 'all' ? 'AND `username` LIKE "'.$filter.'%"' : '').'');
 
 if ($rows)
 {
-	$rowstart = $data->arr('current')->isNum(TRUE, FALSE) ? Paging::getRowStart($data->arr('current')->isNum(TRUE, FALSE), intval($_sett->get('users_per_page'))) : 0;
-
-	$cache = $_system->cache('users,'.$_user->getCacheName().',sort_by-'.$data->arr('sort')->filters('trim', 'strip').',page-'.$data->arr('current')->isNum(TRUE, FALSE), NULL, 'users', $_sett->getUns('cache', 'expire_pages'));
+	$cache = $_system->cache('users,'.$_user->getCacheName().',sort_by-'.$filter.',page-'.$current_page, NULL, 'users', $_sett->getUns('cache', 'expire_pages'));
 	if ($cache === NULL)
 	{
 		$query = $_pdo->getData('
 			SELECT `id`, `username`, `role`, `status`, `lastvisit`
-			FROM [users] WHERE `status` = 0 '.($data->arr('sort')->filters('trim', 'strip') !== 'all' ? 'AND `username` LIKE "'.$data->arr('sort')->filters('trim', 'strip').'%"' : '').'
+			FROM [users] WHERE `status` = 0 '.($filter !== 'all' ? 'AND `username` LIKE "'.$filter.'%"' : '').'
 			ORDER BY `role` ASC, `username`
 			LIMIT :rowstart,:users_per_page',
 			array(
+				array(':rowstart', Paging::getRowStart($current_page, $_sett->get('users_per_page')), PDO::PARAM_INT),
 				array(':users_per_page', intval($_sett->get('users_per_page')), PDO::PARAM_INT),
-				array(':rowstart', $rowstart, PDO::PARAM_INT)
 			)
 		);
-	
-		if ($_pdo->getRowsCount($query))
+
+		if ($query)
 		{
 			$i = 0;
 			foreach($query as $row)
@@ -54,7 +82,7 @@ if ($rows)
 				$cache[] = array(
 					'row' => $i % 2 == 0 ? 'tbl1' : 'tbl2',
 					'id' => $row['id'],
-					'visit' => HELP::showDate('shortdate', $row['lastvisit']),
+					'visit' => ($row['lastvisit'] != 0 ? HELP::showDate('shortdate', $row['lastvisit']) : __('Nie był na stronie')),
 					'link' => HELP::profileLink($row['username'], $row['id']),
 					'role' => $_user->getRoleName($row['role']),
 					'roles' => implode(', ', $_user->getUserRolesTitle($row['id'], 3))
@@ -62,18 +90,17 @@ if ($rows)
 				$i++;
 			}
 		}
-		$_system->cache('users,'.$_user->getCacheName().',sort_by-'.$data->arr('sort')->filters('trim', 'strip').',page-'.$data->arr('current')->isNum(TRUE, FALSE), $cache, 'users');
+		$_system->cache('users,'.$_user->getCacheName().',sort_by-'.$filter.',page-'.$current_page, $cache, 'users');
 	}
 
-	$_pagenav = new PageNav(new Paging($rows, $data->arr('current')->isNum(TRUE, FALSE), intval($_sett->get('users_per_page'))), $_tpl, 10, array($_route->getFileName(), $data->arr('sort')->filters('trim', 'strip'), FALSE));
-
+	$ec->paging->setPagesCount($rows, $current_page, $_sett->get('users_per_page'));
 	if (file_exists(DIR_THEME.'templates'.DS.'paging'.DS.'users_page_nav.tpl'))
 	{
-		$_pagenav->get($_pagenav->create(), 'users_page_nav', DIR_THEME.'templates'.DS.'paging'.DS);
+ 		$ec->pageNav->get($ec->pageNav->create($_tpl, 10), 'users_page_nav', DIR_THEME.'templates'.DS.'paging'.DS);
 	}
 	else
 	{
-		$_pagenav->get($_pagenav->create(), 'page_nav');
+ 		$ec->pageNav->get($ec->pageNav->create($_tpl, 10), 'users_page_nav');
 	}
 
 	$_tpl->assign('users', $cache);
@@ -89,21 +116,20 @@ for ($i = 0, $c = count($sort); $i < $c; $i++)
 	$sort_sel[$i] = array(
 		'disp' => $sort[$i],
 		'val' => strtolower($sort[$i]),
-		'link' => $_route->path(array('controller' => 'users', 'action' => $data->arr('current')->isNum(TRUE, FALSE), strtolower($sort[$i])))
+		'link' => $_route->path(array('controller' => 'users', 'action' => strtolower($sort[$i])))
 	);
 
-	if ($data->arr('sort')->filters('trim', 'strip') === $sort_sel[$i]['val'])
+	if ($filter === $sort_sel[$i]['val'])
 	{
 		$sort_sel[$i]['sel'] = TRUE;
 	}
 }
 
 $_tpl->assign('sort', $sort_sel);
-
-if ($data->arr('sort')->filters('trim', 'strip') !== 'all')
+if ($filter !== 'all')
 {
 	$_tpl->assignGroup(array(
 		'show_all' => TRUE,
-		'link' => $_route->path(array('controller' => 'users', 'action' => $data->arr('current')->isNum(TRUE, FALSE)))
+		'link' => $_route->path(array('controller' => 'users'))
 	));
 }

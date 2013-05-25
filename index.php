@@ -1,14 +1,36 @@
 <?php
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
+/*********************************************************
+| eXtreme-Fusion 5
 | Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
 | http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.
-| http://extreme-fusion.org/ef5/license/
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+|
+**********************************************************
+                ORIGINALLY BASED ON
+---------------------------------------------------------+
+| PHP-Fusion Content Management System
+| Copyright (C) 2002 - 2011 Nick Jones
+| http://www.php-fusion.co.uk/
++--------------------------------------------------------+
+| Author: Nick Jones (Digitanium)
++--------------------------------------------------------+
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
++--------------------------------------------------------*/
 
 try
 {
@@ -34,24 +56,33 @@ try
 		exit('eXtreme-Fusion 5 Beta 6');
 	}
 
+	if ($_user->bannedByIP())
+	{
+		$_route->trace(array('controller' => 'error', 'action' => 404, 'params' => NULL)); exit('Banned...');
+	}
+	
 	StaticContainer::register('route', $_route);
 
 	// Tryb prac na serwerze
 	if ($_user->get('id') !== '1')
 	{
+		// Tryb maintenance?
 		if ($_sett->get('maintenance') === '1')
 		{
+			// Jeśli jest się na innej podstronie niz maintenance
 			if ($_route->getFileName() !== 'maintenance')
 			{
+				// Jeśli nie ma się uprawnień do bycia na innej podstronie
 				if (! $_user->hasAccess($_sett->get('maintenance_level')))
 				{
-					HELP::redirect(ADDR_SITE.'maintenance.html');
+					$_route->redirect(array('controller' => 'maintenance'));
 				}
 			}
 			else
-			{
+			{	// Jesli ma się prawa do bycia na innej podstronie
 				if ($_user->hasAccess($_sett->get('maintenance_level')))
 				{
+					// Przekierowanie na strone główną
 					HELP::redirect(ADDR_SITE);
 				}
 			}
@@ -104,9 +135,7 @@ try
 	if ( ! $_route->getExitFile())
 	{
 		$row = $_pdo->getRow('SELECT full_path FROM [links] WHERE short_path= :short_path ORDER BY `datestamp` DESC LIMIT 1',
-			array(
-				array(':short_path', $_route->getRequest(), PDO::PARAM_STR)
-			)
+			array(':short_path', $_route->getRequest(), PDO::PARAM_STR)
 		);
 
 		if ($row)
@@ -115,9 +144,16 @@ try
 		}
 	}
 	// Tworzenie emulatora statyczności klasy OPT
-	TPL::build($_theme = new Theme($_sett, $_system, $_user, $_pdo, $_request, $_route, $_route->getTplFileName()));
+	TPL::build($_theme = new Theme($_sett, $_system, $_user, $_pdo, $_request, $_route, $_head, $_route->getTplFileName()));
 
 	//$_theme->registerFunction('url', 'Url');
+
+	$_theme->setStatisticsInst($ec->statistics);
+
+	if ($_sett->get('visits_counter_enabled'))
+	{
+		$ec->statistics->saveUniqueVisit($_user->getIP());
+	}
 
 	// Ładowanie pliku startowego modułu
 	if ($row = $ec->modules->getModuleBootstrap($_system))
@@ -151,7 +187,14 @@ try
 	}
 
 	// Załączanie predefiniowanych elementów szablonu systemu (panele)
-	require_once DIR_SYSTEM.'panels.php';
+	if ($_route->getFileName() !== 'maintenance')
+	{
+		require_once DIR_SYSTEM.'panels.php';
+	}
+	else
+	{
+		define('LEFT', ''); define('TOP_CENTER', ''); define('BOTTOM_CENTER', ''); define('RIGHT', '');
+	}
 
 	/**
 	 * Konfiguracja sekcji HEAD

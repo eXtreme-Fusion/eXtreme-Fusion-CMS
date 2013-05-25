@@ -1,7 +1,43 @@
-{php} opentable(__('Rules')) {/php}
+{*
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
+|
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
+|
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+|
+**********************************************************
+                ORIGINALLY BASED ON
+---------------------------------------------------------+
+| PHP-Fusion Content Management System
+| Copyright (C) 2002 - 2011 Nick Jones
+| http://www.php-fusion.co.uk/
++--------------------------------------------------------+
+| Author: Nick Jones (Digitanium)
++--------------------------------------------------------+
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
++--------------------------------------------------------*/
+*}
+
+{panel=i18n('Rules')}
 	{if $license_agreement}
-		{$license_agreement}
+	{$license_agreement}
+	<div class="right small">{i18n('Last updated rules:')} {$license_lastupdate}</div>
 	{else}
-		<div class="error">{i18n('The Rules has not been written yet.')}</div>
+	<div class="error">{i18n('The Rules has not been written yet.')}</div>
 	{/if}
-{php} closetable() {/php}
+{/panel}

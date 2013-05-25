@@ -1,7 +1,7 @@
 <?php defined('EF5_SYSTEM') || exit;
 
 return array(
-		'About URLs' => '<p>URLs Generator allows you to create your own paths to pages of your website.</p>
+	'About URLs' => '<p>URLs Generator allows you to create your own paths to pages of your website.</p>
 					 <p>Addresses entered on the form below should not include the extension or the path to main page.</p>
 					 <p>Example of proper use:</p>
 					 <br />

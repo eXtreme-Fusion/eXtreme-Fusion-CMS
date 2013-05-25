@@ -1,14 +1,37 @@
 <?php
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
+/*********************************************************
+| eXtreme-Fusion 5
 | Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
 | http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.
-| http://extreme-fusion.org/ef5/license/
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+| 
+**********************************************************
+                ORIGINALLY BASED ON
+---------------------------------------------------------+
+| PHP-Fusion Content Management System
+| Copyright (C) 2002 - 2011 Nick Jones
+| http://www.php-fusion.co.uk/
++--------------------------------------------------------+
+| Author: Nick Jones (Digitanium)
+| Author: Starefossen
++--------------------------------------------------------+
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
++--------------------------------------------------------*/
 try
 {
 	require_once '../../config.php';
@@ -214,8 +237,6 @@ try
 					}
 				}
 				
-		
-
 				$_tpl->assignGroup(array(
 					'id' => $row['id'],
 					'title' => $row['title'],
@@ -242,14 +263,14 @@ try
 		else
 		{
 			$_tpl->assignGroup(array(
-				'category' => $_tpl->createSelectOpts($category, NULL, TRUE, TRUE),
-				'access' => $_tpl->getMultiSelect($_user->getViewGroups(), NULL, TRUE),
+				'category' => $_tpl->createSelectOpts($category, NULL, TRUE, FALSE),
+				'access' => $_tpl->getMultiSelect($_user->getViewGroups(), '3', TRUE),
 				'language' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'locale', array(), TRUE, 'folders'), $_sett->get('locale'), FALSE, TRUE)
 			));
 		}
 
 		$items_per_page = 20;
-		$current = intval($_request->get('current', NULL)->show() !== NULL ? $_request->get('current')->show() : 1);
+		$current_page = intval($_request->get('current', NULL)->show() !== NULL ? $_request->get('current')->show() : 1);
 
 		$rows = $_pdo->getMatchRowsCount('SELECT `id`, `title`, `datestamp`, `author`, `access` FROM [news] ORDER BY `datestamp`');
 
@@ -281,9 +302,10 @@ try
 
 			}
 
-			$_pagenav = new PageNav(new Paging($rows, $current, $items_per_page), $_tpl, 10, array('page=news', 'current=', FALSE));
-			$_pagenav->get($_pagenav->create(), 'page_nav', DIR_ADMIN_TEMPLATES.'paging'.DS);
-
+			
+			$ec->paging->setPagesCount($rows, $current_page, $items_per_page);
+			$ec->pageNav->get($ec->pageNav->create($_tpl, 10), 'page_nav', DIR_ADMIN_TEMPLATES.'paging'.DS);
+		
 			$_tpl->assign('news_list', $news_list);
 		}
 	}

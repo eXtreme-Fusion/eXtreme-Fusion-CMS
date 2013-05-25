@@ -1,3 +1,38 @@
+{*
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
+|
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
+|
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+|
+**********************************************************
+                ORIGINALLY BASED ON
+---------------------------------------------------------+
+| PHP-Fusion Content Management System
+| Copyright (C) 2002 - 2011 Nick Jones
+| http://www.php-fusion.co.uk/
++--------------------------------------------------------+
+| Author: Nick Jones (Digitanium)
++--------------------------------------------------------+
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
++--------------------------------------------------------*/
+*}
+
 <h3>{$SystemVersion} - {i18n('Strony treści')}</h3>
 {if $message}<div class="{$class}">{$message}</div>{/if}
 
@@ -135,6 +170,11 @@
 				<div class="grid_1 formField"><label><input type="radio" name="show_type" value="1"{if $show_type == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
 				<div class="grid_5 formField"><label><input type="radio" name="show_type" value="0"{if $show_type == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
 			</div>
+			<div class="tbl1">
+				<div class="grid_6 formLabel">{i18n('Pozwolić na komentarze?')}</div>
+				<div class="grid_1 formField"><label><input type="radio" name="user_allow_comments" value="1"{if $user_allow_comments == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
+				<div class="grid_5 formField"><label><input type="radio" name="user_allow_comments" value="0"{if $user_allow_comments == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
+			</div>
 			<div class="tbl Buttons">
 				<div class="grid_2 center button-l">
 					<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="{i18n('Back')}" /></strong></span>
@@ -213,7 +253,14 @@
 			</div>
 			<div class="tbl2">
 				<div class="grid_6 formLabel"><label for="Thumbnail">{i18n('Category thumbnail:')}</label></div>
+				{if ! $thumbnail}
 				<div class="grid_4 formField"><input type="file" name="thumbnail" value="{$thumbnail}" id="Thumbnail" /></div>
+				{else}
+				<div class="grid_4 formField"><img src="{$ADDR_UPLOAD}images/{$thumbnail}">
+					<p><input type="checkbox" name="delete_thumbnail" />Usuń aktualną miniaturkę</p>
+					<input type="hidden" name="thumbnail" value="{$thumbnail}" />
+				</div>
+				{/if}
 			</div>
 			<div class="tbl Buttons">
 				<div class="grid_2 center button-l">
@@ -252,7 +299,7 @@
 				<tr>
 					<th style="width:20%">{i18n('Id:')}</th>
 					<th style="width:20%">{i18n('Name:')}</th>
-					<th style="width:25%">{i18n('Wyświetlanie jako news:')}</th>
+					<th style="width:25%">{i18n('Opis:')}</th>
 					<th style="width:25%">{i18n('Options:')}</th>
 				</tr>
 			</thead>
@@ -347,10 +394,13 @@
 				</div>
 				<div class="tbl2">
 					<div class="grid_6 formLabel"><label for="Thumbnail">{i18n('Thumbnail:')}</label></div>
-					<div class="grid_4 formField"><input type="file" name="thumbnail" id="Thumbnail" /></div>
-					{if $thumbnail}
-					 {*dostosować*}
+					{if ! $thumbnail}
+					<div class="grid_4 formField"><input type="file" name="thumbnail" value="{$thumbnail}" id="Thumbnail" /></div>
+					{else}
+					<div class="grid_4 formField"><img src="{$ADDR_UPLOAD}images/{$thumbnail}">
 						<p><input type="checkbox" name="delete_thumbnail" />Usuń aktualną miniaturkę</p>
+						<input type="hidden" name="thumbnail" value="{$thumbnail}" />
+					</div>
 					{/if}
 				</div>
 				<div class="tbl1">

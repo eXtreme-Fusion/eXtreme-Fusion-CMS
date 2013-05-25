@@ -1,14 +1,36 @@
 <?php
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
+/*********************************************************
+| eXtreme-Fusion 5
 | Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
 | http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.
-| http://extreme-fusion.org/ef5/license/
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+|
+**********************************************************
+ 	Some open-source code comes from
+---------------------------------------------------------+
+| PHP-Fusion Content Management System
+| Copyright (C) 2002 - 2011 Nick Jones
+| http://www.php-fusion.co.uk/
++--------------------------------------------------------+
+| Author: Nick Jones (Digitanium)
++--------------------------------------------------------+
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
++--------------------------------------------------------*/
 
 defined('EF5_SYSTEM') || exit;
 
@@ -88,6 +110,72 @@ Class HELP
 		self::$_url = $url;
 	}
 
+	public static function wordsProtect($string)
+	{
+		if (self::$_sett->get('bad_words_enabled'))
+		{
+			$to_replace = explode(PHP_EOL, self::$_sett->get('bad_words'));
+			foreach($to_replace as $key => $val)
+			{
+				if ($val)
+				{
+					$new = '';
+					if ($val[strlen($val)-1] === ' ')
+					{
+						$new = ' ';
+					}
+
+					$to_replace[$key] = trim($val).$new;
+				}
+			}
+
+			return str_replace($to_replace, self::$_sett->get('bad_word_replace'), $string);
+		}
+
+		return $string;
+	}
+
+
+
+	public static function cleanSelectOptions($data)
+	{
+		// Rzutowanie typów w celu konwersji stringa na tablicę.
+		$data = (array) $data;
+
+		// Zapisywanie typu danych wejściowych w celu zwrócenia return w odpowiednim.
+		$type = (int) is_array($data);
+
+		$option_new = array();
+		foreach($data as $val)
+		{
+			$val = trim($val);
+			if ($val)
+			{
+				// Usuwanie spacji pomiędzy wyrazami
+
+				$val_new = array();
+				for($i = 0, $c = strlen($val); $i < $c; $i++)
+				{
+					if ($val[$i] === ' ' && isset($val[$i+1]) && $val[$i+1] === ' ')
+					{
+						continue;
+					}
+
+					$val_new[] = $val[$i];
+				}
+
+				$option_new[] = implode('', $val_new);
+			}
+		}
+
+		if ($type === 1)
+		{
+			return $option_new;
+		}
+
+		return isset($option_new[0]) ? $option_new[0] : array();
+	}
+
 	/** METODY NAPISANE PRZEZ EF TEAM: **/
 	public static function daysToSeconds($time, $conv = FALSE)
 	{
@@ -100,6 +188,13 @@ Class HELP
 
 			return $time/(60*60*24);
 		}
+	}
+
+	// Zwraca tę część stringa, która wystąpi przed $needle.
+	public static function strstr_before($haystack, $needle) {
+		$haystack = strrev($haystack);
+		$haystack = strrev(strstr($haystack, '.'));
+		return substr($haystack, 0, -1);
 	}
 
 	public static function truncate($data, $limit = 20)
@@ -119,13 +214,13 @@ Class HELP
 		return $data;
 	}
 	// TODO:: Przerobic na metodę routera
-	public static function createNaviLink($url)
+	public static function createNaviLink($url, $not_parse = FALSE)
 	{
 		if (!preg_match('/^http:/i', $url))
 		{
 			if ($url)
 			{
-				return ADDR_SITE.self::$_url->getPathPrefix().$url;
+				return ADDR_SITE.self::$_url->getPathPrefix($not_parse).$url;
 			}
 
 			return ADDR_SITE;
@@ -358,51 +453,25 @@ Class HELP
 	/** koniec METODY NAPISANE PRZEZ EF TEAM **/
 
 
-	// Javascript email encoder by Tyler Akins
-	// http://rumkin.com/tools/mailto_encoder/
-	public static function hide_email($email, $title = "", $subject = "")
+	// Javascript email encoder by Maurits van der Schee
+	// http://www.maurits.vdschee.nl/php_hide_email/
+	public static function hide_email($email)
 	{
 		if (strpos($email, "@"))
 		{
-			$parts = explode("@", $email);
-			$MailLink = "<a href='mailto:".$parts[0]."@".$parts[1];
-			if ($subject != "")
-			{
-				$MailLink .= "?subject=".urlencode($subject);
-			}
-			$MailLink .= "'>".($title?$title:$parts[0]."@".$parts[1])."</a>";
-			$MailLetters = "";
-			for ($i = 0; $i < strlen($MailLink); $i++)
-			{
-				$l = substr($MailLink, $i, 1);
-				if (strpos($MailLetters, $l) === FALSE)
-				{
-					$p = rand(0, strlen($MailLetters));
-					$MailLetters = substr($MailLetters, 0, $p).$l.substr($MailLetters, $p, strlen($MailLetters));
-				}
-			}
-			$MailLettersEnc = str_replace("\\", "\\\\", $MailLetters);
-			$MailLettersEnc = str_replace("\"", "\\\"", $MailLettersEnc);
-			$MailIndexes = "";
-			for ($i = 0; $i < strlen($MailLink); $i ++)
-			{
-				$index = strpos($MailLetters, substr($MailLink, $i, 1));
-				$index += 48;
-				$MailIndexes .= chr($index);
-			}
-			$MailIndexes = str_replace("\\", "\\\\", $MailIndexes);
-			$MailIndexes = str_replace("\"", "\\\"", $MailIndexes);
+			$character_set = '+-.0123456789@ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz';
+			$key = str_shuffle($character_set);
+			$cipher_text = '';
+			$id = 'e'.rand(1,999999999);
+			for ($i=0;$i<strlen($email);$i+=1)
+			$cipher_text.= $key[strpos($character_set, $email[$i])];
+			$script = 'var a="'.$key.'";var b=a.split("").sort().join("");var c="'.$cipher_text.'";var d="";';
+			$script.= 'for(var e=0;e<c.length;e++)d+=b.charAt(a.indexOf(c.charAt(e)));';
+			$script.= 'document.getElementById("'.$id.'").innerHTML="<a href=\\"mailto:"+d+"\\">"+d+"</a>"';
+			$script = "eval(\"".str_replace(array("\\", '"'),array("\\\\", '\"'), $script)."\")";
+			$script = '<script type="text/javascript">/*<![CDATA[*/'.$script.'/*]]>*/</script>';
 
-			$res = "<script type='text/javascript'>";
-			$res .= "ML=\"".str_replace("<", "xxxx", $MailLettersEnc)."\";";
-			$res .= "MI=\"".str_replace("<", "xxxx", $MailIndexes)."\";";
-			$res .= "ML=ML.replace(/xxxx/g, '<');";
-			$res .= "MI=MI.replace(/xxxx/g, '<');";	$res .= "OT=\"\";";
-			$res .= "for(j=0;j < MI.length;j++){";
-			$res .= "OT+=ML.charAt(MI.charCodeAt(j)-48);";
-			$res .= "}document.write(OT);";
-			$res .= "</script>";
-			return $res;
+			return '<span id="'.$id.'">[N/A]</span>'.$script;
 		}
 		else
 		{
@@ -656,28 +725,15 @@ Class HELP
 	//==================================
 	// Prevent any possible XSS attacks via $_GET.
 	//==================================
-	public static function stripget($check_url)
+	public static function stripget($_dbconfig)
 	{
-		$return = FALSE;
-		if (is_array($check_url))
+		$request = strtolower(urldecode($_SERVER['QUERY_STRING']));
+		$protarray = array('union','drop','select','into','where','update','from','/*','set ',$_dbconfig['prefix'].'users',$_dbconfig['prefix'].'users(',$_dbconfig['prefix'].'groups','phpinfo','escapeshellarg','exec','fopen','fwrite','escapeshellcmd','passthru','proc_close','proc_get_status','proc_nice','proc_open','proc_terminate','shell_exec','system','telnet','ssh','cmd','mv','chmod','chdir','locate','killall','passwd','kill','script','bash','perl','mysql','~root','.history','~nobody','getenv');
+		$check = str_replace($protarray, '*', $request);
+		if ($request !== $check)
 		{
-			foreach ($check_url as $value)
-			{
-				if (HELP::stripget($value) == TRUE)
-				{
-					return TRUE;
-				}
-			}
+			throw new systemException(die('Podejrzewany atak XSS!'));
 		}
-		else
-		{
-			$check_url = str_replace(array("\"", "\'"), array("", ""), urldecode($check_url));
-			if (preg_match("/<[^<>]+>/i", $check_url))
-			{
-				return TRUE;
-			}
-		}
-		return $return;
 	}
 
 	public static function quotes_gpc()
@@ -733,7 +789,7 @@ Class HELP
 	public static function MonthsPL($months)
 	{
 		$en = array("January","February","March","April","May","June","July","August","September","October","November","December","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday");
-		$pl = array("Styczeń","Luty","Marzec","Kwiercień","Maj","Czerwiec","Lipiec","Sierpień","Wrzesień","Październik","Listopad","Grudzień","poniedziałek","wtorek","środa","czwartek","piątek","sobota","niedziela");
+		$pl = array("Styczeń","Luty","Marzec","Kwiecień","Maj","Czerwiec","Lipiec","Sierpień","Wrzesień","Październik","Listopad","Grudzień","poniedziałek","wtorek","środa","czwartek","piątek","sobota","niedziela");
 		$months = str_replace($en,$pl,$months);
 		return $months;
 	}
@@ -761,7 +817,9 @@ Class HELP
 	// Strip file name
 	public static function stripfilename($filename)
 	{
-		$filename = strtolower(str_replace(" ", "_", $filename));
+		$a = array("Ą","Ś","Ę","Ó","Ł","Ż","Ź","Ć","Ń","ą","ś","ę","ó","ł","ż","ź","ć","ń","ü","&quot"," - "," ",".","!",";",":","(",")","[","]","{","}","|","?",",","+","=","#","@","$","%","^","&","*");
+		$b = array("A","S","E","O","L","Z","Z","C","N","a","s","e","o","l","z","z","c","n","u","","-","_","","","","","","","","","","","","","","","","","","","","","","");
+		$filename = strtolower(str_replace($a,$b,$filename));
 		$filename = preg_replace("/[^a-zA-Z0-9_-]/", "", $filename);
 		$filename = preg_replace("/^\W/", "", $filename);
 		$filename = preg_replace('/([_-])\1+/', '$1', $filename);
@@ -821,7 +879,7 @@ Class HELP
 		}
 	}
 
-	public function formatOrphan($content)
+	public static function formatOrphan($content)
 	{
 		return $content = preg_replace("/\s([aiouwzAIOUWZ])\s/", " $1&nbsp;", $content);
 
@@ -845,13 +903,14 @@ Class HELP
 	// Format the date & time accordingly
 	public static function showDate($format, $val)
 	{
+		$val += intval(self::$_sett->get('offset_timezone')) * 3600;
 		if ($format === 'shortdate' || $format == 'longdate')
 		{
-			return strftime(self::$_sett->get($format), $val);
+			return iconv('ISO-8859-2', 'UTF-8', strftime(self::$_sett->get($format), $val));
 		}
 		else
 		{
-			return strftime('shortdate', $val);
+			return iconv('ISO-8859-2', 'UTF-8', strftime('shortdate', $val));
 		}
 	}
 
@@ -900,18 +959,4 @@ Class HELP
 
 		return $return;
 	}
-}
-
-// Funkcje do przepisania....
-// Format the date & time accordingly
-function showdate($format, $val) {
-    global $_sett, $_user;
-    if ( ! $offset = $_user->get('offset')) {
-        $offset = $_sett->get('offset_timezone');
-    }
-    if ($format == "shortdate" || $format == "longdate") {
-        return strftime($_sett->get($format), $val + ($offset * 3600));
-    } else {
-        return strftime($format, $val + ($offset * 3600));
-    }
 }

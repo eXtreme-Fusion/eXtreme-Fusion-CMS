@@ -1,20 +1,42 @@
 <?php
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
+/*********************************************************
+| eXtreme-Fusion 5
 | Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
 | http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.
-| http://extreme-fusion.org/ef5/license/
-***********************************************************/
-error_reporting(E_ALL | E_STRICT);
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+| 
+**********************************************************
+                ORIGINALLY BASED ON
+---------------------------------------------------------+
+| PHP-Fusion Content Management System
+| Copyright (C) 2002 - 2011 Nick Jones
+| http://www.php-fusion.co.uk/
++--------------------------------------------------------+
+| Author: Nick Jones (Digitanium)
++--------------------------------------------------------+
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
++--------------------------------------------------------*/
+error_reporting(-1);
 
 try
 {
 	// Instalowana wersja systemu - wyświetlana w nagłówku nawigacji
-	define('VERSION', '5 Beta 6');
+	define('VERSION', '5.0.0');
 
 	$HostURL = explode('install', $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']);
 
@@ -24,7 +46,7 @@ try
 	define('DS', DIRECTORY_SEPARATOR);
 
 	define('DIR_BASE', dirname(__FILE__).DS);
-	define('DIR_SITE', realpath(DIR_BASE.'../').DS);
+	define('DIR_SITE', realpath(DIR_BASE.'..').DS);
 
 	define('ADDR_SITE', 'http://'.$HostURL[0]);
 
@@ -322,14 +344,14 @@ try
 
 		$check_arr = array(
 			DIR_SITE.'cache'.DS => FALSE,
-			DIR_SITE.'upload'.DS => FALSE,
-			DIR_SITE.'upload'.DS.'archives'.DS => FALSE,
-			DIR_SITE.'upload'.DS.'documents'.DS => FALSE,
-			DIR_SITE.'upload'.DS.'images'.DS => FALSE,
-			DIR_SITE.'upload'.DS.'movies'.DS => FALSE,
+			//DIR_SITE.'upload'.DS => FALSE,
+			//DIR_SITE.'upload'.DS.'archives'.DS => FALSE,
+			//DIR_SITE.'upload'.DS.'documents'.DS => FALSE,
+			//DIR_SITE.'upload'.DS.'images'.DS => FALSE,
+			//DIR_SITE.'upload'.DS.'movies'.DS => FALSE,
 			DIR_SITE.'system'.DS.'opt'.DS.'plugins'.DS => FALSE,
 			DIR_SITE.'templates'.DS.'images'.DS => FALSE,
-			DIR_SITE.'templates'.DS.'images'.DS.'imagelist.js' => FALSE,
+			//DIR_SITE.'templates'.DS.'images'.DS.'imagelist.js' => FALSE,
 			DIR_SITE.'templates'.DS.'images'.DS.'avatars'.DS => FALSE,
 			DIR_SITE.'templates'.DS.'images'.DS.'news'.DS => FALSE,
 			DIR_SITE.'templates'.DS.'images'.DS.'news'.DS.'thumbs'.DS => FALSE,

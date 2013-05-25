@@ -1,4 +1,12 @@
-﻿					eXtreme-Fusion V RC1 2012.12.12
+﻿					eXtreme-Fusion V STABLE 2012.03.4
+
+- zmiana licencji na aGPL v3
+- dodanie licznika unikalnych wizyt
+- poprawki prywatnych wiadomości
+- wprowadzenie ustawienia wykrywania języka w przeglądarce
+- pageNav dla komentarzy wraz z nową metodą dla .tpl
+
+					eXtreme-Fusion V RC1 2012.12.12
 
 - usunięto katalog "info": pliki przeniesiono do folderu "dokumentacja"
 - utworzeno katalog "common" dla plików JS

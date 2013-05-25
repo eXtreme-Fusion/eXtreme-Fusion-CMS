@@ -7,7 +7,20 @@
 * @see http://php-fusion.pl
 * @license Affero GPL license
 */
+// Official SVN Trunk Rev: 2364
+/*English Language Fileset
+ Produced by Nick Jones (Digitanium)
+ Email: digitanium@php-fusion.co.uk
+ Web: http://www.php-fusion.co.uk
 
+ Polish (UTF-8) Language Fileset for PHP-Fusion v7.02.03, based at translation for PHP-Fusion v7.01.xx
+ Translations from english, modifications and tests:
+ PHP-Fusion po Polsku (PHP-Fusion in Polish)
+ https://launchpad.net/pf-pl
+ Main translator: Tomasz Jankowski (jantom)
+ Translator and tester: Michał Pospieszyński (sony)
+ This program is released as free software under the
+ Affero GPL license.*/
 /** TODO: Konfiguracja języka w osobnym pliku (`locale.php`) ***/
 setlocale(LC_TIME, array('cs_CS.UTF-8', 'Czech'));
 
@@ -120,14 +133,6 @@ return array(
 	// Navigation
 	'global_001' => 'Navigace',
 	'global_002' => 'Žádné odkazy\n',
-	// Users Online
-	'global_010' => 'Aktuálně online',
-	'global_011' => 'Hosté online',
-	'global_012' => 'Uživatelé online',
-	'global_013' => 'Žádný uživatel online',
-	'global_014' => 'Celkem uživatelů',
-	'global_015' => 'Neaktivní uživatelé',
-	'global_016' => 'Nejnovější uživatel',
 	// Forum Side panel
 	'global_020' => 'Poslední témata',
 	'global_021' => 'Nejnovější témata',
@@ -314,9 +319,9 @@ return array(
 	//Czas sesji
 
 	// Function showCopyrights()
-	'Powered by :system' => 'Web běží na redakčním systému :system',
+	'Powered by :system' => 'Web běží na redakčním systému :system.<br />Copyright 2002-2013 <a href="http://php-fusion.co.uk/">PHP-Fusion</a>. Released as free software without warranties under <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">aGPL v3</a>.',
 	
-	'Powered by :system under :license License' => 'Web běží na redakčním systému :system pod licencí :license',
+	'Powered by :system under :license License' => 'Web běží na redakčním systému :system<br />Copyright 2002-2013 <a href="http://php-fusion.co.uk/">PHP-Fusion</a>. Released as free software without warranties under <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">aGPL v3</a>.',
 	
 	'Yes' => 'Ano',
 	'No' => 'Ne',

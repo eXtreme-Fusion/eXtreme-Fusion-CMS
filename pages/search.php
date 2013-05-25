@@ -1,15 +1,21 @@
 <?php defined('EF5_SYSTEM') || exit;
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
-***********************************************************/
-$_locale->load('account');
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+| 
+**********************************************************/
+$_locale->load('search');
 
 $theme = array(
 	'Title' => 'Wyszukiwarka',
@@ -19,6 +25,9 @@ $theme = array(
 
 if ($_request->post('search')->show() && $_request->post('search_type')->show())
 {
+	$_locale->setSubDir('search');
+	$_locale->load($_request->post('search_type')->show());
+	
 	$search_type = $_request->post('search_type')->show();
 	$search_text = $_request->post('search_text')->show();
 	
@@ -87,7 +96,7 @@ if ($_route->getByID(1) === 'tags' || $_route->getByID(1) === 'all')
 	$query = $_pdo->getData('SELECT * FROM [tags] WHERE `value` LIKE "%":value"%" ORDER BY `value` ASC',
 		array(':value', $tag, PDO::PARAM_STR)
 	);
-	
+
 	$i = 0; $tags = array();
 	foreach ($query as $row)
 	{
@@ -110,7 +119,7 @@ if ($_route->getByID(1) === 'users' || $_route->getByID(1) === 'all')
 	$query = $_pdo->getData('SELECT * FROM [users] WHERE `status` = 0 AND `username` LIKE "%":username"%" ORDER BY `username` ASC',
 		array(':username', $username, PDO::PARAM_STR)
 	);
-	
+
 	$i = 0; $users = array();
 	foreach ($query as $row)
 	{
@@ -140,5 +149,6 @@ if ($_route->getByID(1) === 'error')
 
 $_tpl->assignGroup(array(
 	'search_text' => $_route->getByID(2) ? HELP::decodingURL($_route->getByID(2)) : '',
-	'search_type' => $_route->getByID(1) ? $_route->getByID(1) : ''
+	'search_type' => $_route->getByID(1) ? $_route->getByID(1) : $_sett->get('default_search'),
+	'searched_type' => $_route->getByID(1) ? $_route->getByID(1) : NULL
 ));

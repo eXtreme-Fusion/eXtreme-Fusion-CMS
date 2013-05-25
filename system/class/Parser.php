@@ -1,14 +1,19 @@
 <?php
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
+/*********************************************************
+| eXtreme-Fusion 5
 | Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
 | http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.
-| http://extreme-fusion.org/ef5/license/
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+*********************************************************/
 
 class Parser extends optClass
 {
@@ -37,6 +42,7 @@ class Parser extends optClass
 	{
 		$this->plugins = OPT_DIR.'plugins'.DS;
 		$this->gzipCompression = FALSE;
+		$this->registerInstruction('optTheme');
 		$this->registerFunction('i18n', 'Locale');
 		if (function_exists('optUrl'))
 		{
@@ -64,6 +70,7 @@ class Parser extends optClass
 		$this->assign('ADDR_JS', ADDR_JS);
 		$this->assign('ADDR_COMMON_JS', ADDR_COMMON_JS);
 		$this->assign('ADDR_COMMON_CSS', ADDR_COMMON_CSS);
+		$this->assign('ADDR_UPLOAD', ADDR_UPLOAD);
 		$this->assignGroup(
 			array(
 				'ADDR_ADMIN_TEMPLATES' => ADDR_ADMIN_TEMPLATES,
@@ -187,9 +194,9 @@ class Parser extends optClass
 	// Tworzenie tablicy danych dla listy formularza
 	// Parametr trzeci ustawiony na TRUE powoduje, że indeksy w zwróconej tablicy będą takie same, jak w źródłowej.
 	// Ustawienie na FALSE powoduje, że indeksem stanie się wartość z tablicy źródłowej.
-	public function createSelectOpts($data, $selected = NULL, $key_value = FALSE, $no_select_option = FALSE)
+	public function createSelectOpts($data, $selected = NULL, $key_value = FALSE, $no_select_option = FALSE, $default = Html::SELECT_NO_SELECTION)
 	{
-		return Html::createSelectOpts($data, $selected, $key_value, $no_select_option);
+		return Html::createSelectOpts($data, $selected, $key_value, $no_select_option, $default);
 	}
 
 	// LISTA MULTI SELECT
@@ -204,16 +211,23 @@ class pageNavParser extends optClass
 	private $_ext = '.tpl';
 
 	private $_route;
+	private $_request;
 
-	public function __construct($_route = NULL)
+	public function __construct($_route = NULL, $_request = NULL)
 	{
 		$this->plugins = OPT_DIR.'plugins'.DS;
 		$this->gzipCompression = FALSE;
+		$this->registerInstruction('optTheme');
 		$this->registerFunction('i18n', 'Locale');
 		$this->setCompilePrefix('page_nav_');
 		if (function_exists('optUrl'))
 		{
 			$this->registerFunction('url', 'Url');
+		}
+		
+		if (function_exists('optRouter'))
+		{
+			$this->registerFunction('Router', 'Router');
 		}
 
 		$this->httpHeaders(OPT_HTML);
@@ -222,11 +236,17 @@ class pageNavParser extends optClass
 		$this->compile = DIR_CACHE;
 
 		$this->_route = $_route;
+		$this->_request = $_request;
 	}
 
 	public function route()
 	{
 		return $this->_route;
+	}
+	
+	public function request()
+	{
+		return $this->_request;
 	}
 
 	// Parametr drugi to katalog, w którym znajduje się szablon.
@@ -358,7 +378,8 @@ class Iframe extends Parser
 			'ADDR_ADMIN_JS' => ADDR_ADMIN_TEMPLATES.'javascripts/',
 			'ADDR_ADMIN_PAGES' => ADDR_ADMIN.'pages/'
 		));
-
+		$this->assign('ADDR_UPLOAD', ADDR_UPLOAD);
+		
 		$this->parse('pre'.DS.'iframe_header'.$this->ext);
 		$this->parse($iframe.$this->ext);
 		$this->parse('pre'.DS.'iframe_footer'.$this->ext);
@@ -480,6 +501,7 @@ class Site extends Parser
 		$this->assign('ADDR_COMMON_JS', ADDR_COMMON_JS);
 		$this->assign('ADDR_CSS', ADDR_CSS);
 		$this->assign('ADDR_MODULES', ADDR_SITE.'modules/');
+		$this->assign('ADDR_UPLOAD', ADDR_UPLOAD);
 		$this->assign('ADDR_INCLUDES', ADDR_SITE.'system/includes/');
 		$this->assign('ADDR_ICONS', ADDR_IMAGES.'icons/');
 		$this->assign('ADDR_ADMIN_ICONS', ADDR_ADMIN_IMAGES.'icons/');
@@ -587,6 +609,7 @@ class Panel extends Parser
 		$this->assign('ADDR_JS', ADDR_JS);
 		$this->assign('ADDR_COMMON_JS', ADDR_COMMON_JS);
 		$this->assign('ADDR_MODULES', ADDR_SITE.'modules/');
+		$this->assign('ADDR_UPLOAD', ADDR_UPLOAD);
 		$this->assign('ADDR_INCLUDES', ADDR_SITE.'system/includes/');
 		$this->assign('ADDR_ICONS', ADDR_IMAGES.'icons/');
 		$this->assign('ADDR_ADMIN_ICONS', ADDR_ADMIN_IMAGES.'icons/');
@@ -659,6 +682,7 @@ class Ajax extends Parser
 		$this->assign('ADDR_JS', ADDR_JS);
 		$this->assign('ADDR_COMMON_JS', ADDR_COMMON_JS);
 		$this->assign('ADDR_MODULES', ADDR_SITE.'modules/');
+		$this->assign('ADDR_UPLOAD', ADDR_UPLOAD);
 		$this->assign('ADDR_INCLUDES', ADDR_SITE.'system/includes/');
 		$this->assign('ADDR_ICONS', ADDR_IMAGES.'icons/');
 		$this->assign('ADDR_ADMIN_ICONS', ADDR_ADMIN_IMAGES.'icons/');
@@ -710,6 +734,7 @@ class AdminModuleIframe extends Parser
 	public function template($iframe)
 	{
 		$this->assign('ADDR_MODULES', ADDR_SITE.'modules/');
+		$this->assign('ADDR_UPLOAD', ADDR_UPLOAD);
 		$this->assign('ADDR_INCLUDES', ADDR_SITE.'system/includes/');
 		$this->assign('ADDR_ADMIN_ICONS', ADDR_ADMIN_IMAGES.'icons/');
 		$this->assign('ADDR_ADMIN_CSS', ADDR_ADMIN_TEMPLATES.'stylesheet/');

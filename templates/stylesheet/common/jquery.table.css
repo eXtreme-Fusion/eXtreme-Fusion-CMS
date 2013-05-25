@@ -77,7 +77,7 @@ a:hover {color:#000}
 
 #TableOPT td {
   padding: 0.2em;
-  
+
 }
 #TableOPT td small {
   font-size:10px;
@@ -138,7 +138,7 @@ a:hover {color:#000}
 .paging_two_button .fg-button {
 	float: left;
 	cursor: pointer;
-	
+
 }
 
 .paging_full_numbers .fg-button {
@@ -470,7 +470,7 @@ table.dataTable tr.odd.row_selected td, table.logTable tr.odd.row_selected td {
 
 
 h3 {
-	background:#4B4B4B url(../images/shared/nav/repeat.jpg) repeat-x 0 -38px;
+	background:#4B4B4B url(../../../admin/templates/images/shared/nav/repeat.jpg) repeat-x 0 -38px;
 	font-size:12px;
 	color:#fff;
 	font-weight:bold;

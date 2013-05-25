@@ -1,14 +1,19 @@
 <?php
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
+/*********************************************************
+| eXtreme-Fusion 5
 | Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
 | http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.
-| http://extreme-fusion.org/ef5/license/
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+*********************************************************/
 
 /**
  * Function to hashing in `sha512` algorithm.
@@ -40,6 +45,15 @@ class User {
 
 	// Przechowuje adres IP użytkownika
 	protected $_ip;
+
+	// Przechowuje typ IP użytkownika
+	protected $_ip_type;
+
+	// Przechowuje IP 6 użytkownika
+	protected $_ip_v6;
+
+	// Przechowuje typ 4 użytkownika
+	protected $_ip_v4;
 
 	protected $_custom_data;
 
@@ -81,8 +95,11 @@ class User {
 	// Cache gości online
 	protected $_get_guests_online = NULL;
 
-	// Lista ID rekordów do usunięcia jako duplikaty // deprecated
-	//protected $_online_to_remove = array();
+	// Tablica z dozwolonymi rozszerzeniami zdjęć profilowych
+	protected $_avatar_extensions_allowed = array();
+
+	// Zawiera kod błędu zmiany zdjęcia profilowego
+	protected $_avatar_upload_status = array();
 
 	/**
 	 * Przypisuje zmiennym referencje do obiektów klas zewnętrznych
@@ -105,15 +122,42 @@ class User {
 		// Przed edycją należy przeczytać opis przy deklaracji zmiennej
 		$this->_cookie_life_time = time() + 60*60*24*31;
 
+		// From php.net
 		if (filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP))
 		{
-			$this->_ip = $_SERVER['REMOTE_ADDR'];
+			if (strpos($_SERVER['REMOTE_ADDR'], '.'))
+			{
+				if (strpos($_SERVER['REMOTE_ADDR'], ':') === FALSE)
+				{
+					// IPv4
+					$this->_ip_type = 4;
+					$this->_ip = $_SERVER['REMOTE_ADDR'];
+				}
+				else
+				{
+					// Mixed IPv4 and IPv6
+					$this->_ip_type = 5;
+					$last_pos = strrpos($_SERVER['REMOTE_ADDR'], ':');
+					$ipv4 = substr($_SERVER['REMOTE_ADDR'], $last_pos + 1);
+					$ipv6 = substr($_SERVER['REMOTE_ADDR'], 0, $last_pos);
+					$ipv6 = $this->IPv6($ipv6, 5);
+					$this->_ip_v6 = $ipv6;
+					$this->_ip_v4 = $ipv4;
+					$this->_ip = $ipv6.':'.$ipv4;
+				}
+			} else {
+				// IPv6
+				$this->_ip_type = 6;
+				$this->_ip = $this->IPv6($_SERVER['REMOTE_ADDR'], 7);
+			}
 		}
+		//
 		else
 		{
 			throw new systemException('Twój adres IP: '.$_SERVER['REMOTE_ADDR'].' jest nie prawidłowy!!!');
 		}
 
+		$this->_avatar_extensions_allowed += array('gif', 'jpg', 'jpeg', 'png');
 	}
 
 	public function __destruct()
@@ -129,10 +173,18 @@ class User {
 	{
 		if ($this->isLoggedIn())
 		{
-			return $this->get('lang');
+			if ($this->get('lang'))
+			{
+				return $this->get('lang');
+			}
 		}
 
-		return System::detectBrowserLanguage(TRUE);
+		if ($this->_sett->get('language_detection'))
+		{
+			return System::detectBrowserLanguage(TRUE);
+		}
+
+		return $this->_sett->get('locale');
 
 	}
 	// Sprawdzanie dostępności nazwy użytkownika i ewentualna zmiana
@@ -141,21 +193,18 @@ class User {
 	// if ($username != $_user->getByID($_request->get('User')->show(), 'username'))
 	public function newName($username, $id = NULL)
 	{
-		if ($this->isValidLogin($username))
+		$row = $this->_pdo->getRow('SELECT `username` FROM [users] WHERE `username` = :username', array(':username', $username, PDO::PARAM_STR));
+		if ( ! $row)
 		{
-			$row = $this->_pdo->getRow('SELECT `username` FROM [users] WHERE `username` = :username', array(':username', $username, PDO::PARAM_STR));
-			if ( ! $row)
+			if ($id !== NULL)
 			{
-				if ($id !== NULL)
-				{
-					return $this->update(array('username' => $username), $id);
-				}
-				return TRUE;
+				return $this->update($id, array('username' => $username));
 			}
-			return FALSE;
+
+			return TRUE;
 		}
 
-		throw new userException(__('Entered the wrong data type.'));
+		return FALSE;
 	}
 
 	// Sprawdzanie dostępności adresu e-mail i ewentualna zmiana
@@ -163,21 +212,18 @@ class User {
 	// if ($_request->post('email') != $_user->getByID($_request->get('User')->show(), 'email'))
 	public function newEmail($email, $id = NULL)
 	{
-		if (filter_var($email, FILTER_VALIDATE_EMAIL))
+		$row = $this->_pdo->getRow('SELECT `email` FROM [users] WHERE `email`= :email', array(':email', $email, PDO::PARAM_STR));
+		if ( ! $row)
 		{
-			$row = $this->_pdo->getRow('SELECT `email` FROM [users] WHERE `email`= :email', array(':email', $email, PDO::PARAM_STR));
-			if ( ! $row)
+			if ($id !== NULL)
 			{
-				if ($id !== NULL)
-				{
-					return $this->update(array('email' => $email), $id);
-				}
-				return TRUE;
+				return $this->update($id, array('email' => $email));
 			}
-			return FALSE;
+
+			return TRUE;
 		}
 
-		throw new userException(__('Entered the wrong data type.'));
+		return FALSE;
 	}
 
 	public function emailExists($email)
@@ -193,13 +239,13 @@ class User {
 		{
 			if ($old_pass === NULL)
 			{
-				return $this->update(array('password' => $this->createUserHash($id, $new_pass)), $id);
+				return $this->update($id, array('password' => $this->createUserHash($id, $new_pass)));
 			}
 			else
 			{
 				if ($this->checkNewPass($id, $new_pass, $old_pass, $con_new_pass))
 				{
-					return $this->update(array('password' => $this->createUserHash($id, $new_pass)), $id);
+					return $this->update($id, array('password' => $this->createUserHash($id, $new_pass)));
 				}
 			}
 		}
@@ -248,7 +294,7 @@ class User {
 	//Przykład:
 	//$file = $_FILES['avatar'];
 	// Trzeci parametr ustawiony na TRUE sprawia, że istniejący na serwerze avatar nie może zostać nadpisany przez jego własciciela.
-	public function saveNewAvatar($id, $file, $check_exists = FALSE)
+	public function saveNewAvatar($id, $file, $check_exists = FALSE, $delete_file = TRUE)
 	{
 		if ($file && is_uploaded_file($file['tmp_name']))
 		{
@@ -256,7 +302,8 @@ class User {
 			$file['name'] = strtolower($file['name']);
 
 			$ext = substr(strstr($file['name'], '.'), 1);
-			$name = strstr($file['name'], '.', TRUE); // As of PHP 5.3.0
+			$name = HELP::strstr_before($file['name'], '.');
+
 			$info = getimagesize($file['tmp_name']);
 
 			if ($info)
@@ -265,48 +312,97 @@ class User {
 				{
 					if ($info[0] <= $this->_sett->get('avatar_width') && $info[1] <= $this->_sett->get('avatar_height'))
 					{
-						if (in_array($ext, $extensions_allowed = array('gif', 'jpg', 'jpeg', 'png')))
+						if (in_array($ext, $this->_avatar_extensions_allowed))
 						{
 							// Nowa nazwa pliku
-							$new_name = str_replace(' ', '-', $name).'['.$id.'].'.$ext;
+							$new_name = str_replace(' ', '-', $name).'-'.$id.'-.'.$ext;
 							// Nowa nazwa pliku wraz ze ścieżką
 							$new_path_name = DIR_IMAGES.'avatars'.DS.$new_name;
 
-							if (! file_exists($new_path_name) || ! $check_exists)
+							if (! $check_exists || ! file_exists($new_path_name))
 							{
 								if (move_uploaded_file($file['tmp_name'], $new_path_name))
 								{
+									if ($delete_file)
+									{
+										$this->delAvatar($id, FALSE);
+									}
+
 									return $this->updateAvatar($new_name, $id);
 								}
 
 								unlink($file['tmp_name']);
-								return FALSE;
+								$this->_avatar_upload_status[] = 'upload_error';
 							}
 							else
 							{
-								throw new userException('Plik o podanej nazwie już istnieje.');
+								$this->_avatar_upload_status[] = 'file_error';
 							}
 						}
 						else
 						{
-							throw new userException('You must upload file with one of the following extensions: :extensions', array(':extensions' => implode(', ', $extensions_allowed)));
+							$this->_avatar_upload_status[] = 'extension_error';
 						}
 					}
 					else
 					{
-						throw new userException('Rozmiary obrazka są nieprawidłowe. Dopuszczalna szerokość: :width, wysokość: :height', array(':width' => $this->_sett->get('avatar_width'), ':height' => $this->_sett->get('avatar_height')));
+						$this->_avatar_upload_status[] = 'dimensions_error';
 					}
 				}
 				else
 				{
-					throw new userException('The uploaded image has got to large file size.');
+					$this->_avatar_upload_status[] = 'filesize_error';
 				}
 			}
 			else
 			{
-				throw new userException('The uploaded file seems not to be an image.');
+				$this->_avatar_upload_status[] = 'type_error';
 			}
 		}
+
+		return FALSE;
+	}
+
+	protected function getAvatarErrorStatus()
+	{
+		return array(
+			'type_error' => __('The avatar seems not to be an image.'),
+			'filesize_error' => __('The avatar has got too large file size.'),
+			'dimensions_error' => __('The avatar has got too large dimensions.'),
+			'extension_error' => __('The avatar has not got an extension from this set: :extensions.', array(':extensions' => implode(', ', $this->_avatar_extensions_allowed))),
+			'file_error' => __('The avatar with that name already exists.'),
+			'upload_error' => __('There was an error during the avatar updating.')
+		);
+	}
+
+	// Status jest pobierany z tablicy, gdyż może być kilka avatarów dodawanych na jednej stronie
+	public function getAvatarError($key = 0, $remove = TRUE)
+	{
+		$status = $this->getAvatarErrorStatus();
+
+		if (isset($this->_avatar_upload_status[$key]))
+		{
+			$status = $status[$this->_avatar_upload_status[$key]];
+			if ($remove)
+			{
+				HELP::arrayRemoveElement($key, $this->_avatar_upload_status);
+			}
+
+			return $status;
+		}
+
+		return '';
+	}
+
+	public function getAvatarErrorCode($key = 0)
+	{
+		return isset($this->_avatar_upload_status[$key]) ? $this->_avatar_upload_status[$key] : '';
+	}
+
+	public function getAvatarErrorByCode($key)
+	{
+		$status = $this->getAvatarErrorStatus();
+		return isset($status[$key]) ? $status[$key] : '';
 	}
 
 	// Aktualizuje avatar użytkownika w bazie.
@@ -320,20 +416,25 @@ class User {
 		return FALSE;
 	}
 
-	// Usuwa avatar w bazie i na serwerze.
+	// Usuwa avatar w bazie, o ile nie ustawiono parametru inaczej, i na serwerze.
 	// Nazwy pozyskuje z bazy - jest to zabezpieczenie:
 	// gdyby nazwa pochodziła z formularza, istniałoby zagrożenie, że ktoś bedzie próbował usunąć plik, do którego nie ma prawa
 	// poprzez zamieszczenie w atrybucie value znaków `../`.
-	public function delAvatar($id = NULL)
+	public function delAvatar($id = NULL, $update = TRUE)
 	{
 		if ($id === NULL) // Usuwa własny avatar
 		{
 			if (file_exists(DIR_IMAGES.'avatars'.DS.$this->get('avatar')))
 			{
-				unlink(DIR_IMAGES.'avatars'.DS.$avatar);
+				unlink(DIR_IMAGES.'avatars'.DS.$this->get('avatar'));
 			}
 
-			return $this->updateAvatar('', $this->get('id'));
+			if ($update)
+			{
+				return $this->updateAvatar('', $this->get('id'));
+			}
+
+			return TRUE;
 		}
 		elseif (isNum($id)) // Usuwa avatar użytkownika o podanym ID
 		{
@@ -344,7 +445,12 @@ class User {
 				unlink(DIR_IMAGES.'avatars'.DS.$avatar);
 			}
 
-			return $this->updateAvatar('', $id);
+			if ($update)
+			{
+				return $this->updateAvatar('', $id);
+			}
+
+			return TRUE;
 		}
 
 		return FALSE;
@@ -363,52 +469,177 @@ class User {
 			}
 		}
 
-		return $this->update(array('avatar' => ''), FALSE);
+		return $this->update(FALSE, array('avatar' => ''));
 	}
 
-	//Aktualizuje dane pól użytkowników
-	public function updateField($field, $id = NULL, $index_val = NULL, $field_val = NULL)
+	/**
+	 * Aktualizuje dane oraz dodatkowe pola użytkownika/ów.
+	 *
+	 * @param   mixed    $id      ID użytkownika; NULL dla aktualnie zalogowanego; FALSE dla wszystkich
+	 * @param   array    $data    Dane do zapisania; Pusta tablica, w przypadku zmiany samych dodatkowych pól
+	 * @param   array    $fields  Dodatkowe dane do zapisania
+	 * @return  boolean
+	 * @throws  systemException
+	 */
+	public function update($id = NULL, array $data, array $fields = array())
 	{
-		echo 'depr';
-		if($id === NULL)
+		if (! $data && ! $fields)
 		{
-			$this->_pdo->exec('UPDATE [users_data] SET '.$field);
+			throw new systemException(__('Both arrays cannot be empty'));
 		}
-		else
+
+		if ($id === NULL)
 		{
-			$this->_pdo->exec('INSERT INTO [users_data] (`user_id`, '.$index_val.') VALUES ('.$id.', '.$field_val.') ON DUPLICATE KEY UPDATE '.$field.'');
+			// Używa ID aktualnie zalogowanego użytkownika
+			$id = $this->get('id');
 		}
+
+		// Aktualizacja/zapis danych z dodatkowych pól
+		if ($fields)
+		{
+			// Rozbija tablicę na kolumny, parametry, wartości i pola
+			$fields = $this->_params($fields);
+
+			if ($id === FALSE)
+			{
+				// Aktualizuje dodatkowe pola wszystkich użytkowników
+				$this->_pdo->exec('UPDATE [users_data] SET '.$fields['fields'], $fields['values']);
+			}
+			else
+			{
+				// Zapisuje dane użytkownika o podanym ID
+				$this->_pdo->exec('INSERT INTO [users_data] (`user_id`, `'.$fields['keys'].'`) VALUES (:user_id, :'.$fields['params'].') ON DUPLICATE KEY UPDATE '.$fields['fields'], array_merge(
+					array(array(':user_id', $id, PDO::PARAM_INT)),
+					$fields['values']
+				));
+			}
+		}
+
+		// Aktualizacja podstawowych danych
+		if ($data)
+		{
+			// Czas ostatniej aktualizacji konta, który zostanie zapisany w bazie
+			$data['lastupdate'] = time();
+
+			// Rozbija tablicę na kolumny, parametry, wartości i pola
+			$data = $this->_params($data);
+
+			if ($id === FALSE)
+			{
+				// Aktualizuje dane wszystkich użytkowników
+				$this->_pdo->exec('UPDATE [users] SET '.$data['fields'], $data['values']);
+			}
+			else
+			{
+				// Aktualizuje dane użytkownika o podanym ID
+				$this->_pdo->exec('UPDATE [users] SET '.$data['fields'].' WHERE `id` = :user_id', array_merge(
+					array(array(':user_id', $id, PDO::PARAM_INT)),
+					$data['values']
+				));
+			}
+		}
+
 		return TRUE;
 	}
 
-	// Setter klasy Users
-	// To co tu trafia musi być wcześniej przefiltrowane,
-	// gdyż w metodzie nie ma bindowania PDO!!
-	public function update(array $data, $id = NULL)
+	// Zwraca dodatkowe dane użytkownika z możliwością ich nadpisania przez $values.
+	public function getCustomData($user_id = NULL, array $values = array())
 	{
-		foreach($data as $key => $val)
+		$query = $this->_pdo->getData('SELECT * FROM [user_field_cats] ORDER BY `order` ASC');
+		$cats = array();
+		foreach($query as $data)
 		{
-			$temp[] = $key." = '".$val."'";
+			$cats[] = $data;
 		}
 
-		$update = implode(', ', $temp);
-
-
-
-		if ($id === FALSE) // Aktualizacja wiersza wszystkich użytkowników
+		$query = $this->_pdo->getData('SELECT * FROM [user_fields]');
+		$fields = array();
+		foreach($query as $data)
 		{
-			return $this->_pdo->exec('UPDATE [users] SET '.$update.', lastupdate = '.time());
+			$fields[] = $data;
 		}
-		elseif ($id === NULL) // Aktualizacja własnego wiersza
+		
+		$data = array(); 
+		if ($user_id !== NULL)
 		{
-			return $this->_pdo->exec('UPDATE [users] SET '.$update.', lastupdate = '.time().' WHERE `id` = '.$this->get('id'));
+			$data = $this->_pdo->getRow('SELECT * FROM [users_data] WHERE `user_id` = :user_id LIMIT 1', array(
+				array(':user_id', intval($user_id), PDO::PARAM_STR)
+			));
 		}
-		elseif (isNum($id)) // Aktualizacja wiersza użytkownika o podanym ID
+		
+		if ($fields)
 		{
-			return $this->_pdo->exec('UPDATE [users] SET '.$update.', lastupdate = '.time().' WHERE `id` = '.$id);
+			$_new_fields = array();
+			foreach($cats as $key => $cat)
+			{
+				$i = 0;
+				foreach($fields as $field)
+				{
+					if ($field['cat'] === $cat['id'])
+					{
+						$new_fields[$key][$i] = $field;
+
+						$new_fields[$key][$i]['value'] = '';
+						if (isset($values[$field['index']]))
+						{
+							$new_fields[$key][$i]['value'] = $values[$field['index']];
+						}
+						elseif (isset($data[$field['index']]) && $data[$field['index']])
+						{
+							$new_fields[$key][$i]['value'] = $data[$field['index']];
+						}
+						// Lista
+						if ($field['type'] === '3')
+						{
+							$option = array();
+							foreach(unserialize($field['option']) as $val)
+							{
+								$option[] = $val;
+							}
+
+							$new_fields[$key][$i]['option'] = Html::createSelectOpts($option, $new_fields[$key][$i]['value'], FALSE, FALSE);
+						}
+
+						$i++;
+					}
+				}
+			}
 		}
 
-		return FALSE;
+		return array('categories' => $cats, 'fields' => $new_fields);
+	}
+
+	/**
+	 * Metoda pomocnicza, która rozbija tablice na kolumny, parametry,
+	 * wartości i pola.
+	 *
+	 * @param   array  $data  Tablica zawierająca dane
+	 * @return  array
+	 */
+	protected function _params(array $data)
+	{
+		$keys   = implode(array_keys($data), '`, `');
+		$values = $params = $fields = array();
+
+		foreach($data as $key => $value)
+		{
+			$type  = is_array($value) ? $value[1] : PDO::PARAM_STR;
+			$value = is_array($value) ? $value[0] : $value;
+
+			$params[] = $key;
+			$values[] = array(':'.$key, $value, $type);
+			$fields[] = '`'.$key.'` = :'.$key;
+		}
+
+		$params = implode($params, ', :');
+		$fields = implode($fields, ', ');
+
+		return array(
+			'keys'   => $keys,
+			'params' => $params,
+			'values' => $values,
+			'fields' => $fields,
+		);
 	}
 	/************koniec wersji do testów */
 
@@ -669,11 +900,12 @@ class User {
 			$role = $this->_pdo->getRow('SELECT `format` FROM [groups] WHERE `id` = :role', array(
 				array(':role', $role, PDO::PARAM_STR)
 			));
-		}
 
-		if ($role)
-		{
 			return str_replace('{username}', $username, $role['format']);
+		}
+		else
+		{
+			return str_replace('{username}', $username, $role);
 		}
 
 		return $username;
@@ -921,6 +1153,16 @@ class User {
 	}
 
 	/**
+	 * Zwraca typ IP użytkownika.
+	 *
+	 * @return  string
+	 */
+	public function getIPType()
+	{
+		return $this->_ip_type;
+	}
+
+	/**
 	 * Sprawdza, czy użytkownik jest zalogowany.
 	 *
 	 * @return  bool
@@ -1088,12 +1330,10 @@ class User {
 			$user = $this->get('id');
 		}
 
-		//$roles = array_keys($roles);
-
-		return $this->update(array(
+		return $this->update($user, array(
 			'roles' => serialize($roles),
 			'role' => $role
-		), $user);
+		));
 	}
 
 	/**
@@ -1161,6 +1401,8 @@ class User {
 	// Zwraca w postaci tablicy identyfikatory grup, do których należy zalogowany użytkownik
 	public function getUserGroupsID()
 	{
+		if (!$this->_roles) $this->getRoles();
+
 		$data = array();
 		foreach($this->_roles as $val)
 		{
@@ -1168,6 +1410,20 @@ class User {
 		}
 
 		return $data;
+	}
+
+	public function convertRoles($data)
+	{
+		$roles = array();
+		if($uns = unserialize($data))
+		{
+			foreach($uns as $row)
+			{
+				$roles[] = (string) $row;
+			}
+		}
+
+		return $roles;
 	}
 
 	// Zwraca tablicę istniejących grup, gdzie klucz to ID grupy, a wartością jest jej nazwa.
@@ -1489,7 +1745,7 @@ class User {
 		}
 	}
 
-	/** Kontrola logowania **/
+	/** Kontrola logowania **/ //- //TODO: potrzebne?
 
 	/**
 	 * Ustawia nie udaną próbę logowania
@@ -1529,7 +1785,6 @@ class User {
 	 {
 		foreach ($this->_pdo->getData('SELECT o.*, u.username FROM [users_online] o LEFT JOIN [users] u ON o.user_id = u.id ORDER BY o.last_activity DESC') as $user)
 		{
-			//if (in_array($))
 			$this->_online[] = $user;
 		}
 
@@ -1573,7 +1828,6 @@ class User {
 			}
 
 			$this->_get_users_online = $data;
-			//$this->cleanOnlineDuplicates();
 		}
 
 		return $this->_get_users_online;
@@ -1698,19 +1952,19 @@ class User {
 		return $pass1 === $pass2 && $strlen > 5 && $strlen < 21 && $pass1;
 	}
 
-	public function getEmailHost($email)
+	public function getEmailHost($mail)
 	{
-		if (strlen($string = strrchr($email, '@')))
+		if ($this->validEmail($mail))
 		{
-			return substr($string, 1);
+			return substr(strrchr($mail, '@'), 1);
 		}
 
-		return FALSE;
+		return '';
 	}
 
 	public function bannedByEmail($email, $validation = FALSE)
 	{
-		if ( ! $validation || $this->validEmail($var))
+		if ( ! $validation || $this->validEmail($email))
 		{
 			return (bool)
 				$this->_pdo->getMatchRowsCount('SELECT `id` FROM [blacklist] WHERE `email` = :email OR `email` = :host',
@@ -1722,6 +1976,43 @@ class User {
 		}
 
 		return TRUE;
+	}
+
+	// From php.net
+	private function IPv6($ip, $limit)
+	{
+		if (strpos($ip, "::") !== FALSE)
+		{
+			$ip = str_replace("::", str_repeat(":", $limit + 2 - substr_count($ip, ":")), $ip);
+		}
+		$tmp = explode(":", $ip);
+		foreach ($tmp as &$value) {
+			$value = str_pad($value, 4, '0', STR_PAD_LEFT);
+		}
+		return implode(":", $tmp);
+	}
+
+	public function bannedByIP()
+	{
+		if ($this->_ip)
+		{
+			if ($this->_ip_type === 4)
+			{
+				return $this->_pdo->getMatchRowsCount('SELECT `id` FROM [blacklist] WHERE type=4 AND ip REGEXP "^'.str_replace(".", ".(", $this->_ip, $i).str_repeat(")?", $i).'$"');
+			}
+			elseif($this->_ip_type === 5)
+			{
+				return $this->_pdo->getMatchRowsCount('SELECT `id` FROM [blacklist] WHERE (type=4 AND ip REGEXP "^'.str_replace(".", ".(", $this->_ip_v4, $i).str_repeat(")?", $i).'$") OR (type=6 AND ip REGEXP "^'.str_replace(":", ":(", $this->_ip_v6, $i).str_repeat(")?", $i).'$") OR (type=5 AND ip=\''.$this->_ip.'\')');
+			}
+			elseif($this->_ip_type === 6)
+			{
+				return $this->_pdo->getMatchRowsCount('SELECT `id` FROM [blacklist] WHERE type=6 AND ip REGEXP "^'.str_replace(":", ":(", $this->_ip, $i).str_repeat(")?", $i).'$"');
+			}
+			else
+			{
+				throw new userException(__('Your IP address is not valid!'));
+			}
+		}
 	}
 
 	// Przekierowanie na logowanie z zachowaniem adresu do przeglądanej strony

@@ -1,7 +1,42 @@
+{*
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
+|
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
+|
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+|
+**********************************************************
+                ORIGINALLY BASED ON
+---------------------------------------------------------+
+| PHP-Fusion Content Management System
+| Copyright (C) 2002 - 2011 Nick Jones
+| http://www.php-fusion.co.uk/
++--------------------------------------------------------+
+| Author: Nick Jones (Digitanium)
++--------------------------------------------------------+
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
++--------------------------------------------------------*/
+*}
+
 <div class="ui-corner-all grid_6">
-	<h3 class="ui-corner-all top17">{i18n('Update')}</h3>
+	<h3 class="ui-corner-all">{i18n('Update')}</h3>
 	<div class="HomeBox"><div class="valid">{i18n('You&nbsp;have&nbsp;currently&nbsp;version&nbsp;eXtreme&nbsp;-&nbsp;Fusion&nbsp;:version', array(':version' => $version))}</div></div>
-	
+
 	<h3 class="ui-corner-all">{i18n('History')}</h3>
 	<div class="HomeBox">
 	{if $logs}
@@ -19,12 +54,9 @@
 		<div class="error">{i18n('There are no logs.')}</div>
 	{/if}
 	</div>
-	
-	<h3 class="ui-corner-all">{i18n('Download')}</h3>
-	<div class="HomeBox"><div class="error">{i18n('Not&nbsp;plugged.')}</div></div>
 </div>
 <div class="ui-corner-all grid_6">
-	<h3 class="ui-corner-all">{i18n('Notes')} {if $current}({$current}/{$notes_per_page}){/if}</h3>
+	<!--<h3 class="ui-corner-all">{i18n('Notes')} {if $current}({$current}/{$notes_per_page}){/if}</h3>
 		<div class="HomeBox">
 
 			{if $message && $notes_log}<div class="{$class}">{$message}</div>{/if}
@@ -60,9 +92,9 @@
 				<div id="notes">
 
 					{section=notes}
-					<h3><a href="#" class="{if $notes.block == 1}{if $notes.author_id == $notes.user_id}edit{/if}{else}edit{/if}" id="{$notes.id}">{$notes.title}</a></h4>
+					<h4><a href="#" class="{if $notes.block == 1}{if $notes.author_id == $notes.user_id}edit{/if}{else}edit{/if}" id="{$notes.id}">{$notes.title}</a></h4>
 					<div>
-						<p>{if $notes.block == 1}<img src="{$ADDR_ADMIN_ICONS}logout.png" alt="">{/if}<small>{i18n('Added')} {$notes.datestamp} {i18n('by')} <a href="{$SITE_ADDRESS}profile,{$notes.author_id}.html">{$notes.author}</a></small></p>
+						<p>{if $notes.block == 1}<img src="{$ADDR_ADMIN_ICONS}logout.png" alt="">{/if}<small>{i18n('Added')} {$notes.datestamp} {i18n('by')} {$notes.author}</small></p>
 						<br>
 						<p class="{if $notes.block == 1}{if $notes.author_id == $notes.user_id}edit_area{/if}{else}edit_area{/if}" id="{$notes.id}">{$notes.note}</p>
 						<br>
@@ -74,39 +106,30 @@
 				<br>
 				{/if}
 
-			<form id="ThisNotes" action="{$URL_REQUEST}" method="post">
-				<div class="Buttons">
-					<div class="center grid_2 button-c">
-						<input type="hidden" name="note_add" value="yes" />
-						<span {if $current < $notes_per_page}id="SendForm_ThisNotes"{/if} class="{if $current < $notes_per_page}Save{/if}"><strong>{if $current < $notes_per_page}{i18n('Add')}{else}{i18n('You have reached maximum number of notes. Remove some.')}{/if}<img src="{$ADDR_ADMIN_ICONS}pixel/plus.png" alt="" /></strong></span>
-					</div>
-				</div>
-			</form>
+				{if $current < $notes_per_page}
+					<form id="ThisNotes" action="{$URL_REQUEST}" method="post">
+						<div class="Buttons">
+							<div class="center grid_2 button-c">
+								<input type="hidden" name="note_add" value="yes" />
+								
+								<span id="SendForm_ThisNotes" class="save"><strong>{i18n('Add')}<img src="{$ADDR_ADMIN_ICONS}pixel/plus.png" alt="" /></strong></span>
+								
+							</div>
+						</div>
+					</form>
+				{else}
+					<p class="center bold">{i18n('You have reached maximum number of notes. Remove some.')}</p>
+				{/if}
 
 			{/if}
 
-		<div class="clear"></div>
+			<div class="clear"></div>
 		</div>
-	
-	<h3 class="ui-corner-all">{i18n('Quick&nbsp;news')}</h3>
-	{if $message && $quick_news_log}<div class="{$class}">{$message}</div>{/if}
-	<form id="ThisQuickNews" action="{$URL_REQUEST}" method="post">
-		<div class="HomeBox">
-				<div class="formField grid_5">
-					<input type="text" id="quick_news_title" name="quick_news_title" maxlength="200" class="num_200" value="" />
-				</div>
-				<div class="clear"></div>
-				<div class="formField grid_5">
-					<textarea cols="80" name="quick_news_content" id="quick_news_content" class="num_255 resize" rows="4"></textarea>
-				</div>
-				<div class="clear"></div>
-				<div class="tbl Buttons">
-					<div class="center grid_2 button-c"><input type="hidden" name="quick_news_add" value="yes" />
-						<span id="SendForm_ThisQuickNews" class="save"><strong>{i18n('Add')}<img src="{$ADDR_ADMIN_ICONS}pixel/plus.png" alt="" /></strong></span>
-					</div>
-				</div>
-				<div class="clear"></div>
-		</div>
-	</form>
+		-->
+		<h3 class="ui-corner-all">{i18n('Statistics')}</h3>
+		<div class="HomeBox"><div class="error">{i18n('Not&nbsp;plugged.')}</div></div>
+		
+		<h3 class="ui-corner-all">{i18n('Latest comments')}</h3>
+		<div class="HomeBox"><div class="error">{i18n('Not&nbsp;plugged.')}</div></div>
 </div>
 <div class="clear"></div>

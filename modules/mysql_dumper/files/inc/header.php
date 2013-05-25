@@ -2,7 +2,7 @@
 $msd_path=realpath(dirname(__FILE__) . '/../') . '/';
 if (!defined('MSD_PATH')) define('MSD_PATH',$msd_path);
 session_name('MySQLDumper');
-session_start();
+@session_start();
 if (!isset($download))
 {
 	header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");

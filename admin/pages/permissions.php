@@ -1,20 +1,25 @@
 <?php
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+*********************************************************/
 try
 {
 	require_once '../../config.php';
 	require DIR_SITE.'bootstrap.php';
 	require_once DIR_SYSTEM.'admincore.php';
-	
+
 	$_locale->load('permissions');
 
     if ( ! $_user->hasPermission('admin.permissions'))
@@ -90,7 +95,7 @@ try
 							array(':description', $description, PDO::PARAM_STR)
 						)
 					);
-					
+
 					$_system->clearCache();
 
 					if ($count)
@@ -119,7 +124,7 @@ try
 				{
 					$name = $_request->post('name')->filters('trim', 'strip');
 					$description = $_request->post('description')->filters('trim', 'strip');
-					
+
 					$count = $_pdo->exec('INSERT INTO [permissions_sections] (`name`, `description`) VALUES (:name, :description)',
 						array(
 							array(':name', $name, PDO::PARAM_STR),
@@ -128,7 +133,7 @@ try
 					);
 
 					$_system->clearCache();
-				
+
 					if ($count)
 					{
 						$_log->insertSuccess('add', __('Section has been added.'));
@@ -137,9 +142,9 @@ try
 
 					$_log->insertFail('add', __('Error! Section has not been added.'));
 					$_request->redirect(FILE_PATH, array('act' => 'add', 'type' => 'section', 'status' => 'error'));
-					
+
 				}
-				
+
 				$_tpl->template('permission');
 			}
 			elseif ($_request->get('action')->show() === 'delete' && $_request->get('id')->isNum())
@@ -160,7 +165,7 @@ try
 						array(':id', $_request->get('id')->show(), PDO::PARAM_INT),
 					)
 				);
-				
+
 				$count = $_pdo->exec('DELETE FROM [permissions] WHERE `id` = :id',
 					array(
 						array(':id', $_request->get('id')->show(), PDO::PARAM_INT),
@@ -168,7 +173,7 @@ try
 				);
 
 				$_user->cleanPerms();
-				
+
 				$_system->clearCache();
 
 				if ($count)
@@ -192,11 +197,11 @@ try
 						array(':id', $_request->get('id')->show(), PDO::PARAM_INT)
 					)
 				);
-				
+
 				if ($_request->post())
 				{
 					$description = $_request->post('description')->filters('trim', 'strip');
-					
+
 					$count = $_pdo->exec('UPDATE [permissions] SET `description` = :description WHERE `id` = :id',
 						array(
 							array(':id', $_request->get('id')->show(), PDO::PARAM_INT),
@@ -207,8 +212,8 @@ try
 					if ( ! $count && ! $permission['is_system'])
 					{
 						unset($count);
-						
-						$name = $_request->post('name')->filters('trim', 'strip');		
+
+						$name = $_request->post('name')->filters('trim', 'strip');
 						$section = $_request->post('section')->filters('trim', 'strip');
 
 						$count = $_pdo->exec('UPDATE [permissions] SET `name` = :name, `section` = :section WHERE `id` = :id',
@@ -219,9 +224,9 @@ try
 							)
 						);
 					}
-					
+
 					$_system->clearCache();
-				
+
 					if ($count)
 					{
 						$_log->insertSuccess('edit', __('Permission has been edited.'));
@@ -230,7 +235,7 @@ try
 
 					$_log->insertFail('edit', __('Error! Permission has not been edited.'));
 					$_request->redirect(FILE_PATH, array('act' => 'edit', 'type' => 'permission', 'status' => 'error'));
-					
+
 				}
 
 				$_tpl->assign('permission', $permission);
@@ -249,12 +254,12 @@ try
 							array(':name', $name, PDO::PARAM_STR)
 						)
 					);
-					
+
 					if ($uniqe)
 					{
 						throw new userException(__('This permission name is already used.'));
 					}
-					
+
 					$count = $_pdo->exec('INSERT INTO [permissions] (`name`, `description`, `section`) VALUES (:name, :description, :section)',
 						array(
 							array(':name', $name, PDO::PARAM_STR),
@@ -264,7 +269,7 @@ try
 					);
 
 					$_system->clearCache();
-				
+
 					if ($count)
 					{
 						$_log->insertSuccess('add', __('Permission has been added.'));
@@ -273,7 +278,7 @@ try
 
 					$_log->insertFail('add', __('Error! Permission has not been added.'));
 					$_request->redirect(FILE_PATH, array('act' => 'add', 'type' => 'permission', 'status' => 'error'));
-					
+
 				}
 
 				$_tpl->template('permission');
@@ -290,13 +295,13 @@ try
 				{
 					throw new userException(__('You can not delete system permission!'));
 				}
-				
+
 				$count = $_pdo->exec('DELETE FROM [permissions] WHERE `id` = :id',
 					array(
 						array(':id', $_request->get('id')->show(), PDO::PARAM_INT),
 					)
 				);
-				
+
 				$_user->cleanPerms();
 				$_system->clearCache();
 
@@ -308,7 +313,7 @@ try
 
 				$_log->insertFail('delete', __('Error! Permission has not been deleted.'));
 				$_request->redirect(FILE_PATH, array('act' => 'delete', 'type' => 'permission', 'status' => 'error'));
-				
+
 			}
 		}
 	}

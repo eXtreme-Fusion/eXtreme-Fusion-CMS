@@ -1,16 +1,39 @@
 <?php
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
+/*********************************************************
+| eXtreme-Fusion 5
 | Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
 | http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.
-| http://extreme-fusion.org/ef5/license/
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+|
+**********************************************************
+                ORIGINALLY BASED ON
+---------------------------------------------------------+
+| PHP-Fusion Content Management System
+| Copyright (C) 2002 - 2011 Nick Jones
+| http://www.php-fusion.co.uk/
++--------------------------------------------------------+
+| Author: Nick Jones (Digitanium)
+| Author: PHP-Fusion Development Team
++--------------------------------------------------------+
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
++--------------------------------------------------------*/
 
-class Comment
+class Comment extends Observer
 {
 	protected $_tpl;
 	protected $_pdo;
@@ -31,11 +54,18 @@ class Comment
 
 		$this->_tpl->root = DIR_TEMPLATES.'pre'.DS;
 		$this->_tpl->compile = DIR_CACHE;
+		parent::$_obj = $_tpl;
 	}
 
-	public function get($type, $item, $rowstart = 0, $only_comments = FALSE)
+	public function getLimit()
 	{
-		if ($d = $this->getData($type, $item, $rowstart))
+		return $this->_sett->get('comments_per_page');
+	}
+
+	public function get($type, $item, $current_page = 1, $limit = 10, $only_comments = FALSE)
+	{
+		if (!$current_page) $current_page = 1;
+		if ($d = $this->getData($type, $item, ($current_page-1)*$limit, $limit))
 		{
 			foreach ($d as &$val)
 			{
@@ -80,7 +110,11 @@ class Comment
 				'comment' => $d,
 				'type' => $type,
 				'item' => $item,
-				'only_comments' => $only_comments
+				'only_comments' => $only_comments,
+				'count' => count($d),
+				'limit' => $limit,
+				'bbcode' => $this->_sbb->bbcodes('post'),
+				'smiley' => $this->_sbb->smileys('post')
 			)
 		);
 
@@ -114,16 +148,15 @@ class Comment
 		return FALSE;
 	}
 
-	private function getData($type, $item, $rowstart)
+	private function getData($type, $item, $rowstart, $limit)
 	{
-		return $this->_pdo->getData('SELECT * FROM [comments] WHERE content_type = :type AND content_id = :item ORDER BY `id` DESC LIMIT '.$rowstart.',10', array(
+		return $this->_pdo->getData('SELECT * FROM [comments] WHERE content_type = :type AND content_id = :item ORDER BY `id` DESC LIMIT '.$rowstart.','.$limit, array(
 			array(':type', $type, PDO::PARAM_STR),
 			array(':item', $item, PDO::PARAM_INT)
 		));
 	}
 
-
-public function hasPermission($writer, $author)
+	public function hasPermission($writer, $author)
 	{
 		if ($writer === 'user')
 		{
@@ -187,7 +220,7 @@ public function hasPermission($writer, $author)
 			if ($author !== NULL)
 			{
 				$count = $this->_pdo->exec('UPDATE [comments] SET content = :content, author = :author'.$time.' WHERE id = :id', array(
-					array(':content', $content, PDO::PARAM_STR),
+					array(':content', HELP::wordsProtect($content), PDO::PARAM_STR),
 					array(':author', $author, PDO::PARAM_INT),
 					array(':id', $id, PDO::PARAM_INT)
 				));
@@ -195,7 +228,7 @@ public function hasPermission($writer, $author)
 			else
 			{
 				$count = $this->_pdo->exec('UPDATE [comments] SET content = :content'.$time.' WHERE id = :id', array(
-					array(':content', $content, PDO::PARAM_STR),
+					array(':content', HELP::wordsProtect($content), PDO::PARAM_STR),
 					array(':id', $id, PDO::PARAM_INT)
 				));
 			}
@@ -296,6 +329,8 @@ public function hasPermission($writer, $author)
 				$author = __('Guest');
 				$author_type = 'g';
 			}
+
+			$post = HELP::wordsProtect($post);
 
 			return $this->_pdo->exec('
 				INSERT INTO [comments] (content_id, post, content_type, author, author_type, datestamp, ip)

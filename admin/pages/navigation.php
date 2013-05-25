@@ -1,20 +1,42 @@
 <?php
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+|
+**********************************************************
+                ORIGINALLY BASED ON
+---------------------------------------------------------+
+| PHP-Fusion Content Management System
+| Copyright (C) 2002 - 2011 Nick Jones
+| http://www.php-fusion.co.uk/
++--------------------------------------------------------+
+| Author: Nick Jones (Digitanium)
++--------------------------------------------------------+
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
++--------------------------------------------------------*/
 try
 {
 	require_once '../../config.php';
 	require DIR_SITE.'bootstrap.php';
 	require_once DIR_SYSTEM.'admincore.php';
-	
+
 	$_locale->load('pages');
 
     if ( ! $_user->isLoggedIn())
@@ -45,6 +67,15 @@ try
 			case 4:
 				$_tpl->assign('NavigationTitle', __('Settings'));
 				break;
+			case 5:
+				$_tpl->assign('NavigationTitle', __('Modules'));
+				break;
+			case 6:
+				$_tpl->assign('NavigationTitle', __('Panel'));
+				break;
+			case 7:
+				$_tpl->assign('NavigationTitle', __('System'));
+				break;
 			default:
 				$_tpl->assign('NavigationTitle', 'N/A');
 		}
@@ -52,7 +83,7 @@ try
 		$query = $_pdo->getData('SELECT * FROM [admin] WHERE `page` = :page ORDER BY `title`',
 			array(':page', $_request->get('PageNum')->show(), PDO::PARAM_INT)
 		);
-		
+
 		$link = array();
 		if ($_pdo->getRowsCount($query))
 		{
@@ -68,11 +99,9 @@ try
 				}
 			}
 		}
-		
-		
-		
+
 		if ($_request->get('PageNum')->show() === '5')
-		{	
+		{
 			if (count($link))
 			{
 				$_tpl->assign('NavigationTitle', __('Modules'));
@@ -84,6 +113,14 @@ try
 			{
 				require DIR_ADMIN.'pages/modules.php';
 			}
+		}
+		elseif ($_request->get('PageNum')->show() === '6')
+		{
+			require DIR_ADMIN.'pages/home.php';
+		}
+		elseif ($_request->get('PageNum')->show() === '7')
+		{
+			require DIR_ADMIN.'pages/settings_ef.php';
 		}
 		else
 		{

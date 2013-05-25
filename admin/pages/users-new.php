@@ -1,14 +1,37 @@
 <?php
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
+/*********************************************************
+| eXtreme-Fusion 5
 | Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
 | http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.
-| http://extreme-fusion.org/ef5/license/
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+**********************************************************
+                ORIGINALLY BASED ON
+---------------------------------------------------------+
+| PHP-Fusion Content Management System
+| Copyright (C) 2002 - 2011 Nick Jones
+| http://www.php-fusion.co.uk/
++--------------------------------------------------------+
+| Author: Nick Jones (Digitanium)
+| Author: Paul Buek (Muscapaul)
+| Author: Hans Kristian Flaatten (Starefossen)
++--------------------------------------------------------+
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
++--------------------------------------------------------*/
 try
 {
 	require_once '../../config.php';
@@ -351,22 +374,23 @@ try
 							$_user->saveNewAvatar($_request->get('user')->show(), $_request->files('avatar')->show());
 						}
 
-						$count = $_user->update(
-							array(
-								'hide_email' => $_request->post('hide_email')->isNum(TRUE),
-								'theme' => $_request->post('theme_set')->show()
-							), $_request->get('user')->show()
-						);
+						$_fields = array();
 
-						if ($query = $_pdo->getData('SELECT * FROM [user_fields]'))
+						if ($fields = $_pdo->getData('SELECT * FROM [user_fields]'))
 						{
-							foreach($query as $data)
+							foreach($fields as $field)
 							{
-								$custom_data[$data['index']] = $_request->post($data['index'])->show();
-							}
+								$key   = $field['index'];
+								$value = $_request->post($key)->show();
 
-							$count = $_user->customData()->update($custom_data, $_request->get('user')->show());
+								$_fields[$key] = $value;
+							}
 						}
+
+						$count = $_user->update($_request->get('user')->show(), array(
+							'hide_email' => $_request->post('hide_email')->isNum(TRUE),
+							'theme'      => $_request->post('theme_set')->show(),
+						), $_fields);
 
 						if ($count)
 						{
@@ -739,13 +763,13 @@ try
 			$user = array();
 			if ($rows)
 			{
-				$rowstart = Paging::getRowStart($current, intval($_sett->get('users_per_page')));
+				$items_per_page = intval($_sett->get('users_per_page'));
 
 				$query = $_pdo->getData('SELECT * FROM [users] WHERE `status` = :status ORDER BY `username` ASC LIMIT :rowstart,:items_per_page',
 					array(
 						array(':status', $status, PDO::PARAM_INT),
-						array(':rowstart', $rowstart, PDO::PARAM_INT),
-						array(':items_per_page', intval($_sett->get('users_per_page')), PDO::PARAM_INT)
+						array(':rowstart', Paging::getRowStart($current_page, $items_per_page), PDO::PARAM_INT),
+						array(':items_per_page', $items_per_page, PDO::PARAM_INT)
 					)
 				);
 
@@ -763,10 +787,8 @@ try
 					}
 				}
 
-
-				$_pagenav = new PageNav(new Paging($rows, $current, intval($_sett->get('users_per_page'))), $_tpl, 10, array('page=users', 'current=', FALSE));
-
-				$_pagenav->get($_pagenav->create(), 'page_nav', DIR_ADMIN_TEMPLATES.'paging'.DS);
+				$ec->paging->setPagesCount($rows, $current_page, $items_per_page);
+				$ec->pageNav->get($ec->pageNav->create($_tpl, 10), 'page_nav', DIR_ADMIN_TEMPLATES.'paging'.DS);
 			}
 			$_tpl->assignGroup(array(
 					'user' => $user,

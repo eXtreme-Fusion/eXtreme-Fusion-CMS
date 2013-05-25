@@ -1,14 +1,36 @@
 <?php
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
+/*********************************************************
+| eXtreme-Fusion 5
 | Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
 | http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.
-| http://extreme-fusion.org/ef5/license/
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+|
+**********************************************************
+                ORIGINALLY BASED ON
+---------------------------------------------------------+
+| PHP-Fusion Content Management System
+| Copyright (C) 2002 - 2011 Nick Jones
+| http://www.php-fusion.co.uk/
++--------------------------------------------------------+
+| Author: Nick Jones (Digitanium)
++--------------------------------------------------------+
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
++--------------------------------------------------------*/
 $_pdo->query("DROP TABLE IF EXISTS ".$db_prefix."pages", NULL, FALSE);
 $result = $_pdo->query("CREATE TABLE ".$db_prefix."pages (
 	`id` SMALLINT UNSIGNED AUTO_INCREMENT,
@@ -51,6 +73,7 @@ $result = $_pdo->query("CREATE TABLE ".$db_prefix."pages_types (
 	`show_date` TINYINT UNSIGNED NOT NULL DEFAULT '1',
 	`show_tags` TINYINT UNSIGNED NOT NULL DEFAULT '1',
 	`show_type` TINYINT UNSIGNED NOT NULL DEFAULT '1',
+	`user_allow_comments` TINYINT UNSIGNED NOT NULL DEFAULT '1',
 	PRIMARY KEY (`id`)
 ) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";", NULL, FALSE);
 if ( ! $result) $fail = TRUE;
@@ -184,6 +207,7 @@ $result = $_pdo->query("CREATE TABLE ".$db_prefix."navigation (
 	`position` TINYINT UNSIGNED NOT NULL DEFAULT '1',
 	`window` TINYINT UNSIGNED NOT NULL DEFAULT '0',
 	`order` SMALLINT(2) UNSIGNED NOT NULL DEFAULT '0',
+	`rewrite` TINYINT UNSIGNED NOT NULL DEFAULT '1',
 	PRIMARY KEY (`id`)
 ) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";", NULL, FALSE);
 if ( ! $result) $fail = TRUE;
@@ -305,6 +329,15 @@ $result = $_pdo->query("CREATE TABLE ".$db_prefix."smileys (
 ) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";", NULL, FALSE);
 if ( ! $result) $fail = TRUE;
 
+$_pdo->query("DROP TABLE IF EXISTS ".$db_prefix."statistics", NULL, FALSE);
+$result = $_pdo->query("CREATE TABLE ".$db_prefix."statistics (
+	`id` MEDIUMINT UNSIGNED NOT NULL auto_increment,
+	`ip` VARCHAR(20) NOT NULL DEFAULT '0.0.0.0',
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `ip` (`ip`)
+) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";", NULL, FALSE);
+if ( ! $result) $fail = TRUE;
+
 $_pdo->query("DROP TABLE IF EXISTS ".$db_prefix."time_formats", NULL, FALSE);
 $result = $_pdo->query("CREATE TABLE ".$db_prefix."time_formats (
 	`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -412,7 +445,6 @@ $result = $_pdo->query("CREATE TABLE ".$db_prefix."users_data (
   `www` VARCHAR(200) NOT NULL DEFAULT '',
   `location` VARCHAR(200) NOT NULL DEFAULT '',
   `sig` TEXT NOT NULL DEFAULT '',
-  `lang` VARCHAR(200) NOT NULL DEFAULT 'English',
   PRIMARY KEY (`user_id`)
 ) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";", NULL, FALSE);
 if ( ! $result) $fail = TRUE;

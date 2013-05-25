@@ -1,20 +1,25 @@
 <?php
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+*********************************************************/
 try
 {
 	require_once '../../config.php';
 	require DIR_SITE.'bootstrap.php';
 	require_once DIR_SYSTEM.'admincore.php';
-	
+
 	$_locale->load('groups');
 
     if ( ! $_user->hasPermission('admin.groups'))
@@ -28,7 +33,7 @@ try
 	if ($_request->get(array('status', 'act'))->show())
 	{
 		// Wyœwietli komunikat
-		$_tpl->getMessage($_request->get('status')->show(), $_request->get('act')->show(), 
+		$_tpl->getMessage($_request->get('status')->show(), $_request->get('act')->show(),
 			array(
 				'add' => array(
 					__('Group has been added.'), __('Error! Group has not been added.')
@@ -62,12 +67,12 @@ try
 						array(':team', $team, PDO::PARAM_INT)
 					)
 				);
-				
-				
+
+
 				if ($count && ( ! in_array($_request->get('id')->show(), $_user->groups) || $_request->get('id')->show() > 1))
 				{
 					unset($count);
-					
+
 					if ($_request->post('permissions')->show())
 					{
 						$permissions = array_keys($_request->post('permissions')->show());
@@ -86,7 +91,7 @@ try
 				}
 
 				$_system->clearCache();
-				
+
 				if ($count)
 				{
 					$_log->insertSuccess('edit', __('Group has been edited.'));
@@ -155,7 +160,7 @@ try
 				$description = $_request->post('description')->filters('trim', 'strip');
 				$format = $_request->post('format')->filters('trim', 'html_decode');
 				$team = $_request->post('team')->isNum(TRUE);
-				
+
 				if ($_request->post('permissions')->show())
 				{
 					$permissions = array_keys($_request->post('permissions')->show());
@@ -165,7 +170,7 @@ try
 				{
 					$permissions = array();
 				}
-					
+
 				$count = $_pdo->exec('INSERT INTO [groups] (`title`, `description`, `format`, `permissions`, `team`) VALUES (:title, :description, :format, :permissions, :team)',
 					array(
 						array(':title', $title, PDO::PARAM_STR),
@@ -179,7 +184,7 @@ try
 				unset($permissions);
 
 				$_system->clearCache();
-				
+
 				if ($count)
 				{
 					$_log->insertSuccess('add', __('Group has been added.'));
@@ -236,7 +241,7 @@ try
 			$count = $_pdo->exec('DELETE FROM [groups] WHERE `id` = '.$_request->get('id')->show());
 
 			$_system->clearCache();
-			
+
 			if ($count)
 			{
 				$_log->insertSuccess('delete', __('Group has been deleted.'));
@@ -253,6 +258,7 @@ try
 
 		if ($_pdo->getRowsCount($query))
 		{
+			
 	        foreach($query as $group)
 	        {
 				$row['id'] = $group['id'];

@@ -50,16 +50,13 @@ return array(
 	'Group: admin' => 'Administratorzy są to ludzie, którzy cały czas czuwają nad stroną.',
 	'Group: user' => 'Uprawnienie to posiada podstawowe zezwolenia m.in. Możliwość logowania się.',
 	'Group: guest' => 'Osoba odwiedzająca stronę bez logowania się.',
-	//Step 1
+	// Step 1
 	'Please select the required locale (language):' => 'Wybierz język strony:',
 	'Download more locales from <a href="http://www.extreme-fusion.org/">extreme-fusion.org</a>' => 'Inne wersje językowe do pobrania na stonie <a href="http://www.extreme-fusion.org/">extreme-fusion.org</a>',
-	'I accept BSD License' => 'Akceptuje warunki licencji BSD',
-	//Step 2
-	'Writeable' => 'Zapisywalny',
+	'I accept aGPL v3 License' => 'Akceptuje warunki licencji aGPL v3',
+	// Step 2
 	'Unwriteable' => 'Niezapisywalny',
-	'In order for setup to continue, the following files/folders must be writeable:' => 'Poniższe pliki i&nbsp;katalogi muszę być zapisywalne, aby poprawnie zakończyć instalację:',
-	'Write permissions check passed, click Next to continue.' => 'Prawa dostępu do plików prawidłowe, naciśnij Dalej w&nbsp;celu kontynuacji.',
-	'Write permissions check failed, please CHMOD files/folders marked Unwriteable.' => 'Prawa dostępu do plików nieprawidłowe, sprawdź uprawnienia dla zaznaczonych plików i&nbsp;folderów.',
+	'The folders and files listed below must be set writeable (chmod 777).' => 'Poniższym katalogom i plikom należy ustawić zapisywalność (chmod 777).',
 	'Refresh' => 'Odśwież',
 	'PHP Version Error' => 'Twój serwer nie spełnia wymagań systemu: posiada interpreter PHP starszy od wersji :php_required.<br />
 							Co możesz zrobić:
@@ -70,6 +67,7 @@ return array(
 							</ul>',
 	'Extension error' => 'Nie znaleziono wymaganego rozszerzenia :extension_error. Należy je załadować przez odpowiednią konfigurację serwera.',
 	'Files has not been changed.' => 'Nie zmieniono plików.',
+	'Not found' => 'Nie znaleziono',
 	// Step 3 - Access criteria
 	'Please enter your MySQL database access settings.' => 'Wpisz ustawienia dla Twojej bazy danych MySQL.',
 	'Database Hostname:' => 'Adres hosta:',
@@ -93,24 +91,20 @@ return array(
 	'Could not write or delete MySQL tables.' => 'Nie można było zapisać lub usunąć tabel MySQL.',
 	'Please make sure your MySQL user has read, write and delete permission for the selected database.' => 'Sprawdź, czy podany przez Ciebie użytkownik bazy danych ma prawa odczytu, zapisu oraz usuwania danych w&nbsp;wybranej bazie danych.',
 	'Table prefix error.' => 'Prefiks tabeli jest w&nbsp;użyciu.',
-	'The specified table prefix is already in use.' => 'Podany przez Ciebie prefiks tabeli jest już zajęty. Podaj inny prefiks.',
 	'Unable to connect with MySQL database.' => 'Brak możliwości połączenia z&nbsp;bazą danych.',
-	'The specified MySQL database does not exist.' => 'Podana baza danych MySQL nie istnieje',
-	'Unable to connect with MySQL.' => 'Brak możliwości połączenia z&nbsp;bazą danych.',
-	'Please ensure your MySQL username and password are correct.' => 'Sprawdź ustawienia, nazwę użytkownika oraz hasło do Twojej bazy danych MySQL.',
+	'Please ensure your MySQL username and password are correct.' => 'Sprawdź ustawienia, nazwę użytkownika oraz hasło do Twojej bazy danych MySQL lub skontaktuj się z dostawcą hostingu.',
 	'There are empty fields left!' => 'Pozostawiono niewypełnione pola!',
 	'Please make sure you have filled out all the MySQL connection fields.' => 'Sprawdź, czy wszystkie pola są wypełnione.',
 	'Tables prefix (Advanced settings) is already in use or prefix has not been written, and tables prefix exist in the database with the same name as that system is trying to create. Please enter a different prefix for tables.' => 'Prefiks tabel (Zaawansowane ustawienia) jest już w użyciu lub niepodano prefiksu, a w bazie istnieją tabele o takiej samej nazwie jak te, które system próbuje utworzyć. Należy podać inny prefiks dla tabel.',
-	'UWAGA! Jeżeli po zakończeniu instalacji wystąpią problemy z linkami i adresami URL (błędy 404), należy przeinstalować system nie zaznaczając poniższego pola lub zmienić ustawienia $_route w pliku config.php.' => 'NOTE! If after installation you experience problems with links and URLs (error 404), you must reinstall the system without checking the box below, or change the $ _route in config.php.',
+	'NOTE! If after installation you experience problems with links and URLs (error 404), you must reinstall the system without checking the box below, or change the $_route in config.php.' => 'UWAGA! Jeżeli po zakończeniu instalacji wystąpią problemy z linkami i adresami URL (błędy 404), należy przeinstalować system nie zaznaczając poniższego pola lub zmienić ustawienia $_route w pliku config.php.',
 	'The names of the files listed below please change with the instructions.' => 'Nazwy poniższych plików proszę zmienić według instrukcji.',
-	'The folders and files listed below must be set writeable (chmod 777).' => 'Poniższym katalogom i plikom należy ustawić zapisywalność (chmod 777).',
 	'modRewrite warning' => 'Instalator nie mógł ustalić, czy twój serwer obsługuje modRewrite.<br />
-	Zaznacz to pole, jeżeli jesteś pewny, że wymieniony moduł jest dostępny. <br />
-	Odpowiada on za tworzenie linków przyjaznych wyszukiwarkom.', 
+							Zaznacz to pole, jeżeli jesteś pewny, że wymieniony moduł jest dostępny. <br />
+							Odpowiada on za tworzenie linków przyjaznych wyszukiwarkom.',
 	'FURL warning' => 'Instalator rozpoznał, że używasz innego serwera niż Apache.<br />
-	Aby móc korzystać z linków przyjaznych wyszukiwarkom, serwer musi obsługiwać ścieżki PATH_INFO.<br />
-	Po zakończeniu instalacji system spróbuje ustalić, czy są one dostępne, przy czym występuje ryzyko pomyłki.<br />
-	Aby temu zapobiec, zaznacz poniższe pole, jeżeli masz pewność, iż twój serwer obsługuje PATH_INFO.',
+						Aby móc korzystać z linków przyjaznych wyszukiwarkom, serwer musi obsługiwać ścieżki PATH_INFO.<br />
+						Po zakończeniu instalacji system spróbuje ustalić, czy są one dostępne, przy czym występuje ryzyko pomyłki.<br />
+						Aby temu zapobiec, zaznacz pole obok, jeżeli masz pewność, iż twój serwer obsługuje PATH_INFO.',
 	// Step 5 - Super Admin login
 	'Super Admin login details' => 'Wpisz dane głównego administratora',
 	'Username:' => 'Nazwa użytkownika:',
@@ -118,18 +112,12 @@ return array(
 	'Repeat Login password:' => 'Powtórz hasło logowania:',
 	'Email address:' => 'Adres e-mail:',
 	// Step 6 - User details validation
-	'User name contains invalid characters.' => 'Nazwa użytkownika zawiera nieobsługiwane znaki.',
-	'User name field can not be left empty.' => 'Pole nazwa użytkownika nie może być puste!',
-	'Your login does not appear to be valid.' => 'Nazwa  użytkownika jest niepoprawna.',
+	'Your login does not appear to be valid.' => 'Nazwa użytkownika jest niepoprawna.',
 	'Your two login passwords do not match.' => 'Hasła użytkownika nie pasują do siebie.',
-	'Invalid login password, please use alpha numeric characters only.<br />Password must be a minimum of 6 characters long.' => 'Nieprawidłowe hasło użytkownika, proszę o&nbsp;korzystanie wyłącznie ze znaków alfanumerycznych.<br />Hasło musi zawierać minimum 6 znaków.',
-	'Login password fields can not be left empty' => 'Pole hasło użytkownika nie może być puste!',
 	'Your email address does not appear to be valid.' => 'Podano nieprawidłowy adres e-mail.',
-	'Email field can not be left empty.' => 'Pole adres e-mail nie może być puste!',
 	'Setup complete' => '<div class="valid">Zakończono instalację. Dziękujemy za wybranie eXtreme-Fusion 5 - Ninja Edition!</div>',
-	'Your user settings are not correct:' => 'Podane dane użytkownika zawierają następujące błędy:',
 	'Administrator account has not been created.' => 'Konto administratora nie zostało utworzone.',
-	//Welcome Message
+	// Welcome Message
 	'Welcome to your site' => 'Witaj na nowej stronie.',
 	'Welcome to eXtreme-Fusion CMS. Thank for using our CMS, Please turn off the maintenance mode in security, onces you have finished configuring your site.' => 'Dziękujemy za korzystanie z systemu eXtreme-Fusion. Tryb prac na serwerze można wyłączyć w Panelu Administratora w dziale Polityki bezpieczeństwa.',
 	// Stage 6 - News Categories
@@ -140,7 +128,7 @@ return array(
 	'Graphics' => 'Grafika',
 	'Hardware' => 'Sprzęt',
 	'Journal' => 'Dziennik',
-	'Members' => 'Użytkownicy',
+	'Users' => 'Użytkownicy',
 	'Mods' => 'Modyfikacje',
 	'Movies' => 'Filmy',
 	'Network' => 'Sieć',
@@ -159,7 +147,10 @@ return array(
 	'News Cats' => 'Kategorie newsów',
 	'Contact' => 'Kontakt',
 	'Search' => 'Szukaj',
-	'Submit News' => 'Dodaj newsa',
+	'Rules' => 'Regulamin',
+	'Tags' => 'Słowa kluczowe',
+	'Team' => 'Administracja',
+	'Pages' => 'Materiały i wpisy',
 	// Stage 6 - User Field Categories
 	'Contact Information' => 'Informacje kontaktowe',
 	'Information' => 'Informacje',
@@ -169,15 +160,23 @@ return array(
 	'Website' => 'Strona WWW',
 	'Living place' => 'Miejscowość',
 	'Signature' => 'Podpis',
-	'Rewrite info' => 'Twój serwer umożliwia korzystanie z modułu mod_rewrite, lecz nie ma uprawnień do automatycznej zmiany nazwy pliku. Jeśli chcesz z niego skorzystać do tworzenia linków przyjaznych dla wyszukiwarek, zmień nazwę pliku "rewrite" na ".htaccess". W przeciwnym przypadku, po prostu zignoruj ten komunikat.',
 	// Example news
-	'Example news title' => 'Przykładowa treść',
-	'Example news content' => 'Witaj na swojej stronie.',
-	'Example news url' => 'przkladowa-tresc',
-	'Example news description' => 'Tresc podstawowa',
+	'Example news title' => 'Witaj na stronie internetowej opartej o eXtreme-Fusion 5',
+	'Example news content' => '<p style="text-align: center;">
+								To co tu widzisz, jest zbudowane dzięki darmowemu Systemowi Zarządzania Treścią (CMS) <a href="http://extreme-fusion.org/">eXtreme-Fusion 5</a>.</p>
+								<p>
+								Jeśli jesteś Administratorem tej strony, zaloguj się przez formularz widoczny po prawej stronie.<br />
+								Następnie przejdź do Panelu Zarządzania, by dokonać konfiguracji, dodać treść lub utworzyć nowe konta użytkowników.</p>
+								<p>
+								Rozbudowa Twojej strony www odbywa się przez instalację Moduł&oacute;w, dla przykładu Punktacji, zachęcającej do aktywności.</p>
+								<p style="text-align: center;">
+								Jeżeli nie jesteś Administratorem tej strony, ale chcesz posiadać własny serwis internetowy, to przejdź na nasz <a href="http://extreme-fusion.org/">Support</a>, skąd pobierzesz system EF5 oraz otrzymasz pomoc od Społeczności.<br />
+								&nbsp;</p>',
+	'Example news url' => 'witaj_na_stronie_internetowej_opartej_o_extreme-fusion_5',
+	'Example news description' => 'To co tu widzisz, jest zbudowane dzięki darmowemu Systemowi Zarządzania Treścią (CMS) eXtreme-Fusion 5.',
 	// Some additional informations
 	'The installation was interrupted. The system can be unstable.' => 'Instalacja została przerwana. System może nie działać stabilnie.',
-	'Start the installation again.' => 'Zacznij instalację ponownie',
+	'Start the installation again.' => 'Zacznij instalację ponownie.',
 	'Stop the installation or start from the begining.' => 'Przerwij instalację lub zacznij od nowa.',
-	'Stop installation' => 'Przerwij instalację.',
+	'Stop installation' => 'Przerwij instalację.'
 );

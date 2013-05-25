@@ -1,13 +1,48 @@
+{*
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
+|
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
+|
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+|
+**********************************************************
+                ORIGINALLY BASED ON
+---------------------------------------------------------+
+| PHP-Fusion Content Management System
+| Copyright (C) 2002 - 2011 Nick Jones
+| http://www.php-fusion.co.uk/
++--------------------------------------------------------+
+| Author: Nick Jones (Digitanium)
++--------------------------------------------------------+
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
++--------------------------------------------------------*/
+*}
+
 {if $action && $action !== 'page'}
 	{if $rows}
-		{php} opentable(__('News preview')) {/php}
+		{panel=i18n('News preview')}
 			<article class="news dark border_top_other">
 				<header>
 					<p class="text_dark">{i18n('Date:')} <time datetime="{$news.datetime}" pubdate="pubdate">{$news.date}</time></p>
 					<h3>
 						<a href="{$news.url}" title="{$news.title_name}">{$news.title_name}</a>
 						{if $access_edit}
-							<a href="javascript:void(0);" class="admin-box" rel="{$ADDR_ADMIN}pages/news.php?page=news&amp;action=edit&amp;id={$news.title_id}&amp;fromPage=true" title="{i18n('Edit')}">[{i18n('Edit')}]</a>
+							<a href="{$ADDR_ADMIN}pages/news.php?page=news&amp;action=edit&amp;id={$news.title_id}&amp;indexPage=true" class="admin-box" title="{i18n('Edit')}">[{i18n('Edit')}]</a>
 						{/if}
 					</h3>
 					{if $news.allow_comments}<a href="#comments" class="news_comments" title="{i18n('Comments:')} {$news.num_comments}">{$news.num_comments}</a>{/if}
@@ -37,15 +72,15 @@
 					{/if}
 				</footer>
 			</article>
-		{php} closetable() {/php}
+		{/panel}
 		{$comments}
 	{else}
-		{php} opentable(__('Error')) {/php}
+		{panel=i18n('Error')}
 			<p class="status">{i18n('No data!')}</p>
-		{php} closetable() {/php}
+		{/panel}
 	{/if}
 {else}
-	{php} opentable(__('News')); {/php}
+	{panel=i18n('News')}
 		{if $news}
 			{section=news}
 				<article class="news dark border_top_other">
@@ -69,7 +104,7 @@
 						{/if}
 						{if $news.keyword}
 							<p>
-								<strong>{i18n('Tags:')}</strong>
+								<strong>{i18n('Słowa kluczowe:')}</strong>
 								{$news.keyword}
 							</p>
 						{/if}
@@ -83,5 +118,5 @@
 	{else}
 		<p class="status">{i18n('No News has been posted yet')}</p>
 	{/if}
-{php} closetable(); {/php}
+{/panel}
 {/if}
