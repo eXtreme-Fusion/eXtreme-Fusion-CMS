@@ -332,7 +332,7 @@
 						<label for="URL">{i18n('Adres do podstrony:')}</label>
 						<small>Przykładowy adres: {$ADDR_SITE}nowy_system_cms.html</small>
 					</div>
-					<div class="grid_4 formField"><input type="text" name="url" value="{if $url}{$url}{else}{$ADDR_SITE}{/if}" id="URL" class="num_50" maxlength="50" /></div>
+					<div class="grid_4 formField"><input type="text" name="url" value="{if $url}{$url}{else}{$ADDR_SITE}{/if}" id="URL" class="num_500" maxlength="500" /></div>
 				</div>
 				<div class="tbl1">
 					<div class="grid_6 formLabel">

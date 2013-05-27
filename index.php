@@ -51,14 +51,14 @@ try
 	// Routing class
 	$_route = new Router($_request, $_sett, $_system->rewriteAvailable(), 'page', $_system->pathInfoExists(), $_sett->get('opening_page'), TRUE, TRUE, FALSE, 'admin');
 
-	if ($_route->getByID(1) === 'ef5')
+	if ($_request->get('ef5')->show())
 	{
-		exit('eXtreme-Fusion 5 Beta 6');
+		exit($_sett->get('version'));
 	}
-
+	
 	if ($_user->bannedByIP())
 	{
-		$_route->trace(array('controller' => 'error', 'action' => 404, 'params' => NULL)); exit('Banned...');
+		$_route->trace(array('controller' => 'error', 'action' => 403, 'params' => NULL));
 	}
 	
 	StaticContainer::register('route', $_route);
@@ -187,7 +187,7 @@ try
 	}
 
 	// Załączanie predefiniowanych elementów szablonu systemu (panele)
-	if ($_route->getFileName() !== 'maintenance')
+	if ($_route->getFileName() !== 'maintenance' && $_route->getFileName() !== 'error')
 	{
 		require_once DIR_SYSTEM.'panels.php';
 	}
@@ -289,18 +289,21 @@ try
 	defined('CONTENT') || define('CONTENT', ob_get_contents());
 	ob_end_clean();
 
-	render_page(FALSE);
-
+	if ($_route->getFileName() === 'maintenance' || $_route->getFileName() === 'error')
+	{
+		// Renderowanie strony bez menu, paneli bocznych i stopki
+		render_page(FALSE, FALSE, FALSE, FALSE, FALSE);
+	}
+	else
+	{
+		render_page();
+	}
+	
 	// Załączanie szablonu zamykającego stronę
 	$_tpl->template('pre'.DS.'footer'.$_route->getExt('tpl'));
 
 	// Usuwanie niepotrzebnych wpisów z tabeli użytkowników online.
 	$_pdo->exec('DELETE FROM [users_online] WHERE `last_activity` < '.(time()-60*60*2));
-
-	/*
-	$_tree = new Tree($_pdo, 'drzewko');
-	$_tree->add(0, 1);
-	*/
 
 	session_write_close();
 }
