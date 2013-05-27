@@ -14,29 +14,34 @@
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
 *********************************************************/
-function render_page()
+function render_page($banners = TRUE, $menu = TRUE, $left = TRUE, $right = TRUE, $footer = TRUE)
 {
-	// Nazwa strony
-	TPL::this()->assign('Sitename', TPL::this()->_sett->get('site_name'));
-	TPL::this()->assign('Menu', TPL::this()->showSubLinks('', 'menu'));
-	TPL::this()->assign('Logo', TPL::this()->showBanners());
+	// Logo strony
+	if ($banners)	TPL::this()->assign('Logo', trim(TPL::this()->showBanners()));
+	
+	// Menu strony
+	if ($menu)		TPL::this()->assign('Menu', TPL::this()->showSubLinks('', 'menu'));
 
 	// Panels - o ile istnieją na danej pozycji
-	if (LEFT)    TPL::this()->assign('LEFT', LEFT);
-	if (RIGHT)   TPL::this()->assign('RIGHT', RIGHT);
+	if ($left) 		if (LEFT)    TPL::this()->assign('LEFT', LEFT);
+	if ($right)		if (RIGHT)   TPL::this()->assign('RIGHT', RIGHT);
 
 	// Część środkowa strony - panele górne, mainbox, dolne
 	TPL::this()->assign('CONTENT', TOP_CENTER.CONTENT.BOTTOM_CENTER);
 
 	// Stopka - pobieranie z ustawień
+	TPL::this()->assign('RenderFooter', $footer);
+
+	// Stopka - pobieranie z ustawień
 	TPL::this()->assign('Footer', TPL::this()->_sett->get('footer'));
 
 	// Wymagane informacje o autorach
-	TPL::this()->assign('Copyright', TPL::this()->showCopyright(FALSE));
+	TPL::this()->assign('Copyright', TPL::this()->showCopyright(TRUE));
 
 	// Link do Panelu Admina widoczny dla Administratorów
 	TPL::this()->assign('AdminLinks', TPL::this()->showAdminLinks());
 
+	// Licznik strony
 	if (TPL::this()->_sett->get('visits_counter_enabled'))
 	{
 		TPL::this()->assign('VisitsCount', TPL::this()->getVisitsCount());

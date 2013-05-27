@@ -122,11 +122,11 @@ class Router
 				$to_replace = array($dirname, $this->_sep.'index.php');
 			}
 
-			define('PATH_INFO', str_replace($to_replace, '', $_SERVER['REQUEST_URI']));
+			defined('PATH_INFO') || define('PATH_INFO', str_replace($to_replace, '', $_SERVER['REQUEST_URI']));
 		}
 		else
 		{
-			define('PATH_INFO', $this->_request->get('q', '')->show());
+			defined('PATH_INFO') || define('PATH_INFO', $this->_request->get('q', '')->show());
 		}
 	}
 

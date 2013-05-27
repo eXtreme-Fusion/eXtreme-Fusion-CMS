@@ -34,3 +34,7 @@
 
 // Wszystkie linki wychodz¹ce z strony w postaci komentarzy, postów, czatów bed¹ przechodzi³y przez ten plik w postaci redirect.php?url=http://asd.pl
 // Mo¿na bêdzie wykorzystaæ puŸniej do reklamy :) lub inforamcji czy jesteœ pewien, ¿e chcesz przejœæ w wskazany link. 
+
+$_tpl->assign('url', base64_decode(urldecode($_route->getAction())));
+
+header('Refresh: 15; url='.base64_decode(urldecode($_route->getAction())));
