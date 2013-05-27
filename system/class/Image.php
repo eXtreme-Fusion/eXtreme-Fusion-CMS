@@ -112,10 +112,8 @@ class Image
 			{
 				throw new userException('Plik o podanej nazwie('.$file.') nie istnieje.');
 			}
-			else 
-			{
-				return FALSE;
-			}
+			
+			return FALSE;
 		}
 	}
 

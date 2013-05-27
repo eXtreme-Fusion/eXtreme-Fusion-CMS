@@ -53,7 +53,7 @@ try
 
 	if ($_request->get('ef5')->show())
 	{
-		exit($_sett->get('version'));
+		exit('eXtreme-Fusion '.$_sett->get('version'));
 	}
 	
 	if ($_user->bannedByIP())
@@ -187,7 +187,7 @@ try
 	}
 
 	// Załączanie predefiniowanych elementów szablonu systemu (panele)
-	if ($_route->getFileName() !== 'maintenance' && $_route->getFileName() !== 'error')
+	if ($_route->getFileName() !== 'maintenance')
 	{
 		require_once DIR_SYSTEM.'panels.php';
 	}
@@ -289,10 +289,10 @@ try
 	defined('CONTENT') || define('CONTENT', ob_get_contents());
 	ob_end_clean();
 
-	if ($_route->getFileName() === 'maintenance' || $_route->getFileName() === 'error')
+	if ($_route->getFileName() === 'maintenance')
 	{
 		// Renderowanie strony bez menu, paneli bocznych i stopki
-		render_page(FALSE, FALSE, FALSE, FALSE, FALSE);
+		render_page(TRUE, FALSE, FALSE, FALSE, FALSE);
 	}
 	else
 	{
