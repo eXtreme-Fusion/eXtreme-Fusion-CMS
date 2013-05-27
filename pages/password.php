@@ -106,14 +106,20 @@ if ($_user->iGuest())
 						$_user->update($data['id'], array('valid_code' => $hash));
 
 						// Do Tymcio - jak bedziesz robił tutaj locale, to zrób short_index - myślę że wiesz co mam na myśli ;)
-						$_mail->send($_request->post('email')->show(), $_sett->get('contact_email'), __('Generowanie nowego hasła'),
+						$status = $_mail->send($_request->post('email')->show(), $_sett->get('contact_email'), __('Generowanie nowego hasła'),
 						'Poproszono o zmianę hasła w serwisie '.$_sett->get('site_name').' dostępnym pod adresem '.ADDR_SITE.'.'.PHP_EOL.'
 						Jeżeli nie korzystałeś/aś z procedury odzyskiwania dostępu do konta, prosimy o zignorowanie tej wiadomości.'.PHP_EOL.PHP_EOL.'
 							W celu wygenerowania nowego hasła, proszę przejść pod nastepujący adres:'.PHP_EOL.PHP_EOL.'
 							<a href="'.$_route->path(array('controller' => 'password', 'action' => 'renew', 'user-'.$data['id'], $hash)).'">'.$_route->path(array('controller' => 'password', 'action' => 'renew', 'user-'.$data['id'], $hash)).'</a>'
 						);
-
-						$_route->redirect(array('action' => 'message', 'status' => 'ok'));
+						if ($status)
+						{
+							$_route->redirect(array('action' => 'message', 'status' => 'ok'));
+						}
+						else
+						{
+							$_tpl->printMessage('error', __('E-mail has not been sent. Please contact an administrator and report the problem to him'));
+						}
 					}
 					// Konto wymaga akceptacji Administratora
 					elseif ($data['status'] === '2')

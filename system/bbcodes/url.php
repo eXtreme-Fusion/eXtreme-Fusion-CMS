@@ -32,8 +32,8 @@ $bbcode_info = array(
 
 if($bbcode_used)
 {
-	$text = preg_replace('#\[url\]([\r\n]*)(http://|ftp://|https://|ftps://)([^\s\'\"]*?)([\r\n]*)\[/url\]#sie', "'<a href=\'\\2\\3\' target=\'_blank\' title=\'\\2\\3\'>'.HELP::trimlink('\\2\\3', 20).(strlen('\\2\\3')>30?substr('\\2\\3', strlen('\\2\\3')-10, strlen('\\2\\3')):'').'</a>'", $text);
-	$text = preg_replace('#\[url\]([\r\n]*)([^\s\'\"]*?)([\r\n]*)\[/url\]#sie', "'<a href=\'http://\\2\' target=\'_blank\' title=\'\\2\'>'.HELP::trimlink('\\2', 20).(strlen('\\2')>30?substr('\\2', strlen('\\2')-10, strlen('\\2')):'').'</a>'", $text);
-	$text = preg_replace('#\[url=([\r\n]*)(http://|ftp://|https://|ftps://)([^\s\'\"]*?)\](.*?)([\r\n]*)\[/url\]#si', '<a href=\'\2\3\' target=\'_blank\' title=\'\2\3\'>\4</a>', $text);
-	$text = preg_replace('#\[url=([\r\n]*)([^\s\'\"]*?)\](.*?)([\r\n]*)\[/url\]#si', '<a href=\'http://\2\' target=\'_blank\' title=\'\2\'>\3</a>', $text);
+	$text = preg_replace('#\[url\]([\r\n]*)(http://|ftp://|https://|ftps://)([^\s\'\"]*?)([\r\n]*)\[/url\]#sie', "'<a href=\''.ADDR_SITE.'redirect/'.urlencode(base64_encode(trim('\\2\\3'))).'.html\' target=\'_blank\' title=\'\\2\\3\'>'.HELP::trimlink('\\2\\3', 20).(strlen('\\2\\3')>30?substr('\\2\\3', strlen('\\2\\3')-10, strlen('\\2\\3')):'').'</a>'", $text);
+	$text = preg_replace('#\[url\]([\r\n]*)([^\s\'\"]*?)([\r\n]*)\[/url\]#sie', "'<a href=\''.ADDR_SITE.'redirect/'.urlencode(base64_encode(trim('\\2'))).'.html\' target=\'_blank\' title=\'\\2\'>'.HELP::trimlink('\\2', 20).(strlen('\\2')>30?substr('\\2', strlen('\\2')-10, strlen('\\2')):'').'</a>'", $text);
+	$text = preg_replace('#\[url=([\r\n]*)(http://|ftp://|https://|ftps://)([^\s\'\"]*?)\](.*?)([\r\n]*)\[/url\]#si', "'<a href=\''.ADDR_SITE.'redirect/'.urlencode(base64_encode(trim('\\2\\3'))).'.html\' target=\'_blank\' title=\'\\2\\3\'>\4</a>'", $text);
+	$text = preg_replace('#\[url=([\r\n]*)([^\s\'\"]*?)\](.*?)([\r\n]*)\[/url\]#si', "'<a href=\''.ADDR_SITE.'redirect/'.urlencode(base64_encode(trim('\\2'))).'.html\' target=\'_blank\' title=\'\\2\'>\3</a>'", $text);
 }

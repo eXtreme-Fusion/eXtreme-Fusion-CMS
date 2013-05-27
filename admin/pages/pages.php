@@ -237,7 +237,7 @@ try
 			elseif ($_request->post('delete_thumbnail')->show())
 			{
 				$thumbnail = '';
-				Image::delFile(DIR_UPLOAD.'images'.DS.$_request->post('thumbnail')->strip());
+				Image::delFile(DIR_UPLOAD.'images'.DS.$_request->post('thumbnail')->strip(), FALSE);
 			}
 
 			if (isset($thumbnail))
@@ -299,7 +299,7 @@ try
 				array(':id', $_request->get('id')->show(), PDO::PARAM_INT)
 			);
 			
-			Image::delFile(DIR_UPLOAD.'images'.DS.$row['thumbnail']);
+			Image::delFile(DIR_UPLOAD.'images'.DS.$row['thumbnail'], FALSE);
 			
 			$_pdo->exec('UPDATE [pages] SET `categories` = :categories WHERE `id` = :id',
 				array(
@@ -388,7 +388,7 @@ try
 					elseif ($_request->post('delete_thumbnail')->show())
 					{
 						$thumbnail = '';
-						Image::delFile(DIR_UPLOAD.'images'.DS.$_request->post('thumbnail')->strip());
+						Image::delFile(DIR_UPLOAD.'images'.DS.$_request->post('thumbnail')->strip(), FALSE);
 					}
 
 					if (isset($thumbnail))
@@ -533,7 +533,7 @@ try
 					array(':id', $_request->get('id')->show(), PDO::PARAM_INT)
 				);
 				$_pdo->exec('DELETE FROM [comments] WHERE `content_type` = "pages" AND `content_id` = '.$_request->get('id')->show());
-				Image::delFile(DIR_UPLOAD.'images'.DS.$row['thumbnail']);
+				Image::delFile(DIR_UPLOAD.'images'.DS.$row['thumbnail'], FALSE);
 				$_pdo->exec('DELETE FROM [pages] WHERE id = '.$_request->get('id')->show());
 
 				////$_tag->delTag('NEWS', $_request->get('id')->show());
