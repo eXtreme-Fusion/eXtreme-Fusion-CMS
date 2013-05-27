@@ -32,7 +32,7 @@ $(function() {
 	//$('#user_groups option:first').attr('checked', 'checked');
 
 	insight($('#InsightGroups'));
-	
+
 	$('#InsightGroups').change(function() {
 		insight($(this));
 	});
@@ -81,7 +81,7 @@ $(function() {
 			$option.attr('checked', 'checked');
 		}
 	}
-	
+
 	// Funkcja dodaje do wybranej opcji listy atrybut `checked`,
 	// by był on widoczny z poziomu konsoli html
 	$('#user_groups').change(function() {

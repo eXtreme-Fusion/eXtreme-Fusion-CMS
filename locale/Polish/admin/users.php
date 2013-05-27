@@ -117,7 +117,7 @@ return array(
 
 
 	// Message Error
-	
+
 	'Username contains unsupported characters.' => 'Nazwa użytkownika zawiera nieobsługiwane znaki.',
 	'The new passwords not match.' => 'Nowe hasła użytkownika nie pasują do siebie.',
 	'Incorrect password' => 'Nieprawidłowe hasło użytkownika, proszę o korzystanie wyłącznie ze znaków alfanumerycznych.<br />Hasło musi zawierać minimum 6 znaków.',

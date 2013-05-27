@@ -558,15 +558,15 @@ class User {
 		{
 			$fields[] = $data;
 		}
-		
-		$data = array(); 
+
+		$data = array();
 		if ($user_id !== NULL)
 		{
 			$data = $this->_pdo->getRow('SELECT * FROM [users_data] WHERE `user_id` = :user_id LIMIT 1', array(
 				array(':user_id', intval($user_id), PDO::PARAM_STR)
 			));
 		}
-		
+
 		if ($fields)
 		{
 			$_new_fields = array();
