@@ -100,11 +100,16 @@ class Comment extends Observer
 						$val['avatar'] = $this->_user->getAvatarAddr();
 					}
 				}
+				elseif ($val['author_type'] === 'g' || !$val['author_type'])
+				{
+					$val['author'] = $val['author'];
+					$val['avatar'] = $this->_user->getAvatarAddr();
+				}
 
 				$val['post'] = $this->_sbb->parseAllTags(nl2br($val['post']));
 			}
 		}
-
+		
 		$this->_tpl->assignGroup(
 			array(
 				'comment' => $d,
