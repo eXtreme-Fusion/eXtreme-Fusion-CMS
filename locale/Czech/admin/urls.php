@@ -16,7 +16,7 @@ return array(
 	'There is no such action' => 'Tato akce není dostupná',
 	'Every field must be filled' => 'Všechny pole musí být vyplněny',
 	'About URLs' => '<p>Generátor odkazů vám umožní vytvořit si vlastní cestu na stránky vašeho webu.</p>
-					 <p>Adresy, zveřejněny v níže uvedeném formuláři by neměly zahrnovat rozšíření nebo cesty k hlavní stránce.</p>
+					 <p>Adresy, zveřejněny v níže uvedeném formuláři by neměly zahrnovat cesty k hlavní stránce.</p>
 					 <p>Příklad správného používání:</p>
 					 <br />
 					 <ul><li><strong>Aktuálny adresa:</strong> profile,1,Admin</li><li><strong>Nová adresa:</strong> profil-admina</ul>'

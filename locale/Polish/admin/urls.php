@@ -16,9 +16,9 @@ return array(
 	'There is no such action' => 'Ta akcja nie istnieje',
 	'Every field must be filled' => 'Wszystkie pola muszą być wypełnione',
 	'About URLs' => '<p>Generator linków umożliwia tworzenie własnych ścieżek do podstron witryny.</p>
-					 <p>Adresy, zamieszczane w poniższym formularzu, nie powinny zawierać rozszerzenia ani ścieżki do strony głównej.</p>
+					 <p>Adresy, zamieszczane w poniższym formularzu, nie powinny zawierać ścieżki do strony głównej.</p>
 					 <p>Przykład prawidłowego użycia:</p>
 					 <br />
-					 <ul><li><strong>Aktualny adres:</strong> profile,1,Admin</li><li><strong>Nowy adres:</strong> profil-admina</ul>'
+					 <ul><li><strong>Aktualny adres:</strong> profile,1,Admin.html</li><li><strong>Nowy adres:</strong> profil-admina</ul>'
 
 );
