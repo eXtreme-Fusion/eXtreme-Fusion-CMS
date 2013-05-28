@@ -49,7 +49,7 @@
 		</div>
 		<div class="center grid_2 button-r">
 			<input type="hidden" name="save" value="yes" />
-			<span id="SendForm_This" class="save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
+			<span id="SendForm_This" class="save"><strong>{i18n('Upgrade')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
 		</div>
 	</div>
 	{else}
