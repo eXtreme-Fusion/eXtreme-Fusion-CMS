@@ -63,7 +63,7 @@ try
     }
 	
 	// Numer wersji, do której system ma zostać zaktualizowany
-	$new_version = '5.0.2';
+	$new_version = '5.0.0';
 
 	$ver = $_sett->get('version') < $new_version;
 
