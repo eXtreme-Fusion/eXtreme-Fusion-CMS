@@ -265,7 +265,7 @@ $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `ima
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('Security', '".HELP::Title2Link(__('Security'))."', 'security.png')");
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('Software', '".HELP::Title2Link(__('Software'))."', 'software.png')");
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('Themes', '".HELP::Title2Link(__('Themes'))."', 'themes.png')");
-$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('Windows', '".HELP::Title2Link(__('Windows'))."', 'windows.png')");
+//$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('Windows', '".HELP::Title2Link(__('Windows'))."', 'windows.png')");
 
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news  (`id`, `title`, `link`, `category`, `content`, `author`, `source`, `breaks`, `description`, `datestamp`, `access`, `reads`, `draft`, `sticky`, `allow_comments`, `allow_ratings`, `language`) VALUES (NULL, '".__('Example news title')."', '".__('Example news url')."', '3', '".__('Example news content')."', '1', 'http://extreme-fusion.org', '0', '".__('Example news description')."', '".time()."', '3', '1', '0', '0', '1', '1', '".$_SESSION['localeset']."')");
 

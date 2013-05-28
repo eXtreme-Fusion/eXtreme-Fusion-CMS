@@ -1448,7 +1448,7 @@ class User {
 	 * @param   int    identyfikator użytkownika
 	 * @return  array
 	 */
-	public function getUserRolesTitle($id = NULL, $ommit_group_id = NULL)
+	public function getUserRolesTitle($id = NULL, $ommit_group_id = NULL, $ommit_user_group = TRUE)
 	{
 
 		if ($ommit_group_id === NULL)
@@ -1467,6 +1467,31 @@ class User {
 				if (intval($val['id']) !== $ommit_group_id)
 				{
 					$_roles[] = $val['title'];
+				}
+			}
+		}
+
+		/**
+		 * Pomijanie grupy Użytkownik, o ile nie ustawiono inaczej.
+		 * Jeżeli pominięto grupę Gość oraz użytkownik należy do co najmniej jednej grupy specjalnej.
+		 */
+		if ($ommit_user_group && $ommit_group_id == 3 && count($_roles) > 1)
+		{
+			foreach($this->getRoles($id) as $role)
+			{
+				if ($role['id'] === '2')
+				{
+					$ommit_user_name = $role['title'];
+					break;
+				}
+			}
+
+			foreach($_roles as $key => $role)
+			{
+				if ($role === $ommit_user_name)
+				{
+					unset($_roles[$key]);
+					break;
 				}
 			}
 		}
