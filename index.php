@@ -130,12 +130,12 @@ try
 	if ( ! $_route->getExitFile())
 	{
 		$row = $_pdo->getRow('SELECT full_path FROM [links] WHERE short_path =:short_path ORDER BY `datestamp` DESC LIMIT 1',
-			array(':short_path', substr($_route->getRequest(), 0, 1) === '/' ? substr($_route->getRequest(), 1) : $_route->getRequest(), PDO::PARAM_STR)
+			array(':short_path', substr(PATH_INFO, 0, 1) === '/' ? substr(PATH_INFO, 1) : PATH_INFO, PDO::PARAM_STR)
 		);
-
+		
 		if ($row)
 		{
-			$_route->setNewConfig($row['full_path']);echo 2;
+			$_route->setNewConfig($row['full_path']);
 		}
 		else
 		{

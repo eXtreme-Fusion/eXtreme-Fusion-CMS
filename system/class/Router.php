@@ -87,9 +87,6 @@ class Router
 
 		$this->_url = new URL($this->_ext['url'], $this->_sep, $this->_param_sep, $this->_rewrite, $this->_path_info_exists);
 		$this->_ext_allowed = $this->_url->extAllowed();
-
-		// Temporary
-		$this->_path = PATH_INFO;
 		
 		/**
 		 * Metoda zwróci FALSE, jeśli żądanie nie spełnia warunku dotyczącego rozszerzenia.
@@ -125,6 +122,7 @@ class Router
 				$to_replace = array($dirname, $this->_sep.'index.php');
 			}
 
+			
 			defined('PATH_INFO') || define('PATH_INFO', str_replace($to_replace, '', $_SERVER['REQUEST_URI']));
 		}
 		else
