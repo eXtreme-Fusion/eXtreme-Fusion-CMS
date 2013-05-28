@@ -1,19 +1,30 @@
 <?php
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
+/*********************************************************
+| eXtreme-Fusion 5
 | Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
 | http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.
-| http://extreme-fusion.org/ef5/license/
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+*********************************************************/
 class System {
 
 	private $_rewrite_available;
 	private $_furl = FALSE;
 	private $_rewrite = FALSE;
+
+	// Wyłączenie szyfrowania cache wersja jedynie dla DEV
+	// Pamiętaj o ręcznym usunięciu cache po zmianie parametru FALSE/TRUE
+	private $code = TRUE;
+
+	protected $dir_cache = DIR_CACHE;
 
 	/**
 	 * Tworzenie środowiska pracy systemu
@@ -23,19 +34,19 @@ class System {
 	 */
 	public function __construct($cleaning = TRUE)
 	{
-		// Zabezpieczenie przed atakami XSS.
-		if ($cleaning && HELP::stripget($_GET))
-		{
-			throw new systemException(die('Podejrzewany atak XSS po zmiennej $_GET!'));
-		}
-
 		if (file_exists(DIR_SITE.'config.php'))
 		{
 			require DIR_SITE.'config.php';
 			$this->_furl = isset($_route['custom_furl']) && $_route['custom_furl'] === TRUE;
 			$this->_rewrite = isset($_route['custom_rewrite']) && $_route['custom_rewrite'] === TRUE;
+			
+			// Zabezpieczenie przed atakami XSS.
+			if ($cleaning)
+			{
+				HELP::stripget($_dbconfig);
+			}
 		}
-
+		
 		$_SERVER['SERVER_SOFTWARE'] = isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : '';
 		$_SERVER['SERVER_SIGNATURE'] = isset($_SERVER['SERVER_SIGNATURE']) ? $_SERVER['SERVER_SIGNATURE'] : '';
 	}
@@ -57,12 +68,8 @@ class System {
 	 */
 	public function cache($name, $data = NULL, $dir = NULL, $lifetime = 3600)
 	{
-		// Wyłączenie szyfrowania cache wersja jedynie dla DEV
-		// Pamiętaj o ręcznym usunięciu cache po zmianie parametru FALSE/TRUE
-		$code = FALSE;
-
 		// Koduje nazwę pliku pamięci podręcznej
-		if ( ! $code)
+		if ( ! $this->code)
 		{
 			$file = CACHE_PREFIX.$name.'.txt';
 		}
@@ -72,14 +79,14 @@ class System {
 		}
 
 		// Tworzy ścieżkę dostępu do katalogu z pamięcią podręczną
-		$dir = DIR_SITE.'cache'.DS.$dir.DS;
+		$dir = DIR_CACHE.$dir.DS;
 		if ( ! file_exists($dir))
 		{
 			mkdir($dir);
 			chmod($dir, 0777);
 		}
 
-		if ($code)
+		if ($this->code)
 		{
 			// TODO:: czy wartość $key/$string nie powinna być brana z zakodowanej cześci $data zamiast z nazwy pliku?
 			// TODO:: bo wydaje mi się że w obecnej formie może się zdarzyć tak, że w zawartości
@@ -98,7 +105,7 @@ class System {
 			{
 				if ((time() - filemtime($dir.$file)) < $lifetime || $lifetime === NULL)
 				{
-					if ( ! $code)
+					if ( ! $this->code)
 					{
 						return unserialize(file_get_contents($dir.$file));
 					}
@@ -129,7 +136,7 @@ class System {
 			chmod($dir, 0777);
 		}
 
-		if ( ! $code)
+		if ( ! $this->code)
 		{
 			return (bool) file_put_contents($dir.$file, serialize($data), LOCK_EX);
 		}
@@ -140,38 +147,99 @@ class System {
 	}
 
 	/**
-	 * Opróżnia katalog pamięci podręcznej szablonów.
+	 * Usuwa pamięć podręczną ze wszystkich podkatalogów katalogu pamięci podręcznej
 	 *
-	 *     // Usuwa całą pamięć podręczną szablonów.
+	 * @param   object   obiekt do zarzadzania plikami
+	 * @return  boolean
+	 */
+	public function clearCacheRecursive(Files $_files)
+	{
+		return $_files->rmDirRecursive($this->dir_cache);
+	}
+
+	/**
+	 * Opróżnia katalog pamięci podręcznej usuwając tylko pliki o roszerzeniach tpl, php lub txt.
+	 *
+	 *     // Usuwa całą pamięć podręczną z głównego katalogu pamięci podręcznej.
 	 *     $_system->clearCache();
 	 *
-	 *     // Usuwa pliki `foo.tpl` oraz `bar.tpl` z pamięci podręcznej.
-	 *     $_system->clearCache(NULL, array('foo.tpl', 'bar.tpl'));
+	 *     // Usuwa pliki `foo` oraz `bar` z głównego katalogu pamięci podręcznej.
+	 *     $_system->clearCache(NULL, array('foo', 'bar'));
 	 *
 	 *     // Usuwa pamięć podręczną z podkatalogu `dir`.
 	 *     $_system->clearCache('dir');
 	 *
+	 *		// Usuwa pamięć podręczną z podkatalogów `dir` oraz `folder`.
+	 *     $_system->clearCache(array('dir', 'folder'));
+	 *
+	 *		// Usuwa pliki pamięci podręcznej `foo` oraz `bar` z podkatalogu `dir` oraz wszystkie pliki z podkatalogów `addr` oraz `folder`.
+	 *     $_system->clearCache(array('addr', 'dir', 'folder'), array(1 => array('foo', 'bar')));
+	 *
+	 *
 	 * @param   mixed    nazwa podkatalogu z cache
 	 * @param   mixed    pliki pamięci podręcznej do usunięcia
-	 * @param   string   ścieżka do głównego katalogu z pamięcią podręczną
 	 * @return  boolean  zawsze zwróci TRUE
 	 */
-	public function clearCache($dir = NULL, array $cache = array(), $path = DIR_CACHE)
+	public function clearCache($dir = NULL, $cache = array())
 	{
+		if (is_array($dir))
+		{
+			$i = 0;
+			foreach($dir as $val)
+			{
+				if (isset($cache[$i]))
+				{
+					$new_cache = $cache[$i];
+				}
+				else
+				{
+					$new_cache = array();
+				}
 
-		if (file_exists($path.$dir))
+				if (!$this->clearCache($val, $new_cache, $this->dir_cache))
+				{
+					$error = TRUE;
+				}
+
+				$i++;
+			}
+
+			return !isset($error);
+		}
+
+		if ($cache && !is_array($cache))
+		{
+			$cache = array($cache);
+		}
+
+		if ($this->code)
+		{
+			foreach($cache as $key => $file)
+			{
+				$cache[$key] = sha1(CACHE_PREFIX.$file);
+			}
+		}
+		else
+		{
+			foreach($cache as $key => $file)
+			{
+				$cache[$key] = CACHE_PREFIX.$file;
+			}
+		}
+
+		if (file_exists($this->dir_cache.$dir))
 		{
 			// Przeszukuje katalog pamięci podręcznej
-			$files = new DirectoryIterator($path.$dir);
+			$files = new DirectoryIterator($this->dir_cache.$dir);
 
 			foreach ($files as $file)
 			{
 				// Sprawdza rozszerzenie pliku pamięci podręcznej
 				$extension = pathinfo($file->getPathname(), PATHINFO_EXTENSION);
 
-				if ( ! $file->isDot() && $file->isFile() && ($extension === 'tpl' || $extension === 'txt'))
+				if ( ! $file->isDot() && $file->isFile() && ($extension === 'tpl' || $extension === 'txt' || $extension === 'php'))
 				{
-					if (in_array(preg_replace('/'.CACHE_PREFIX.'/', '', pathinfo($file->getPathname(), PATHINFO_FILENAME)), $cache) || empty($cache))
+					if (in_array(pathinfo($file->getPathname(), PATHINFO_FILENAME), $cache) || empty($cache))
 					{
 						if (file_exists($file->getPathname()))
 						{
@@ -202,21 +270,25 @@ class System {
 			'cz' => 'Czech'
 		);
 
-		$var = explode(';', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
-		$var = explode(',', $var[0]);
+		$current = NULL;
 
-		$current = null;
-		foreach($var as $data)
+		if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))
 		{
+			$var = explode(';', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
+			$var = explode(',', $var[0]);
+			$var = explode('-', $var[0]);
 
-			if(isset($langs[$data]))
+			foreach($var as $data)
 			{
-				$current = $data;
-				break;
+				if(isset($langs[$data]))
+				{
+					$current = $data;
+					break;
+				}
 			}
 		}
 
-		if(is_null($current))
+		if ($current === NULL)
 		{
 			$current = 'en';
 		}
@@ -228,6 +300,17 @@ class System {
 
 		return $langs[$current];
 	}
+	
+	public function getLangName($short)
+	{
+		$langs = array(
+			'pl' => 'Polish',
+			'en' => 'English',
+			'cz' => 'Czech'
+		);
+		
+		return isset($langs[$short]) ? $langs[$short] : '';
+	}
 
 	// Zwraca informację, czy uzyskanie listy załadowanych modułów Apache jest możliwe
 	public function apacheModulesListingAvailable()
@@ -237,7 +320,7 @@ class System {
 
 	/**
 	 * Sprawdza, czy moduł Apache podany parametrem istnieje
-	 * lub zwraca tablicę załądowanych modułów Apache
+	 * lub zwraca tablicę załadowanych modułów Apache, jeżeli pominięto parametr.
 	 */
 	public function apacheModuleLoaded($name = NULL)
 	{
@@ -255,7 +338,7 @@ class System {
 		{
 			/**
 			 * Funkcja do sprawdzania załadowanych modułów Apache jest niedostępna.
-			 * Zakładamy więc, że mod_rewrite nie jest załadowany.
+			 * Zakładamy więc, że moduł nie jest załadowany.
 			 */
 			return FALSE;
 		}
@@ -263,7 +346,7 @@ class System {
 		throw new systemException('Błąd: Funkcja <span class="bold">apache_get_modules()</span> jest niedostępna!');
 	}
 
-	// Przed wywołaniem tej funkcji należy sprawdzić System::apacheModulesListingAvailable()
+	// Zwraca info czy modRewrite aktywny
 	public function rewriteAvailable()
 	{
 		if ($this->_rewrite_available !== NULL)
@@ -281,8 +364,8 @@ class System {
 	 * PATH_INFO nie występuje na stronie głównej, dlatego sprawdzane jest, czy serwerem jest Apache,
 	 * który ścieżki ma zazwyczaj skonfigurowane prawidłowo.
 	 *
-	 * W przypadku IIS (test na 7.5), na stronie głównej występuje ORIG_PATH_INFO, a na podstronach także PATH_INFO.
-	 * ORIG_PATH_INFO jest stosowane również na niektórych serwerach Apache.
+	 * W przypadku IIS (test na 7.5), na stronie głównej występuje ORIG_PATH_INFO, a na podstronach dodatkowo PATH_INFO.
+	 * ORIG_PATH_INFO jest również na niektórych serwerach Apache.
 	 *
 	 * Jeżeli korzystasz z innego serwera, który jest skonfigurowany do PATH_INFO,
 	 * wystarczy w pliku config.php zmienić wartość z FALSE na TRUE przy $_route['custom_furl'].
@@ -298,34 +381,43 @@ class System {
 	 */
 	public function pathInfoExists()
 	{
-		$apache = (isset($_SERVER['SERVER_SOFTWARE']) && preg_match('/Apache/i', $_SERVER['SERVER_SOFTWARE'])) || (isset($_SERVER['SERVER_SIGNATURE']) && preg_match('/Apache/i', $_SERVER['SERVER_SIGNATURE']));
-
-		return $result = (bool) ($this->rewriteAvailable() || $this->serverPathInfoExists() || $apache || $this->_furl);
-
-		// Serwer to nie Apache
-		if ($result === FALSE)
+		// Serwer może nie udostępniać informacji o swojej nazwie, natomiast może udzielać dostępu do listy modułów Apache, co świadczy o tym, że jest to Apache :)
+		if (!$this->httpServerIs('Apache') && !$this->rewriteAvailable())
 		{
-			$data = $this->cache('path_exists', NULL, 'system', 86400);
-			if ($data[0] === FALSE)
-			{
-				return FALSE;
-			}
-			else
-			{
-				return TRUE;
-			}
-		}
+			$result =  $this->serverPathInfoExists() || $this->_furl;
 
-		if (! $apache)
-		{
+			// Serwer to nie Apache
+			if ($result === FALSE)
+			{
+				// Odczytywanie informacji z cache
+				$data = $this->cache('path_exists', NULL, 'system', 86400);
+				if (!isset($data[0]) || $data[0] === FALSE)
+				{
+					return FALSE;
+				}
+				else
+				{
+					return TRUE;
+				}
+			}
+
+			// Zapis informacji do cache
 			$this->cache('path_exists', array(TRUE), 'system');
 		}
+
+		// Gdy serwer to Apache lub gdy wykryto PATH_INFO/ORIG_PATH_INFO lub gdy ustawiono ręcznie
 		return TRUE;
 	}
 
 	public function serverPathInfoExists()
 	{
 		return isset($_SERVER['PATH_INFO']) || isset($_SERVER['ORIG_PATH_INFO']);
+	}
+
+	// Sprawdza czy serwer udostępnia o sobie informacje
+	public function serverInfoAvailable()
+	{
+		return $_SERVER['SERVER_SOFTWARE'] || $_SERVER['SERVER_SIGNATURE'];
 	}
 
 	public function httpServerIs($name)

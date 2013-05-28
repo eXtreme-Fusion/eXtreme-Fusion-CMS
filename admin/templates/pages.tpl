@@ -1,6 +1,39 @@
+{*
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
+|
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
+|
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+|
+**********************************************************
+                ORIGINALLY BASED ON
+---------------------------------------------------------+
+| PHP-Fusion Content Management System
+| Copyright (C) 2002 - 2011 Nick Jones
+| http://www.php-fusion.co.uk/
++--------------------------------------------------------+
+| Author: Nick Jones (Digitanium)
++--------------------------------------------------------+
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
++--------------------------------------------------------*/
+*}
 
-
-<h3>{$SystemVersion} - {i18n('Strony')}</h3>
+<h3>{$SystemVersion} - {i18n('Strony treści')}</h3>
 {if $message}<div class="{$class}">{$message}</div>{/if}
 
 {if $page == 'types'}
@@ -20,6 +53,7 @@
 				<p class="bold">Domyślne ustawienia dla materiałów przypisywanych do tego typu treści:</p>
 				<small>(każdy wpis będzie mógł posiadać indywidualne ustawienia, niezależne od tych poniżej)</small>
 			</div>
+			<div style="display:none">
 			<div class="tbl2">
 				<div class="grid_6 formLabel">{i18n('Wyświetlać materiał jako news?')}<small>Zaznaczenie tej opcji spowoduje, że materiał będzie wyświetlany razem z newsami. Jest to dobry sposób na wyróżnienie najciekawszych wpisów.</small></div>
 				<div class="grid_1 formField"><label><input type="radio" name="for_news_page" value="1"{if $for_news_page == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
@@ -29,7 +63,7 @@
 				<div class="grid_6 formLabel">{i18n('Pozwolić użytkownikom na modyfikacje własnych materiałów?')}<small>Dotyczy jedynie materiałów nadesłanych przez konkretnego użytkownika oraz tych, których stał się autorem. Publikacja zmodyfikowanej wersji materiału odbywa się dopiero po akceptacji Administratora.</small></div>
 				<div class="grid_1 formField"><label><input type="radio" name="user_allow_edit_own" value="1"{if $user_allow_edit_own == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
 				<div class="grid_5 formField"><label><input type="radio" name="user_allow_edit_own" value="0"{if $user_allow_edit_own == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
-			</div>
+			</div></div>
 			<div class="tbl2">
 				<div class="grid_6 formLabel">
 					<label for="InsightGroups">{i18n('Którym grupom udzielić dostępu do materiału:')}</label>
@@ -44,6 +78,7 @@
 					</select>
 				</div>
 			</div>
+			<div style="display:none">
 			<div class="tbl1">
 				<div class="grid_6 formLabel">
 					<label for="EditingGroups">{i18n('Którym grupom użytkowników umożliwić modyfikację materiału?')}</label>
@@ -137,13 +172,19 @@
 				<div class="grid_1 formField"><label><input type="radio" name="show_type" value="1"{if $show_type == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
 				<div class="grid_5 formField"><label><input type="radio" name="show_type" value="0"{if $show_type == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
 			</div>
-			<div class="tbl AdminButtons">
+			<div class="tbl1">
+				<div class="grid_6 formLabel">{i18n('Pozwolić na komentarze?')}</div>
+				<div class="grid_1 formField"><label><input type="radio" name="user_allow_comments" value="1"{if $user_allow_comments == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
+				<div class="grid_5 formField"><label><input type="radio" name="user_allow_comments" value="0"{if $user_allow_comments == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
+			</div>
+			</div>
+			<div class="tbl Buttons">
 				<div class="grid_2 center button-l">
 					<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="{i18n('Back')}" /></strong></span>
 				</div>
 				<div class="grid_2 center button-r">
 					<input type="hidden" name="save" value="yes" />
-					<span id="SendForm_This" class="Save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="{i18n('Save')}" /></strong></span>
+					<span id="SendForm_This" class="save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="{i18n('Save')}" /></strong></span>
 				</div>
 			</div>
 		</form>
@@ -215,15 +256,22 @@
 			</div>
 			<div class="tbl2">
 				<div class="grid_6 formLabel"><label for="Thumbnail">{i18n('Category thumbnail:')}</label></div>
+				{if ! $thumbnail}
 				<div class="grid_4 formField"><input type="file" name="thumbnail" value="{$thumbnail}" id="Thumbnail" /></div>
+				{else}
+				<div class="grid_4 formField"><img src="{$ADDR_UPLOAD}images/{$thumbnail}">
+					<p><input type="checkbox" name="delete_thumbnail" />Usuń aktualną miniaturkę</p>
+					<input type="hidden" name="thumbnail" value="{$thumbnail}" />
+				</div>
+				{/if}
 			</div>
-			<div class="tbl AdminButtons">
+			<div class="tbl Buttons">
 				<div class="grid_2 center button-l">
 					<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="{i18n('Back')}" /></strong></span>
 				</div>
 				<div class="grid_2 center button-r">
 					<input type="hidden" name="save" value="yes" />
-					<span id="SendForm_This" class="Save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="{i18n('Save')}" /></strong></span>
+					<span id="SendForm_This" class="save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="{i18n('Save')}" /></strong></span>
 				</div>
 			</div>
 		</form>
@@ -254,7 +302,7 @@
 				<tr>
 					<th style="width:20%">{i18n('Id:')}</th>
 					<th style="width:20%">{i18n('Name:')}</th>
-					<th style="width:25%">{i18n('Wyświetlanie jako news:')}</th>
+					<th style="width:25%">{i18n('Opis:')}</th>
 					<th style="width:25%">{i18n('Options:')}</th>
 				</tr>
 			</thead>
@@ -282,12 +330,14 @@
 					<div class="grid_6 formLabel"><label for="Description">{i18n('Description:')}</label></div>
 					<div class="grid_4 formField"><textarea name="description" id="Description">{$description}</textarea></div>
 				</div>
+				<div style="display:none">
 				<div class="tbl2">
 					<div class="grid_6 formLabel">
 						<label for="URL">{i18n('Adres do podstrony:')}</label>
 						<small>Przykładowy adres: {$ADDR_SITE}nowy_system_cms.html</small>
 					</div>
-					<div class="grid_4 formField"><input type="text" name="url" value="{if $url}{$url}{else}{$ADDR_SITE}{/if}" id="URL" class="num_50" maxlength="50" /></div>
+					<div class="grid_4 formField"><input type="text" name="url" value="{if $url}{$url}{else}{$ADDR_SITE}{/if}" id="URL" class="num_500" maxlength="500" /></div>
+				</div>
 				</div>
 				<div class="tbl1">
 					<div class="grid_6 formLabel">
@@ -349,10 +399,13 @@
 				</div>
 				<div class="tbl2">
 					<div class="grid_6 formLabel"><label for="Thumbnail">{i18n('Thumbnail:')}</label></div>
-					<div class="grid_4 formField"><input type="file" name="thumbnail" id="Thumbnail" /></div>
-					{if $thumbnail}
-					 {*dostosować*}
+					{if ! $thumbnail}
+					<div class="grid_4 formField"><input type="file" name="thumbnail" value="{$thumbnail}" id="Thumbnail" /></div>
+					{else}
+					<div class="grid_4 formField"><img src="{$ADDR_UPLOAD}images/{$thumbnail}">
 						<p><input type="checkbox" name="delete_thumbnail" />Usuń aktualną miniaturkę</p>
+						<input type="hidden" name="thumbnail" value="{$thumbnail}" />
+					</div>
 					{/if}
 				</div>
 				<div class="tbl1">
@@ -383,13 +436,13 @@
 						});
 					{/literal}
 				</script>
-				<div class="tbl AdminButtons">
+				<div class="tbl Buttons">
 					<div class="grid_2 center button-l">
 						<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="{i18n('Back')}" /></strong></span>
 					</div>
 					<div class="grid_2 center button-r">
 						<input type="hidden" name="save" value="yes" />
-						<span id="SendForm_This" class="Save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="{i18n('Save')}" /></strong></span>
+						<span id="SendForm_This" class="save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="{i18n('Save')}" /></strong></span>
 					</div>
 				</div>
 			</form>
@@ -429,12 +482,12 @@
 		{/if}
 	{/if}
 {else}
-	<p class="red center">Moduł Dodatkowych stron nie został jeszcze skończony. Niektóre funkcje jak miniaturki czy zaawansowane ustawienia nie zostały jeszcze wdrożone poza Panelem admina. Mimo tego, publikacja treści w podstawowej formie powinna działać.</p>
+	<p class="red center" style="display:none">Moduł Stron treści nie został jeszcze skończony. Niektóre funkcje jak miniaturki czy zaawansowane ustawienia nie zostały jeszcze wdrożone poza Panelem admina. Mimo tego, publikacja treści w podstawowej formie powinna działać.</p>
 	<div>
 		<ul class="margin-l-10 margin-t-10">
-			<li><a href="{$FILE_SELF}?page=types" title="Zarządzanie typami wpisów">Zarządzanie typami wpisów</a></li>
-			<li><a href="{$FILE_SELF}?page=categories" title="Zarządzanie kategoriami wpisów">Zarządzanie kategoriami wpisów</li>
 			<li><a href="{$FILE_SELF}?page=entries" title="Zarządzanie wpisami">Zarządzanie wpisami</li>
+			<li><a href="{$FILE_SELF}?page=categories" title="Zarządzanie kategoriami wpisów">Zarządzanie kategoriami wpisów</li>
+			<li><a href="{$FILE_SELF}?page=types" title="Zarządzanie typami wpisów">Zarządzanie typami wpisów</a></li>
 		</ul>
 	</div>
 {/if}

@@ -1,27 +1,40 @@
 <?php
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
+/*********************************************************
+| eXtreme-Fusion 5
 | Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
 | http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.
-| http://extreme-fusion.org/ef5/license/
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+|
+**********************************************************/
 
 $config = '<?php'.PHP_EOL;
-$config .= '/*---------------------------------------------------------------+'.PHP_EOL;
-$config .= '| eXtreme-Fusion - Content Management System - version 5         |'.PHP_EOL;
-$config .= '+----------------------------------------------------------------+'.PHP_EOL;
-$config .= '| Copyright (c) 2005-2012 The eXtreme-Fusion Crew                |'.PHP_EOL;
-$config .= '| http://extreme-fusion.org/                              	     |'.PHP_EOL;
-$config .= '+----------------------------------------------------------------+'.PHP_EOL;
-$config .= '| This product is licensed under the BSD License.				 |'.PHP_EOL;
-$config .= '| http://extreme-fusion.org/ef5/license/						 |'.PHP_EOL;
-$config .= '+---------------------------------------------------------------*/'.PHP_EOL;
-$config .= 'defined(\'DS\') || define(\'DS\', DIRECTORY_SEPARATOR);'.PHP_EOL.PHP_EOL;
 
+$config .= '/*********************************************************'.PHP_EOL;
+$config .= '| eXtreme-Fusion 5'.PHP_EOL;
+$config .= '| Content Management System'.PHP_EOL;
+$config .= '|'.PHP_EOL;
+$config .= '| Copyright (c) 2005-'.date('Y').' eXtreme-Fusion Crew'.PHP_EOL;
+$config .= '| http://extreme-fusion.org/'.PHP_EOL;
+$config .= '|'.PHP_EOL;
+$config .= '| This program is released as free software under the'.PHP_EOL;
+$config .= '| Affero GPL license. You can redistribute it and/or'.PHP_EOL;
+$config .= '| modify it under the terms of this license which you'.PHP_EOL;
+$config .= '| can read by viewing the included agpl.txt or online'.PHP_EOL;
+$config .= '| at www.gnu.org/licenses/agpl.html. Removal of this'.PHP_EOL;
+$config .= '| copyright header is strictly prohibited without'.PHP_EOL;
+$config .= '| written permission from the original author(s).'.PHP_EOL;
+$config .= '| '.PHP_EOL;
+$config .= '**********************************************************/'.PHP_EOL.PHP_EOL;
+$config .= 'defined(\'DS\') || define(\'DS\', DIRECTORY_SEPARATOR);'.PHP_EOL.PHP_EOL;
 
 $config .= '#Database'.PHP_EOL.PHP_EOL;
 
@@ -33,7 +46,7 @@ $config .= '    \'password\' => \''.$db_pass.'\','.PHP_EOL;
 $config .= '    \'database\' => \''.$db_name.'\','.PHP_EOL;
 $config .= '    \'prefix\' => \''.$db_prefix.'\','.PHP_EOL;
 $config .= '    \'charset\' => \'utf8\','.PHP_EOL;
-$config .= '    \'version\' => \'eXtreme-Fusion CMS - Ninja Edition\''.PHP_EOL;
+$config .= '    \'version\' => \'eXtreme-Fusion CMS - Ninja Edition '.VERSION.'\''.PHP_EOL;
 $config .= ');'.PHP_EOL.PHP_EOL;
 
 $config .= '#Routing'.PHP_EOL.PHP_EOL;

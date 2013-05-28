@@ -1,14 +1,19 @@
 <?php defined('EF5_SYSTEM') || exit;
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+*********************************************************/
 /**
  Metody, których nie należy używać na zewnątrz klasy, bo mają swoje rozbudowane odpowiedniki:
 	- query() [odpowiednik to np. getData()]
@@ -26,6 +31,20 @@ class Data extends PDO
 {
 	private $_prefix;
 
+	public static function exceptionHandler($exception)
+	{
+		//exit('Connection failed: '.$exception->getMessage());
+	}
+	
+	public function __construct($dsn, $username = '', $password = '', array $driver_options = array())
+	{
+		set_exception_handler(array(__CLASS__, 'exceptionHandler'));
+		
+		parent::__construct($dsn, $username, $password, $driver_options = array());
+		
+		restore_exception_handler();
+	}
+	
 	/**
 	 Zapisywanie ustawień obiektu
 	**/
@@ -117,6 +136,7 @@ class Data extends PDO
 	public function query($query, $type = PDO::FETCH_ASSOC, $fetch = TRUE)
 	{
 		$d = parent::query(str_replace(array('[', ']'), array($this->_prefix, ''), $query));
+
 		if ($fetch)
 		{
 			return $d->fetchAll($type);
@@ -356,4 +376,89 @@ class Data extends PDO
 			return $res;
 		}
 	}
+	
+	/**
+		Zwraca w postaci numerycznej tablicy identyfikatory 
+	 	elementów pobranych z bazy i przesłanych do tej metody parametrem.
+	**/
+	public function getIDs(array $data, $key = 'id', $exception = TRUE)
+	{
+		if (!$data && $exception)
+		{
+			throw new systemException(__('Array is empty.'));
+		}
+		
+		if ($data && !isset($data[0][$key]))
+		{
+			throw new systemException(__('Required array key not exists.'));
+		}
+		
+		$ret = array();
+		foreach($data as $row)
+		{
+			$ret[] = $row[$key];
+		}
+		
+		return $ret;
+	}
+	
+	/**
+		Zwraca w postaci numerycznej tablicy identyfikatory 
+	 	elementów pobranych z bazy i przesłanych do tej metody parametrem.
+	**/
+	public function getIDsQuery(array $data, $key = 'id', $exception = TRUE)
+	{
+		return implode(',', $this->getIDs($data, $key, $exception));
+	}
+	
+	// Czyści tabelę z przestarzałych wpisów
+	function cleanTable($table, $limit)
+	{
+		if (! is_numeric($limit))
+		{
+			exit('Błąd w funkcji czyszczącej logi');
+		}
+		
+		$table = HELP::strip($table);
+		
+		$count = $this->getSelectCount('SELECT Count(`log_id`) FROM ['.$table.']');
+		
+		$limit = $count-$limit;
+		
+		if ($limit < 0)
+		{
+			$limit = 0;
+		}
+		
+		$data = $this->getData('SELECT `log_id` FROM ['.$table.'] ORDER BY `log_id` ASC LIMIT '.$limit);
+		$d = array();
+		foreach($data as $val)
+		{
+			$d[] = $val['log_id'];
+		}
+		
+		if ($d) 
+		{
+			// Usuwanie rekordów
+			$this->exec('DELETE FROM ['.$table.'] WHERE `log_id` IN ('.implode(',', $d).')');
+		}
+		
+		return TRUE;
+	}
+	
+	function insert($table = null, $fields = null)
+	{
+		// Sprawdzanie, czy parametry nie zostały pominięte, a zmienna $fields jest tablicą
+		if (is_null($table) || is_null($fields) || !is_array($fields))
+		{
+			return FALSE;
+		}
+
+		$keys = implode('`, `', array_keys($fields));
+		$values = implode("', '", array_values($fields));
+
+		return $this->exec("INSERT INTO ".$table." (`".$keys."`) VALUES ('".$values."')");
+
+	} // end of insert();
+
 }

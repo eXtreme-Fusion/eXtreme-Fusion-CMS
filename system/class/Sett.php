@@ -1,14 +1,19 @@
 <?php
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+*********************************************************/
 
 //TODO: EF6 - połączyć metody get() oraz getUnserialized() w jedną
 
@@ -97,7 +102,7 @@ class Sett {
 	 */
 	public function clearCache()
 	{
-		$this->_system->clearCache('system', array(sha1(CACHE_PREFIX.'settings')));
+		$this->_system->clearCache('system', 'settings');
 	}
 
 	/**
@@ -129,9 +134,6 @@ class Sett {
 				{
 					throw new systemException('Błąd aktualizacji: Ustawienie o kluczu <strong>'.$key.'</strong> nie istnieje.');
 				}
-
-				// Czyści pamięć podręczną
-				$this->clearCache();
 			}
 			else
 			{
@@ -139,6 +141,9 @@ class Sett {
 			}
 		}
 
+		// Czyści pamięć podręczną
+		$this->clearCache('system', '');
+				
 		// Ustawienia zostały zapisane
 		return TRUE;
 	}

@@ -1,3 +1,3 @@
-#chat_post { display:none; }
+/* #chat_post { display:none; } */
 #chat_messages { overflow:auto; height:300px; }
 #chat_messages div span.alt { float:right;margin-right:10px; }

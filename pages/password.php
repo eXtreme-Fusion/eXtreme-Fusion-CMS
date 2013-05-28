@@ -1,14 +1,36 @@
 <?php defined('EF5_SYSTEM') || exit;
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+| 
+**********************************************************
+                ORIGINALLY BASED ON
+---------------------------------------------------------+
+| PHP-Fusion Content Management System
+| Copyright (C) 2002 - 2011 Nick Jones
+| http://www.php-fusion.co.uk/
++--------------------------------------------------------+
+| Author: Nick Jones (Digitanium)
++--------------------------------------------------------+
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
++--------------------------------------------------------*/
 $_locale->load('password');
 $_head->set('<link href="'.ADDR_TEMPLATES.'stylesheet/password.css" media="screen" rel="stylesheet">');
 
@@ -81,17 +103,23 @@ if ($_user->iGuest())
 					if ($data['status'] <= 1)
 					{
 						$hash = time().'_'.substr(uniqid(md5(time())), 1, 10);
-						$_user->update(array('valid_code' => $hash), $data['id']);
+						$_user->update($data['id'], array('valid_code' => $hash));
 
 						// Do Tymcio - jak bedziesz robił tutaj locale, to zrób short_index - myślę że wiesz co mam na myśli ;)
-						$_mail->send($_request->post('email')->show(), $_sett->get('contact_email'), __('Generowanie nowego hasła'),
+						$status = $_mail->send($_request->post('email')->show(), $_sett->get('contact_email'), __('Generowanie nowego hasła'),
 						'Poproszono o zmianę hasła w serwisie '.$_sett->get('site_name').' dostępnym pod adresem '.ADDR_SITE.'.'.PHP_EOL.'
 						Jeżeli nie korzystałeś/aś z procedury odzyskiwania dostępu do konta, prosimy o zignorowanie tej wiadomości.'.PHP_EOL.PHP_EOL.'
 							W celu wygenerowania nowego hasła, proszę przejść pod nastepujący adres:'.PHP_EOL.PHP_EOL.'
 							<a href="'.$_route->path(array('controller' => 'password', 'action' => 'renew', 'user-'.$data['id'], $hash)).'">'.$_route->path(array('controller' => 'password', 'action' => 'renew', 'user-'.$data['id'], $hash)).'</a>'
 						);
-
-						$_route->redirect(array('action' => 'message', 'status' => 'ok'));
+						if ($status)
+						{
+							$_route->redirect(array('action' => 'message', 'status' => 'ok'));
+						}
+						else
+						{
+							$_tpl->printMessage('error', __('E-mail has not been sent. Please contact an administrator and report the problem to him'));
+						}
 					}
 					// Konto wymaga akceptacji Administratora
 					elseif ($data['status'] === '2')
@@ -141,7 +169,7 @@ if ($_user->iGuest())
 					{
 						if ($_sett->get('admin_activation') || $data['status'] === '2')
 						{
-							if ($_user->update(array('password' => sha512($salt.'^'.$password), 'salt' => $salt, 'status' => 2, 'valid_code' => ''), $_route->getParam('user')))
+							if ($_user->update($_route->getParam('user'), array('password' => sha512($salt.'^'.$password), 'salt' => $salt, 'status' => 2, 'valid_code' => '')))
 							{
 								// Do Tymcio - jak bedziesz robił tutaj locale, to zrób short_index - myślę że wiesz co mam na myśli ;)
 								$_mail->send($data['email'], $_sett->get('contact_email'), __('Nowe hasło'), '<p>Twoje nowe hasło: '.$password.'</p><p>Dziękujemy za skorzystanie z Systemu odzyskiwania konta.</p>');
@@ -151,7 +179,7 @@ if ($_user->iGuest())
 						}
 						else
 						{
-							if ($_user->update(array('password' => sha512($salt.'^'.$password), 'salt' => $salt, 'status' => 0, 'valid_code' => ''), $_route->getParam('user')))
+							if ($_user->update($_route->getParam('user'), array('password' => sha512($salt.'^'.$password), 'salt' => $salt, 'status' => 0, 'valid_code' => '')))
 							{
 								// Do Tymcio - jak bedziesz robił tutaj locale, to zrób short_index - myślę że wiesz co mam na myśli ;)
 								$_mail->send($data['email'], $_sett->get('contact_email'), __('Nowe hasło'), '<p>Twoje nowe hasło: '.$password.'</p><p>Dziękujemy za skorzystanie z Systemu odzyskiwania konta.</p>');
@@ -162,7 +190,7 @@ if ($_user->iGuest())
 					}
 					elseif ($data['status'] === '3')
 					{
-						if ($_user->update(array('password' => sha512($salt.'^'.$password), 'salt' => $salt, 'valid_code' => ''), $_route->getParam('user')))
+						if ($_user->update($_route->getParam('user'), array('password' => sha512($salt.'^'.$password), 'salt' => $salt, 'valid_code' => '')))
 						{
 							// Do Tymcio - jak bedziesz robił tutaj locale, to zrób short_index - myślę że wiesz co mam na myśli ;)
 							$_mail->send($data['email'], $_sett->get('contact_email'), __('Nowe hasło'), '<p>Twoje nowe hasło: '.$password.'</p><p>Dziękujemy za skorzystanie z Systemu odzyskiwania konta.</p>');
@@ -172,7 +200,7 @@ if ($_user->iGuest())
 					}
 					else
 					{
-						if ($_user->update(array('password' => sha512($salt.'^'.$password), 'salt' => $salt, 'valid_code' => ''), $_route->getParam('user')))
+						if ($_user->update($_route->getParam('user'), array('password' => sha512($salt.'^'.$password), 'salt' => $salt, 'valid_code' => '')))
 						{
 							// Do Tymcio - jak bedziesz robił tutaj locale, to zrób short_index - myślę że wiesz co mam na myśli ;)
 							$_mail->send($data['email'], $_sett->get('contact_email'), __('Nowe hasło'), '<p>Twoje nowe hasło: '.$password.'</p><p>Dziękujemy za skorzystanie z Systemu odzyskiwania konta.</p>');

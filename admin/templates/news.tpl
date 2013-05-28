@@ -1,7 +1,43 @@
+{*
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
+|
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
+|
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+| 
+**********************************************************
+                ORIGINALLY BASED ON
+---------------------------------------------------------+
+| PHP-Fusion Content Management System
+| Copyright (C) 2002 - 2011 Nick Jones
+| http://www.php-fusion.co.uk/
++--------------------------------------------------------+
+| Author: Nick Jones (Digitanium)
+| Author: Starefossen
++--------------------------------------------------------+
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
++--------------------------------------------------------*/
+*}
+
 <h3>{$SystemVersion} - {i18n('News')} || {i18n('Section')} - {i18n($page)}</h3>
 {if $message}<div class="{$class}">{$message}</div>{/if}
 
-<div class="tbl AdminButtons">
+<div class="tbl Buttons">
 	<div class="center grid_2 button-l">
 		{if $page === 'news'}
 			<span class="Cancels"><strong>{i18n('News')}</strong></span>
@@ -36,7 +72,7 @@
 			});
 		{/literal}
 	</script>
-	
+
 	<form id="This" class="tagform-full" action="{$URL_REQUEST}" method="post">
 		<div class="tbl1">
 			<div class="formLabel grid_6"><label for="Title">{i18n('News title:')}</label></div>
@@ -138,34 +174,29 @@
 			<div class="formField grid_1"><label><input type="checkbox" name="allow_comments" value="1" {if $allow_comments == 1} checked="checked"{/if} /></label></div>
 			<div class="clear"></div>
 		</div>
-		<div class="tbl2">
-			<div class="formLabel grid_6"><label for="Ratings">{i18n('Enable ratings')}</label></div>
-			<div class="formField grid_1"><label><input type="checkbox" name="allow_ratings" value="1" {if $allow_ratings == 1} checked="checked"{/if} /></label></div>
-			<div class="clear"></div>
-		</div>
-		<div class="tbl1">
+		<div class="tbl12">
 			<div class="formLabel grid_6"><label for="Draft">{i18n('Save as a draft')}</label></div>
 			<div class="formField grid_1"><label><input type="checkbox" name="draft" value="1" {if $draft == 1} checked="checked"{/if} /></label></div>
 			<div class="clear"></div>
 		</div>
-		<div class="tbl2">
+		<div class="tbl1">
 			<div class="formLabel grid_6"><label for="Sticky">{i18n('Make sticky')}</label></div>
 			<div class="formField grid_1"><label><input type="checkbox" name="sticky" value="1" {if $sticky == 1} checked="checked"{/if} /></label></div>
 			<div class="clear"></div>
 		</div>
-		<div class="tb1 AdminButtons">
+		<div class="tb1 Buttons">
 			<div class="center grid_2 button-l">
 				<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
 			</div>
 			<div class="center grid_2 button-r">
 				<input type="hidden" name="save" value="yes" />
-				<span id="SendForm_This" class="Save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
+				<span id="SendForm_This" class="save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
 			</div>
 		</div>
 	</form>
 	<div class="clear"></div><br />
-	
-	<h3 class="ui-corner-all">{i18n('Istniejące aktualnosci')}</h3>
+
+	<h3 class="ui-corner-all">{i18n('Current news')}</h3>
 	<div class="tbl2">
 		<div class="sep_1 grid_3 bold">{i18n('News title:')}</div>
 		<div class="grid_3 bold">{i18n('Publication date:')}</div>
@@ -178,7 +209,7 @@
 			<div class="grid_3 bold">{$news_list.date}</div>
 			<div class="grid_2 bold">{$news_list.author}</div>
 			<div class="grid_3 bold">
-				<a href="{$FILE_SELF}?page=news&action=edit&id={$news_list.id}" class="tip" title="{i18n('Edit')}"><img src="{$ADDR_ADMIN_IMAGES}icons/edit.png" alt="{i18n('Edit')}" /></a> | 
+				<a href="{$FILE_SELF}?page=news&action=edit&id={$news_list.id}" class="tip" title="{i18n('Edit')}"><img src="{$ADDR_ADMIN_IMAGES}icons/edit.png" alt="{i18n('Edit')}" /></a>
 				<a href="{$FILE_SELF}?page=news&action=delete&id={$news_list.id}" class="tip confirm_button" title="{i18n('Delete')}"><img src="{$ADDR_ADMIN_IMAGES}icons/delete.png" alt="{i18n('Delete')}" /></a></div>
 		</div>
 	{/section}
@@ -205,13 +236,13 @@
 			<div class="grid_4 right">{i18n('Category language:')}</div>
 			<div class="grid_6 left">{$language}<br /><small>{i18n('Same as a site language.')}</small></div>
 		</div>
-		<div class="tb2 AdminButtons">
+		<div class="tb2 Buttons">
 			<div class="center grid_2 button-l">
 				<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
 			</div>
 			<div class="center grid_2 button-r">
 				<input type="hidden" name="save" value="yes" />
-				<span id="SendForm_This" class="Save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
+				<span id="SendForm_This" class="save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
 			</div>
 		</div>
 	</form>

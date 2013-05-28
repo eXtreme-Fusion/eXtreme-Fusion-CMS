@@ -2,6 +2,4 @@
 
 return array(
 
-	'Example' => '<em>For example:</em><br />/news.php<br />/index.php<br />',
-
 );

@@ -1,5 +1,19 @@
 <?php
-
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
+|
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
+|
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+*********************************************************/
 class Container extends ServiceContainerBuilder
 {
 	protected function getCommentService()
@@ -22,12 +36,28 @@ class Container extends ServiceContainerBuilder
 		return new System;
 	}
 
+	protected function getPagingService()
+	{
+		return new Paging;
+	}
+
+	protected function getPageNavService()
+	{
+		return new PageNav($this->getService('Paging'));
+	}
+
 	protected function getPDOService()
 	{
 		$_dbconfig = $this['pdo.config'];
 
-		$pdo = new Data('mysql:host='.$_dbconfig['host'].';dbname='.$_dbconfig['database'].';port='.$_dbconfig['port'], $_dbconfig['user'], $_dbconfig['password'], array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES '.$_dbconfig['charset']));
+		$pdo = new Data('mysql:host='.$_dbconfig['host'].';dbname='.$_dbconfig['database'].';port='.$_dbconfig['port'].';charset='.$_dbconfig['charset'], $_dbconfig['user'], $_dbconfig['password']);
 		$pdo->config($_dbconfig['prefix']);
+
+		// MYSQL_ATTR_INIT_COMMAND is available for PHP >= 5.3.1, so we are using dsn charset.
+		// http://stackoverflow.com/a/4348744/1794927
+		// Charset by dsn available after php 5.3.6, so we are using set names.
+		// http://php.net/manual/en/ref.pdo-mysql.connection.php
+		$pdo->query('SET NAMES '.$_dbconfig['charset'], NULL, FALSE);
 
 		return $pdo;
 	}
@@ -41,12 +71,12 @@ class Container extends ServiceContainerBuilder
 	{
 		include_once DIR_CLASS.'Sbb.php';
 
-		return SmileyBBcode::getInstance($this->getService('Sett'), $this->getService('Pdo'), $this->getService('Locale'), $this->getService('Header'), $this->getService('User'), $this->getService('System'));
+		return SmileyBBcode::getInstance($this->getService('Sett'), $this->getService('Pdo'), $this->getService('Locales'), $this->getService('Header'), $this->getService('User'), $this->getService('System'));
 	}
 
-	protected function getLocaleService()
+	protected function getLocalesService()
 	{
-		return new Locales($this->getService('Sett')->get('locale'), DIR_LOCALE);
+		return new Locales($this->getService('User')->getLang(), DIR_LOCALE);
 	}
 
 	protected function getTagService()
@@ -56,6 +86,11 @@ class Container extends ServiceContainerBuilder
 
 	protected function getModulesService()
 	{
-		return new Modules($this->getService('Pdo'), $this->getService('Sett'), $this->getService('User'), $this->getService('Tag'), $this->getService('Locale'));
+		return new Modules($this->getService('Pdo'), $this->getService('Sett'), $this->getService('User'), $this->getService('Tag'), $this->getService('Locales'));
+	}
+
+	protected function getStatisticsService()
+	{
+		return new Statistics($this->getService('Pdo'), $this->getService('System'));
 	}
 }

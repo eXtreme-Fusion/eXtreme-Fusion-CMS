@@ -2,7 +2,10 @@
 
 return array(
 	'Contact' => 'Kontakt',
-	'Contact Ways' => 'Správce tohoto webu :site_name lze kontaktovat prostřednictvím: <ul><li> odesláním e-mailu :hidemail.</li><li> Odesláním <a href="messages.php?msg_send=1">soukromé zprávy</a>.<li> nebo odesláním formuláře, který naleznete níže. Obsah formuláře bude doručen na e-mail hlavního administrátora.</li></ul>',
+	'Contact Ways' => '
+		Správce tohoto webu :site_name lze kontaktovat prostřednictvím: 
+		<ul><li> odeslání e-mailu :hidemail.</li><li> Odesláním <a href="messages.php?msg_send=1">soukromé zprávy</a>.<li> Odesláním formuláře, který naleznete níže. Obsah formuláře bude doručen na e-mail hlavního administrátora.</li></ul>
+	',
 	'Name:' => 'Název uživatele:',
 	'Email Address:' => 'Adresa e-mailu:',
 	'Subject:' => 'Předmět:',

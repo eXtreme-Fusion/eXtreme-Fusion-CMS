@@ -16,15 +16,9 @@ MIT license
 
 /* The values below are for the login.php page */
 
-// START :: eXtreme-Fusion CMS
-include '../../../config.php';
-
 $sbconfig['DefaultAdapter'] = "mysql";
-$sbconfig['DefaultHost'] = 'localhost';//$_dbconfig['host'];				// niebezpieczne, tymczasowo zakomentowane - EF Team
-$sbconfig['DefaultUser'] = '';//$_dbconfig['user'];
-$sbconfig['DefaultPass'] = '';//$_dbconfig['password'];
-
-// END :: eXtreme-Fusion CMS
+$sbconfig['DefaultHost'] = "localhost";
+$sbconfig['DefaultUser'] = "root";
 
 /*
 * If you want to enable automatic login, you can include your password below. To 

@@ -2,7 +2,7 @@
 
 return array(
 	'Comments' => 'Komentáře',
-	'No Comments' => 'Nikdo nenapsal zatím žádný komentář.',
+	'No Comments' => 'Nikdo zatím nenapsal žádný komentář.',
 	'Post Comment' => 'Napsat komentář',
 	'Update Comment' => 'Aktualizovat komentáře',
 	'Name:' => 'Název uživatele:',

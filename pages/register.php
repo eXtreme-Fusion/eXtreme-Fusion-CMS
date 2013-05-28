@@ -1,14 +1,19 @@
 <?php defined('EF5_SYSTEM') || exit;
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+*********************************************************/
 
 if ($_user->isLoggedIn())
 {
@@ -20,10 +25,10 @@ $_locale->load('register');
 $theme = array(
 	'Title' => __('Register').' &raquo; '.$_sett->get('site_name'),
 	'Keys' => 'Rejestracja, stwórz konto, uzyskaj dostęp',
-	'Desc' => 'Chcesz zarejesstrować się na: '.$_sett->get('site_name').'? Możesz to zrobić już teraz.'
+	'Desc' => 'Chcesz zarejestrować się na: '.$_sett->get('site_name').'? Możesz to zrobić już teraz.'
 );
 
-if ($_sett->get('enable_registration') != 1)
+if ($_sett->get('enable_registration') !== '1')
 {
 	// Rejestracja wyłaczona, wyświetlę komunikat
 	throw new userException('Rejestra została wyłączona przez Administratora.');
@@ -51,7 +56,7 @@ if ($_route->getByID(1) === 'active' && $_route->getByID(2))
 		array(':code', $_route->getByID(2), PDO::PARAM_STR)
 	);
 
-	if ($_sett->get('admin_activation') == 1)
+	if ($_sett->get('admin_activation') === '1')
 	{
 		$status = 2;
 	}
@@ -118,6 +123,16 @@ if ($_request->post('create_account')->show())
 			if ($_user->bannedByEmail($_request->post('user_email')->show()))
 			{
 				$error[] = '7';
+				
+				$_pdo->exec('INSERT INTO [blacklist] (`ip`, `type`, `user_id`, `email`, `reason`, `datestamp`) VALUES (:ip, :type, :user_id, :email, :reason, '.time().')',
+					array(
+						array(':ip', $_user->getIP(), PDO::PARAM_STR),
+						array(':type', $_user->getIPType(), PDO::PARAM_INT),
+						array(':user_id', 1, PDO::PARAM_INT),
+						array(':email', $_request->post('user_email')->show(), PDO::PARAM_STR),
+						array(':reason', __('Gość próbował się rejestrować na zablokowany email lub domenę, jego adres IP został dodany do bazy danych jako podejrzany!'), PDO::PARAM_STR)
+					)
+				);
 			}
 		}
 	}
@@ -132,12 +147,12 @@ if ($_request->post('create_account')->show())
 
 	if ( ! $error)
 	{
-		if ($_sett->get('email_verification') == 1)
+		if ($_sett->get('email_verification') === '1')
 		{
 			$status = 1;
 			$valid = md5(uniqid(time()));
 		}
-		elseif ($_sett->get('admin_activation') == 1)
+		elseif ($_sett->get('admin_activation') === '1')
 		{
 			$status = 2;
 			$valid = md5(uniqid(time()));
@@ -181,7 +196,7 @@ if ($_request->post('create_account')->show())
 		$query = $_pdo->getData('SELECT * FROM [user_fields] WHERE `register` = 1');
 		$match = $_pdo->getRowsCount($query);
 		$i = 0; $field = ''; $index_val = ''; $field_val = '';
-		if($match != NULL)
+		if($match !== NULL)
 		{
 			foreach($query as $data)
 			{
@@ -192,8 +207,18 @@ if ($_request->post('create_account')->show())
 				$field .= '`'.$index.'` = "'.$val.'"'.($i < $match-1 ? ', ' : '');
 				$i++;
 			}
-
-			$_user->updateField($field, $lastuser['id'], $index_val, $field_val);
+			
+			if ($field)
+			{
+				if ($lastuser['id'] === NULL)
+				{
+					$_pdo->exec('UPDATE [users_data] SET '.$field);
+				}
+				else
+				{
+					$_pdo->exec('INSERT INTO [users_data] (`user_id`, '.$index_val.') VALUES ('.$lastuser['id'].', '.$field_val.') ON DUPLICATE KEY UPDATE '.$field.'');
+				}
+			}
 		}
 
 		if ($_sett->get('email_verification') === '1')
@@ -213,11 +238,16 @@ if ($_request->post('create_account')->show())
 				<hr />
 				Wiadomość wysłana automatycznie. Proszę nie odpisywać.';
 
-			$_mail->send($_request->post('user_email')->show(), $_sett->get('contact_email'), __('Aktywacja konta'), $message, array(), TRUE);
-
-			$_tpl->assign('email_send', TRUE);
+			if ($_mail->send($_request->post('user_email')->show(), $_sett->get('contact_email'), __('Aktywacja konta'), $message, array(), TRUE))
+			{
+				$_tpl->assign('email_send', TRUE);
+			}
+			else
+			{
+				$_tpl->assign('email_not_send', TRUE);
+			}
 		}
-		elseif ($_sett->get('admin_activation') == 1)
+		elseif ($_sett->get('admin_activation') === '1')
 		{
 			$_tpl->assign('active', TRUE);
 		}
@@ -276,7 +306,7 @@ if ($result)
 	));
 }
 
-if ($_sett->get('enable_terms') == 1)
+if ($_sett->get('enable_terms') === '1')
 {
 	$_tpl->assign('license_agreement', $_sett->get('license_agreement'));
 }
@@ -285,7 +315,7 @@ $_tpl->assignGroup(array(
 	'portal' => $_sett->get('site_name'),
 	'validation' => (bool) $_protection,
 	'enable_terms' => $_sett->get('enable_terms'),
-	'locale_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'locale', array(), TRUE, 'folders'), NULL, FALSE, TRUE)
+	'locale_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'locale', array(), TRUE, 'folders'), $_user->getLang(), FALSE, TRUE, Html::SELECT_NO_SELECTION)
 ));
 
 if ($_protection)
