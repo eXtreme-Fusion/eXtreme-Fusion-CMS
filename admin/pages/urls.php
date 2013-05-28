@@ -111,56 +111,57 @@ try
 			throw new userException(__('Incorrect link'));
 		}
 	}
-	else
+	
+	if ($_request->post('save')->show())
 	{
-		if ($_request->post('save')->show())
+		if ($_request->post('full_path')->show() && $_request->post('short_path')->show())
 		{
-			if ($_request->post('full_path')->show() && $_request->post('short_path')->show())
+			if ($_request->post('id')->show())
 			{
-				if (isset($_POST['id']))
+				$count = $_pdo->exec('UPDATE [links] SET full_path = :full, short_path = :short, datestamp = '.time().' WHERE id = :id',
+					array(
+						array(':full', $_request->post('full_path')->show(), PDO::PARAM_STR),
+						array(':short', $_request->post('short_path')->show(), PDO::PARAM_STR),
+						array(':id', $_request->post('id')->show(), PDO::PARAM_INT)
+					)
+				);
+				
+				if ($count)
 				{
-					$count = $_pdo->exec('UPDATE [links] SET full_path = :full, short_path = :short, datestamp = '.time().' WHERE id = :id',
-						array(
-							array(':full', $_request->post('full_path')->show(), PDO::PARAM_STR),
-							array(':short', $_request->post('short_path')->show(), PDO::PARAM_STR),
-							array(':id', $_request->post('id')->show(), PDO::PARAM_INT)
-						)
-					);
-					
-					if ($count)
-					{
-						$_log->insertSuccess('edit', __('The URL has been edited.'));
-						$_request->redirect(FILE_PATH, array('act' => 'edit', 'status' => 'ok'));
-					}
-
-					$_log->insertFail('edit', __('Error! The URL has not been edited.'));
-					$_request->redirect(FILE_PATH, array('act' => 'edit', 'status' => 'error'));
+					$_log->insertSuccess('edit', __('The URL has been edited.'));
+					$_request->redirect(FILE_PATH, array('act' => 'edit', 'status' => 'ok'));
 				}
-				else
-				{
-					$count = $_pdo->exec('INSERT INTO [links] (`full_path`, `short_path`, `datestamp`) VALUES (:full, :short, '.time().')',
-						array(
-							array(':full', $_request->post('full_path')->show(), PDO::PARAM_STR),
-							array(':short', $_request->post('short_path')->show(), PDO::PARAM_STR)
-						)
-					);
-					
-					if ($count)
-					{
-						$_log->insertSuccess('add', __('The URL has been added.'));
-						$_request->redirect(FILE_PATH, array('act' => 'add', 'status' => 'ok'));
-					}
 
-					$_log->insertFail('add', __('Error! The URL has not been added.'));
-					$_request->redirect(FILE_PATH, array('act' => 'add', 'status' => 'error'));
-				}
+				$_log->insertFail('edit', __('Error! The URL has not been edited.'));
+				$_request->redirect(FILE_PATH, array('act' => 'edit', 'status' => 'error'));
 			}
 			else
 			{
-				throw new userException(__('Every field must be filled'));
+				$count = $_pdo->exec('INSERT INTO [links] (`full_path`, `short_path`, `datestamp`) VALUES (:full, :short, '.time().')',
+					array(
+						array(':full', $_request->post('full_path')->show(), PDO::PARAM_STR),
+						array(':short', $_request->post('short_path')->show(), PDO::PARAM_STR)
+					)
+				);
+				
+				if ($count)
+				{
+					$_log->insertSuccess('add', __('The URL has been added.'));
+					$_request->redirect(FILE_PATH, array('act' => 'add', 'status' => 'ok'));
+				}
+
+				$_log->insertFail('add', __('Error! The URL has not been added.'));
+				$_request->redirect(FILE_PATH, array('act' => 'add', 'status' => 'error'));
 			}
 		}
-
+		else
+		{
+			throw new userException(__('Every field must be filled'));
+		}
+	}
+	
+	if (!$_request->get('action')->show())
+	{
 		$query = $_pdo->getData('SELECT `id`, `full_path`, `short_path`, `datestamp` FROM [links]');
 
 		$i = 0; $link = array();

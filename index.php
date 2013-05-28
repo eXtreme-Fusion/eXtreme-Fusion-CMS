@@ -98,21 +98,23 @@ try
 
 	//$_tpl->registerFunction('url', 'Url');
 
+	// Nie usuwać
 	/**
 	 * Pobieranie linków definiowanych przez administratora
 	 */
-	$query = $_pdo->getData('SELECT * FROM [links] WHERE `link`=:link',
+	/*$query = $_pdo->getData('SELECT * FROM [links] WHERE `link`=:link',
 		array(':link', $_route->getFileName(), PDO::PARAM_STR)
 	);
 
-	if ($_pdo->getRowsCount($query))
+	if ($query)
 	{
 		foreach($query as $row)
 		{
 			// Ustawia administracyjną ścieżkę odczytu pliku
 			$_route->setAdminFile($row['file']);
 		}
-	}
+	}*/
+	
 
 	// Scieżki, w których jest wyszukiwany plik wg kolejności przeszukiwania
 	$folders = array(
@@ -125,24 +127,28 @@ try
 
 	$_route->setFolders($folders);
 
-	/**
-	 * Ustawia ostateczną sciężkę odczytu pliku
-	 * W przypadku gdy wykonała się metoda setAdminFile(), sprawdzi czy plik istnieje.
-	 * Jeśli nie, wyszuka go w lokalizacjach podanych parametrem
-	 */
-	$_route->setExitFile();
-
 	if ( ! $_route->getExitFile())
 	{
-		$row = $_pdo->getRow('SELECT full_path FROM [links] WHERE short_path= :short_path ORDER BY `datestamp` DESC LIMIT 1',
-			array(':short_path', $_route->getRequest(), PDO::PARAM_STR)
+		$row = $_pdo->getRow('SELECT full_path FROM [links] WHERE short_path =:short_path ORDER BY `datestamp` DESC LIMIT 1',
+			array(':short_path', substr(PATH_INFO, 0, 1) === '/' ? substr(PATH_INFO, 1) : PATH_INFO, PDO::PARAM_STR)
 		);
-
+		
 		if ($row)
 		{
 			$_route->setNewConfig($row['full_path']);
 		}
+		else
+		{
+			/**
+			 * Ustawia ostateczną sciężkę odczytu pliku
+			 * W przypadku gdy wykonała się metoda setAdminFile(), sprawdzi czy plik istnieje.
+			 * Jeśli nie, wyszuka go w lokalizacjach podanych parametrem
+			 */
+			$_route->setExitFile();
+		}
 	}
+	
+	
 	// Tworzenie emulatora statyczności klasy OPT
 	TPL::build($_theme = new Theme($_sett, $_system, $_user, $_pdo, $_request, $_route, $_head, $_route->getTplFileName()));
 
