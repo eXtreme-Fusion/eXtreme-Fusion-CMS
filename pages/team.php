@@ -112,7 +112,7 @@ $groups = $_pdo->getData('SELECT * FROM [groups] WHERE `id` != 1 AND `team` = 1'
 $users = $_pdo->getData('SELECT `id`, `roles`, `role`, `joined`, `avatar`, `lastvisit`, `username` FROM [users] WHERE `status` = 0');
 
 $roles = array();
-foreach($users as &$user)
+foreach($users as $user)
 {
 	foreach(unserialize($user['roles']) as $role)
 	{
