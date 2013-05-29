@@ -1,4 +1,8 @@
-﻿					eXtreme-Fusion V STABLE 2012.03.4
+﻿					eXtreme-Fusion 5.0.1 2012.05.28
+
+- uzupełnienie czeskich plików językowych
+
+					eXtreme-Fusion V STABLE 2012.03.4
 
 - zmiana licencji na aGPL v3
 - dodanie licznika unikalnych wizyt
