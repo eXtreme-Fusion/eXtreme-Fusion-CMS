@@ -61,7 +61,11 @@ class Theme extends optClass
 		$this->_theme = $sett->get('theme');
 		$this->setConfig();
 		$this->_tpl_file_name = $tpl_file_name;
-		
+		$this->registerFunction('i18n', 'Locale');
+		if (function_exists('optUrl'))
+		{
+			$this->registerFunction('url', 'Url');
+		}
 		$this->_head->set('
 			<link href="'.ADDR_COMMON_CSS.'facebox.css" rel="stylesheet">'.PHP_EOL.'
 			<script src="'.ADDR_COMMON_JS.'facebox.js"></script>'.PHP_EOL.'
@@ -90,6 +94,7 @@ class Theme extends optClass
 	public function template($iframe)
 	{
 		$this->assign('ADDR_SITE', ADDR_SITE);
+		$this->assign('ADDR_ADMIN', ADDR_ADMIN);
 		$this->assign('THEME_ADDRESS', ADDR_SITE.'themes/'.$this->_theme.'/');
 		$this->assign('DIR_IMAGES', DIR_IMAGES);
 		$this->assign('THEME_IMAGES', THEME_IMAGES);
