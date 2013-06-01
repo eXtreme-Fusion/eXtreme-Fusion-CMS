@@ -347,5 +347,3 @@ $_pdo->exec("INSERT INTO `".$_dbconfig['prefix']."permissions` (`name`, `section
 ");
 $_pdo->exec("INSERT INTO `".$_dbconfig['prefix']."permissions_sections` (`name`, `description`, `is_system`) VALUES ('admin', '".__('Administration')."', 1), ('site', '".__('Site')."', 1)");
 $_pdo->exec("INSERT INTO `".$_dbconfig['prefix']."groups` (`title`, `description`, `format`, `permissions`) VALUES ('".__('Admin')."', '".__('Group: admin')."', '<span style=\"color:#99bb00\">{username}</span>', '".serialize(array('*'))."'), ('".__('User')."', '".__('Group: user')."', '{username}', '".serialize(array('site.login', 'site.comment', 'site.comment.add', 'site.comment.edit'))."'), ('".__('Guest')."', '".__('Group: guest')."', '{username}', '".serialize(array())."')");
-
-$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."users_data (`user_id`) VALUES ('1')");

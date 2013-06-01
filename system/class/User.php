@@ -573,7 +573,7 @@ class User {
 	}
 
 	// Zwraca dodatkowe dane użytkownika z możliwością ich nadpisania przez $values.
-	public function getCustomData($user_id = NULL, array $values = array())
+	public function getCustomData($user_id = NULL, array $values = array(), $edit = NULL)
 	{
 		$query = $this->_pdo->getData('SELECT * FROM [user_field_cats] ORDER BY `order` ASC');
 		$cats = array();
@@ -581,8 +581,17 @@ class User {
 		{
 			$cats[] = $data;
 		}
-
-		$query = $this->_pdo->getData('SELECT * FROM [user_fields]');
+		
+		if ($edit === NULL)
+		{
+			$query = $this->_pdo->getData('SELECT * FROM [user_fields]');
+		}
+		else
+		{
+			$edit = (int) $edit;
+			$query = $this->_pdo->getData('SELECT * FROM [user_fields] WHERE `edit` = '.$edit);
+		}
+		
 		$fields = array();
 		foreach($query as $data)
 		{
@@ -602,11 +611,13 @@ class User {
 			$_new_fields = array();
 			foreach($cats as $key => $cat)
 			{
-				$i = 0;
+				$i = 0; $has_field = FALSE;
 				foreach($fields as $field)
 				{
 					if ($field['cat'] === $cat['id'])
 					{
+						$has_field = TRUE;
+						
 						$new_fields[$key][$i] = $field;
 
 						$new_fields[$key][$i]['value'] = '';
@@ -632,6 +643,11 @@ class User {
 
 						$i++;
 					}
+				}
+				
+				if (! $has_field)
+				{
+					unset($cats[$key]);
 				}
 			}
 		}
