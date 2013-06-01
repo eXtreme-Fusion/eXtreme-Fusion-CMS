@@ -39,6 +39,7 @@ if ($_route->getAction() === 'logout')
 	HELP::redirect(ADDR_SITE);
 }
 
+$_head->set('<script src="'.ADDR_JS.'account.js"></script>');
 $_locale->load('account');
 
 $status = $_route->getByID(1);
@@ -92,7 +93,7 @@ elseif (isset($status) && $status == 'error')
 	}
 }
 
-if ($_request->post('save')->show() && $_request->post('email')->show())
+if ($_request->post())
 {
 	if ($_user->checkOldPass($_user->get('id'), $_request->post('old_password')->show()))
 	{

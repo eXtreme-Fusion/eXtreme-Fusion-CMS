@@ -38,7 +38,7 @@
 
 	<h4>{i18n('Edit account')}</h4>
 
-	<form action="{$URL_REQUEST}" method="post" enctype="multipart/form-data" name="account">
+	<form action="{$URL_REQUEST}" method="post" enctype="multipart/form-data" id="account">
 		{if $change_name == 1}
 		<div class="tbl1">
 			<div class="formLabel grid_3"><label for="username">{i18n('Username:')}</label></div>
