@@ -143,16 +143,13 @@ if ($_request->post('save')->show() && $_request->post('email')->show())
 				HELP::redirect($_route->path(array('controller' => 'account', 'action' => 'error', '4')));
 			}
 
-			if ($_user->changePass($_user->get('id'), $_request->post('password1')->show()))
-			{
-				//deprecated $_user->updateLoginSession($_request->post('password1')->show());
-			}
-			else
+			if ( ! $_user->changePass($_user->get('id'), $_request->post('password1')->show()))
 			{
 				HELP::redirect($_route->path(array('controller' => 'account', 'action' => 'error', '5')));
 			}
 		}
 
+		// Aktualizacja avatara
 		if ($_request->upload('avatar'))
 		{
 			if ( ! $_user->saveNewAvatar($_user->get('id'), $_request->files('avatar')->show()))
@@ -162,15 +159,15 @@ if ($_request->post('save')->show() && $_request->post('email')->show())
 		}
 
 		$fields  = $_pdo->getData('SELECT * FROM [user_fields] WHERE `edit` = 0');
+		
 		$_fields = array();
-
 		if ($_pdo->getRowsCount($fields))
 		{
 			foreach($fields as $field)
 			{
 				$key   = $field['index'];
 				$value = HELP::wordsProtect($_request->post($key)->filters('trim', 'strip'));
-
+	
 				$_fields[$key] = $value;
 			}
 		}
