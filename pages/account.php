@@ -93,7 +93,8 @@ elseif (isset($status) && $status == 'error')
 	}
 }
 
-if ($_request->post())
+// Zapis danych
+if ($_request->postIsset('email'))
 {
 	if ($_user->checkOldPass($_user->get('id'), $_request->post('old_password')->show()))
 	{
