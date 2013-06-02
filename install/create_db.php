@@ -35,8 +35,8 @@ $_pdo->query("DROP TABLE IF EXISTS ".$db_prefix."pages", NULL, FALSE);
 $result = $_pdo->query("CREATE TABLE ".$db_prefix."pages (
 	`id` SMALLINT UNSIGNED AUTO_INCREMENT,
 	`title` VARCHAR(255) NOT NULL DEFAULT '',
-	`content` TEXT NOT NULL DEFAULT '',
-	`preview` MEDIUMTEXT NOT NULL DEFAULT '',
+	`content` TEXT NOT NULL,
+	`preview` MEDIUMTEXT NOT NULL,
 	`description` VARCHAR(255) NOT NULL DEFAULT '',
 	`type` SMALLINT UNSIGNED NOT NULL DEFAULT '0',
 	`categories` VARCHAR(255) NOT NULL DEFAULT '',
@@ -82,7 +82,7 @@ $_pdo->query("DROP TABLE IF EXISTS ".$db_prefix."pages_categories", NULL, FALSE)
 $result = $_pdo->query("CREATE TABLE ".$db_prefix."pages_categories (
 	`id` SMALLINT UNSIGNED AUTO_INCREMENT,
 	`name` VARCHAR(255) NOT NULL DEFAULT '',
-	`description` MEDIUMTEXT NOT NULL DEFAULT '',
+	`description` MEDIUMTEXT NOT NULL,
 	`submitting_groups` VARCHAR(255) NOT NULL DEFAULT '',
 	`thumbnail` VARCHAR(255) NOT NULL DEFAULT '',
 	`is_system` TINYINT UNSIGNED NOT NULL DEFAULT '0',
@@ -94,7 +94,7 @@ if ( ! $result) $fail = TRUE;
 $_pdo->query("DROP TABLE IF EXISTS ".$db_prefix."pages_custom_settings", NULL, FALSE);
 $result = $_pdo->query("CREATE TABLE ".$db_prefix."pages_custom_settings (
 	`id` SMALLINT UNSIGNED AUTO_INCREMENT,
-	`settings` MEDIUMTEXT NOT NULL DEFAULT '',
+	`settings` MEDIUMTEXT NOT NULL,
 	PRIMARY KEY (`id`)
 ) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";", NULL, FALSE);
 if ( ! $result) $fail = TRUE;
@@ -377,7 +377,7 @@ $result = $_pdo->query("CREATE TABLE ".$db_prefix."user_fields (
 	`index` VARCHAR(50) NOT NULL,
 	`cat` MEDIUMINT UNSIGNED NOT NULL DEFAULT '1',
 	`type` SMALLINT NOT NULL DEFAULT '0',
-	`option` TEXT NOT NULL DEFAULT '',
+	`option` TEXT NOT NULL,
 	`register` TINYINT NOT NULL DEFAULT '0',
 	`hide` TINYINT NOT NULL DEFAULT '0',
 	`edit` TINYINT NOT NULL DEFAULT '0',
@@ -415,7 +415,7 @@ $result = $_pdo->query("CREATE TABLE ".$db_prefix."users (
 	`actiontime` INT UNSIGNED NOT NULL DEFAULT '0',
 	`theme` VARCHAR(100) NOT NULL DEFAULT 'Default',
 
-	`roles` TEXT NOT NULL DEFAULT '',
+	`roles` TEXT NOT NULL,
 	`role` INT(11) NOT NULL DEFAULT '2',
 	`lastupdate` INT NOT NULL DEFAULT '0',
 	`lang` VARCHAR(20) NOT NULL,
@@ -444,7 +444,7 @@ $result = $_pdo->query("CREATE TABLE ".$db_prefix."users_data (
   `skype` VARCHAR(200) NOT NULL DEFAULT '',
   `www` VARCHAR(200) NOT NULL DEFAULT '',
   `location` VARCHAR(200) NOT NULL DEFAULT '',
-  `sig` TEXT NOT NULL DEFAULT '',
+  `sig` TEXT NOT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";", NULL, FALSE);
 if ( ! $result) $fail = TRUE;
