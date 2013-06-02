@@ -38,7 +38,7 @@
 
 	<h4>{i18n('Edit account')}</h4>
 
-	<form action="{$URL_REQUEST}" method="post" enctype="multipart/form-data" name="account">
+	<form action="{$URL_REQUEST}" method="post" enctype="multipart/form-data" id="account">
 		{if $change_name == 1}
 		<div class="tbl1">
 			<div class="formLabel grid_3"><label for="username">{i18n('Username:')}</label></div>
@@ -106,44 +106,45 @@
 		<h4>{i18n('Additional informations')}</h4>
 
 		{section=cats}
-		<div class="tbl1">
-			<div class="formField grid_10">{$cats.name}</div>
-		</div>
-		{section=fields}
-		<div class="tbl2">
-			<div class="formLabel grid_3"><label for="{$fields.label}">{i18n($fields.name)}:</label></div>
-			{if $fields.type == 1}
-			<div class="formField grid_7">
-				<input type="text" name="{$fields.index}" value="{if $fields.value}{$fields.value}{/if}" id="{$fields.label}">
+			<div class="tbl1">
+				<div class="formField grid_10">{$cats.name}</div>
 			</div>
-			{elseif $fields.type == 3}
-			<div class="formField grid_7">
-				<select name="{$fields.index}" class="textbox">
-					{foreach=$fields.option; value}
-					<option value="{@value.value}"{if @value.selected} selected{/if}>{@value.display}</option>
-					{/foreach}
-				</select>
-			</div>
-			{else}
-			<div class="formField grid_7">
-				<textarea name="{$fields.index}" id="{$fields.label}" rows="3" class="resize">{$fields.value}</textarea>
-			</div>
-		</div>
-		<div class="tbl2">
-			<div class="line center">
-				{foreach=$fields.bbcode; bbcode}
-				<button type="button" onClick="addText('{$fields.index}', '[{@bbcode.value}]', '[/{@bbcode.value}]', 'account');"><img src="{@bbcode.image}" title="{@bbcode.description}" alt="{@bbcode.description}" class="tip"></button>
-				{/foreach}
-			</div>
-			<div class="line center">
-				{foreach=$fields.smiley; smiley}
-				<img src="{$ADDR_IMAGES}smiley/{@smiley.image}" title="{@smiley.text}" alt="{@smiley.text}" class="tip" onclick="insertText('{$fields.index}', '{@smiley.code}', 'account');">
-				{if @smiley.i % 20 == 0}</div><div class="line center">{/if}
-				{/foreach}
-			</div>
-			{/if}
-		</div>
-		{/section}
+			{section=fields}
+				<div class="tbl2">
+					<div class="formLabel grid_3"><label for="{$fields.label}">{i18n($fields.name)}:</label></div>
+					{if $fields.type == 1}
+						<div class="formField grid_7">
+							<input type="text" name="data[{$fields.index}]" value="{if $fields.value}{$fields.value}{/if}" id="{$fields.label}">
+						</div>
+					{elseif $fields.type == 3}
+						<div class="formField grid_7">
+							<select name="data[{$fields.index}]" class="textbox">
+								{foreach=$fields.option; value}
+									<option value="{@value.value}"{if @value.selected} selected{/if}>{@value.display}</option>
+								{/foreach}
+							</select>
+						</div>
+					{else}
+						<div class="formField grid_7">
+							<textarea name="data[{$fields.index}]" id="{$fields.label}" rows="3">{$fields.value}</textarea>
+						</div>
+						<div class="clear"></div>
+						<div class="tbl2">
+							<div class="line center">
+								{foreach=$bbcodes; bbcode}
+									<button type="button" onClick="addText('data[{$fields.index}]', '[{@bbcode.value}]', '[/{@bbcode.value}]', 'account');"><img src="{@bbcode.image}" title="{@bbcode.description}" alt="{@bbcode.description}" class="tip"></button>
+								{/foreach}
+							</div>
+							<div class="line center">
+								{foreach=$smileys; smiley}
+									<img src="{$ADDR_IMAGES}smiley/{@smiley.image}" title="{@smiley.text}" alt="{@smiley.text}" class="tip" onclick="insertText('data[{$fields.index}]', '{@smiley.code}', 'account');">
+									{if @smiley.i % 20 == 0}</div><div class="line center">{/if}
+								{/foreach}
+							</div>
+						</div>
+					{/if}
+				</div>
+			{/section}
 		{/section}
 		<div class="tbl center">
 			<input type="submit" name="save" class="button" value="{i18n('Save')}">

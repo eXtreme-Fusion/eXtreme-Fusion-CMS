@@ -137,6 +137,11 @@ class Request
 		
 		return new Edit($array);
 	}
+	
+	public function postIsset($key)
+	{
+		return isset($this->_post[$key]);
+	}
 
 	/**
 	 Analiza żądań po tablicy $_FILES
