@@ -267,7 +267,7 @@ $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `ima
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('Themes', '".HELP::Title2Link(__('Themes'))."', 'themes.png')");
 //$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news_cats (`name`, `link`, `image`) VALUES ('Windows', '".HELP::Title2Link(__('Windows'))."', 'windows.png')");
 
-$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news  (`id`, `title`, `link`, `category`, `content`, `author`, `source`, `breaks`, `description`, `datestamp`, `access`, `reads`, `draft`, `sticky`, `allow_comments`, `allow_ratings`, `language`) VALUES (NULL, '".__('Example news title')."', '".__('Example news url')."', '3', '".__('Example news content')."', '1', 'http://extreme-fusion.org', '0', '".__('Example news description')."', '".time()."', '3', '1', '0', '0', '1', '1', '".$_SESSION['localeset']."')");
+$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."news  (`id`, `title`, `link`, `category`, `content`, `author`, `source`, `breaks`, `description`, `datestamp`, `access`, `reads`, `draft`, `sticky`, `allow_comments`, `allow_ratings`, `language`, `content_extended`) VALUES (NULL, '".__('Example news title')."', '".__('Example news url')."', '3', '".__('Example news content')."', '1', 'http://extreme-fusion.org', '0', '".__('Example news description')."', '".time()."', '3', '1', '0', '0', '1', '1', '".$_SESSION['localeset']."', '')");
 
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."tags  (`id`, `supplement`, `supplement_id`, `value`, `value_for_link`, `access`) VALUES (1, 'NEWS', 1, 'eXtreme-Fusion', 'extreme_fusion', '1')");
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."tags  (`id`, `supplement`, `supplement_id`, `value`, `value_for_link`, `access`) VALUES (2, 'NEWS', 1, 'eXtreme-Fusion 5', 'extreme_fusion_5', '1')");
@@ -296,13 +296,13 @@ $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."user_field_cats (`name`, `order
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."user_field_cats (`name`, `order`) VALUES ('".__('Contact Information')."', 2)");
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."user_field_cats (`name`, `order`) VALUES ('".__('Miscellaneous')."', 3)");
 
-$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."user_fields (`name`, `index`, `cat`, `type`) VALUES ('".__('First name')."', 'name', 1, 1)");
-$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."user_fields (`name`, `index`, `cat`, `type`) VALUES ('".__('Date of birth')."', 'old', 1, 1)");
-$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."user_fields (`name`, `index`, `cat`, `type`) VALUES ('".__('Gadu-Gadu')."', 'gg', 2, 1)");
-$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."user_fields (`name`, `index`, `cat`, `type`) VALUES ('".__('Skype')."', 'skype', 2, 1)");
-$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."user_fields (`name`, `index`, `cat`, `type`) VALUES ('".__('Website')."', 'www', 2, 1)");
-$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."user_fields (`name`, `index`, `cat`, `type`) VALUES ('".__('Living place')."', 'location', 2, 1)");
-$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."user_fields (`name`, `index`, `cat`, `type`) VALUES ('".__('Signature')."', 'sig', 3, 2)");
+$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."user_fields (`name`, `index`, `cat`, `type`, `option`) VALUES ('".__('First name')."', 'name', 1, 1, '')");
+$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."user_fields (`name`, `index`, `cat`, `type`, `option`) VALUES ('".__('Date of birth')."', 'old', 1, 1, '')");
+$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."user_fields (`name`, `index`, `cat`, `type`, `option`) VALUES ('".__('Gadu-Gadu')."', 'gg', 2, 1, '')");
+$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."user_fields (`name`, `index`, `cat`, `type`, `option`) VALUES ('".__('Skype')."', 'skype', 2, 1, '')");
+$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."user_fields (`name`, `index`, `cat`, `type`, `option`) VALUES ('".__('Website')."', 'www', 2, 1, '')");
+$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."user_fields (`name`, `index`, `cat`, `type`, `option`) VALUES ('".__('Living place')."', 'location', 2, 1, '')");
+$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."user_fields (`name`, `index`, `cat`, `type`, `option`) VALUES ('".__('Signature')."', 'sig', 3, 2, '')");
 
 //$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."settings_inf (`name`, `value`, `inf`) VALUES ('version', '5.0', '(Beta)')");
 
