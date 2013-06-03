@@ -141,7 +141,7 @@ abstract class HtmlAbstract
 	{
 		if ($show_default)
 		{
-			HELP::arrayUnshift($data, '0', __('--Brak wyboru--'));
+			HELP::arrayUnshift($data, '0', __('--No selection--'));
 		}
 
 		if (is_array($selected))
