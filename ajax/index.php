@@ -33,13 +33,14 @@
 +--------------------------------------------------------*/
 
 require_once '../config.php';
+require DIR_SITE.'bootstrap.php';
 require_once DIR_SYSTEM.'sitecore.php';
 
 // Wczytywanie g³ównej klasy
 require_once DIR_CLASS.'Themes.php';
 
 // Tworzenie emulatora statycznoœci klasy OPT
-TPL::build($_theme = new Theme($_sett, $_user));
+TPL::build($_theme = new Theme($_sett, $_system, $_user, $_pdo, $_request, $_route, $_head));
 
 $_tpl = new SiteAjax;
 

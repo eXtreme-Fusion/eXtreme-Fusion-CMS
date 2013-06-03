@@ -13,7 +13,7 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
+|
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------+
@@ -32,5 +32,13 @@
 | written permission from the original author(s).
 +--------------------------------------------------------*/
 
-// Wszystkie linki wychodz¹ce z strony w postaci komentarzy, postów, czatów bed¹ przechodzi³y przez ten plik w postaci redirect.php?url=http://asd.pl
-// Mo¿na bêdzie wykorzystaæ puŸniej do reklamy :) lub inforamcji czy jesteœ pewien, ¿e chcesz przejœæ w wskazany link. 
+// Wszystkie linki wychodzÄ…ce ze strony w postaci komentarzy, postÃ³w, czatÃ³w bÄ™dÄ… przechodziÅ‚y przez ten plik w postaci redirect.php?url=http://asd.pl
+// MoÅ¼na bÄ™dzie wykorzystaÄ‡ pÃ³Åºniej do reklamy :) lub inforamcji czy jesteÅ› pewien, Å¼e chcesz przejÅ›Ä‡ pod wskazany adres.
+
+$_tpl->assign('url', base64_decode(urldecode($_route->getAction())));
+
+if (filter_var(base64_decode(urldecode($_route->getAction())), FILTER_VALIDATE_URL))
+{
+	$_tpl->assign('url_valid', TRUE);
+	header('Refresh: 15; url='.base64_decode(urldecode($_route->getAction())));
+}

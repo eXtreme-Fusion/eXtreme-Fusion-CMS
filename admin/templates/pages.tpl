@@ -53,6 +53,7 @@
 				<p class="bold">Domyślne ustawienia dla materiałów przypisywanych do tego typu treści:</p>
 				<small>(każdy wpis będzie mógł posiadać indywidualne ustawienia, niezależne od tych poniżej)</small>
 			</div>
+			<div style="display:none">
 			<div class="tbl2">
 				<div class="grid_6 formLabel">{i18n('Wyświetlać materiał jako news?')}<small>Zaznaczenie tej opcji spowoduje, że materiał będzie wyświetlany razem z newsami. Jest to dobry sposób na wyróżnienie najciekawszych wpisów.</small></div>
 				<div class="grid_1 formField"><label><input type="radio" name="for_news_page" value="1"{if $for_news_page == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
@@ -62,7 +63,7 @@
 				<div class="grid_6 formLabel">{i18n('Pozwolić użytkownikom na modyfikacje własnych materiałów?')}<small>Dotyczy jedynie materiałów nadesłanych przez konkretnego użytkownika oraz tych, których stał się autorem. Publikacja zmodyfikowanej wersji materiału odbywa się dopiero po akceptacji Administratora.</small></div>
 				<div class="grid_1 formField"><label><input type="radio" name="user_allow_edit_own" value="1"{if $user_allow_edit_own == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
 				<div class="grid_5 formField"><label><input type="radio" name="user_allow_edit_own" value="0"{if $user_allow_edit_own == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
-			</div>
+			</div></div>
 			<div class="tbl2">
 				<div class="grid_6 formLabel">
 					<label for="InsightGroups">{i18n('Którym grupom udzielić dostępu do materiału:')}</label>
@@ -77,6 +78,7 @@
 					</select>
 				</div>
 			</div>
+			<div style="display:none">
 			<div class="tbl1">
 				<div class="grid_6 formLabel">
 					<label for="EditingGroups">{i18n('Którym grupom użytkowników umożliwić modyfikację materiału?')}</label>
@@ -174,6 +176,7 @@
 				<div class="grid_6 formLabel">{i18n('Pozwolić na komentarze?')}</div>
 				<div class="grid_1 formField"><label><input type="radio" name="user_allow_comments" value="1"{if $user_allow_comments == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
 				<div class="grid_5 formField"><label><input type="radio" name="user_allow_comments" value="0"{if $user_allow_comments == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
+			</div>
 			</div>
 			<div class="tbl Buttons">
 				<div class="grid_2 center button-l">
@@ -327,12 +330,14 @@
 					<div class="grid_6 formLabel"><label for="Description">{i18n('Description:')}</label></div>
 					<div class="grid_4 formField"><textarea name="description" id="Description">{$description}</textarea></div>
 				</div>
+				<div style="display:none">
 				<div class="tbl2">
 					<div class="grid_6 formLabel">
 						<label for="URL">{i18n('Adres do podstrony:')}</label>
 						<small>Przykładowy adres: {$ADDR_SITE}nowy_system_cms.html</small>
 					</div>
-					<div class="grid_4 formField"><input type="text" name="url" value="{if $url}{$url}{else}{$ADDR_SITE}{/if}" id="URL" class="num_50" maxlength="50" /></div>
+					<div class="grid_4 formField"><input type="text" name="url" value="{if $url}{$url}{else}{$ADDR_SITE}{/if}" id="URL" class="num_500" maxlength="500" /></div>
+				</div>
 				</div>
 				<div class="tbl1">
 					<div class="grid_6 formLabel">
@@ -477,7 +482,7 @@
 		{/if}
 	{/if}
 {else}
-	<p class="red center">Moduł Stron treści nie został jeszcze skończony. Niektóre funkcje jak miniaturki czy zaawansowane ustawienia nie zostały jeszcze wdrożone poza Panelem admina. Mimo tego, publikacja treści w podstawowej formie powinna działać.</p>
+	<p class="red center" style="display:none">Moduł Stron treści nie został jeszcze skończony. Niektóre funkcje jak miniaturki czy zaawansowane ustawienia nie zostały jeszcze wdrożone poza Panelem admina. Mimo tego, publikacja treści w podstawowej formie powinna działać.</p>
 	<div>
 		<ul class="margin-l-10 margin-t-10">
 			<li><a href="{$FILE_SELF}?page=entries" title="Zarządzanie wpisami">Zarządzanie wpisami</li>

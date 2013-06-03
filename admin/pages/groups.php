@@ -239,7 +239,9 @@ try
 				throw new userException(__('You can not delete system group.'));
 
 			$count = $_pdo->exec('DELETE FROM [groups] WHERE `id` = '.$_request->get('id')->show());
-
+			
+			$_pdo->exec('UPDATE [users] SET `role` = 2 WHERE `role` = '.$_request->get('id')->show());
+			
 			$_system->clearCache();
 
 			if ($count)

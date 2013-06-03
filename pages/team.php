@@ -103,99 +103,58 @@ if ($_pdo->getRowsCount($query))
 
 	$_tpl->assign('admin', $data);
 }
-/* Do poprawki ~Rafik
+
 // Other groups
-$groups = '';
-$query = $_pdo->getData('SELECT * FROM [groups] WHERE `id` != 1 AND `team` = 1');
-if($query !== NULL)
+
+$groups = $_pdo->getData('SELECT * FROM [groups] WHERE `id` != 1 AND `team` = 1');
+
+// todo: dodać cache, przerobić w bazie roles na po przecinku zamiast serialize, wtedy nie trzeba bedzie pobierać tylu rekordów
+$users = $_pdo->getData('SELECT `id`, `roles`, `role`, `joined`, `avatar`, `lastvisit`, `username` FROM [users] WHERE `status` = 0');
+
+$roles = array();
+foreach($users as $user)
 {
-	foreach($query as $data)
+	foreach(unserialize($user['roles']) as $role)
 	{
-		$groups[] = $data;
+		$roles[$role][] = $user;
 	}
 }
 
-$users = '';
-$query = $_pdo->getData('SELECT * FROM [users] WHERE `id` != 1 AND `role` > 3');
-if($query !== NULL)
+if($groups)
 {
-	foreach($query as $data)
-	{
-		$users[] = $data;
-	}
-}
-
-
-if($groups != NULL)
-{
-	$i = 0;
-
 	$all_users = array();
 
 	foreach($groups as $key => $group)
 	{
-		if($users != NULL)
+		if (isset($roles[$group['id']]))
 		{
-			foreach($users as $user)
+			foreach($roles[$group['id']] as $user)
 			{
-				if ($user['role'] === $group['id'])
+				if(time() <= $user['lastvisit']+300)
 				{
-					if(time() <= $user['lastvisit']+300)
-					{
-						$last_visit = 1;
-					}
-					else
-					{
-						$last_visit = HELP::showDate('shortdate', $user['lastvisit']);
-					}
-
-					$all_users[$key][$i] = array(
-						'id' => $user['id'],
-						'username' => $_user->getUsername($user['id']),
-						'role' => $_user->getRoleName($user['role']),
-						'roles' => implode(', ', $_user->getUserRolesTitle($row['id'], 3)),
-						'avatar' => $user['avatar'],
-						'joined' => HELP::showDate('shortdate', $user['joined']),
-						'last_visit' => $last_visit,
-						'link' => HELP::profileLink($user['username'], $user['id']),
-						'last_visit_time' => ($row['lastvisit'] != 0 ? HELP::showDate('shortdate', $row['lastvisit']) : __('Nie był na stronie')),
-						'is_online' => inArray($row['id'], $_user->getOnline(), 'id') ? 1 : 0
-					);
-					$i++;
+					$last_visit = 1;
 				}
+				else
+				{
+					$last_visit = HELP::showDate('shortdate', $user['lastvisit']);
+				}
+
+				$all_users[$key][] = array(
+					'id' => $user['id'],
+					'username' => $_user->getUsername($user['id']),
+					'role' => $_user->getRoleName($user['role']),
+					'roles' => implode(', ', $_user->getUserRolesTitle($user['id'], 3)),
+					'avatar' => $user['avatar'],
+					'joined' => HELP::showDate('shortdate', $user['joined']),
+					'last_visit' => $last_visit,
+					'link' => HELP::profileLink($user['username'], $user['id']),
+					'last_visit_time' => ($user['lastvisit'] != 0 ? HELP::showDate('shortdate', $user['lastvisit']) : __('Nie był na stronie')),
+					'is_online' => inArray($user['id'], $_user->getOnline(), 'id') ? 1 : 0
+				);
 			}
-		}
-		else
-		{
-			$_tpl->printMessage('info', __('There are no users who belongs to this group.'));
 		}
 	}
 
 	$_tpl->assign('users', $all_users);
-
-$_tpl->assign('groups', $groups);
+	$_tpl->assign('groups', $groups);
 }
-
-
-	#************
-/*print_r($cos); exit;
-$query = $_pdo->getData('SELECT * FROM [groups] WHERE `id` != 1 AND `team` = 1');
-
-$i = 0; $group = array();
-foreach($query as $group)
-{
-	$groups[] = array(
-		'Title' => $group['title']
-	);
-
-	$query2 = $_pdo->getData('SELECT * FROM [users] WHERE `role` = '.$group['id']);
-	foreach($query2 as $user)
-	{
-		$users[] = $user;
-	}
-	$_tpl->assign('Users', $users);
-
-	$i++;
-}
-
-$_tpl->assign('Groups', $groups);*/

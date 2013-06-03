@@ -1,13 +1,17 @@
 {if $error == '401'}
-	<h1 align="center">Error 401</h1></td>
-	<p align="center"><b>Brak autoryzacji</b></td>
+	{panel=i18n('Error 401')}
+		<p class="center error bold">Brak autoryzacji.</p>
+	{/panel}
 {elseif $error == '404'}
-	<h1 align="center">Error 404</h1></td>
-	<p align="center"><b>Nie znaleziono strony o podanym adresie</b></td>
+	{panel=i18n('Error 404')}
+		<p class="center error bold">Nie znaleziono strony o podanym adresie.</p>
+	{/panel}	
 {elseif $error == '403'}
-	<h1 align="center">Error 403</h1></td>
-	<p align="center"><b>Brak dostępu do tej części strony</b></td>
+	{panel=i18n('Error 403')}
+		<p class="center error bold">Brak dostępu do tej części strony.</p>
+	{/panel}
 {elseif $error == '500'}
-	<h1 align="center">Error 500</h1></td>
-	<p align="center"><b>Bł±d Wewnętrzny Serwera.<br>Za utrudnienia Przepraszamy</b></td>
+	{panel=i18n('Error 500')}
+		<p class="center error bold">Błąd Wewnętrzny Serwera.<br>Za utrudnienia Przepraszamy.</p>
+	{/panel}
 {/if}

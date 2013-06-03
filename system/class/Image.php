@@ -95,16 +95,25 @@ class Image
 		}
 	}
 	
-	public static function delFile($file)
+	public static function delFile($file, $exception = TRUE)
 	{
 		
 		if (file_exists($file))
 		{
 			unlink($file);
+			if ( ! $exception) 
+			{
+				return TRUE;
+			}
 		}
 		else
 		{
-			throw new userException('Plik o podanej nazwie('.$file.') nie istnieje.');
+			if ($exception)
+			{
+				throw new userException('Plik o podanej nazwie('.$file.') nie istnieje.');
+			}
+			
+			return FALSE;
 		}
 	}
 

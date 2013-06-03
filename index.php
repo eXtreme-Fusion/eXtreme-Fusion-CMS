@@ -51,14 +51,14 @@ try
 	// Routing class
 	$_route = new Router($_request, $_sett, $_system->rewriteAvailable(), 'page', $_system->pathInfoExists(), $_sett->get('opening_page'), TRUE, TRUE, FALSE, 'admin');
 
-	if ($_route->getByID(1) === 'ef5')
+	if ($_request->get('ef5')->show())
 	{
-		exit('eXtreme-Fusion 5 Beta 6');
+		exit('eXtreme-Fusion '.$_sett->get('version'));
 	}
-
+	
 	if ($_user->bannedByIP())
 	{
-		$_route->trace(array('controller' => 'error', 'action' => 404, 'params' => NULL)); exit('Banned...');
+		$_route->trace(array('controller' => 'error', 'action' => 403, 'params' => NULL));
 	}
 	
 	StaticContainer::register('route', $_route);
@@ -98,21 +98,23 @@ try
 
 	//$_tpl->registerFunction('url', 'Url');
 
+	// Nie usuwać
 	/**
 	 * Pobieranie linków definiowanych przez administratora
 	 */
-	$query = $_pdo->getData('SELECT * FROM [links] WHERE `link`=:link',
+	/*$query = $_pdo->getData('SELECT * FROM [links] WHERE `link`=:link',
 		array(':link', $_route->getFileName(), PDO::PARAM_STR)
 	);
 
-	if ($_pdo->getRowsCount($query))
+	if ($query)
 	{
 		foreach($query as $row)
 		{
 			// Ustawia administracyjną ścieżkę odczytu pliku
 			$_route->setAdminFile($row['file']);
 		}
-	}
+	}*/
+	
 
 	// Scieżki, w których jest wyszukiwany plik wg kolejności przeszukiwania
 	$folders = array(
@@ -125,24 +127,28 @@ try
 
 	$_route->setFolders($folders);
 
-	/**
-	 * Ustawia ostateczną sciężkę odczytu pliku
-	 * W przypadku gdy wykonała się metoda setAdminFile(), sprawdzi czy plik istnieje.
-	 * Jeśli nie, wyszuka go w lokalizacjach podanych parametrem
-	 */
-	$_route->setExitFile();
-
 	if ( ! $_route->getExitFile())
 	{
-		$row = $_pdo->getRow('SELECT full_path FROM [links] WHERE short_path= :short_path ORDER BY `datestamp` DESC LIMIT 1',
-			array(':short_path', $_route->getRequest(), PDO::PARAM_STR)
+		$row = $_pdo->getRow('SELECT full_path FROM [links] WHERE short_path =:short_path ORDER BY `datestamp` DESC LIMIT 1',
+			array(':short_path', substr(PATH_INFO, 0, 1) === '/' ? substr(PATH_INFO, 1) : PATH_INFO, PDO::PARAM_STR)
 		);
-
+		
 		if ($row)
 		{
 			$_route->setNewConfig($row['full_path']);
 		}
+		else
+		{
+			/**
+			 * Ustawia ostateczną sciężkę odczytu pliku
+			 * W przypadku gdy wykonała się metoda setAdminFile(), sprawdzi czy plik istnieje.
+			 * Jeśli nie, wyszuka go w lokalizacjach podanych parametrem
+			 */
+			$_route->setExitFile();
+		}
 	}
+	
+	
 	// Tworzenie emulatora statyczności klasy OPT
 	TPL::build($_theme = new Theme($_sett, $_system, $_user, $_pdo, $_request, $_route, $_head, $_route->getTplFileName()));
 
@@ -289,18 +295,21 @@ try
 	defined('CONTENT') || define('CONTENT', ob_get_contents());
 	ob_end_clean();
 
-	render_page(FALSE);
-
+	if ($_route->getFileName() === 'maintenance')
+	{
+		// Renderowanie strony bez menu, paneli bocznych i stopki
+		render_page(TRUE, FALSE, FALSE, FALSE, FALSE);
+	}
+	else
+	{
+		render_page();
+	}
+	
 	// Załączanie szablonu zamykającego stronę
 	$_tpl->template('pre'.DS.'footer'.$_route->getExt('tpl'));
 
 	// Usuwanie niepotrzebnych wpisów z tabeli użytkowników online.
 	$_pdo->exec('DELETE FROM [users_online] WHERE `last_activity` < '.(time()-60*60*2));
-
-	/*
-	$_tree = new Tree($_pdo, 'drzewko');
-	$_tree->add(0, 1);
-	*/
 
 	session_write_close();
 }

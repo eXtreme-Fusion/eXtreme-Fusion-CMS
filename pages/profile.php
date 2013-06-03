@@ -153,7 +153,7 @@ if ($row)
 		'email' => HELP::hide_email($row['email']),
 		'joined' => HELP::showDate('shortdate', $row['joined']),
 		'joined_datetime' => date('c', $row['joined']),
-		'last_visit_time' => $row['lastvisit'] ? HELP::showDate('longdate', $row['lastvisit']) : NULL,
+		'last_visit_time' => $row['lastvisit'] ? HELP::showDate('longdate', $row['lastvisit']) : __('Nie był na stronie'),
 		'is_online' => inArray($row['id'], $_user->getOnline(), 'id') ? 1 : 0,
 		'time' => time(),
 		'news' => $news,

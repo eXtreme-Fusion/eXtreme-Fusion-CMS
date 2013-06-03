@@ -87,7 +87,7 @@ class Router
 
 		$this->_url = new URL($this->_ext['url'], $this->_sep, $this->_param_sep, $this->_rewrite, $this->_path_info_exists);
 		$this->_ext_allowed = $this->_url->extAllowed();
-
+		
 		/**
 		 * Metoda zwróci FALSE, jeśli żądanie nie spełnia warunku dotyczącego rozszerzenia.
 		 * Wyświetli się błąd 404, więc wykonanie poniższych metod jest niepotrzebne.
@@ -122,11 +122,12 @@ class Router
 				$to_replace = array($dirname, $this->_sep.'index.php');
 			}
 
-			define('PATH_INFO', str_replace($to_replace, '', $_SERVER['REQUEST_URI']));
+			
+			defined('PATH_INFO') || define('PATH_INFO', str_replace($to_replace, '', $_SERVER['REQUEST_URI']));
 		}
 		else
 		{
-			define('PATH_INFO', $this->_request->get('q', '')->show());
+			defined('PATH_INFO') || define('PATH_INFO', $this->_request->get('q', '')->show());
 		}
 	}
 
@@ -395,16 +396,18 @@ class Router
 		$this->_folders = $folders;
 	}
 
-	protected function setPath()
+	protected function setPath($path = NULL)
 	{
-		$path = PATH_INFO;
+		if ($path === NULL)
+		{
+			$path = PATH_INFO;
+		}
 
 		if ($path && $path !== '/')
 		{
-			$path_len = strlen($path);
 			if (substr($path, 0, 1) === '/')
 			{
-				$path = substr($path, 1, $path_len);
+				$path = substr($path, 1);
 			}
 
 			if ($this->_ext_allowed)

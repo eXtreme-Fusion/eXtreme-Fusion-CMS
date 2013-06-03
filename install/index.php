@@ -36,7 +36,7 @@ error_reporting(-1);
 try
 {
 	// Instalowana wersja systemu - wyświetlana w nagłówku nawigacji
-	define('VERSION', '5.0.0');
+	define('VERSION', '5.0.2-unstable');
 
 	$HostURL = explode('install', $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']);
 
@@ -347,7 +347,7 @@ try
 			//DIR_SITE.'upload'.DS => FALSE,
 			//DIR_SITE.'upload'.DS.'archives'.DS => FALSE,
 			//DIR_SITE.'upload'.DS.'documents'.DS => FALSE,
-			//DIR_SITE.'upload'.DS.'images'.DS => FALSE,
+			DIR_SITE.'upload'.DS.'images'.DS => FALSE,
 			//DIR_SITE.'upload'.DS.'movies'.DS => FALSE,
 			DIR_SITE.'system'.DS.'opt'.DS.'plugins'.DS => FALSE,
 			DIR_SITE.'templates'.DS.'images'.DS => FALSE,

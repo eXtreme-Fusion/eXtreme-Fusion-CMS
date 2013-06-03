@@ -39,6 +39,7 @@ if ($_route->getAction() === 'logout')
 	HELP::redirect(ADDR_SITE);
 }
 
+$_head->set('<script src="'.ADDR_JS.'account.js"></script>');
 $_locale->load('account');
 
 $status = $_route->getByID(1);
@@ -92,7 +93,8 @@ elseif (isset($status) && $status == 'error')
 	}
 }
 
-if ($_request->post('save')->show() && $_request->post('email')->show())
+// Zapis danych
+if ($_request->postIsset('email'))
 {
 	if ($_user->checkOldPass($_user->get('id'), $_request->post('old_password')->show()))
 	{
@@ -143,16 +145,13 @@ if ($_request->post('save')->show() && $_request->post('email')->show())
 				HELP::redirect($_route->path(array('controller' => 'account', 'action' => 'error', '4')));
 			}
 
-			if ($_user->changePass($_user->get('id'), $_request->post('password1')->show()))
-			{
-				//deprecated $_user->updateLoginSession($_request->post('password1')->show());
-			}
-			else
+			if ( ! $_user->changePass($_user->get('id'), $_request->post('password1')->show()))
 			{
 				HELP::redirect($_route->path(array('controller' => 'account', 'action' => 'error', '5')));
 			}
 		}
 
+		// Aktualizacja avatara
 		if ($_request->upload('avatar'))
 		{
 			if ( ! $_user->saveNewAvatar($_user->get('id'), $_request->files('avatar')->show()))
@@ -162,16 +161,20 @@ if ($_request->post('save')->show() && $_request->post('email')->show())
 		}
 
 		$fields  = $_pdo->getData('SELECT * FROM [user_fields] WHERE `edit` = 0');
-		$_fields = array();
 
-		if ($_pdo->getRowsCount($fields))
+		$_fields = array();
+		if ($fields)
 		{
+			$data = $_request->post('data')->show();
 			foreach($fields as $field)
 			{
-				$key   = $field['index'];
-				$value = HELP::wordsProtect($_request->post($key)->filters('trim', 'strip'));
+				if (isset($data[$field['index']]))
+				{
+					$value = new Edit($data[$field['index']]);
+					$value = HELP::wordsProtect($value->filters('trim', 'strip'));
 
-				$_fields[$key] = $value;
+					$_fields[$field['index']] = $value;
+				}
 			}
 		}
 
@@ -210,81 +213,13 @@ $_tpl->assignGroup(array(
 	'avatar_width' => $_sett->get('avatar_width')
 ));
 
-// Pobieranie kategorii
-$query = $_pdo->getData('SELECT * FROM [user_field_cats] ORDER BY `order` ASC');
-$cats  = array();
+// Pobieranie dodatkowych pól
+$data = $_user->getCustomData($_user->get('id'), array(), 0);
 
-// Przepisywanie pobranych danych na zwykłą tablicę
-foreach($query as $data)
-{
-	$cats[] = $data;
-}
+$_tpl->assignGroup(array(
+	'bbcodes' => $_sbb->bbcodes(),
+	'smileys' => $_sbb->smileys()
+));
 
-// Pobieranie pól
-$query = $_pdo->getData('SELECT * FROM [user_fields] WHERE `edit` = 0');
-
-// Przepisywanie pobranych pól na zwykłą tablicę
-foreach($query as $data)
-{
-	$fields[] = $data;
-}
-
-// Pobieranie wszystkich dodatkowych pól uzytkowników
-$data = $_pdo->getRow('SELECT * FROM [users_data] WHERE `user_id` = '.$_user->get('id').' LIMIT 1');
-
-// Przepisywanie pobranych pól na zwykłą tablicę
-$i = 0;
-
-// Segregacja danych
-if (isset($fields))
-{
-	$_new_fields = array();
-
-	foreach($cats as $key => &$cat)
-	{
-		$has_data = FALSE;
-		foreach($fields as $field)
-		{
-			if ($field['cat'] === $cat['id'])
-			{
-				$option = array();
-				if ($field['type'] == 3)
-				{
-					$n = 1;
-					foreach(unserialize($field['option']) as $val)
-					{
-						$option[$n] = $val;
-						$n++;
-					}
-				}
-
-				$new_fields[$key][$i] = array(
-					'name' => $field['name'],
-					'index' => $field['index'],
-					'type' => $field['type'],
-					'value' => ($data[$field['index']] ? $data[$field['index']] : NULL),
-					'option' => $_tpl->createSelectOpts($option, $data[$field['index']], FALSE, FALSE),
-					'label' => HELP::stripfilename($field['name']),
-					'bbcode' => $_sbb->bbcodes(),
-					'smiley' => $_sbb->smileys()
-				);
-
-				$has_data = TRUE;
-
-				$i++;
-			}
-		}
-
-		if ($has_data)
-		{
-			$cat['has_fields'] = '1';
-		}
-		else
-		{
-			$cat['has_fields'] = '0';
-		}
-	}
-	$_tpl->assign('fields', $new_fields);
-}
-
-$_tpl->assign('cats', $cats);
+$_tpl->assign('fields', $data['fields']);
+$_tpl->assign('cats', $data['categories']);

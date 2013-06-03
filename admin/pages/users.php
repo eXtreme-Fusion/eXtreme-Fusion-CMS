@@ -142,7 +142,6 @@ try
 								}
 								else
 								{
-									// TODO: The username
 									$_tpl->printMessage('error', __('Error! The username is already in use.'));
 									$error = TRUE;
 								}
@@ -197,8 +196,6 @@ try
 							}
 						}
 
-						
-							
 						// ! $error są rodzielone, dlatego by w przypadku błędu
 						// przy aktualizacji zdjęcia profilowego, nie wykonywać dalszego kodu.
 						if (! $error)
@@ -259,7 +256,7 @@ try
 
 							$_tpl->assign('all_groups', $_tpl->getMultiSelect($_user->getViewGroups(), $_request->post('roles')->show()), FALSE);
 							$_tpl->assign('insight_groups', $_tpl->createSelectOpts($_user->getViewGroups(), intval($_request->post('role')->show()), TRUE, FALSE), TRUE);
-						
+
 							// Dodatkowe pola
 							$data = $_user->getCustomData($_request->get('user')->show(), $_request->post('data')->show());
 						}
@@ -274,8 +271,6 @@ try
 							'hide_email' => $data['hide_email'],
 							'theme' => $data['theme'],
 							'avatar' => $data['avatar'],
-							//'roles' => unserialize($data['roles']),
-							//'role' => $data['role']
 						);
 
 						$_tpl->assign('all_groups', $_tpl->getMultiSelect($_user->getViewGroups(), $_user->convertRoles($data['roles'])), FALSE);
@@ -286,7 +281,7 @@ try
 							'theme_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'themes', array('templates'), TRUE, 'folders'), $data['theme']),
 							'locale_set' => $_tpl->createSelectOpts($_files->createFileList(DIR_SITE.'locale', array(), TRUE, 'folders'), $_user->get('lang')),
 						));
-						
+
 						// Dodatkowe pola
 						$data = $_user->getCustomData($_request->get('user')->show());
 					}
@@ -298,7 +293,7 @@ try
 					));
 					$_tpl->assign('fields', $data['fields']);
 					$_tpl->assign('cats', $data['categories']);
-					
+
 				}
 				elseif ($_request->get('suspend')->show() === '')
 				{
@@ -516,7 +511,7 @@ try
 					$data = $_user->getCustomData($_request->get('user')->show());
 					$_tpl->assign('fields', $data['fields']);
 					$_tpl->assign('cats', $data['categories']);
-						
+
 					$_tpl->assignGroup(array(
 						'id' => $_user->get('id'),
 						'account' => $users,
@@ -524,7 +519,7 @@ try
 						'action' => $action
 					));
 				}
-				
+
 				$_tpl->assignGroup(array(
 					'id' => $_user->get('id'),
 					'action' => $action
@@ -784,10 +779,10 @@ try
 					'active' => $_request->post('active')->show()
 				));
 
-				
+
 				$_tpl->assign('all_groups', $_tpl->getMultiSelect($_user->getViewGroups(), $_request->post('roles')->show()), FALSE);
 				$_tpl->assign('insight_groups', $_tpl->createSelectOpts($_user->getViewGroups(), intval($_request->post('role')->show()), TRUE, TRUE), TRUE);
-			
+
 				// Dodatkowe pola
 				$data = $_user->getCustomData(NULL, $_request->post('data')->show());
 			}
@@ -803,7 +798,7 @@ try
 
 		$_tpl->assign('fields', $data['fields']);
 		$_tpl->assign('cats', $data['categories']);
-		
+
 		if ($_sett->get('email_verification') === '1' || $_sett->get('admin_activation') === '1')
 		{
 			$_tpl->assign('active', TRUE);

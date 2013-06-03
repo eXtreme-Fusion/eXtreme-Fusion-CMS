@@ -1,5 +1,3 @@
-/.htaccess
-/upload/*
 /config.php
 /system/opt/plugins/plugins.php
 /system/opt/plugins/compile.php
