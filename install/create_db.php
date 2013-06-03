@@ -332,7 +332,7 @@ if ( ! $result) $fail = TRUE;
 $_pdo->query("DROP TABLE IF EXISTS ".$db_prefix."statistics", NULL, FALSE);
 $result = $_pdo->query("CREATE TABLE ".$db_prefix."statistics (
 	`id` MEDIUMINT UNSIGNED NOT NULL auto_increment,
-	`ip` VARCHAR(20) NOT NULL DEFAULT '0.0.0.0',
+	`ip` VARCHAR(45) NOT NULL DEFAULT '0.0.0.0',
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `ip` (`ip`)
 ) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";", NULL, FALSE);
