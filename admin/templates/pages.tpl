@@ -33,15 +33,15 @@
 +--------------------------------------------------------*/
 *}
 
-<h3>{$SystemVersion} - {i18n('Strony treści')}</h3>
+<h3>{$SystemVersion} - {i18n('Content Pages')}</h3>
 {if $message}<div class="{$class}">{$message}</div>{/if}
 
 {if $page == 'types'}
 	{if $action == 'add' || $action == 'edit'}
 		<div class="tbl2 text-padding-h3">
-			<span class="bold">Jesteś tutaj: </span>
-			<a href="{$FILE_SELF}">Menu główne</a> &raquo;
-			<a href="{$FILE_SELF}?page=types">Typy materiałów</a> &raquo; Tworzenie nowego typu treści
+			<span class="bold">{i18n('You are here:')} </span>
+			<a href="{$FILE_SELF}">{i18n('Main menu')}</a> &raquo;
+			<a href="{$FILE_SELF}?page=types">{i18n('Type of contents')}</a> &raquo; {i18n('Creating a new type of content')}
 		</div>
 
 		<form action="{$URL_REQUEST}" method="post" id="This">
@@ -50,25 +50,25 @@
 				<div class="grid_4 formField"><input type="text" name="name" value="{$name}" id="Name" class="num_40" maxlength="40" /></div>
 			</div>
 			<div class="center text-padding">
-				<p class="bold">Domyślne ustawienia dla materiałów przypisywanych do tego typu treści:</p>
-				<small>(każdy wpis będzie mógł posiadać indywidualne ustawienia, niezależne od tych poniżej)</small>
+				<p class="bold">{i18n('Default settings for material set to this type:')}</p>
+				<small>{i18n('(each entry can have individual settings, independent of those below)')}</small>
 			</div>
 			<div style="display:none">
 			<div class="tbl2">
-				<div class="grid_6 formLabel">{i18n('Wyświetlać materiał jako news?')}<small>Zaznaczenie tej opcji spowoduje, że materiał będzie wyświetlany razem z newsami. Jest to dobry sposób na wyróżnienie najciekawszych wpisów.</small></div>
+				<div class="grid_6 formLabel">{i18n('Display material as a news:')}<small>{i18n('If you select this option, the material will be displayed with the news. This is a good way to differentiate the most interesting entries.')}</small></div>
 				<div class="grid_1 formField"><label><input type="radio" name="for_news_page" value="1"{if $for_news_page == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
 				<div class="grid_5 formField"><label><input type="radio" name="for_news_page" value="0"{if $for_news_page == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
 			</div>
 			<div class="tbl1">
-				<div class="grid_6 formLabel">{i18n('Pozwolić użytkownikom na modyfikacje własnych materiałów?')}<small>Dotyczy jedynie materiałów nadesłanych przez konkretnego użytkownika oraz tych, których stał się autorem. Publikacja zmodyfikowanej wersji materiału odbywa się dopiero po akceptacji Administratora.</small></div>
+				<div class="grid_6 formLabel">{i18n('Allow users to modify their own entries:')}<small>{i18n('Only applies to materials sent by a particular user and those which became the author. Publication of the modified version of the material takes place only after the approval of the Administrator.')}</small></div>
 				<div class="grid_1 formField"><label><input type="radio" name="user_allow_edit_own" value="1"{if $user_allow_edit_own == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
 				<div class="grid_5 formField"><label><input type="radio" name="user_allow_edit_own" value="0"{if $user_allow_edit_own == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
 			</div></div>
 			<div class="tbl2">
 				<div class="grid_6 formLabel">
-					<label for="InsightGroups">{i18n('Którym grupom udzielić dostępu do materiału:')}</label>
-					<small>Przytrzymaj klawiasz CTRL przy zaznaczaniu, aby wybrać kilka opcji.</small>
-					<small>Dla braku wyboru, materiał nie będzie widoczny poza Panelem Admina.</small>
+					<label for="InsightGroups">{i18n('What groups can have access to the material:')}</label>
+					<small>{i18n('Hold down CTRL to select a few options.')}</small>
+					<small>{i18n('In case of no selection the material will not be visible outside the Admin Panel.')}</small>
 				</div>
 				<div class="grid_4 formField">
 					<select name="insight_groups[]" multiple id="InsightGroups" class="select-multi" size="5" >
@@ -81,8 +81,8 @@
 			<div style="display:none">
 			<div class="tbl1">
 				<div class="grid_6 formLabel">
-					<label for="EditingGroups">{i18n('Którym grupom użytkowników umożliwić modyfikację materiału?')}</label>
-					<small>Przytrzymaj klawiasz CTRL przy zaznaczaniu, aby wybrać kilka opcji.</small>
+					<label for="EditingGroups">{i18n('What groups can modify the material:')}</label>
+					<small>{i18n('Hold down CTRL to select a few options.')}</small>
 				</div>
 				<div class="grid_4 formField">
 					<select name="editing_groups[]" multiple id="EditingGroups" class="select-multi" size="5" >
@@ -91,9 +91,9 @@
 						{/section}
 					</select>
 				</div>
-				{*Widoczne tylko w przypadku zaznaczenua którejś pozycji na liscie wyżej *}
+				{i18n('{* Visible only in case of selecting some option on the list above *}')}
 				<div id="wysiwyg" class="hidden">
-					<div class="grid_6 formLabel">{i18n('Umożliwić użytkowników korzystanie z graficznego edytora treści?')}<small>Zaznaczenie tej opcji może mieć znaczny wpływ na wygląd materiałów nadsyłanych lub modyfikowanych przez użytkowników. Będą oni mogli korzystać z kodu HTML przy wizualnym opracowywaniu swoich prac.</small></div>
+					<div class="grid_6 formLabel">{i18n('Allow users to use the graphical content editor:')}<small>{i18n('Selecting this option can have a significant impact on the appearance of materials sent in or modified by users. They will be able to use HTML on the visual development of their entries.')}</small></div>
 					<div class="grid_1 formField"><label><input type="radio" name="user_allow_use_wysiwyg" value="1"{if $user_allow_use_wysiwyg == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
 					<div class="grid_5 formField"><label><input type="radio" name="user_allow_use_wysiwyg" value="0"{if $user_allow_use_wysiwyg == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
 				</div>

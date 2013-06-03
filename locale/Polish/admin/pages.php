@@ -38,5 +38,5 @@ return array(
 	'Security Politics' => 'Polityka bezpieczeństwa',
 	'User Fields' => 'Pola profilu',
 	'User Field Categories' => 'Kategorie pól profilu',
-	'Pages' => 'Strony treści',
+	'Content Pages' => 'Strony treści',
 );

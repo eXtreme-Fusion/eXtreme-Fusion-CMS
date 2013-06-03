@@ -50,7 +50,7 @@ try
 	 * Załączam najpierw plik językowy, gdyż w klasie może wystąpić błąd.
 	 * Wtedy komunikat zostanie wyświetlony w odpowiednim języku.
 	 */
-	$_locale->load('pages');
+	$_locale->load('content_pages');
 
 	/** Załączam model-klasę do obsługi Stron **/
 	require DIR_CLASS.'Pages.php';
