@@ -23,7 +23,7 @@ if ($_user->isLoggedIn())
 $_locale->load('register');
 
 $theme = array(
-	'Title' => __('Register').' &raquo; '.$_sett->get('site_name'),
+	'Title' => __('Register').' » '.$_sett->get('site_name'),
 	'Keys' => 'Rejestracja, stwórz konto, uzyskaj dostęp',
 	'Desc' => 'Chcesz zarejestrować się na: '.$_sett->get('site_name').'? Możesz to zrobić już teraz.'
 );

@@ -95,7 +95,7 @@ jQuery(function() {
 });
 
 	// ============================
-	// PL: Funkcja pobieraj¹ca nazwe buttona i zmieniaj¹ca treœæ w textarea
+	// PL: Funkcja pobierajÄ…ca nazwe buttona i zmieniajÄ…ca treÅ›Ä‡ w textarea
 	// EN: Function grabbing button name and add text in textarea
 	// ============================
 

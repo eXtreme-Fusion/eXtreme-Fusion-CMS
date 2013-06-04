@@ -26,7 +26,7 @@ if ($row)
 	$_tpl->assign('iAdmin', $_user->iAdmin());
 	
 	$theme = array(
-		'Title' => __('Profil użytkownika - :Username', array(':Username' => $row['username'])).' &raquo; '.$_sett->get('site_name'),
+		'Title' => __('Profil użytkownika - :Username', array(':Username' => $row['username'])).' » '.$_sett->get('site_name'),
 		'Keys' => 'Profil użytkownika '.$row['username'].', konto '.$row['username'].', podgląd konta '.$row['username'].' ',
 		'Desc' => 'Odwiedź konto użytkownika '.$row['username'].', skontaktuj się z nim, sprawdź aktywność.'
 	);

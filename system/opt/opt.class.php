@@ -214,7 +214,7 @@
 				$this -> error(E_USER_ERROR, 'Prefix for compile file has been already changed.', OPT_E_PREFIX);
 			}
 		}
-		// Zmienia rozszerzenie uøywanych plikÛw szablonu
+		// Zmienia rozszerzenie u≈ºywanych plik√≥w szablonu
 		public function setFileExt($ext)
 		{
 			if (in_array($ext, array('.tpl', '.html', '.htm')))

@@ -36,7 +36,7 @@ $_head->set('<meta name="robots" content="noindex" />');
 if ($_user->isLoggedIn())
 {
 	$theme = array(
-		'Title' => 'Panel użytkownika - '.$_user->get('username').' &raquo; '.$_sett->get('site_name'),
+		'Title' => 'Panel użytkownika - '.$_user->get('username').' » '.$_sett->get('site_name'),
 		'Keys' => 'Wyloguj, edycja konta, prywatne wiadomości, konta użytkowników',
 		'Desc' => 'Łatwy dostęp do najpotrzebniejszych miejsc na stronie.'
 	);
@@ -72,7 +72,7 @@ if ($_user->isLoggedIn())
 else
 {
 	$theme = array(
-		'Title' => $_sett->get('site_name').' &raquo; Panel logowania',
+		'Title' => $_sett->get('site_name').' » Panel logowania',
 		'Keys' => 'Zaloguj się, logowanie, rejestracja',
 		'Desc' => 'Przez poniższy formularz możesz zalogować się do '.$_sett->get('site_name')
 	);

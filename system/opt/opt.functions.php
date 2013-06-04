@@ -105,11 +105,11 @@
 	} // end optPredefCycle();
 
 	/**
-	 * Dodaje predefiniowan¹ funkcje, która sprawdza czy wartoœæ
+	 * Dodaje predefiniowanÅº funkcje, ktÃ³ra sprawdza czy wartoÂ£Âµ
 	 * istnieje w tablicy.
 	 *
 	 * @param   optClass  klasa parsera OPT
-	 * @param   mixed     szukana wartoœæ
+	 * @param   mixed     szukana wartoÂ£Âµ
 	 * @param   array     przeszukiwana tablica
 	 * @return  boolean
 	 */
