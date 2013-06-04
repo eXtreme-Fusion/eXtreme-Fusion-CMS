@@ -91,7 +91,7 @@
 						{/section}
 					</select>
 				</div>
-				{*Widoczne tylko w przypadku zaznaczenua którejś pozycji na liscie wyżej *}
+				{* Visible only if you select any item on the list above *}
 				<div id="wysiwyg" class="hidden">
 					<div class="grid_6 formLabel">{i18n('Allow users to use the graphical content editor:')}<small>{i18n('Selecting this option can have a significant impact on the appearance of materials sent in or modified by users. They will be able to use HTML on the visual development of their entries.')}</small></div>
 					<div class="grid_1 formField"><label><input type="radio" name="user_allow_use_wysiwyg" value="1"{if $user_allow_use_wysiwyg == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
@@ -100,7 +100,7 @@
 			</div>
 			<div class="tbl2">
 				<div class="grid_6 formLabel">
-					<label for="SubmittingGroups">{i18n('What groups can send new materials:')}</label>
+					<label for="SubmittingGroups">{i18n('Which groups can send new materials:')}</label>
 					<small>{i18n('Hold down CTRL to select a few options.')}</small>
 					<small>{i18n('For each category, this setting can be set individually.')}</small>
 					<small>{i18n('Publication of submitted material requires Admin approval.')}</small>
