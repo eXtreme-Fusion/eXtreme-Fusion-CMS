@@ -16,7 +16,7 @@
 *********************************************************/
 
 $mod_info = array(
-	'title' => 'SFSProtection™',
+	'title' => 'SFSProtection&trade;',
 	'description' => 'Zabezpieczenie formularzy przed spamem',
 	'developer' => 'Rafał Krupiński',
 	'support' => 'http://rafik.eu/',
@@ -34,7 +34,7 @@ $admin_page[1] = array(
 
 $perm[1] = array(
 	'name' => 'admin',
-	'desc' => 'Zarządzanie modułem SFSProtection™'
+	'desc' => 'Zarządzanie modułem SFSProtection&trade;'
 );
 
 $new_table[1] = array(

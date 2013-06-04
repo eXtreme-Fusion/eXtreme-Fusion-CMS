@@ -63,7 +63,7 @@ class sfs_protection implements Security_Intf
 	public function getView()
 	{
 		$this->_tpl->assignGroup(array(
-			'message' => __('System rejestracji chroniony przez <a href="http://rafik.eu/">SFSProtection™</a>.'),
+			'message' => __('System rejestracji chroniony przez <a href="http://rafik.eu/">SFSProtection&trade;</a>.'),
 			'user_ip' => $_SERVER['REMOTE_ADDR'],
 			'answer' => $this->getUserAnswer()
 		));

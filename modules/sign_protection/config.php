@@ -16,7 +16,7 @@
 *********************************************************/
 
 $mod_info = array(
-	'title' => 'SignProtection™',
+	'title' => 'SignProtection&trade;',
 	'description' => 'Zabezpieczenie formularzy przed spamem',
 	'developer' => 'Clear-PHP',
 	'support' => 'http://clear-php.com/',
@@ -34,7 +34,7 @@ $admin_page[1] = array(
 
 $perm[1] = array(
 	'name' => 'admin',
-	'desc' => 'Zarządzanie modułem SignProtection™'
+	'desc' => 'Zarządzanie modułem SignProtection&trade;'
 );
 
 $new_table[1] = array(
