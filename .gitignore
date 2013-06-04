@@ -1,4 +1,4 @@
 /config.php
 /system/opt/plugins/plugins.php
 /system/opt/plugins/compile.php
-/nbproject/private/
+/nbproject/*

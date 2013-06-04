@@ -5,13 +5,13 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>Creating CKEditor Instances — CKEditor Sample</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Creating CKEditor Instances &mdash; CKEditor Sample</title>
+	<meta content="text/html; charset=utf-8" http-equiv="content-type"/>
 	<link href="../sample.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 	<h1 class="samples">
-		CKEditor Sample — Creating CKEditor Instances
+		CKEditor Sample &mdash; Creating CKEditor Instances
 	</h1>
 	<div class="description">
 	<p>
@@ -75,7 +75,7 @@ $CKEditor->editor("textarea_id", "This is some sample text");
 			CKEditor - The text editor for the Internet - <a class="samples" href="http://ckeditor.com/">http://ckeditor.com</a>
 		</p>
 		<p id="copy">
-			Copyright © 2003-2011, <a class="samples" href="http://cksource.com/">CKSource</a> - Frederico
+			Copyright &copy; 2003-2011, <a class="samples" href="http://cksource.com/">CKSource</a> - Frederico
 			Knabben. All rights reserved.
 		</p>
 	</div>
