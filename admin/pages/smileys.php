@@ -48,7 +48,7 @@ try
 
 	if ($_request->get(array('status', 'act'))->show())
 	{
-		// Wyœwietli komunikat
+		// WyÅ›wietli komunikat
 		$_tpl->getMessage($_request->get('status')->show(), $_request->get('act')->show(), 
 			array(
 				'add' => array(
