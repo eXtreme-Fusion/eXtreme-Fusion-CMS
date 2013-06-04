@@ -4,7 +4,7 @@
 
 	<form id="This" action="{$URL_REQUEST}" method="post">
 		<div class="tbl1">
-			<div class="formLabel sep_1 grid_2"><label for="name">{i18n('Identyfikator:')}</label></div>
+			<div class="formLabel sep_1 grid_2"><label for="name">{i18n('ID:')}</label></div>
 			<div class="formField grid_7"><input type="text" name="name" value="{$permission.name}" id="name"></div>
 		</div>
 		<div class="tbl2">

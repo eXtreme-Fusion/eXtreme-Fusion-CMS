@@ -41,7 +41,7 @@
 		<div class="center tbl Buttons">
 			<div class="grid_2 center button-l">
 				{if $page === 'add'}
-					<span class="Cancels"><strong>{i18n('Create account')}<img src="{$ADDR_ADMIN_ICONS}pixel/plus.png" alt="" /></strong></span>
+					<span class="Cancels"><strong>{i18n('Create account')} <img src="{$ADDR_ADMIN_ICONS}pixel/plus.png" alt="" /></strong></span>
 				{else}
 					<span><a href="{$FILE_SELF}?page=add"><strong>{i18n('Create account')}<img src="{$ADDR_ADMIN_ICONS}pixel/plus.png" alt="" /></strong></a></span>
 				{/if}
@@ -79,7 +79,7 @@
 				<div class="center tbl Buttons">
 					<div class="grid_2 center button-l">
 					{if $page === 'users' && $status === 'active'}
-						<span class="Cancels"><strong>{i18n('Aktywne')}<img src="{$ADDR_ADMIN_ICONS}pixel/user.png" alt="" /></strong></span>
+						<span class="Cancels"><strong>{i18n('Active')}<img src="{$ADDR_ADMIN_ICONS}pixel/user.png" alt="" /></strong></span>
 					{else}
 						<span><a href="{$FILE_SELF}?page=users"><strong>{i18n('Aktywne')}<img src="{$ADDR_ADMIN_ICONS}pixel/user.png" alt="" /></strong></a></span>
 					{/if}
@@ -100,9 +100,9 @@
 				</div>
 				<div class="center grid_2 button-c">
 					{if $page === 'users' && $status === 'required'}
-						<span class="Cancels"><strong>{i18n('Nieczynne')}</strong></span>
+						<span class="Cancels"><strong>{i18n('Activation required')}</strong></span>
 					{else}
-						<span><a href="{$FILE_SELF}?page=users&amp;status=required"><strong>{i18n('Nieczynne')}</strong></a></span>
+						<span><a href="{$FILE_SELF}?page=users&amp;status=required"><strong>{i18n('Activation required')}</strong></a></span>
 					{/if}
 				</div>
 				<div class="grid_2 center button-r">
@@ -154,7 +154,7 @@
 					<div class="formLabel sep_1 grid_3">{i18n('Theme')}:</div>
 					<div class="formField grid_7">
 						<select name="theme_set" id="ThemeSet">
-							<option value="Default">Default</option>
+							<option value="Default">{i18n('Default')}</option>
 							{section=theme_set}
 								<option value="{$theme_set.value}"{if $theme_set.selected} selected="selected"{/if}>{$theme_set.display}</option>
 							{/section}
