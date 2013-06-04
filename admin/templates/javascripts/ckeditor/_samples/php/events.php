@@ -5,13 +5,13 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>Adding Event Handlers &mdash; CKEditor Sample</title>
-	<meta content="text/html; charset=utf-8" http-equiv="content-type"/>
+	<title>Adding Event Handlers — CKEditor Sample</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link href="../sample.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 	<h1 class="samples">
-		CKEditor Sample &mdash; Adding Event Handlers
+		CKEditor Sample — Adding Event Handlers
 	</h1>
 	<div class="description">
 	<p>
@@ -145,7 +145,7 @@ $CKEditor->editor("editor2", $initialValue, $config, $events);
 			CKEditor - The text editor for the Internet - <a class="samples" href="http://ckeditor.com/">http://ckeditor.com</a>
 		</p>
 		<p id="copy">
-			Copyright &copy; 2003-2011, <a class="samples" href="http://cksource.com/">CKSource</a> - Frederico
+			Copyright © 2003-2011, <a class="samples" href="http://cksource.com/">CKSource</a> - Frederico
 			Knabben. All rights reserved.
 		</p>
 	</div>

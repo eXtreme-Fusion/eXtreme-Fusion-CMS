@@ -46,10 +46,10 @@ try
 
     $_tpl = new Iframe;
 
-	// Wyœwietlenie komunikatów
+	// WyÅ›wietlenie komunikatÃ³w
 	if ($_request->get(array('status', 'act'))->show())
 	{
-		// Wyœwietli komunikat
+		// WyÅ›wietli komunikat
 		$_tpl->getMessage($_request->get('status')->show(), $_request->get('act')->show(), 
 			array(
 				'edit' => array(

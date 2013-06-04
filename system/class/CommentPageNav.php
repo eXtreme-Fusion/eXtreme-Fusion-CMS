@@ -37,7 +37,7 @@ class CommentPageNav
 
 			if (!is_numeric($arg) || !$arg)
 			{
-				throw new systemException('Paramter metody CommentPageNav::create() nie jest numeryczny lub jest równy 0!');
+				throw new systemException('Paramter metody CommentPageNav::create() nie jest numeryczny lub jest rÃ³wny 0!');
 			}
 
 			$i++;

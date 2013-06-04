@@ -37,7 +37,7 @@ $_head->set('<link href="'.ADDR_TEMPLATES.'stylesheet/team.css" media="screen" r
 // TO DO Będziesz dodawać cache dla tej strony użyj: $_sett->getUns('cache', 'expire_team') //
 
 $theme = array(
-	'Title' => __('Site Team').' &raquo; '.$_sett->get('site_name'),
+	'Title' => __('Site Team').' » '.$_sett->get('site_name'),
 	'Keys' => 'Ekipa '.$_sett->get('site_name').', skład, właściciele',
 	'Desc' => 'Lista osób odpowiedzialnych za działanie i funkcjonowanie strony.'
 );

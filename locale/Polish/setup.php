@@ -168,7 +168,7 @@ return array(
 								Jeśli jesteś Administratorem tej strony, zaloguj się przez formularz widoczny po prawej stronie.<br />
 								Następnie przejdź do Panelu Zarządzania, by dokonać konfiguracji, dodać treść lub utworzyć nowe konta użytkowników.</p>
 								<p>
-								Rozbudowa Twojej strony www odbywa się przez instalację Moduł&oacute;w, dla przykładu Punktacji, zachęcającej do aktywności.</p>
+								Rozbudowa Twojej strony www odbywa się przez instalację Modułów, dla przykładu Punktacji, zachęcającej do aktywności.</p>
 								<p style="text-align: center;">
 								Jeżeli nie jesteś Administratorem tej strony, ale chcesz posiadać własny serwis internetowy, to przejdź na nasz <a href="http://extreme-fusion.org/">Support</a>, skąd pobierzesz system EF5 oraz otrzymasz pomoc od Społeczności.<br />
 								&nbsp;</p>',

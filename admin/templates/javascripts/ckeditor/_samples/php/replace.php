@@ -5,13 +5,13 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>Replace Selected Textarea Elements &mdash; CKEditor Sample</title>
-	<meta content="text/html; charset=utf-8" http-equiv="content-type"/>
+	<title>Replace Selected Textarea Elements — CKEditor Sample</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link href="../sample.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 	<h1 class="samples">
-		CKEditor Sample &mdash;  Replace Selected Textarea Elements Using PHP Code
+		CKEditor Sample —  Replace Selected Textarea Elements Using PHP Code
 	</h1>
 	<div class="description">
 	<p>
@@ -67,7 +67,7 @@ $CKEditor->replace("textarea_id");
 			CKEditor - The text editor for the Internet - <a class="samples" href="http://ckeditor.com/">http://ckeditor.com</a>
 		</p>
 		<p id="copy">
-			Copyright &copy; 2003-2011, <a class="samples" href="http://cksource.com/">CKSource</a> - Frederico
+			Copyright © 2003-2011, <a class="samples" href="http://cksource.com/">CKSource</a> - Frederico
 			Knabben. All rights reserved.
 		</p>
 	</div>

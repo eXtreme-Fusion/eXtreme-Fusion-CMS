@@ -36,10 +36,10 @@ require_once '../config.php';
 require DIR_SITE.'bootstrap.php';
 require_once DIR_SYSTEM.'sitecore.php';
 
-// Wczytywanie g≥Ûwnej klasy
+// Wczytywanie g≈Ç√≥wnej klasy
 require_once DIR_CLASS.'Themes.php';
 
-// Tworzenie emulatora statycznoúci klasy OPT
+// Tworzenie emulatora statyczno≈õci klasy OPT
 TPL::build($_theme = new Theme($_sett, $_system, $_user, $_pdo, $_request, $_route, $_head));
 
 $_tpl = new SiteAjax;
@@ -54,11 +54,11 @@ try
 	}
 	else
 	{
-		throw new systemException('Plik '.$file.' nie zosta≥ odnaleziony w katalogu <span class="italic">/ajax/</span>.');
+		throw new systemException('Plik '.$file.' nie zosta≈Ç odnaleziony w katalogu <span class="italic">/ajax/</span>.');
 	}
 
-	// Metoda za≥aduje plik TPL jeúli istnieje w szablonie lub katalogu ajax.
-	// Jeúli nie istnieje, to nie zwrÛci øadnej wartoúci.
+	// Metoda za≈Çaduje plik TPL je≈õli istnieje w szablonie lub katalogu ajax.
+	// Je≈õli nie istnieje, to nie zwr√≥ci ≈ºadnej warto≈õci.
 	$_tpl->template($file.'.tpl', $_tpl->themeTplExists($file.'.tpl'));
 }
 catch(optException $exception)

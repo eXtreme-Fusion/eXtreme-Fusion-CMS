@@ -33,7 +33,7 @@
 +--------------------------------------------------------*/
 
 /*$theme = array(
-	'Title' => $data['title'].' &raquo; '.$_sett->get('site_name'),
+	'Title' => $data['title'].' » '.$_sett->get('site_name'),
 	'Keys' => $k,
 	'Desc' => $data['description']
 );*/
@@ -67,7 +67,7 @@ if ($_route->getAction() == NULL)
 	$_tpl->assign('data', $data);
 	
 	$theme = array(
-		'Title' => 'Materiały i wpisy &raquo; '.$_sett->get('site_name'),
+		'Title' => 'Materiały i wpisy » '.$_sett->get('site_name'),
 		'Keys' => '',
 		'Desc' => ''
 	);
@@ -123,7 +123,7 @@ elseif ($_route->getAction() === 'type')
 				$_tpl->assign('type', $type['name']);
 				
 				$theme = array(
-					'Title' => $type['name'].' &raquo; '.$_sett->get('site_name'),
+					'Title' => $type['name'].' » '.$_sett->get('site_name'),
 					'Keys' => '',
 					'Desc' => ''
 				);
@@ -178,7 +178,7 @@ elseif ($_route->getAction() === 'category')
 				$_tpl->assign('data', $data);
 				
 				$theme = array(
-					'Title' => $category.' &raquo; '.$_sett->get('site_name'),
+					'Title' => $category.' » '.$_sett->get('site_name'),
 					'Keys' => HELP::Title2Link($category),
 					'Desc' => 'Materiały w kategorii '.$category
 				);
@@ -240,7 +240,7 @@ elseif ($_route->getAction() === 'categories')
 				$_tpl->assign('data', $data);
 				
 				$theme = array(
-					'Title' => $category.' &raquo; '.$_sett->get('site_name'),
+					'Title' => $category.' » '.$_sett->get('site_name'),
 					'Keys' => HELP::Title2Link($category),
 					'Desc' => 'Materiały w kategorii '.$category
 				);
@@ -270,7 +270,7 @@ elseif ($_route->getAction() === 'categories')
 		$_tpl->assign('data', $data);
 		
 		$theme = array(
-			'Title' => 'Kategorie materiałów &raquo; '.$_sett->get('site_name'),
+			'Title' => 'Kategorie materiałów » '.$_sett->get('site_name'),
 			'Keys' => '',
 			'Desc' => 'Kategorie materiałów zamieszczanych na stronie'
 		);
@@ -324,7 +324,7 @@ elseif (isNum($_route->getAction(), FALSE))
 			}
 
 			$theme = array(
-				'Title' => $row['title'].' &raquo; '.$_sett->get('site_name'),
+				'Title' => $row['title'].' » '.$_sett->get('site_name'),
 				'Keys' => implode(', ', $k),
 				'Desc' => $row['description']
 			);

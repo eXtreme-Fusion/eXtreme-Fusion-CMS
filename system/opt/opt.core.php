@@ -6,7 +6,7 @@ _e('<script type="text/javascript">
 opt_console = window.open("","debug console","width=680,height=350,resizable,scrollbars=yes");
 opt_console.document.write(\'<html>\');
 opt_console.document.write(\'<head>\');
-opt_console.document.write(\'<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />\');
+opt_console.document.write(\'<meta http-equiv="Content-Type" content="text/html; charset=utf-8">\');
 opt_console.document.write(\'<title>Debug Console</title>\');
 opt_console.document.write(\'<style>\');
 opt_console.document.write(\'body{\');

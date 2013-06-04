@@ -34,7 +34,7 @@
 $_locale->load('rules');
 
 $theme = array(
-	'Title' => __('Rules').' &raquo; '.$_sett->get('site_name'),
+	'Title' => __('Rules').' » '.$_sett->get('site_name'),
 	'Keys' => 'Regulamin, polityka prywatności, informacje prawne',
 	'Desc' => 'Chcesz poznać regulamin, politykę prywatności lub informacje prawne: '.$_sett->get('site_name').'? Możesz to zrobić już teraz.'
 );

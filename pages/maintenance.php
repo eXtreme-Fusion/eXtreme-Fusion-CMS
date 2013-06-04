@@ -33,7 +33,7 @@
 +--------------------------------------------------------*/
 
 $theme = array(
-	'Title' => 'Tryb prac na serwerze. Zapraszamy wkrótce &raquo; '.$_sett->get('site_name'),
+	'Title' => 'Tryb prac na serwerze. Zapraszamy wkrótce » '.$_sett->get('site_name'),
 	'Keys' => 'Tryb serwisowy, przerwa techniczna, usterka, aktualizacja',
 	'Desc' => ''
 );

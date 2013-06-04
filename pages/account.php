@@ -46,7 +46,7 @@ $status = $_route->getByID(1);
 $error  = $_route->getByID(2);
 
 $theme = array(
-	'Title' => 'Ustawienia konta użytkownika - '.$_user->get('username').' &raquo; '.$_sett->get('site_name'),
+	'Title' => 'Ustawienia konta użytkownika - '.$_user->get('username').' » '.$_sett->get('site_name'),
 	'Keys'  => 'Ustawienia profilu, ustawienia konta, edycja konta, profil',
 	'Desc'  => 'W tym miescju możesz dokonać aktualizacji swoich danych osobowych.',
 );

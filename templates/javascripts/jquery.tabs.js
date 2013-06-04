@@ -1,20 +1,20 @@
 jQuery(document).ready(function() {
 
-	// Domyúlne ustawienia
+	// Domy≈õlne ustawienia
 	jQuery('.tab_cont').hide();
 	jQuery('.tab').removeClass('selected');
 
-	// Aktywacja pierwszej zak≥adki
+	// Aktywacja pierwszej zak≈Çadki
 	jQuery('.tab_cont:first').show();
 	jQuery('.tab:first').addClass('selected');
 
 	jQuery('.tab').click(function() {
 
-		// Dezaktywacja wszystkich zak≥adek
+		// Dezaktywacja wszystkich zak≈Çadek
 		jQuery('.tab_cont').hide();
 		jQuery('.tab').removeClass('selected');
 
-		// Aktywacja wybranej zak≥adki
+		// Aktywacja wybranej zak≈Çadki
 		var id = this.id;
 		var num = id.split('_');
 		jQuery('#'+this.id).addClass('selected');

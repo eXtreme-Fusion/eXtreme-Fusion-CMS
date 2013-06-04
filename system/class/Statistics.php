@@ -25,8 +25,8 @@ class Statistics
 		$this->_system = $_system;
 	}
 	
-	// Zapisuje unikaln¹ wizytê u¿ytkownika
-	// Adres IP musi byæ filtrowany wczeœniej!
+	// Zapisuje unikalnÄ… wizytÄ™ uÅ¼ytkownika
+	// Adres IP musi byÄ‡ filtrowany wczeÅ›niej!
 	public function saveUniqueVisit($ip)
 	{
 		// Odczytywanie informacji z cache
@@ -53,7 +53,7 @@ class Statistics
 		return FALSE;
 	}
 
-	// Zwraca iloœæ unikalnych wizyt na stronie
+	// Zwraca iloÅ›Ä‡ unikalnych wizyt na stronie
 	public function getUniqueVisitsCount()
 	{
 		return $this->_pdo->getSelectCount('SELECT Count(`id`) FROM [statistics]');
