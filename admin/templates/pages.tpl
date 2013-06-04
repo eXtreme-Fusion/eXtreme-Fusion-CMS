@@ -66,7 +66,7 @@
 			</div></div>
 			<div class="tbl2">
 				<div class="grid_6 formLabel">
-					<label for="InsightGroups">{i18n('What groups can have access to the material:')}</label>
+					<label for="InsightGroups">{i18n('Which groups can have access to the material:')}</label>
 					<small>{i18n('Hold down CTRL to select a few options.')}</small>
 					<small>{i18n('In case of no selection the material will not be visible outside the Admin Panel.')}</small>
 				</div>
@@ -81,7 +81,7 @@
 			<div style="display:none">
 			<div class="tbl1">
 				<div class="grid_6 formLabel">
-					<label for="EditingGroups">{i18n('What groups can modify the material:')}</label>
+					<label for="EditingGroups">{i18n('Which groups can modify the material:')}</label>
 					<small>{i18n('Hold down CTRL to select a few options.')}</small>
 				</div>
 				<div class="grid_4 formField">
