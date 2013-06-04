@@ -251,7 +251,7 @@ try
 		'ADDR_ADMIN' => ADDR_SITE.'admin/',
 		'ADDR_SITE' => ADDR_SITE,
 		'ADDR_INSTALL' =>  ADDR_SITE.'install/',
-		'step_header' => __('eXtreme-Fusion :version - Setup', array(':version' => VERSION)).(getStepHeader() ? ' &raquo; '.getStepHeader() : ''),
+		'step_header' => __('eXtreme-Fusion :version - Setup', array(':version' => VERSION)).(getStepHeader() ? ' » '.getStepHeader() : ''),
 		'step_menu' => getStepMenu(),
 		'step' => getStepNum(),
 		'php_required' => PHP_REQUIRED

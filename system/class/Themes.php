@@ -255,7 +255,7 @@ class Theme extends optClass
 		return $output;
 	}
 
-	public function showSubLinks($sep = "&middot;", $class = "")
+	public function showSubLinks($sep = "·", $class = "")
 	{
 		$query = $this->_pdo->getData(
 			"SELECT `name`, `url`, `window`, `visibility`, `rewrite` FROM [navigation]

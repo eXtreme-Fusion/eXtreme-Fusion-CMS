@@ -32,12 +32,12 @@
 | written permission from the original author(s).
 +--------------------------------------------------------*/
 
-// Jeœli nie jest numeryczne to zostanie rzucony wyj¹tek.
+// JeÅ›li nie jest numeryczne to zostanie rzucony wyjÄ…tek.
 if ( ! $_request->get('current')->isNum()) exit;
 
 $_locale->load('news');
 
-// Sprawdzanie, czy u¿ytkownik ma prawo do zobaczenia jakiegokolwiek newsa
+// Sprawdzanie, czy uÅ¼ytkownik ma prawo do zobaczenia jakiegokolwiek newsa
 $rows = $_pdo->getMatchRowsCount('SELECT `id` FROM [news] WHERE `access` IN ('.$_user->listRoles().') AND `draft` = 0');
 
 if ($rows)
@@ -117,7 +117,7 @@ if ($rows)
 		}
 		else
 		{
-			throw new systemException('B³¹d! U¿ytkownik posiada w cache\'u materia³u, do którego nie ma uprawnieñ. Czyszczenie cache\'u przy edycji newsa nie dzia³a poprawnie.');
+			throw new systemException('BÅ‚Ä…d! UÅ¼ytkownik posiada w cache\'u materiaÅ‚u, do ktÃ³rego nie ma uprawnieÅ„. Czyszczenie cache\'u przy edycji newsa nie dziaÅ‚a poprawnie.');
 		}
 	}
 

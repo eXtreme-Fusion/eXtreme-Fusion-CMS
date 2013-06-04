@@ -28,7 +28,7 @@ try
 
     $_tpl = new Iframe;
 
-	// Czy usun¹æ przestarza³e wpisy Rejestru zdarzeñ?
+	// Czy usunÄ…Ä‡ przestarzaÅ‚e wpisy Rejestru zdarzeÅ„?
 	if ($_sett->get('logger_optimize_active'))
 	{
 		$_log->deleteOld($_sett->get('logger_expire_days'));
@@ -45,7 +45,7 @@ try
 			$info = array(__('The log has been deleted.'), __('Error! The log has not been deleted.'));
 		}
 
-		// Czy zapisaæ w Rejestrze usuniêcie wpisu?
+		// Czy zapisaÄ‡ w Rejestrze usuniÄ™cie wpisu?
 		if ($_sett->get('logger_save_removal_action'))
 		{
 			$_log->insertSuccess('delete', $info[0]);

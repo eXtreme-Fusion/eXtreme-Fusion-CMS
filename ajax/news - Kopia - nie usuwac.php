@@ -32,18 +32,18 @@
 | written permission from the original author(s).
 +--------------------------------------------------------*/
 echo 1;
-// Jeœli nie jest numeryczne to zostanie rzucony wyj¹tek.
+// JeÅ›li nie jest numeryczne to zostanie rzucony wyjÄ…tek.
 if ( ! $_request->get('current')->isNum()) exit;
 
 $_locale->load('news');
 echo 3;
-// Sprawdzanie, czy u¿ytkownik ma prawo do zobaczenia jakiegokolwiek newsa
-// Sprawdzanie, czy u¿ytkownik ma prawo do zobaczenia jakiegokolwiek newsa
+// Sprawdzanie, czy uÅ¼ytkownik ma prawo do zobaczenia jakiegokolwiek newsa
+// Sprawdzanie, czy uÅ¼ytkownik ma prawo do zobaczenia jakiegokolwiek newsa
 	$rows = $_pdo->getMatchRowsCount('SELECT `id` FROM [news] WHERE `access` IN ('.$_user->listRoles().') AND `draft` = 0');
 
 	if ($rows)
 	{
-		// Newsów na stronie
+		// NewsÃ³w na stronie
 		$items_per_page = intval($_user->get('itemnews') ? $_user->get('itemnews') : $_sett->get('news_per_page'));
 
 		// Aktualna strona
@@ -96,7 +96,7 @@ echo 3;
 						'category_link' => $_route->path(array('controller' => 'news_cats', 'action' => $data['cat_id'], HELP::Title2Link($data['name']))),
 						'category_image' => $data['image'],
 						'language' => __($data['language']),
-						// todo: Dodamy mo¿e po ciasteczkach zmienê jezyka newsa i wyswietlanie newsów w danym jezyku^^
+						// todo: Dodamy moÅ¼e po ciasteczkach zmienÄ™ jezyka newsa i wyswietlanie newsÃ³w w danym jezyku^^
 						'author_id' => $data['user_id'],
 						'author_name' => $_user->getUsername($data['user_id']),
 						'author_link' => $_route->path(array('controller' => 'profile', 'action' => $data['user_id'], HELP::Title2Link($data['username']))),

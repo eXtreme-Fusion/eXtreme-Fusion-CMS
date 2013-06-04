@@ -88,7 +88,7 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 			$keyword = Html::arrayToLinks($keyword, ', ');
 
 			$theme = array(
-				'Title' => $data['title'].' &raquo; '.$_sett->get('site_name'),
+				'Title' => $data['title'].' » '.$_sett->get('site_name'),
 				'Keys' => implode(', ', $k),
 				'Desc' => $data['description']
 			);

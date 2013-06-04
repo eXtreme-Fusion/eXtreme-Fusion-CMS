@@ -40,7 +40,7 @@ if ($row === NULL)
 {
 	$_system->cache('cleaning_raport', time(), 'chat');
 
-	// Usuniêcie z pamiêci zmiennej $row przechowuj¹cej informacje o poprzednim cache
+	// UsuniÄ™cie z pamiÄ™ci zmiennej $row przechowujÄ…cej informacje o poprzednim cache
 	unset($row);
 
 	$settings = $_pdo->getRow('SELECT * FROM [chat_settings]');

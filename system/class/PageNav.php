@@ -18,7 +18,7 @@
 # THIS CLASS IS A VIEW
 
 /**
- * Dziêki Bogu, po ciêzkiej pracy, uda³o siê przebudowaæ stronicowanie.
+ * DziÄ™ki Bogu, po ciÄ™zkiej pracy, udaÅ‚o siÄ™ przebudowaÄ‡ stronicowanie.
  * HOW TO USE:
  * 		$ec->paging->setPagesCount($rows_count, $current_page, $per_page);
  *		$ec->pageNav->get($ec->pageNav->create($_tpl, $buttons_count), 'tpl_filename');
@@ -26,16 +26,16 @@
 
 interface PageNavIntf
 {
-	// Wyœwietla stronicowanie
+	// WyÅ›wietla stronicowanie
 	public function create($_tpl, $links_count, $show_go_to_first = TRUE, $show_go_to_last = TRUE);
 
 	public function get(array $paging, $filename, $dir = NULL);
 
-	// Zwraca tablicê z numerami podstron do wyœwietlenia
+	// Zwraca tablicÄ™ z numerami podstron do wyÅ›wietlenia
 	public function getPagesNums();
 
-	// Zwraca iloœæ numerów podstron, jakie zostan¹ wyœwietlone w nawigacji
-	// z uwzglêdnieniem aktualnej pozycji i wyjœciowej iloœci
+	// Zwraca iloÅ›Ä‡ numerÃ³w podstron, jakie zostanÄ… wyÅ›wietlone w nawigacji
+	// z uwzglÄ™dnieniem aktualnej pozycji i wyjÅ›ciowej iloÅ›ci
 	public function getLinksCount();
 }
 
@@ -46,12 +46,12 @@ class PageNav extends Observer implements PageNavIntf
 		$_tpl;
 
 	private
-		$_links_count,					// Iloœæ podstron, jakie bêd¹ wyœwietlane w nawigacji
-		$_pages_nums = array(), 		// Tablica z numerami podstron z uwzglêdnieniem $_links_count
-		$_route,						// Tablica z formatem linków stronicowania
+		$_links_count,					// IloÅ›Ä‡ podstron, jakie bÄ™dÄ… wyÅ›wietlane w nawigacji
+		$_pages_nums = array(), 		// Tablica z numerami podstron z uwzglÄ™dnieniem $_links_count
+		$_route,						// Tablica z formatem linkÃ³w stronicowania
 		$_default_ext = 'html';
 
-	// Nalezy pamiêtaæ, aby parametr $links_count przes³any do konstruktora by³ parsowany przez funkcjê intval()!!
+	// Nalezy pamiÄ™taÄ‡, aby parametr $links_count przesÅ‚any do konstruktora byÅ‚ parsowany przez funkcjÄ™ intval()!!
 	public function __construct(Paging $paging)
 	{
 		$this->_paging = $paging;
@@ -59,7 +59,7 @@ class PageNav extends Observer implements PageNavIntf
 
 	private function createListToDisplay()
 	{
-		// Sprawdza, czy liczba numerów stron do wyœwietlenia jest parzysta
+		// Sprawdza, czy liczba numerÃ³w stron do wyÅ›wietlenia jest parzysta
 		if ($this->_links_count % 2 == 0)
 		{
 			/* Wyliczanie pierwszego i ostatniego numeru podstrony */
@@ -73,37 +73,37 @@ class PageNav extends Observer implements PageNavIntf
 			$end = $this->_paging->getCurrentPage()+floor($this->_links_count/2);
 		}
 
-		// Sprawdzanie, czy ostatni numer reprezentuje istniej¹c¹ podstronê
+		// Sprawdzanie, czy ostatni numer reprezentuje istniejÄ…cÄ… podstronÄ™
 		if ($end > $this->_paging->getLastPage())
 		{
-			// Skoro wyliczony numer  wykracza poza numery reprezentuj¹ce istniej¹ce podstrony,
-			// to trzeba cofn¹æ do ty³u numer pierwszej, aby wyœwietli³o siê tyle numerów, ile chciano.
+			// Skoro wyliczony numer  wykracza poza numery reprezentujÄ…ce istniejÄ…ce podstrony,
+			// to trzeba cofnÄ…Ä‡ do tyÅ‚u numer pierwszej, aby wyÅ›wietliÅ‚o siÄ™ tyle numerÃ³w, ile chciano.
 			$begin -= $end - $this->_paging->getLastPage();
 
-			// Ostatni wyœwietlany numer podstrony bêdzie równy ilorazowi wszystkich materia³ów a ich iloœci na podstronê.
+			// Ostatni wyÅ›wietlany numer podstrony bÄ™dzie rÃ³wny ilorazowi wszystkich materiaÅ‚Ã³w a ich iloÅ›ci na podstronÄ™.
 			$end = $this->_paging->getLastPage();
 		}
 
 		// Sprawdzanie, czy pierwszy numer nie jest mniejszy od 1
 		if ($begin < 1)
 		{
-			// Skoro wyliczony numer wykracza poza numery reprezentuj¹ce istniej¹ce podstrony (jest mniejszy od 1, a taka podstrona przecie¿ nie istnieje),
-			// to trzeba przesun¹æ do przodu numer ostatniej, aby wyœwietli³o siê tyle numerów, ile chciano.
+			// Skoro wyliczony numer wykracza poza numery reprezentujÄ…ce istniejÄ…ce podstrony (jest mniejszy od 1, a taka podstrona przecieÅ¼ nie istnieje),
+			// to trzeba przesunÄ…Ä‡ do przodu numer ostatniej, aby wyÅ›wietliÅ‚o siÄ™ tyle numerÃ³w, ile chciano.
 			$end += 1 - $begin;
 
-			// Pierwszy wyœwietlany numer podstrony bêdzie równy 1
+			// Pierwszy wyÅ›wietlany numer podstrony bÄ™dzie rÃ³wny 1
 			$begin = 1;
 
-			// Sprawdzanie, czy w wyniku przesuwania do przodu ostatniej podstrony nie przekroczono zakresu istniej¹cych podstron
+			// Sprawdzanie, czy w wyniku przesuwania do przodu ostatniej podstrony nie przekroczono zakresu istniejÄ…cych podstron
 			if ($end > $this->_paging->getLastPage())
 			{
-				// Skoro zakres przekroczono, to ostatni wyœwietlany numer podstrony bêdzie równy ilorazowi wszystkich materia³ów a ich iloœci na podstronê.
-				// Niestety, iloœæ wyœwietlanych numerów podstron bêdzie mniejsza ni¿ chciano, gdy¿ ich tyle nie istnieje.
+				// Skoro zakres przekroczono, to ostatni wyÅ›wietlany numer podstrony bÄ™dzie rÃ³wny ilorazowi wszystkich materiaÅ‚Ã³w a ich iloÅ›ci na podstronÄ™.
+				// Niestety, iloÅ›Ä‡ wyÅ›wietlanych numerÃ³w podstron bÄ™dzie mniejsza niÅ¼ chciano, gdyÅ¼ ich tyle nie istnieje.
 				$end = $this->_paging->getLastPage();
 			}
 		}
 
-		// Skoro znamy pocz¹tkowy i koñcowy numer podstron, trzeba je wyodrêbniæ.
+		// Skoro znamy poczÄ…tkowy i koÅ„cowy numer podstron, trzeba je wyodrÄ™bniÄ‡.
 		for($i = $begin; $i <= $end; $i++)
 		{
 			$this->_pages_nums[] = $i;
@@ -120,14 +120,14 @@ class PageNav extends Observer implements PageNavIntf
 		}
 		else
 		{
-			throw new systemException('B³¹d! Parametr czwarty nie mo¿e przyjmowaæ wartoœci mniejszej od <span class="italic">1</span>.');
+			throw new systemException('BÅ‚Ä…d! Parametr czwarty nie moÅ¼e przyjmowaÄ‡ wartoÅ›ci mniejszej od <span class="italic">1</span>.');
 		}
 
 		$this->createListToDisplay();
 
 		$page_nav['nums'] = $this->getPagesNums();
 
-		// Nadawanie domyœlnej wartoœci
+		// Nadawanie domyÅ›lnej wartoÅ›ci
 		$page_nav['first'] = NULL;
 		$page_nav['last'] = NULL;
 
@@ -149,7 +149,7 @@ class PageNav extends Observer implements PageNavIntf
 		return $page_nav;
 	}
 
-	// W odrêbnym stosie OPT tworzy szablon, który przechwycony przez bufor danych jest zwracany przez metodê
+	// W odrÄ™bnym stosie OPT tworzy szablon, ktÃ³ry przechwycony przez bufor danych jest zwracany przez metodÄ™
 	public function get(array $paging, $filename, $dir = NULL, $comments = TRUE)
 	{
 		if ($paging)

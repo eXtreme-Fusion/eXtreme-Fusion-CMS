@@ -148,7 +148,7 @@ elseif ($_route->getAction() === 'view')
 		$recipient = $_user->getByID($_route->getParamVoid(1), 'username');
 
 		$theme = array(
-			'Title' => __('Wyślij wiadomość do: ').$recipient.' &raquo; '.$_sett->get('site_name'),
+			'Title' => __('Wyślij wiadomość do: ').$recipient.' » '.$_sett->get('site_name'),
 			'Keys' => 'prywatne wiadomości, komunikacja, chat z '.$recipient,
 			'Desc' => 'W łatwy sposób możesz komunikować się z '.$recipient.'.'
 		);

@@ -45,6 +45,6 @@ $_tpl->assignGroup(array(
 	'smiley' => $_sbb->smileys('content')
 ));
 
-// Definiowanie katalogu templatek modu³u
+// Definiowanie katalogu templatek moduÅ‚u
 $_tpl->setPageCompileDir(DIR_MODULES.'chat'.DS.'templates'.DS);
 #***********

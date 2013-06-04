@@ -7,13 +7,13 @@
 | http://extreme-fusion.org/ 
 **********************************************************
  	Some open-source code comes from
----------------------------------------------------------+
+---------------------------------------------------------
 | PHP-Fusion Content Management System
 | Copyright (C) 2002 - 2011 Nick Jones
 | http://www.php-fusion.co.uk/
-+--------------------------------------------------------+
++-------------------------------------------------------
 | Author: Wooya
-+--------------------------------------------------------+
++-------------------------------------------------------
 | This program is released as free software under the
 | Affero GPL license. You can redistribute it and/or
 | modify it under the terms of this license which you
@@ -21,7 +21,7 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-+--------------------------------------------------------*/
++-------------------------------------------------------*/
 $_locale->load('mail');
 
 $bbcode_info = array(
@@ -32,6 +32,6 @@ $bbcode_info = array(
 
 if($bbcode_used)
 {
-	$text = preg_replace('#\[mail=([\r\n]*)([^\s\'\";:\+]*?)\](.*?)([\r\n]*)\[/mail\]#sie', "'<a href=\'http://mailto:'.HELP::hide_email('\\2').'\' target=\'_blank\' title=\''.HELP::hide_email('\\2', '\\2').'\'>'.HELP::hide_email('\\2').'</a>'", $text);
-	$text = preg_replace('#\[mail\]([\r\n]*)([^\s\'\";:\+]*?)([\r\n]*)\[/mail\]#sie', "'<a href=\'http://mailto:'.HELP::hide_email('\\2').'\' target=\'_blank\' title=\''.HELP::hide_email('\\2').'\'>'.HELP::hide_email('\\2').'</a>'", $text);
+	$text = preg_replace('#\[mail=([\r\n]*)([^\s\'\";:\]*?)\](.*?)([\r\n]*)\[/mail\]#sie', "'<a href=\'http://mailto:'.HELP::hide_email('\\2').'\' target=\'_blank\' title=\''.HELP::hide_email('\\2', '\\2').'\'>'.HELP::hide_email('\\2').'</a>'", $text);
+	$text = preg_replace('#\[mail\]([\r\n]*)([^\s\'\";:\]*?)([\r\n]*)\[/mail\]#sie', "'<a href=\'http://mailto:'.HELP::hide_email('\\2').'\' target=\'_blank\' title=\''.HELP::hide_email('\\2').'\'>'.HELP::hide_email('\\2').'</a>'", $text);
 }

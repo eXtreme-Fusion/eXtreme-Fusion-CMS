@@ -29,10 +29,10 @@ try
 
     $_tpl = new AdminModuleIframe('cautions');
 
-	// Wyœwietlenie komunikatów
+	// WyÅ›wietlenie komunikatÃ³w
 	if ($_request->get(array('status', 'act'))->show())
 	{
-		// Wyœwietli komunikat
+		// WyÅ›wietli komunikat
 		$_tpl->getMessage($_request->get('status')->show(), $_request->get('act')->show(), 
 			array(
 				'add' => array(
@@ -58,11 +58,11 @@ try
 	
 		if ($count)
 		{
-			$_log->insertSuccess('delete', __('Ostrze¿enie zosta³o usuniête'));
+			$_log->insertSuccess('delete', __('OstrzeÅ¼enie zostaÅ‚o usuniÄ™te'));
 			$_request->redirect(FILE_PATH, array('act' => 'delete', 'status' => 'ok'));
 		}
 	
-		$_log->insertFail('delete', __('B³¹d podczas usuwania ostrze¿enia'));
+		$_log->insertFail('delete', __('BÅ‚Ä…d podczas usuwania ostrzeÅ¼enia'));
 		$_request->redirect(FILE_PATH, array('act' => 'delete', 'status' => 'error'));
     }
 	
@@ -118,11 +118,11 @@ try
 		
 				if ($count)
 				{
-					$_log->insertSuccess('add', __('Ostrze¿enie zosta³o dodane'));
+					$_log->insertSuccess('add', __('OstrzeÅ¼enie zostaÅ‚o dodane'));
 					$_request->redirect(FILE_PATH, array('act' => 'add', 'status' => 'ok'));
 				}	
 		
-				$_log->insertFail('add', __('B³¹d podczas dodawania ostrze¿enia'));
+				$_log->insertFail('add', __('BÅ‚Ä…d podczas dodawania ostrzeÅ¼enia'));
 				$_request->redirect(FILE_PATH, array('act' => 'add', 'status' => 'error'));
 			}
 		}
