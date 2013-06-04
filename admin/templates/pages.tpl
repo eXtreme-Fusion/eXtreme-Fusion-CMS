@@ -91,7 +91,7 @@
 						{/section}
 					</select>
 				</div>
-				{i18n('{* Visible only in case of selecting some option on the list above *}')}
+				{*Widoczne tylko w przypadku zaznaczenua którejś pozycji na liscie wyżej *}
 				<div id="wysiwyg" class="hidden">
 					<div class="grid_6 formLabel">{i18n('Allow users to use the graphical content editor:')}<small>{i18n('Selecting this option can have a significant impact on the appearance of materials sent in or modified by users. They will be able to use HTML on the visual development of their entries.')}</small></div>
 					<div class="grid_1 formField"><label><input type="radio" name="user_allow_use_wysiwyg" value="1"{if $user_allow_use_wysiwyg == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
@@ -100,10 +100,10 @@
 			</div>
 			<div class="tbl2">
 				<div class="grid_6 formLabel">
-					<label for="SubmittingGroups">{i18n('Którym grupom umożliwić nadsyłanie nowych materiałów?')}</label>
-					<small>Przytrzymaj klawiasz CTRL przy zaznaczaniu, aby wybrać kilka opcji</small>
-					<small>Dla każdej kategorii to ustawienie można określić indywidualnie.</small>
-					<small>Opublikowanie nadesłanego materiału wymaga akceptacji Administratora.</small>
+					<label for="SubmittingGroups">{i18n('What groups can send new materials:')}</label>
+					<small>{i18n('Hold down CTRL to select a few options.')}</small>
+					<small>{i18n('For each category, this setting can be set individually.')}</small>
+					<small>{i18n('Publication of submitted material requires Admin approval.')}</small>
 				</div>
 				<div class="grid_4 formField">
 					<select name="submitting_groups[]" multiple id="SubmittingGroups" class="select-multi" size="5">
@@ -114,34 +114,34 @@
 				</div>
 			</div>
 			<div class="tbl1">
-				<div class="grid_6 formLabel">{i18n('Pokazywać zapowiedź materiału?')}<small>Dotyczy Przeglądu materiałów poza Panel admina.</small></div>
+				<div class="grid_6 formLabel">{i18n('Show a preview of the material:')}<small>{i18n('Applies to review the material outside of the Admin Panel.')}</small></div>
 				<div class="grid_1 formField"><label><input type="radio" name="show_preview" value="1"{if $show_preview == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
 				<div class="grid_5 formField"><label><input type="radio" name="show_preview" value="0"{if $show_preview == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
 			</div>
 			<div class="tbl2">
 				<div>
-					<div class="grid_6 formLabel">{i18n('Czy zmienić autora materiału po dokonaniu edycji?')}<small>Dotyczy modyfikacji materiału przez Administratora jak i użytkownika.</small></div>
+					<div class="grid_6 formLabel">{i18n('Do the autor of publication should be changed after editing material:')}<small>{i18n('It applies to modifying material by admin and user.')}</small></div>
 					<div class="grid_1 formField"><label><input type="radio" name="change_author" value="1"{if $change_author == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
 					<div class="grid_5 formField"><label><input type="radio" name="change_author" value="0"{if $change_author == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
 				</div>
 				<div class="clear"></div>
 				{*Jeśli pole wyzej ma wartość 1, to trzeba to ukryć *}
 				<div id="author" class="hidden">
-					<div class="grid_6 formLabel">{i18n('Czy dopisywać autorów po dokonaniu edycji materiału?')}<small>Dotyczy modyfikacji materiału przez Administratora jak i użytkownika.</small></div>
+					<div class="grid_6 formLabel">{i18n('Do the new autors should be added after editing material:')}<small>{i18n('It applies to modifying material by admin and user.')}</small></div>
 					<div class="grid_1 formField"><label><input type="radio" name="add_author" value="1"{if $add_author == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
 					<div class="grid_5 formField"><label><input type="radio" name="add_author" value="0"{if $add_author == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
 				</div>
 			</div>
 			<div class="tbl1">
 				<div>
-					<div class="grid_6 formLabel">{i18n('Czy zmienić datę publikacji materiału po dokonaniu edycji?')}<small>Dotyczy modyfikacji materiału przez Administratora jak i użytkownika.</small></div>
+					<div class="grid_6 formLabel">{i18n('Do the publication date should be changed after editing material:')}<small>{i18n('It applies to modifying material by admin and user.')}</small></div>
 					<div class="grid_1 formField"><label><input type="radio" name="change_date" value="1"{if $change_date == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
 					<div class="grid_5 formField"><label><input type="radio" name="change_date" value="0"{if $change_date == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
 				</div>
 				<div class="clear"></div>
 				{*Jeśli pole wyzej ma wartość 1, to trzeba to ukryć *}
 				<div id="date" class="hidden">
-					<div class="grid_6 formLabel">{i18n('Czy dopisać do listy datę modyfikacji materiału?')}<small>Dotyczy modyfikacji materiału przez Administratora jak i użytkownika.</small></div>
+					<div class="grid_6 formLabel">{i18n('Do the editon date should be added after editing material:')}<small>{i18n('It applies to modifying material by admin and user.')}</small></div>
 					<div class="grid_1 formField"><label><input type="radio" name="add_last_editing_date" value="1"{if $add_last_editing_date == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
 					<div class="grid_5 formField"><label><input type="radio" name="add_last_editing_date" value="0"{if $add_last_editing_date == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
 				</div>

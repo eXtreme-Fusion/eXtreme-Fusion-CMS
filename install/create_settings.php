@@ -181,7 +181,7 @@ $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, 
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.blacklist', 'blacklist.png', 'Blacklist', 'blacklist.php', 2)");
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.comments', 'comments.png', 'Comments', 'comments.php', 2)");
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.groups', 'groups.png', 'Groups', 'groups.php', 2)");
-$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.pages', 'pages.png', 'Pages', 'pages.php', 1)");
+$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.pages', 'pages.png', 'Content Pages', 'pages.php', 1)");
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.logs', 'logs.png', 'Logs', 'logs.php', 2)");
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.urls', 'urls.png', 'URLs Generator', 'urls.php', 3)");
 //$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.modules', 'modules.png', 'Modules', 'modules.php', 3)");

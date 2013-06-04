@@ -78,10 +78,10 @@
 		<div class="formField grid_7"><input type="checkbox" name="edit" value="1" id="Edit" {if $edit == 1}checked="checked"{/if}> {i18n('Yes')}</div>
 	</div>
 	<div class="tbl2">
-		<div class="formField sep_1 grid_10 center">{i18n('<small><strong>NOTE:</strong> These two fields should be filled only if you selected <em>Select List</em>.</small>')}</div>
+		<div class="formField sep_1 grid_10 center"><small><strong>{i18n('Attention!')}</strong> {i18n('These two fields should be filled only if you selected')} <em>{i18n('Select List.')}</em></small></div>
 	</div>
 	<div class="tbl1">
-		<div class="formLabel sep_1 grid_3"><label for="Option">{i18n('Field options:')}<br /><small>{i18n('(kolejne opcje w nowej lini)')}</small></label></div>
+		<div class="formLabel sep_1 grid_3"><label for="Option">{i18n('Field options:')}<br /><small>{i18n('(each option in new line)')}</small></label></div>
 		<div class="formField grid_7"><textarea name="option" id="Option" rows="3" class="resize">{$option}</textarea></div>
 	</div>
 	<div class="tbl Buttons">

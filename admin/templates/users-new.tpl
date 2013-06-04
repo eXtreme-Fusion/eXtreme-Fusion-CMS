@@ -158,7 +158,7 @@
 					{if $user.avatar}
 						<div class="formField sep_3 grid_8"><img src="{$ADDR_IMAGES}avatars/{$user.avatar}"></div>
 						<div id="DelAvatarBox">
-							<div class="formField sep_3 grid_8"><label for="DelAvatar"><input type="checkbox" name="del_avatar" value="del" id="DelAvatar" /> {i18n('Usuń aktualny avatar')}</label></div>
+							<div class="formField sep_3 grid_8"><label for="DelAvatar"><input type="checkbox" name="del_avatar" value="del" id="DelAvatar" /> {i18n('')}</label></div>
 						</div>
 					{else}
 						<div class="formLabel sep_1 grid_3"><label for="Avatar">{i18n('Avatar:')}</label></div>

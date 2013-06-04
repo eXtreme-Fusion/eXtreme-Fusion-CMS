@@ -6,6 +6,7 @@ return array(
 	'User:'  => 'Użytkownik:',
 	'Create account' => 'Utwórz konto',
 	'Send e-mail' => 'Wyślij e-mail',
+	'Find user:' => 'Znajdź użytkownika:',
 	'Edit account :username' => 'Edytuj konto :username',
 	'Account type' => 'Typ konta',
 	'Advanced' => 'Zaawansowane',
@@ -27,6 +28,7 @@ return array(
 	'Additional informations' => 'Dodatkowe informacje',
 	'Administration options' => 'Opcje administracyjne',
 	'Adding an user' => 'Dodawanie użytkownika',
+	'Delete current avatar' => 'Usuń aktualny avatar',
 
 
 
@@ -73,6 +75,7 @@ return array(
 
 	//Forms
 	'Roles:' => 'Uprawnienia:',
+	'Default roles' => 'Uprawnienia domyślne',
 	'Main role:' => 'Główne uprawnienia:',
 	'Find user:' => 'Znajdź użytkownika:',
 	'Main group: ' => 'Grupa główna: ',
