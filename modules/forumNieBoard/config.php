@@ -38,10 +38,10 @@ $perm[1] = array(
 );
 
 $new_table[1] = array(
-	"module_forum",
+	'module_forum',
 	"(
 		`validation_type` TINYINT UNSIGNED NOT NULL DEFAULT '0'
 	) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;"
 );
 
-$drop_table[1] = "module_forum";
+$drop_table[1] = 'module_forum';
