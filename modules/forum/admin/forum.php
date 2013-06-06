@@ -23,16 +23,16 @@ try
 	//?
 	$_locale->moduleLoad('settings', 'forum');
 
-	// Sprawdza prawa dostêpu do podstrony
+	// Sprawdza prawa dostÄ™pu do podstrony
     if ( ! $_user->hasPermission('module.forum.admin'))
     {
         throw new userException(__('Access denied'));
     }
 
-	// Tworzy obiekt odpowiedzialny za prezentacjê
+	// Tworzy obiekt odpowiedzialny za prezentacjÄ™
     $_tpl = new AdminModuleIframe('forum');
 	
-	// Zapisuje podstronê do odœwie¿enia
+	// Zapisuje podstronÄ™ do odÅ›wieÅ¼enia
 	$_tpl->setHistory(__FILE__);
 	
 	// Zapis danych
@@ -40,7 +40,7 @@ try
 	{
 		$_pdo->exec('UPDATE [sign_protection] SET `validation_type` = :type', array(':type', $_request->post('validation_type')->isNum(TRUE), PDO::PARAM_INT));
 		
-		// Komunikat do wyœwietlenia przez szablon
+		// Komunikat do wyÅ›wietlenia przez szablon
 		$_tpl->printMessage('valid', $_log->insertSuccess('edit', __('Data has been saved.')));
 	}
 	
