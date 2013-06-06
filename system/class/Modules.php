@@ -61,7 +61,8 @@ class Modules
 		// Kategorie, do których można przypisywać moduły
 		$this->_categories = array(
 			'security',
-			'comments'
+			'comments',
+			'forum'
 		);
 	}
 

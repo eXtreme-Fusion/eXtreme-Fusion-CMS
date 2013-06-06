@@ -20,28 +20,38 @@ try
 	require DIR_SITE.'bootstrap.php';
 	require_once DIR_SYSTEM.'admincore.php';
 	
-	$_locale->moduleLoad('settings', 'sign_protection');
+	//?
+	$_locale->moduleLoad('settings', 'forum');
 
-    if ( ! $_user->hasPermission('module.sign_protection.admin'))
+	// Sprawdza prawa dostêpu do podstrony
+    if ( ! $_user->hasPermission('module.forum.admin'))
     {
         throw new userException(__('Access denied'));
     }
 
-    $_tpl = new AdminModuleIframe('sign_protection');
+	// Tworzy obiekt odpowiedzialny za prezentacjê
+    $_tpl = new AdminModuleIframe('forum');
+	
+	// Zapisuje podstronê do odœwie¿enia
 	$_tpl->setHistory(__FILE__);
 	
-	
+	// Zapis danych
 	if ($_request->post('save')->show())
 	{
 		$_pdo->exec('UPDATE [sign_protection] SET `validation_type` = :type', array(':type', $_request->post('validation_type')->isNum(TRUE), PDO::PARAM_INT));
+		
+		// Komunikat do wyœwietlenia przez szablon
 		$_tpl->printMessage('valid', $_log->insertSuccess('edit', __('Data has been saved.')));
 	}
 	
+	// Pobieranie danych
 	if ($row = $_pdo->getRow('SELECT `validation_type` FROM [sign_protection]'))
 	{
+		// Zapisywanie danych w szablonie
 		$_tpl->assign('validation_type', $row['validation_type']);
 	}
 	
+	// Renderowanie szablonu
 	$_tpl->template('admin.tpl');
 }
 catch(uploadException $exception)
