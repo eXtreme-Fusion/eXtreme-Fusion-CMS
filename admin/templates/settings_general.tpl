@@ -33,7 +33,7 @@
 +--------------------------------------------------------*/
 *}
 
-<h3>{$SystemVersion} - {i18n('Settings')} &raquo; {i18n('Main')}</h3>
+<h3>{$SystemVersion} - {i18n('Settings')} &raquo; {i18n('General')}</h3>
 {if $message}<div class="{$class}">{$message}</div>{/if}
 
 <form action="{$URL_REQUEST}" method="post" id="This">
@@ -50,19 +50,19 @@
 		<div class="grid_4 formField"><textarea name="keywords" id="Keywords" class="resize" rows="1">{$keywords}</textarea></div>
 	</div>
 	<div class="tbl1">
-		<div class="grid_6 formLabel"><label for="SiteBanner">{i18n('Banner:')}</label><small>{i18n('This banner will be displayed if only design author will use correct template methods.')}</small></div>
+		<div class="grid_6 formLabel"><label for="SiteBanner">{i18n('Banner:')}</label><small>{i18n('This banner will be displayed, only if the design author will use correct template methods.')}</small></div>
 		<div class="grid_4 formField"><input type="text" name="site_banner" value="{$site_banner}" id="SiteBanner" class="num_255" maxlength="255" /></div>
 	</div>
 	<div class="tbl2">
-		<div class="grid_6 formLabel"><label for="SiteEmail">{i18n('Admin e-mail address:')}</label></div>
+		<div class="grid_6 formLabel"><label for="SiteEmail">{i18n('Admin's e-mail address:')}</label></div>
 		<div class="grid_4 formField"><input type="text" name="siteemail" value="{$siteemail}" id="SiteEmail" class="num_128" maxlength="128" /></div>
 	</div>
 	<div class="tbl1">
-		<div class="grid_6 formLabel"><label for="SiteUsername">{i18n('Your nick:')}</label></div>
+		<div class="grid_6 formLabel"><label for="SiteUsername">{i18n('Admin's nickname:')}</label></div>
 		<div class="grid_4 formField"><input type="text" name="siteusername" value="{$siteusername}" id="SiteUsername" class="num_32" maxlength="32" /></div>
 	</div>
 	<div class="tbl2">
-		<div class="grid_6 formLabel"><label for="SiteIntro">{i18n('Welcome message:')}</label><small>{i18n('Optional, field can be empty. HTML code is allowed.')}</small></div>
+		<div class="grid_6 formLabel"><label for="SiteIntro">{i18n('Welcome message:')}</label><small>{i18n('Optional, field can be left empty. HTML is allowed here.')}</small></div>
 		<div class="grid_4 formField"><textarea name="siteintro" id="SiteIntro" class="resize" rows="1">{$siteintro}</textarea></div>
 	</div>
 	<div class="tbl1">
@@ -70,7 +70,7 @@
 		<div class="grid_4 formField"><textarea name="footer" id="Footer" class="resize" rows="1">{$footer}</textarea></div>
 	</div>
 	<div class="tbl2">
-		<div class="grid_6 formLabel"><label for="OpeningPage">{i18n('Set as a homepage:')}</label></div>
+		<div class="grid_6 formLabel"><label for="OpeningPage">{i18n('Homepage site:')}</label></div>
 		<div class="grid_4 formField"><input type="text" name="opening_page" value="{$opening_page}" id="OpeningPage" class="num_100" maxlength="100" /></div>
 	</div>
 	<div class="tbl1">
@@ -99,7 +99,7 @@
 		</div>
 	</div>
 	<div class="tbl2">
-		<div class="grid_6 formLabel"><label for="DefaultSearch">{i18n('Default search place:')}</label></div>
+		<div class="grid_6 formLabel"><label for="DefaultSearch">{i18n('Default search field:')}</label></div>
 		<div class="grid_4 formField">
 			<select name="default_search" id="DefaultSearch">
 				{section=search_opts}
