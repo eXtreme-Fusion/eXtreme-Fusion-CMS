@@ -66,7 +66,6 @@ class Parser extends optClass
 		$this->assign('ADDR_ADMIN', ADDR_ADMIN);
 		$this->assign('ADDR_IMAGES', ADDR_IMAGES);
 		$this->assign('ADDR_ADMIN_IMAGES', ADDR_ADMIN_IMAGES);
-		$this->assign('NEWS_CAT_IMAGES', ADDR_IMAGES.'news_cats/'.self::$_sett->get('locale').'/');
 		$this->assign('ADDR_JS', ADDR_JS);
 		$this->assign('ADDR_COMMON_JS', ADDR_COMMON_JS);
 		$this->assign('ADDR_COMMON_CSS', ADDR_COMMON_CSS);
@@ -81,12 +80,37 @@ class Parser extends optClass
 				'ADDR_ADMIN_PAGES' => ADDR_ADMIN.'pages/'
 			)
 		);
-		if (file_exists(DIR_SITE.'themes'.DS.self::$_sett->get('theme').DS.'templates'.DS.'images'.DS.'favicon.ico'))
+		
+		if (self::$_user->iUSER())
 		{
-			$this->assign('ADDR_FAVICON', ADDR_SITE.'themes/'.self::$_sett->get('theme').'/templates/images/favicon.ico');
+			$this->assign('NEWS_CAT_IMAGES', ADDR_IMAGES.'news_cats/'.self::$_user->get('lang').'/');
+			
+			if (self::$_user->get('theme') !== 'Default' && self::$_sett->get('userthemes') === '1')
+			{
+				if (file_exists(DIR_SITE.'themes'.DS.self::$_user->get('theme').DS.'templates'.DS.'images'.DS.'favicon.ico'))
+				{
+					$this->assign('ADDR_FAVICON', ADDR_SITE.'themes/'.self::$_user->get('theme').'/templates/images/favicon.ico');
+				}
+				else
+				{
+					$this->assign('ADDR_FAVICON', ADDR_ADMIN_IMAGES.'favicon.ico');
+				}
+			}
+			else
+			{
+				if (file_exists(DIR_SITE.'themes'.DS.self::$_sett->get('theme').DS.'templates'.DS.'images'.DS.'favicon.ico'))
+				{
+					$this->assign('ADDR_FAVICON', ADDR_SITE.'themes/'.self::$_sett->get('theme').'/templates/images/favicon.ico');
+				}
+				else
+				{
+					$this->assign('ADDR_FAVICON', ADDR_ADMIN_IMAGES.'favicon.ico');
+				}
+			}
 		}
 		else
 		{
+			$this->assign('NEWS_CAT_IMAGES', ADDR_IMAGES.'news_cats/'.self::$_sett->get('locale').'/');
 			$this->assign('ADDR_FAVICON', ADDR_ADMIN_IMAGES.'favicon.ico');
 		}
 
