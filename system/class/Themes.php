@@ -99,7 +99,7 @@ class Theme extends optClass
 
 	protected function setConfig()
 	{
-		$this->setCompilePrefix('themes_'.($this->_user->get('id') ? 'user_'.$this->_user->get('id') : 'default').'_');
+		$this->setCompilePrefix('themes_'.($this->_user->get('theme') ? preg_replace("/[^a-zA-Z0-9_]/", "", $this->_user->get('theme')) : preg_replace("/[^a-zA-Z0-9_]/", "", $this->_sett->get('theme'))).'_');
 		$this->root            = DIR_THEMES.$this->_theme.DS.'templates'.DS;
 		$this->compile         = DIR_CACHE;
 		//$this->compile         = DIR_CACHE.'compile'.DS; Może odzielny katalog dla skompilowanych plików?
