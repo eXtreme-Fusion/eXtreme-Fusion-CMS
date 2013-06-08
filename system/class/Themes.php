@@ -99,12 +99,12 @@ class Theme extends optClass
 
 	protected function setConfig()
 	{
-		
-		$this->setCompilePrefix('themes_');
+		$this->setCompilePrefix('themes_'.($this->_user->get('id') ? 'user_'.$this->_user->get('id') : 'default').'_');
 		$this->root            = DIR_THEMES.$this->_theme.DS.'templates'.DS;
 		$this->compile         = DIR_CACHE;
+		//$this->compile         = DIR_CACHE.'compile'.DS; Może odzielny katalog dla skompilowanych plików?
 		$this->cache           = DIR_SITE.'cache'.DS;
-		$this->gzipCompression = 0;
+		$this->gzipCompression = 1;
 		//$this->httpHeaders(OPT_HTML);
 	}
 
