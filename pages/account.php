@@ -184,6 +184,7 @@ if ($_request->postIsset('email'))
 			'lang'       => $_request->post('language')->show(),
 		), $_fields);
 		
+		// Tymczasowo...
 		$_files->rmDirRecursive(DIR_CACHE);
 
 		$_system->clearCache('profiles');
