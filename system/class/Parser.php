@@ -333,7 +333,7 @@ class SiteAjax extends Parser
 	{
 
 		parent::loadSystem();
-		$this->setCompilePrefix('site_ajax_');
+		$this->setCompilePrefix('site_ajax_'.(parent::$_user->get('theme') ? preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_user->get('theme')) : preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_sett->get('theme'))).'_');
 		$this->compile         = DIR_CACHE;
 		$this->cache           = DIR_CACHE;
 
@@ -387,7 +387,7 @@ class Iframe extends Parser
 
 	protected function setConfig()
 	{
-		$this->setCompilePrefix('admin_iframe_');
+		$this->setCompilePrefix('admin_iframe_'.(parent::$_user->get('theme') ? preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_user->get('theme')) : preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_sett->get('theme'))).'_');
 		$this->root            = DIR_ADMIN_TEMPLATES;
 		$this->compile         = DIR_CACHE;
 	}
@@ -466,7 +466,7 @@ class Site extends Parser
 
 	protected function setConfig()
 	{
-		$this->setCompilePrefix('site_');
+		$this->setCompilePrefix('site_'.(parent::$_user->get('theme') ? preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_user->get('theme')) : preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_sett->get('theme'))).'_');
 		$this->root            = DIR_TEMPLATES;
 		$this->compile         = DIR_CACHE;
 		$this->cache           = DIR_CACHE;
@@ -587,7 +587,7 @@ class Panel extends Parser
 
 	protected function setConfig()
 	{
-		$this->setCompilePrefix('panels_');
+		$this->setCompilePrefix('panels_'.(parent::$_user->get('theme') ? preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_user->get('theme')) : preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_sett->get('theme'))).'_');
 		$this->root            = DIR_TEMPLATES;
 		$this->compile         = DIR_CACHE;
 		$this->cache           = DIR_CACHE;
@@ -674,7 +674,7 @@ class Ajax extends Parser
 
 	protected function setConfig()
 	{
-		$this->setCompilePrefix('ajax_');
+		$this->setCompilePrefix('ajax_'.(parent::$_user->get('theme') ? preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_user->get('theme')) : preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_sett->get('theme'))).'_');
 		$this->compile         = DIR_CACHE;
 		$this->cache           = DIR_CACHE;
 	}
@@ -749,7 +749,7 @@ class AdminModuleIframe extends Parser
 
 	protected function setConfig()
 	{
-		$this->setCompilePrefix('modules_').$this->_module;
+		$this->setCompilePrefix('modules_'.(parent::$_user->get('theme') ? preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_user->get('theme')) : preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_sett->get('theme'))).'_').$this->_module.'_';
 		$this->compile         = DIR_CACHE;
 		$this->cache           = DIR_CACHE;
 	}
@@ -798,7 +798,7 @@ class AdminMainEngine extends Parser
 
 	protected function setConfig()
 	{
-		$this->setCompilePrefix('admin_');
+		$this->setCompilePrefix('admin_'.(parent::$_user->get('theme') ? preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_user->get('theme')) : preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_sett->get('theme'))).'_');
 		$this->root            = DIR_ADMIN_TEMPLATES;
 		$this->compile         = DIR_CACHE;
 		$this->cache           = DIR_CACHE;
