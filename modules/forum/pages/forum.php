@@ -14,21 +14,21 @@
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
 *********************************************************/
-$_locale->moduleLoad('lang', 'forum');
-
-
-
-$theme = array(
-	'Title' => __('Chat'),
-	'Keys' => '',
-	'Desc' => ''
-);
-
-$_tpl->assign('Theme', $theme);
-
 // Blokuje wykonywanie pliku TPL z katalogu szablonu
 define('THIS', TRUE);
 
+require __DIR__.DS.'init.php';
 
-// Definiowanie katalogu templatek modu³u
-$_tpl->setPageCompileDir(DIR_MODULES.'chat'.DS.'templates'.DS);
+// Inicjacja systemu
+$_init = new ForumInit;
+
+// Przekazywanie obiektów
+$_init->setObjs(array(
+	'data' => $_pdo,
+	'request' => $_request,
+	'router' => $_route,
+	'locale' => $_locale
+));
+
+// Wybór kontrolera i przekazanie sterowania aplikacj¹
+$_init->show();
