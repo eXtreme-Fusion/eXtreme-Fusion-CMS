@@ -16,12 +16,12 @@
 *********************************************************/
 
 $mod_info = array(
-	'title' => 'forumNieBoard&trade;',
+	'title' => 'Forum&trade;',
 	'description' => 'Forum społecznościowe',
 	'developer' => 'eXtreme Crew',
 	'support' => 'http://extreme-fusion.org/',
 	'version' => '1.0',
-	'dir' => 'forumNieBoard',
+	'dir' => 'forum',
 	'category' => 'forum'
 );
 

@@ -19,40 +19,20 @@ try
 	require_once '../../../config.php';
 	require DIR_SITE.'bootstrap.php';
 	require_once DIR_SYSTEM.'admincore.php';
-	
-	//?
-	$_locale->moduleLoad('settings', 'forum');
 
-	// Sprawdza prawa dostępu do podstrony
-    if ( ! $_user->hasPermission('module.forum.admin'))
-    {
-        throw new userException(__('Access denied'));
-    }
+	$_locale->moduleLoad('admin', 'forum');
 
-	// Tworzy obiekt odpowiedzialny za prezentację
-    $_tpl = new AdminModuleIframe('forum');
-	
-	// Zapisuje podstronę do odświeżenia
-	$_tpl->setHistory(__FILE__);
-	
-	// Zapis danych
-	if ($_request->post('save')->show())
+	if ( ! $_user->hasPermission('module.forum.admin'))
 	{
-		$_pdo->exec('UPDATE [sign_protection] SET `validation_type` = :type', array(':type', $_request->post('validation_type')->isNum(TRUE), PDO::PARAM_INT));
-		
-		// Komunikat do wyświetlenia przez szablon
-		$_tpl->printMessage('valid', $_log->insertSuccess('edit', __('Data has been saved.')));
+		throw new userException(__('Access denied'));
 	}
+
+	$_tpl = new AdminModuleIframe('forum');
 	
-	// Pobieranie danych
-	if ($row = $_pdo->getRow('SELECT `validation_type` FROM [sign_protection]'))
-	{
-		// Zapisywanie danych w szablonie
-		$_tpl->assign('validation_type', $row['validation_type']);
-	}
+	// Inicjalizacja klas
+	! class_exists('Tag') || $_tag = New Tag($_system, $_pdo);
 	
-	// Renderowanie szablonu
-	$_tpl->template('admin.tpl');
+	$_tpl->template('admin.tpl');	
 }
 catch(uploadException $exception)
 {
