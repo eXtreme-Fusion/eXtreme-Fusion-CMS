@@ -16,21 +16,21 @@
 *********************************************************/
 
 $mod_info = array(
-	'title' => 'systemForum',
-	'description' => 'Zabezpieczenie formularzy przed spamem',
-	'developer' => 'Clear-PHP',
-	'support' => 'http://clear-php.com/',
+	'title' => 'Forum',
+	'description' => 'Forum dla Twojej strony internetowej',
+	'developer' => 'eXtreme-Crew',
+	'support' => 'http://extreme-fusion.org/',
 	'version' => '1.0',
 	'dir' => 'forum',
 );
-
+/*
 $admin_page[1] = array(
-	'title' => 'Sign Protection',
+	'title' => 'Forum',
 	'image' => 'images/protection.png',
 	'page' => 'admin/sign_protection.php',
 	'perm' => 'admin'
 );
-/*
+
 $perm[1] = array(
 	'name' => 'admin',
 	'desc' => 'Zarządzanie modułem SignProtection&trade;'
@@ -43,7 +43,7 @@ $new_table[1] = array(
 	) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;"
 );
 $new_row[1] = array(
-	'sign_protection', 
+	'sign_protection',
 	"(`validation_type`) VALUES (0)"
 );
 
