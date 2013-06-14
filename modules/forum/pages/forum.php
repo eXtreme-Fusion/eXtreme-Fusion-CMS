@@ -1,7 +1,7 @@
 <?php
 chdir(dirname(__DIR__));
 
-define('F_CLASS', '.'.DS.'class'.DS);
+define('F_CLASS', '.'.DS.'app'.DS);
 define('F_VIEW', '.'.DS.'view'.DS);
 define('F_TPL', F_VIEW.'tpl'.DS);
 
