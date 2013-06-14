@@ -1,4 +1,4 @@
-﻿					eXtreme-Fusion 5.0.1 2012.05.28
+					eXtreme-Fusion 5.0.1 2012.05.28
 
 - uzupełnienie czeskich plików językowych
 

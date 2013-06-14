@@ -13,7 +13,7 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
+|
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------+
@@ -38,7 +38,7 @@ class Theme extends optClass
 	private $_tpl_file_name;
 
 	protected $_system;
-	
+
 	protected $_statistics;
 
 
@@ -58,7 +58,23 @@ class Theme extends optClass
 		$this->_request = $request;
 		$this->_route = $route;
 		$this->_head = $head;
-		$this->_theme = $sett->get('theme');
+
+		if ($user->iUSER())
+		{
+			if ($user->get('theme') !== 'Default' && $sett->get('userthemes') === '1')
+			{
+				$this->_theme = $user->get('theme');
+			}
+			else
+			{
+				$this->_theme = $sett->get('theme');
+			}
+		}
+		else
+		{
+			$this->_theme = $sett->get('theme');
+		}
+
 		$this->setConfig();
 		$this->_tpl_file_name = $tpl_file_name;
 		$this->registerFunction('i18n', 'Locale');
@@ -73,9 +89,9 @@ class Theme extends optClass
 				$(\'a[rel*=facebox]\').facebox();
 			});</script>
 		');
-	
+
 	}
-	
+
 	public function setStatisticsInst($_inst)
 	{
 		$this->_statistics = $_inst;
@@ -83,11 +99,12 @@ class Theme extends optClass
 
 	protected function setConfig()
 	{
-		$this->setCompilePrefix('themes_');
+		$this->setCompilePrefix('themes_'.($this->_user->get('theme') ? preg_replace("/[^a-zA-Z0-9_]/", '_', $this->_user->get('theme')) : preg_replace("/[^a-zA-Z0-9_]/", '_', $this->_sett->get('theme'))).'_');
 		$this->root            = DIR_THEMES.$this->_theme.DS.'templates'.DS;
 		$this->compile         = DIR_CACHE;
+		//$this->compile         = DIR_CACHE.'compile'.DS; Może odzielny katalog dla skompilowanych plików?
 		$this->cache           = DIR_SITE.'cache'.DS;
-		$this->gzipCompression = 0;
+		$this->gzipCompression = FALSE;
 		//$this->httpHeaders(OPT_HTML);
 	}
 
@@ -283,14 +300,14 @@ class Theme extends optClass
 			return $menu;
 		}
 	}
-	
+
 	public function getVisitsCount()
 	{
 		if ($this->_statistics)
 		{
 			return $this->_statistics->getUniqueVisitsCount();
 		}
-		
+
 		return NULL;
 	}
 }

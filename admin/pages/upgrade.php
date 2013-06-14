@@ -55,7 +55,7 @@ try
 		// Wyświetli komunikat
 		$_tpl->getMessage($_request->get('status')->show(), $_request->get('act')->show(),
 			array(
-				'update' => array(
+				'updating' => array(
 					__('The update has been finished successfully.'), __('Error! The update has not been finished.')
 				)
 			)
@@ -81,12 +81,12 @@ try
 		
 		if ($count)
 		{
-			$_log->insertSuccess('update', __('The update has been finished successfully.'));
-			$_request->redirect(FILE_PATH, array('act' => 'update', 'status' => 'ok'));
+			$_log->insertSuccess('updating', __('The update has been finished successfully.'));
+			$_request->redirect(FILE_PATH, array('act' => 'updating', 'status' => 'ok'));
 		}
 
-		$_log->insertFail('update', __('Error! The update has not been finished.'));
-		$_request->redirect(FILE_PATH, array('act' => 'update', 'status' => 'error'));
+		$_log->insertFail('updating', __('Error! The update has not been finished.'));
+		$_request->redirect(FILE_PATH, array('act' => 'updating', 'status' => 'error'));
 	}
 
 	$_tpl->assign('ver', $ver);
