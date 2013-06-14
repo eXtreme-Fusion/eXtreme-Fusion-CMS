@@ -55,20 +55,24 @@ if (get_magic_quotes_runtime())
 	}
 }
 
+// Undo register_globals
 if (ini_get('register_globals'))
 {
-	$data = array('_GET', '_POST', '_COOKIE', '_FILES', '_SERVER', '_SESSION', '_ENV');
+	$array= array('_GET', '_POST', '_COOKIE', '_FILES', '_SERVER', '_SESSION', '_ENV');
 
-	foreach ($data as $var)
+	foreach ($array as $value) 
 	{
-		foreach ($GLOBALS[$var] as $key => $value)
+		foreach ($GLOBALS[$value] as $key => $var) 
 		{
-			if (in_array($key, $data))
+			if (isset($GLOBALS[$key]) && $var === $GLOBALS[$key]) 
 			{
-				exit('Hacking action!');
+				if (in_array($key, $array))
+				{
+					exit('Hacking action!');
+				}
+				
+				unset($GLOBALS[$key]);
 			}
-
-			unset($GLOBALS[$key]);
 		}
 	}
 }
