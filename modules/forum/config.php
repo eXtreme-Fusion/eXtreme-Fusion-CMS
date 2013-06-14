@@ -16,32 +16,35 @@
 *********************************************************/
 
 $mod_info = array(
-	'title' => 'forumNieBoard&trade;',
-	'description' => 'Forum społecznościowe',
-	'developer' => 'eXtreme Crew',
-	'support' => 'http://extreme-fusion.org/',
+	'title' => 'systemForum',
+	'description' => 'Zabezpieczenie formularzy przed spamem',
+	'developer' => 'Clear-PHP',
+	'support' => 'http://clear-php.com/',
 	'version' => '1.0',
-	'dir' => 'forumNieBoard',
-	'category' => 'forum'
+	'dir' => 'forum',
 );
 
 $admin_page[1] = array(
-	'title' => 'Forum',
+	'title' => 'Sign Protection',
 	'image' => 'images/protection.png',
-	'page' => 'admin/forum.php',
+	'page' => 'admin/sign_protection.php',
 	'perm' => 'admin'
 );
-
+/*
 $perm[1] = array(
 	'name' => 'admin',
-	'desc' => 'Zarządzanie modułem forumNieBoard&trade;'
+	'desc' => 'Zarządzanie modułem SignProtection&trade;'
 );
 
 $new_table[1] = array(
-	'module_forum',
+	'sign_protection',
 	"(
 		`validation_type` TINYINT UNSIGNED NOT NULL DEFAULT '0'
 	) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;"
 );
+$new_row[1] = array(
+	'sign_protection', 
+	"(`validation_type`) VALUES (0)"
+);
 
-$drop_table[1] = 'module_forum';
+$drop_table[1] = 'sign_protection'; */

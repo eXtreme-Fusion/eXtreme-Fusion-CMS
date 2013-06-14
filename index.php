@@ -181,17 +181,20 @@ try
 	}
 
 	$trace = $_route->getExitFile();
-
+	ob_start();
 	// Ładowanie pliku PHP wybranej podstrony
 	require $_route->getExitFile();
 
 	// Sprawdzanie, czy w załadowanym pliku nastąpiła zmana trace'a (błąd 404, przymus logowania etc.).
 	if ($trace !== $_route->getExitFile())
 	{
+		
 		// Załączanie pliku z trace'a. Zmienił się też TPL.
 		require $_route->getExitFile();
+		
 	}
-
+	$render = ob_get_contents();
+	ob_clean();
 	// Załączanie predefiniowanych elementów szablonu systemu (panele)
 	if ($_route->getFileName() !== 'maintenance')
 	{
@@ -238,7 +241,7 @@ try
 	ob_start();
 
 	/* PREZENTACJA STRONY Z PLIKU TPL */
-
+	echo $render;
 	if ( ! isset($exc_error))
 	{
 		if (! $_tpl->getPageCompileDir())

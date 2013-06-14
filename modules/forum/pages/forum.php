@@ -1,34 +1,91 @@
-<?php defined('EF5_SYSTEM') || exit;
-/*********************************************************
-| eXtreme-Fusion 5
-| Content Management System
-|
-| Copyright (c) 2005-2013 eXtreme-Fusion Crew
-| http://extreme-fusion.org/
-|
-| This program is released as free software under the
-| Affero GPL license. You can redistribute it and/or
-| modify it under the terms of this license which you
-| can read by viewing the included agpl.txt or online
-| at www.gnu.org/licenses/agpl.html. Removal of this
-| copyright header is strictly prohibited without
-| written permission from the original author(s).
-*********************************************************/
-// Blokuje wykonywanie pliku TPL z katalogu szablonu
-define('THIS', TRUE);
+<?php
+chdir(dirname(__DIR__));
 
-require __DIR__.DS.'init.php';
+define('F_CLASS', '.'.DS.'class'.DS);
+define('F_VIEW', '.'.DS.'view'.DS);
+define('F_TPL', F_VIEW.'tpl'.DS);
 
-// Inicjacja systemu
-$_init = new ForumInit;
+define('F_EXT', '.php');
 
-// Przekazywanie obiektów
-$_init->setObjs(array(
-	'data' => $_pdo,
-	'request' => $_request,
-	'router' => $_route,
-	'locale' => $_locale
-));
+// $app - nazwa aplikacji (podstrony)
+// $param[1] - akcja
+// $_params - parametry
 
-// Wybór kontrolera i przekazanie sterowania aplikacj¹
-$_init->show();
+function autoloader($class_name)
+{
+	$class_name = strtolower($class_name);
+	if (file_exists(F_CLASS.$class_name.F_EXT))
+	{
+		include F_CLASS.$class_name.F_EXT;
+		return;
+	}
+	
+	if (file_exists(F_VIEW.$class_name.F_EXT))
+	{
+		include F_VIEW.$class_name.F_EXT;
+		return;
+	}
+	
+	throw new systemException('Class '.$name.' undefined');
+}
+
+spl_autoload_register('autoloader');
+
+if ($_route->getAction())
+{
+	$app = $_route->getAction();
+}
+else
+{
+	$app = 'index';
+}
+
+if (file_exists(F_CLASS.$app.F_EXT))
+{
+	// Pobieranie wszystkich parametrów. Indeksy numeryczne, od 1.
+	$params = $_route->getParams();
+	
+	// Kopiowanie pramaterów z wyj¹tkiem 1., który odpowiada za akcjê.
+	// Nowa tablica jest przekazywana do konstruktora aplikacji.
+	$_params = array();
+
+	for($i = 2, $c = count($params); $i < $c; $i++)
+	{
+		$_params[] = $params[$i];
+	}
+	
+	// Za³¹czanie klasy aplikacji
+	include F_CLASS.$app.F_EXT;
+	$class_name = $app.'_Controller';
+	try
+	{
+		$_obj = new $class_name(isset($params[1]) ? $params[1] : 'index', $_params);
+		$_obj->set('ec', $ec);
+		
+		$_obj->render();
+	}
+	catch(optException $exception)
+	{
+		optErrorHandler($exception);
+	}
+	catch(systemException $exception)
+	{
+		systemErrorHandler($exception);
+	}
+	catch(userException $exception)
+	{
+		userErrorHandler($exception);
+	}
+	catch(PDOException $exception)
+	{
+	   echo $exception;
+	}
+	
+	spl_autoload_unregister('autoloader');
+	spl_autoload_register('__autoload');
+}
+else
+{
+	// B³¹d 404 bez przekierowania.
+	$_route->trace(array('controller' => 'error', 'action' => 404));
+}
