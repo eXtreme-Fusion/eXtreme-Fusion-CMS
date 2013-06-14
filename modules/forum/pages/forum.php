@@ -42,10 +42,10 @@ else
 
 if (file_exists(F_CLASS.$app.F_EXT))
 {
-	// Pobieranie wszystkich parametrów. Indeksy numeryczne, od 1.
+	// Pobieranie wszystkich parametrÃ³w. Indeksy numeryczne, od 1.
 	$params = $_route->getParams();
 	
-	// Kopiowanie pramaterów z wyj¹tkiem 1., który odpowiada za akcjê.
+	// Kopiowanie pramaterÃ³w z wyjÄ…tkiem 1., ktÃ³ry odpowiada za akcjÄ™.
 	// Nowa tablica jest przekazywana do konstruktora aplikacji.
 	$_params = array();
 
@@ -54,7 +54,7 @@ if (file_exists(F_CLASS.$app.F_EXT))
 		$_params[] = $params[$i];
 	}
 	
-	// Za³¹czanie klasy aplikacji
+	// ZaÅ‚Ä…czanie klasy aplikacji
 	include F_CLASS.$app.F_EXT;
 	$class_name = $app.'_Controller';
 	try
@@ -86,6 +86,6 @@ if (file_exists(F_CLASS.$app.F_EXT))
 }
 else
 {
-	// B³¹d 404 bez przekierowania.
+	// BÅ‚Ä…d 404 bez przekierowania.
 	$_route->trace(array('controller' => 'error', 'action' => 404));
 }
