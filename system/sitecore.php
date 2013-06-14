@@ -171,7 +171,7 @@ try
 		
 		HELP::reload(0);
 	}
-	
+
 	# User login session
 	if (strpos($_SERVER['PHP_SELF'], 'admin') === FALSE)
 	{

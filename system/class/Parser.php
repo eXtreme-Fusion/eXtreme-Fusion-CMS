@@ -826,4 +826,3 @@ class AdminMainEngine extends Parser
 		$this->parse($mainengine.$this->ext);
 	}
 }
-
