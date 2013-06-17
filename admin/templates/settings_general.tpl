@@ -33,7 +33,7 @@
 +--------------------------------------------------------*/
 *}
 
-<h3>{$SystemVersion} - {i18n('Settings')} &raquo; {i18n('Main')}</h3>
+<h3>{$SystemVersion} - {i18n('Settings')} &raquo; {i18n('General')}</h3>
 {if $message}<div class="{$class}">{$message}</div>{/if}
 
 <form action="{$URL_REQUEST}" method="post" id="This">
