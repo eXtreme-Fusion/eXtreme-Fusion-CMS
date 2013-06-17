@@ -1,10 +1,9 @@
 <?php defined('EF5_SYSTEM') || exit;
 
 return array(
-
-  'Users Online' => 'Aktuálně online',
-	'Guests Online' => 'Hosté online',
-	'Members Online' => 'Uživatelé online',
-	'Total Members' => 'Celkem uživatelů',
-	'Newest Member' => 'Nejnovější uživatel'
+	'Users online'    => 'Aktuálně online',
+	'Guests online'   => 'Hosté online',
+	'Logged in users' => 'Uživatelé online',
+	'Total members'   => 'Celkem uživatelé',
+	'Last member'     => 'Nejnovější uživatel',
 );

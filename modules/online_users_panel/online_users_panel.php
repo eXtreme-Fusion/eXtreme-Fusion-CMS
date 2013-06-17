@@ -33,53 +33,28 @@
 +-------------------------------------------------------*/
 $_locale->moduleLoad('lang', 'online_users_panel');
 
-openside(__('Users Online'));
+$data = array();
 
-	$online = $_user->getOnline();
-	/*$robots = array(
-		array(
-			'username' => $_robots->getRobots(FALSE, TRUE)
-		)
-	);
-	*/
-
-	echo '		<div>'.__('Guests Online').': '.$_user->getGuests().'</div>
-	';
-	//echo '<div>'.__('Members Online').': '.((count($online))(count($robots))).'</div>';
-	echo '				<div>'.__('Members Online').': '.(count($online)).'</div>
-	';
-
-	$data = array();
-	if ($online)
-	//if ($online || $robots)
+if ($users = $_user->getOnline())
+{
+	foreach ($users as $user)
 	{
-
-		foreach($online as $user)
-		{
-			$data[] = HELP::profileLink($user['username'], $user['id']);
-		}
-
-		/*
-		foreach($robots as $robot)
-		{
-			$data[] = $robot['username'];
-		}
-		*/
-
-		echo '<div>'.implode($data, ', ').'</div>';
+		$data[] = HELP::profileLink($user['username'], $user['id']);
 	}
 
-	echo '					<br />
-	';
+	$_panel->assign('online', $data);
+}
 
-	echo '				<div>'.__('Total Members').': '.number_format($_pdo->getMatchRowsCount('SELECT `id` FROM [users] WHERE status = 0')).'</div>
-	';
+$member = $_pdo->getRow('SELECT `id`, `username` FROM [users] WHERE `status` != 1 AND `status` !=2 ORDER BY `joined` DESC LIMIT 1');
 
-	if ($_sett->get('admin_activation') === '1' && $_user->hasPermission('admin.members'))
-	{
-		//echo '<a href="members.php?status=2" class="side">Nieaktywnych</a>';
-		echo ': '.$_pdo->getMatchRowsCount('SELECT `id` FROM [users] WHERE status<=2')."<br />\n";
-	}
-	$data = $_pdo->getRow('SELECT `id`, `username` FROM [users] WHERE `status` != 1 AND `status` !=2 ORDER BY `joined` DESC LIMIT 1');
-	echo '				'.__('Newest Member').': <span class="side">'.HELP::profileLink($data['username'], $data['id'])."</span>\n";
-closeside();
+$_panel->assignGroup(array(
+	'members' => count($users),
+	'guests'  => $_user->getGuests(),
+	'total'   => number_format($_pdo->getMatchRowsCount('SELECT `id` FROM [users] WHERE status = 0')),
+	'member'  => HELP::profileLink($member['username'], $member['id']),
+));
+
+if ($_sett->get('admin_activation') === '1' && $_user->hasPermission('admin.members'))
+{
+	$_panel->assign('inactive', $_pdo->getMatchRowsCount('SELECT `id` FROM [users] WHERE status<=2'));
+}

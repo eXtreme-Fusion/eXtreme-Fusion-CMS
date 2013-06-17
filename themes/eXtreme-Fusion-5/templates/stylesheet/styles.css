@@ -74,8 +74,68 @@ a.white:hover {color: #d0ef00;}
 
 
 /****** Boczna nawigacja (Side navigation) ******/
-/*#side_nav ul li {padding: 0 12px;}*/
+#side_nav {
+	margin: 0;
+	list-style: none;
+}
 
+#side_nav li + li {
+	margin-top: 1px;
+}
+
+#side_nav li a {
+	display: block;
+	padding: 4px 8px;
+}
+
+#side_nav li a:hover {
+	background-color: #d0ef00;
+	text-decoration: none;
+	color: #151515;
+	border-radius: 3px;
+}
+
+#side_nav li.header {
+	margin: 2px 8px 4px;
+	font-weight: bold;
+	text-transform: uppercase;
+	color: #999;
+}
+
+#side_nav li.separator {
+	display: block;
+	margin: 4px 0;
+	border-top: 1px solid #404040;
+}
+
+/****** Aktualnie online ******/
+#users_online {
+	font-size: 10px;
+}
+
+#users_online dt {
+	width: 110px;
+	float: left;
+	overflow: hidden;
+	font-weight: bold;
+	line-height: 20px;
+	text-align: right;
+}
+
+#users_online dd {
+	margin-left: 120px;
+	line-height: 20px;
+}
+
+#users_online + .links {
+	padding-top: 8px;
+	margin-top: 8px;
+	border-top: 1px solid #404040;
+}
+
+.links {
+	color: #999;
+}
 
 /****** Zawartość (Content) ******/
 #site_mid {
