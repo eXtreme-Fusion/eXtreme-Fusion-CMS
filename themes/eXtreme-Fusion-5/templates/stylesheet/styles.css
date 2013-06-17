@@ -116,7 +116,6 @@ a.white:hover {color: #d0ef00;}
 #users_online dt {
 	width: 110px;
 	float: left;
-
 	overflow: hidden;
 	font-weight: bold;
 	line-height: 20px;
