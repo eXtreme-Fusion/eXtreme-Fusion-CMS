@@ -20,21 +20,21 @@ function autoloader($class_name)
 		include F_CLASS.$class_name.F_EXT;
 		return;
 	}
-	
+
 	if (file_exists(F_VIEW.$class_name.F_EXT))
 	{
 		include F_VIEW.$class_name.F_EXT;
 		return;
 	}
-	
+
 	$class_name = substr($class_name, 0, strpos($class_name, '_data'));
-	
+
 	if (file_exists(F_SRC.$class_name.F_EXT))
 	{
 		include F_SRC.$class_name.F_EXT;
 		return;
 	}
-	
+
 	throw new systemException('Class '.$class_name.' undefined');
 }
 
@@ -53,24 +53,28 @@ if (file_exists(F_CLASS.$app.F_EXT))
 {
 	// Pobieranie wszystkich parametrów. Indeksy numeryczne, od 1.
 	$params = $_route->getParams();
-	
+
 	// Kopiowanie pramaterów z wyjątkiem 1., który odpowiada za akcję.
 	// Nowa tablica jest przekazywana do konstruktora aplikacji.
 	$_params = array();
-
 	for($i = 2, $c = count($params); $i < $c; $i++)
 	{
 		$_params[] = $params[$i];
 	}
-	
+
 	// Załączanie klasy aplikacji
 	include F_CLASS.$app.F_EXT;
 	$class_name = $app.'_Controller';
+
 	try
 	{
+		// Przekazywanie do konstruktora akcji i parametrów
 		$_obj = new $class_name(isset($params[1]) ? $params[1] : 'index', $_params);
+
+		// Przekazywanie obiektu DI
 		$_obj->set('ec', $ec);
-		
+
+		// Wyświetlanie strony
 		$_obj->render();
 	}
 	catch(optException $exception)
@@ -89,7 +93,7 @@ if (file_exists(F_CLASS.$app.F_EXT))
 	{
 	   echo $exception;
 	}
-	
+
 	spl_autoload_unregister('autoloader');
 	spl_autoload_register('__autoload');
 }
