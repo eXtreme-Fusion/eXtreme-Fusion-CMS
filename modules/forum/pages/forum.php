@@ -3,6 +3,7 @@ chdir(dirname(__DIR__));
 
 define('F_CLASS', '.'.DS.'app'.DS);
 define('F_VIEW', '.'.DS.'view'.DS);
+define('F_SRC', '.'.DS.'src'.DS);
 define('F_TPL', F_VIEW.'tpl'.DS);
 
 define('F_EXT', '.php');
@@ -26,7 +27,15 @@ function autoloader($class_name)
 		return;
 	}
 	
-	throw new systemException('Class '.$name.' undefined');
+	$class_name = substr($class_name, 0, strpos($class_name, '_data'));
+	
+	if (file_exists(F_SRC.$class_name.F_EXT))
+	{
+		include F_SRC.$class_name.F_EXT;
+		return;
+	}
+	
+	throw new systemException('Class '.$class_name.' undefined');
 }
 
 spl_autoload_register('autoloader');

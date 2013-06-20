@@ -29,13 +29,41 @@ abstract class Abstract_Controller
 		throw new systemException('Undefined helper usage.');
 	}
 	
-	public function view($name)
+	public function view(array $data)
 	{
-		if (file_exists(F_VIEW.$name.F_EXT))
+		if (isset($data['class']))
 		{
-			include F_VIEW.$name.F_EXT;
-			$name = ucfirst($name).'_View';
-			return new $name;
+			if (file_exists(F_VIEW.$data['class'].F_EXT))
+			{
+				include F_VIEW.$data['class'].F_EXT;
+				$name = ucfirst($data['class']).'_View';
+				if (isset($data['construct']))
+				{
+					$_class = new ReflectionClass($name);
+					$_class = $_class->newInstanceArgs($data['construct']);
+				}
+				else
+				{
+					$_class = new $name;
+				}
+				
+				if (isset($data['method']))
+				{
+					$temp = array();
+					foreach($data['models'] as $name => $class)
+					{
+						$name = ucfirst($name).'_Data';
+						$model = new ReflectionClass($name);
+						$model = $model->newInstanceArgs($class);
+						$temp[] = $model;
+					}
+					
+					call_user_func_array(array($_class, $data['method']), $temp);
+					
+				}
+				
+				return $_class;
+			}
 		}
 		
 		throw new systemException('View '.$name.' not found');

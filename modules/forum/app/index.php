@@ -10,6 +10,15 @@ class Index_Controller extends Abstract_Controller
 	
 	public function index()
 	{
-		return $this->view('index')->index($this->get('ec')->getService('pdo'));
+		return $this->view(array(
+			'class' => 'index', 
+			'construct' => array(),
+			'models' => array(
+				'forum' => array($this->get('ec')->getService('pdo')),
+			),
+			'method' => 'index'
+		));
+
+		
 	}
 }
