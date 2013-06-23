@@ -1,12 +1,10 @@
 <?php
 
-abstract class Abstract_Controller
-{
-	protected
-		$action,
-		$params;
+abstract class Abstract_Controller {
 
-	protected $helper = array();
+	protected $action, $params = array();
+
+	protected $_helper = array();
 
 	public function __construct($action, $params)
 	{
@@ -16,17 +14,27 @@ abstract class Abstract_Controller
 
 	public function set($name, $obj)
 	{
-		$this->helper[$name] = $obj;
+		$this->_helper[$name] = $obj;
 	}
 
 	public function get($name)
 	{
-		if (isset($this->helper[$name]))
+		if (isset($this->_helper[$name]))
 		{
-			return $this->helper[$name];
+			return $this->_helper[$name];
 		}
 
 		throw new systemException('Undefined helper usage.');
+	}
+
+	public function __get($name)
+	{
+		return $this->get($name);
+	}
+
+	public function render()
+	{
+		return $this->{$this->action}();
 	}
 
 	public function view(array $data)
@@ -82,4 +90,5 @@ abstract class Abstract_Controller
 
 		throw new systemException('View is required.');
 	}
+
 }

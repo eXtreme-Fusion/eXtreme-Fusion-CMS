@@ -1,14 +1,6 @@
 <?php
 
-class Index_Controller extends Abstract_Controller {
-
-	public function render()
-	{
-		// Tymczasowo
-		$this->get('ec')->header->set('<link href="'.ADDR_MODULES.'forum/assets/forum.css" rel="stylesheet">');
-
-		return $this->{$this->action}();
-	}
+class Index_Controller extends Forum_Controller {
 
 	public function index()
 	{
@@ -25,8 +17,8 @@ class Index_Controller extends Abstract_Controller {
 
 			// Modele dla metody widoku (opcjonalne)
 			'models' => array(
-				'board'    => array($this->get('ec')->getService('pdo')),
-				'category' => array($this->get('ec')->getService('pdo')),
+				'board'    => array($this->ec->getService('pdo')),
+				'category' => array($this->ec->getService('pdo')),
 			),
 		));
 	}
