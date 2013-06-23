@@ -1,10 +1,13 @@
 <?php
 
-class Index_View extends Abstract_View
-{
-	public function index(Forum_Data $_data)
+class Index_View extends Abstract_View {
+
+	public function index(Board_Data $_board, Category_Data $_category)
 	{
-		$this->assign('version', $_data->get('version'));
-		$this->template('index');
+		$this
+			->assign('board', $_board)
+			->assign('category', $_category)
+			->template('index');
 	}
+
 }

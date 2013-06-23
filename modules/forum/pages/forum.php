@@ -8,6 +8,9 @@ define('F_TPL', F_VIEW.'tpl'.DS);
 
 define('F_EXT', '.php');
 
+define('LEFT', FALSE);
+define('RIGHT', FALSE);
+
 // $app - nazwa aplikacji (podstrony)
 // $param[1] - akcja
 // $_params - parametry

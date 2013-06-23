@@ -1,21 +1,29 @@
 <?php
 
-abstract class Abstract_View
-{
-	protected $data = array();
-	
+abstract class Abstract_View {
+
+	protected $_data = array();
+
 	public function template($name)
 	{
 		include realpath(F_TPL.$name.DS.$name.'.phtml');
 	}
-	
-	public function assign($name, $data)
+
+	public function assign($key, $value)
 	{
-		$this->data[$name] = $data;
+		$this->_data[$key] = $value;
+
+		return $this;
 	}
-	
-	public function get($name)
+
+	public function get($key)
 	{
-		echo $this->data[$name];
+		return $this->_data[$key];
 	}
+
+	public function __get($key)
+	{
+		return $this->get($key);
+	}
+
 }

@@ -1,0 +1,37 @@
+#forum {
+}
+
+#forum th:first-child { border-top-left-radius: 3px; }
+#forum th:last-child  { border-top-right-radius: 3px; }
+
+#forum th,
+#forum td {
+	padding: 10px 14px;
+}
+
+#forum .column-left {
+	text-align: left;
+}
+
+#forum .column-title {
+	font-weight: bold;
+	font-size: 13px;
+}
+
+#forum p {
+	margin-top: 3px;
+	font-size: 11px;
+	color: #777;
+}
+
+#forum tbody tr:last-child td:first-child { border-bottom-left-radius: 3px; }
+#forum tbody tr:last-child td:last-child  { border-bottom-right-radius: 3px; }
+
+#forum tbody tr + tr { border-top: 1px solid #333; }
+#forum tbody td      { background-color: #222; }
+
+#forum th {
+	font-weight: bold;
+	color: #272727;
+	background-color: #9fd10f;
+}
