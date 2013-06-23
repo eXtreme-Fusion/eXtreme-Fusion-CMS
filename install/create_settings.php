@@ -35,7 +35,7 @@
 date_default_timezone_set('UTC');
 
 /*
-* Main Settings
+* General Settings
 */
 
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'site_name', 'value' => 'eXtreme-Fusion CMS - Ninja Edition'));
@@ -191,7 +191,7 @@ $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, 
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.permissions', 'permissions.png', 'Permissions', 'permissions.php', 2)");
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.phpinfo', 'phpinfo.png', 'PHP Info', 'phpinfo.php', 3)");
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.security', 'security.png', 'Security Politics', 'settings_security.php', '4')");
-$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.settings', 'settings.png', 'Main', 'settings_main.php', 4)");
+$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.settings', 'settings.png', 'General', 'settings_general.php', 4)");
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.settings_banners', 'settings_banners.png', 'Banners', 'settings_banners.php', 4)");
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.settings_cache', 'settings_cache.png', 'Cache', 'settings_cache.php', 4)");
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.settings_time', 'settings_time.png', 'Time and Date', 'settings_time.php', 4)");
