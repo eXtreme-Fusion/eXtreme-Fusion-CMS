@@ -28,7 +28,7 @@ return array(
 	'Submissions' => 'Schvalovací sekce',
 	'Upgrade' => 'Aktualizace',
 	'User Groups' => 'Skupiny uživatele',
-	'Main' => 'Hlavní',
+	'General' => 'Hlavní',
 	'Time and Date' => 'Datum a čas',
 	'Registration' => 'Registrace',
 	'Miscellaneous' => 'Různé',

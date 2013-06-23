@@ -285,14 +285,17 @@ class Theme extends optClass
 			{
 				if ($sdata['url'] != "---" && $this->_user->hasAccess($sdata['visibility']))
 				{
+					$route = $this->_route->getFileName();
+					$path  = pathinfo($sdata['url'], PATHINFO_FILENAME);
+
 					$menu[] = array(
-						'sep' => $sep,
-						'link' => HELP::createNaviLink($sdata['url'], !$sdata['rewrite']),
-						//'name' => HELP::parseBBCode($sdata['name'], "b|i|u|color"),
-						'name' => $sdata['name'],
-						'target' => $sdata['window'] == '1' ? TRUE : FALSE,
-						'class' => ($i == 0 ? 'first-link'.($class ? ' '.$class : '') : ($class ? $class : '')),
-						'selected' =>  $this->_route->getFileName() == pathinfo($sdata['url'], PATHINFO_FILENAME) ? TRUE : FALSE
+						'sep'      => $sep,
+						'link'     => HELP::createNaviLink($sdata['url'], !$sdata['rewrite']),
+						//'name'     => HELP::parseBBCode($sdata['name'], "b|i|u|color"),
+						'name'     => $sdata['name'],
+						'target'   => ($sdata['window'] == '1'),
+						'class'    => ($i == 0 ? 'first-link'.($class ? ' '.$class : '') : ($class ? $class : '')),
+						'selected' => ($route == $path || ($path == '' && $route == $this->_sett->get('opening_page'))),
 					);
 					$i++;
 				}
