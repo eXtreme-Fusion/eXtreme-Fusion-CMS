@@ -86,13 +86,22 @@ class URL
 	 */
 	public function path(array $data)
 	{
+		$module = $action = $ext = NULL;
+
+		if (isset($data['module']))
+		{
+			$module = $data['module'].$this->main_sep;
+		}
+
+		unset($data['module']);
+
 		if (isset($data['controller']))
 		{
-			$ctrl = $data['controller'];
+			$controller = $data['controller'];
 		}
 		elseif ($this->controller)
 		{
-			$ctrl = $this->controller;
+			$controller = $this->controller;
 		}
 		else
 		{
@@ -105,33 +114,25 @@ class URL
 		{
 			$action = $this->main_sep.$data['action'];
 		}
-		else
-		{
-			$action = '';
-		}
 
 		unset($data['action']);
 
-			if (isset($data['extension']) && $data['extension'])
-			{
-				$ext = '.'.str_replace('.', '', $data['extension']);
-			}
-			elseif ($this->ext_allowed)
-			{
-				$ext = $this->url_ext;
-			}
-			else
-			{
-				$ext = '';
-			}
-
+		if (isset($data['extension']) && $data['extension'])
+		{
+			$ext = '.'.str_replace('.', '', $data['extension']);
+		}
+		elseif ($this->ext_allowed)
+		{
+			$ext = $this->url_ext;
+		}
 
 		unset($data['extension']);
 
 		$params = array();
+
 		foreach($data as $key => $val)
 		{
-			$params[] = !is_int($key) ? $key.$this->param_sep.$val : $val;
+			$params[] = ! is_int($key) ? $key.$this->param_sep.$val : $val;
 		}
 
 		if ($params)
@@ -143,9 +144,9 @@ class URL
 			$params = '';
 		}
 
-
 		$trace = $this->getPathPrefix();
 
-		return ADDR_SITE.$trace.$ctrl.$action.$params.$ext;
+		return ADDR_SITE.$trace.$module.$controller.$action.$params.$ext;
 	}
+
 }

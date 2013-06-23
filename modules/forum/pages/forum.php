@@ -67,7 +67,7 @@ if (file_exists(F_CLASS.$app.F_EXT))
 		$action = array_shift($params);
 
 		// Przekazywanie do konstruktora akcji i parametrów
-		$_obj = new $class_name(isset($action) ? $action : 'index', $params);
+		$_obj = new $class_name(isset($action) && ! is_numeric($action) ? $action : 'index', $params);
 
 		// Przekazywanie obiektu DI
 		$_obj

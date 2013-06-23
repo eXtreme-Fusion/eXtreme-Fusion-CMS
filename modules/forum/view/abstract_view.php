@@ -9,9 +9,19 @@ abstract class Abstract_View {
 		include realpath(F_TPL.$name.DS.$name.'.phtml');
 	}
 
-	public function assign($key, $value)
+	public function assign($key, $value = NULL)
 	{
-		$this->_data[$key] = $value;
+		if (is_array($key))
+		{
+			foreach ($key as $k => $v)
+			{
+				$this->assign($k, $v);
+			}
+		}
+		else
+		{
+			$this->_data[$key] = $value;
+		}
 
 		return $this;
 	}

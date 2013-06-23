@@ -19,7 +19,7 @@
 				<?php foreach ($categories as $category): ?>
 				<tr>
 					<td>
-						<a href="#" class="column-title"><?php echo $category['title']; ?></a>
+						<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'category', $category['id'])); ?>" class="column-title"><?php echo $category['title']; ?></a>
 						<p><?php echo $category['description']; ?></p>
 					</td>
 					<td>0</td>

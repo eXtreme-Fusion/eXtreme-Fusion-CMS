@@ -64,6 +64,8 @@ abstract class Abstract_Controller {
 					$_class = new $name;
 				}
 
+				$_class->assign($this->_helper);
+
 				// Sprawdzanie, czy ma zostać uruchomiona jakaś metoda
 				if (isset($data['method']) && $data['method'])
 				{
