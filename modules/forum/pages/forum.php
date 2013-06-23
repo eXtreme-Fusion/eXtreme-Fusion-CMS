@@ -54,28 +54,24 @@ else
 
 if (file_exists(F_CLASS.$app.F_EXT))
 {
-	// Pobieranie wszystkich parametrów. Indeksy numeryczne, od 1.
+	// Pobieranie wszystkich parametrów
 	$params = $_route->getParams();
-
-	// Kopiowanie pramaterów z wyjątkiem 1., który odpowiada za akcję.
-	// Nowa tablica jest przekazywana do konstruktora aplikacji.
-	$_params = array();
-	for($i = 2, $c = count($params); $i < $c; $i++)
-	{
-		$_params[] = $params[$i];
-	}
 
 	// Załączanie klasy aplikacji
 	include F_CLASS.$app.F_EXT;
+
 	$class_name = $app.'_Controller';
 
 	try
 	{
+		$action = array_shift($params);
+
 		// Przekazywanie do konstruktora akcji i parametrów
-		$_obj = new $class_name(isset($params[1]) ? $params[1] : 'index', $_params);
+		$_obj = new $class_name(isset($action) ? $action : 'index', $params);
 
 		// Przekazywanie obiektu DI
 		$_obj->set('ec', $ec);
+		$_obj->set('router', $_route);
 
 		// Wyświetlanie strony
 		$_obj->render();
