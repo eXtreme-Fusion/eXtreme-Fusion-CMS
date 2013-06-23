@@ -70,8 +70,10 @@ if (file_exists(F_CLASS.$app.F_EXT))
 		$_obj = new $class_name(isset($action) ? $action : 'index', $params);
 
 		// Przekazywanie obiektu DI
-		$_obj->set('ec', $ec);
-		$_obj->set('router', $_route);
+		$_obj
+			->set('ec', $ec)
+			->set('router', $_route)
+			->set('locale', $_locale);
 
 		// Wyświetlanie strony
 		$_obj->render();

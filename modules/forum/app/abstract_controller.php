@@ -15,6 +15,8 @@ abstract class Abstract_Controller {
 	public function set($name, $obj)
 	{
 		$this->_helper[$name] = $obj;
+
+		return $this;
 	}
 
 	public function get($name)

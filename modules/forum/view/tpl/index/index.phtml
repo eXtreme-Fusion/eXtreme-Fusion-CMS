@@ -1,6 +1,6 @@
 <section class="main_body">
 	<header>
-		<h2>Forum dyskusyjne</h2>
+		<h2><?php echo __('Forum'); ?></h2>
 	</header>
 	<div class="content">
 		<?php if ($boards = $this->board->fetchAll()): ?>
@@ -9,9 +9,9 @@
 			<thead>
 				<tr>
 					<th class="column-left"><?php echo $board['title']; ?></th>
-					<th>Tematów</th>
-					<th>Wpisów</th>
-					<th>Ostatni wpis</th>
+					<th><?php echo __('Threads'); ?></th>
+					<th><?php echo __('Entries'); ?></th>
+					<th><?php echo __('Last entry'); ?></th>
 				</tr>
 			</thead>
 			<?php if ($categories = $this->category->fetchAll($board['id'])): ?>
