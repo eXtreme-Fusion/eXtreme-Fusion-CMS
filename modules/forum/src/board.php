@@ -11,7 +11,7 @@ class Board_Data {
 
 	public function fetchAll()
 	{
-		$boards = $this->_pdo->getData('SELECT * FROM ef_boards ORDER BY `order`');
+		$boards = $this->_pdo->getData('SELECT * FROM [boards] ORDER BY `order`');
 
 		if ( ! $this->_pdo->getRowsCount($boards))
 			return FALSE;
