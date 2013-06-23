@@ -2,7 +2,7 @@
 
 return array(
 	//Site Settings
-	'Main' => 'Główne',
+	'General' => 'Główne',
 	'Site name:' => 'Nazwa strony:',
 	'Site description:' => 'Opis strony:',
 	'Site URL:' => 'Adres strony:',

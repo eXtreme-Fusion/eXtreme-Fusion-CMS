@@ -28,7 +28,7 @@ return array(
 	'Submissions' => 'Nadesłane materiały',
 	'Upgrade' => 'Aktualizacje',
 	'User Groups' => 'Grupy użytkowników',
-	'Main' => 'Główne',
+	'General' => 'Główne',
 	'Time and Date' => 'Data i czas',
 	'Registration' => 'Rejestracja',
 	'Miscellaneous' => 'Różne',
