@@ -10,7 +10,7 @@
 					<th><?php echo __('Last entry'); ?></th>
 				</tr>
 			</thead>
-			<?php if ($categories = $category->fetchAll($board['id'])): ?>
+			<?php if ($categories = $category->fetchByID($board['id'])): ?>
 			<tbody>
 				<?php foreach ($categories as $category): ?>
 				<tr>
@@ -18,8 +18,8 @@
 						<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'category', $category['id'])); ?>" class="column-title"><?php echo $category['title']; ?></a>
 						<p><?php echo $category['description']; ?></p>
 					</td>
-					<td>0</td>
-					<td>0</td>
+					<td><?php echo $category['threads']; ?></td>
+					<td><?php echo $category['entries']; ?></td>
 					<td>Brak</td>
 				</tr>
 				<?php endforeach; ?>
