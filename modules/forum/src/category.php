@@ -11,11 +11,12 @@ class Category_Data {
 
 	public function fetchByID($id)
 	{
-		$categories = $this->_pdo->getData('SELECT * FROM [board_categories] WHERE `board_id`=:id ORDER BY `order` DESC',
-			array(':id', $id, PDO::PARAM_INT));
-
-		if ( ! $this->_pdo->getRowsCount($categories))
-			return FALSE;
+		$categories = $this->_pdo->getData('
+			SELECT c.*
+			FROM [board_categories] c
+			WHERE board_id = :id
+			ORDER BY `order` DESC
+		', array(':id', $id, PDO::PARAM_INT));
 
 		$_categories = array();
 
@@ -34,7 +35,7 @@ class Category_Data {
 
 	public function findByID($id)
 	{
-		$category = $this->_pdo->getRow('
+		return $this->_pdo->getRow('
 			SELECT
 				c.*,
 				b.title as board
@@ -43,11 +44,6 @@ class Category_Data {
 			ON c.board_id=b.id
 			WHERE c.id = :id
 		', array(':id', $id, PDO::PARAM_INT));
-
-		if ($category === FALSE)
-			return FALSE;
-
-		return $category;
 	}
 
 	public function getCount($id)
