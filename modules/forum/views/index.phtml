@@ -1,7 +1,7 @@
 <?php opentable(__('Forum')); ?>
 		<?php if ($boards = $board->fetchAll()): ?>
 		<?php foreach ($boards as $board): ?>
-		<table id="forum">
+		<table class="forum" id="board-<?php echo $board['id']; ?>">
 			<thead>
 				<tr>
 					<th class="column-left"><?php echo $board['title']; ?></th>

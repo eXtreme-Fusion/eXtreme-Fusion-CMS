@@ -32,6 +32,24 @@ class Category_Data {
 		return $_categories;
 	}
 
+	public function findByID($id)
+	{
+		$category = $this->_pdo->getRow('
+			SELECT
+				c.*,
+				b.title as board
+			FROM [board_categories] c
+			LEFT JOIN [boards] b
+			ON c.board_id=b.id
+			WHERE c.id = :id
+		', array(':id', $id, PDO::PARAM_INT));
+
+		if ($category === FALSE)
+			return FALSE;
+
+		return $category;
+	}
+
 	public function getCount($id)
 	{
 		return $this->_pdo->getRow('

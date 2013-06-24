@@ -2,7 +2,7 @@
 
 return array(
 	'Forum'      => 'Forum dyskusyjne',
-	'Threads'    => 'Tematów',
+	'Threads'    => 'Wątków',
 	'Entries'    => 'Wpisów',
 	'Last entry' => 'Ostatni wpis',
 );

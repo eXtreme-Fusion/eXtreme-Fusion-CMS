@@ -1,7 +1,29 @@
 <ul class="breadcrumbs">
 	<li><a href="<?php echo $this->router->path(array('module' => 'forum')); ?>"><?php echo __('Forum'); ?></a></li>
-	<li><strong><?php echo $this->params[0]; ?></strong></li>
+	<li><a href="<?php echo $this->router->path(array('module' => 'forum')); ?>#board-<?php echo $category['board_id']; ?>"><?php echo $category['board']; ?></a></li>
+	<li><strong><?php echo $category['title']; ?></strong></li>
 </ul>
 <?php opentable(__('Forum')); ?>
-		<?php echo $this->params[0]; ?>
+		<table class="forum">
+			<thead>
+				<tr>
+					<th class="column-left">Tytuł wątku</th>
+					<th>Autor</th>
+					<th>Odpowiedzi</th>
+				</tr>
+			</thead>
+			<?php if ($threads): ?>
+			<tbody>
+				<?php foreach ($threads as $thread): ?>
+				<tr>
+					<td>
+						<a href="#"><?php echo $thread['title']; ?></a>
+					</td>
+					<td><?php echo HELP::profileLink($thread['username'], $thread['user_id']); ?></td>
+					<td><?php echo $thread['entries']; ?></td>
+				</tr>
+				<?php endforeach; ?>
+			</tbody>
+			<?php endif; ?>
+		</table>
 <?php closetable(); ?>
