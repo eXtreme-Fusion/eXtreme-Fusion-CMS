@@ -7,9 +7,10 @@
 		<table class="forum">
 			<thead>
 				<tr>
-					<th class="column-left">Tytuł wątku</th>
-					<th>Autor</th>
-					<th>Odpowiedzi</th>
+					<th class="col-6 align-left">Tytuł wątku</th>
+					<th class="col-2">Autor</th>
+					<th class="col-1">Odpowiedzi</th>
+					<th class="col-3">Ostatni wpis</th>
 				</tr>
 			</thead>
 			<?php if ($threads): ?>
@@ -19,8 +20,9 @@
 					<td>
 						<a href="#"><?php echo $thread['title']; ?></a>
 					</td>
-					<td><?php echo HELP::profileLink($thread['username'], $thread['user_id']); ?></td>
-					<td><?php echo $thread['entries']; ?></td>
+					<td class="align-center"><?php echo HELP::profileLink($thread['username'], $thread['user_id']); ?></td>
+					<td class="align-center"><?php echo $thread['entries']; ?></td>
+					<td>-</td>
 				</tr>
 				<?php endforeach; ?>
 			</tbody>

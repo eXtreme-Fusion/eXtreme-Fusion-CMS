@@ -4,10 +4,10 @@
 		<table class="forum" id="board-<?php echo $board['id']; ?>">
 			<thead>
 				<tr>
-					<th class="column-left"><?php echo $board['title']; ?></th>
-					<th><?php echo __('Threads'); ?></th>
-					<th><?php echo __('Entries'); ?></th>
-					<th><?php echo __('Last entry'); ?></th>
+					<th class="col-8 align-left"><?php echo $board['title']; ?></th>
+					<th class="col-1"><?php echo __('Threads'); ?></th>
+					<th class="col-1"><?php echo __('Entries'); ?></th>
+					<th class="col-3"><?php echo __('Last entry'); ?></th>
 				</tr>
 			</thead>
 			<?php if ($categories = $category->fetchByID($board['id'])): ?>
@@ -18,9 +18,9 @@
 						<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'category', $category['id'])); ?>" class="column-title"><?php echo $category['title']; ?></a>
 						<p><?php echo $category['description']; ?></p>
 					</td>
-					<td><?php echo $category['threads']; ?></td>
-					<td><?php echo $category['entries']; ?></td>
-					<td>Brak</td>
+					<td class="align-center"><?php echo $category['threads']; ?></td>
+					<td class="align-center"><?php echo $category['entries']; ?></td>
+					<td>-</td>
 				</tr>
 				<?php endforeach; ?>
 			</tbody>
