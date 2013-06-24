@@ -4,22 +4,12 @@ class Index_Controller extends Forum_Controller {
 
 	public function index()
 	{
-		return $this->view(array(
+		$board    = $this->model('board', array($this->ec->getService('pdo')));
+		$category = $this->model('category', array($this->ec->getService('pdo')));
 
-			// Nazwa pliku widoku bez rozszerzenia
-			'class' => 'index',
-
-			// Parametry konstruktora (opcjonalne)
-			'construct' => array(),
-
-			// Metoda widoku, która ma zostać użyta (opcjonalne)
-			'method' => 'index',
-
-			// Modele dla metody widoku (opcjonalne)
-			'models' => array(
-				'board'    => array($this->ec->getService('pdo')),
-				'category' => array($this->ec->getService('pdo')),
-			),
+		return $this->view('index', array(
+			'board'    => $board,
+			'category' => $category,
 		));
 	}
 

@@ -39,60 +39,27 @@ abstract class Abstract_Controller {
 		return $this->{$this->action}();
 	}
 
-	public function view(array $data)
+	public function model($name, $params = array())
 	{
-		// Sprawdzanie, czy podano nazwę klasy widoku
-		if (isset($data['class']))
+		$name = ucfirst($name).'_Data';
+
+		$model = new ReflectionClass($name);
+
+		return $model->newInstanceArgs($params);
+	}
+
+	public function view($filename, array $data = array())
+	{
+		$_path = F_VIEW.$filename.'.phtml';
+
+		if ( ! file_exists($_path))
 		{
-			// Sprawdzanie, czy plik z klasą istnieje
-			if (file_exists(F_VIEW.$data['class'].F_EXT))
-			{
-				// Załączanie klasy
-				include F_VIEW.$data['class'].F_EXT;
-
-				$name = ucfirst($data['class']).'_View';
-
-				// Sprawdzanie, czy obiekt ma argumenty konstruktora
-				if (isset($data['construct']) && $data['construct'])
-				{
-					// Przekazywanie argumentów do konstruktora
-					$_class = new ReflectionClass($name);
-					$_class = $_class->newInstanceArgs($data['construct']);
-				}
-				else
-				{
-					$_class = new $name;
-				}
-
-				$_class->assign($this->_helper);
-
-				// Sprawdzanie, czy ma zostać uruchomiona jakaś metoda
-				if (isset($data['method']) && $data['method'])
-				{
-					$temp = array();
-					foreach($data['models'] as $name => $class)
-					{
-						// Tworzenie obiektów modeli
-						$name = ucfirst($name).'_Data';
-						$model = new ReflectionClass($name);
-						// Przekazywanie prametrów do konstruktora obiektu
-						$model = $model->newInstanceArgs($class);
-
-						// Zapis obiektów do tablicy jako parametrów metody $data['method']
-						$temp[] = $model;
-					}
-
-					call_user_func_array(array($_class, $data['method']), $temp);
-				}
-
-				// Return view
-				return $_class;
-			}
-
-			throw new systemException('View '.$name.' not found');
+			throw new systemException('View '.$filename.' not found');
 		}
 
-		throw new systemException('View is required.');
+		extract($data, EXTR_SKIP);
+
+		include realpath($_path);
 	}
 
 }

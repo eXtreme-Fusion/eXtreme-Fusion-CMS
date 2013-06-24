@@ -11,7 +11,7 @@ class Category_Data {
 
 	public function fetchAll($id)
 	{
-		$categories = $this->_pdo->getData('SELECT * FROM [board_categories] WHERE `board_id`=:id ORDER BY `order`',
+		$categories = $this->_pdo->getData('SELECT * FROM [board_categories] WHERE `board_id`=:id ORDER BY `order` DESC',
 			array(':id', $id, PDO::PARAM_INT));
 
 		if ( ! $this->_pdo->getRowsCount($categories))

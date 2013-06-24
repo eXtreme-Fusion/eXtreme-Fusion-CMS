@@ -2,9 +2,8 @@
 chdir(dirname(__DIR__));
 
 define('F_CLASS', '.'.DS.'app'.DS);
-define('F_VIEW', '.'.DS.'view'.DS);
+define('F_VIEW', '.'.DS.'views'.DS);
 define('F_SRC', '.'.DS.'src'.DS);
-define('F_TPL', F_VIEW.'tpl'.DS);
 
 define('F_EXT', '.php');
 
@@ -64,10 +63,17 @@ if (file_exists(F_CLASS.$app.F_EXT))
 
 	try
 	{
+		// Pobieranie nazwy akcji oraz usuwanie jej z parametrów
 		$action = array_shift($params);
 
+		// Jeżeli zamiast nazwy akcji znajdzie się liczba, jest ona dodawana na początek parametrów
+		$params = is_numeric($action) ? array_merge(array($action), $params) : $params;
+
+		// W przypadku, gdy nazwą akcji jest liczba, automatycznie wybierana jest akcja `index`
+		$action = isset($action) && ! is_numeric($action) ? $action : 'index';
+
 		// Przekazywanie do konstruktora akcji i parametrów
-		$_obj = new $class_name(isset($action) && ! is_numeric($action) ? $action : 'index', $params);
+		$_obj = new $class_name($action, $params);
 
 		// Przekazywanie obiektu DI
 		$_obj
