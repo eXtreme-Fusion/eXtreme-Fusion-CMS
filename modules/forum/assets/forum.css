@@ -35,3 +35,24 @@
 	color: #272727;
 	background-color: #9fd10f;
 }
+
+.breadcrumbs {
+	margin: 0 0 20px;
+	list-style: none;
+	background-color: #333;
+	border-radius: 3px;
+}
+
+.breadcrumbs li {
+	display: inline-block;
+	padding: 10px 12px;
+}
+
+.breadcrumbs li + li:before {
+	padding-right: 12px;
+	color: #555;
+	content: " \002F";
+}
+
+.breadcrumbs li + li { padding-left: 0; }
+.breadcrumbs strong  { font-weight: bold; }

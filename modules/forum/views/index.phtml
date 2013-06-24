@@ -1,8 +1,4 @@
-<section class="main_body">
-	<header>
-		<h2><?php echo __('Forum'); ?></h2>
-	</header>
-	<div class="content">
+<?php opentable(__('Forum')); ?>
 		<?php if ($boards = $board->fetchAll()): ?>
 		<?php foreach ($boards as $board): ?>
 		<table id="forum">
@@ -32,5 +28,4 @@
 		</table>
 		<?php endforeach; ?>
 		<?php endif; ?>
-	</div>
-</section>
+<?php closetable(); ?>

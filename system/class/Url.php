@@ -86,11 +86,11 @@ class URL
 	 */
 	public function path(array $data)
 	{
-		$module = $action = $ext = NULL;
+		$controller = $module = $action = $ext = NULL;
 
 		if (isset($data['module']))
 		{
-			$module = $data['module'].$this->main_sep;
+			$module = $data['module'];
 		}
 
 		unset($data['module']);
@@ -99,13 +99,18 @@ class URL
 		{
 			$controller = $data['controller'];
 		}
-		elseif ($this->controller)
+		elseif ($this->controller && $module === NULL)
 		{
 			$controller = $this->controller;
 		}
-		else
+		elseif ($module === NULL)
 		{
 			exit('Nie podano kontrolera');
+		}
+
+		if ($module && $controller)
+		{
+			$controller = $this->main_sep.$controller;
 		}
 
 		unset($data['controller']);
