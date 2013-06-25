@@ -1,7 +1,24 @@
+					     eXtreme-Fusion 5.0.3 
+		
+
+
+		OD TERAZ DATA PRZY WERSJI OZNACZA DZIEN PREMIERY A NIE ROZPOCZECIA PRAC NAD SYSTEMEM
+					
 					eXtreme-Fusion 5.0.2 2013.06.01
+					
 - poprawka zabezpieczeń i usuniecie bledu przy wlaczonym register_globals
 - usuniecie odstepu nad jednym z paneli
 - cache dla różnych szablonów o tej samej nazwie plikow tymczasowych
+- usuniecie bledow dotyczacych mySQL w konfiguracji strict mode
+- nowy wyglad panelu nawigacja, ostatnio online
+- nowy wyglad naglowkow paneli bocznych oraz nawigacji poziomej
+- podswietlanie w menu poziomym strony glownej gdy nie jestesmy na podstronie
+- wdrozenie obslugi IPv6 w statystykach unikalnych odwiedzin - wyeliminowanie problemu (jak dobrze pamietam) z logowaniem 
+- poprawki plikow jezykowych, glownie polskich i angielskich
+- latka do usuwania skutkow dzialania register_globals - usuniecie problemu z niezadeklarowana zmienna na jednym z darmowych serwerow
+- usunieciu bledu z niezadeklarowanym indeksem hash w sesji uzytkownika
+- modyfikacja pliku index.php umozliwiajaca rozpoczecie prac nad forum oraz budowe modulow we wzrocu MVP/MVC lub pochodnych
+- poprawka do zarzadzania panelami - usuniecie niepotrzebnej funkcji parsujacej dane 
 
 					eXtreme-Fusion 5.0.1 2013.05.28
 
