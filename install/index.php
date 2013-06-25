@@ -36,7 +36,7 @@ error_reporting(-1);
 try
 {
 	// Instalowana wersja systemu - wyświetlana w nagłówku nawigacji
-	define('VERSION', '5.0.2-unstable');
+	define('VERSION', '5.0.2');
 
 	$HostURL = explode('install', $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']);
 
