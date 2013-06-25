@@ -36,7 +36,7 @@ error_reporting(-1);
 try
 {
 	// Instalowana wersja systemu - wyświetlana w nagłówku nawigacji
-	define('VERSION', '5.0.0');
+	define('VERSION', '5.0.2-unstable');
 
 	$HostURL = explode('install', $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']);
 
@@ -251,7 +251,7 @@ try
 		'ADDR_ADMIN' => ADDR_SITE.'admin/',
 		'ADDR_SITE' => ADDR_SITE,
 		'ADDR_INSTALL' =>  ADDR_SITE.'install/',
-		'step_header' => __('eXtreme-Fusion :version - Setup', array(':version' => VERSION)).(getStepHeader() ? ' &raquo; '.getStepHeader() : ''),
+		'step_header' => __('eXtreme-Fusion :version - Setup', array(':version' => VERSION)).(getStepHeader() ? ' » '.getStepHeader() : ''),
 		'step_menu' => getStepMenu(),
 		'step' => getStepNum(),
 		'php_required' => PHP_REQUIRED

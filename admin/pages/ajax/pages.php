@@ -78,7 +78,7 @@ try
 		}
 		else
 		{
-			exit('Nieprawid≥owy odnoúnik');
+			exit('Nieprawid≈Çowy odno≈õnik');
 		}
 
 			/* Indexed column (used for fast and accurate table cardinality) */

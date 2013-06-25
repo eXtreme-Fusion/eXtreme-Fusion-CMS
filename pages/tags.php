@@ -74,7 +74,7 @@ if ($_route->getAction())
 	}
 
 	$theme = array(
-		'Title' => __('Tag').' &raquo; '.$_route->getAction().' &raquo; '.$_sett->get('site_name'),
+		'Title' => __('Tag').' » '.$_route->getAction().' » '.$_sett->get('site_name'),
 		'Keys' => 'Tag '.$_route->getAction().', słowo kluczowe'.$_route->getAction().', '.$_route->getAction(),
 		'Desc' => 'Lista elementów przypisanych do słowa kluczowego '.$_route->getAction()
 	);
@@ -129,7 +129,7 @@ else
 	$k = implode(', ', $k);
 	
 	$theme = array(
-		'Title' => __('Tagi').' &raquo; '.$_sett->get('site_name'),
+		'Title' => __('Tagi').' » '.$_sett->get('site_name'),
 		'Keys' => $k,
 		'Desc' => 'Lista najpopularniejszych tagów na '.$_sett->get('site_name').'.'
 	);

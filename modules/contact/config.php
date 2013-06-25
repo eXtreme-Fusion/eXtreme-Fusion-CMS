@@ -25,18 +25,18 @@ $mod_info = array(
 );
 
 $new_table[1] = array(
-	"contact",
+	'contact',
 	"(
 		`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 		`email` VARCHAR(200) NOT NULL DEFAULT '',
 		`title` VARCHAR(400) NOT NULL DEFAULT '',
-		`description` TEXT NOT NULL DEFAULT '',
-		`value` TEXT NOT NULL DEFAULT '',
+		`description` TEXT NOT NULL,
+		`value` TEXT NOT NULL,
 		PRIMARY KEY (`id`)
 	) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;"
 );
 
-$drop_table[1] = "contact";
+$drop_table[1] = 'contact';
 
 $admin_page[1] = array(
 	'title' => 'Kontakt',

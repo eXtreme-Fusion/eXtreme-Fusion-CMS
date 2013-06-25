@@ -35,7 +35,7 @@ $_locale->load('password');
 $_head->set('<link href="'.ADDR_TEMPLATES.'stylesheet/password.css" media="screen" rel="stylesheet">');
 
 $theme = array(
-		'Title' => __('Odzyskaj swoje hasło').' &raquo; '.$_sett->get('site_name'),
+		'Title' => __('Odzyskaj swoje hasło').' » '.$_sett->get('site_name'),
 		'Keys' => 'Odzyskiwanie hasła, zapomniałem hasła, hasło',
 		'Desc' => 'Jeśli nie pamiętasz hasła do swojego proflu możesz wysłać nowe hasło na adres podany podczas rejestracji.'
 	);

@@ -16,10 +16,10 @@
 *********************************************************/
 
 /**
- * Przyk³ad dzia³ania:
+ * PrzykÅ‚ad dziaÅ‚ania:
  *
-	// Drugi parametr koniecznie 8 znaków.
-	$c = new Crypt('klucz szyfruj¹cy', '=thn<.?!');
+	// Drugi parametr koniecznie 8 znakÃ³w.
+	$c = new Crypt('klucz szyfrujÄ…cy', '=thn<.?!');
 
 	echo $e = $c->encrypt('test');
 	echo $c->decrypt($e);
@@ -34,11 +34,11 @@ class Crypt
 	protected $_iv;
 
 	/**
-	 * Przy pominiêciu drugiego parametru, kodowanie udbywa siê w jedn¹ stronê.
-	 * Wektor inicjuj¹cy `iv` jest zmienny z prze³adowaniem strony.
+	 * Przy pominiÄ™ciu drugiego parametru, kodowanie udbywa siÄ™ w jednÄ… stronÄ™.
+	 * Wektor inicjujÄ…cy `iv` jest zmienny z przeÅ‚adowaniem strony.
 
-	 * Jeœli dane maj¹ byæ rozkodowane w przysz³oœci, nale¿y posiadaæ sta³y wektor inicjuj¹cy i podaæ go drugim parametrem.
-	 * Niezmienny musi byæ te¿ `key` - klucz szyfruj¹cy.
+	 * JeÅ›li dane majÄ… byÄ‡ rozkodowane w przyszÅ‚oÅ›ci, naleÅ¼y posiadaÄ‡ staÅ‚y wektor inicjujÄ…cy i podaÄ‡ go drugim parametrem.
+	 * Niezmienny musi byÄ‡ teÅ¼ `key` - klucz szyfrujÄ…cy.
 	 */
 	public function __construct($key, $iv = NULL, $cipher = MCRYPT_BLOWFISH, $mode = MCRYPT_MODE_CBC, $source = MCRYPT_DEV_URANDOM)
 	{

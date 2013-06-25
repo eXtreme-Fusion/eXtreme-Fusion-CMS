@@ -171,11 +171,11 @@ try
 		
 		HELP::reload(0);
 	}
-	
+
 	# User login session
 	if (strpos($_SERVER['PHP_SELF'], 'admin') === FALSE)
 	{
-		if (isset($_SESSION['user']))
+		if (isset($_SESSION['user']['id']) && isset($_SESSION['user']['hash']))
 		{
 			$_user->userLoggedInBySession($_SESSION['user']['id'], $_SESSION['user']['hash']);
 		}

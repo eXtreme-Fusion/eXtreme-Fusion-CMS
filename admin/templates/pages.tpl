@@ -33,15 +33,15 @@
 +--------------------------------------------------------*/
 *}
 
-<h3>{$SystemVersion} - {i18n('Strony treści')}</h3>
+<h3>{$SystemVersion} - {i18n('Content Pages')}</h3>
 {if $message}<div class="{$class}">{$message}</div>{/if}
 
 {if $page == 'types'}
 	{if $action == 'add' || $action == 'edit'}
 		<div class="tbl2 text-padding-h3">
-			<span class="bold">Jesteś tutaj: </span>
-			<a href="{$FILE_SELF}">Menu główne</a> &raquo;
-			<a href="{$FILE_SELF}?page=types">Typy materiałów</a> &raquo; Tworzenie nowego typu treści
+			<span class="bold">{i18n('You are here:')} </span>
+			<a href="{$FILE_SELF}">{i18n('Main menu')}</a> &raquo;
+			<a href="{$FILE_SELF}?page=types">{i18n('Content types')}</a> &raquo; {i18n('Creating new content type')}
 		</div>
 
 		<form action="{$URL_REQUEST}" method="post" id="This">
@@ -50,25 +50,25 @@
 				<div class="grid_4 formField"><input type="text" name="name" value="{$name}" id="Name" class="num_40" maxlength="40" /></div>
 			</div>
 			<div class="center text-padding">
-				<p class="bold">Domyślne ustawienia dla materiałów przypisywanych do tego typu treści:</p>
-				<small>(każdy wpis będzie mógł posiadać indywidualne ustawienia, niezależne od tych poniżej)</small>
+				<p class="bold">{i18n('Default settings for pages of this content type:')}</p>
+				<small>{i18n('(each entry can have individual settings, independent of those below)')}</small>
 			</div>
 			<div style="display:none">
 			<div class="tbl2">
-				<div class="grid_6 formLabel">{i18n('Wyświetlać materiał jako news?')}<small>Zaznaczenie tej opcji spowoduje, że materiał będzie wyświetlany razem z newsami. Jest to dobry sposób na wyróżnienie najciekawszych wpisów.</small></div>
+				<div class="grid_6 formLabel">{i18n('Display page as a news:')}<small>{i18n('If you select this option, the page will be displayed with the news. This is a good way to differentiate the most interesting entries.')}</small></div>
 				<div class="grid_1 formField"><label><input type="radio" name="for_news_page" value="1"{if $for_news_page == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
 				<div class="grid_5 formField"><label><input type="radio" name="for_news_page" value="0"{if $for_news_page == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
 			</div>
 			<div class="tbl1">
-				<div class="grid_6 formLabel">{i18n('Pozwolić użytkownikom na modyfikacje własnych materiałów?')}<small>Dotyczy jedynie materiałów nadesłanych przez konkretnego użytkownika oraz tych, których stał się autorem. Publikacja zmodyfikowanej wersji materiału odbywa się dopiero po akceptacji Administratora.</small></div>
+				<div class="grid_6 formLabel">{i18n('Allow users to modify their own pages:')}<small>{i18n('Applies only to pages sent by a particular user and those which he became an author. Publication of the modified version of the page takes place only after the approval by  Administrator.')}</small></div>
 				<div class="grid_1 formField"><label><input type="radio" name="user_allow_edit_own" value="1"{if $user_allow_edit_own == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
 				<div class="grid_5 formField"><label><input type="radio" name="user_allow_edit_own" value="0"{if $user_allow_edit_own == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
 			</div></div>
 			<div class="tbl2">
 				<div class="grid_6 formLabel">
-					<label for="InsightGroups">{i18n('Którym grupom udzielić dostępu do materiału:')}</label>
-					<small>Przytrzymaj klawiasz CTRL przy zaznaczaniu, aby wybrać kilka opcji.</small>
-					<small>Dla braku wyboru, materiał nie będzie widoczny poza Panelem Admina.</small>
+					<label for="InsightGroups">{i18n('Which groups can have access to the page:')}</label>
+					<small>{i18n('Hold down CTRL to select a few options.')}</small>
+					<small>{i18n('In case of no selection the page will NOT be visible outside of the Admin Panel.')}</small>
 				</div>
 				<div class="grid_4 formField">
 					<select name="insight_groups[]" multiple id="InsightGroups" class="select-multi" size="5" >
@@ -81,8 +81,8 @@
 			<div style="display:none">
 			<div class="tbl1">
 				<div class="grid_6 formLabel">
-					<label for="EditingGroups">{i18n('Którym grupom użytkowników umożliwić modyfikację materiału?')}</label>
-					<small>Przytrzymaj klawiasz CTRL przy zaznaczaniu, aby wybrać kilka opcji.</small>
+					<label for="EditingGroups">{i18n('Which groups can modify the page:')}</label>
+					<small>{i18n('Hold down CTRL to select a few options.')}</small>
 				</div>
 				<div class="grid_4 formField">
 					<select name="editing_groups[]" multiple id="EditingGroups" class="select-multi" size="5" >
@@ -91,19 +91,19 @@
 						{/section}
 					</select>
 				</div>
-				{*Widoczne tylko w przypadku zaznaczenua którejś pozycji na liscie wyżej *}
+				{* Visible only if you select any item on the list above *}
 				<div id="wysiwyg" class="hidden">
-					<div class="grid_6 formLabel">{i18n('Umożliwić użytkowników korzystanie z graficznego edytora treści?')}<small>Zaznaczenie tej opcji może mieć znaczny wpływ na wygląd materiałów nadsyłanych lub modyfikowanych przez użytkowników. Będą oni mogli korzystać z kodu HTML przy wizualnym opracowywaniu swoich prac.</small></div>
+					<div class="grid_6 formLabel">{i18n('Allow users to use the graphical content editor:')}<small>{i18n('Selecting this option can have a significant impact on the appearance of created pages. Users will be able to use HTML in the content of their pages.')}</small></div>
 					<div class="grid_1 formField"><label><input type="radio" name="user_allow_use_wysiwyg" value="1"{if $user_allow_use_wysiwyg == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
 					<div class="grid_5 formField"><label><input type="radio" name="user_allow_use_wysiwyg" value="0"{if $user_allow_use_wysiwyg == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
 				</div>
 			</div>
 			<div class="tbl2">
 				<div class="grid_6 formLabel">
-					<label for="SubmittingGroups">{i18n('Którym grupom umożliwić nadsyłanie nowych materiałów?')}</label>
-					<small>Przytrzymaj klawiasz CTRL przy zaznaczaniu, aby wybrać kilka opcji</small>
-					<small>Dla każdej kategorii to ustawienie można określić indywidualnie.</small>
-					<small>Opublikowanie nadesłanego materiału wymaga akceptacji Administratora.</small>
+					<label for="SubmittingGroups">{i18n('Which groups can create new pages:')}</label>
+					<small>{i18n('Hold down CTRL to select a few options.')}</small>
+					<small>{i18n('This setting can be set individually for each category.')}</small>
+					<small>{i18n('Publication of submitted pages requires Admin approval.')}</small>
 				</div>
 				<div class="grid_4 formField">
 					<select name="submitting_groups[]" multiple id="SubmittingGroups" class="select-multi" size="5">
@@ -114,66 +114,66 @@
 				</div>
 			</div>
 			<div class="tbl1">
-				<div class="grid_6 formLabel">{i18n('Pokazywać zapowiedź materiału?')}<small>Dotyczy Przeglądu materiałów poza Panel admina.</small></div>
+				<div class="grid_6 formLabel">{i18n('Show a preview of the page:')}<small>{i18n('Applies to review of the page outside of the Admin Panel.')}</small></div>
 				<div class="grid_1 formField"><label><input type="radio" name="show_preview" value="1"{if $show_preview == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
 				<div class="grid_5 formField"><label><input type="radio" name="show_preview" value="0"{if $show_preview == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
 			</div>
 			<div class="tbl2">
 				<div>
-					<div class="grid_6 formLabel">{i18n('Czy zmienić autora materiału po dokonaniu edycji?')}<small>Dotyczy modyfikacji materiału przez Administratora jak i użytkownika.</small></div>
+					<div class="grid_6 formLabel">{i18n('Do the author of publication should be changed after page editing?')}<small>{i18n('It applies to modifying pages by admin and user.')}</small></div>
 					<div class="grid_1 formField"><label><input type="radio" name="change_author" value="1"{if $change_author == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
 					<div class="grid_5 formField"><label><input type="radio" name="change_author" value="0"{if $change_author == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
 				</div>
 				<div class="clear"></div>
-				{*Jeśli pole wyzej ma wartość 1, to trzeba to ukryć *}
+				{* The bottom field has to be hidden if the field above is set to 1 *}
 				<div id="author" class="hidden">
-					<div class="grid_6 formLabel">{i18n('Czy dopisywać autorów po dokonaniu edycji materiału?')}<small>Dotyczy modyfikacji materiału przez Administratora jak i użytkownika.</small></div>
+					<div class="grid_6 formLabel">{i18n('Do the new authors should be added after page editing?')}<small>{i18n('It applies to modifying pages by admin and user.')}</small></div>
 					<div class="grid_1 formField"><label><input type="radio" name="add_author" value="1"{if $add_author == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
 					<div class="grid_5 formField"><label><input type="radio" name="add_author" value="0"{if $add_author == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
 				</div>
 			</div>
 			<div class="tbl1">
 				<div>
-					<div class="grid_6 formLabel">{i18n('Czy zmienić datę publikacji materiału po dokonaniu edycji?')}<small>Dotyczy modyfikacji materiału przez Administratora jak i użytkownika.</small></div>
+					<div class="grid_6 formLabel">{i18n('Do the publication date should be changed after page editing:')}<small>{i18n('It applies to modifying pages by admin and user.')}</small></div>
 					<div class="grid_1 formField"><label><input type="radio" name="change_date" value="1"{if $change_date == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
 					<div class="grid_5 formField"><label><input type="radio" name="change_date" value="0"{if $change_date == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
 				</div>
 				<div class="clear"></div>
-				{*Jeśli pole wyzej ma wartość 1, to trzeba to ukryć *}
+				{* The bottom field has to be hidden if the field above is set to 1 *}
 				<div id="date" class="hidden">
-					<div class="grid_6 formLabel">{i18n('Czy dopisać do listy datę modyfikacji materiału?')}<small>Dotyczy modyfikacji materiału przez Administratora jak i użytkownika.</small></div>
+					<div class="grid_6 formLabel">{i18n('Do the editon date should be added after page editing?')}<small>{i18n('It applies to modifying pages by admin and user.')}</small></div>
 					<div class="grid_1 formField"><label><input type="radio" name="add_last_editing_date" value="1"{if $add_last_editing_date == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
 					<div class="grid_5 formField"><label><input type="radio" name="add_last_editing_date" value="0"{if $add_last_editing_date == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
 				</div>
 			</div>
-			<p class="center bold text-padding">Opcje dla systemowych funkcji widoku HTML, które mogą być użyte jako API Stron przy tworzeniu szablonów:</p>
+			<p class="center bold text-padding">{i18n('Options for HTML view system functions which may be used as API for creating pages templates:')}</p>
 			<div class="tbl2">
-				<div class="grid_6 formLabel">{i18n('Wyświetlać informację o autorze/autorach materiału?')}</div>
+				<div class="grid_6 formLabel">{i18n('Display information about authors of page:')}</div>
 				<div class="grid_1 formField"><label><input type="radio" name="show_author" value="1"{if $show_author == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
 				<div class="grid_5 formField"><label><input type="radio" name="show_author" value="0"{if $show_author == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
 			</div>
 			<div class="tbl1">
-				<div class="grid_6 formLabel">{i18n('Wyświetlać datę publikacji/daty modyfikacji materiału?')}</div>
+				<div class="grid_6 formLabel">{i18n('Display date of publication or date of modification of page:')}</div>
 				<div class="grid_1 formField"><label><input type="radio" name="show_date" value="1"{if $show_date == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
 				<div class="grid_5 formField"><label><input type="radio" name="show_date" value="0"{if $show_date == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
 			</div>
 			<div class="tbl2">
-				<div class="grid_6 formLabel">{i18n('Wyświetlać kategorie, do których materiał należy?')}</div>
+				<div class="grid_6 formLabel">{i18n('Display categories which include the page:')}</div>
 				<div class="grid_1 formField"><label><input type="radio" name="show_category" value="1"{if $show_category == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
 				<div class="grid_5 formField"><label><input type="radio" name="show_category" value="0"{if $show_category == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
 			</div>
 			<div class="tbl1">
-				<div class="grid_6 formLabel">{i18n('Wyświetlać słowa kluczowe przypisane do materiału?')}</div>
+				<div class="grid_6 formLabel">{i18n('Display keywords assigned to the page:')}</div>
 				<div class="grid_1 formField"><label><input type="radio" name="show_tags" value="1"{if $show_tags == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
 				<div class="grid_5 formField"><label><input type="radio" name="show_tags" value="0"{if $show_tags == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
 			</div>
 			<div class="tbl2">
-				<div class="grid_6 formLabel">{i18n('Wyświetlać typ materiału (nazwę z pierwszego pola)?')}</div>
+				<div class="grid_6 formLabel">{i18n('Display content type (name from first field):')}</div>
 				<div class="grid_1 formField"><label><input type="radio" name="show_type" value="1"{if $show_type == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
 				<div class="grid_5 formField"><label><input type="radio" name="show_type" value="0"{if $show_type == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
 			</div>
 			<div class="tbl1">
-				<div class="grid_6 formLabel">{i18n('Pozwolić na komentarze?')}</div>
+				<div class="grid_6 formLabel">{i18n('Allow comments?')}</div>
 				<div class="grid_1 formField"><label><input type="radio" name="user_allow_comments" value="1"{if $user_allow_comments == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>
 				<div class="grid_5 formField"><label><input type="radio" name="user_allow_comments" value="0"{if $user_allow_comments == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
 			</div>

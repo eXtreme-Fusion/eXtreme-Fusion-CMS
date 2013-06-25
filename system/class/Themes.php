@@ -13,7 +13,7 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
+|
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------+
@@ -38,7 +38,7 @@ class Theme extends optClass
 	private $_tpl_file_name;
 
 	protected $_system;
-	
+
 	protected $_statistics;
 
 
@@ -58,10 +58,30 @@ class Theme extends optClass
 		$this->_request = $request;
 		$this->_route = $route;
 		$this->_head = $head;
-		$this->_theme = $sett->get('theme');
+
+		if ($user->iUSER())
+		{
+			if ($user->get('theme') !== 'Default' && $sett->get('userthemes') === '1')
+			{
+				$this->_theme = $user->get('theme');
+			}
+			else
+			{
+				$this->_theme = $sett->get('theme');
+			}
+		}
+		else
+		{
+			$this->_theme = $sett->get('theme');
+		}
+
 		$this->setConfig();
 		$this->_tpl_file_name = $tpl_file_name;
-		
+		$this->registerFunction('i18n', 'Locale');
+		if (function_exists('optUrl'))
+		{
+			$this->registerFunction('url', 'Url');
+		}
 		$this->_head->set('
 			<link href="'.ADDR_COMMON_CSS.'facebox.css" rel="stylesheet">'.PHP_EOL.'
 			<script src="'.ADDR_COMMON_JS.'facebox.js"></script>'.PHP_EOL.'
@@ -69,9 +89,9 @@ class Theme extends optClass
 				$(\'a[rel*=facebox]\').facebox();
 			});</script>
 		');
-	
+
 	}
-	
+
 	public function setStatisticsInst($_inst)
 	{
 		$this->_statistics = $_inst;
@@ -79,17 +99,19 @@ class Theme extends optClass
 
 	protected function setConfig()
 	{
-		$this->setCompilePrefix('themes_');
+		$this->setCompilePrefix('themes_'.($this->_user->get('theme') ? preg_replace("/[^a-zA-Z0-9_]/", '_', $this->_user->get('theme')) : preg_replace("/[^a-zA-Z0-9_]/", '_', $this->_sett->get('theme'))).'_');
 		$this->root            = DIR_THEMES.$this->_theme.DS.'templates'.DS;
 		$this->compile         = DIR_CACHE;
+		//$this->compile         = DIR_CACHE.'compile'.DS; Może odzielny katalog dla skompilowanych plików?
 		$this->cache           = DIR_SITE.'cache'.DS;
-		$this->gzipCompression = 0;
+		$this->gzipCompression = FALSE;
 		//$this->httpHeaders(OPT_HTML);
 	}
 
 	public function template($iframe)
 	{
 		$this->assign('ADDR_SITE', ADDR_SITE);
+		$this->assign('ADDR_ADMIN', ADDR_ADMIN);
 		$this->assign('THEME_ADDRESS', ADDR_SITE.'themes/'.$this->_theme.'/');
 		$this->assign('DIR_IMAGES', DIR_IMAGES);
 		$this->assign('THEME_IMAGES', THEME_IMAGES);
@@ -250,7 +272,7 @@ class Theme extends optClass
 		return $output;
 	}
 
-	public function showSubLinks($sep = "&middot;", $class = "")
+	public function showSubLinks($sep = "·", $class = "")
 	{
 		$query = $this->_pdo->getData(
 			"SELECT `name`, `url`, `window`, `visibility`, `rewrite` FROM [navigation]
@@ -263,14 +285,17 @@ class Theme extends optClass
 			{
 				if ($sdata['url'] != "---" && $this->_user->hasAccess($sdata['visibility']))
 				{
+					$route = $this->_route->getFileName();
+					$path  = pathinfo($sdata['url'], PATHINFO_FILENAME);
+
 					$menu[] = array(
-						'sep' => $sep,
-						'link' => HELP::createNaviLink($sdata['url'], !$sdata['rewrite']),
-						//'name' => HELP::parseBBCode($sdata['name'], "b|i|u|color"),
-						'name' => $sdata['name'],
-						'target' => $sdata['window'] == '1' ? TRUE : FALSE,
-						'class' => ($i == 0 ? 'first-link'.($class ? ' '.$class : '') : ($class ? $class : '')),
-						'selected' =>  $this->_route->getFileName() == pathinfo($sdata['url'], PATHINFO_FILENAME) ? TRUE : FALSE
+						'sep'      => $sep,
+						'link'     => HELP::createNaviLink($sdata['url'], !$sdata['rewrite']),
+						//'name'     => HELP::parseBBCode($sdata['name'], "b|i|u|color"),
+						'name'     => $sdata['name'],
+						'target'   => ($sdata['window'] == '1'),
+						'class'    => ($i == 0 ? 'first-link'.($class ? ' '.$class : '') : ($class ? $class : '')),
+						'selected' => ($route == $path || ($path == '' && $route == $this->_sett->get('opening_page'))),
 					);
 					$i++;
 				}
@@ -278,14 +303,14 @@ class Theme extends optClass
 			return $menu;
 		}
 	}
-	
+
 	public function getVisitsCount()
 	{
 		if ($this->_statistics)
 		{
 			return $this->_statistics->getUniqueVisitsCount();
 		}
-		
+
 		return NULL;
 	}
 }

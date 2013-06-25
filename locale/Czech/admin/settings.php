@@ -2,7 +2,7 @@
 
 return array(
 	//Site Settings
-	'Main' => 'Hlavní',
+	'General' => 'Hlavní',
 	'Site name:' => 'Název stránky:',
 	'Site description:' => 'Popis stránky:',
 	'Site URL:' => 'Adresa stránky:',

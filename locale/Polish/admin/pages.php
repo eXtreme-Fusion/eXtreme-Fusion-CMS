@@ -28,7 +28,7 @@ return array(
 	'Submissions' => 'Nadesłane materiały',
 	'Upgrade' => 'Aktualizacje',
 	'User Groups' => 'Grupy użytkowników',
-	'Main' => 'Główne',
+	'General' => 'Główne',
 	'Time and Date' => 'Data i czas',
 	'Registration' => 'Rejestracja',
 	'Miscellaneous' => 'Różne',
@@ -38,5 +38,5 @@ return array(
 	'Security Politics' => 'Polityka bezpieczeństwa',
 	'User Fields' => 'Pola profilu',
 	'User Field Categories' => 'Kategorie pól profilu',
-	'Pages' => 'Strony treści',
+	'Content Pages' => 'Strony treści',
 );

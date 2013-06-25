@@ -94,6 +94,9 @@ return array(
 
 	'User Panel' => 'Panel użytkownika',
 	'Admin Panel' => 'Administracja',
+	
+	'--No selection--' => '--Brak wyboru--',
+	'--Default--' => '--Domyślne--',
 
 	'Private messages' => 'Prywatne wiadomości',
 

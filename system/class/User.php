@@ -507,11 +507,41 @@ class User {
 			}
 			else
 			{
+				$bind = array(':user_id', $id, PDO::PARAM_INT);
+
 				// Zapisuje dane użytkownika o podanym ID
 				$this->_pdo->exec('INSERT INTO [users_data] (`user_id`, `'.$fields['keys'].'`) VALUES (:user_id, :'.$fields['params'].') ON DUPLICATE KEY UPDATE '.$fields['fields'], array_merge(
-					array(array(':user_id', $id, PDO::PARAM_INT)),
+					array($bind),
 					$fields['values']
 				));
+
+				/**
+				 * Nie wszystkie dodatkowe pola podlegają edycji.
+				 * Z tego powodu trzeba pobrać wszystkie pola dla danego użytkownika,
+				 * by sprawdzić, czy posiada w którymś z nich dane.
+				 */
+
+				// Pobiera wszystkie dane dla użytkownika o podanym ID
+				$user_data = $this->_pdo->getRow('SELECT * FROM [users_data] WHERE `user_id` = :user_id', $bind);
+
+				unset($user_data['user_id']);
+
+				$has_data = FALSE;
+				foreach($user_data as $val)
+				{
+					// Sprawdzanie, czy któreś pole posiada dane
+					if (trim($val))
+					{
+						$has_data = TRUE;
+						break;
+					}
+				}
+
+				if (! $has_data)
+				{
+					// Usuwanie zbędnego wiersza
+					$this->_pdo->exec('DELETE FROM [users_data] WHERE `user_id` = :user_id', $bind);
+				}
 			}
 		}
 
@@ -543,7 +573,7 @@ class User {
 	}
 
 	// Zwraca dodatkowe dane użytkownika z możliwością ich nadpisania przez $values.
-	public function getCustomData($user_id = NULL, array $values = array())
+	public function getCustomData($user_id = NULL, array $values = array(), $edit = NULL)
 	{
 		$query = $this->_pdo->getData('SELECT * FROM [user_field_cats] ORDER BY `order` ASC');
 		$cats = array();
@@ -551,8 +581,17 @@ class User {
 		{
 			$cats[] = $data;
 		}
-
-		$query = $this->_pdo->getData('SELECT * FROM [user_fields]');
+		
+		if ($edit === NULL)
+		{
+			$query = $this->_pdo->getData('SELECT * FROM [user_fields]');
+		}
+		else
+		{
+			$edit = (int) $edit;
+			$query = $this->_pdo->getData('SELECT * FROM [user_fields] WHERE `edit` = '.$edit);
+		}
+		
 		$fields = array();
 		foreach($query as $data)
 		{
@@ -572,11 +611,13 @@ class User {
 			$_new_fields = array();
 			foreach($cats as $key => $cat)
 			{
-				$i = 0;
+				$i = 0; $has_field = FALSE;
 				foreach($fields as $field)
 				{
 					if ($field['cat'] === $cat['id'])
 					{
+						$has_field = TRUE;
+						
 						$new_fields[$key][$i] = $field;
 
 						$new_fields[$key][$i]['value'] = '';
@@ -602,6 +643,11 @@ class User {
 
 						$i++;
 					}
+				}
+				
+				if (! $has_field)
+				{
+					unset($cats[$key]);
 				}
 			}
 		}
