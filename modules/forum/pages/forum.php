@@ -7,8 +7,10 @@ define('F_SRC', '.'.DS.'src'.DS);
 
 define('F_EXT', '.php');
 
+/*
 define('LEFT', FALSE);
 define('RIGHT', FALSE);
+*/
 
 // $app - nazwa aplikacji (podstrony)
 // $param[1] - akcja

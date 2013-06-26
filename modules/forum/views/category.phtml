@@ -13,19 +13,23 @@
 					<th class="col-3">Ostatni wpis</th>
 				</tr>
 			</thead>
-			<?php if ($threads): ?>
 			<tbody>
+				<?php if ($threads): ?>
 				<?php foreach ($threads as $thread): ?>
 				<tr>
 					<td>
-						<a href="#"><?php echo $thread['title']; ?></a>
+						<a href="#" class="text-title"><?php echo $thread['title']; ?></a>
 					</td>
 					<td class="align-center"><?php echo HELP::profileLink($thread['username'], $thread['user_id']); ?></td>
 					<td class="align-center"><?php echo $thread['entries']; ?></td>
 					<td>-</td>
 				</tr>
 				<?php endforeach; ?>
+				<?php else: ?>
+				<tr>
+					<td colspan="4">W tej kategorii nie został utworzony żaden wątek.</td>
+				</tr>
+				<?php endif; ?>
 			</tbody>
-			<?php endif; ?>
 		</table>
 <?php closetable(); ?>
