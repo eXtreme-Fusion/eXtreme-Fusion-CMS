@@ -7,8 +7,8 @@ class Category_Model extends Abstract_Model {
 		$categories = $this->_pdo->getData('
 			SELECT c.*
 			FROM [board_categories] c
-			WHERE board_id = :id
-			ORDER BY `order` DESC
+			WHERE c.board_id = :id
+			ORDER BY `order` ASC
 		', array(':id', $id, PDO::PARAM_INT));
 
 		$_categories = array();
@@ -34,7 +34,7 @@ class Category_Model extends Abstract_Model {
 				b.title as board
 			FROM [board_categories] c
 			LEFT JOIN [boards] b
-			ON c.board_id=b.id
+			ON b.id=c.board_id
 			WHERE c.id = :id
 		', array(':id', $id, PDO::PARAM_INT));
 	}

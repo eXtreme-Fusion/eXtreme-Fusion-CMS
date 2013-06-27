@@ -71,7 +71,8 @@ if (file_exists($path = F_CLASS.$app.F_EXT))
 		$_obj
 			->set('ec', $ec)
 			->set('router', $_route)
-			->set('locale', $_locale);
+			->set('locale', $_locale)
+			->set('user', $_user);
 
 		// Wyświetlanie strony
 		$_obj->render();
@@ -90,7 +91,7 @@ if (file_exists($path = F_CLASS.$app.F_EXT))
 	}
 	catch(PDOException $exception)
 	{
-	   echo $exception;
+		echo $exception;
 	}
 
 	spl_autoload_unregister('autoloader');
