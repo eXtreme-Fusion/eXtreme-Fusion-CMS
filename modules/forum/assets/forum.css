@@ -43,12 +43,13 @@ strong { font-weight: bold; }
 }
 
 .forum .entry-author {
-	margin: 14px 0 0;
+	margin: 6px 0 0;
+	font-size: 10px;
 	color: #999;
 	list-style: none;
 }
 
-.forum .entry-author li + li { margin-top: 4px; }
+.forum .entry-author .text-title { margin-bottom: 6px; }
 
 .forum tbody tr:last-child td:first-child { border-bottom-left-radius: 3px; }
 .forum tbody tr:last-child td:last-child { border-bottom-right-radius: 3px; }

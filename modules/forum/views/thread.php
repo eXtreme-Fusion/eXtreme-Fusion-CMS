@@ -23,6 +23,7 @@
 							<ul class="entry-author col">
 								<li class="text-title"><?php echo HELP::profileLink($entry['username'], $entry['user_id']); ?></li>
 								<li><?php echo $this->user->getRoleName($entry['role']); ?></li>
+								<li>Wpisów: <strong><?php echo $entry['entries']; ?></strong></li>
 							</ul>
 						</div>
 					</td>

@@ -8,7 +8,8 @@ class Entry_Model extends Abstract_Model {
 			SELECT
 				e.*,
 				u.username as username,
-				u.role as role
+				u.role as role,
+				(SELECT COUNT(entry.id) FROM [entries] entry WHERE entry.user_id=e.user_id) as entries
 			FROM [entries] e
 			LEFT JOIN [users] u
 			ON u.id=e.user_id
