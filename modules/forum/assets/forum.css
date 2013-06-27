@@ -1,5 +1,6 @@
-.forum {
-}
+strong { font-weight: bold; }
+
+.forum {}
 
 .forum th:first-child { border-top-left-radius: 3px; }
 .forum th:last-child { border-top-right-radius: 3px; }
@@ -14,6 +15,8 @@
 .forum .align-center { text-align: center; }
 .forum .align-right { text-align: right; }
 
+.forum .align-top { vertical-align: top; }
+
 .forum .text-title {
 	font-weight: bold;
 	font-size: 13px;
@@ -24,6 +27,28 @@
 	font-size: 11px;
 	color: #777;
 }
+
+.forum .avatar {
+	max-width: 100%;
+	border: 2px solid #eee;
+	border-radius: 3px;
+}
+
+.forum .entry-info {
+	padding: 5px 14px;
+	margin: -10px -14px 10px;
+	font-size: 10px;
+	background-color: #1c1c1c;
+	border-bottom: 1px solid #333;
+}
+
+.forum .entry-author {
+	margin: 14px 0 0;
+	color: #999;
+	list-style: none;
+}
+
+.forum .entry-author li + li { margin-top: 4px; }
 
 .forum tbody tr:last-child td:first-child { border-bottom-left-radius: 3px; }
 .forum tbody tr:last-child td:last-child { border-bottom-right-radius: 3px; }
@@ -59,7 +84,6 @@
 }
 
 .breadcrumbs li + li { padding-left: 0; }
-.breadcrumbs strong { font-weight: bold; }
 
 .col-12 { width: 100%; }
 .col-11 { width: 91.66666666666666%; }
@@ -73,3 +97,17 @@
 .col-3 { width: 25%; }
 .col-2 { width: 16.666666666666664%; }
 .col-1 { width: 8.333333333333332%; }
+
+.col {
+	position: relative;
+	float: left;
+	min-height: 1px;
+	padding-right: 7px;
+	padding-left: 7px;
+}
+
+.row {
+	margin-right: -7px;
+	margin-left: -7px;
+	overflow: hidden;
+}

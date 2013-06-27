@@ -7,10 +7,8 @@ define('F_SRC', '.'.DS.'src'.DS);
 
 define('F_EXT', '.php');
 
-/*
 define('LEFT', FALSE);
 define('RIGHT', FALSE);
-*/
 
 function autoloader($class_name)
 {
