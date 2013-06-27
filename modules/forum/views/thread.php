@@ -8,8 +8,8 @@
 		<table class="forum">
 			<thead>
 				<tr>
-					<th class="col-2">Autor</th>
-					<th class="col-10">Treść wpisu</th>
+					<th class="col-2"><?php echo __('Author'); ?></th>
+					<th class="col-10"><?php echo __('Entry content'); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -23,12 +23,12 @@
 							<ul class="entry-author col">
 								<li class="text-title"><?php echo HELP::profileLink($entry['username'], $entry['user_id']); ?></li>
 								<li><?php echo $this->user->getRoleName($entry['role']); ?></li>
-								<li>Wpisów: <strong><?php echo $entry['entries']; ?></strong></li>
+								<li><?php echo __('Entries'); ?>: <strong><?php echo $entry['entries']; ?></strong></li>
 							</ul>
 						</div>
 					</td>
 					<td class="align-top">
-						<p class="entry-info">Utworzone: <strong><?php echo HELP::showDate('longdate', $entry['timestamp']); ?></strong></p>
+						<p class="entry-info"><?php echo __('Created on'); ?>: <strong><?php echo HELP::showDate('longdate', $entry['timestamp']); ?></strong></p>
 						<?php echo $entry['content']; ?>
 					</td>
 				</tr>

@@ -7,10 +7,10 @@
 		<table class="forum">
 			<thead>
 				<tr>
-					<th class="col-6 align-left">Tytuł wątku</th>
-					<th class="col-2">Autor</th>
-					<th class="col-1">Odpowiedzi</th>
-					<th class="col-3">Ostatni wpis</th>
+					<th class="col-6 align-left"><?php echo __('Thread title'); ?></th>
+					<th class="col-2"><?php echo __('Author'); ?></th>
+					<th class="col-1"><?php echo __('Replies'); ?></th>
+					<th class="col-3"><?php echo __('Last entry'); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -27,7 +27,7 @@
 				<?php endforeach; ?>
 				<?php else: ?>
 				<tr>
-					<td colspan="4">W tej kategorii nie został utworzony żaden wątek.</td>
+					<td colspan="4"><?php echo __('In this category has not been created any thread'); ?>.</td>
 				</tr>
 				<?php endif; ?>
 			</tbody>
