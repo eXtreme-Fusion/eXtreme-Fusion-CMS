@@ -51,7 +51,7 @@ if (file_exists($path = F_CLASS.$app.F_EXT))
 	// Załączanie klasy aplikacji
 	require_once $path;
 
-	$class_name = $app.'_Controller';
+	$class_name = ucfirst($app).'_Controller';
 
 	try
 	{
