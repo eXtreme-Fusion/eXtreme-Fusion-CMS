@@ -12,34 +12,24 @@ define('LEFT', FALSE);
 define('RIGHT', FALSE);
 */
 
-// $app - nazwa aplikacji (podstrony)
-// $param[1] - akcja
-// $_params - parametry
-
 function autoloader($class_name)
 {
 	$class_name = strtolower($class_name);
-	if (file_exists(F_CLASS.$class_name.F_EXT))
+
+	if (file_exists($path = F_CLASS.$class_name.F_EXT))
 	{
-		include F_CLASS.$class_name.F_EXT;
+		require_once $path;
 		return;
 	}
 
-	if (file_exists(F_VIEW.$class_name.F_EXT))
+	if (file_exists($path = F_SRC.$class_name.F_EXT))
 	{
-		include F_VIEW.$class_name.F_EXT;
+		require_once $path;
 		return;
 	}
 
-	$class_name = substr($class_name, 0, strpos($class_name, '_data'));
-
-	if (file_exists(F_SRC.$class_name.F_EXT))
-	{
-		include F_SRC.$class_name.F_EXT;
-		return;
-	}
-
-	throw new systemException('Class '.$class_name.' undefined');
+	throw new systemException(__('Class :name does not exist',
+		array(':name' => $class_name)));
 }
 
 spl_autoload_register('autoloader');
@@ -53,13 +43,13 @@ else
 	$app = 'index';
 }
 
-if (file_exists(F_CLASS.$app.F_EXT))
+if (file_exists($path = F_CLASS.$app.F_EXT))
 {
 	// Pobieranie wszystkich parametrów
 	$params = $_route->getParams();
 
 	// Załączanie klasy aplikacji
-	include F_CLASS.$app.F_EXT;
+	require_once $path;
 
 	$class_name = $app.'_Controller';
 

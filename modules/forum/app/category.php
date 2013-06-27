@@ -5,7 +5,7 @@ class Category_Controller extends Forum_Controller {
 	public function index()
 	{
 		$category = $this
-			->model('category', array($this->ec->getService('pdo')))
+			->model('category')
 			->findByID($this->params[0]);
 
 		if ($category === FALSE)
@@ -14,7 +14,7 @@ class Category_Controller extends Forum_Controller {
 		}
 
 		$threads = $this
-			->model('thread', array($this->ec->getService('pdo')))
+			->model('thread')
 			->fetchByID($category['id']);
 
 		return $this->view('category', array(

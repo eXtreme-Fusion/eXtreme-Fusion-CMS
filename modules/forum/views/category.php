@@ -18,7 +18,7 @@
 				<?php foreach ($threads as $thread): ?>
 				<tr>
 					<td>
-						<a href="#" class="text-title"><?php echo $thread['title']; ?></a>
+						<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', $thread['id'])); ?>" class="text-title"><?php echo $thread['title']; ?></a>
 					</td>
 					<td class="align-center"><?php echo HELP::profileLink($thread['username'], $thread['user_id']); ?></td>
 					<td class="align-center"><?php echo $thread['entries']; ?></td>

@@ -2,9 +2,10 @@
 
 abstract class Abstract_Controller {
 
-	protected $action, $params = array();
+	protected $action = array();
+	protected $params = array();
 
-	protected $_helper = array();
+	protected $_helpers = array();
 
 	public function __construct($action, $params)
 	{
@@ -12,21 +13,22 @@ abstract class Abstract_Controller {
 		$this->params = $params;
 	}
 
-	public function set($name, $obj)
+	public function set($name, $object)
 	{
-		$this->_helper[$name] = $obj;
+		$this->_helpers[$name] = $object;
 
 		return $this;
 	}
 
 	public function get($name)
 	{
-		if (isset($this->_helper[$name]))
+		if ( ! isset($this->_helpers[$name]))
 		{
-			return $this->_helper[$name];
+			throw new systemException(__('Helper :name does not exist',
+				array(':name' => $name)));
 		}
 
-		throw new systemException('Undefined helper usage.');
+		return $this->_helpers[$name];
 	}
 
 	public function __get($name)
@@ -41,7 +43,16 @@ abstract class Abstract_Controller {
 
 	public function model($name, $params = array())
 	{
-		$name = ucfirst($name).'_Data';
+		if ( ! file_exists($path = F_SRC.$name.F_EXT))
+		{
+			throw new systemException(__('Model :name does not exist',
+				array(':name' => $name)));
+		}
+
+		// Załączanie klasy
+		require_once $path;
+
+		$name = ucfirst($name).'_Model';
 
 		$model = new ReflectionClass($name);
 
@@ -50,16 +61,15 @@ abstract class Abstract_Controller {
 
 	public function view($filename, array $data = array())
 	{
-		$_path = F_VIEW.$filename.'.phtml';
-
-		if ( ! file_exists($_path))
+		if ( ! file_exists($_path = F_VIEW.$filename.F_EXT))
 		{
-			throw new systemException('View '.$filename.' not found');
+			throw new systemException(__('View :filename does not exist',
+				array(':filename' => $filename)));
 		}
 
 		extract($data, EXTR_SKIP);
 
-		include realpath($_path);
+		require_once realpath($_path);
 	}
 
 }

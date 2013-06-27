@@ -1,13 +1,6 @@
 <?php
 
-class Thread_Data {
-
-	protected $_pdo;
-
-	public function __construct(Data $_pdo)
-	{
-		$this->_pdo = $_pdo;
-	}
+class Thread_Model extends Abstract_Model {
 
 	public function fetchByID($id)
 	{
@@ -23,6 +16,15 @@ class Thread_Data {
 			return FALSE;
 
 		return $threads;
+	}
+
+	public function findByID($id)
+	{
+		return $this->_pdo->getRow('
+			SELECT *
+			FROM [threads]
+			WHERE id = :id
+		', array(':id', $id, PDO::PARAM_INT));
 	}
 
 }

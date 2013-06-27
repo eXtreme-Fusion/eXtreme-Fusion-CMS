@@ -1,12 +1,7 @@
 <?php
 
-class Entry_Data {
+class Entry_Data extends Abstract_Model {
 
-	protected $_pdo;
 
-	public function __construct(Data $_pdo)
-	{
-		$this->_pdo = $_pdo;
-	}
 
 }

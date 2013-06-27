@@ -1,13 +1,6 @@
 <?php
 
-class Category_Data {
-
-	protected $_pdo;
-
-	public function __construct(Data $_pdo)
-	{
-		$this->_pdo = $_pdo;
-	}
+class Category_Model extends Abstract_Model {
 
 	public function fetchByID($id)
 	{
