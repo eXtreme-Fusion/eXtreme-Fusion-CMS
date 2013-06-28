@@ -38,7 +38,7 @@ $(document).ready(function($) {
 	});
 
 	// Boczna nawigacja wczytywana AJAXowo
-	$("#Navigation .table a").live("click", function(e) {
+	$("#Navigation .table a").live("click", function() {
 		var id      = this.id,
 		    menu    = id.split("-"),
 		    session = $("#SessionExpire").find("strong");
