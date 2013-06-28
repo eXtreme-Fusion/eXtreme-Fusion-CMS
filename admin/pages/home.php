@@ -52,6 +52,14 @@ try
 
 	$_tpl = new Iframe;
 
+	// Numer wersji, do której system ma zostać zaktualizowany
+	$new_version = '5.0.2';
+
+	if ($_sett->get('version') < $new_version)
+	{
+		$_tpl->assign('upgrade', TRUE);
+	}
+	
 	if ($_request->post('note_add_save')->show() === 'yes')
 	{
 		$count = $_pdo->getMatchRowsCount('
