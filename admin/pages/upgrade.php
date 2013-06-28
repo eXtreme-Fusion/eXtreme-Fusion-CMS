@@ -63,7 +63,7 @@ try
     }
 	
 	// Numer wersji, do której system ma zostać zaktualizowany
-	$new_version = '5.0.1';
+	$new_version = '5.0.2';
 
 	$ver = $_sett->get('version') < $new_version;
 
@@ -73,6 +73,8 @@ try
 			Zapytania wymagane podczas aktualizacji
 		*/
 	
+		$_pdo->exec('ALTER TABLE [statistics] CHANGE `ip` `ip` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT \'0.0.0.0\'');
+		
 		$count = $_sett->update(array
 			(
 				'version' => $new_version

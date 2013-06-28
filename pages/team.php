@@ -45,7 +45,7 @@ $theme = array(
 define('THIS', TRUE);
 
 // Site Admin
-$row = $_pdo->getRow('SELECT * FROM [users] WHERE `id` = 1');
+$row = $_pdo->getRow('SELECT * FROM [users] WHERE `id` = 1 and `role` = 1');
 
 	if(time() <= $row['lastvisit']+300)
 	{
