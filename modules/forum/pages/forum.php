@@ -2,43 +2,32 @@
 chdir(dirname(__DIR__));
 
 define('F_CLASS', '.'.DS.'app'.DS);
-define('F_VIEW', '.'.DS.'view'.DS);
+define('F_VIEW', '.'.DS.'views'.DS);
 define('F_SRC', '.'.DS.'src'.DS);
-define('F_TPL', F_VIEW.'tpl'.DS);
 
 define('F_EXT', '.php');
 
 define('LEFT', FALSE);
 define('RIGHT', FALSE);
 
-// $app - nazwa aplikacji (podstrony)
-// $param[1] - akcja
-// $_params - parametry
-
 function autoloader($class_name)
 {
 	$class_name = strtolower($class_name);
-	if (file_exists(F_CLASS.$class_name.F_EXT))
+
+	if (file_exists($path = F_CLASS.$class_name.F_EXT))
 	{
-		include F_CLASS.$class_name.F_EXT;
+		require_once $path;
 		return;
 	}
 
-	if (file_exists(F_VIEW.$class_name.F_EXT))
+	if (file_exists($path = F_SRC.$class_name.F_EXT))
 	{
-		include F_VIEW.$class_name.F_EXT;
+		require_once $path;
 		return;
 	}
 
-	$class_name = substr($class_name, 0, strpos($class_name, '_data'));
-
-	if (file_exists(F_SRC.$class_name.F_EXT))
-	{
-		include F_SRC.$class_name.F_EXT;
-		return;
-	}
-
-	throw new systemException('Class '.$class_name.' undefined');
+	throw new systemException(__('Class :name does not exist',
+		array(':name' => $class_name)));
 }
 
 spl_autoload_register('autoloader');
@@ -52,30 +41,36 @@ else
 	$app = 'index';
 }
 
-if (file_exists(F_CLASS.$app.F_EXT))
+if (file_exists($path = F_CLASS.$app.F_EXT))
 {
-	// Pobieranie wszystkich parametrów. Indeksy numeryczne, od 1.
+	// Pobieranie wszystkich parametrów
 	$params = $_route->getParams();
 
-	// Kopiowanie pramaterów z wyjątkiem 1., który odpowiada za akcję.
-	// Nowa tablica jest przekazywana do konstruktora aplikacji.
-	$_params = array();
-	for($i = 2, $c = count($params); $i < $c; $i++)
-	{
-		$_params[] = $params[$i];
-	}
-
 	// Załączanie klasy aplikacji
-	include F_CLASS.$app.F_EXT;
-	$class_name = $app.'_Controller';
+	require_once $path;
+
+	$class_name = ucfirst($app).'_Controller';
 
 	try
 	{
+		// Pobieranie nazwy akcji oraz usuwanie jej z parametrów
+		$action = array_shift($params);
+
+		// Jeżeli zamiast nazwy akcji znajdzie się liczba, jest ona dodawana na początek parametrów
+		$params = is_numeric($action) ? array_merge(array($action), $params) : $params;
+
+		// W przypadku, gdy nazwą akcji jest liczba, automatycznie wybierana jest akcja `index`
+		$action = isset($action) && ! is_numeric($action) ? $action : 'index';
+
 		// Przekazywanie do konstruktora akcji i parametrów
-		$_obj = new $class_name(isset($params[1]) ? $params[1] : 'index', $_params);
+		$_obj = new $class_name($action, $params);
 
 		// Przekazywanie obiektu DI
-		$_obj->set('ec', $ec);
+		$_obj
+			->set('ec', $ec)
+			->set('router', $_route)
+			->set('locale', $_locale)
+			->set('user', $_user);
 
 		// Wyświetlanie strony
 		$_obj->render();
@@ -94,7 +89,7 @@ if (file_exists(F_CLASS.$app.F_EXT))
 	}
 	catch(PDOException $exception)
 	{
-	   echo $exception;
+		echo $exception;
 	}
 
 	spl_autoload_unregister('autoloader');

@@ -1,12 +1,11 @@
 <?php
 
-abstract class Abstract_Controller
-{
-	protected
-		$action,
-		$params;
+abstract class Abstract_Controller {
 
-	protected $helper = array();
+	protected $action = array();
+	protected $params = array();
+
+	protected $_helpers = array();
 
 	public function __construct($action, $params)
 	{
@@ -14,72 +13,63 @@ abstract class Abstract_Controller
 		$this->params = $params;
 	}
 
-	public function set($name, $obj)
+	public function set($name, $object)
 	{
-		$this->helper[$name] = $obj;
+		$this->_helpers[$name] = $object;
+
+		return $this;
 	}
 
 	public function get($name)
 	{
-		if (isset($this->helper[$name]))
+		if ( ! isset($this->_helpers[$name]))
 		{
-			return $this->helper[$name];
+			throw new systemException(__('Helper :name does not exist',
+				array(':name' => $name)));
 		}
 
-		throw new systemException('Undefined helper usage.');
+		return $this->_helpers[$name];
 	}
 
-	public function view(array $data)
+	public function __get($name)
 	{
-		// Sprawdzanie, czy podano nazwę klasy widoku
-		if (isset($data['class']))
+		return $this->get($name);
+	}
+
+	public function render()
+	{
+		return $this->{$this->action}();
+	}
+
+	public function model($name, $params = array())
+	{
+		if ( ! file_exists($path = F_SRC.$name.F_EXT))
 		{
-			// Sprawdzanie, czy plik z klasą istnieje
-			if (file_exists(F_VIEW.$data['class'].F_EXT))
-			{
-				// Załączanie klasy
-				include F_VIEW.$data['class'].F_EXT;
-
-				$name = ucfirst($data['class']).'_View';
-
-				// Sprawdzanie, czy obiekt ma argumenty konstruktora
-				if (isset($data['construct']) && $data['construct'])
-				{
-					// Przekazywanie argumentów do konstruktora
-					$_class = new ReflectionClass($name);
-					$_class = $_class->newInstanceArgs($data['construct']);
-				}
-				else
-				{
-					$_class = new $name;
-				}
-
-				// Sprawdzanie, czy ma zostać uruchomiona jakaś metoda
-				if (isset($data['method']) && $data['method'])
-				{
-					$temp = array();
-					foreach($data['models'] as $name => $class)
-					{
-						// Tworzenie obiektów modeli
-						$name = ucfirst($name).'_Data';
-						$model = new ReflectionClass($name);
-						// Przekazywanie prametrów do konstruktora obiektu
-						$model = $model->newInstanceArgs($class);
-
-						// Zapis obiektów do tablicy jako parametrów metody $data['method']
-						$temp[] = $model;
-					}
-
-					call_user_func_array(array($_class, $data['method']), $temp);
-				}
-
-				// Return view
-				return $_class;
-			}
-
-			throw new systemException('View '.$name.' not found');
+			throw new systemException(__('Model :name does not exist',
+				array(':name' => $name)));
 		}
 
-		throw new systemException('View is required.');
+		// Załączanie klasy
+		require_once $path;
+
+		$name = ucfirst($name).'_Model';
+
+		$model = new ReflectionClass($name);
+
+		return $model->newInstanceArgs($params);
 	}
+
+	public function view($filename, array $data = array())
+	{
+		if ( ! file_exists($_path = F_VIEW.$filename.F_EXT))
+		{
+			throw new systemException(__('View :filename does not exist',
+				array(':filename' => $filename)));
+		}
+
+		extract($data, EXTR_SKIP);
+
+		require_once realpath($_path);
+	}
+
 }
