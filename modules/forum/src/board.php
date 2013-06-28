@@ -1,17 +1,10 @@
 <?php
 
-class Board_Data {
-
-	protected $_pdo;
-
-	public function __construct(Data $_pdo)
-	{
-		$this->_pdo = $_pdo;
-	}
+class Board_Model extends Abstract_Model {
 
 	public function fetchAll()
 	{
-		$boards = $this->_pdo->getData('SELECT * FROM [boards] ORDER BY `order`');
+		$boards = $this->_pdo->getData('SELECT * FROM [boards] ORDER BY `order` ASC');
 
 		if ( ! $this->_pdo->getRowsCount($boards))
 			return FALSE;
