@@ -27,7 +27,7 @@ body {
 
 /* Rozszerzenia */
 textarea {resize:vertical;min-height:80px}
-.center {text-align:center;}
+.center {text-align:center !important;}
 .center-box {margin:0 auto !important;text-align:center !important;}
 .italic{font-style:italic}
 .underline{text-decoration:underline}
