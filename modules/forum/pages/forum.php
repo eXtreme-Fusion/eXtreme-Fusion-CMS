@@ -70,7 +70,8 @@ if (file_exists($path = F_CLASS.$app.F_EXT))
 			->set('ec', $ec)
 			->set('router', $_route)
 			->set('locale', $_locale)
-			->set('user', $_user);
+			->set('user', $_user)
+			->set('url', $_url);
 
 		// Wyświetlanie strony
 		$_obj->render();
