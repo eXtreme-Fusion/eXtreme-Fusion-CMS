@@ -37,10 +37,17 @@ $(document).ready(function($) {
 		this.target = "_blank";
 	});
 
-	//	Boczna nawigacja wczytywana AJAXowo
+	// Boczna nawigacja wczytywana AJAXowo
 	$("#Navigation .table a").live("click", function() {
-		var GetMenu = (this.id).split("-");
-		$("#mainFrame").attr("src", "pages/navigation.php?PageNum="+GetMenu[1]);
+		var id      = this.id,
+		    menu    = id.split("-"),
+		    session = $("#SessionExpire").find("strong");
+
+		if (session.text() == "00:00:00") {
+			window.location.href = document.location+"?action=login";
+		}
+
+		$("#mainFrame").attr("src", "pages/navigation.php?PageNum="+menu[1]);
 	});
 
 	//	Główna nawigacja

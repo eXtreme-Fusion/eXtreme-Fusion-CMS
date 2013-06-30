@@ -1,6 +1,8 @@
 			eXtreme-Fusion 5.0.3
-        
-
+- ukrycie linku do podstrony Edytor paneli - link do dodawania paneli jest na podstronie Panele
+- ukrycie linku do podstrony Aktualizacja - informacja o dostępności aktualizacji oraz link do podstrony Aktualizacja jest widoczny na stronie głównej panelu admina, gdy aktualizacja jest dostępna
+- wersja systemu do aktualizacji od teraz w pliku bootstrap.php
+- przekierowania na logowanie po wygaśnięciu sesji przy kliknięciu w zakładkę w Panelu admina
 
         OD TERAZ DATA PRZY WERSJI OZNACZA DZIEŃ PREMIERY A NIE ROZPOCZĘCIA PRAC NAD SYSTEMEM
                     

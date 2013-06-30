@@ -122,7 +122,8 @@ class User {
 		// Przed edycją należy przeczytać opis przy deklaracji zmiennej
 		$this->_cookie_life_time = time() + 60*60*24*31;
 
-		// From php.net
+		// Author: Karoly Nagy (Korcsii)
+		// https://github.com/php-fusion/PHP-Fusion/blob/master/includes/ip_handling_include.php
 		if (filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP))
 		{
 			if (strpos($_SERVER['REMOTE_ADDR'], '.'))
@@ -2049,7 +2050,8 @@ class User {
 		return TRUE;
 	}
 
-	// From php.net
+	// Author: Karoly Nagy (Korcsii)
+	// https://github.com/php-fusion/PHP-Fusion/blob/master/includes/ip_handling_include.php
 	private function IPv6($ip, $limit)
 	{
 		if (strpos($ip, "::") !== FALSE)
@@ -2062,14 +2064,16 @@ class User {
 		}
 		return implode(":", $tmp);
 	}
-
+	
+	// Author: Karoly Nagy (Korcsii)
+	// https://github.com/php-fusion/PHP-Fusion/blob/master/includes/ip_handling_include.php
 	public function bannedByIP()
 	{
 		if ($this->_ip)
 		{
 			if ($this->_ip_type === 4)
 			{
-				return $this->_pdo->getMatchRowsCount('SELECT `id` FROM [blacklist] WHERE type=4 AND ip REGEXP "^'.str_replace(".", ".(", $this->_ip, $i).str_repeat(")?", $i).'$"');
+				return $this->_pdo->getMatchRowsCount('SELECT `id` FROM [blacklist] WHERE type=4 AND ip REGEXP "^'.str_replace(".", "(.", $this->_ip, $i).str_repeat(")?", $i).'$"');
 			}
 			elseif($this->_ip_type === 5)
 			{
@@ -2077,7 +2081,7 @@ class User {
 			}
 			elseif($this->_ip_type === 6)
 			{
-				return $this->_pdo->getMatchRowsCount('SELECT `id` FROM [blacklist] WHERE type=6 AND ip REGEXP "^'.str_replace(":", ":(", $this->_ip, $i).str_repeat(")?", $i).'$"');
+				return $this->_pdo->getMatchRowsCount('SELECT `id` FROM [blacklist] WHERE type=6 AND ip REGEXP "^'.str_replace(":", "(:", $this->_ip, $i).str_repeat(")?", $i).'$"');
 			}
 			else
 			{
