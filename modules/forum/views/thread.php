@@ -4,15 +4,20 @@
 	<li><a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'category', $thread['category_id'])); ?>"><?php echo $thread['category']; ?></a></li>
 	<li><strong><?php echo $thread['title']; ?></strong></li>
 </ul>
-<?php opentable(__('Forum')); ?>
+<?php $this->theme->middlePanel(__('Forum')); ?>
+		<nav class="forum-nav">
+			<?php if ($logged_in = $this->user->iUSER()): ?>
+			<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'reply', $thread['id'])); ?>" class="button"><?php echo __('Add reply'); ?></a>
+			<?php endif; ?>
+			<?php if (($logged_in && $user->isAuthor()) || ($logged_in && $this->user->iADMIN())): ?>
+			<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'edit', $thread['id'])); ?>" class="button"><?php echo __('Edit thread'); ?></a>
+			<?php endif; ?>
+		</nav>
 		<table class="forum">
 			<thead>
 				<tr>
 					<th class="col-2"><?php echo __('Author'); ?></th>
-					<th class="col-10">
-						<?php echo __('Entry content'); ?>
-						<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'reply', $thread['id'])); ?>" class="forum-btn"><?php echo __('Add reply'); ?></a>
-					</th>
+					<th class="col-10"><?php echo __('Entry content'); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -38,9 +43,9 @@
 				<?php endforeach; ?>
 			</tbody>
 		</table>
-<?php closetable(); ?>
-<?php if ($this->user->iUSER() === TRUE): $_user = $this->user; ?>
-<?php opentable(__('Quick reply')); ?>
+<?php $this->theme->middlePanel(); ?>
+<?php if ($this->user->iUSER()): $_user = $this->user; ?>
+<?php $this->theme->middlePanel(__('Quick reply')); ?>
 		<form action="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'reply', $thread['id'])); ?>" method="post">
 			<table class="forum">
 				<thead>
@@ -71,5 +76,5 @@
 				</tbody>
 			</table>
 		</form>
-<?php closetable(); ?>
+<?php $this->theme->middlePanel(); ?>
 <?php endif; ?>

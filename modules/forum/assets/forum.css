@@ -1,5 +1,9 @@
 strong { font-weight: bold; }
 
+.button { margin: 0; }
+
+.button + .button { margin-left: 2px; }
+
 .forum th:first-child { border-top-left-radius: 3px; }
 .forum th:last-child { border-top-right-radius: 3px; }
 
@@ -9,32 +13,12 @@ strong { font-weight: bold; }
 	vertical-align: middle;
 }
 
-.forum-btn {
+.forum-nav {
 	float: right;
-	padding: 4px 8px;
-	margin: -4px 0;
-	color: #4e6116;
-	font-size: 10px;
-	background-color: #c4f531;
-	border: 1px solid #7fa803;
-	border-radius: 3px;
-	box-shadow: inset 0 1px 0 #d9ff66, 0 1px 0 #bdf514;
+	margin-bottom: 8px;
 }
 
-.forum-btn:hover,
-.forum-btn:focus {
-	text-decoration: none;
-	color: #4e6116;
-}
-
-.forum-btn:active {
-	color: #f2ffcc;
-	text-shadow: 0 -1px 0 #688a03;
-	background-color: #81a80c;
-	border-color: #688a03;
-	border-radius: 2px;
-	box-shadow: inset 0 1px 3px rgba(0,0,0,.1), 0 1px 0 #bdf514;
-}
+.forum + .forum-nav { margin: 8px 0 0; }
 
 .forum .align-left { text-align: left; }
 .forum .align-center { text-align: center; }
@@ -45,6 +29,11 @@ strong { font-weight: bold; }
 .forum .text-title {
 	font-weight: bold;
 	font-size: 13px;
+}
+
+.forum .text-link {
+	display: block;
+	color: #777;
 }
 
 .forum p {
@@ -84,12 +73,19 @@ strong { font-weight: bold; }
 .forum tbody td { background-color: #222; }
 .forum tbody td + td { border-left: 1px solid #333; }
 
+.forum .pinned {
+	margin-right: 5px;
+	color: #777;
+}
+
 .forum th {
 	font-weight: bold;
 	font-size: 13px;
 	color: #272727;
 	background-color: #9fd10f;
 }
+
+.forum img { vertical-align: middle; }
 
 .breadcrumbs {
 	margin: 0 0 12px;

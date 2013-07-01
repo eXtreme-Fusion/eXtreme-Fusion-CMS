@@ -1,4 +1,4 @@
-{php} openside(__('Cloud of tags')) {/php}
+{php} $this->sidePanel(__('Cloud of tags')); {/php}
 	<div class="center">
 		{if $tags}
 			{section=tags}
@@ -8,4 +8,4 @@
 			<div class="admin-message">{i18n('There are no tags to display.')}</div>
 		{/if}
 	</div>
-{php} closeside() {/php}
+{php} $this->sidePanel(); {/php}

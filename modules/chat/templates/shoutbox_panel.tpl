@@ -35,7 +35,7 @@
 *}
 
 <div id="ShoutBoxPanel">
-	{php} openside(__('ShoutBox')) {/php}
+	{php} $this->sidePanel(__('ShoutBox')); {/php}
 	<div id="ShoutBoxUpArrow"></div>
 		<p>{i18n('Posted in')}: <span id="chat_post"></span></p>
 
@@ -63,5 +63,5 @@
 		<div class="center margin-top-10"><a href="{$url_chat}">{i18n('ARCHIVE')}</a></div>
 
 	<div id="ShoutBoxDownArrow"></div>
-	{php} closeside() {/php}
+	{php} $this->sidePanel(); {/php}
 </div>

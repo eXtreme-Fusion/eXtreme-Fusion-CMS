@@ -3,14 +3,19 @@
 	<li><a href="<?php echo $this->router->path(array('module' => 'forum')); ?>#board-<?php echo $category['board_id']; ?>"><?php echo $category['board']; ?></a></li>
 	<li><strong><?php echo $category['title']; ?></strong></li>
 </ul>
-<?php opentable(__('Forum')); ?>
+<?php $this->theme->middlePanel(__('Forum')); ?>
+		<?php if ($logged_in = $this->user->iUSER()): ?>
+		<nav class="forum-nav">
+			<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'create', $category['id'])); ?>" class="button"><?php echo __('Create a new thread'); ?></a>
+		</nav>
+		<?php endif; ?>
 		<table class="forum">
 			<thead>
 				<tr>
-					<th class="col-6 align-left"><?php echo __('Thread title'); ?></th>
+					<th class="col-7 align-left"><?php echo __('Thread title'); ?></th>
 					<th class="col-2"><?php echo __('Author'); ?></th>
 					<th class="col-1"><?php echo __('Replies'); ?></th>
-					<th class="col-3"><?php echo __('Last entry'); ?></th>
+					<th class="col-2"><?php echo __('Last entry'); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -18,11 +23,19 @@
 				<?php foreach ($threads as $thread): ?>
 				<tr>
 					<td>
+						<?php if ($thread['is_pinned']): ?><em class="pinned">(<?php echo __('Pinned'); ?>)</em><?php endif; ?>
 						<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', $thread['id'])); ?>" class="text-title"><?php echo $thread['title']; ?></a>
 					</td>
 					<td class="align-center"><?php echo HELP::profileLink($thread['username'], $thread['user_id']); ?></td>
 					<td class="align-center"><?php echo $thread['entries']; ?></td>
-					<td>-</td>
+					<td class="align-center">
+						<?php if (isset($thread['entry_user'])): ?>
+						<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', $thread['id'])); ?>#entry-<?php echo $thread['entry_id']; ?>" class="text-link"><?php echo HELP::showDate('shortdate', $thread['entry_timestamp']); ?></a>
+						<?php echo HELP::profileLink(NULL, $thread['entry_user']); ?>
+						<?php else: ?>
+						<?php echo __('None'); ?>
+						<?php endif; ?>
+					</td>
 				</tr>
 				<?php endforeach; ?>
 				<?php else: ?>
@@ -32,4 +45,9 @@
 				<?php endif; ?>
 			</tbody>
 		</table>
-<?php closetable(); ?>
+		<?php if ($logged_in && $threads): ?>
+		<nav class="forum-nav">
+			<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'create', $category['id'])); ?>" class="button"><?php echo __('Create a new thread'); ?></a>
+		</nav>
+		<?php endif; ?>
+<?php $this->theme->middlePanel(); ?>

@@ -33,7 +33,7 @@
 +-------------------------------------------------------*/
 *}
 
-{php} openside(__('Navigation Panel')) {/php}
+{php} $this->sidePanel(__('Navigation Panel')); {/php}
 {if $nav}
 <ul id="side_nav">
 	{section=nav}
@@ -49,4 +49,4 @@
 {else}
 <div class="error center">{i18n('No site links')}</div>
 {/if}
-{php} closeside() {/php}
+{php} $this->sidePanel(); {/php}

@@ -8,7 +8,7 @@ class Category_Controller extends Forum_Controller {
 			->model('category')
 			->findByID($this->params[0]);
 
-		if ($category === FALSE)
+		if ( ! $category)
 		{
 			return $this->router->trace(array('controller' => 'error', 'action' => 404));
 		}

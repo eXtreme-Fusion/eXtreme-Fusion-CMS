@@ -68,6 +68,7 @@ $new_table[4] = array(
 		`thread_id` int(11) NOT NULL,
 		`user_id` int(11) NOT NULL,
 		`content` text NOT NULL,
+		`is_main` tinyint(1) NOT NULL DEFAULT '0',
 		`timestamp` int(10) NOT NULL,
 		PRIMARY KEY (`id`)
 	) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;"
@@ -99,7 +100,7 @@ $new_row[4] = array(
 
 $new_row[5] = array(
 	'entries',
-	"(`thread_id`, `user_id`, `content`, `timestamp`) VALUES (1, 1, 'Testowy post', ".time().")"
+	"(`thread_id`, `user_id`, `content`, `is_main`, `timestamp`) VALUES (1, 1, 'Testowy post', 1, ".time().")"
 );
 
 $new_row[6] = array(
