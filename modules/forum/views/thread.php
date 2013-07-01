@@ -5,14 +5,19 @@
 	<li><strong><?php echo $thread['title']; ?></strong></li>
 </ul>
 <?php $this->theme->middlePanel(__('Forum')); ?>
+		<nav class="forum-nav">
+			<?php if ($logged_in = $this->user->iUSER()): ?>
+			<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'reply', $thread['id'])); ?>" class="forum-btn"><?php echo __('Add reply'); ?></a>
+			<?php endif; ?>
+			<?php if (($logged_in && $user->isAuthor()) || ($logged_in && $this->user->iADMIN())): ?>
+			<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'edit', $thread['id'])); ?>" class="forum-btn"><?php echo __('Edit thread'); ?></a>
+			<?php endif; ?>
+		</nav>
 		<table class="forum">
 			<thead>
 				<tr>
 					<th class="col-2"><?php echo __('Author'); ?></th>
-					<th class="col-10">
-						<?php echo __('Entry content'); ?>
-						<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'reply', $thread['id'])); ?>" class="forum-btn"><?php echo __('Add reply'); ?></a>
-					</th>
+					<th class="col-10"><?php echo __('Entry content'); ?></th>
 				</tr>
 			</thead>
 			<tbody>

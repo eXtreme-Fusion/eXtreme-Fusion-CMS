@@ -9,17 +9,25 @@ strong { font-weight: bold; }
 	vertical-align: middle;
 }
 
-.forum-btn {
+.forum-nav {
 	float: right;
-	padding: 4px 8px;
-	margin: -4px 0;
-	color: #4e6116;
-	font-size: 10px;
-	background-color: #c4f531;
-	border: 1px solid #7fa803;
-	border-radius: 3px;
-	box-shadow: inset 0 1px 0 #d9ff66, 0 1px 0 #bdf514;
+	margin-bottom: 8px;
 }
+
+.forum + .forum-nav { margin: 8px 0 0; }
+
+.forum-btn {
+	display: inline-block;
+	padding: 6px 10px;
+	font-size: 10px;
+	font-weight: bold;
+	color: #4e6116;
+	background-color: #c4f531;
+	border-radius: 3px;
+	box-shadow: inset 0 1px 0 #d9ff66, 0 0 1px #000;
+}
+
+.forum-btn + .forum-btn { margin-left: 2px; }
 
 .forum-btn:hover,
 .forum-btn:focus {
@@ -29,11 +37,9 @@ strong { font-weight: bold; }
 
 .forum-btn:active {
 	color: #f2ffcc;
-	text-shadow: 0 -1px 0 #688a03;
-	background-color: #81a80c;
-	border-color: #688a03;
-	border-radius: 2px;
-	box-shadow: inset 0 1px 3px rgba(0,0,0,.1), 0 1px 0 #bdf514;
+	text-shadow: 0 1px 0 rgba(0,0,0,.6);
+	background-color: rgba(0,0,0,.3);
+	box-shadow: inset 0 1px 3px rgba(0,0,0,.15), 0 0 0 1px rgba(0,0,0,.4);
 }
 
 .forum .align-left { text-align: left; }
@@ -84,12 +90,19 @@ strong { font-weight: bold; }
 .forum tbody td { background-color: #222; }
 .forum tbody td + td { border-left: 1px solid #333; }
 
+.forum .pinned {
+	margin-right: 5px;
+	color: #777;
+}
+
 .forum th {
 	font-weight: bold;
 	font-size: 13px;
 	color: #272727;
 	background-color: #9fd10f;
 }
+
+.forum img { vertical-align: middle; }
 
 .breadcrumbs {
 	margin: 0 0 12px;
