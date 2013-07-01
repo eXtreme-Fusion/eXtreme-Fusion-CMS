@@ -23,12 +23,7 @@ class Category_Model extends Abstract_Model {
 
 		foreach ($categories as $category)
 		{
-			$count = $this->getCount($category['id']);
-
-			$_categories[] = array_merge($category, array(
-				'threads' => $count['threads'],
-				'entries' => $count['entries'],
-			));
+			$_categories[] = array_merge($category, $this->getCount($category['id']));
 		}
 
 		return $_categories;
@@ -49,14 +44,26 @@ class Category_Model extends Abstract_Model {
 
 	public function getCount($id)
 	{
-		return $this->_pdo->getRow('
+		$count = $this->_pdo->getData('
 			SELECT
 				t.id,
-				COUNT(t.id) as threads,
 				(SELECT COUNT(e.id) FROM [entries] e WHERE e.thread_id = t.id) as entries
 			FROM [threads] t
 			WHERE t.category_id = :id
 		', array(':id', $id, PDO::PARAM_INT));
+
+		$threads = $entries = 0;
+
+		foreach ($count as $row)
+		{
+			$entries = $entries + $row['entries'];
+			$threads++;
+		}
+
+		return array(
+			'threads' => $threads,
+			'entries' => $entries,
+		);
 	}
 
 }
