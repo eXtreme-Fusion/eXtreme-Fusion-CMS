@@ -13,7 +13,7 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
+|
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------
@@ -31,18 +31,17 @@
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
 +-------------------------------------------------------*/
+error_reporting(-1);
 
-error_reporting(E_ALL | E_NOTICE);
-
-if ( ! isset($_SESSION)) 
+if ( ! isset($_SESSION))
 {
 	session_start();
 }
 
 // Check if magic_quotes_runtime is active
-if (get_magic_quotes_runtime()) 
+if (get_magic_quotes_runtime())
 {
-	if (version_compare(PHP_VERSION, '5.3.0', '<')) 
+	if (version_compare(PHP_VERSION, '5.3.0', '<'))
 	{
 		// Deactivate when function is not deprecated PHP < 5.3.0
 		set_magic_quotes_runtime(0);
@@ -60,17 +59,17 @@ if (ini_get('register_globals'))
 {
 	$array= array('_GET', '_POST', '_COOKIE', '_FILES', '_SERVER', '_SESSION', '_ENV');
 
-	foreach ($array as $value) 
+	foreach ($array as $value)
 	{
-		foreach ($GLOBALS[$value] as $key => $var) 
+		foreach ($GLOBALS[$value] as $key => $var)
 		{
-			if (isset($GLOBALS[$key]) && $var === $GLOBALS[$key]) 
+			if (isset($GLOBALS[$key]) && $var === $GLOBALS[$key])
 			{
 				if (in_array($key, $array))
 				{
 					exit('Hacking action!');
 				}
-				
+
 				unset($GLOBALS[$key]);
 			}
 		}

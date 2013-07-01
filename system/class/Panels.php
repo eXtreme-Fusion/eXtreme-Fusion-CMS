@@ -13,7 +13,7 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
+|
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------+
@@ -46,8 +46,7 @@ class Panels
 		$active_panels = array(),
 		$inactive_panels = array(),
 		$panels = array(),
-		$panel = array(),
-		$_theme;
+		$panel = array();
 
     public function __construct(Data $pdo, $dir = './')
     {
@@ -59,8 +58,6 @@ class Panels
 	{
 		$this->_mod = $_mod;
 	}
-	
-
 
 	// Pobiera z bazy danych dane wszystkich zainstalowanych modułów i zapisuje do zmiennej klsowej
 	public function adminGetDataPanels($_user)

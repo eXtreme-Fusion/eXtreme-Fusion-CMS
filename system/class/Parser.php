@@ -59,7 +59,7 @@ class Parser extends optClass
 	}
 
 	// TODO:: zrobić dla panelu admina klasę i dla strony klasę, po której będą dziedziczyć inne metody
-	public function setThemeInst($_theme)
+	public static function setThemeInst($_theme)
 	{
 		self::$_theme = $_theme;
 	}	
