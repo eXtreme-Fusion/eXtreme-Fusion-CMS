@@ -39,15 +39,6 @@ try
 
 	require_once 'system/sitecore.php';
 
-	/**
-	 * Szablon systemowy (theme)
-	 */
-
-	// Wczytywanie głównej klasy
-	require_once DIR_CLASS.'Themes.php';
-
-	/******* Koniec sekcji szablonu systemowego */
-
 	// Routing class
 	$_route = new Router($_request, $_sett, $_system->rewriteAvailable(), 'page', $_system->pathInfoExists(), $_sett->get('opening_page'), TRUE, TRUE, FALSE, 'admin');
 
@@ -93,10 +84,9 @@ try
 		}
 	}
 
-	/** Konfiguracja obiektu szablonu **/
+	/** Konfiguracja obiektu szablonu dla podstron **/
 	$_tpl = new Site($_route);
 
-	//$_tpl->registerFunction('url', 'Url');
 
 	// Nie usuwać
 	/**
@@ -148,14 +138,6 @@ try
 		}
 	}
 	
-	
-	// Tworzenie emulatora statyczności klasy OPT
-	TPL::build($_theme = new Theme($_sett, $_system, $_user, $_pdo, $_request, $_route, $_head, $_route->getTplFileName()));
-
-	//$_theme->registerFunction('url', 'Url');
-
-	$_theme->setStatisticsInst($ec->statistics);
-
 	if ($_sett->get('visits_counter_enabled'))
 	{
 		$ec->statistics->saveUniqueVisit($_user->getIP());
@@ -170,8 +152,22 @@ try
 		}
 	}
 
-	require_once DIR_THEME.'core'.DS.'theme.php';
+	/**
+	 * Szablon systemowy (theme)
+	 */
+	
+	// Załączanie klasy szablonu
+	require_once DIR_THEME.'view.php';
+	
+	// Tworzenie emulatora statyczności klasy OPT
+	$_theme = new Theme($_sett, $_system, $_user, $_pdo, $_request, $_route, $_head, $_route->getTplFileName());
 
+	$_theme->setStatisticsInst($ec->statistics);
+	
+	Parser::setThemeInst($_theme);
+	
+	/******* Koniec sekcji szablonu systemowego */
+	
 	/* GENEROWANIE STRONY Z PLIKU PHP */
 
 	// Sprawdzanie, czy plik istnieje
@@ -301,11 +297,11 @@ try
 	if ($_route->getFileName() === 'maintenance')
 	{
 		// Renderowanie strony bez menu, paneli bocznych i stopki
-		render_page(TRUE, FALSE, FALSE, FALSE, FALSE);
+		$_theme->page(TRUE, FALSE, FALSE, FALSE, FALSE);
 	}
 	else
 	{
-		render_page();
+		$_theme->page();
 	}
 	
 	// Załączanie szablonu zamykającego stronę
