@@ -1,4 +1,4 @@
-<?php opentable(__('Forum')); ?>
+<?php $this->theme->middlePanel(__('Forum')); ?>
 		<?php if ($boards = $board->fetchAll()): ?>
 		<?php foreach ($boards as $board): ?>
 		<table class="forum" id="board-<?php echo $board['id']; ?>">
@@ -28,4 +28,4 @@
 		</table>
 		<?php endforeach; ?>
 		<?php endif; ?>
-<?php closetable(); ?>
+<?php $this->theme->middlePanel(); ?>

@@ -5,7 +5,7 @@
 	<li><a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', $thread['id'])); ?>"><?php echo $thread['title']; ?></a></li>
 	<li><strong><?php echo __('Add reply'); ?></strong></li>
 </ul>
-<?php opentable(__('Forum')); ?>
+<?php $this->theme->middlePanel(__('Forum')); ?>
 		<form action="<?php echo URL_REQUEST; ?>" method="post" id="thread-reply">
 			<div class="tbl1">
 				<div class="formLabel col col-2"><label for="content"><?php echo __('Reply content'); ?>:</label></div>
@@ -31,4 +31,4 @@
 				<input type="submit" value="<?php echo __('Add reply'); ?>" class="button">
 			</div>
 		</form>
-<?php closetable(); ?>
+<?php $this->theme->middlePanel(); ?>

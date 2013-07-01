@@ -3,7 +3,7 @@
 	<li><a href="<?php echo $this->router->path(array('module' => 'forum')); ?>#board-<?php echo $category['board_id']; ?>"><?php echo $category['board']; ?></a></li>
 	<li><strong><?php echo $category['title']; ?></strong></li>
 </ul>
-<?php opentable(__('Forum')); ?>
+<?php $this->theme->middlePanel(__('Forum')); ?>
 		<table class="forum">
 			<thead>
 				<tr>
@@ -32,4 +32,4 @@
 				<?php endif; ?>
 			</tbody>
 		</table>
-<?php closetable(); ?>
+<?php $this->theme->middlePanel(); ?>

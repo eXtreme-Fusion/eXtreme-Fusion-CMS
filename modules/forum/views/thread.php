@@ -4,7 +4,7 @@
 	<li><a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'category', $thread['category_id'])); ?>"><?php echo $thread['category']; ?></a></li>
 	<li><strong><?php echo $thread['title']; ?></strong></li>
 </ul>
-<?php opentable(__('Forum')); ?>
+<?php $this->theme->middlePanel(__('Forum')); ?>
 		<table class="forum">
 			<thead>
 				<tr>
@@ -38,9 +38,9 @@
 				<?php endforeach; ?>
 			</tbody>
 		</table>
-<?php closetable(); ?>
+<?php $this->theme->middlePanel(); ?>
 <?php if ($this->user->iUSER() === TRUE): $_user = $this->user; ?>
-<?php opentable(__('Quick reply')); ?>
+<?php $this->theme->middlePanel(__('Quick reply')); ?>
 		<form action="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'reply', $thread['id'])); ?>" method="post">
 			<table class="forum">
 				<thead>
@@ -71,5 +71,5 @@
 				</tbody>
 			</table>
 		</form>
-<?php closetable(); ?>
+<?php $this->theme->middlePanel(); ?>
 <?php endif; ?>
