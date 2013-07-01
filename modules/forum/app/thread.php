@@ -147,6 +147,11 @@ class Thread_Controller extends Forum_Controller {
 
 			if ($reply && $entry = $this->pdo->lastInsertId())
 			{
+				$this->pdo->exec('UPDATE [threads] SET `timestamp` = :timestamp WHERE `id` = :id', array(
+					array(':id', $id, PDO::PARAM_INT),
+					array(':timestamp', time(), PDO::PARAM_INT),
+				));
+
 				return HELP::redirect($this->url->path(array('module' => 'forum', 'controller' => 'thread', $id)).'#entry-'.$entry);
 			}
 		}

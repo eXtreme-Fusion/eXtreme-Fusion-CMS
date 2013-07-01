@@ -53,6 +53,11 @@ strong { font-weight: bold; }
 	font-size: 13px;
 }
 
+.forum .text-link {
+	display: block;
+	color: #777;
+}
+
 .forum p {
 	margin-top: 3px;
 	font-size: 11px;

@@ -5,10 +5,18 @@ class Category_Model extends Abstract_Model {
 	public function fetchByID($id)
 	{
 		$categories = $this->_pdo->getData('
-			SELECT c.*
+			SELECT
+				c.*,
+				e.id as entry,
+				e.user_id as user,
+				e.timestamp as timestamp,
+				e.thread_id as thread
 			FROM [board_categories] c
+			LEFT JOIN (SELECT e.* FROM [entries] e ORDER BY e.id DESC) e
+			ON e.thread_id = (SELECT t.id FROM [threads] t WHERE t.category_id = c.id ORDER BY t.timestamp DESC LIMIT 1)
 			WHERE c.board_id = :id
-			ORDER BY `order` ASC
+			GROUP BY c.id
+			ORDER BY c.order ASC
 		', array(':id', $id, PDO::PARAM_INT));
 
 		$_categories = array();

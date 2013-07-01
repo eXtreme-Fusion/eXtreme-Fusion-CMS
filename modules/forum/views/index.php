@@ -20,7 +20,14 @@
 					</td>
 					<td class="align-center"><?php echo $category['threads']; ?></td>
 					<td class="align-center"><?php echo $category['entries']; ?></td>
-					<td>-</td>
+					<td class="align-center">
+						<?php if (isset($category['user'])): ?>
+						<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', $category['thread'])); ?>#entry-<?php echo $category['entry']; ?>" class="text-link"><?php echo HELP::showDate('shortdate', $category['timestamp']); ?></a>
+						<?php echo HELP::profileLink(NULL, $category['user']); ?>
+						<?php else: ?>
+						<?php echo __('None'); ?>
+						<?php endif; ?>
+					</td>
 				</tr>
 				<?php endforeach; ?>
 			</tbody>

@@ -18,6 +18,7 @@ return array(
 	'Save changes'        => 'Zapisz zmiany',
 	'Pin this thread'     => 'Przypnij ten temat',
 	'Pinned'              => 'Przypięte',
+	'None'                => 'Brak',
 
 	'In this category has not been created any thread' => 'W tej kategorii nie został utworzony żaden wątek',
 );

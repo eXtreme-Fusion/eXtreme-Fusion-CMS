@@ -15,7 +15,7 @@ class Thread_Model extends Abstract_Model {
 			WHERE category_id = :id
 			ORDER BY
 				t.is_pinned DESC,
-				t.id DESC 
+				t.timestamp DESC 
 		', array(':id', $id, PDO::PARAM_INT));
 
 		if ( ! $this->_pdo->getRowsCount($threads))
