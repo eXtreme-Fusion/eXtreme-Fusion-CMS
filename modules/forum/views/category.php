@@ -6,16 +6,16 @@
 <?php $this->theme->middlePanel(__('Forum')); ?>
 		<?php if ($logged_in = $this->user->iUSER()): ?>
 		<nav class="forum-nav">
-			<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'create', $category['id'])); ?>" class="forum-btn"><?php echo __('Create a new thread'); ?></a>
+			<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'create', $category['id'])); ?>" class="button"><?php echo __('Create a new thread'); ?></a>
 		</nav>
 		<?php endif; ?>
 		<table class="forum">
 			<thead>
 				<tr>
-					<th class="col-6 align-left"><?php echo __('Thread title'); ?></th>
+					<th class="col-7 align-left"><?php echo __('Thread title'); ?></th>
 					<th class="col-2"><?php echo __('Author'); ?></th>
 					<th class="col-1"><?php echo __('Replies'); ?></th>
-					<th class="col-3"><?php echo __('Last entry'); ?></th>
+					<th class="col-2"><?php echo __('Last entry'); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -47,7 +47,7 @@
 		</table>
 		<?php if ($logged_in && $threads): ?>
 		<nav class="forum-nav">
-			<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'create', $category['id'])); ?>" class="forum-btn"><?php echo __('Create a new thread'); ?></a>
+			<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'create', $category['id'])); ?>" class="button"><?php echo __('Create a new thread'); ?></a>
 		</nav>
 		<?php endif; ?>
 <?php $this->theme->middlePanel(); ?>
