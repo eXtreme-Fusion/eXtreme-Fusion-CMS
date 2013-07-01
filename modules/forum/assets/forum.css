@@ -2,7 +2,30 @@ strong { font-weight: bold; }
 
 .button { margin: 0; }
 
-.button + .button { margin-left: 2px; }
+.button + .button,
+.button + .button-group,
+.button-group + .button {
+	margin-left: 2px;
+}
+
+.button-group { display: inline-block; }
+
+.button-group .button { border-radius: 0; }
+
+.button-group .button + .button {
+	margin-left: -3px;
+	border-left: 1px solid #658c00;
+}
+
+.button-group .button:first-child {
+	border-top-left-radius: 3px;
+	border-bottom-left-radius: 3px;
+}
+
+.button-group .button:last-child {
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
 
 .forum th:first-child { border-top-left-radius: 3px; }
 .forum th:last-child { border-top-right-radius: 3px; }

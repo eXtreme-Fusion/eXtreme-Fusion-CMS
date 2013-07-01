@@ -19,6 +19,7 @@ return array(
 	'Pin this thread'     => 'Przypnij ten temat',
 	'Pinned'              => 'Przypięte',
 	'None'                => 'Brak',
+	'Remove thread'       => 'Usuń wątek',
 
 	'In this category has not been created any thread' => 'W tej kategorii nie został utworzony żaden wątek',
 );

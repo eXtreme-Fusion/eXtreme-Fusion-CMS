@@ -120,6 +120,39 @@ class Thread_Controller extends Forum_Controller {
 		));
 	}
 
+	public function remove()
+	{
+		if ($this->user->iGUEST() || ($this->user->iUSER() && ! $this->user->iADMIN()))
+		{
+			return $this->router->trace(array('controller' => 'error', 'action' => 404));
+		}
+
+		$thread = $this
+			->model('thread')
+			->findByID($id = $this->params[0]);
+
+		if ( ! $thread)
+		{
+			return $this->router->trace(array('controller' => 'error', 'action' => 404));
+		}
+
+		$_thread = $this->pdo->exec('DELETE FROM [threads] WHERE `id` = :id',
+			array(':id', $id, PDO::PARAM_INT));
+
+		if ($_thread)
+		{
+			$_entries = $this->pdo->exec('DELETE FROM [entries] WHERE `thread_id` = :id',
+				array(':id', $id, PDO::PARAM_INT));
+
+			if ($_entries)
+			{
+				return $this->router->redirect(array('module' => 'forum', 'controller' => 'category', $thread['category_id']));
+			}
+		}
+
+		return $this->router->trace(array('controller' => 'error', 'action' => 500));
+	}
+
 	public function reply()
 	{
 		if ($this->user->iGUEST())

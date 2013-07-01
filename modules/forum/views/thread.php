@@ -9,9 +9,14 @@
 			<?php if ($logged_in = $this->user->iUSER()): ?>
 			<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'reply', $thread['id'])); ?>" class="button"><?php echo __('Add reply'); ?></a>
 			<?php endif; ?>
-			<?php if (($logged_in && $user->isAuthor()) || ($logged_in && $this->user->iADMIN())): ?>
-			<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'edit', $thread['id'])); ?>" class="button"><?php echo __('Edit thread'); ?></a>
-			<?php endif; ?>
+			<div class="button-group">
+				<?php if (($logged_in && $user->isAuthor()) || ($logged_in && $this->user->iADMIN())): ?>
+				<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'edit', $thread['id'])); ?>" class="button"><?php echo __('Edit thread'); ?></a>
+				<?php endif; ?>
+				<?php if ($logged_in && $this->user->iADMIN()): ?>
+				<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'remove', $thread['id'])); ?>" class="button"><?php echo __('Remove thread'); ?></a>
+				<?php endif; ?>
+			</div>
 		</nav>
 		<table class="forum">
 			<thead>
