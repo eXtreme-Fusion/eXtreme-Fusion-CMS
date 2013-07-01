@@ -20,6 +20,8 @@ return array(
 	'Pinned'              => 'Przypięte',
 	'None'                => 'Brak',
 	'Remove thread'       => 'Usuń wątek',
+	'Remove'              => 'Usuń',
+	'Edit entry'          => 'Edytuj wpis',
 
 	'In this category has not been created any thread' => 'W tej kategorii nie został utworzony żaden wątek',
 );

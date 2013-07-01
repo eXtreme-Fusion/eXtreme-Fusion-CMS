@@ -6,14 +6,14 @@
 </ul>
 <?php $this->theme->middlePanel(__('Forum')); ?>
 		<nav class="forum-nav">
-			<?php if ($logged_in = $this->user->iUSER()): ?>
+			<?php if ($this->logged_in): ?>
 			<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'reply', $thread['id'])); ?>" class="button"><?php echo __('Add reply'); ?></a>
 			<?php endif; ?>
 			<div class="button-group">
-				<?php if (($logged_in && $user->isAuthor()) || ($logged_in && $this->user->iADMIN())): ?>
+				<?php if (($this->logged_in && $user->isAuthor($thread['user_id'])) || $this->is_admin): ?>
 				<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'edit', $thread['id'])); ?>" class="button"><?php echo __('Edit thread'); ?></a>
 				<?php endif; ?>
-				<?php if ($logged_in && $this->user->iADMIN()): ?>
+				<?php if ($this->is_admin): ?>
 				<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'remove', $thread['id'])); ?>" class="button"><?php echo __('Remove thread'); ?></a>
 				<?php endif; ?>
 			</div>
@@ -41,7 +41,15 @@
 						</div>
 					</td>
 					<td class="align-top">
-						<p class="entry-info"><?php echo __('Created on'); ?>: <strong><?php echo HELP::showDate('longdate', $entry['timestamp']); ?></strong></p>
+						<header class="entry-top">
+							<p class="top-info"><?php echo __('Created on'); ?>: <strong><?php echo HELP::showDate('longdate', $entry['timestamp']); ?></strong></p>
+							<?php if ($this->logged_in && ! $entry['is_main']): ?>
+							<p class="top-options">
+								<?php if ($user->isAuthor($entry['user_id']) || $this->is_admin): ?><a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'entry', 'action' => 'edit', $entry['id'])); ?>"><?php echo __('Edit'); ?></a><?php endif; ?>
+								<?php if ($this->is_admin): ?>&bull; <a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'entry', 'action' => 'remove', $entry['id'])); ?>"><?php echo __('Remove'); ?></a><?php endif; ?>
+							</p>
+							<?php endif; ?>
+						</header>
 						<?php echo $this->bbcode->parseAllTags($entry['content']); ?>
 					</td>
 				</tr>
@@ -49,7 +57,7 @@
 			</tbody>
 		</table>
 <?php $this->theme->middlePanel(); ?>
-<?php if ($this->user->iUSER()): $_user = $this->user; ?>
+<?php if ($this->logged_in): $_user = $this->user; ?>
 <?php $this->theme->middlePanel(__('Quick reply')); ?>
 		<form action="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'reply', $thread['id'])); ?>" method="post">
 			<table class="forum">

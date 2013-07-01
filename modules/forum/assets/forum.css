@@ -1,6 +1,9 @@
 strong { font-weight: bold; }
 
-.button { margin: 0; }
+.button,
+.forum .button {
+	margin: 0;
+}
 
 .button + .button,
 .button + .button-group,
@@ -71,12 +74,29 @@ strong { font-weight: bold; }
 	border-radius: 3px;
 }
 
-.forum .entry-info {
-	padding: 5px 14px;
+.forum .entry-top {
+	overflow: hidden;
 	margin: -10px -14px 10px;
-	font-size: 10px;
 	background-color: #1c1c1c;
 	border-bottom: 1px solid #333;
+}
+
+.forum .entry-top .top-info {
+	float: left;
+	margin: 5px 10px;
+}
+
+.forum .entry-top .top-options { float: right; }
+
+.forum .entry-top .top-options a {
+	margin: 0 4px;
+	font-weight: bold;
+	color: #777;
+}
+
+.forum .entry-top p {
+	margin: 5px 14px;
+	font-size: 10px;
 }
 
 .forum .entry-author {

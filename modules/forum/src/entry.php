@@ -23,4 +23,13 @@ class Entry_Model extends Abstract_Model {
 		return $entries;
 	}
 
+	public function findByID($id)
+	{
+		return $this->_pdo->getRow('
+			SELECT e.*
+			FROM [entries] e
+			WHERE e.id = :id
+		', array(':id', $id, PDO::PARAM_INT));
+	}
+
 }
