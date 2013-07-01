@@ -2,7 +2,11 @@
 
 abstract class Forum_Controller extends Abstract_Controller {
 
+	protected $request;
+
 	protected $pdo;
+
+	protected $bbcode;
 
 	public function render()
 	{
@@ -10,7 +14,11 @@ abstract class Forum_Controller extends Abstract_Controller {
 
 		$this->locale->moduleLoad('lang', 'forum');
 
-		$this->pdo = $this->ec->getService('pdo');
+		$this->request = $this->ec->request;
+
+		$this->pdo = $this->ec->pdo;
+
+		$this->bbcode = $this->ec->sbb;
 
 		return parent::render();
 	}

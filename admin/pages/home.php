@@ -31,11 +31,7 @@
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
 +--------------------------------------------------------*/
-// TO DO
-// Poprawić wygląd notatek
-// Podpiąć download
-// Sprawdzanie wersji systemu z aktualną dostępną na EF.
-// TO DO
+// TODO: poprawić wygląd notatek, podpiąć download.
 
 try
 {
@@ -52,10 +48,7 @@ try
 
 	$_tpl = new Iframe;
 
-	// Numer wersji, do której system ma zostać zaktualizowany
-	$new_version = '5.0.2';
-
-	if ($_sett->get('version') < $new_version)
+	if ($_sett->get('version') < SYSTEM_VERSION)
 	{
 		$_tpl->assign('upgrade', TRUE);
 	}
