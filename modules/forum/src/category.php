@@ -42,7 +42,7 @@ class Category_Model extends Abstract_Model {
 				b.title as board
 			FROM [board_categories] c
 			LEFT JOIN [boards] b
-			ON b.id=c.board_id
+			ON b.id = c.board_id
 			WHERE c.id = :id
 		', array(':id', $id, PDO::PARAM_INT));
 	}
@@ -53,7 +53,7 @@ class Category_Model extends Abstract_Model {
 			SELECT
 				t.id,
 				COUNT(t.id) as threads,
-				(SELECT COUNT(e.id) FROM [entries] e WHERE e.thread_id=t.id) as entries
+				(SELECT COUNT(e.id) FROM [entries] e WHERE e.thread_id = t.id) as entries
 			FROM [threads] t
 			WHERE t.category_id = :id
 		', array(':id', $id, PDO::PARAM_INT));
