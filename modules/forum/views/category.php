@@ -28,7 +28,14 @@
 					</td>
 					<td class="align-center"><?php echo HELP::profileLink($thread['username'], $thread['user_id']); ?></td>
 					<td class="align-center"><?php echo $thread['entries']; ?></td>
-					<td>-</td>
+					<td class="align-center">
+						<?php if (isset($thread['entry_user'])): ?>
+						<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', $thread['id'])); ?>#entry-<?php echo $thread['entry_id']; ?>" class="text-link"><?php echo HELP::showDate('shortdate', $thread['entry_timestamp']); ?></a>
+						<?php echo HELP::profileLink(NULL, $thread['entry_user']); ?>
+						<?php else: ?>
+						<?php echo __('None'); ?>
+						<?php endif; ?>
+					</td>
 				</tr>
 				<?php endforeach; ?>
 				<?php else: ?>

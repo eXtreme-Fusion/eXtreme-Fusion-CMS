@@ -44,7 +44,7 @@
 			</tbody>
 		</table>
 <?php $this->theme->middlePanel(); ?>
-<?php if ($this->user->iUSER() === TRUE): $_user = $this->user; ?>
+<?php if ($this->user->iUSER()): $_user = $this->user; ?>
 <?php $this->theme->middlePanel(__('Quick reply')); ?>
 		<form action="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'reply', $thread['id'])); ?>" method="post">
 			<table class="forum">

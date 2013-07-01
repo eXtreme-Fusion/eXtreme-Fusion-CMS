@@ -8,11 +8,17 @@ class Thread_Model extends Abstract_Model {
 			SELECT 
 				t.*,
 				u.username as username,
-				(SELECT COUNT(e.id)-1 FROM [entries] e WHERE e.thread_id=t.id) as entries
+				(SELECT COUNT(e.id)-1 FROM [entries] e WHERE e.thread_id = t.id) as entries,
+				e.id as entry_id,
+				e.user_id as entry_user,
+				e.timestamp as entry_timestamp
 			FROM [threads] t
 			LEFT JOIN [users] u
-			ON u.id=t.user_id
+			ON u.id = t.user_id
+			LEFT JOIN (SELECT e.* FROM [entries] e ORDER BY e.id DESC) e
+			ON e.thread_id = t.id
 			WHERE category_id = :id
+			GROUP BY t.id
 			ORDER BY
 				t.is_pinned DESC,
 				t.timestamp DESC 
@@ -37,11 +43,11 @@ class Thread_Model extends Abstract_Model {
 				e.id as entry_id
 			FROM [threads] t
 			LEFT JOIN [board_categories] c
-			ON c.id=t.category_id
+			ON c.id = t.category_id
 			LEFT JOIN [boards] b
-			ON b.id=c.board_id
+			ON b.id = c.board_id
 			LEFT JOIN [entries] e
-			ON e.thread_id=t.id AND e.user_id=t.user_id
+			ON e.thread_id = t.id AND e.user_id = t.user_id
 			WHERE t.id = :id
 		', array(':id', $id, PDO::PARAM_INT));
 	}

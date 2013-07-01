@@ -8,7 +8,7 @@ class Thread_Controller extends Forum_Controller {
 			->model('thread')
 			->findByID($this->params[0]);
 
-		if ($thread === FALSE)
+		if ( ! $thread)
 		{
 			return $this->router->trace(array('controller' => 'error', 'action' => 404));
 		}
@@ -28,16 +28,16 @@ class Thread_Controller extends Forum_Controller {
 
 	public function create()
 	{
-		if ($this->user->iGUEST() === TRUE)
+		if ($this->user->iGUEST())
 		{
-			return $this->router->redirect(array('controller' => 'login'));
+			return $this->user->onlyForUsers($this->router);
 		}
 
 		$category = $this
 			->model('category')
 			->findByID($id = $this->params[0]);
 
-		if ($category === FALSE)
+		if ( ! $category)
 		{
 			return $this->router->trace(array('controller' => 'error', 'action' => 404));
 		}
@@ -77,16 +77,16 @@ class Thread_Controller extends Forum_Controller {
 
 	public function edit()
 	{
-		if ($this->user->iGUEST() === TRUE)
+		if ($this->user->iGUEST())
 		{
-			return $this->router->redirect(array('controller' => 'login'));
+			return $this->user->onlyForUsers($this->router);
 		}
 
 		$thread = $this
 			->model('thread')
 			->findByID($id = $this->params[0]);
 
-		if ($thread === FALSE)
+		if ( ! $thread)
 		{
 			return $this->router->trace(array('controller' => 'error', 'action' => 404));
 		}
@@ -122,16 +122,16 @@ class Thread_Controller extends Forum_Controller {
 
 	public function reply()
 	{
-		if ($this->user->iGUEST() === TRUE)
+		if ($this->user->iGUEST())
 		{
-			return $this->router->redirect(array('controller' => 'login'));
+			return $this->user->onlyForUsers($this->router);
 		}
 
 		$thread = $this
 			->model('thread')
 			->findByID($id = $this->params[0]);
 
-		if ($thread === FALSE)
+		if ( ! $thread)
 		{
 			return $this->router->trace(array('controller' => 'error', 'action' => 404));
 		}
