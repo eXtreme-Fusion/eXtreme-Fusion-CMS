@@ -1,4 +1,4 @@
-<?php preg_match("/sitecore.php/i", $_SERVER['PHP_SELF']) == FALSE || exit;
+<?php if (stripos($_SERVER['PHP_SELF'], 'sitecore.php')) exit;
 /*********************************************************
 | eXtreme-Fusion 5
 | Content Management System

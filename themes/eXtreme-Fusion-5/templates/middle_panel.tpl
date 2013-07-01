@@ -1,7 +1,7 @@
-{if $Begin}
-	<section class="side_body">
+{if $open}
+	<section class="main_body">
 		<header>
-			<h3>{$Title}</h3>
+			<h2>{$title}</h2>
 		</header>
 		<div class="content">
 {else}

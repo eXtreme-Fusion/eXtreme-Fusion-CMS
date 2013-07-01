@@ -1,4 +1,4 @@
-{php} openside(__('Users online')) {/php}
+{php} $this->sidePanel(__('Users online')); {/php}
 	<dl id="users_online">
 		<dt>{i18n('Guests online')}:</dt>
 		<dd>{$guests}</dd>
@@ -20,4 +20,4 @@
 		{/section}
 	</p>
 	{/if}
-{php} closeside() {/php}
+{php} $this->sidePanel(); {/php}

@@ -1,14 +1,14 @@
-{if $Logo}
+{if $logo}
 <header id="site_top">
-	<h1>{$Logo}</h1>
+	<h1>{$logo}</h1>
 </header>
 {/if}
 
-{if $Menu}
+{if $menu}
 <nav id="main_nav">
 	<ul>
-	{section=Menu}
-		<li{if $Menu.selected} class="selected"{/if}>{$Menu.sep}<a href="{$Menu.link}"{if $Menu.target} target="_blank"{/if}>{$Menu.name}</a></li>
+	{section=menu}
+		<li{if $menu.selected} class="selected"{/if}>{$menu.sep}<a href="{$menu.link}"{if $menu.target} target="_blank"{/if}>{$menu.name}</a></li>
 	{/section}
 	</ul>
 </nav>
@@ -27,15 +27,14 @@
 	</section>
 </section>
 
-{if $RenderFooter}
+{if $footer}
 <footer id="site_bot">
-	{if $Copyright}
-		<address>{$Copyright}</address>
-		<p>{$License}</p>
+	{if $copyright}
+		<address>{$copyright}</address>
 	{/if}
-	<p>{$Footer}</p>
+	<p>{$footer}</p>
 	<address>Theme by <a href="http://nlds-group.com/" title="NLDS-Group.com"><img src="{$THEME_IMAGES}nlds_logo.png" alt="NLDS-Group.com"></a></address>
-	{if $AdminLinks}<p>{$AdminLinks}</p>{/if}
-	{if $VisitsCount}<p>Unikalnych wizyt: {$VisitsCount}</p>{/if}
+	{if $admin_panel_link}<p>{$admin_panel_link}</p>{/if}
+	{if $visits_count}<p>Unikalnych wizyt: {$visits_count}</p>{/if}
 </footer>
 {/if}

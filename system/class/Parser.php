@@ -22,7 +22,8 @@ class Parser extends optClass
 		$_sett,
 		$_user,
 		$_request,
-		$_log;
+		$_log,
+		$_theme;
 
 	public function __construct()
 	{
@@ -57,6 +58,23 @@ class Parser extends optClass
 		$_SESSION['history']['Page'] = str_replace(array(DIR_SITE, '\\'), array('', '/'), $__file__).($_SERVER['QUERY_STRING'] ? '?'.$_SERVER['QUERY_STRING'] : '');
 	}
 
+	// TODO:: zrobić dla panelu admina klasę i dla strony klasę, po której będą dziedziczyć inne metody
+	public function setThemeInst($_theme)
+	{
+		self::$_theme = $_theme;
+	}	
+	
+	public function middlePanel($title = NULL)
+	{
+		return self::$_theme->middlePanel($title);
+	}
+	
+	public function sidePanel($title = NULL)
+	{
+		return self::$_theme->sidePanel($title);
+	}
+	//
+	
 	private function assignMain()
 	{
 		$this->assign('FILE_SELF', FILE_SELF);
@@ -326,8 +344,8 @@ class Basic extends Parser
 class SiteAjax extends Parser
 {
 	private
-		$_theme,
-		$_default;
+		$_dir_theme,
+		$_dir_default;
 
 	public function __construct()
 	{
@@ -337,8 +355,8 @@ class SiteAjax extends Parser
 		$this->compile         = DIR_CACHE;
 		$this->cache           = DIR_CACHE;
 
-		$this->_theme = DIR_THEME.'templates'.DS.'ajax'.DS;
-		$this->_default = DIR_AJAX.'templates'.DS;
+		$this->_dir_theme = DIR_THEME.'templates'.DS.'ajax'.DS;
+		$this->_dir_default = DIR_AJAX.'templates'.DS;
 	}
 
 	// Metoda nie zwraca FALSE jeśli pliku nie znaleziono, ponieważ nie zawsze on istnieje dla AJAX-a
@@ -346,11 +364,11 @@ class SiteAjax extends Parser
 	{
 		if ($theme)
 		{
-			$this->root = $this->_theme;
+			$this->root = $this->_dir_theme;
 		}
 		else
 		{
-			$this->root = $this->_default;
+			$this->root = $this->_dir_default;
 		}
 
 		if (file_exists($this->root.$file))
@@ -362,7 +380,7 @@ class SiteAjax extends Parser
 
 	public function themeTplExists($file)
 	{
-		return file_exists($this->_theme.$file);
+		return file_exists($this->_dir_theme.$file);
 	}
 }
 
@@ -573,18 +591,10 @@ class Panel extends Parser
 		$this->root = $root;
 		$this->_route = $route;
 
-		//$this->_default_root = $this->root;
-
-
-		//if (isset($_GET['fromPage']))
-		//{
-			//$this->assign('HereIsPage', TRUE);
-		//}
-
 		// Main OPT configuration && system constants loader
 		parent::loadSystem();
 	}
-
+	
 	protected function setConfig()
 	{
 		$this->setCompilePrefix('panels_'.(parent::$_user->get('theme') ? preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_user->get('theme')) : preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_sett->get('theme'))).'_');

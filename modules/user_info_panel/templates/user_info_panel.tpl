@@ -1,5 +1,5 @@
 {if $is_logged_in}
-	{php} openside(__('User Panel')) {/php}
+	{php} $this->sidePanel(__('User Panel')); {/php}
         <div id="user_info_panel">
 					<div class="top">
 						<strong>{i18n('Hello :username!', array(':username' => $username))}</strong>
@@ -23,9 +23,9 @@
                     {/if}
 					</div>
 				</div>
-	{php} closeside() {/php}
+	{php} $this->sidePanel(); {/php}
 {else}
-	{php} openside(__('Login')) {/php}
+	{php} $this->sidePanel(__('Login')); {/php}
 	<div id="user_info_panel">
 		<form method="post" action="{$URL_REQUEST}">
 			<input type="text" name="username" id="username" class="valueSystem" value="{i18n("Username:")}">
@@ -39,5 +39,5 @@
 		{if $enable_reg}<p><a href="{$url_register}">{i18n("Register")}</a></p>{/if}
 		<p><a href="{$url_password}">{i18n("Forgot password")}</a></p>
 	</div>
-	{php} closeside() {/php}
+	{php} $this->sidePanel(); {/php}
 {/if}
