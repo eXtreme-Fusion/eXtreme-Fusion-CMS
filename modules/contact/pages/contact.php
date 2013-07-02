@@ -44,11 +44,11 @@ if ($id && $title)
 {
 	if ($id && $title && $action === 'send')
 	{
-		$_tpl->printMessage('valid', __('Wiadomość została wysłana.'));
+		$_tpl->printMessage('valid', __('The message has been sent.'));
 	}
 	elseif ($id && $title && $action === 'error2')
 	{
-		$_tpl->printMessage('error', __('Wystąpił błąd podczas wysyłania wiadomości. Prosimy o kontakt z Administratorem.'));
+		$_tpl->printMessage('error', __('An error occurred while sending e-mail message. Please contact the Administrator.'));
 	}
 
 	$row = $_pdo->getRow('SELECT * FROM [contact] WHERE `id` = :id',
@@ -61,7 +61,7 @@ if ($id && $title)
 
 		if ( ! $_request->post('send_mail')->isEmail())
 		{
-			throw new systemException('Adres e-mail odbiorcy wiadomości jest niepoprawny.');
+			throw new systemException('Recipient\'s e-mail address is invalid.');
 		}
 
 		if (! $_request->post('email')->show() || ! $_request->post('subject')->show() || ! $_request->post('message')->show())
@@ -92,7 +92,7 @@ if ($id && $title)
 					$message = 'Wiadomośc do: '.$row['title'].'<br /><br />'.$_request->post('message')->show();
 					if ($_mail->send($_request->post('email')->show(), $_sett->get('contact_email'), $_request->post('subject')->filters('trim', 'strip'), $message))
 					{
-						$_tpl->printMessage('valid', 'Wysłano wiadomość.');
+						$_tpl->printMessage('valid', 'The message has been sent.');
 					}
 					else
 					{
@@ -101,7 +101,7 @@ if ($id && $title)
 				}
 				else
 				{
-					$_tpl->printMessage('valid', 'Wysłano wiadomość.');
+					$_tpl->printMessage('valid', 'The message has been sent.');
 				}
 			}
 			else

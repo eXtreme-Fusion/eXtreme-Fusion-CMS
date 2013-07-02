@@ -46,6 +46,7 @@ return array(
 	'Author' => 'Autor',
 	'Title:' => 'Tytuł:',
 	'Content' => 'Treść',
+	'Subject:' => 'Temat:',
 	// userException class
 	'Entered the wrong data type.' => 'Wprowadzono dane o niepoprawnym typie',
 
@@ -73,6 +74,7 @@ return array(
 	'Hide e-mail:' => 'Ukryć e-mail:',
 	'Remember me' => 'Pamiętaj logowanie',
 	'Settings' => 'Ustawienia',
+	'E-mail address' => 'Adres e-mail',
 
 	'Register' => 'Rejestracja',
 	'Forgot password' => 'Odzyskiwanie hasła',
