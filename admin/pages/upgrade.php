@@ -55,41 +55,41 @@ try
 		// Wyświetli komunikat
 		$_tpl->getMessage($_request->get('status')->show(), $_request->get('act')->show(),
 			array(
-				'update' => array(
+				'updating' => array(
 					__('The update has been finished successfully.'), __('Error! The update has not been finished.')
 				)
 			)
 		);
     }
-	
-	// Numer wersji, do której system ma zostać zaktualizowany
-	$new_version = '5.0.1';
 
-	$ver = $_sett->get('version') < $new_version;
-
-	if ($_request->post('save')->show())
+	if ($_sett->get('version') < SYSTEM_VERSION)
 	{
-		/*
-			Zapytania wymagane podczas aktualizacji
-		*/
-	
-		$count = $_sett->update(array
-			(
-				'version' => $new_version
-			)
-		);
-		
-		if ($count)
+		if ($_request->post('save')->show())
 		{
-			$_log->insertSuccess('update', __('The update has been finished successfully.'));
-			$_request->redirect(FILE_PATH, array('act' => 'update', 'status' => 'ok'));
+			/*
+				Zapytania wymagane podczas aktualizacji
+			*/
+		
+			$_pdo->exec('ALTER TABLE [statistics] CHANGE `ip` `ip` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT \'0.0.0.0\'');
+			
+			$count = $_sett->update(array
+				(
+					'version' => SYSTEM_VERSION
+				)
+			);
+			
+			if ($count)
+			{
+				$_log->insertSuccess('updating', __('The update has been finished successfully.'));
+				$_request->redirect(FILE_PATH, array('act' => 'updating', 'status' => 'ok'));
+			}
+
+			$_log->insertFail('updating', __('Error! The update has not been finished.'));
+			$_request->redirect(FILE_PATH, array('act' => 'updating', 'status' => 'error'));
 		}
 
-		$_log->insertFail('update', __('Error! The update has not been finished.'));
-		$_request->redirect(FILE_PATH, array('act' => 'update', 'status' => 'error'));
+		$_tpl->assign('upgrade', TRUE);
 	}
-
-	$_tpl->assign('ver', $ver);
 
 	$_tpl->template('upgrade');
 

@@ -116,7 +116,7 @@ function systemErrorHandler(systemException $exc)
 		</table>
 		<div class="tbl Buttons" style="width:200px;margin:10px auto;">
 			<div class="center button-c">
-				<span class="Cancel"><strong><?php echo __('Back'); ?> <img style="position: absolute;" src="<?php echo ADDR_ADMIN; ?>/templates/images/icons/pixel/undo.png" alt="" ></strong></span>
+				<span class="Cancel" onclick="history.back()"><strong><?php echo __('Back'); ?> <img style="position: absolute;" src="<?php echo ADDR_ADMIN; ?>/templates/images/icons/pixel/undo.png" alt="" ></strong></span>
 			</div>
 		</div>
 	</div>
@@ -167,7 +167,7 @@ function argumentErrorHandler(argumentException $exc)
 		</table>
 		<div class="tbl Buttons" style="width:200px;margin:10px auto;">
 			<div class="center button-c">
-				<span class="Cancel"><strong><?php echo __('Back'); ?> <img style="position: absolute;" src="<?php echo ADDR_ADMIN; ?>/templates/images/icons/pixel/undo.png" alt="" ></strong></span>
+				<span class="Cancel" onclick="history.back()"><strong><?php echo __('Back'); ?> <img style="position: absolute;" src="<?php echo ADDR_ADMIN; ?>/templates/images/icons/pixel/undo.png" alt="" ></strong></span>
 			</div>
 		</div>
 	</div>
@@ -259,7 +259,7 @@ function PDOErrorHandler($exc) {
 		</table>
 		<div class="tbl Buttons" style="width:200px;margin:10px auto;">
 			<div class="center button-c">
-				<span class="Cancel"><strong><?php echo __('Back'); ?> <img style="position: absolute;" src="<?php echo ADDR_ADMIN; ?>/templates/images/icons/pixel/undo.png" alt="" ></strong></span>
+				<span class="Cancel" onclick="history.back()"><strong><?php echo __('Back'); ?> <img style="position: absolute;" src="<?php echo ADDR_ADMIN; ?>/templates/images/icons/pixel/undo.png" alt="" ></strong></span>
 			</div>
 		</div>
 	</div>
@@ -271,8 +271,19 @@ function PDOErrorHandler($exc) {
 	echo replaceException($getFooter);
 }
 
-function replaceException($text) {
-	$search = array('{$Charset}','{$ADDR_SITE}','{$DIR_ADMIN}','{$ADDR_ADMIN_CSS}','{$ADDR_COMMON_CSS}','{$FILE_SELF}','{$DIR_ADMIN_IMAGES}','{$CornerStart}','{$CornerEnd}','{literal}','{/literal}');
-	$replace = array('utf-8',ADDR_SITE,DIR_ADMIN,ADDR_ADMIN_TEMPLATES.'stylesheet/',ADDR_COMMON_CSS,FILE_SELF,DIR_ADMIN_IMAGES,"<div class='corner4px'><div class='ctl'><div class='ctr'><div class='ctc'></div></div></div><div class='cc'>","</div><div class='cfl'><div class='cfr'><div class='cfc'></div></div></div></div>","","");
-	return str_replace($search,$replace,$text);
+function replaceException($text) 
+{
+	$replace = array(
+		'{$html_harset}' 		=> 'utf-8',
+		'{$ADDR_SITE}' 			=> ADDR_SITE,
+		'{$DIR_ADMIN}' 			=> DIR_ADMIN,
+		'{$ADDR_ADMIN_CSS}' 	=> ADDR_ADMIN_TEMPLATES.'stylesheet/',
+		'{$ADDR_COMMON_CSS}' 	=> ADDR_COMMON_CSS,
+		'{$FILE_SELF}' 			=> FILE_SELF,
+		'{$DIR_ADMIN_IMAGES}' 	=> DIR_ADMIN_IMAGES,
+		'{literal}' 			=> "",
+		'{/literal}' 			=> ""
+	);
+	
+	return HELP::strReplaceAssoc($replace, $text);
 }

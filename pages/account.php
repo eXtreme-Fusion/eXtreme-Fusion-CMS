@@ -177,12 +177,15 @@ if ($_request->postIsset('email'))
 				}
 			}
 		}
-
+		
 		$_user->update(NULL, array(
 			'hide_email' => $_request->post('hideemail')->isNum(TRUE),
 			'theme'      => $_request->post('theme')->show(),
 			'lang'       => $_request->post('language')->show(),
 		), $_fields);
+		
+		// Tymczasowo...
+		$_files->rmDirRecursive(DIR_CACHE);
 
 		$_system->clearCache('profiles');
 		HELP::redirect($_route->path(array('controller' => 'account', 'action' => 'ok')));

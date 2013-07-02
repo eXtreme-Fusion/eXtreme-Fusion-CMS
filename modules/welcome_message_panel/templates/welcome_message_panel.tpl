@@ -35,7 +35,7 @@
 *}
 
 {if $welcome_message}
-	{php} opentable(__('Welcome Message')) {/php}
+	{php} $this->middlePanel(__('Welcome Message')); {/php}
 		{$welcome_message}
-	{php} closetable() {/php}
+	{php} $this->middlePanel(); {/php}
 {/if}

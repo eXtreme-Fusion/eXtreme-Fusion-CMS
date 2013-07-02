@@ -1,9 +1,9 @@
 {if $contact}
-	{php} opentable(__('Contact with :contact', array(':contact' => $this->data['contact']['title']))) {/php}
+	{php} $this->middlePanel(__('Contact with :contact', array(':contact' => $this->data['contact']['title']))); {/php}
 	{if $error}
 		<div class="error">
 			{section=error}
-				<p>	
+				<p>
 					{if $error == '1'}
 						{i18n('Nie uzupełniono wymaganych pól.')}
 					{elseif $error == '2'}
@@ -45,7 +45,7 @@
 				<div class="formLabel grid_2 sep_1"><label for="message">Wyślij mi kopię:</label></div>
 				<div class="formField grid_7"><input type="checkbox" name="sendme_copy" value="send"{if $sendme_copy} checked="checked"{/if} /></div>
 			</div>
-			
+
 			{if $security}{$security}{/if}
 			<div class="tbl center">
 				<div class="grid_11 center">
@@ -56,9 +56,9 @@
 				</div>
 			</div>
 		</form>
-	{php} closetable() {/php}
+	{php} $this->middlePanel(); {/php}
 {else}
-	{php} opentable(__('Contact')) {/php}
+	{php} $this->middlePanel(__('Contact')); {/php}
 	{if $contacts}
 		<div class="sep_1 grid_4 tbl">
 			{section=contacts}
@@ -68,5 +68,5 @@
 	{else}
 		<div class="info">Brak formularzy</div>
 	{/if}
-	{php} closetable() {/php}
+	{php} $this->middlePanel(); {/php}
 {/if}

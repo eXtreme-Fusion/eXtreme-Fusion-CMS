@@ -22,7 +22,8 @@ class Parser extends optClass
 		$_sett,
 		$_user,
 		$_request,
-		$_log;
+		$_log,
+		$_theme;
 
 	public function __construct()
 	{
@@ -57,6 +58,23 @@ class Parser extends optClass
 		$_SESSION['history']['Page'] = str_replace(array(DIR_SITE, '\\'), array('', '/'), $__file__).($_SERVER['QUERY_STRING'] ? '?'.$_SERVER['QUERY_STRING'] : '');
 	}
 
+	// TODO:: zrobić dla panelu admina klasę i dla strony klasę, po której będą dziedziczyć inne metody
+	public static function setThemeInst($_theme)
+	{
+		self::$_theme = $_theme;
+	}	
+	
+	public function middlePanel($title = NULL)
+	{
+		return self::$_theme->middlePanel($title);
+	}
+	
+	public function sidePanel($title = NULL)
+	{
+		return self::$_theme->sidePanel($title);
+	}
+	//
+	
 	private function assignMain()
 	{
 		$this->assign('FILE_SELF', FILE_SELF);
@@ -66,7 +84,6 @@ class Parser extends optClass
 		$this->assign('ADDR_ADMIN', ADDR_ADMIN);
 		$this->assign('ADDR_IMAGES', ADDR_IMAGES);
 		$this->assign('ADDR_ADMIN_IMAGES', ADDR_ADMIN_IMAGES);
-		$this->assign('NEWS_CAT_IMAGES', ADDR_IMAGES.'news_cats/'.self::$_sett->get('locale').'/');
 		$this->assign('ADDR_JS', ADDR_JS);
 		$this->assign('ADDR_COMMON_JS', ADDR_COMMON_JS);
 		$this->assign('ADDR_COMMON_CSS', ADDR_COMMON_CSS);
@@ -81,12 +98,37 @@ class Parser extends optClass
 				'ADDR_ADMIN_PAGES' => ADDR_ADMIN.'pages/'
 			)
 		);
-		if (file_exists(DIR_SITE.'themes'.DS.self::$_sett->get('theme').DS.'templates'.DS.'images'.DS.'favicon.ico'))
+		
+		if (self::$_user->iUSER())
 		{
-			$this->assign('ADDR_FAVICON', ADDR_SITE.'themes/'.self::$_sett->get('theme').'/templates/images/favicon.ico');
+			$this->assign('NEWS_CAT_IMAGES', ADDR_IMAGES.'news_cats/'.self::$_user->get('lang').'/');
+			
+			if (self::$_user->get('theme') !== 'Default' && self::$_sett->get('userthemes') === '1')
+			{
+				if (file_exists(DIR_SITE.'themes'.DS.self::$_user->get('theme').DS.'templates'.DS.'images'.DS.'favicon.ico'))
+				{
+					$this->assign('ADDR_FAVICON', ADDR_SITE.'themes/'.self::$_user->get('theme').'/templates/images/favicon.ico');
+				}
+				else
+				{
+					$this->assign('ADDR_FAVICON', ADDR_ADMIN_IMAGES.'favicon.ico');
+				}
+			}
+			else
+			{
+				if (file_exists(DIR_SITE.'themes'.DS.self::$_sett->get('theme').DS.'templates'.DS.'images'.DS.'favicon.ico'))
+				{
+					$this->assign('ADDR_FAVICON', ADDR_SITE.'themes/'.self::$_sett->get('theme').'/templates/images/favicon.ico');
+				}
+				else
+				{
+					$this->assign('ADDR_FAVICON', ADDR_ADMIN_IMAGES.'favicon.ico');
+				}
+			}
 		}
 		else
 		{
+			$this->assign('NEWS_CAT_IMAGES', ADDR_IMAGES.'news_cats/'.self::$_sett->get('locale').'/');
 			$this->assign('ADDR_FAVICON', ADDR_ADMIN_IMAGES.'favicon.ico');
 		}
 
@@ -219,7 +261,7 @@ class pageNavParser extends optClass
 		$this->gzipCompression = FALSE;
 		$this->registerInstruction('optTheme');
 		$this->registerFunction('i18n', 'Locale');
-		$this->setCompilePrefix('page_nav_');
+		$this->setCompilePrefix('site_');
 		if (function_exists('optUrl'))
 		{
 			$this->registerFunction('url', 'Url');
@@ -302,19 +344,19 @@ class Basic extends Parser
 class SiteAjax extends Parser
 {
 	private
-		$_theme,
-		$_default;
+		$_dir_theme,
+		$_dir_default;
 
 	public function __construct()
 	{
 
 		parent::loadSystem();
-		$this->setCompilePrefix('site_ajax_');
+		$this->setCompilePrefix('site_ajax_'.(parent::$_user->get('theme') ? preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_user->get('theme')) : preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_sett->get('theme'))).'_');
 		$this->compile         = DIR_CACHE;
 		$this->cache           = DIR_CACHE;
 
-		$this->_theme = DIR_THEME.'templates'.DS.'ajax'.DS;
-		$this->_default = DIR_AJAX.'templates'.DS;
+		$this->_dir_theme = DIR_THEME.'templates'.DS.'ajax'.DS;
+		$this->_dir_default = DIR_AJAX.'templates'.DS;
 	}
 
 	// Metoda nie zwraca FALSE jeśli pliku nie znaleziono, ponieważ nie zawsze on istnieje dla AJAX-a
@@ -322,11 +364,11 @@ class SiteAjax extends Parser
 	{
 		if ($theme)
 		{
-			$this->root = $this->_theme;
+			$this->root = $this->_dir_theme;
 		}
 		else
 		{
-			$this->root = $this->_default;
+			$this->root = $this->_dir_default;
 		}
 
 		if (file_exists($this->root.$file))
@@ -338,7 +380,7 @@ class SiteAjax extends Parser
 
 	public function themeTplExists($file)
 	{
-		return file_exists($this->_theme.$file);
+		return file_exists($this->_dir_theme.$file);
 	}
 }
 
@@ -363,7 +405,7 @@ class Iframe extends Parser
 
 	protected function setConfig()
 	{
-		$this->setCompilePrefix('admin_iframe_');
+		$this->setCompilePrefix('admin_iframe_'.(parent::$_user->get('theme') ? preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_user->get('theme')) : preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_sett->get('theme'))).'_');
 		$this->root            = DIR_ADMIN_TEMPLATES;
 		$this->compile         = DIR_CACHE;
 	}
@@ -442,7 +484,7 @@ class Site extends Parser
 
 	protected function setConfig()
 	{
-		$this->setCompilePrefix('site_');
+		$this->setCompilePrefix('site_'.(parent::$_user->get('theme') ? preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_user->get('theme')) : preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_sett->get('theme'))).'_');
 		$this->root            = DIR_TEMPLATES;
 		$this->compile         = DIR_CACHE;
 		$this->cache           = DIR_CACHE;
@@ -549,21 +591,13 @@ class Panel extends Parser
 		$this->root = $root;
 		$this->_route = $route;
 
-		//$this->_default_root = $this->root;
-
-
-		//if (isset($_GET['fromPage']))
-		//{
-			//$this->assign('HereIsPage', TRUE);
-		//}
-
 		// Main OPT configuration && system constants loader
 		parent::loadSystem();
 	}
-
+	
 	protected function setConfig()
 	{
-		$this->setCompilePrefix('panels_');
+		$this->setCompilePrefix('panels_'.(parent::$_user->get('theme') ? preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_user->get('theme')) : preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_sett->get('theme'))).'_');
 		$this->root            = DIR_TEMPLATES;
 		$this->compile         = DIR_CACHE;
 		$this->cache           = DIR_CACHE;
@@ -650,7 +684,7 @@ class Ajax extends Parser
 
 	protected function setConfig()
 	{
-		$this->setCompilePrefix('ajax_');
+		$this->setCompilePrefix('ajax_'.(parent::$_user->get('theme') ? preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_user->get('theme')) : preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_sett->get('theme'))).'_');
 		$this->compile         = DIR_CACHE;
 		$this->cache           = DIR_CACHE;
 	}
@@ -725,7 +759,7 @@ class AdminModuleIframe extends Parser
 
 	protected function setConfig()
 	{
-		$this->setCompilePrefix('modules_').$this->_module;
+		$this->setCompilePrefix('modules_'.(parent::$_user->get('theme') ? preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_user->get('theme')) : preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_sett->get('theme'))).'_').$this->_module.'_';
 		$this->compile         = DIR_CACHE;
 		$this->cache           = DIR_CACHE;
 	}
@@ -774,7 +808,7 @@ class AdminMainEngine extends Parser
 
 	protected function setConfig()
 	{
-		$this->setCompilePrefix('admin_');
+		$this->setCompilePrefix('admin_'.(parent::$_user->get('theme') ? preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_user->get('theme')) : preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_sett->get('theme'))).'_');
 		$this->root            = DIR_ADMIN_TEMPLATES;
 		$this->compile         = DIR_CACHE;
 		$this->cache           = DIR_CACHE;
@@ -802,4 +836,3 @@ class AdminMainEngine extends Parser
 		$this->parse($mainengine.$this->ext);
 	}
 }
-

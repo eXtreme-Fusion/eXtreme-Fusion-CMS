@@ -1,8 +1,33 @@
-﻿					eXtreme-Fusion 5.0.1 2012.05.28
+			eXtreme-Fusion 5.0.3
+- ukrycie linku do podstrony Edytor paneli - link do dodawania paneli jest na podstronie Panele
+- ukrycie linku do podstrony Aktualizacja - informacja o dostępności aktualizacji oraz link do podstrony Aktualizacja jest widoczny na stronie głównej panelu admina, gdy aktualizacja jest dostępna
+- wersja systemu do aktualizacji od teraz w pliku bootstrap.php
+- przekierowania na logowanie po wygaśnięciu sesji przy kliknięciu w zakładkę w Panelu admina
+- nowe, obiektowe API szablonów
+
+        OD TERAZ DATA PRZY WERSJI OZNACZA DZIEŃ PREMIERY A NIE ROZPOCZĘCIA PRAC NAD SYSTEMEM
+                    
+			eXtreme-Fusion 5.0.2 2013.06.01
+                    
+- poprawka zabezpieczeń i usuniecie błędu przy włączonym register_globals - usuniecie problemu z niezadeklarowana zmienna na jednym z darmowych serwerów
+- usuniecie odstępu nad jednym z paneli
+- cache dla różnych szablonów o tej samej nazwie plików tymczasowych
+- usuniecie błędów dotyczących MySQL w konfiguracji strict mode
+- nowy wygląd paneli nawigacja, ostatnio online
+- nowy wygląd nagłówków paneli bocznych oraz nawigacji poziomej
+- podświetlanie w menu poziomym strony głównej, gdy nie jesteśmy na podstronie
+- wdrożenie obsługi IPv6 w statystykach unikalnych odwiedzin - wyeliminowanie problemu (jak dobrze pamiętam) z logowaniem
+- poprawki plików językowych, głownie polskich i angielskich
+- usunięciu błędu z niezadeklarowanym indeksem hash w sesji użytkownika
+- modyfikacja pliku index.php umożliwiająca rozpoczęcie prac nad forum oraz budowę modułów we wzorcu MVP/MVC lub pochodnych
+- poprawka do zarządzania panelami - usuniecie niepotrzebnej funkcji parsującej dane
+- Usunięcie BOM z wszystkich plików
+
+			eXtreme-Fusion 5.0.1 2013.05.28
 
 - uzupełnienie czeskich plików językowych
 
-					eXtreme-Fusion V STABLE 2012.03.4
+eXtreme-Fusion V STABLE 2013.03.4
 
 - zmiana licencji na aGPL v3
 - dodanie licznika unikalnych wizyt
@@ -10,10 +35,10 @@
 - wprowadzenie ustawienia wykrywania języka w przeglądarce
 - pageNav dla komentarzy wraz z nową metodą dla .tpl
 
-					eXtreme-Fusion V RC1 2012.12.12
+			eXtreme-Fusion V RC1 2012.12.12
 
 - usunięto katalog "info": pliki przeniesiono do folderu "dokumentacja"
-- utworzeno katalog "common" dla plików JS
+- utworzono katalog "common" dla plików JS
 - poprawka do kodowania znaków dla języka angielskiego: nie powinno już "krzaczyć"
 - poprawka do detekcji języka: jeśli brakuje indeksu tablicy SERVER, język ustawia się na angielski; przydatne dla wyszukiwarek
 - usunięto niepotrzebne tabele oraz kod z pliku cronjob.php; zmieniono nazwę katalogu "dokumentacja" na "docs"
@@ -22,7 +47,7 @@
 - modyfikacja instalatora: PDO zamiast mysql_*; wybór języka z tłumaczeniem pierwszego etapu instalacji; wdrożenie metod helpera w miejsce strukturalnych
 - panele z niezainstalowanych modułów nie będą dostępne
 
-					eXtreme-Fusion V Beta 5 2012.06.23
+			eXtreme-Fusion V Beta 5 2012.06.23
 
 - zrezygnowano z $_SERVER['PATH_INFO'] na rzecz $_SERVER['REQUEST_URI']
   ze względu na problemy na serwerach nginx
@@ -36,7 +61,6 @@
 - dodano checkboxy umożliwiające poinformowanie instalatora,
   że modRewrite jest dostępny; analogicznie co do PATH_INFO
 - edycja ustawień routera (możliwość wyboru rozszerzenia dla adresów URL)
-
 - nowy wygląd podstrony Profil użytkownika
 
 - wyeliminowano błąd z niewyświetlaniem się newsów osobom niezalogowanym

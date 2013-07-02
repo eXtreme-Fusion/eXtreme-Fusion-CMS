@@ -37,12 +37,12 @@ if ( ! function_exists('optTheme'))
 
 			$this->compiler->parametrize('panel', $attributes, $params);
 
-			$this->compiler->out('opentable('.$params['name'].');');
+			$this->compiler->out('$this->middlePanel('.$params['name'].');');
 		}
 
 		protected function themeEnd()
 		{
-			$this->compiler->out('closetable();');
+			$this->compiler->out('$this->middlePanel();');
 		}
 
 	}

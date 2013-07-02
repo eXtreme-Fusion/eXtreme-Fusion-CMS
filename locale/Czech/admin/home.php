@@ -9,7 +9,7 @@ return array(
 	'Update' => 'Aktualizace',
 	'Notes' => 'Poznámky',
 	'Quick&nbsp;news' => 'Rychlá novinky',
-	'You&nbsp;have&nbsp;currently&nbsp;version&nbsp;eXtreme&nbsp;-&nbsp;Fusion&nbsp;:version' => 'Máte aktuální verzi eXtreme-Fusion :version',
+	'You have currently version of eXtreme-Fusion CMS.' => 'Máte aktuální verzi eXtreme-Fusion CMS.',
 	'Quick news has been added.' => 'Rychlá novinka byla přidána.',
 	'Error! Quick news has not been added.' => 'Došlo k chybě! Rychlá novinka nebyla přidána.',
 	'Note has been added.' => 'Poznámka byla přidána.',

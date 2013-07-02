@@ -832,11 +832,7 @@ Class HELP
 	// Check that site or user theme exists
 	public static function theme_exists($theme)
 	{
-		if ( ! file_exists(DIR_THEMES) || ! is_dir(DIR_THEMES))
-		{
-			return FALSE;
-		}
-		elseif (file_exists(DIR_THEMES.$theme.DS.'core'.DS.'theme.php'))
+		if (file_exists(DIR_THEMES.$theme.DS.'view.php'))
 		{
 			defined('ADDR_THEME') || define('ADDR_THEME', ADDR_THEMES.$theme.'/');
 			defined('DIR_THEME') || define('DIR_THEME', DIR_THEMES.$theme.DS);
@@ -845,7 +841,7 @@ Class HELP
 			defined('THEME_IMAGES') || define('THEME_IMAGES', ADDR_THEME.'templates/images/');
 			return TRUE;
 		}
-		else
+		/*else
 		{
 			$dh = opendir(DIR_THEMES);
 			while (FALSE !== ($entry = readdir($dh)))
@@ -876,7 +872,9 @@ Class HELP
 			{
 				return FALSE;
 			}
-		}
+		}*/
+		
+		return FALSE;
 	}
 
 	public static function formatOrphan($content)
@@ -959,4 +957,10 @@ Class HELP
 
 		return $return;
 	}
+	
+	// http://www.php.net/manual/en/function.str-replace.php#95198
+	public static function strReplaceAssoc(array $replace, $text) 
+	{
+	   return str_replace(array_keys($replace), array_values($replace), $text);   
+	} 
 }

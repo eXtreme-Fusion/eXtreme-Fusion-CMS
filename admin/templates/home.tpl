@@ -35,7 +35,7 @@
 
 <div class="ui-corner-all grid_6">
 	<h3 class="ui-corner-all">{i18n('Update')}</h3>
-	<div class="HomeBox"><div class="valid">{i18n('You&nbsp;have&nbsp;currently&nbsp;version&nbsp;eXtreme&nbsp;-&nbsp;Fusion&nbsp;:version', array(':version' => $version))}</div></div>
+	<div class="HomeBox"><div class="valid">{if $upgrade}<a href="{$ADDR_ADMIN_PAGES}upgrade.php">{i18n('Update is available.')}</a>{else}{i18n('You have currently version of eXtreme-Fusion CMS.')}{/if}</div></div>
 
 	<h3 class="ui-corner-all">{i18n('History')}</h3>
 	<div class="HomeBox">

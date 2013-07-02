@@ -1,4 +1,4 @@
-<?php preg_match("/sitecore.php/i", $_SERVER['PHP_SELF']) == FALSE || exit;
+<?php if (stripos($_SERVER['PHP_SELF'], 'sitecore.php')) exit;
 /*********************************************************
 | eXtreme-Fusion 5
 | Content Management System
@@ -38,31 +38,33 @@ try
 	{
 		$value = func_get_args();
 		unset($value[0]);
-
+		
 		if ($value)
 		{
 			$ret = array(); $i = 0; $id = NULL;
 			foreach($value as $array)
 			{
 				$data = explode('=>', $array);
-
-				if (count($data) == 2)
+				if ($data[0] !== '')
 				{
-					$id = trim($data[0]);
-				}
-				else
-				{
-					if ($id)
+					if (count($data) == 2)
 					{
-						$ret[$id] = trim($data[0]);
+						$id = trim($data[0]);
 					}
 					else
 					{
-						$ret[$i] = trim($data[0]);
-						$i++;
-					}
+						if ($id)
+						{
+							$ret[$id] = trim($data[0]);
+						}
+						else
+						{
+							$ret[$i] = trim($data[0]);
+							$i++;
+						}
 
-					$id = FALSE;
+						$id = FALSE;
+					}
 				}
 			}
 
@@ -171,11 +173,11 @@ try
 		
 		HELP::reload(0);
 	}
-	
+
 	# User login session
 	if (strpos($_SERVER['PHP_SELF'], 'admin') === FALSE)
 	{
-		if (isset($_SESSION['user']))
+		if (isset($_SESSION['user']['id']) && isset($_SESSION['user']['hash']))
 		{
 			$_user->userLoggedInBySession($_SESSION['user']['id'], $_SESSION['user']['hash']);
 		}

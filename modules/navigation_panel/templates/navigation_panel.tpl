@@ -33,22 +33,20 @@
 +-------------------------------------------------------*/
 *}
 
-{php} openside(__('Navigation Panel')) {/php}
-<nav id="side_nav">
-	<ul>
-		{if $nav}
-			{section=nav}
-				{if $nav.type == 1}
-					<div class="side-label"><strong>{$nav.name}</strong></div>
-				{elseif $nav.type == 2}
-					<div><hr class="side-hr" /></div>
-				{else}
-					<li><a href="{$nav.url}"{if $nav.link_target} {$nav.link_target}{/if}>{$nav.name}</a></li>
-				{/if}
-			{/section}
-		{else}
-			<div class="error center">{i18n('No site links')}</div>
-		{/if}
-	</ul>
-</nav>
-{php} closeside() {/php}
+{php} $this->sidePanel(__('Navigation Panel')); {/php}
+{if $nav}
+<ul id="side_nav">
+	{section=nav}
+	{if $nav.type == 1}
+	<li class="header">{$nav.name}</li>
+	{elseif $nav.type == 2}
+	<li class="separator"></li>
+	{else}
+	<li><a href="{$nav.url}"{if $nav.link_target} {$nav.link_target}{/if}>{$nav.name}</a></li>
+	{/if}
+	{/section}
+</ul>
+{else}
+<div class="error center">{i18n('No site links')}</div>
+{/if}
+{php} $this->sidePanel(); {/php}

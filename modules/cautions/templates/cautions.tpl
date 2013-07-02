@@ -1,4 +1,4 @@
-{php} opentable(__('Cautions')) {/php}
+{php} $this->middlePanel(__('Cautions')); {/php}
 	<div class="tbl">
 		<div class="grid_10 red">{i18n('You have :how warnings', array(':how' => $rows))}</div>
 	</div>
@@ -30,4 +30,4 @@
 		{/section}
 		<div class="right"><< {i18n('Back to profile')} {$profile}</div>
 	{/if}
-{php} closetable() {/php}
+{php} $this->middlePanel(); {/php}

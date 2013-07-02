@@ -34,7 +34,7 @@
 +-------------------------------------------------------*/
 *}
 
-{php} opentable(__('Chat')) {/php}
+{php} $this->middlePanel(__('Chat')); {/php}
     {if $iUSER}
 		<div id="request_chat"></div>
 		<div id="archive_chat_post"></div>
@@ -55,7 +55,7 @@
 						<img src="{$ADDR_IMAGES}smiley/{$smiley.image}" title="{$smiley.text}" class="tip" onclick="insertText('{$smiley.textarea}', '{$smiley.code}', 'chat');">
 						{if $smiley.i % 10 == 0}</div><div class="line center">{/if}
 					{/section}
-					
+
 				</div>
 				<div class="line center">
 					<input type="submit" name="send" class="button" value="{i18n('Send')}" />
@@ -65,4 +65,4 @@
     {else}
 		<div class="admin-message">{i18n('You must login to post a message.')}</div>
     {/if}
-{php} closetable() {/php}
+{php} $this->middlePanel(); {/php}

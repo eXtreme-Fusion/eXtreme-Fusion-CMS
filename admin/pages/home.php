@@ -31,11 +31,7 @@
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
 +--------------------------------------------------------*/
-// TO DO
-// Poprawić wygląd notatek
-// Podpiąć download
-// Sprawdzanie wersji systemu z aktualną dostępną na EF.
-// TO DO
+// TODO: poprawić wygląd notatek, podpiąć download.
 
 try
 {
@@ -52,6 +48,11 @@ try
 
 	$_tpl = new Iframe;
 
+	if ($_sett->get('version') < SYSTEM_VERSION)
+	{
+		$_tpl->assign('upgrade', TRUE);
+	}
+	
 	if ($_request->post('note_add_save')->show() === 'yes')
 	{
 		$count = $_pdo->getMatchRowsCount('
