@@ -363,10 +363,20 @@ return array(
 
 	//System
 	'System error' => 'Błąd systemu',
+	'Internal error' => 'Błąd wewnętrzny',
 	'Error path' => 'Ścieżka błędu',
 	'In file' => 'W pliku',
 	'Function' => 'Funckja',
 	'Line' => 'Linia',
+	'Directories' => 'Katalogi',
+	'Directory' => 'Katalog',
+	'Path' => 'Ścieżka',
+	'Status' => 'Status',
+	'Exist' => 'Istnieje',
+	'Does not exist' => 'Nie istnieje',
+	'File' => 'Plik',
+	'Method' => 'Metoda',
+	'Templates' => 'Templateka',
 
 	// Arguments
 	'Function argument error' => 'Błąd argumentów funkcji',
