@@ -116,7 +116,7 @@ function systemErrorHandler(systemException $exc)
 		</table>
 		<div class="tbl Buttons" style="width:200px;margin:10px auto;">
 			<div class="center button-c">
-				<span class="Cancel"><strong><?php echo __('Back'); ?> <img style="position: absolute;" src="<?php echo ADDR_ADMIN; ?>/templates/images/icons/pixel/undo.png" alt="" ></strong></span>
+				<span class="Cancel" onclick="history.back()"><strong><?php echo __('Back'); ?> <img style="position: absolute;" src="<?php echo ADDR_ADMIN; ?>/templates/images/icons/pixel/undo.png" alt="" ></strong></span>
 			</div>
 		</div>
 	</div>
@@ -167,7 +167,7 @@ function argumentErrorHandler(argumentException $exc)
 		</table>
 		<div class="tbl Buttons" style="width:200px;margin:10px auto;">
 			<div class="center button-c">
-				<span class="Cancel"><strong><?php echo __('Back'); ?> <img style="position: absolute;" src="<?php echo ADDR_ADMIN; ?>/templates/images/icons/pixel/undo.png" alt="" ></strong></span>
+				<span class="Cancel" onclick="history.back()"><strong><?php echo __('Back'); ?> <img style="position: absolute;" src="<?php echo ADDR_ADMIN; ?>/templates/images/icons/pixel/undo.png" alt="" ></strong></span>
 			</div>
 		</div>
 	</div>
@@ -259,7 +259,7 @@ function PDOErrorHandler($exc) {
 		</table>
 		<div class="tbl Buttons" style="width:200px;margin:10px auto;">
 			<div class="center button-c">
-				<span class="Cancel"><strong><?php echo __('Back'); ?> <img style="position: absolute;" src="<?php echo ADDR_ADMIN; ?>/templates/images/icons/pixel/undo.png" alt="" ></strong></span>
+				<span class="Cancel" onclick="history.back()"><strong><?php echo __('Back'); ?> <img style="position: absolute;" src="<?php echo ADDR_ADMIN; ?>/templates/images/icons/pixel/undo.png" alt="" ></strong></span>
 			</div>
 		</div>
 	</div>
