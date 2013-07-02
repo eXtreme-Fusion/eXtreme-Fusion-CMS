@@ -113,6 +113,12 @@ $drop_table[2] = 'board_categories';
 $drop_table[3] = 'threads';
 $drop_table[4] = 'entries';
 
+$menu_link[1] = array(
+	'title'      => 'Forum',
+	'url'        => 'forum',
+	'visibility' => '3',
+);
+
 /*
 $admin_page[1] = array(
 	'title' => 'Forum',
@@ -125,16 +131,4 @@ $perm[1] = array(
 	'name' => 'admin',
 	'desc' => 'Zarządzanie modułem SignProtection&trade;'
 );
-
-$new_table[1] = array(
-	'sign_protection',
-	"(
-		`validation_type` TINYINT UNSIGNED NOT NULL DEFAULT '0'
-	) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;"
-);
-$new_row[1] = array(
-	'sign_protection',
-	"(`validation_type`) VALUES (0)"
-);
-
-$drop_table[1] = 'sign_protection'; */
+*/
