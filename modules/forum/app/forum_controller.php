@@ -8,6 +8,10 @@ abstract class Forum_Controller extends Abstract_Controller {
 
 	protected $bbcode;
 
+	protected $logged_in = FALSE;
+
+	protected $is_admin = FALSE;
+
 	public function render()
 	{
 		$this->ec->header->set('<link href="'.ADDR_MODULES.'forum/assets/forum.css" rel="stylesheet">');
@@ -19,6 +23,9 @@ abstract class Forum_Controller extends Abstract_Controller {
 		$this->pdo = $this->ec->pdo;
 
 		$this->bbcode = $this->ec->sbb;
+
+		$this->logged_in = $logged_in = $this->user->iUSER();
+		$this->is_admin  = ($logged_in && $this->user->iADMIN());
 
 		return parent::render();
 	}

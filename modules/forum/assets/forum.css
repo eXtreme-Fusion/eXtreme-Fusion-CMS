@@ -1,8 +1,35 @@
 strong { font-weight: bold; }
 
-.button { margin: 0; }
+.button,
+.forum .button,
+.error {
+	margin: 0;
+}
 
-.button + .button { margin-left: 2px; }
+.button + .button,
+.button + .button-group,
+.button-group + .button {
+	margin-left: 2px;
+}
+
+.button-group { display: inline-block; }
+
+.button-group .button { border-radius: 0; }
+
+.button-group .button + .button {
+	margin-left: -3px;
+	border-left: 1px solid #658c00;
+}
+
+.button-group .button:first-child {
+	border-top-left-radius: 3px;
+	border-bottom-left-radius: 3px;
+}
+
+.button-group .button:last-child {
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
 
 .forum th:first-child { border-top-left-radius: 3px; }
 .forum th:last-child { border-top-right-radius: 3px; }
@@ -31,13 +58,14 @@ strong { font-weight: bold; }
 	font-size: 13px;
 }
 
+.forum .text-title + p { margin-top: 3px; }
+
 .forum .text-link {
 	display: block;
 	color: #777;
 }
 
-.forum p {
-	margin-top: 3px;
+.forum .text-small {
 	font-size: 11px;
 	color: #777;
 }
@@ -48,12 +76,29 @@ strong { font-weight: bold; }
 	border-radius: 3px;
 }
 
-.forum .entry-info {
-	padding: 5px 14px;
+.forum .entry-top {
+	overflow: hidden;
 	margin: -10px -14px 10px;
-	font-size: 10px;
 	background-color: #1c1c1c;
 	border-bottom: 1px solid #333;
+}
+
+.forum .entry-top .top-info {
+	float: left;
+	margin: 5px 10px;
+}
+
+.forum .entry-top .top-options { float: right; }
+
+.forum .entry-top .top-options a {
+	margin: 0 4px;
+	font-weight: bold;
+	color: #777;
+}
+
+.forum .entry-top p {
+	margin: 5px 14px;
+	font-size: 10px;
 }
 
 .forum .entry-author {

@@ -5,7 +5,7 @@
 	<li><strong><?php echo __('Create a new thread'); ?></strong></li>
 </ul>
 <?php $this->theme->middlePanel(__('Forum')); ?>
-		<form action="<?php echo URL_REQUEST; ?>" method="post" id="thread-reply">
+		<form action="<?php echo URL_REQUEST; ?>" method="post" id="thread-create">
 			<div class="tbl1">
 				<div class="formLabel col col-2"><label for="title"><?php echo __('Thread title'); ?>:</label></div>
 				<div class="formField col col-8">
@@ -21,14 +21,14 @@
 			<div class="tbl1">
 				<div class="line center">
 					<?php foreach ($bbcodes as $bbcode): ?>
-					<button type="button" onClick="addText('content', '[<?php echo $bbcode['value']; ?>]', '[/<?php echo $bbcode['value']; ?>]', 'thread-reply');">
+					<button type="button" onClick="addText('content', '[<?php echo $bbcode['value']; ?>]', '[/<?php echo $bbcode['value']; ?>]', 'thread-create');">
 						<img src="<?php echo $bbcode['image']; ?>" title="<?php echo $bbcode['description']; ?>" alt="<?php echo $bbcode['description']; ?>">
 					</button>
 					<?php endforeach; ?>
 				</div>
 				<div class="line center">
 					<?php foreach ($smileys as $smiley): ?>
-					<img src="<?php echo ADDR_IMAGES; ?>smiley/<?php echo $smiley['image']; ?>" title="<?php echo $smiley['text']; ?>" alt="<?php echo $smiley['text']; ?>" onclick="insertText('content', '<?php echo $smiley['code']; ?>', 'thread-reply');">
+					<img src="<?php echo ADDR_IMAGES; ?>smiley/<?php echo $smiley['image']; ?>" title="<?php echo $smiley['text']; ?>" alt="<?php echo $smiley['text']; ?>" onclick="insertText('content', '<?php echo $smiley['code']; ?>', 'thread-create');">
 					<?php endforeach; ?>
 				</div>
 			</div>

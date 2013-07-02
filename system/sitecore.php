@@ -38,31 +38,33 @@ try
 	{
 		$value = func_get_args();
 		unset($value[0]);
-
+		
 		if ($value)
 		{
 			$ret = array(); $i = 0; $id = NULL;
 			foreach($value as $array)
 			{
 				$data = explode('=>', $array);
-
-				if (count($data) == 2)
+				if ($data[0] !== '')
 				{
-					$id = trim($data[0]);
-				}
-				else
-				{
-					if ($id)
+					if (count($data) == 2)
 					{
-						$ret[$id] = trim($data[0]);
+						$id = trim($data[0]);
 					}
 					else
 					{
-						$ret[$i] = trim($data[0]);
-						$i++;
-					}
+						if ($id)
+						{
+							$ret[$id] = trim($data[0]);
+						}
+						else
+						{
+							$ret[$i] = trim($data[0]);
+							$i++;
+						}
 
-					$id = FALSE;
+						$id = FALSE;
+					}
 				}
 			}
 

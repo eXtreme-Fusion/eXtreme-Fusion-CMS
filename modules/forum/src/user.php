@@ -3,17 +3,15 @@
 class User_Model extends Abstract_Model {
 
 	protected $_user;
-	protected $_thread;
 
-	public function __construct(User $user, $thread)
+	public function __construct(User $user)
 	{
 		$this->_user   = $user;
-		$this->_thread = $thread;
 	}
 
-	public function isAuthor()
+	public function isAuthor($id)
 	{
-		return ($this->_thread['user_id'] === $this->_user->get('id'));
+		return ($this->_user->get('id') === $id);
 	}
 
 	public function getCount()

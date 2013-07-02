@@ -17,7 +17,7 @@ class Thread_Controller extends Forum_Controller {
 			->model('entry')
 			->fetchByID($thread['id']);
 
-		$user = $this->model('user', array($this->user, $thread));
+		$user = $this->model('user', array($this->user));
 
 		return $this->view('thread', array(
 			'thread'  => $thread,
@@ -28,7 +28,7 @@ class Thread_Controller extends Forum_Controller {
 
 	public function create()
 	{
-		if ($this->user->iGUEST())
+		if ( ! $this->logged_in)
 		{
 			return $this->user->onlyForUsers($this->router);
 		}
@@ -48,7 +48,7 @@ class Thread_Controller extends Forum_Controller {
 				array(':category', $id, PDO::PARAM_INT),
 				array(':user', $user = $this->user->get('id'), PDO::PARAM_INT),
 				array(':title', HELP::wordsProtect($this->request->post('title')->filters('trim', 'strip')), PDO::PARAM_STR),
-				array(':is_pinned', ($this->user->iADMIN() && $this->request->post('is_pinned')->show()), PDO::PARAM_BOOL),
+				array(':is_pinned', ($this->is_admin && $this->request->post('is_pinned')->show()), PDO::PARAM_BOOL),
 				array(':timestamp', $time = time(), PDO::PARAM_INT),
 			));
 
@@ -77,7 +77,7 @@ class Thread_Controller extends Forum_Controller {
 
 	public function edit()
 	{
-		if ($this->user->iGUEST())
+		if ( ! $this->logged_in)
 		{
 			return $this->user->onlyForUsers($this->router);
 		}
@@ -95,7 +95,7 @@ class Thread_Controller extends Forum_Controller {
 		{
 			$_thread = $this->pdo->exec('UPDATE [threads] SET `title` = :title, `is_pinned` = :is_pinned WHERE `id` = :id', array(
 				array(':title', HELP::wordsProtect($this->request->post('title')->filters('trim', 'strip')), PDO::PARAM_STR),
-				array(':is_pinned', ($this->user->iADMIN() && $this->request->post('is_pinned')->show()), PDO::PARAM_BOOL),
+				array(':is_pinned', ($this->is_admin && $this->request->post('is_pinned')->show()), PDO::PARAM_BOOL),
 				array(':id', $id, PDO::PARAM_INT),
 			));
 
@@ -120,9 +120,42 @@ class Thread_Controller extends Forum_Controller {
 		));
 	}
 
+	public function remove()
+	{
+		if ( ! $this->is_admin)
+		{
+			return $this->router->trace(array('controller' => 'error', 'action' => 404));
+		}
+
+		$thread = $this
+			->model('thread')
+			->findByID($id = $this->params[0]);
+
+		if ( ! $thread)
+		{
+			return $this->router->trace(array('controller' => 'error', 'action' => 404));
+		}
+
+		$_thread = $this->pdo->exec('DELETE FROM [threads] WHERE `id` = :id',
+			array(':id', $id, PDO::PARAM_INT));
+
+		if ($_thread)
+		{
+			$_entries = $this->pdo->exec('DELETE FROM [entries] WHERE `thread_id` = :id',
+				array(':id', $id, PDO::PARAM_INT));
+
+			if ($_entries)
+			{
+				return $this->router->redirect(array('module' => 'forum', 'controller' => 'category', $thread['category_id']));
+			}
+		}
+
+		return $this->router->trace(array('controller' => 'error', 'action' => 500));
+	}
+
 	public function reply()
 	{
-		if ($this->user->iGUEST())
+		if ( ! $this->logged_in)
 		{
 			return $this->user->onlyForUsers($this->router);
 		}
