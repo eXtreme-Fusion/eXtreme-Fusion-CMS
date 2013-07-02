@@ -6,9 +6,9 @@
 - nowe, obiektowe API szablonów
 
         OD TERAZ DATA PRZY WERSJI OZNACZA DZIEŃ PREMIERY A NIE ROZPOCZĘCIA PRAC NAD SYSTEMEM
-                    
+
 			eXtreme-Fusion 5.0.2 2013.06.01
-                    
+
 - poprawka zabezpieczeń i usuniecie błędu przy włączonym register_globals - usuniecie problemu z niezadeklarowana zmienna na jednym z darmowych serwerów
 - usuniecie odstępu nad jednym z paneli
 - cache dla różnych szablonów o tej samej nazwie plików tymczasowych
@@ -19,7 +19,7 @@
 - wdrożenie obsługi IPv6 w statystykach unikalnych odwiedzin - wyeliminowanie problemu (jak dobrze pamiętam) z logowaniem
 - poprawki plików językowych, głownie polskich i angielskich
 - usunięciu błędu z niezadeklarowanym indeksem hash w sesji użytkownika
-- modyfikacja pliku index.php umożliwiająca rozpoczęcie prac nad forum oraz budowę modułów we wzorcu MVP/MVC lub pochodnych
+- modyfikacja pliku index.php umożliwiająca rozpoczęcie prac nad forum oraz budowę modułów we wzorcu MVP/MVC lub pochodnym
 - poprawka do zarządzania panelami - usuniecie niepotrzebnej funkcji parsującej dane
 - Usunięcie BOM z wszystkich plików
 
