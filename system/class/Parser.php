@@ -830,8 +830,8 @@ class AdminMainEngine extends Parser
 		$this->assign('MOD_ADDRESS', ADDR_SITE.'modules/');
 		$this->assign('BASE_IMAGES', ADDR_SITE.'templates/images/');
 		$this->assign('ADMIN_TEMPLATE_IMAGES', ADDR_ADMIN.'templates/images/');
-		$this->assign('THEME', ADDR_SITE.'themes'.DS.parent::$_sett->get('theme').DS);
-		$this->assign('THEME_IMAGE', ADDR_SITE.'themes'.DS.parent::$_sett->get('theme').DS.'templates/images'.DS);
+		$this->assign('THEME', ADDR_SITE.'themes'.DS.strtolower(parent::$_sett->get('theme')).DS);
+		$this->assign('THEME_IMAGE', ADDR_SITE.'themes'.DS.strtolower(parent::$_sett->get('theme')).DS.'templates/images'.DS);
 		$this->assign('ADDR_ADMIN_CSS', ADDR_ADMIN_TEMPLATES.'stylesheet/');
 		$this->assign('ADDR_ADMIN_JS', ADDR_ADMIN_TEMPLATES.'javascripts/');
 		$this->assign('CurrentYear', date('Y'));
