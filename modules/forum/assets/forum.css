@@ -1,7 +1,8 @@
 strong { font-weight: bold; }
 
 .button,
-.forum .button {
+.forum .button,
+.error {
 	margin: 0;
 }
 
@@ -57,13 +58,14 @@ strong { font-weight: bold; }
 	font-size: 13px;
 }
 
+.forum .text-title + p { margin-top: 3px; }
+
 .forum .text-link {
 	display: block;
 	color: #777;
 }
 
-.forum p {
-	margin-top: 3px;
+.forum .text-small {
 	font-size: 11px;
 	color: #777;
 }

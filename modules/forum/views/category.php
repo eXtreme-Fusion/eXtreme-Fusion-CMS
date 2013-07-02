@@ -40,7 +40,7 @@
 				<?php endforeach; ?>
 				<?php else: ?>
 				<tr>
-					<td colspan="4"><?php echo __('In this category has not been created any thread'); ?>.</td>
+					<td colspan="4"><p class="center error bold"><?php echo __('In this category has not been created any thread'); ?>.</p></td>
 				</tr>
 				<?php endif; ?>
 			</tbody>

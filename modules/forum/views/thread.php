@@ -41,7 +41,7 @@
 						</div>
 					</td>
 					<td class="align-top">
-						<header class="entry-top">
+						<header class="entry-top text-small">
 							<p class="top-info"><?php echo __('Created on'); ?>: <strong><?php echo HELP::showDate('longdate', $entry['timestamp']); ?></strong></p>
 							<?php if ($this->logged_in && ! $entry['is_main']): ?>
 							<p class="top-options">

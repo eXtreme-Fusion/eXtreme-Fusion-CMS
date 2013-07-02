@@ -23,5 +23,7 @@ return array(
 	'Remove'              => 'Usuń',
 	'Edit entry'          => 'Edytuj wpis',
 
-	'In this category has not been created any thread' => 'W tej kategorii nie został utworzony żaden wątek',
+	'In this category has not been created any thread'   => 'W tej kategorii nie został utworzony żaden wątek',
+	'In this board has not been created any category'    => 'W tym dziale nie została utworzona żadna kategoria',
+	'This forum does not have any boards and categories' => 'To forum nie ma żadnych działów oraz kategorii',
 );
