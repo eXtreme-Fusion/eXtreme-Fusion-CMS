@@ -13,7 +13,7 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
+|
 **********************************************************
  	Some open-source code comes from
 ---------------------------------------------------------+
@@ -34,58 +34,60 @@
 
 try
 {
+	/**
+	 * URL parser for template files.
+	 *
+	 * Code to parsing: {url('controller=>', 'login', 'action=>', 'redirect', 'param')}
+	 */
 	function optUrl(optClass &$_tpl)
 	{
-		$value = func_get_args();
-		unset($value[0]);
-		
+		$value = array_slice(func_get_args(), 1);
+
 		if ($value)
 		{
-			$ret = array(); $i = 0; $id = NULL;
+			$ret = array(); $id = NULL;
 			foreach($value as $array)
 			{
-				$data = explode('=>', $array);
+				// Czyszczenie danych wejściowych
+				$data = array_map('trim', explode('=>', $array));
+
+				// Kontrola danych wejściowych
 				if ($data[0] !== '')
 				{
+					// Sprawdzanie, czy element ma przypisany klucz.
 					if (count($data) == 2)
 					{
-						$id = trim($data[0]);
+						// Zapisujemy klucz. Wartości na razie nie znamy.
+						$id = $data[0];
 					}
 					else
 					{
 						if ($id)
 						{
-							$ret[$id] = trim($data[0]);
+							// Zapis wartości o kluczu zapisanym wcześniej.
+							$ret[$id] = $data[0];
 						}
 						else
 						{
-							$ret[$i] = trim($data[0]);
-							$i++;
+							// Parametr.
+							$ret[] = $data[0];
 						}
 
-						$id = FALSE;
+						// Resetowanie zmiennej, by nie było konfliktu w razie wystąpienia parametru.
+						$id = NULL;
 					}
 				}
 			}
 
-
-			if ($ret)
-			{
-				if (method_exists($_tpl, 'route'))
-				{
-					return $_tpl->route()->path($ret);
-				}
-			}
+			$value = $ret;
 		}
-		else
+
+		if (method_exists($_tpl, 'route'))
 		{
-			if (method_exists($_tpl, 'route'))
-			{
-				return $_tpl->route()->path($value);
-			}
+			return $_tpl->route()->path($value);
 		}
 
-		return '';
+		throw new systemException('Routing is not available.');
 	}
 
 	function OptRouter(OptClass &$_tpl, $key)
@@ -94,12 +96,12 @@ try
 		{
 			return $_tpl->route()->getFilename();
 		}
-		
+
 		if ($key === 'action')
 		{
 			return $_tpl->route()->getAction();
 		}
-		
+
 		return $_tpl->route()->getByID(intval($key));
 	}
 
@@ -152,7 +154,7 @@ try
 
 	# Requests
 	$_request = $ec->request;
-	
+
 	// Checking whether there are required database tables
 	require_once DIR_SYSTEM.'table_list.php';
 
@@ -162,7 +164,7 @@ try
 
 	//1. way:
     $_user = $ec->register('User')->setArguments(array(new Reference('sett'), new Reference('pdo')))->get();
-	
+
 	if ($_request->post('login')->show() && $_request->post('username')->show() && $_request->post('password')->show())
 	{
 		// Sprawdzanie danych logowania
@@ -170,7 +172,7 @@ try
 		{
 			$_user->setTryLogin(TRUE);
 		}
-		
+
 		HELP::reload(0);
 	}
 
@@ -186,7 +188,7 @@ try
 			$_user->userLoggedInByCookie($_COOKIE['user']);
 		}
 	}
-	
+
     $_locale = new Locales($ec->getService('User')->getLang(), DIR_LOCALE);
 
 	define('URL_REQUEST', isset($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'] != '' ? HELP::cleanurl($_SERVER['REQUEST_URI']) : $_SERVER['SCRIPT_NAME']);
@@ -199,7 +201,7 @@ try
 
 	# Helper class
 	HELP::init($_pdo, $_sett, $_user, $_url);
-			
+
 	// Załączenie wymaganych plików
 	require_once DIR_SYSTEM.'table_list.php';
 
@@ -220,14 +222,14 @@ try
 
     // Settings dependent functions
     date_default_timezone_set($_sett->get('timezone'));
-	
+
 	if ($_sett->get('maintenance') === '1' && $_user->isLoggedIn() && !$_user->hasAccess($_sett->get('maintenance_level'), 'df'))
 	{
 		$_user->userLogout();
 		HELP::redirect(ADDR_SITE);
 	}
 
-	
+
 	if ($_user->iUSER())
 	{
 		if ($_user->get('theme') !== 'Default' && $_sett->get('userthemes') === '1')
