@@ -261,7 +261,7 @@ class pageNavParser extends optClass
 		$this->gzipCompression = FALSE;
 		$this->registerInstruction('optTheme');
 		$this->registerFunction('i18n', 'Locale');
-		$this->setCompilePrefix('page_nav_');
+		$this->setCompilePrefix('site_');
 		if (function_exists('optUrl'))
 		{
 			$this->registerFunction('url', 'Url');
