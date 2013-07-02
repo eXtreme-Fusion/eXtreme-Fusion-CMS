@@ -31,6 +31,9 @@ class User {
 	// Tablica zawierająca dane zalogowanego użytkownika
 	protected $_data = array();
 
+	// Tablica z danymi użytkowników
+	protected $_users = array();
+
 	// Czy użytkownik jest zalogowany?
 	protected $_logged = FALSE;
 
@@ -1067,7 +1070,14 @@ class User {
 	{
 		if (isNum($id))
 		{
-			$data = $this->_pdo->getRow('SELECT u.*, ud.* FROM [users] u LEFT JOIN [users_data] ud ON u.`id`= ud.`user_id` WHERE u.`id` = '.$id);
+			if (isset($this->_users[$id]))
+			{
+				$data = $this->users[$id];
+			}
+			else
+			{
+				$data = $this->users[$id] = $this->_pdo->getRow('SELECT u.*, ud.* FROM [users] u LEFT JOIN [users_data] ud ON u.`id`= ud.`user_id` WHERE u.`id` = '.$id);
+			}
 
 			if ($data)
 			{
