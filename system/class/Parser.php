@@ -818,8 +818,8 @@ class AdminMainEngine extends Parser
 	{
 		$this->setCompilePrefix('admin_'.(strtolower(parent::$_user->get('theme')) ? preg_replace("/[^a-zA-Z0-9_]/", '_', strtolower(parent::$_user->get('theme'))) : preg_replace("/[^a-zA-Z0-9_]/", '_', strtolower(strtolower(parent::$_sett->get('theme'))))).'_');
 		$this->root = DIR_ADMIN_TEMPLATES;
-		//$this->compile = DIR_CACHE;
-		$this->compile = DIR_CACHE.'compile'.DS; 
+		$this->compile = DIR_CACHE;
+		//$this->compile = DIR_CACHE.'compile'.DS; 
 		$this->cache = DIR_CACHE;
 	}
 
