@@ -271,8 +271,19 @@ function PDOErrorHandler($exc) {
 	echo replaceException($getFooter);
 }
 
-function replaceException($text) {
-	$search = array('{$Charset}','{$ADDR_SITE}','{$DIR_ADMIN}','{$ADDR_ADMIN_CSS}','{$ADDR_COMMON_CSS}','{$FILE_SELF}','{$DIR_ADMIN_IMAGES}','{$CornerStart}','{$CornerEnd}','{literal}','{/literal}');
-	$replace = array('utf-8',ADDR_SITE,DIR_ADMIN,ADDR_ADMIN_TEMPLATES.'stylesheet/',ADDR_COMMON_CSS,FILE_SELF,DIR_ADMIN_IMAGES,"<div class='corner4px'><div class='ctl'><div class='ctr'><div class='ctc'></div></div></div><div class='cc'>","</div><div class='cfl'><div class='cfr'><div class='cfc'></div></div></div></div>","","");
-	return str_replace($search,$replace,$text);
+function replaceException($text) 
+{
+	$replace = array(
+		'{$html_harset}' 		=> 'utf-8',
+		'{$ADDR_SITE}' 			=> ADDR_SITE,
+		'{$DIR_ADMIN}' 			=> DIR_ADMIN,
+		'{$ADDR_ADMIN_CSS}' 	=> ADDR_ADMIN_TEMPLATES.'stylesheet/',
+		'{$ADDR_COMMON_CSS}' 	=> ADDR_COMMON_CSS,
+		'{$FILE_SELF}' 			=> FILE_SELF,
+		'{$DIR_ADMIN_IMAGES}' 	=> DIR_ADMIN_IMAGES,
+		'{literal}' 			=> "",
+		'{/literal}' 			=> ""
+	);
+	
+	return HELP::strReplaceAssoc($replace, $text);
 }
