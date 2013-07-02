@@ -2,7 +2,6 @@
 
 return array(
 	'Contact' => 'Kontakt',
-	'Destination e-mail' => 'Adres e-mail odbiorcy',
 	'For example: Technical department.' => 'Przykładowo: Dział techniczny.',
 	'Reciever\'s e-mail address:' => 'Adres e-mail odbiorcy:',
 	'E-mail address to which messages will be sent.' => 'Adres e-mail, na który będą wysyłane wiadomości.',
