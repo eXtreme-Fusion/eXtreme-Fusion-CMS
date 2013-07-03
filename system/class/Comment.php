@@ -52,8 +52,10 @@ class Comment extends Observer
 		$this->_sett = $_sett;
 		$this->_sbb = $_sbb;
 
+		$this->_tpl->setCompilePrefix('site_');
 		$this->_tpl->root = DIR_TEMPLATES.'pre'.DS;
 		$this->_tpl->compile = DIR_CACHE;
+		//$this->_tpl->compile = DIR_CACHE.'compile'.DS; 
 		parent::$_obj = $_tpl;
 	}
 

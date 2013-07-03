@@ -64,12 +64,12 @@ class Crypt
 
 	public function encrypt($data)
 	{
-		return base64_encode(mcrypt_encrypt($this->_cipher, $this->_key, $data, $this->_mode, $this->_iv));
+		return urlencode(base64_encode(mcrypt_encrypt($this->_cipher, $this->_key, $data, $this->_mode, $this->_iv)));
 	}
 
 	public function decrypt($data)
 	{
-		return mcrypt_decrypt($this->_cipher, $this->_key, base64_decode($data), $this->_mode, $this->_iv);
+		return mcrypt_decrypt($this->_cipher, $this->_key, base64_decode(urldecode($data)), $this->_mode, $this->_iv);
 	}
 	
 	public function correctAnswer($user_answer, $answer)
