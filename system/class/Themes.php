@@ -107,11 +107,11 @@ class Themes extends optClass
 
 	protected function setConfig()
 	{
-		$this->setCompilePrefix('themes_'.($this->_user->get('theme') ? preg_replace("/[^a-zA-Z0-9_]/", '_', $this->_user->get('theme')) : preg_replace("/[^a-zA-Z0-9_]/", '_', $this->_sett->get('theme'))).'_');
-		$this->root            = DIR_THEMES.$this->_theme.DS.'templates'.DS;
-		$this->compile         = DIR_CACHE;
-		//$this->compile         = DIR_CACHE.'compile'.DS; Może odzielny katalog dla skompilowanych plików?
-		$this->cache           = DIR_SITE.'cache'.DS;
+		$this->setCompilePrefix('themes_'.(strtolower($this->_user->get('theme')) ? preg_replace("/[^a-zA-Z0-9_]/", '_', strtolower($this->_user->get('theme'))) : preg_replace("/[^a-zA-Z0-9_]/", '_', strtolower($this->_sett->get('theme')))).'_');
+		$this->root = DIR_THEMES.$this->_theme.DS.'templates'.DS;
+		$this->compile = DIR_CACHE;
+		//$this->compile = DIR_CACHE.'compile'.DS; 
+		$this->cache = DIR_SITE.'cache'.DS;
 		$this->gzipCompression = FALSE;
 		//$this->httpHeaders(OPT_HTML);
 	}
