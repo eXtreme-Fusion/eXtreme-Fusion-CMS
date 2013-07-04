@@ -64,12 +64,12 @@
 				{* Do przerobienia *}
 				{php} $i = 0; {/php}
 				{section=data}
-					{php} $this->sidePanel(__('Kategoria &raquo; '.$this->data['data'][$i]['name'])); {/php}
+					{php} $this->middlePanel(__('Kategoria &raquo; '.$this->data['data'][$i]['name'])); {/php}
 						<div class="tbl formated_text clearfix">
 							<section id="content">{if $data.thumbnail}<img src="{$ADDR_UPLOAD}images/{$data.thumbnail}">{/if}{$data.description}</section>
 							<p><a href="{$data.link}" title="{$data.name}">Materiały w kategorii...</a></p>
 						</div>
-					{php} $i++; $this->sidePanel(); {/php}
+					{php} $i++; $this->middlePanel(); {/php}
 
 				{/section}
 			{else}
@@ -78,7 +78,7 @@
 				{/panel}
 			{/if}
 		{* Skąd to się to wzięło? *}
-		{php} $this->sidePanel(); {/php}
+		{php} $this->middlePanel(); {/php}
 	{elseif $page == 'category'}
 		{panel='Nawigacja'}
 		<p>Jesteś tutaj: <a href="{url()}" title="Materiały na stronie">Materiały na stronie</a> &raquo; <a href="{$type.link}" title="{$type.name}">{$type.name}</a> &raquo; Materiały w kategorii: {$category}</p>
@@ -88,19 +88,19 @@
 				{* Do przerobienia *}
 				{php} $i = 0; {/php}
 				{section=data}
-					{php} $this->sidePanel(__('Materiał &raquo; '.$this->data['data'][$i]['title'])); {/php}
+					{php} $this->middlePanel(__('Materiał &raquo; '.$this->data['data'][$i]['title'])); {/php}
 						<div class="tbl formated_text clearfix">
 							<p class="margin-b-10"><small>Dodane przez {$data.author} dnia {$data.date}</small></p>
 							<section id="preview">{$data.preview}</section>
 							<div><a href="{$data.link}">Czytaj więcej...</a></div>
 						</div>
-					{php} $i++; $this->sidePanel(); {/php}
+					{php} $i++; $this->middlePanel(); {/php}
 				{/section}
 			{else}
 				{* Do przerobienia *}
-				{php} $this->sidePanel('Materiały w kategorii '.$this->data['category']); {/php}
+				{php} $this->middlePanel('Materiały w kategorii '.$this->data['category']); {/php}
 					Brak materiałów w tej kategorii
-				{php} $this->sidePanel(); {/php}
+				{php} $this->middlePanel(); {/php}
 			{/if}
 	{elseif $page == 'categories'}
 		{panel='Nawigacja'}
@@ -110,18 +110,18 @@
 			{if $data}
 				{php} $i = 0; {/php}
 				{section=data}
-					{php} $this->sidePanel(__('Materiał &raquo; '.$this->data['data'][$i]['title'])); {/php}
+					{php} $this->middlePanel(__('Materiał &raquo; '.$this->data['data'][$i]['title'])); {/php}
 						<div class="tbl formated_text clearfix">
 							<p class="margin-b-10"><small>Dodane przez {$data.author} dnia {$data.date}</small></p>
 							<section id="preview">{$data.preview}</section>
 							<div><a href="{$data.link}">Czytaj więcej...</a></div>
 						</div>
-					{php} $i++; $this->sidePanel(); {/php}
+					{php} $i++; $this->middlePanel(); {/php}
 				{/section}
 			{else}
-				{php} $this->sidePanel(__('Materiały w kategorii '.$this->data['category'])); {/php}
+				{php} $this->middlePanel(__('Materiały w kategorii '.$this->data['category'])); {/php}
 					Brak materiałów w tej kategorii
-				{php} $this->sidePanel(); {/php}
+				{php} $this->middlePanel(); {/php}
 			{/if}
 	{elseif $page == 'categories_list'}
 		{panel='Nawigacja'}
@@ -131,24 +131,24 @@
 			{if $data}
 				{php} $i = 0; {/php}
 				{section=data}
-					{php} $this->sidePanel(__('Kategoria &raquo; '.$this->data['data'][$i]['name'])); {/php}
+					{php} $this->middlePanel(__('Kategoria &raquo; '.$this->data['data'][$i]['name'])); {/php}
 						<div class="tbl formated_text clearfix">
 							<section id="preview">{if $data.thumbnail}<img src="{$ADDR_UPLOAD}images/{$data.thumbnail}">{/if}{$data.description}</section>
 							<div><a href="{$data.link}">Więcej...</a></div>
 						</div>
-					{php} $i++; $this->sidePanel(); {/php}
+					{php} $i++; $this->middlePanel(); {/php}
 				{/section}
 			{else}
-				{php} $this->sidePanel('Kategorie treści'); {/php}
+				{php} $this->middlePanel('Kategorie treści'); {/php}
 					Brak utworzonych kategorii
-				{php} $this->sidePanel(); {/php}
+				{php} $this->middlePanel(); {/php}
 			{/if}
 	{elseif $page == 'entry'}
 		{panel='Nawigacja'}
 		<p>Jesteś tutaj: <a href="{url()}" title="Materiały na stronie">Materiały na stronie</a> &raquo; <a href="{$type.url}" title="{$type.name}">{$type.name}</a> &raquo; Czytasz: {$entry}</p>
 		{/panel}
 
-		{php} $this->sidePanel($this->data['data']['title']); {/php}
+		{php} $this->middlePanel($this->data['data']['title']); {/php}
 			<div class="margin-b-10">
 				<small>Dodane przez {$data.author} dnia {$data.date}</small>
 
@@ -171,7 +171,7 @@
 			{else}
 				Wystąpił błąd. Przepraszamy za utrudnienia.
 			{/if}
-		{php} $this->sidePanel(); {/php}
+		{php} $this->middlePanel(); {/php}
 		{if $user_allow_comments}
 			{$comments}
 		{/if}

@@ -4,6 +4,13 @@
 - wersja systemu do aktualizacji od teraz w pliku bootstrap.php
 - przekierowania na logowanie po wygaśnięciu sesji przy kliknięciu w zakładkę w Panelu admina
 - nowe, obiektowe API szablonów
+- rozbudowanie API komentarzy o możliwość zmiany katalogu i pliku szablonu
+- tłumaczenie dla modułu Kontakt
+- poprawki do wyjątków OPT, dodane tłumaczenie oraz poprawiony wygląd
+- możliwość tworzenia podstron o takiej samej nazwie jak katalog z systemem
+- klasa Crypt może być teraz używana w adresach URL
+- aktywacja przycisku 'Wróć' w mechaniźmie obsługi błędów
+- optymalizacja pobierania danych użytkownika
 
         OD TERAZ DATA PRZY WERSJI OZNACZA DZIEŃ PREMIERY A NIE ROZPOCZĘCIA PRAC NAD SYSTEMEM
 
