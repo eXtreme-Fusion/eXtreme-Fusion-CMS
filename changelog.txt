@@ -9,7 +9,7 @@
 - poprawki do wyjątków OPT, dodane tłumaczenie oraz poprawiony wygląd
 - możliwość tworzenia podstron o takiej samej nazwie jak katalog z systemem
 - klasa Crypt może być teraz używana w adresach URL
-- aktywacja przycisku 'Wróć' (gdzie?)
+- aktywacja przycisku 'Wróć' w mechaniźmie obsługi błędów
 - optymalizacja pobierania danych użytkownika
 
         OD TERAZ DATA PRZY WERSJI OZNACZA DZIEŃ PREMIERY A NIE ROZPOCZĘCIA PRAC NAD SYSTEMEM
