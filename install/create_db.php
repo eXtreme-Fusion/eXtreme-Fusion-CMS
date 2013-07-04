@@ -420,7 +420,7 @@ $result = $_pdo->query("CREATE TABLE ".$db_prefix."users (
 	`lastupdate` INT NOT NULL DEFAULT '0',
 	`lang` VARCHAR(20) NOT NULL,
 	PRIMARY KEY (`id`),
-	KEY name (username),
+	KEY username (username),
 	KEY joined (joined),
 	KEY lastvisit (lastvisit)
 ) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";", NULL, FALSE);
