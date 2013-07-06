@@ -159,7 +159,7 @@ $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'cache', 'value' =
 	//'expire_rules' => '3600',
 	'expire_tags' => '3600',
 	'expire_team' => '3600',
-	'expire_users' => '3600',
+	'expire_users' => '3600'
 ))));
 
 /** Nie usuwac/Do not remove
