@@ -304,9 +304,6 @@ try
 	// Załączanie szablonu zamykającego stronę
 	$_tpl->template('pre'.DS.'footer'.$_route->getExt('tpl'));
 
-	// Usuwanie niepotrzebnych wpisów z tabeli użytkowników online.
-	$_pdo->exec('DELETE FROM [users_online] WHERE `last_activity` < '.(time()-60*60*2));
-
 	session_write_close();
 }
 catch(optException $exception)
