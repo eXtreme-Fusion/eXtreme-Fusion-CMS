@@ -1,0 +1,1 @@
+<div id="module_cookies-message">{$message}</div>
