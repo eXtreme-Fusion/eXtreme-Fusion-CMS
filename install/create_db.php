@@ -391,6 +391,7 @@ $result = $_pdo->query("CREATE TABLE ".$db_prefix."users (
 	`username` VARCHAR(30) NOT NULL DEFAULT '',
 	`password` CHAR(129) NOT NULL DEFAULT '',
 	`salt` CHAR(5) NOT NULL DEFAULT '',
+	`algo` VARCHAR(10) NOT NULL DEFAULT 'sha512',
 
 	`user_hash` VARCHAR(10) NOT NULL DEFAULT '',
 	`user_last_logged_in` INT UNSIGNED NOT NULL DEFAULT '0',

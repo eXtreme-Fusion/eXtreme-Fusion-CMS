@@ -741,13 +741,22 @@ class User {
 
 		if ($this->isValidLogin($username))
 		{
-			if ($query = $this->_pdo->getRow("SELECT `id`, `status`, `salt`, `password` FROM [users] WHERE `username`='{$username}' AND status = 0 LIMIT 1"))
+			if ($query = $this->_pdo->getRow("SELECT `id`, `status`, `salt`, `password` , `algo` FROM [users] WHERE `username`='{$username}' AND status = 0 LIMIT 1"))
 			{
-				$sha512 = sha512($query['salt'].'^'.$pass);
+				$hash = $query['algo'] === 'sha512' ? sha512($query['salt'].'^'.$pass) : md5(md5($pass));
 
 				// Sprawdzanie poprawności hasła
-				if ($sha512 === $query['password'])
-				{
+				if ($hash === $query['password'])
+				{	
+				
+					if($query['algo'] === 'md5')
+					{
+						if ($this->changePass($query['id'], $pass))
+						{
+							$this->_pdo->exec('UPDATE [users] SET `algo` = \'sha512\' WHERE `id` = '.$query['id']);
+						}
+					}
+					
 					$this->_data = $query;
 
 					$hash = $this->createLoginHash();
@@ -1005,7 +1014,9 @@ class User {
 	{
 		if ( ! $data = $this->get('salt', $id))
 		{
-			return FALSE;
+			$data = substr(sha512(uniqid(rand(), true)), 0, 5);
+			$this->_pdo->exec('UPDATE [users] SET `salt` = \''.$data.'\' WHERE `id` = '.$id);
+			return sha512($data.'^'.$pass);
 		}
 		return sha512($data.'^'.$pass);
 	}
