@@ -6,7 +6,7 @@
 		<div class="grid_12 formLabel left">{i18n('Communique:')}</div>
 		<div class="grid_12 formField"><textarea name="message" id="message">{$data}</textarea></div>
 	</div>
-	<div class="tbl2"> 
+	<div class="tbl2">
 		<div class="grid_12 formLabel left">{i18n('Cookies policy:')}<small>{i18n('Cookies policy visibility', array(':url' => $learn_more_url, ':url_title' => $learn_more_url_title))}</small></div>
 		<div class="grid_12 formField"><textarea name="policy" id="policy">{$policy}</textarea></div>
 	</div>

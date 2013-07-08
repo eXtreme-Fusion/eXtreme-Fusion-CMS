@@ -135,7 +135,7 @@ try
 		$i = 0;
 		foreach($mod_list as $val)
 		{
-			if (include DIR_MODULES.$val[0].DS.'config.php')
+			if ($mod_info = $_mod->getConfig(DIR_MODULES.$val[0].DS.'config.php'))
 			{
 				$mod[] = array(
 					'row_color'		=> $i % 2 == 0 ? 'tbl1' : 'tbl2',

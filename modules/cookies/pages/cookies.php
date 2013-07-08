@@ -13,7 +13,7 @@ if ($policy === NULL)
 if ($policy)
 {
 	$_tpl->assign('policy', $policy);
-	
+
 	// Definiowanie katalogu templatek modułu
 	$_tpl->setPageCompileDir(DIR_MODULES.'cookies'.DS.'templates'.DS);
 }

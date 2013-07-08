@@ -45,7 +45,7 @@ $new_table[1] = array(
 	) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;"
 );
 $new_row[1] = array(
-	'cookies', 
+	'cookies',
 	"(`message`) VALUES ('Strona ta korzysta z plików cookies w celu zapewnienia lepszej jakości usług.')"
 );
 
