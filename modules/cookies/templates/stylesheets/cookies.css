@@ -1,5 +1,25 @@
 #module-cookies-message {
-	position:fixed;
-	bottom:0;
-	padding:5px;
+	width: 100%;
+	overflow: hidden;
+	position: fixed;
+	left: 0;
+	top: 0;
+	color: #fff !important;
+	font-size: 12px !important;
+	background: transparent url(../images/bg.png);
+}
+
+#module-cookies-message div {
+	width: 960px;
+	margin: 20px auto;
+	padding: 0 5px;
+}
+
+#module-cookies-message div span {
+	display: block;
+	float: right;
+	width: 16px;
+	height: 16px;
+	background: url(../images/close.png) no-repeat;
+	cursor: pointer;
 }
