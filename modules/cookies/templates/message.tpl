@@ -1,1 +1,2 @@
-<div><span id="close-cookies"></span>{$message}</div>
+<div>{$message}</div>
+<span id="module-cookies-close">ROZUMIEM</span>
