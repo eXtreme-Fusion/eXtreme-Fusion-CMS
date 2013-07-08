@@ -24,6 +24,8 @@ class Parser extends optClass
 		$_request,
 		$_log,
 		$_theme;
+		
+	protected static $_obj;
 
 	public function __construct()
 	{
@@ -57,7 +59,32 @@ class Parser extends optClass
 	{
 		$_SESSION['history']['Page'] = str_replace(array(DIR_SITE, '\\'), array('', '/'), $__file__).($_SERVER['QUERY_STRING'] ? '?'.$_SERVER['QUERY_STRING'] : '');
 	}
-
+	
+	public static function registerFunc($obj_name, $obj)
+	{
+		if (is_object($obj))
+		{
+			return self::$_obj[$obj_name] = $obj;
+		}
+		
+		throw new systemException('Wrong argument type.');
+	}
+	
+	public static function getFunc($obj_name, $func_name, array $args)
+	{
+		return self::$_obj[$obj_name]->$func_name($args);
+	}
+	
+	public function funcExists($obj_name, $func_name)
+	{
+		if (isset(self::$_obj[$obj_name]))
+		{
+			return method_exists(self::$_obj[$obj_name], $func_name);
+		}
+		
+		return FALSE;
+	}
+	
 	// TODO:: zrobić dla panelu admina klasę i dla strony klasę, po której będą dziedziczyć inne metody
 	public static function setThemeInst($_theme)
 	{
@@ -313,11 +340,9 @@ class General extends Parser
 {
 	public function __construct($root)
 	{
-
 		parent::loadSystem();
 		$this->root = $root;
-		$this->compile = DIR_CACHE;
-		//$this->compile = DIR_CACHE.'compile'.DS; 
+		$this->compile = DIR_CACHE; 
 		$this->cache = DIR_CACHE;
 	}
 
@@ -411,7 +436,6 @@ class Iframe extends Parser
 		$this->setCompilePrefix('admin_iframe_'.(strtolower(parent::$_user->get('theme')) ? preg_replace("/[^a-zA-Z0-9_]/", '_', strtolower(parent::$_user->get('theme'))) : preg_replace("/[^a-zA-Z0-9_]/", '_', strtolower(parent::$_sett->get('theme')))).'_');
 		$this->root = DIR_ADMIN_TEMPLATES;
 		$this->compile = DIR_CACHE;
-		//$this->compile = DIR_CACHE.'compile'.DS; 
 	}
 
 	public function template($iframe)

@@ -14,6 +14,7 @@
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
 *********************************************************/
+
 try
 {
 	require_once '../../../config.php';
@@ -33,13 +34,21 @@ try
 	
 	if ($_request->post('save')->show())
 	{
-		$_pdo->exec('UPDATE [cookies] SET `message` = :message', array(':message', $_request->post('message')->show(), PDO::PARAM_STR));
+		$_pdo->exec('UPDATE [cookies] SET `message` = :message, `policy` = :policy', array(
+			array(':message', $_request->post('message')->show(), PDO::PARAM_STR),
+			array(':policy', $_request->post('policy')->show(), PDO::PARAM_STR)
+		));
 		$_tpl->printMessage('valid', $_log->insertSuccess('edit', __('Data has been saved.')));
 	}
 	
-	if ($message = $_pdo->getField('SELECT `message` FROM [cookies]'))
+	if ($row = $_pdo->getRow('SELECT `message`, `policy` FROM [cookies]'))
 	{
-		$_tpl->assign('data', $message);
+		$_tpl->assignGroup(array(
+			'data' => $row['message'],
+			'policy' => $row['policy'],
+			'learn_more_url' => $_url->path(array('controller' => 'cookies')),
+			'learn_more_url_title' => __('Learn more')
+		));
 	}
 	
 	$_tpl->template('admin.tpl');

@@ -33,62 +33,6 @@
 
 try
 {
-	/**
-	 * URL parser for template files.
-	 *
-	 * Code to parsing: {url('controller=>', 'login', 'action=>', 'redirect', 'param')}
-	 */
-	function optUrl(optClass &$_tpl)
-	{
-		$value = array_slice(func_get_args(), 1);
-
-		if ($value)
-		{
-			$ret = array(); $id = NULL;
-			foreach($value as $array)
-			{
-				// Czyszczenie danych wejściowych
-				$data = array_map('trim', explode('=>', $array));
-
-				// Kontrola danych wejściowych
-				if ($data[0] !== '')
-				{
-					// Sprawdzanie, czy element ma przypisany klucz.
-					if (count($data) == 2)
-					{
-						// Zapisujemy klucz. Wartości na razie nie znamy.
-						$id = $data[0];
-					}
-					else
-					{
-						if ($id)
-						{
-							// Zapis wartości o kluczu zapisanym wcześniej.
-							$ret[$id] = $data[0];
-						}
-						else
-						{
-							// Parametr.
-							$ret[] = $data[0];
-						}
-
-						// Resetowanie zmiennej, by nie było konfliktu w razie wystąpienia parametru.
-						$id = NULL;
-					}
-				}
-			}
-
-			$value = $ret;
-		}
-
-		if (method_exists($_tpl, 'route'))
-		{
-			return $_tpl->route()->path($value);
-		}
-
-		throw new systemException('Routing is not available.');
-	}
-
 	function OptRouter(OptClass &$_tpl, $key)
 	{
 		if ($key === 'controller')
@@ -142,7 +86,7 @@ try
 	require_once DIR_CLASS.'Parser.php';
 
     ob_start();
-
+	
     $ec = new Container(array('pdo.config' => $_dbconfig));
 
 	# PHP Data Object
@@ -198,6 +142,8 @@ try
 
 	$_url = new Url($_sett->getUns('routing', 'url_ext'), $_sett->getUns('routing', 'main_sep'), $_sett->getUns('routing', 'param_sep'), $_system->rewriteAvailable(), $_system->pathInfoExists());
 
+	Parser::registerFunc('url', $_url);
+	
 	# Helper class
 	HELP::init($_pdo, $_sett, $_user, $_url);
 

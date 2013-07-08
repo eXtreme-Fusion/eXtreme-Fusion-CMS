@@ -33,6 +33,61 @@
 
 defined('EF5_SYSTEM') || exit;
 
+/**
+ * URL parser for template files.
+ *
+ * Code to parsing: {url('controller=>', 'login', 'action=>', 'redirect', 'param')}
+ */
+function optUrl(optClass &$_tpl)
+{
+	$value = array_slice(func_get_args(), 1);
+
+	if ($value)
+	{
+		$ret = array(); $id = NULL;
+		foreach($value as $array)
+		{
+			// Czyszczenie danych wejściowych
+			$data = array_map('trim', explode('=>', $array));
+
+			// Kontrola danych wejściowych
+			if ($data[0] !== '')
+			{
+				// Sprawdzanie, czy element ma przypisany klucz.
+				if (count($data) == 2)
+				{
+					// Zapisujemy klucz. Wartości na razie nie znamy.
+					$id = $data[0];
+				}
+				else
+				{
+					if ($id)
+					{
+						// Zapis wartości o kluczu zapisanym wcześniej.
+						$ret[$id] = $data[0];
+					}
+					else
+					{
+						// Parametr.
+						$ret[] = $data[0];
+					}
+
+					// Resetowanie zmiennej, by nie było konfliktu w razie wystąpienia parametru.
+					$id = NULL;
+				}
+			}
+		}
+
+		$value = $ret;
+	}
+
+	if ($_tpl->funcExists('url', 'path'))
+	{
+		return $_tpl->getFunc('url', 'path', $value);
+	}
+
+	throw new systemException('Routing is not available.');
+}
 // Function for AJAX response
 function _e($val)
 {

@@ -85,6 +85,9 @@ try
 
 	/** Konfiguracja obiektu szablonu dla podstron **/
 	$_tpl = new Site($_route);
+	
+	
+	
 
 	// Nie usuwać
 	/**
