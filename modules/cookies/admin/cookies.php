@@ -20,7 +20,7 @@ try
 	require_once '../../../config.php';
 	require DIR_SITE.'bootstrap.php';
 	require_once DIR_SYSTEM.'admincore.php';
-	
+
 	$_locale->moduleLoad('cookies', 'cookies');
 
     if ( ! $_user->hasPermission('module.cookies.admin'))
@@ -30,8 +30,7 @@ try
 
     $_tpl = new AdminModuleIframe('cookies');
 	$_tpl->setHistory(__FILE__);
-	
-	
+
 	if ($_request->post('save')->show())
 	{
 		$_pdo->exec('UPDATE [cookies] SET `message` = :message, `policy` = :policy', array(
@@ -40,7 +39,7 @@ try
 		));
 		$_tpl->printMessage('valid', $_log->insertSuccess('edit', __('Data has been saved.')));
 	}
-	
+
 	if ($row = $_pdo->getRow('SELECT `message`, `policy` FROM [cookies]'))
 	{
 		$_tpl->assignGroup(array(
@@ -50,7 +49,7 @@ try
 			'learn_more_url_title' => __('Learn more')
 		));
 	}
-	
+
 	$_tpl->template('admin.tpl');
 }
 catch(uploadException $exception)

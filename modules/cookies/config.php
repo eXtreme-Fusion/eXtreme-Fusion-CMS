@@ -14,10 +14,11 @@
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
 *********************************************************/
+$this->_locale->moduleLoad('cookies', 'cookies');
 
 $mod_info = array(
-	'title' => 'Pliki cookies',
-	'description' => 'Moduł wyświetlający komunikat o ciasteczkach',
+	'title' => __('Cookies'),
+	'description' => __('Module description'),
 	'developer' => 'eXtreme-Fusion Crew',
 	'support' => 'http://extreme-fusion.org/',
 	'version' => '1.0',
@@ -25,7 +26,7 @@ $mod_info = array(
 );
 
 $admin_page[1] = array(
-	'title' => 'Pliki cookies',
+	'title' => __('Cookies'),
 	'image' => '',
 	'page' => 'admin/cookies.php',
 	'perm' => 'admin'
@@ -33,7 +34,7 @@ $admin_page[1] = array(
 
 $perm[1] = array(
 	'name' => 'admin',
-	'desc' => 'Zarządzanie modułem Cookies'
+	'desc' => __('Cookies page - perm description')
 );
 
 $new_table[1] = array(
