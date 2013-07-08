@@ -1,4 +1,5 @@
 <?php
+
 // Pobranie z cache zapytania sprawdzającego czy moduł jest zainstalowany
 $policy = $_system->cache('cookies_policy', NULL, 'cookies', 2592000);
 

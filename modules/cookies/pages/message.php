@@ -2,6 +2,8 @@
 
 require_once '../../../system/sitecore.php';
 
+$_locale->moduleLoad('cookies', 'cookies');
+
 // Pobranie z cache zapytania sprawdzającego czy moduł jest zainstalowany
 $message = $_system->cache('cookies_msg', NULL, 'cookies', 2592000);
 
