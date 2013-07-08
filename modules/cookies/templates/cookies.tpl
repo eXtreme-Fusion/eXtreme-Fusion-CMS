@@ -1,1 +1,3 @@
-<div id="module_cookies-message">{$message}</div>
+{php} $this->middlePanel('Pliki cookies'); {/php}
+	{$policy}
+{php} $this->middlePanel(); {/php}

@@ -50,7 +50,7 @@
 								<div id="login-inner">
 									<div>
 										<label for="User">{i18n('User')}:</label>
-										<input type="text" id="User" name="user" autocomplete="off" class="login-inp">
+										<input type="text" id="User" name="user" autocomplete="off" autofocus="autofocus" class="login-inp">
 									</div>
 									<div>
 										<label for="Pass">{i18n('Password:')}</label>

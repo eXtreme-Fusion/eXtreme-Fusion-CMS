@@ -39,7 +39,8 @@ $perm[1] = array(
 $new_table[1] = array(
 	'cookies',
 	"(
-		`message` VARCHAR(255) NOT NULL
+		`message` VARCHAR(255) NOT NULL,
+		`policy` TEXT NOT NULL
 	) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;"
 );
 $new_row[1] = array(
