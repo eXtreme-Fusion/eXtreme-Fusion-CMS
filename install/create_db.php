@@ -111,6 +111,16 @@ $result = $_pdo->query("CREATE TABLE ".$db_prefix."admin (
 ) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";", NULL, FALSE);
 if ( ! $result) $fail = TRUE;
 
+$_pdo->query("DROP TABLE IF EXISTS ".$db_prefix."admin_favourites", NULL, FALSE);
+$result = $_pdo->query("CREATE TABLE ".$db_prefix."admin_favourites (
+	`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
+	`admin_id` MEDIUMINT UNSIGNED NOT NULL,
+	`page_id` MEDIUMINT UNSIGNED NOT NULL,
+	`count` MEDIUMINT UNSIGNED NOT NULL,
+	PRIMARY KEY (`id`)
+) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";", NULL, FALSE);
+if ( ! $result) $fail = TRUE;
+
 $_pdo->query("DROP TABLE IF EXISTS ".$db_prefix."bbcodes", NULL, FALSE);
 $result = $_pdo->query("CREATE TABLE ".$db_prefix."bbcodes (
 	`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,

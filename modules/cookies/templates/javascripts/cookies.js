@@ -2,7 +2,7 @@ $(function() {
 	$('body').append('<div id="module-cookies-message"></div>');
 	
 	var $obj = $('#module-cookies-message');
-	
+	$obj.css({'width': ($('body').outerWidth()-$obj.outerWidth())+'px'});
 	$obj.load(addr_site+'modules/cookies/pages/message.php', function() {
 		var $close = $('#module-cookies-close');
 		var box_height = $obj.outerHeight();
