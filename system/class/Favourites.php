@@ -41,7 +41,7 @@ class Favourites implements Favourites_Intf
 		$user_id = (int) $user_id;
 		
 		// Pobieranie ulubionych podstron zalogowanego admina
-		$fav = $this->_pdo->getData('SELECT a.`image`, a.`title`, a.`link`, a.`page` FROM ['.$this->_config('fav_table').'] f LEFT JOIN ['.$this->_config('data_table').'] a ON f.`page_id` = a.`id` WHERE f.`user_id` = :id ORDER BY f.`count` DESC LIMIT 0,'.$this->_config('limit').'', array(':id', $user_id, PDO::PARAM_INT));
+		$fav = $this->_pdo->getData('SELECT a.`image`, a.`title`, a.`link`, a.`page`, a.`permissions`, f.`id` FROM ['.$this->_config('fav_table').'] f LEFT JOIN ['.$this->_config('data_table').'] a ON f.`page_id` = a.`id` WHERE f.`user_id` = :id ORDER BY f.`count` DESC LIMIT 0,'.$this->_config('limit').'', array(':id', $user_id, PDO::PARAM_INT));
 
 		if ($shared)
 		{

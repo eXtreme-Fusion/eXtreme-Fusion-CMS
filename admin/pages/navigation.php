@@ -46,6 +46,11 @@ try
 
 	$_tpl = new Iframe;
 
+	if (! is_numeric($_request->get('PageNum')->show()) && $_request->get('PageNum')->show() !== 'fav')
+	{
+		throw new systemException('Naigation not exists.');
+	}
+
 	$_SESSION['history'] = array(
 		'Page' => 'admin/pages/'.FILE_SELF.'?'.$_SERVER['QUERY_STRING'],
 		'Current' => $_request->get('PageNum')->show() ? $_request->get('PageNum')->show() : 5
@@ -82,19 +87,16 @@ try
 				case 7:
 					$_tpl->assign('NavigationTitle', __('System'));
 					break;
-				case 'fav':
-					break;
 				default:
 					$_tpl->assign('NavigationTitle', 'N/A');
 			}
 
-			
 			$query = $_pdo->getData('SELECT * FROM [admin] WHERE `page` = :page ORDER BY `title`',
 				array(':page', $_request->get('PageNum')->show(), PDO::PARAM_INT)
 			);
 
 			$link = array();
-			if ($_pdo->getRowsCount($query))
+			if ($query)
 			{
 				foreach($query as $row)
 				{

@@ -39,6 +39,12 @@ try
 	$pages = array();
 	foreach($fav as $key => $row)
 	{
+		if (! $_user->hasPermission($row['permissions']))
+		{
+			// Usuwanie podstron z ulubionych, do których admin nie ma dostępu
+			$_pdo->exec('DELETE FROM [admin_favourites] WHERE `id` = '.intval($row['id']));
+			continue;
+		}
 		if ($row['page'] !== '5')
 		{
 			$row['url'] = ADDR_ADMIN.'pages/'.$row['link'];
