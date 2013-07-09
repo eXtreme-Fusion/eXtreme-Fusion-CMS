@@ -39,6 +39,8 @@ try
 	
 	$_locale->load('home');
 
+	$_fav->setFavByLink('notes.php', $_user->get('id'));
+	
 	if ($_request->post('note_title')->show() && $_request->post('note_id')->isNum())
 	{
 		$_pdo->exec('UPDATE [notes] SET `title` = :title WHERE `id` = :id',

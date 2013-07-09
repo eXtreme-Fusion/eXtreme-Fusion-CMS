@@ -43,6 +43,8 @@ try
         throw new userException(__('Access Denied'));
     }
 
+	$_fav->setFavByLink('navigations.php', $_user->get('id'));
+	
 	$_tpl = new Iframe;
 
 	// Wyświetlenie komunikatów

@@ -128,6 +128,11 @@ try
 	#Parser
 	Parser::config($_pdo, $_sett, $_user, $_request, $_log);
 
+	# Favourite pages of Admin Panel
+	$_fav = new Favourites($_pdo);
+	$_fav->extend(array('fav_table' => 'admin_favourites', 'data_table' => 'admin'));
+	
+	// TODO: deprecated!
 	define('iGUEST', $_user->iGUEST());
     define('iUSER', $_user->iUSER());
     define('iADMIN', $_user->iADMIN());

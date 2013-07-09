@@ -44,6 +44,8 @@ try
         throw new userException(__('Access denied'));
     }
 
+	$_fav->setFavByLink('users.php', $_user->get('id'));
+
     $_tpl = new Iframe;
 
 	$_tpl->assign('page', $_request->get('page')->show());

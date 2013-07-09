@@ -25,21 +25,29 @@ try
         $_request->redirect(ADDR_ADMIN.'index.php', array('action' => 'login'));
     }
 
+	$_locale->load('favourites');
+	$_locale->load('pages');
+	
 	$_tpl = new Iframe;
-
+	
+	// Ilość pobieranych elementów
+	$_fav->extend(array('limit' => 18));
+	
 	// Pobieranie ulubionych podstron zalogowanego admina
-	$fav = $_pdo->getData('SELECT a.`image`, a.`title`, a.`link`, a.`page` FROM [admin_favourites] f LEFT JOIN [admin] a ON f.`page_id` = a.`id` WHERE f.`admin_id` = :id ORDER BY f.`count` DESC LIMIT 0,18', array(':id', $_user->get('id'), PDO::PARAM_INT));
+	$fav = $_fav->get($_user->get('id'));
 
 	$pages = array();
 	foreach($fav as $key => $row)
 	{
 		if ($row['page'] !== '5')
 		{
-			$row['url'] = ADDR_ADMIN.'pages'.DS.$row['link'];
+			$row['url'] = ADDR_ADMIN.'pages/'.$row['link'];
+			$row['src'] = ADDR_ADMIN_IMAGES.'pages/'.$row['image'];
 		}
 		else
 		{
 			$row['url'] = ADDR_MODULES.$row['link'];
+			$row['src'] = ADDR_ADMIN_IMAGES.$row['image'];
 		}
 
 		$row['title'] = __($row['title']);
@@ -48,6 +56,12 @@ try
 	}
 
 	$_tpl->assign('pages', $pages);
+	
+	if ($_sett->get('version') < SYSTEM_VERSION)
+	{
+		$_tpl->assign('upgrade', TRUE);
+	}
+	
 	$_tpl->template('favourites');
 }
 catch(optException $exception)

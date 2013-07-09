@@ -48,6 +48,8 @@ try
         throw new userException(__('Access denied'));
     }
 
+	$_fav->setFavByLink('modules.php', $_user->get('id'));
+	
 	$_tpl = new Iframe;
 
 	$_mod = new Modules($_pdo, $_sett, $_user, New Tag($_system, $_pdo), $_locale);

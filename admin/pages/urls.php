@@ -43,7 +43,9 @@ try
     {
         throw new userException(__('Access denied'));
     }
-
+	
+	$_fav->setFavByLink('urls.php', $_user->get('id'));
+	
 	$_tpl = new Iframe;
 
 	if ($_request->get('status')->show() && $_request->get('act')->show())

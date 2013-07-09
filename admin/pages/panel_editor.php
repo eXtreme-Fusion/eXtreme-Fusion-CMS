@@ -48,6 +48,8 @@ try
 
 	require DIR_CLASS.'Panels.php';
 
+	$_fav->setFavByLink('panels.php', $_user->get('id'));
+	
     $_tpl = new Iframe;
 
 	$_pnl = new Panels($_pdo, '..'.DS.'..'.DS.'modules'.DS);

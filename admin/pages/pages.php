@@ -54,6 +54,8 @@ try
 	/** Załączam model-klasę do obsługi Stron **/
 	require DIR_CLASS.'Pages.php';
 
+	$_fav->setFavByLink('pages.php', $_user->get('id'));
+	
     $_tpl = new Iframe;
 
 	// Zarządzanie typami treści
