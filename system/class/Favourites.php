@@ -105,7 +105,8 @@ class Favourites implements Favourites_Intf
 		{
 			$this->_config_checked = TRUE;
 			
-			if (! strlen($this->_config('fav_table')) || ! strlen($this->_config('data_table')) || ! is_numeric($this->_config('limit')))
+			
+			if (! strlen($this->_config('fav_table')) || ! strlen($this->_config('data_table')) || ! is_numeric($this->_config('limit')) || ! ctype_alnum(str_replace('_', '', $this->_config('fav_table'))) || ! ctype_alnum(str_replace('_', '', $this->_config('data_table'))))
 			{
 				throw new systemException('Invalid config data.');
 			}
