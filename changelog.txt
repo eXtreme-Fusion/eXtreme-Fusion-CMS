@@ -13,6 +13,7 @@
 - optymalizacja pobierania danych użytkownika
 - nowy moduł - Pliki cookies
 - funkcja url() od teraz dostępna w Panelu Admina
+- zakładka Ulubione w Panelu Admina
 
         OD TERAZ DATA PRZY WERSJI OZNACZA DZIEŃ PREMIERY A NIE ROZPOCZĘCIA PRAC NAD SYSTEMEM
 

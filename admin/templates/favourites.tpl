@@ -9,6 +9,6 @@
 			</a>
 		</div>
 	{sectionelse}
-		<div id="status">{i18n('You do not have favourite items.')}</div>
+		<div id="status" class="center">{i18n('You do not have favourite items.')}</div>
 	{/section}
 </div>

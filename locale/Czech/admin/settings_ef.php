@@ -1,7 +1,7 @@
 <?php defined('EF5_SYSTEM') || exit;
 
 return array(
-	'Logging and Cookies' => 'Přihlašování a Cookies',
+	'Cookies' => 'Cookies',
 	'Data cache' => 'Data cache',
 	'Login time:' => 'Čas přihlášení:',
 	'Admin login time (in seconds).' => 'Čas pro přihlášení administrátora (v sekundách).',

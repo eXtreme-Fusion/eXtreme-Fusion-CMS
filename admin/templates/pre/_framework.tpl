@@ -117,9 +117,9 @@
 								<ul class="select page-5">
 									<li><a id="Menu-5" href="javascript:void(0)"><strong><span>{i18n('Modules')}</span></strong></a></li>
 								</ul>
-								<ul class="select page-7">
+								<!--<ul class="select page-7">
 									<li><a id="Menu-7" href="javascript:void(0)"><strong><span>{i18n('System')}</span></strong></a></li>
-								</ul>
+								</ul>-->
 							</div>
 						</div>
 					</div>
@@ -136,9 +136,9 @@
 					<li>
 						<a href="{$ADDR_SITE}messages.html" target="mainFrame" id="GetMessages" class="sub-menu" name="UserID-{$UserID}">{if $Messages != 0}<strong>({$Messages})</strong>{/if} {i18n('Private messages')} <img src="{$ADMIN_TEMPLATE_IMAGES}icons/messages.png" alt="Private messages"></a>
 					</li>-->
-					<li>
+					<!--<li>
 						<a href="{$ADDR_ADMIN}pages/users.php" target="mainFrame" class="sub-menu">{i18n('Users')} <img src="{$ADMIN_TEMPLATE_IMAGES}icons/users.png" alt="Users"></a>
-					</li>
+					</li>-->
 					<li>
 						<a href="{$FILE_SELF}?action=logout" class="sub-menu">{i18n('Logout')} <img src="{$ADMIN_TEMPLATE_IMAGES}icons/logout.png" alt="Logout"></a>
 					</li>
