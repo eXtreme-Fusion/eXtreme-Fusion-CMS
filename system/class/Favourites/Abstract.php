@@ -37,6 +37,11 @@ abstract class Favourites_Abstract
 		$this->_config = array_merge($this->_config, $config);
 	}
 
+	public function setFavByID($fav_id, $user_id)
+	{
+		return $this->_setFav($fav_id, $user_id);
+	}
+
 	protected function _setFav($fav_id, $user_id)
 	{
 		// Konwertowanie danych do liczb całkowitych

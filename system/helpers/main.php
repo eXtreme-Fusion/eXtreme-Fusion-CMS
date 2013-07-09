@@ -927,7 +927,7 @@ Class HELP
 				return FALSE;
 			}
 		}*/
-		
+
 		return FALSE;
 	}
 
@@ -1011,10 +1011,10 @@ Class HELP
 
 		return $return;
 	}
-	
+
 	// http://www.php.net/manual/en/function.str-replace.php#95198
-	public static function strReplaceAssoc(array $replace, $text) 
+	public static function strReplaceAssoc(array $replace, $text)
 	{
-	   return str_replace(array_keys($replace), array_values($replace), $text);   
-	} 
+	   return str_replace(array_keys($replace), array_values($replace), $text);
+	}
 }

@@ -1,4 +1,19 @@
 <?php
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
+|
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
+|
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+*********************************************************/
 
 class Favourites extends Favourites_Abstract implements Favourites_Intf
 {
@@ -28,11 +43,6 @@ class Favourites extends Favourites_Abstract implements Favourites_Intf
 	{
 		$fav_id = (int) $this->_pdo->getField('SELECT `id` FROM ['.$this->_config('data_table').'] WHERE `link` = :link', array(':link', $link, PDO::PARAM_STR));
 
-		return $this->_setFav($fav_id, $user_id);
-	}
-
-	public function setFavByID($fav_id, $user_id)
-	{
 		return $this->_setFav($fav_id, $user_id);
 	}
 }

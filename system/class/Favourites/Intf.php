@@ -19,6 +19,5 @@ interface Favourites_Intf
 {
 	public function extend(array $config);
 	public function get($user_id, $shared = TRUE);
-	//public function setFavByLink($link, $user_id);
 	public function setFavByID($fav_id, $user_id);
 }
