@@ -115,7 +115,7 @@ try
 			} elseif (getStepNum() === 4) {
 				$header = __('Step 4: Database settings');
 			} elseif (getStepNum() === 5) {
-				$header = __('Step 5: Head Admin account');
+				$header = __('Step 5: Admin account');
 			} elseif (getStepNum() === 6) {
 				$header = __('Step 6: System settings');
 			} elseif (getStepNum() === 7) {
@@ -172,7 +172,7 @@ try
 				explode(':', __('Step 2: Checking server configuration')),
 				explode(':', __('Step 3: File and Folder Permissions Test')),
 				explode(':', __('Step 4: Database settings')),
-				explode(':', __('Step 5: Head Admin account')),
+				explode(':', __('Step 5: Admin account')),
 				explode(':', __('Step 6: System settings')),
 				explode(':', __('Step 7: Final settings'))
 			);

@@ -7,9 +7,9 @@ return array(
 	'Step 1: Locale' => 'Krok 1: Jazyk',
 	'Step 2: Checking server configuration' => 'Krok 2: Kontrola konfigurace serveru',
 	'Step 3: File and Folder Permissions Test' => 'Krok 3: Kontrola přístupových práv k souborům a adresářům',
-	'Step 4: Database Settings' => 'Krok 4: Nastavení databáze',
-	'Step 5: Head Admin Details' => 'Krok 5: Vyplnění hlavního administrátora',
-	'Step 6: Final Settings' => 'Krok 6: Dokončení nastavení',
+	'Step 4: Database settings' => 'Krok 4: Nastavení databáze',
+	'Step 5: Admin account' => 'Krok 5: Vyplnění hlavního administrátora',
+	'Step 6: Final settings' => 'Krok 6: Dokončení nastavení',
 	'Finish' => 'Zakończ',
 	// Permissions
 	'Perm: admin login' => 'Přihlášení do admin panelu.',
