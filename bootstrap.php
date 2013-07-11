@@ -68,7 +68,7 @@ defined('FILE_SELF') || define('FILE_SELF', basename($_SERVER['PHP_SELF']));
 defined('FILE_PATH') || define('FILE_PATH', $_SERVER['PHP_SELF']);
 
 // HTTP_HOST może być niedostępne w CRON
-defined('SITE_HOST') || define('SITE_HOST', isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] '');
+defined('SITE_HOST') || define('SITE_HOST', isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '');
 
 // System identifier
 defined('EF5_SYSTEM') || define('EF5_SYSTEM', TRUE);
