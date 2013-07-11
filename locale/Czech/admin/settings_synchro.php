@@ -2,7 +2,7 @@
 
 return array(
 	// Konfiguracja systemu
-	'Synchro statement' => 'Sprawdzaj dostępność aktualizacji (zalecane)',
-	'Synchro policy' => 'Dzięki zaznaczeniu powyższej opcji, system będzie informował poprzez komunikat w Panelu Admina, czy dostępna jest aktualizacja. Do strony producenta wysyłane są następujące informacje dotyczące Twojej strony: <ul><li>Adres IP serwera</li><li>Wersja eXtreme-Fusion CMS</li><li>Data instalacji systemu</li></ul> Zaznaczenie opcji nie jest obowiązkowe.',
-	'Curl warning' => 'Rozszerzenie curl nie zostało włączone. Należy przejść do kolejnego etapu instalacji lub skonfigurować odpowiednio PHP.',
+	'Synchro statement' => 'Kontrolování aktualizací (doporučeno)',
+	'Synchro policy' => 'Výběrem této volby Vás bude systém informovat zprávou v administračním panelu, zda-li je dostupná aktualizace. Na web producenta budou odeslány následující informace o Vaší stránce: <ul> <li> IP adresa serveru </ li> <li> verze eXtreme-Fusion CMS </ li> <li> datum instalace systému </ li> </ ul> Výběr této volby není vyžadován.',
+	'Curl warning' => 'Curl rozšíření není povoleno. Prosím, pokračujte dalším krokem v instalaci nebo překonfigurujte PHP.',
 );
