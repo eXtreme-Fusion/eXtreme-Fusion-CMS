@@ -66,7 +66,7 @@ defined('DBS') || define('DBS', '^');
 
 defined('FILE_SELF') || define('FILE_SELF', basename($_SERVER['PHP_SELF']));
 defined('FILE_PATH') || define('FILE_PATH', $_SERVER['PHP_SELF']);
-defined('SITE_HOST') || define('SITE_HOST', $_SERVER['HTTP_HOST']);
+//defined('SITE_HOST') || define('SITE_HOST', $_SERVER['HTTP_HOST']);
 
 // System identifier
 defined('EF5_SYSTEM') || define('EF5_SYSTEM', TRUE);

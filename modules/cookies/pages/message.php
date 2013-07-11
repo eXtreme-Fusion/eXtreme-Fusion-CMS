@@ -14,7 +14,6 @@
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
 *********************************************************/
-
 require_once '../../../system/sitecore.php';
 
 $_locale->moduleLoad('cookies', 'cookies');

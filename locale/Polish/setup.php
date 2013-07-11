@@ -178,5 +178,5 @@ return array(
 	'The installation was interrupted. The system can be unstable.' => 'Instalacja została przerwana. System może nie działać stabilnie.',
 	'Start the installation again.' => 'Zacznij instalację ponownie.',
 	'Stop the installation or start from the begining.' => 'Przerwij instalację lub zacznij od nowa.',
-	'Stop installation' => 'Przerwij instalację.'
+	'Stop installation' => 'Przerwij instalację',
 );

@@ -136,6 +136,7 @@ $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'users_per_page', 
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'comments_per_page', 'value' => 11));
 //$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'flood_interval', 'value' => 15));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'version', 'value' => SYSTEM_VERSION));
+$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'synchro', 'value' => 0));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'notes', 'value' => __('')));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'loging', 'value' => serialize(array(
 	'site_normal_loging_time' => 60*60*5,			// 5h

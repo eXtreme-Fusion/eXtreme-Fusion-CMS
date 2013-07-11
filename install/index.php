@@ -113,11 +113,13 @@ try
 			} elseif (getStepNum() === 3) {
 				$header = __('Step 3: File and Folder Permissions Test');
 			} elseif (getStepNum() === 4) {
-				$header = __('Step 4: Database Settings');
+				$header = __('Step 4: Database settings');
 			} elseif (getStepNum() === 5) {
-				$header = __('Step 5: Head Admin Details');
+				$header = __('Step 5: Head Admin account');
 			} elseif (getStepNum() === 6) {
-				$header = __('Step 6: Final Settings');
+				$header = __('Step 6: System settings');
+			} elseif (getStepNum() === 7) {
+				$header = __('Step 7: Final settings');
 			} else {
 				$header = '';
 			}
@@ -169,9 +171,10 @@ try
 				explode(':', __('Step 1: Locale')),
 				explode(':', __('Step 2: Checking server configuration')),
 				explode(':', __('Step 3: File and Folder Permissions Test')),
-				explode(':', __('Step 4: Database Settings')),
-				explode(':', __('Step 5: Head Admin Details')),
-				explode(':', __('Step 6: Final Settings'))
+				explode(':', __('Step 4: Database settings')),
+				explode(':', __('Step 5: Head Admin account')),
+				explode(':', __('Step 6: System settings')),
+				explode(':', __('Step 7: Final settings'))
 			);
 
 			$data = array(); $i = 0;
@@ -632,7 +635,7 @@ try
 				require DIR_SITE.'config.php';
 				if (file_exists(DIR_SITE.'cache'.DS))
 				{
-					$_system->clearCache(NULL, array(), DIR_SITE.'cache'.DS);
+					$_system->clearCache();
 				}
 
 				$_pdo = new Data('mysql:host='.$_dbconfig['host'].';dbname='.$_dbconfig['database'].';port='.$_dbconfig['port'], $_dbconfig['user'], $_dbconfig['password'], array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES '.$_dbconfig['charset']));
@@ -674,6 +677,33 @@ try
 		}
 	}
 	else if (getStepNum() === 6)
+	{
+		$_locale->setSubDir('admin');
+		$_locale->load('settings_synchro');
+		
+		if ($curl_loaded = extension_loaded('curl'))
+		{
+			$_tpl->assign('curl_available', TRUE);
+		}
+
+		if ($_POST)
+		{
+			if (isset($_POST['synchro']) && $_POST['synchro'] && $curl_loaded)
+			{
+				require DIR_SITE.'config.php';
+				
+				$_pdo = new Data('mysql:host='.$_dbconfig['host'].';dbname='.$_dbconfig['database'].';port='.$_dbconfig['port'], $_dbconfig['user'], $_dbconfig['password'], array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES '.$_dbconfig['charset']));
+				$_pdo->config($_dbconfig['prefix']);
+				
+				// For php < 5.3.1: http://stackoverflow.com/a/4348744/1794927
+				$_pdo->query('SET NAMES '.$_dbconfig['charset'], NULL, FALSE);
+				
+				$_pdo->exec('UPDATE [settings] SET `value` = 1 WHERE `key` = \'synchro\'');	
+			}
+			goToStep(7);
+		}
+	}
+	else if (getStepNum() === 7)
 	{
 		if ($_POST)
 		{
