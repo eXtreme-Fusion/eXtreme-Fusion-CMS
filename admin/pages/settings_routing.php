@@ -61,8 +61,6 @@ try
 			))
 		));
 		
-		// Petmanentne usuwanie cache z wyjatkiem pliku dodanego do wyjątku.
-		$_files->setOmitExt(array('.htaccess'));
 		$_files->rmDirRecursive(DIR_CACHE, TRUE);
 		
 		$_tpl->printMessage('valid', $_log->insertSuccess('edit', __('Data has been saved.')));

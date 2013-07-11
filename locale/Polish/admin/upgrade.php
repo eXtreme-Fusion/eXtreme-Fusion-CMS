@@ -3,7 +3,7 @@
 return array(
 	'Upgrade' => 'Aktualizuj',
 	'Update' => 'Aktualizacja',
-	'There is no database upgrade available.' => 'Nie ma dostępnych aktualizacji.',
+	'There is no updates ready to install.' => 'Brak aktualizacji do zainstalowania.',
 	'A database update is available for this installation of eXtreme-Fusion.' => 'Dostępna jest aktualizacja dla zainstalowanej wersji eXtreme-Fusion.',
 	'The update has been finished successfully.' => 'Aktualizację zakończono pomyślnie.',
 	//Logs

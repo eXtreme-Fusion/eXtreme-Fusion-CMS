@@ -633,10 +633,6 @@ try
 			if (!$error)
 			{
 				require DIR_SITE.'config.php';
-				if (file_exists(DIR_SITE.'cache'.DS))
-				{
-					$_system->clearCache();
-				}
 
 				$_pdo = new Data('mysql:host='.$_dbconfig['host'].';dbname='.$_dbconfig['database'].';port='.$_dbconfig['port'], $_dbconfig['user'], $_dbconfig['password'], array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES '.$_dbconfig['charset']));
 				$_pdo->config($_dbconfig['prefix']);
@@ -710,7 +706,9 @@ try
 			restartInstall();
 			goToPage();
 		}
-
+		
+		$_files = new Files;
+		$_files->rmDirRecursive(DIR_SITE.'cache'.DS, TRUE);
 	}
 
 	$_tpl->parse('index.tpl');

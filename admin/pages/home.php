@@ -50,6 +50,49 @@ try
 	if ($_sett->get('version') < SYSTEM_VERSION)
 	{
 		$_tpl->assign('upgrade', TRUE);
+	} 
+	elseif ($_sett->get('synchro'))
+	{
+		$json = $_system->cache('synchro', NULL, 'synchro', 3600*24);
+
+		if ($json === NULL)
+		{
+			if (extension_loaded('curl'))
+			{
+				$c = curl_init('http://extreme-fusion.org/curl/update.php');
+				$fields['system'] = SYSTEM_VERSION;
+				$fields['addr'] = ADDR_SITE;
+				curl_setopt($c, CURLOPT_POSTFIELDS, $fields);
+				curl_setopt($c, CURLOPT_NOBODY, 0);
+				curl_setopt($c, CURLOPT_HEADER, 0);
+				ob_start();
+				curl_exec($c);
+				
+				$json = ob_get_contents();
+				ob_end_clean();
+				curl_close($c);
+				
+				$_system->cache('synchro', $json, 'synchro');
+			}
+			else
+			{
+				$error = TRUE;
+				$_tpl->assign('curl_error', TRUE);
+			}
+		}
+		
+		if (! isset($error))
+		{
+			$json = json_decode($json, TRUE);
+			if ($json['update'])
+			{
+				$_tpl->assign('update_href', $json['url']);
+			}
+		}
+	}	
+	else
+	{
+		$_tpl->assign('synchro_error', TRUE);
 	}
 	
 	if ($_request->post('note_add_save')->show() === 'yes')

@@ -143,10 +143,11 @@ class Files
 	 * @param   bool    			Opcjonalnie usuwanie pustych katalogów
 	 * @return  boolean  			TRUE/FALSE
 	 */
-	public function rmDirRecursive($_dir, $rmdir = FALSE)
+	public function rmDirRecursive($_dir, $rm_dir = FALSE, $rm_main_dir = FALSE)
 	{
-		$_dir = (array) $_dir;
+		$error = FALSE;
 
+		$_dir = (array) $_dir;
 		foreach($_dir as $dir)
 		{
 			if (substr($dir, -1) === DS)
@@ -156,7 +157,7 @@ class Files
 
 			if( ! file_exists($dir) || ! is_dir($dir))
 			{
-				return FALSE;
+				$error = TRUE;
 			}
 			elseif (is_readable($dir))
 			{
@@ -167,27 +168,26 @@ class Files
 						if (is_dir($file->getPathname()))
 						{
 							$this->rmDirRecursive($file->getPathname().DS);
+							if($rm_dir)
+							{
+								$error = @rmdir($file->getPathname().DS);
+							}
 						}
 						else
 						{
-							if ( ! @unlink($file->getPathname()))
-							{
-								return FALSE;
-							}
+							$error = @unlink($file->getPathname());
 						}
 					}
 				}
 
-				if($rmdir && ! @rmdir($dir))
+				if ($rm_main_dir)
 				{
-					return FALSE;
+					$error = @rmdir($dir);
 				}
 			}
-
-			return TRUE;
 		}
 
-		return FALSE;
+		return ! $error;
 	}
 
 	/**
@@ -240,7 +240,6 @@ class Files
 
 	/**
 	 * Tworzy listę plików/folderów ze wskazanej scieżki.
-	 *
 	 *
 	 * @param   string    	Ścieżka do katalogu
 	 * @param   array    	Filtr np.: array('..', '.', '.svn', '.gitignore')
