@@ -8,7 +8,7 @@ return array(
 	'Step 2: Checking server configuration' => 'Krok 2: Sprawdzanie konfiguracji serwera',
 	'Step 3: File and Folder Permissions Test' => 'Krok 3: Sprawdzenie praw dostępu do plików i katalogów',
 	'Step 4: Database settings' => 'Krok 4: Ustawienia bazy danych',
-	'Step 5: Admin account' => 'Krok 5: Dane głównego administratora',
+	'Step 5: Admin account' => 'Krok 5: Konto administratora',
 	'Step 6: Final settings' => 'Krok 6: Końcowe ustawienia',
 	'Finish' => 'Zakończ',
 	// Permissions

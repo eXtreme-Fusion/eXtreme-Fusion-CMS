@@ -8,7 +8,7 @@ return array(
 	'Step 2: Checking server configuration' => 'Krok 2: Kontrola konfigurace serveru',
 	'Step 3: File and Folder Permissions Test' => 'Krok 3: Kontrola přístupových práv k souborům a adresářům',
 	'Step 4: Database settings' => 'Krok 4: Nastavení databáze',
-	'Step 5: Admin account' => 'Krok 5: Vyplnění hlavního administrátora',
+	'Step 5: Admin account' => 'Krok 5: Učet administrátora',
 	'Step 6: Final settings' => 'Krok 6: Dokončení nastavení',
 	'Finish' => 'Zakończ',
 	// Permissions
