@@ -128,16 +128,23 @@ class Files
 	}
 
 	/**
-	 * Usuwa katalog oraz całą jego zawartość.
+	 * Usuwa całą zawartość katalogu.
 	 *
-	 *     Usuwa zawartość katalogu oraz jego podkatalogów.
+	 *     Usuwa pliki zawarte w katalogu oraz jego podkatalogach.
 	 *     $_files->rmDirRecursive('c:path/to/dir/');
+	 *	   Usuwa pliki zawarte w katalogach oraz ich podkatalogach.
 	 *     $_files->rmDirRecursive(array('c:path/to/dir/', 'c:path/to/dir2/'));
 	 *
-	 *     Usuwa puste katalogi jeśli parametr 2 jest oznaczone na TRUE.
+	 *     Usuwa pliki z katalogu wraz z podkatalagami i ich zawartością.
 	 *     $_files->rmDirRecursive('c:path/to/dir/', TRUE);
+	 *	   Usuwa pliki z katalogów wraz z podkatalagami i ich zawartością.
 	 *     $_files->rmDirRecursive(array('c:path/to/dir/', 'c:path/to/dir2/'), TRUE);
 	 *
+	 *	   Usuwa pliki z katalogów wraz z podkatalagami i ich zawartością
+	 *	   oraz usuwa katalogi podane pierwszym parametrem.
+	 *     $_files->rmDirRecursive(array('c:path/to/dir/', 'c:path/to/dir2/'), TRUE, TRUE);
+	 *
+	 *	   Nie usunie katalogu, który zawiera plik o rozszerzeniu z tablicy $this->_omit_ext.
 	 *
 	 * @param   string/array    	Ścieżka/i do katalogu
 	 * @param   bool    			Opcjonalnie usuwanie pustych katalogów
@@ -168,21 +175,30 @@ class Files
 						if (is_dir($file->getPathname()))
 						{
 							$this->rmDirRecursive($file->getPathname().DS);
-							if($rm_dir)
+							if ($rm_dir)
 							{
-								$error = @rmdir($file->getPathname().DS);
+								if (! @rmdir($file->getPathname().DS))
+								{
+									$error = TRUE;
+								}
 							}
 						}
 						else
 						{
-							$error = @unlink($file->getPathname());
+							if (!  @unlink($file->getPathname()))
+							{
+								$error = TRUE;
+							}
 						}
 					}
 				}
 
 				if ($rm_main_dir)
 				{
-					$error = @rmdir($dir);
+					if (! @rmdir($dir))
+					{
+						$error = TRUE;
+					}
 				}
 			}
 		}
