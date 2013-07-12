@@ -85,9 +85,6 @@ try
 
 	/** Konfiguracja obiektu szablonu dla podstron **/
 	$_tpl = new Site($_route);
-	
-	
-	
 
 	// Nie usuwać
 	/**
@@ -143,7 +140,7 @@ try
 	{
 		$ec->statistics->saveUniqueVisit($_user->getIP());
 	}
-
+	
 	// Ładowanie pliku startowego modułu
 	if ($row = $ec->modules->getModuleBootstrap($_system))
 	{
@@ -184,7 +181,6 @@ try
 	// Sprawdzanie, czy w załadowanym pliku nastąpiła zmana trace'a (błąd 404, przymus logowania etc.).
 	if ($trace !== $_route->getExitFile())
 	{
-
 		// Załączanie pliku z trace'a. Zmienił się też TPL.
 		require $_route->getExitFile();
 

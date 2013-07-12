@@ -19,6 +19,6 @@ return array(
 					 <p>Adresy, zamieszczane w poniższym formularzu, nie powinny zawierać ścieżki do strony głównej.</p>
 					 <p>Przykład prawidłowego użycia:</p>
 					 <br />
-					 <ul><li><strong>Aktualny adres:</strong> profile,1,Admin.html</li><li><strong>Nowy adres:</strong> profil-admina</ul>'
+					 <ul><li><strong>Aktualny adres:</strong> profile/1/Admin.html</li><li><strong>Nowy adres:</strong> profil-admina</ul>'
 
 );
