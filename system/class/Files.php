@@ -139,7 +139,7 @@ class Files
 	 *     $_files->rmDirRecursive('c:path/to/dir/', TRUE);
 	 *	   Usuwa pliki z katalogów wraz z podkatalagami i ich zawartością.
 	 *     $_files->rmDirRecursive(array('c:path/to/dir/', 'c:path/to/dir2/'), TRUE);
-	 *
+
 	 *     Usuwa pliki z katalogów wraz z podkatalagami i ich zawartością
 	 *     oraz usuwa katalogi podane pierwszym parametrem.
 	 *     $_files->rmDirRecursive(array('c:path/to/dir/', 'c:path/to/dir2/'), TRUE, TRUE);
