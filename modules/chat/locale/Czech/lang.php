@@ -35,7 +35,6 @@
 return array(
 	'Chat' => 'Chat',
 	'You must login to post a message.' => 'Dostupný pouze pro registrované uživatele.',
-	'No messages have been posted.' => 'Nejsou žádné zprávy.',
 	'Send' => 'Odeslat',
 	'Delete' => 'Smazat',
 	'Edit' => 'Upravit'
