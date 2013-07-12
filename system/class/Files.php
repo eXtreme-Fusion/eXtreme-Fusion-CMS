@@ -24,7 +24,7 @@ class Files
 
 	public function __construct()
 	{
-		$this->_omit_ext = array('..', '.', '.svn', '.gitignore');
+		$this->_omit_ext = array('..', '.', '.svn', '.gitignore', '.htaccess');
 		$this->_size_title = array(__('B'), __('kB'), __('MB'), __('GB'), __('TB'));
 		$this->_size = NULL;
 	}
@@ -36,7 +36,7 @@ class Files
 	 *     $_files->setOmitExt(array('.foo', '.bar'));
 	 *
 	 * @param   array    	Tablica z rozszerzeniami plików
-	 * @return  boolean  	TRUE/FALSE
+	 * @return  boolean
 	 */
 	public function setOmitExt(array $ext = array())
 	{
@@ -98,7 +98,7 @@ class Files
 	 *
 	 *
 	 * @param   string    	Ścieżka do katalogu
-	 * @param   bool    	Opcjonalnie persowanie przez metodę getFileSize
+	 * @param   boolean    	Opcjonalnie persowanie przez metodę getFileSize
 	 * @return  int/string  W zależności czy w/w opcja włączona
 	 */
 	public function getDirSize($var, $titles = FALSE)
@@ -128,20 +128,28 @@ class Files
 	}
 
 	/**
-	 * Usuwa katalog oraz całą jego zawartość.
+	 * Usuwa całą zawartość katalogu.
 	 *
-	 *     Usuwa zawartość katalogu oraz jego podkatalogów.
+	 *     Usuwa pliki zawarte w katalogu oraz jego podkatalogach.
 	 *     $_files->rmDirRecursive('c:path/to/dir/');
+	 *	   Usuwa pliki zawarte w katalogach oraz ich podkatalogach.
 	 *     $_files->rmDirRecursive(array('c:path/to/dir/', 'c:path/to/dir2/'));
 	 *
-	 *     Usuwa puste katalogi jeśli parametr 2 jest oznaczone na TRUE.
+	 *     Usuwa pliki z katalogu wraz z podkatalagami i ich zawartością.
 	 *     $_files->rmDirRecursive('c:path/to/dir/', TRUE);
+	 *	   Usuwa pliki z katalogów wraz z podkatalagami i ich zawartością.
 	 *     $_files->rmDirRecursive(array('c:path/to/dir/', 'c:path/to/dir2/'), TRUE);
 	 *
+	 *     Usuwa pliki z katalogów wraz z podkatalagami i ich zawartością
+	 *     oraz usuwa katalogi podane pierwszym parametrem.
+	 *     $_files->rmDirRecursive(array('c:path/to/dir/', 'c:path/to/dir2/'), TRUE, TRUE);
+	 *
+	 *     Nie usunie katalogu, który zawiera plik o rozszerzeniu z tablicy $this->_omit_ext.
 	 *
 	 * @param   string/array    	Ścieżka/i do katalogu
-	 * @param   bool    			Opcjonalnie usuwanie pustych katalogów
-	 * @return  boolean  			TRUE/FALSE
+	 * @param   boolean    			Opcjonalnie usuwanie pustych katalogów
+	 * @param   boolean    			Opcjonalnie usuwanie katalogów podanych parametrem $_dir
+	 * @return  boolean
 	 */
 	public function rmDirRecursive($_dir, $rm_dir = FALSE, $rm_main_dir = FALSE)
 	{
@@ -168,21 +176,30 @@ class Files
 						if (is_dir($file->getPathname()))
 						{
 							$this->rmDirRecursive($file->getPathname().DS);
-							if($rm_dir)
+							if ($rm_dir)
 							{
-								$error = @rmdir($file->getPathname().DS);
+								if (! @rmdir($file->getPathname().DS))
+								{
+									$error = TRUE;
+								}
 							}
 						}
 						else
 						{
-							$error = @unlink($file->getPathname());
+							if (!  @unlink($file->getPathname()))
+							{
+								$error = TRUE;
+							}
 						}
 					}
 				}
 
 				if ($rm_main_dir)
 				{
-					$error = @rmdir($dir);
+					if (! @rmdir($dir))
+					{
+						$error = TRUE;
+					}
 				}
 			}
 		}
@@ -198,8 +215,8 @@ class Files
 	 *	   $_files->mkDirRecursive(array('dir', 'subdir1', 'subdir2') DIR_SITE, 0777); // Określa domyślną ścieżkę główną, oraz jakie prawa nadaje katalogom
 	 *
 	 * @param   string/array    	Ścieżka do katalogu
-	 * @param   bool    			Opcjonalnie usuwanie pustych katalogów
-	 * @return  boolean  			TRUE/FALSE
+	 * @param   boolean    			Opcjonalnie usuwanie pustych katalogów
+	 * @return  boolean
 	 */
 	function mkDirRecursive($_dir, $root = NULL, $rights = 0777)
 	{
@@ -243,7 +260,7 @@ class Files
 	 *
 	 * @param   string    	Ścieżka do katalogu
 	 * @param   array    	Filtr np.: array('..', '.', '.svn', '.gitignore')
-	 * @param   bool    	Sortowanie wyników
+	 * @param   boolean    	Sortowanie wyników
 	 * @param   string    	Typ: pliki/katalogi
 	 * @return  array  		Lista plików/katalogów
 	 */
