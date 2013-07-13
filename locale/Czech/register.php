@@ -17,7 +17,7 @@ return array(
 	'Fields marked with an asterisk are required.' => 'Pole označená hvězdičkou jsou povinné.',
 	'Username contains illegal characters.' => 'Uživatelské jméno obsahuje nepovolené znaky.',
 	'The passwords do not match.' => 'Hesla se neshodují.',
-	'Password contains illegal characters.' => 'Heslo obsahuje nepovolené znaky.',
+	//'Password contains illegal characters.' => 'Hasło zawiera niedozwolone znaki.',
 	'Incorrect e-mail address.' => 'Nesprávná e-mailová adresa.',
 	'Username is already in use.' => 'Toto uživatelské jméno již někdo používá.',
 	'E-mail address is already in use.' => 'Tuto e-mailovou adresu již někdo používá.',
