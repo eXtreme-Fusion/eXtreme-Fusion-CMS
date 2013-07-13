@@ -11,6 +11,7 @@ return array(
 	'Hide e-mail?' => 'Skrýt e-mail?',
 	'Registration has been disabled by administrator.' => 'Registrace nejsou povoleny administrátorem.',
 	'Rules' => 'Pravidla',
+	'Language:' => 'Jazyk:',
 	'Additional information' => 'Další informace',
 	//Error
 	'Fields marked with an asterisk are required.' => 'Pole označená hvězdičkou jsou povinné.',
