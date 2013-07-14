@@ -46,6 +46,7 @@ return array(
 	'Author' => 'Autor',
 	'Title:' => 'Tytuł:',
 	'Content' => 'Treść',
+	'Subject:' => 'Temat:',
 	// userException class
 	'Entered the wrong data type.' => 'Wprowadzono dane o niepoprawnym typie',
 
@@ -73,6 +74,7 @@ return array(
 	'Hide e-mail:' => 'Ukryć e-mail:',
 	'Remember me' => 'Pamiętaj logowanie',
 	'Settings' => 'Ustawienia',
+	'E-mail address' => 'Adres e-mail',
 
 	'Register' => 'Rejestracja',
 	'Forgot password' => 'Odzyskiwanie hasła',
@@ -363,10 +365,20 @@ return array(
 
 	//System
 	'System error' => 'Błąd systemu',
+	'Internal error' => 'Błąd wewnętrzny',
 	'Error path' => 'Ścieżka błędu',
 	'In file' => 'W pliku',
 	'Function' => 'Funckja',
 	'Line' => 'Linia',
+	'Directories' => 'Katalogi',
+	'Directory' => 'Katalog',
+	'Path' => 'Ścieżka',
+	'Status' => 'Status',
+	'Exist' => 'Istnieje',
+	'Does not exist' => 'Nie istnieje',
+	'File' => 'Plik',
+	'Method' => 'Metoda',
+	'Templates' => 'Templateka',
 
 	// Arguments
 	'Function argument error' => 'Błąd argumentów funkcji',

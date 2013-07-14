@@ -13,7 +13,6 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
 **********************************************************
  	Some open-source code comes from
 ---------------------------------------------------------+
@@ -34,72 +33,18 @@
 
 try
 {
-	function optUrl(optClass &$_tpl)
-	{
-		$value = func_get_args();
-		unset($value[0]);
-		
-		if ($value)
-		{
-			$ret = array(); $i = 0; $id = NULL;
-			foreach($value as $array)
-			{
-				$data = explode('=>', $array);
-				if ($data[0] !== '')
-				{
-					if (count($data) == 2)
-					{
-						$id = trim($data[0]);
-					}
-					else
-					{
-						if ($id)
-						{
-							$ret[$id] = trim($data[0]);
-						}
-						else
-						{
-							$ret[$i] = trim($data[0]);
-							$i++;
-						}
-
-						$id = FALSE;
-					}
-				}
-			}
-
-
-			if ($ret)
-			{
-				if (method_exists($_tpl, 'route'))
-				{
-					return $_tpl->route()->path($ret);
-				}
-			}
-		}
-		else
-		{
-			if (method_exists($_tpl, 'route'))
-			{
-				return $_tpl->route()->path($value);
-			}
-		}
-
-		return '';
-	}
-
 	function OptRouter(OptClass &$_tpl, $key)
 	{
 		if ($key === 'controller')
 		{
 			return $_tpl->route()->getFilename();
 		}
-		
+
 		if ($key === 'action')
 		{
 			return $_tpl->route()->getAction();
 		}
-		
+
 		return $_tpl->route()->getByID(intval($key));
 	}
 
@@ -141,7 +86,7 @@ try
 	require_once DIR_CLASS.'Parser.php';
 
     ob_start();
-
+	
     $ec = new Container(array('pdo.config' => $_dbconfig));
 
 	# PHP Data Object
@@ -152,7 +97,7 @@ try
 
 	# Requests
 	$_request = $ec->request;
-	
+
 	// Checking whether there are required database tables
 	require_once DIR_SYSTEM.'table_list.php';
 
@@ -162,7 +107,7 @@ try
 
 	//1. way:
     $_user = $ec->register('User')->setArguments(array(new Reference('sett'), new Reference('pdo')))->get();
-	
+
 	if ($_request->post('login')->show() && $_request->post('username')->show() && $_request->post('password')->show())
 	{
 		// Sprawdzanie danych logowania
@@ -170,7 +115,7 @@ try
 		{
 			$_user->setTryLogin(TRUE);
 		}
-		
+
 		HELP::reload(0);
 	}
 
@@ -186,7 +131,7 @@ try
 			$_user->userLoggedInByCookie($_COOKIE['user']);
 		}
 	}
-	
+
     $_locale = new Locales($ec->getService('User')->getLang(), DIR_LOCALE);
 
 	define('URL_REQUEST', isset($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'] != '' ? HELP::cleanurl($_SERVER['REQUEST_URI']) : $_SERVER['SCRIPT_NAME']);
@@ -197,9 +142,11 @@ try
 
 	$_url = new Url($_sett->getUns('routing', 'url_ext'), $_sett->getUns('routing', 'main_sep'), $_sett->getUns('routing', 'param_sep'), $_system->rewriteAvailable(), $_system->pathInfoExists());
 
+	Parser::registerFunc('url', $_url);
+	
 	# Helper class
 	HELP::init($_pdo, $_sett, $_user, $_url);
-			
+
 	// Załączenie wymaganych plików
 	require_once DIR_SYSTEM.'table_list.php';
 
@@ -220,14 +167,14 @@ try
 
     // Settings dependent functions
     date_default_timezone_set($_sett->get('timezone'));
-	
+
 	if ($_sett->get('maintenance') === '1' && $_user->isLoggedIn() && !$_user->hasAccess($_sett->get('maintenance_level'), 'df'))
 	{
 		$_user->userLogout();
 		HELP::redirect(ADDR_SITE);
 	}
 
-	
+
 	if ($_user->iUSER())
 	{
 		if ($_user->get('theme') !== 'Default' && $_sett->get('userthemes') === '1')

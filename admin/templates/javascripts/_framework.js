@@ -37,7 +37,7 @@ $(document).ready(function($) {
 		this.target = "_blank";
 	});
 
-	// Boczna nawigacja wczytywana AJAXowo
+	// Główna nawigacja wczytywana przez AJAX
 	$("#Navigation .table a").live("click", function() {
 		var id      = this.id,
 		    menu    = id.split("-"),

@@ -13,7 +13,7 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
+|
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------+
@@ -39,7 +39,8 @@ class Modules
 		$_pdo,
 		$_sett,
 		$_user,
-		$_tag;
+		$_tag,
+		$_locale;
 
 	protected $_categories = array();
 
@@ -100,6 +101,19 @@ class Modules
 		return $modules;
 	}
 
+	public function getConfig($path)
+	{
+		if (file_exists($path))
+		{
+			include $path;
+			if (isset($mod_info))
+			{
+				return $mod_info;
+			}
+		}
+
+		return array();
+	}
 
 	public function getModuleBootstrap($_system, $cache_expire = 43200)
 	{

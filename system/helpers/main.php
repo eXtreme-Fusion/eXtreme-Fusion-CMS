@@ -13,7 +13,6 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-|
 **********************************************************
  	Some open-source code comes from
 ---------------------------------------------------------+
@@ -34,6 +33,61 @@
 
 defined('EF5_SYSTEM') || exit;
 
+/**
+ * URL parser for template files.
+ *
+ * Code to parsing: {url('controller=>', 'login', 'action=>', 'redirect', 'param')}
+ */
+function optUrl(optClass &$_tpl)
+{
+	$value = array_slice(func_get_args(), 1);
+
+	if ($value)
+	{
+		$ret = array(); $id = NULL;
+		foreach($value as $array)
+		{
+			// Czyszczenie danych wejściowych
+			$data = array_map('trim', explode('=>', $array));
+
+			// Kontrola danych wejściowych
+			if ($data[0] !== '')
+			{
+				// Sprawdzanie, czy element ma przypisany klucz.
+				if (count($data) == 2)
+				{
+					// Zapisujemy klucz. Wartości na razie nie znamy.
+					$id = $data[0];
+				}
+				else
+				{
+					if ($id)
+					{
+						// Zapis wartości o kluczu zapisanym wcześniej.
+						$ret[$id] = $data[0];
+					}
+					else
+					{
+						// Parametr.
+						$ret[] = $data[0];
+					}
+
+					// Resetowanie zmiennej, by nie było konfliktu w razie wystąpienia parametru.
+					$id = NULL;
+				}
+			}
+		}
+
+		$value = $ret;
+	}
+
+	if ($_tpl->funcExists('url', 'path'))
+	{
+		return $_tpl->getFunc('url', 'path', $value);
+	}
+
+	throw new systemException('Routing is not available.');
+}
 // Function for AJAX response
 function _e($val)
 {
@@ -873,7 +927,7 @@ Class HELP
 				return FALSE;
 			}
 		}*/
-		
+
 		return FALSE;
 	}
 
@@ -957,10 +1011,10 @@ Class HELP
 
 		return $return;
 	}
-	
+
 	// http://www.php.net/manual/en/function.str-replace.php#95198
-	public static function strReplaceAssoc(array $replace, $text) 
+	public static function strReplaceAssoc(array $replace, $text)
 	{
-	   return str_replace(array_keys($replace), array_values($replace), $text);   
-	} 
+	   return str_replace(array_keys($replace), array_values($replace), $text);
+	}
 }

@@ -4,11 +4,22 @@
 - wersja systemu do aktualizacji od teraz w pliku bootstrap.php
 - przekierowania na logowanie po wygaśnięciu sesji przy kliknięciu w zakładkę w Panelu admina
 - nowe, obiektowe API szablonów
+- rozbudowanie API komentarzy o możliwość zmiany katalogu i pliku szablonu
+- tłumaczenie dla modułu Kontakt
+- poprawki do wyjątków OPT, dodane tłumaczenie oraz poprawiony wygląd
+- możliwość tworzenia podstron o takiej samej nazwie jak katalog z systemem
+- klasa Crypt może być teraz używana w adresach URL
+- aktywacja przycisku 'Wróć' w mechaniźmie obsługi błędów
+- optymalizacja pobierania danych użytkownika
+- nowy moduł - Pliki cookies
+- funkcja url() od teraz dostępna w Panelu Admina
+- zakładka Ulubione w Panelu Admina
+- automatyczne sprawdzanie, czy aktualizacja jest dostepna
 
         OD TERAZ DATA PRZY WERSJI OZNACZA DZIEŃ PREMIERY A NIE ROZPOCZĘCIA PRAC NAD SYSTEMEM
-                    
+
 			eXtreme-Fusion 5.0.2 2013.06.01
-                    
+
 - poprawka zabezpieczeń i usuniecie błędu przy włączonym register_globals - usuniecie problemu z niezadeklarowana zmienna na jednym z darmowych serwerów
 - usuniecie odstępu nad jednym z paneli
 - cache dla różnych szablonów o tej samej nazwie plików tymczasowych
@@ -19,7 +30,7 @@
 - wdrożenie obsługi IPv6 w statystykach unikalnych odwiedzin - wyeliminowanie problemu (jak dobrze pamiętam) z logowaniem
 - poprawki plików językowych, głownie polskich i angielskich
 - usunięciu błędu z niezadeklarowanym indeksem hash w sesji użytkownika
-- modyfikacja pliku index.php umożliwiająca rozpoczęcie prac nad forum oraz budowę modułów we wzorcu MVP/MVC lub pochodnych
+- modyfikacja pliku index.php umożliwiająca rozpoczęcie prac nad forum oraz budowę modułów we wzorcu MVP/MVC lub pochodnym
 - poprawka do zarządzania panelami - usuniecie niepotrzebnej funkcji parsującej dane
 - Usunięcie BOM z wszystkich plików
 

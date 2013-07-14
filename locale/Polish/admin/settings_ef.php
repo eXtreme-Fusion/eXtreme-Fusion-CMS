@@ -1,7 +1,7 @@
 <?php defined('EF5_SYSTEM') || exit;
 
 return array(
-	'Logging and Cookies' => 'Logowanie i ciasteczka',
+	'Cookies' => 'Ciasteczka',
 	'Data cache' => 'Bufor danych',
 	'Login time:' => 'Czas zalogowania:',
 	'The duration of login session in seconds.' => 'Czas trwania sesji zalogowania wyrażony w sekundach.',

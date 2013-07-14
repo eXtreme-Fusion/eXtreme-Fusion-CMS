@@ -13,7 +13,6 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-|
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------+
@@ -44,6 +43,8 @@ try
         throw new userException(__('Access Denied'));
     }
 
+	$_fav->setFavByLink('navigations.php', $_user->get('id'));
+	
 	$_tpl = new Iframe;
 
 	// Wyświetlenie komunikatów

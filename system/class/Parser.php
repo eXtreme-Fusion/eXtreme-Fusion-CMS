@@ -24,6 +24,8 @@ class Parser extends optClass
 		$_request,
 		$_log,
 		$_theme;
+		
+	protected static $_obj;
 
 	public function __construct()
 	{
@@ -57,7 +59,32 @@ class Parser extends optClass
 	{
 		$_SESSION['history']['Page'] = str_replace(array(DIR_SITE, '\\'), array('', '/'), $__file__).($_SERVER['QUERY_STRING'] ? '?'.$_SERVER['QUERY_STRING'] : '');
 	}
-
+	
+	public static function registerFunc($obj_name, $obj)
+	{
+		if (is_object($obj))
+		{
+			return self::$_obj[$obj_name] = $obj;
+		}
+		
+		throw new systemException('Wrong argument type.');
+	}
+	
+	public static function getFunc($obj_name, $func_name, array $args)
+	{
+		return self::$_obj[$obj_name]->$func_name($args);
+	}
+	
+	public function funcExists($obj_name, $func_name)
+	{
+		if (isset(self::$_obj[$obj_name]))
+		{
+			return method_exists(self::$_obj[$obj_name], $func_name);
+		}
+		
+		return FALSE;
+	}
+	
 	// TODO:: zrobić dla panelu admina klasę i dla strony klasę, po której będą dziedziczyć inne metody
 	public static function setThemeInst($_theme)
 	{
@@ -276,6 +303,7 @@ class pageNavParser extends optClass
 
 		$this->root = DIR_TEMPLATES.'paging'.DS;
 		$this->compile = DIR_CACHE;
+		//$this->compile = DIR_CACHE.'compile'.DS;
 
 		$this->_route = $_route;
 		$this->_request = $_request;
@@ -312,11 +340,10 @@ class General extends Parser
 {
 	public function __construct($root)
 	{
-
 		parent::loadSystem();
 		$this->root = $root;
-		$this->compile         = DIR_CACHE;
-		$this->cache           = DIR_CACHE;
+		$this->compile = DIR_CACHE; 
+		$this->cache = DIR_CACHE;
 	}
 
 	public function template($file)
@@ -351,9 +378,10 @@ class SiteAjax extends Parser
 	{
 
 		parent::loadSystem();
-		$this->setCompilePrefix('site_ajax_'.(parent::$_user->get('theme') ? preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_user->get('theme')) : preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_sett->get('theme'))).'_');
-		$this->compile         = DIR_CACHE;
-		$this->cache           = DIR_CACHE;
+		$this->setCompilePrefix('site_ajax_'.(strtolower(parent::$_user->get('theme')) ? preg_replace("/[^a-zA-Z0-9_]/", '_', strtolower(parent::$_user->get('theme'))) : preg_replace("/[^a-zA-Z0-9_]/", '_', strtolower(parent::$_sett->get('theme')))).'_');
+		$this->compile  = DIR_CACHE;
+		//$this->compile = DIR_CACHE.'compile'.DS; 
+		$this->cache = DIR_CACHE;
 
 		$this->_dir_theme = DIR_THEME.'templates'.DS.'ajax'.DS;
 		$this->_dir_default = DIR_AJAX.'templates'.DS;
@@ -405,9 +433,9 @@ class Iframe extends Parser
 
 	protected function setConfig()
 	{
-		$this->setCompilePrefix('admin_iframe_'.(parent::$_user->get('theme') ? preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_user->get('theme')) : preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_sett->get('theme'))).'_');
-		$this->root            = DIR_ADMIN_TEMPLATES;
-		$this->compile         = DIR_CACHE;
+		$this->setCompilePrefix('admin_iframe_'.(strtolower(parent::$_user->get('theme')) ? preg_replace("/[^a-zA-Z0-9_]/", '_', strtolower(parent::$_user->get('theme'))) : preg_replace("/[^a-zA-Z0-9_]/", '_', strtolower(parent::$_sett->get('theme')))).'_');
+		$this->root = DIR_ADMIN_TEMPLATES;
+		$this->compile = DIR_CACHE;
 	}
 
 	public function template($iframe)
@@ -484,10 +512,11 @@ class Site extends Parser
 
 	protected function setConfig()
 	{
-		$this->setCompilePrefix('site_'.(parent::$_user->get('theme') ? preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_user->get('theme')) : preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_sett->get('theme'))).'_');
-		$this->root            = DIR_TEMPLATES;
-		$this->compile         = DIR_CACHE;
-		$this->cache           = DIR_CACHE;
+		$this->setCompilePrefix('site_'.(strtolower(parent::$_user->get('theme')) ? preg_replace("/[^a-zA-Z0-9_]/", '_', strtolower(parent::$_user->get('theme'))) : preg_replace("/[^a-zA-Z0-9_]/", '_', strtolower(parent::$_sett->get('theme')))).'_');
+		$this->root = DIR_TEMPLATES;
+		$this->compile = DIR_CACHE;
+		//$this->compile = DIR_CACHE.'compile'.DS; 
+		$this->cache = DIR_CACHE;
 	}
 
 	public function setDefaultRoot()
@@ -597,10 +626,11 @@ class Panel extends Parser
 	
 	protected function setConfig()
 	{
-		$this->setCompilePrefix('panels_'.(parent::$_user->get('theme') ? preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_user->get('theme')) : preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_sett->get('theme'))).'_');
-		$this->root            = DIR_TEMPLATES;
-		$this->compile         = DIR_CACHE;
-		$this->cache           = DIR_CACHE;
+		$this->setCompilePrefix('panels_'.(strtolower(parent::$_user->get('theme')) ? preg_replace("/[^a-zA-Z0-9_]/", '_', strtolower(parent::$_user->get('theme'))) : preg_replace("/[^a-zA-Z0-9_]/", '_', strtolower(parent::$_sett->get('theme')))).'_');
+		$this->root = DIR_TEMPLATES;
+		$this->compile = DIR_CACHE;
+		//$this->compile = DIR_CACHE.'compile'.DS; 
+		$this->cache = DIR_CACHE;
 	}
 
 	public function setDefaultRoot()
@@ -684,9 +714,10 @@ class Ajax extends Parser
 
 	protected function setConfig()
 	{
-		$this->setCompilePrefix('ajax_'.(parent::$_user->get('theme') ? preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_user->get('theme')) : preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_sett->get('theme'))).'_');
-		$this->compile         = DIR_CACHE;
-		$this->cache           = DIR_CACHE;
+		$this->setCompilePrefix('ajax_'.(strtolower(parent::$_user->get('theme')) ? preg_replace("/[^a-zA-Z0-9_]/", '_', strtolower(parent::$_user->get('theme'))) : preg_replace("/[^a-zA-Z0-9_]/", '_', strtolower(parent::$_sett->get('theme')))).'_');
+		$this->compile = DIR_CACHE;
+		//$this->compile = DIR_CACHE.'compile'.DS; 
+		$this->cache = DIR_CACHE;
 	}
 
 	public function cache(array $data = array())
@@ -759,9 +790,10 @@ class AdminModuleIframe extends Parser
 
 	protected function setConfig()
 	{
-		$this->setCompilePrefix('modules_'.(parent::$_user->get('theme') ? preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_user->get('theme')) : preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_sett->get('theme'))).'_').$this->_module.'_';
-		$this->compile         = DIR_CACHE;
-		$this->cache           = DIR_CACHE;
+		$this->setCompilePrefix('modules_'.(strtolower(parent::$_user->get('theme')) ? preg_replace("/[^a-zA-Z0-9_]/", '_', strtolower(parent::$_user->get('theme'))) : preg_replace("/[^a-zA-Z0-9_]/", '_', strtolower(parent::$_sett->get('theme')))).'_').$this->_module.'_';
+		$this->compile = DIR_CACHE;
+		//$this->compile = DIR_CACHE.'compile'.DS; 
+		$this->cache = DIR_CACHE;
 	}
 
 
@@ -808,10 +840,11 @@ class AdminMainEngine extends Parser
 
 	protected function setConfig()
 	{
-		$this->setCompilePrefix('admin_'.(parent::$_user->get('theme') ? preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_user->get('theme')) : preg_replace("/[^a-zA-Z0-9_]/", '_', parent::$_sett->get('theme'))).'_');
-		$this->root            = DIR_ADMIN_TEMPLATES;
-		$this->compile         = DIR_CACHE;
-		$this->cache           = DIR_CACHE;
+		$this->setCompilePrefix('admin_'.(strtolower(parent::$_user->get('theme')) ? preg_replace("/[^a-zA-Z0-9_]/", '_', strtolower(parent::$_user->get('theme'))) : preg_replace("/[^a-zA-Z0-9_]/", '_', strtolower(strtolower(parent::$_sett->get('theme'))))).'_');
+		$this->root = DIR_ADMIN_TEMPLATES;
+		$this->compile = DIR_CACHE;
+		//$this->compile = DIR_CACHE.'compile'.DS; 
+		$this->cache = DIR_CACHE;
 	}
 
 

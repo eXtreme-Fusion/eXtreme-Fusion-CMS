@@ -27,7 +27,7 @@
 						$('#mainFrame').attr('src', '{/literal}{$ADDR_SITE}{$History.Page}{literal}');
 						 $("#Navigation ul").removeClass("current");
 						{/literal}{if $History.Current}{literal}
-							$("#Navigation .page-"+{/literal}{$History.Current}{literal}).addClass('current');
+							$("#Navigation .page-{/literal}{$History.Current}{literal}").addClass('current');
 						{/literal}{/if}
 					{else}{literal}
 						$("#Navigation ul:first").addClass('current');
@@ -50,7 +50,7 @@
 								<div id="login-inner">
 									<div>
 										<label for="User">{i18n('User')}:</label>
-										<input type="text" id="User" name="user" autocomplete="off" class="login-inp">
+										<input type="text" id="User" name="user" autocomplete="off" autofocus="autofocus" class="login-inp">
 									</div>
 									<div>
 										<label for="Pass">{i18n('Password:')}</label>
@@ -89,34 +89,37 @@
 						<div id="Navigation">
 							<div class="table">
 								<ul class="select page-6">
-									<li><a id="Menu-6" href="#"><strong><span>{i18n('Panel')}</span></strong></a></li>
+									<li><a id="Menu-6" href="javascript:void(0)"><strong><span>{i18n('Panel')}</span></strong></a></li>
+								</ul>
+								<ul class="select page-fav">
+									<li><a id="Menu-fav" href="javascript:void(0)"><strong><span>{i18n('Favourites')}</span></strong></a></li>
 								</ul>
 								{if $Count.1 > 0}
 									<ul class="select page-1">
-										<li><a id="Menu-1" href="#"><strong><span>{i18n('Manage content')}</span></strong></a></li>
+										<li><a id="Menu-1" href="javascript:void(0)"><strong><span>{i18n('Manage content')}</span></strong></a></li>
 									</ul>
 								{/if}
 								{if $Count.2 > 0}
 									<ul class="select page-2">
-										<li><a id="Menu-2" href="#"><strong><span>{i18n('Manage users')}</span></strong></a></li>
+										<li><a id="Menu-2" href="javascript:void(0)"><strong><span>{i18n('Manage users')}</span></strong></a></li>
 									</ul>
 								{/if}
 								{if $Count.3 > 0}
 									<ul class="select page-3">
-										<li><a id="Menu-3" href="#"><strong><span>{i18n('Manage site')}</span></strong></a></li>
+										<li><a id="Menu-3" href="javascript:void(0)"><strong><span>{i18n('Manage site')}</span></strong></a></li>
 									</ul>
 								{/if}
 								{if $Count.4 > 0}
 									<ul class="select page-4">
-										<li><a id="Menu-4" href="#"><strong><span>{i18n('Settings')}</span></strong></a></li>
+										<li><a id="Menu-4" href="javascript:void(0)"><strong><span>{i18n('Settings')}</span></strong></a></li>
 									</ul>
 								{/if}
 								<ul class="select page-5">
-									<li><a id="Menu-5" href="#"><strong><span>{i18n('Modules')}</span></strong></a></li>
+									<li><a id="Menu-5" href="javascript:void(0)"><strong><span>{i18n('Modules')}</span></strong></a></li>
 								</ul>
-								<ul class="select page-7">
-									<li><a id="Menu-7" href="#"><strong><span>{i18n('System')}</span></strong></a></li>
-								</ul>
+								<!--<ul class="select page-7">
+									<li><a id="Menu-7" href="javascript:void(0)"><strong><span>{i18n('System')}</span></strong></a></li>
+								</ul>-->
 							</div>
 						</div>
 					</div>
@@ -133,9 +136,9 @@
 					<li>
 						<a href="{$ADDR_SITE}messages.html" target="mainFrame" id="GetMessages" class="sub-menu" name="UserID-{$UserID}">{if $Messages != 0}<strong>({$Messages})</strong>{/if} {i18n('Private messages')} <img src="{$ADMIN_TEMPLATE_IMAGES}icons/messages.png" alt="Private messages"></a>
 					</li>-->
-					<li>
+					<!--<li>
 						<a href="{$ADDR_ADMIN}pages/users.php" target="mainFrame" class="sub-menu">{i18n('Users')} <img src="{$ADMIN_TEMPLATE_IMAGES}icons/users.png" alt="Users"></a>
-					</li>
+					</li>-->
 					<li>
 						<a href="{$FILE_SELF}?action=logout" class="sub-menu">{i18n('Logout')} <img src="{$ADMIN_TEMPLATE_IMAGES}icons/logout.png" alt="Logout"></a>
 					</li>
@@ -149,7 +152,7 @@
 			 	<div id="FooterLeft">2005-{$CurrentYear} &copy; <a href="http://www.extreme-fusion.org/" rel="blank">{$SystemVersion}</a> Copyright 2002-2013 <a href="http://php-fusion.co.uk/">PHP-Fusion</a>. Released as free software without warranties under <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">aGPL v3</a>
 			 </div>
 			</div>
-			<iframe id='mainFrame' name='mainFrame' width='100%' height='600' class="ui-layout-center" frameborder='0' scrolling='auto' src='pages/home.php'></iframe>
+			<iframe id='mainFrame' name='mainFrame' width='100%' height='600' class="ui-layout-center" frameborder='0' scrolling='auto' src='pages/{if $has_favourite}favourites{else}home{/if}.php'></iframe>
 
 		</body>
     {/if}
