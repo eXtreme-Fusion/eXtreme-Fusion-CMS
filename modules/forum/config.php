@@ -39,7 +39,6 @@ $new_table[2] = array(
 	"(
 		`id` int(11) NOT NULL AUTO_INCREMENT,
 		`board_id` int(11) NOT NULL,
-		`category_id` int(11) DEFAULT NULL,
 		`title` varchar(255) NOT NULL,
 		`description` text NOT NULL,
 		`is_closed` tinyint(1) NOT NULL DEFAULT '0',
