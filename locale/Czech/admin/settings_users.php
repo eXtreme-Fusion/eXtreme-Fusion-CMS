@@ -15,6 +15,7 @@ return array(
 	'Maximum avatar size:' => 'Maximální velikost avataru:',
 	'width x height' => 'šířka x výška',
 	'Maximum avatar size (bytes):' => 'Maximální rozměry avataru<br />(v bajtech):',
+	'1 KB = 1024 bytes' => '1 KB = 1024 B',
 	'Avatar ratio:' => 'Ořezání avataru:',
 	'Allow users to change theme:' => 'Povolit uživatelům měnit šablony (themes):',
 	'Allow users to change name:' => 'Povolit uživatelům měnit jméno (nick):'
