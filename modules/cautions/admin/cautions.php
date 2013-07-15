@@ -28,7 +28,8 @@ try
 	}
 
     $_tpl = new AdminModuleIframe('cautions');
-
+	$_tpl->setHistory(__FILE__);
+	
 	// Wyświetlenie komunikatów
 	if ($_request->get(array('status', 'act'))->show())
 	{

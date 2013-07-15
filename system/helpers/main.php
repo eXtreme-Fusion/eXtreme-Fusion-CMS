@@ -128,22 +128,35 @@ function __autoload($class_name)
 	$data = explode('_', $class_name);
 	if (count($data) > 1)
 	{
-		$path = implode(DIRECTORY_SEPARATOR, $data);
+		$name = implode(DIRECTORY_SEPARATOR, $data);
 	}
 	else
 	{
-		$path = $class_name;
+		$name = $class_name;
 	}
-
-	$path = DIR_CLASS.$path.'.php';
-
-    if (file_exists($path))
+	
+	$tmp_path = array(DIR_CLASS.$name.'.php');
+	foreach (new DirectoryIterator(DIR_MODULES) as $file)
 	{
-		include $path;
+		if ( ! in_array($file->getFilename(), array('..', '.', '.svn', '.gitignore')))
+		{
+			if (file_exists(DIR_MODULES.$file->getFilename().DS.'class'.DS.$name.'.php'))
+			{
+				$tmp_path = array(DIR_MODULES.$file->getFilename().DS.'class'.DS.$name.'.php');
+			}
+		}
 	}
-	else
+	
+	foreach($tmp_path as $path)
 	{
-		throw new systemException("Unable to load $class_name.");
+		if (file_exists($path))
+		{
+			include $path;
+		}
+		else
+		{
+			throw new systemException("Unable to load class $name.");
+		}
 	}
 }
 
