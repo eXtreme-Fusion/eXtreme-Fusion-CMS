@@ -2,6 +2,7 @@
 
 return array(
 	'Section:' => 'Sekce',
+	'ID:' => 'Identifikátor:',
 	'Permission' => 'Oprávnění',
 	'Permissions' => 'Oprávnění',
 	'Edit permission' => 'Úprava oprávnění',
