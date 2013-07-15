@@ -106,6 +106,7 @@ return array(
 	'Theme:' => 'Šablona:',
 	'Birthdate:' => 'Datum narození:',
 	'Default roles' => '<small>Ve výchozím nastavení přiřazena <em>Hostovi</em> a <em>Uživateli</em></small>.',
+	'Avatar requirements' => 'Maximální požadavky: :filesize KB, :width x :height px',
 	
 	//Admin options
 	'Edit the account' => 'Upravit účet',
