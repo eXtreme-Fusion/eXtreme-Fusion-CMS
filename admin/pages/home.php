@@ -59,15 +59,18 @@ try
 		{
 			$fields['system'] = SYSTEM_VERSION;
 			$fields['addr'] = ADDR_SITE;
-			if (function_exists('curl'))
+			if (function_exists('curl_init'))
 			{
 				$c = curl_init('http://extreme-fusion.org/curl/update.php');
 				curl_setopt($c, CURLOPT_POSTFIELDS, $fields);
 				curl_setopt($c, CURLOPT_NOBODY, 0);
 				curl_setopt($c, CURLOPT_HEADER, 0);
 				ob_start();
-				curl_exec($c);
-				
+				if ( ! curl_exec($c))
+				{
+					$error = TRUE;
+					$_tpl->assign('error', TRUE);
+				}
 				$json = ob_get_contents();
 				ob_end_clean();
 				curl_close($c);
@@ -76,9 +79,10 @@ try
 			}
 			elseif (function_exists('fsockopen'))
 			{
-				if ( ! ($r = fsockopen('extreme-fusion.org', 80, $errno, $errstr)))
+				if ( ! $r = fsockopen('extreme-fusion.org', 80, $errno, $errstr))
 				{
-					exit($errstr);
+					$error = TRUE;
+					$_tpl->assign('error', TRUE);
 				}
 				else
 				{
@@ -107,10 +111,10 @@ try
 			}
 			elseif (function_exists('fopen'))
 			{
-				if ( ! ($r = fopen("http://extreme-fusion.org/curl/update.php?&system=".$fields['system']."&addr=".$fields['addr'], 'r')))
+				if ( ! $r = fopen("http://extreme-fusion.org/curl/update.php?&system=".$fields['system']."&addr=".$fields['addr'], 'r'))
 				{
-					exit();
-				}
+					$error = TRUE;
+					$_tpl->assign('error', TRUE); 
 				else
 				{
 					$json = '';
@@ -122,7 +126,7 @@ try
 					
 					$_system->cache('synchro', $json, 'synchro');
 				}
-			}
+			} 
 		}
 		
 		if (! isset($error))
