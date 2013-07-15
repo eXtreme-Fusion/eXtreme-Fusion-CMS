@@ -6,6 +6,7 @@ return array(
 	'User:'  => 'Uživatel:',
 	'Create account' => 'Vytvořit účet',
 	'Send e-mail' => 'Odeslat e-mail',
+	'Find user:' => 'Najdi uživatele:', 
 	'Edit account :username' => 'Upravit účet :username',
 	'Account type' => 'Typ účtu',
 	'Advanced' => 'Rozšíření',
@@ -27,6 +28,7 @@ return array(
 	'Additional informations' => 'Další informace',
 	'Administration options' => 'Možnosti administrace',
 	'Adding an user' => 'Přidání uživatele',
+	'Delete current avatar' => 'Smazat aktuální avatar', 
 	
 	
 	
@@ -73,6 +75,7 @@ return array(
 
 	//Forms
 	'Roles:' => 'Pravomoce:',
+	'Default roles' => 'Výchozí oprávnění', 
 	'Main role:' => 'Hlavní pravomoce:',
 	'Find user:' => 'Najít uživatele:',
 	'Main group: ' => 'Hlavní skupina: ',
