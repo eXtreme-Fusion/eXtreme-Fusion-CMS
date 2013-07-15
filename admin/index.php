@@ -13,7 +13,6 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-|
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------+
@@ -37,6 +36,8 @@ try
 	require DIR_SITE.'bootstrap.php';
 	require_once DIR_SYSTEM.'admincore.php';
 
+	$_locale->load('favourites');
+	
 	$tpl = new AdminMainEngine;
 
 	if ($_user->bannedByIP())
@@ -113,6 +114,12 @@ try
 		}
 	}
 
+	// Pobieranie ulubionych podstron zalogowanego admina
+	$fav = $_fav->get($_user->get('id'));
+	if ($fav)
+	{
+		$tpl->assign('has_favourite', TRUE);
+	}
 	$tpl->template('pre'.DS.'_framework');
 }
 catch(optException $exception)

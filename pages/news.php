@@ -270,11 +270,11 @@ else
 	}
 
 	// Załączanie pluginów
-	if (function_exists('render_news'))
+	if (method_exists($_theme, 'news'))
 	{
-		render_news();
+		$_theme->news();
 
 		// Scalanie pluginów ze zmiennymi OPT Routera
-		$_tpl->data = array_merge($_tpl->data, TPL::get());
+		$_tpl->data = array_merge($_tpl->data, $_theme->get());
 	}
 }

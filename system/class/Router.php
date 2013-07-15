@@ -113,22 +113,51 @@ class Router
 		{
 			$dirname = dirname($_SERVER['SCRIPT_NAME']);
 
-			if ($dirname === $this->_sep)
+			$to_replace = array($this->_sep.'index.php');
+
+			if ($dirname !== $this->_sep)
 			{
-				$to_replace = $this->_sep.'index.php';
-			}
-			else
-			{
-				$to_replace = array($dirname, $this->_sep.'index.php');
+				$to_replace[] = $dirname;
 			}
 
-			
-			defined('PATH_INFO') || define('PATH_INFO', str_replace($to_replace, '', $_SERVER['REQUEST_URI']));
+			defined('PATH_INFO') || define('PATH_INFO', $this->strReplace($to_replace, '', $_SERVER['REQUEST_URI']));
 		}
 		else
 		{
 			defined('PATH_INFO') || define('PATH_INFO', $this->_request->get('q', '')->show());
 		}
+	}
+
+	// Zamienia pierwsze wystąpienie elementu w ciągu
+	protected function strReplace($old, $new, $haystack)
+	{
+		if (is_array($new))
+		{
+			if (count($old) !== count($new))
+			{
+				throw new systemException('Wrong number of elements in the arrays. Arrays must have the same number of elements.');
+			}
+
+			foreach($old as $key => $val)
+			{
+				if (strlen($pos = stripos($haystack, $val)))
+				{
+					$haystack = substr_replace($haystack, $new[$key], $pos, strlen($val));
+				}
+			}
+		}
+		else
+		{
+			foreach($old as $val)
+			{
+				if (strlen($pos = stripos($haystack,$val)))
+				{
+					$haystack = substr_replace($haystack, $new, $pos, strlen($val));
+				}
+			}
+		}
+
+		return $haystack;
 	}
 
 /*start of**********TEST*********/
@@ -341,44 +370,6 @@ class Router
 		HELP::redirect($this->path($path));
 	}
 
-	// Przekierowanie na inny kontriker (plik).
-	public function goToFile($file, $action = NULL, array $params = array())
-	{
-
-		echo 'METODA KLASY ROUTER O NAZWIE GOTOFILE JEST PRZESTARZALA';
-		$str_params = '';
-		if ($params)
-		{
-			$temp = array();
-			foreach($params as $key => $val)
-			{
-				if (isNum($key, FALSE, FALSE))
-				{
-					$temp[] = $val;
-				}
-				else
-				{
-					$temp[] = $key.$this->_param_sep.$val;
-				}
-			}
-
-			$str_params = implode($this->_sep, $temp);
-
-			if ($str_params && $action)
-			{
-				$str_params = $this->_sep.$str_params;
-			}
-
-			if ($action === NULL)
-			{
-				$action = $this->_sep;
-			}
-		}
-
-		HELP::redirect($file.$action.$str_params.$this->_ext['url']);
-		exit;
-	}
-
 /*end of**********TEST*********/
 
 	public function setNewConfig($val)
@@ -386,6 +377,8 @@ class Router
 		$this->setPath($val);
 		$this->setValues();
 		$this->setFileName();
+		$this->setParams();
+		$this->setAction();
 		$this->setExitFile();
 		$this->_search_admin = FALSE;
 		$this->_search_more = TRUE;

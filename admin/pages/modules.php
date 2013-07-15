@@ -48,6 +48,8 @@ try
         throw new userException(__('Access denied'));
     }
 
+	$_fav->setFavByLink('modules.php', $_user->get('id'));
+	
 	$_tpl = new Iframe;
 
 	$_mod = new Modules($_pdo, $_sett, $_user, New Tag($_system, $_pdo), $_locale);
@@ -135,7 +137,7 @@ try
 		$i = 0;
 		foreach($mod_list as $val)
 		{
-			if (include DIR_MODULES.$val[0].DS.'config.php')
+			if ($mod_info = $_mod->getConfig(DIR_MODULES.$val[0].DS.'config.php'))
 			{
 				$mod[] = array(
 					'row_color'		=> $i % 2 == 0 ? 'tbl1' : 'tbl2',

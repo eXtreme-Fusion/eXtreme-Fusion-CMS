@@ -27,6 +27,8 @@ try
         throw new userException(__('Access denied'));
     }
 
+	$_fav->setFavByLink('panels.php', $_user->get('id'));
+	
 	$_tpl = new Iframe;
 
 	$_tag = new Tag($_system, $_pdo);

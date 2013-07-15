@@ -13,7 +13,6 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-|
 **********************************************************/
 
 $config = '<?php'.PHP_EOL;
@@ -46,7 +45,7 @@ $config .= '    \'password\' => \''.$db_pass.'\','.PHP_EOL;
 $config .= '    \'database\' => \''.$db_name.'\','.PHP_EOL;
 $config .= '    \'prefix\' => \''.$db_prefix.'\','.PHP_EOL;
 $config .= '    \'charset\' => \'utf8\','.PHP_EOL;
-$config .= '    \'version\' => \'eXtreme-Fusion CMS - Ninja Edition '.VERSION.'\''.PHP_EOL;
+$config .= '    \'version\' => \'eXtreme-Fusion CMS - Ninja Edition '.SYSTEM_VERSION.'\''.PHP_EOL;
 $config .= ');'.PHP_EOL.PHP_EOL;
 
 $config .= '#Routing'.PHP_EOL.PHP_EOL;

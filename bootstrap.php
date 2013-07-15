@@ -13,36 +13,18 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
-**********************************************************
-                ORIGINALLY BASED ON
----------------------------------------------------------
-| PHP-Fusion Content Management System
-| Copyright (C) 2002 - 2011 Nick Jones
-| http://www.php-fusion.co.uk/
-+-------------------------------------------------------
-| Author: Nick Jones (Digitanium)
-+-------------------------------------------------------
-| This program is released as free software under the
-| Affero GPL license. You can redistribute it and/or
-| modify it under the terms of this license which you
-| can read by viewing the included agpl.txt or online
-| at www.gnu.org/licenses/agpl.html. Removal of this
-| copyright header is strictly prohibited without
-| written permission from the original author(s).
-+-------------------------------------------------------*/
+*********************************************************/
+error_reporting(-1);
 
-error_reporting(E_ALL | E_NOTICE);
-
-if ( ! isset($_SESSION)) 
+if ( ! isset($_SESSION))
 {
 	session_start();
 }
 
 // Check if magic_quotes_runtime is active
-if (get_magic_quotes_runtime()) 
+if (get_magic_quotes_runtime())
 {
-	if (version_compare(PHP_VERSION, '5.3.0', '<')) 
+	if (version_compare(PHP_VERSION, '5.3.0', '<'))
 	{
 		// Deactivate when function is not deprecated PHP < 5.3.0
 		set_magic_quotes_runtime(0);
@@ -60,29 +42,33 @@ if (ini_get('register_globals'))
 {
 	$array= array('_GET', '_POST', '_COOKIE', '_FILES', '_SERVER', '_SESSION', '_ENV');
 
-	foreach ($array as $value) 
+	foreach ($array as $value)
 	{
-		foreach ($GLOBALS[$value] as $key => $var) 
+		foreach ($GLOBALS[$value] as $key => $var)
 		{
-			if (isset($GLOBALS[$key]) && $var === $GLOBALS[$key]) 
+			if (isset($GLOBALS[$key]) && $var === $GLOBALS[$key])
 			{
 				if (in_array($key, $array))
 				{
 					exit('Hacking action!');
 				}
-				
+
 				unset($GLOBALS[$key]);
 			}
 		}
 	}
 }
 
+defined ('SYSTEM_VERSION') || define('SYSTEM_VERSION', '5.0.3-unstable-master-repo');
+
 // Array-imploded data separator for Database fields
 defined('DBS') || define('DBS', '^');
 
 defined('FILE_SELF') || define('FILE_SELF', basename($_SERVER['PHP_SELF']));
 defined('FILE_PATH') || define('FILE_PATH', $_SERVER['PHP_SELF']);
-defined('SITE_HOST') || define('SITE_HOST', $_SERVER['HTTP_HOST']);
+
+// HTTP_HOST może być niedostępne w CRON
+defined('SITE_HOST') || define('SITE_HOST', isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '');
 
 // System identifier
 defined('EF5_SYSTEM') || define('EF5_SYSTEM', TRUE);

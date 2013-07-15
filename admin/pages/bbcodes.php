@@ -45,6 +45,7 @@ try
 		throw new userException(__('Access denied'));
 	}
 
+	$_fav->setFavByLink('bbcodes.php', $_user->get('id'));
 	$_tpl = new Iframe;
 
 	if ($_request->get(array('status', 'act'))->show())

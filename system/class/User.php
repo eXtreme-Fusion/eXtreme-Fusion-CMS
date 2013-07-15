@@ -31,6 +31,9 @@ class User {
 	// Tablica zawierająca dane zalogowanego użytkownika
 	protected $_data = array();
 
+	// Tablica z danymi użytkowników
+	protected $_users = array();
+
 	// Czy użytkownik jest zalogowany?
 	protected $_logged = FALSE;
 
@@ -122,7 +125,8 @@ class User {
 		// Przed edycją należy przeczytać opis przy deklaracji zmiennej
 		$this->_cookie_life_time = time() + 60*60*24*31;
 
-		// From php.net
+		// Author: Karoly Nagy (Korcsii)
+		// https://github.com/php-fusion/PHP-Fusion/blob/master/includes/ip_handling_include.php
 		if (filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP))
 		{
 			if (strpos($_SERVER['REMOTE_ADDR'], '.'))
@@ -737,13 +741,22 @@ class User {
 
 		if ($this->isValidLogin($username))
 		{
-			if ($query = $this->_pdo->getRow("SELECT `id`, `status`, `salt`, `password` FROM [users] WHERE `username`='{$username}' AND status = 0 LIMIT 1"))
+			if ($query = $this->_pdo->getRow("SELECT `id`, `status`, `salt`, `password` , `algo` FROM [users] WHERE `username`='{$username}' AND status = 0 LIMIT 1"))
 			{
-				$sha512 = sha512($query['salt'].'^'.$pass);
+				$hash = $query['algo'] === 'sha512' ? sha512($query['salt'].'^'.$pass) : md5(md5($pass));
 
 				// Sprawdzanie poprawności hasła
-				if ($sha512 === $query['password'])
-				{
+				if ($hash === $query['password'])
+				{	
+				
+					if($query['algo'] === 'md5')
+					{
+						if ($this->changePass($query['id'], $pass))
+						{
+							$this->_pdo->exec('UPDATE [users] SET `algo` = \'sha512\' WHERE `id` = '.$query['id']);
+						}
+					}
+					
 					$this->_data = $query;
 
 					$hash = $this->createLoginHash();
@@ -1001,7 +1014,9 @@ class User {
 	{
 		if ( ! $data = $this->get('salt', $id))
 		{
-			return FALSE;
+			$data = substr(sha512(uniqid(rand(), true)), 0, 5);
+			$this->_pdo->exec('UPDATE [users] SET `salt` = \''.$data.'\' WHERE `id` = '.$id);
+			return sha512($data.'^'.$pass);
 		}
 		return sha512($data.'^'.$pass);
 	}
@@ -1066,7 +1081,14 @@ class User {
 	{
 		if (isNum($id))
 		{
-			$data = $this->_pdo->getRow('SELECT u.*, ud.* FROM [users] u LEFT JOIN [users_data] ud ON u.`id`= ud.`user_id` WHERE u.`id` = '.$id);
+			if (isset($this->_users[$id]))
+			{
+				$data = $this->users[$id];
+			}
+			else
+			{
+				$data = $this->users[$id] = $this->_pdo->getRow('SELECT u.*, ud.* FROM [users] u LEFT JOIN [users_data] ud ON u.`id`= ud.`user_id` WHERE u.`id` = '.$id);
+			}
 
 			if ($data)
 			{
@@ -2049,7 +2071,8 @@ class User {
 		return TRUE;
 	}
 
-	// From php.net
+	// Author: Karoly Nagy (Korcsii)
+	// https://github.com/php-fusion/PHP-Fusion/blob/master/includes/ip_handling_include.php
 	private function IPv6($ip, $limit)
 	{
 		if (strpos($ip, "::") !== FALSE)
@@ -2062,14 +2085,16 @@ class User {
 		}
 		return implode(":", $tmp);
 	}
-
+	
+	// Author: Karoly Nagy (Korcsii)
+	// https://github.com/php-fusion/PHP-Fusion/blob/master/includes/ip_handling_include.php
 	public function bannedByIP()
 	{
 		if ($this->_ip)
 		{
 			if ($this->_ip_type === 4)
 			{
-				return $this->_pdo->getMatchRowsCount('SELECT `id` FROM [blacklist] WHERE type=4 AND ip REGEXP "^'.str_replace(".", ".(", $this->_ip, $i).str_repeat(")?", $i).'$"');
+				return $this->_pdo->getMatchRowsCount('SELECT `id` FROM [blacklist] WHERE type=4 AND ip REGEXP "^'.str_replace(".", "(.", $this->_ip, $i).str_repeat(")?", $i).'$"');
 			}
 			elseif($this->_ip_type === 5)
 			{
@@ -2077,7 +2102,7 @@ class User {
 			}
 			elseif($this->_ip_type === 6)
 			{
-				return $this->_pdo->getMatchRowsCount('SELECT `id` FROM [blacklist] WHERE type=6 AND ip REGEXP "^'.str_replace(":", ":(", $this->_ip, $i).str_repeat(")?", $i).'$"');
+				return $this->_pdo->getMatchRowsCount('SELECT `id` FROM [blacklist] WHERE type=6 AND ip REGEXP "^'.str_replace(":", "(:", $this->_ip, $i).str_repeat(")?", $i).'$"');
 			}
 			else
 			{

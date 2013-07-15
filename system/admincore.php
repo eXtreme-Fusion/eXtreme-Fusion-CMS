@@ -118,12 +118,21 @@ try
 	define('URL_REQUEST', isset($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'] != '' ? HELP::cleanurl($_SERVER['REQUEST_URI']) : $_SERVER['SCRIPT_NAME']);
 	define('URL_QUERY', isset($_SERVER['QUERY_STRING']) ? HELP::cleanurl($_SERVER['QUERY_STRING']) : '');
 
+	$_url = new Url($_sett->getUns('routing', 'url_ext'), $_sett->getUns('routing', 'main_sep'), $_sett->getUns('routing', 'param_sep'), $_system->rewriteAvailable(), $_system->pathInfoExists());
+
+	Parser::registerFunc('url', $_url);
+	
     # Timezone settings
     date_default_timezone_set($_sett->get('timezone'));
 
 	#Parser
 	Parser::config($_pdo, $_sett, $_user, $_request, $_log);
 
+	# Favourite pages of Admin Panel
+	$_fav = new Favourites($_pdo);
+	$_fav->extend(array('fav_table' => 'admin_favourites', 'data_table' => 'admin'));
+	
+	// TODO: deprecated!
 	define('iGUEST', $_user->iGUEST());
     define('iUSER', $_user->iUSER());
     define('iADMIN', $_user->iADMIN());

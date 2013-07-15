@@ -19,6 +19,136 @@ class systemException extends Exception{}
 class userException extends Exception{}
 class argumentException extends Exception{};
 
+class optException extends Exception 
+{
+	private $func;
+	private $type;
+	private $filename;
+	public $directories;
+
+	public function __construct($message = null, $code = null, $type=null, $file = null, $line = null, $function = null, $filename = null) {
+		$this -> message = $message;
+		$this -> code = $code;
+		$this -> file = $file;
+		$this -> line = $line;
+		$this -> func = $function;
+		$this -> type = $type;
+		$this -> filename = $filename;
+	}
+	
+	public function getFunction() {
+		return $this -> func;
+	}
+	
+	public function getType() {
+		return $this -> type;
+	}
+	
+	public function getFilename() {
+		return $this -> filename;
+	}
+}
+
+function optErrorHandler(optException $exc) 
+{
+	ob_start();
+		include DIR_ADMIN_TEMPLATES."pre".DS."exception_header.tpl";
+		$getHeader = ob_get_contents();
+	ob_end_clean();
+	
+	echo replaceException($getHeader);
+	echo '<h3>'.$exc->getType().' '.__('Internal error').' #'.$exc->getCode().'</h3>';
+	echo '<div class="error">'.$exc->getMessage().'</div>';
+
+	if($exc->getCode() >= 100) 
+	{
+		echo '<div class="status">'.__('Method').': "<em>'.$exc->getFunction().'</em>"; '.__('Templates').': "<em>'.$exc->getFilename().'</em>"; '.__('File').': "<em>'.$exc->getFile().'</em>"; '.__('Line').': "<em>'.$exc->getLine().'</em>"</div>';
+	} 
+	else
+	{
+		echo '<div class="status">'.__('Method').': "<em>'.$exc->getFunction().'</em>"; '.__('File').': "<em>'.$exc->getFile().'</em>"; '.__('Line').': "<em>'.$exc->getLine().'</em>"</div>';			
+	}
+
+	$trace = array_reverse($exc->getTrace()); ?>
+	<div class="debug opt">
+		<h3><?php echo __('Error path'); ?></h3>
+		<table id="TableOPT" class="dataTable">
+			<thead>
+				<tr>
+					<th style="width:5%">#</th>
+					<th style="width:40%"><?php echo __('In file'); ?></th>
+					<th style="width:45%"><?php echo __('Function'); ?></th>
+					<th style="width:10%"><?php echo __('Line'); ?></th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php foreach($trace as $number => $item) 
+				{
+					if(isset($item['class'])) 
+					{
+						$callback = $item['class'].$item['type'].$item['function'];
+					} 
+					else 
+					{
+						$callback = $item['function'];
+					}
+					echo '<tr class="tbl1 border_bottom">
+					<td style="padding:6px;width:5%" class="center">'.$number.'</td>
+					<td style="width:40%">'.(isset($item['file']) ? basename($item['file']) : '----').'</td>
+					<td style="width:45%">'.$callback.'</td>
+					<td style="width:10%" class="center">'.(isset($item['line']) ? basename($item['line']) : '----').'</td>
+					</tr>';
+				} ?>
+			</tbody>
+		</table>
+		<br /><h3><?php echo __('Directories'); ?></h3>
+		<table id="TableOPT" class="dataTable">
+			<thead>
+				<tr>
+					<th style="width:33%"><?php echo __('Directory'); ?></th>
+					<th style="width:34%"><?php echo __('Path'); ?></th>
+					<th style="width:33%"><?php echo __('Status'); ?></th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php foreach($exc -> directories as $type => $data) 
+				{
+					if($data == NULL) 
+					{
+						$status = '<a class="Plus tip" title="'.__('N/A').'">'.__('N/A').'</a>';				
+					} 
+					elseif(is_dir($data)) 
+					{
+						$status = '<a class="IconStatusOK tip" title="'.__('Exist').'">'.__('Exist').'</a>';
+					} 
+					else 
+					{
+						$status = '<a class="IconMinus tip" title="'.__('Does not exist').'">'.__('Does not exist').'</a>';
+					} ?>
+					<tr class="tbl1 border_bottom">
+						<td style="width:33%"><strong><?php echo($type) ?></strong></td>
+						<td style="width:33%"><?php echo($data) ?></td>
+						<td style="width:33%" class="center"><?php echo($status) ?></td>
+					</tr>
+				<?php } ?>
+
+			</tbody>
+		</table>
+		<div class="tbl Buttons" style="width:200px;margin:10px auto;">
+			<div class="center button-c">
+				<span class="Cancel" onclick="history.back()"><strong><?php echo __('Back'); ?> <img style="position: absolute;" src="<?php echo ADDR_ADMIN; ?>/templates/images/icons/pixel/undo.png" alt="" ></strong></span>
+			</div>
+		</div>
+	</div>
+
+<?php 
+	ob_start();
+		include DIR_ADMIN_TEMPLATES."pre".DS."exception_footer.tpl";
+		$getFooter = ob_get_contents();
+	ob_end_clean();
+	echo replaceException($getFooter);
+}
+
 class uploadException extends Exception
 {
     public function __construct($code) {
@@ -116,7 +246,7 @@ function systemErrorHandler(systemException $exc)
 		</table>
 		<div class="tbl Buttons" style="width:200px;margin:10px auto;">
 			<div class="center button-c">
-				<span class="Cancel"><strong><?php echo __('Back'); ?> <img style="position: absolute;" src="<?php echo ADDR_ADMIN; ?>/templates/images/icons/pixel/undo.png" alt="" ></strong></span>
+				<span class="Cancel" onclick="history.back()"><strong><?php echo __('Back'); ?> <img style="position: absolute;" src="<?php echo ADDR_ADMIN; ?>/templates/images/icons/pixel/undo.png" alt="" ></strong></span>
 			</div>
 		</div>
 	</div>
@@ -167,7 +297,7 @@ function argumentErrorHandler(argumentException $exc)
 		</table>
 		<div class="tbl Buttons" style="width:200px;margin:10px auto;">
 			<div class="center button-c">
-				<span class="Cancel"><strong><?php echo __('Back'); ?> <img style="position: absolute;" src="<?php echo ADDR_ADMIN; ?>/templates/images/icons/pixel/undo.png" alt="" ></strong></span>
+				<span class="Cancel" onclick="history.back()"><strong><?php echo __('Back'); ?> <img style="position: absolute;" src="<?php echo ADDR_ADMIN; ?>/templates/images/icons/pixel/undo.png" alt="" ></strong></span>
 			</div>
 		</div>
 	</div>
@@ -259,7 +389,7 @@ function PDOErrorHandler($exc) {
 		</table>
 		<div class="tbl Buttons" style="width:200px;margin:10px auto;">
 			<div class="center button-c">
-				<span class="Cancel"><strong><?php echo __('Back'); ?> <img style="position: absolute;" src="<?php echo ADDR_ADMIN; ?>/templates/images/icons/pixel/undo.png" alt="" ></strong></span>
+				<span class="Cancel" onclick="history.back()"><strong><?php echo __('Back'); ?> <img style="position: absolute;" src="<?php echo ADDR_ADMIN; ?>/templates/images/icons/pixel/undo.png" alt="" ></strong></span>
 			</div>
 		</div>
 	</div>
@@ -271,8 +401,19 @@ function PDOErrorHandler($exc) {
 	echo replaceException($getFooter);
 }
 
-function replaceException($text) {
-	$search = array('{$Charset}','{$ADDR_SITE}','{$DIR_ADMIN}','{$ADDR_ADMIN_CSS}','{$ADDR_COMMON_CSS}','{$FILE_SELF}','{$DIR_ADMIN_IMAGES}','{$CornerStart}','{$CornerEnd}','{literal}','{/literal}');
-	$replace = array('utf-8',ADDR_SITE,DIR_ADMIN,ADDR_ADMIN_TEMPLATES.'stylesheet/',ADDR_COMMON_CSS,FILE_SELF,DIR_ADMIN_IMAGES,"<div class='corner4px'><div class='ctl'><div class='ctr'><div class='ctc'></div></div></div><div class='cc'>","</div><div class='cfl'><div class='cfr'><div class='cfc'></div></div></div></div>","","");
-	return str_replace($search,$replace,$text);
+function replaceException($text) 
+{
+	$replace = array(
+		'{$html_harset}' 		=> 'utf-8',
+		'{$ADDR_SITE}' 			=> ADDR_SITE,
+		'{$DIR_ADMIN}' 			=> DIR_ADMIN,
+		'{$ADDR_ADMIN_CSS}' 	=> ADDR_ADMIN_TEMPLATES.'stylesheet/',
+		'{$ADDR_COMMON_CSS}' 	=> ADDR_COMMON_CSS,
+		'{$FILE_SELF}' 			=> FILE_SELF,
+		'{$DIR_ADMIN_IMAGES}' 	=> DIR_ADMIN_IMAGES,
+		'{literal}' 			=> "",
+		'{/literal}' 			=> ""
+	);
+	
+	return HELP::strReplaceAssoc($replace, $text);
 }

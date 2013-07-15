@@ -31,8 +31,16 @@
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
 +--------------------------------------------------------*/
+interface Theme_Intf
+{
+	public function page();
+	
+	public function sidePanel();
+	
+	public function middlePanel();
 
-class Theme extends optClass
+}
+class Themes extends optClass
 {
 	public $_sett;
 	private $_tpl_file_name;
@@ -99,16 +107,16 @@ class Theme extends optClass
 
 	protected function setConfig()
 	{
-		$this->setCompilePrefix('themes_'.($this->_user->get('theme') ? preg_replace("/[^a-zA-Z0-9_]/", '_', $this->_user->get('theme')) : preg_replace("/[^a-zA-Z0-9_]/", '_', $this->_sett->get('theme'))).'_');
-		$this->root            = DIR_THEMES.$this->_theme.DS.'templates'.DS;
-		$this->compile         = DIR_CACHE;
-		//$this->compile         = DIR_CACHE.'compile'.DS; Może odzielny katalog dla skompilowanych plików?
-		$this->cache           = DIR_SITE.'cache'.DS;
+		$this->setCompilePrefix('themes_'.(strtolower($this->_user->get('theme')) ? preg_replace("/[^a-zA-Z0-9_]/", '_', strtolower($this->_user->get('theme'))) : preg_replace("/[^a-zA-Z0-9_]/", '_', strtolower($this->_sett->get('theme')))).'_');
+		$this->root = DIR_THEMES.$this->_theme.DS.'templates'.DS;
+		$this->compile = DIR_CACHE;
+		//$this->compile = DIR_CACHE.'compile'.DS; 
+		$this->cache = DIR_SITE.'cache'.DS;
 		$this->gzipCompression = FALSE;
 		//$this->httpHeaders(OPT_HTML);
 	}
 
-	public function template($iframe)
+	public function render($filename)
 	{
 		$this->assign('ADDR_SITE', ADDR_SITE);
 		$this->assign('ADDR_ADMIN', ADDR_ADMIN);
@@ -166,7 +174,9 @@ class Theme extends optClass
 			$this->assign('Page', $this->_request->get('page')->show());
 		}
 
-		$this->parse($iframe);
+		if (!strpos($filename, '.')) $filename = $filename.'.tpl';
+		
+		$this->parse($filename);
 		// Usuwanie danych z bufora OPT
 		$this->data = array();
 	}
@@ -239,7 +249,7 @@ class Theme extends optClass
 
 
 
-	public function showAdminLinks($class = FALSE)
+	public function showAdminPanelLink($class = FALSE)
 	{
 		if ($this->_user->hasPermission('admin.login'))
 		{
@@ -313,24 +323,18 @@ class Theme extends optClass
 
 		return NULL;
 	}
-}
-
-class TPL
-{
-	protected static $_obj;
-
-	public static function build($obj)
+	
+	public function get()
 	{
-		self::$_obj = $obj;
+		return $this->data;
 	}
-
-	public static function this()
+	
+	public function obj($name)
 	{
-		return self::$_obj;
-	}
-
-	public static function get()
-	{
-		return self::$_obj->data;
+		$name = '_'.$name;
+		if (property_exists($this, $name))
+		{
+			return $this->$name;
+		}
 	}
 }

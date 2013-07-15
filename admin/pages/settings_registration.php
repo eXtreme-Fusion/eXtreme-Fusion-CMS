@@ -46,6 +46,8 @@ try
 		throw new userException(__('Access denied'));
 	}
 
+	$_fav->setFavByLink('settings_registration.php', $_user->get('id'));
+	
 	$_tpl = new Iframe;
 
 	if ($_request->post('save')->show())

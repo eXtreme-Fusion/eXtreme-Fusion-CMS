@@ -193,7 +193,7 @@
 									<a id="refresh" class="SendButton" style="width:100px;margin:0 auto;">
 										<strong class="o">
 											<strong class="m">
-												<strong>{i18n('Refresh')} &raquo;</strong>
+												<strong>{i18n('Refresh')}</strong>
 											</strong>
 										</strong>
 									</a>
@@ -480,6 +480,47 @@
 								</strong>
 							</a>
 					{elseif $step == 6}
+						<form action="index.php" method="post" id="This" autocomplete="off">
+							<div class="formMessage">
+								{if !$curl_available}
+									<div class="formWarning">{i18n('Curl warning')}</div>
+								{/if}
+								<div class="synchro">
+									<input type="checkbox" name="synchro" value="true" {if !$curl_available}disabled="disabled" {/if}id="Synchro" />
+									<label for="Synchro">
+										{i18n('Synchro statement')}
+									</label>
+								</div>
+								<p>{i18n('Synchro policy')}</p>
+							</div>
+							<br /><hr /><br />
+							<div class="center" style="width:240px; margin:15px auto; overflow:hidden">
+								<input type='hidden' name='step' value='6'>
+								<a id="refresh" class="SendButton" style="width:100px;float:left;margin-right:20px">
+									<strong class="o">
+										<strong class="m">
+											<strong>{i18n('Refresh')}</strong>
+										</strong>
+									</strong>
+								</a>
+								<a id="SendForm_This" class="SendButton" style="width:100px;float:left">
+									<strong class="o">
+										<strong class="m">
+											<strong>{i18n('Next')} &raquo;</strong>
+										</strong>
+									</strong>
+								</a>
+							</div>
+							<div class="clear"></div>
+						</form>
+						<a class="CancelButton" style="width:100px;margin:0 auto;">
+							<strong class="o">
+								<strong class="m">
+									<strong title="{i18n('Stop the installation or start from the begining.')}">{i18n('Stop installation')}</strong>
+								</strong>
+							</strong>
+						</a>
+					{elseif $step == 7}
 
 						<div class="center">{i18n('Setup complete')}</div><br />
 						<form action="index.php" method="post" id="This" autocomplete="off">
