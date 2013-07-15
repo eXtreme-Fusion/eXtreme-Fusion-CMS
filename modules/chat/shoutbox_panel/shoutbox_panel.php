@@ -15,7 +15,7 @@
 | written permission from the original author(s).
 *********************************************************/
 $_locale->moduleLoad('shoutbox', 'chat');
-$_head->set('<script src="'.ADDR_SITE.'modules/chat/templates/shoutbox.js"></script>');
+$_head->set('	<script src="'.ADDR_SITE.'modules/chat/templates/shoutbox.js"></script>');
 
 if ($_user->isLoggedIn()) 
 {

@@ -56,6 +56,7 @@ try
 	$_tpl = new optClass;
 	$_tpl->compile = DIR_CACHE;
 	$_tpl->root = DIR_BASE.'templates'.DS;
+	$_tpl->setCompilePrefix('install_');
 	/***/
 
 	require DIR_SITE.'system'.DS.'helpers'.DS.'main.php';

@@ -90,13 +90,13 @@ class Themes extends optClass
 		{
 			$this->registerFunction('url', 'Url');
 		}
-		$this->_head->set('
-			<link href="'.ADDR_COMMON_CSS.'facebox.css" rel="stylesheet">'.PHP_EOL.'
-			<script src="'.ADDR_COMMON_JS.'facebox.js"></script>'.PHP_EOL.'
-			<script>$(function() {
-				$(\'a[rel*=facebox]\').facebox();
-			});</script>
-		');
+		$this->_head->set('	<link href="'.ADDR_COMMON_CSS.'facebox.css" rel="stylesheet">
+	<script src="'.ADDR_COMMON_JS.'facebox.js"></script>
+	<script>
+		$(function() {
+			$(\'a[rel*=facebox]\').facebox();
+		});
+	</script>');
 
 	}
 

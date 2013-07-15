@@ -25,8 +25,6 @@
 	{if $message}<div class="{$class}">{$message}</div>{/if}
 
 	<form action="{$URL_REQUEST}" method="post" id="This">
-		
-		
 		<div class="tbl1">
 			<div class="grid_6 formLabel">{i18n('Synchro statement')}</div>
 			<div class="grid_1 formField"><label><input type="radio" name="ext_allowed" value="1"{if $synchro == 1} checked="checked"{/if} /> {i18n('Yes')}</label></div>

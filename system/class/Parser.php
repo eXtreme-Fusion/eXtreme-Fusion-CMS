@@ -344,6 +344,7 @@ class General extends Parser
 		$this->root = $root;
 		$this->compile = DIR_CACHE; 
 		$this->cache = DIR_CACHE;
+		$this->setCompilePrefix('modules_'.(strtolower(parent::$_user->get('theme')) ? preg_replace("/[^a-zA-Z0-9_]/", '_', strtolower(parent::$_user->get('theme'))) : preg_replace("/[^a-zA-Z0-9_]/", '_', strtolower(parent::$_sett->get('theme')))).'_').$this->_module.'_';
 	}
 
 	public function template($file)

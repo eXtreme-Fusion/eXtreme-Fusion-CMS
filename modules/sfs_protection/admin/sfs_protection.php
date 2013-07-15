@@ -28,7 +28,6 @@ try
     }
 
     $_tpl = new AdminModuleIframe('sfs_protection');
-	
 	$_tpl->setHistory(__FILE__);
 	
 	if ($_request->get('action')->show() === 'delete' && $_request->get('id')->isNum())

@@ -45,15 +45,9 @@ try
 	}
 
 	$_tpl = new AdminModuleIframe('chat');
-
+	$_tpl->setHistory(__FILE__);
+	
 	$row = $_pdo->getRow('SELECT * FROM [chat_settings]');
-
-	if ($_request->get(array('status', 'act'))->show())
-	{
-		$_tpl->logAndShow($_request->get('status')->show(), $_request->get('act')->show(), array(
-			'update' => array(__('Data has been saved.'), __('Error! Data has not been saved.'))
-		));
-	}
 
 	if ($_request->post('save')->show())
 	{
@@ -69,10 +63,8 @@ try
 
 		if ($count)
 		{
-			HELP::redirect(FILE_SELF.'?act=update&status=ok');
+			$_tpl->printMessage('valid', $_log->insertSuccess('edit', __('Data has been saved.')));
 		}
-
-		HELP::redirect(FILE_SELF.'?act=update&status=error');
 	}
 
 	$_tpl->assignGroup(array

@@ -45,7 +45,7 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 
 	if ( ! file_exists(DIR_THEME.'templates'.DS.'pages'.DS.'news.tpl'))
 	{
-		$_head->set('<link href="'.ADDR_CSS.'news.css" rel="stylesheet">');
+		$_head->set('	<link href="'.ADDR_CSS.'news.css" rel="stylesheet">');
 	}
 
 	! class_exists('Tag') || $_tag = New Tag($_system, $_pdo);
@@ -152,7 +152,7 @@ else
 
 	if ( ! file_exists(DIR_THEME.'templates'.DS.'pages'.DS.'news.tpl'))
 	{
-		$_head->set('<link href="'.ADDR_TEMPLATES.'stylesheet/news.css" rel="stylesheet">');
+		$_head->set('	<link href="'.ADDR_TEMPLATES.'stylesheet/news.css" rel="stylesheet">');
 	}
 
 	$title = array(
