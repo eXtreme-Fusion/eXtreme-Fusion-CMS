@@ -142,7 +142,7 @@ function __autoload($class_name)
 		{
 			if (file_exists(DIR_MODULES.$file->getFilename().DS.'class'.DS.$name.'.php'))
 			{
-				$tmp_path = array(DIR_MODULES.$file->getFilename().DS.'class'.DS.$name.'.php');
+				$tmp_path[] = DIR_MODULES.$file->getFilename().DS.'class'.DS.$name.'.php';
 			}
 		}
 	}
@@ -152,10 +152,6 @@ function __autoload($class_name)
 		if (file_exists($path))
 		{
 			include $path;
-		}
-		else
-		{
-			throw new systemException("Unable to load class $name.");
 		}
 	}
 }
