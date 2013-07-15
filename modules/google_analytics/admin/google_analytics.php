@@ -41,7 +41,6 @@ try
 			
 			if ($google_analytics === NULL)
 			{
-				
 				$google_analytics = new Gapi($row['email'], $row['password']);
 
 				$dimensions = array(

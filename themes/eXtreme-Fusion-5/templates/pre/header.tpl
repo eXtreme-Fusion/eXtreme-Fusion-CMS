@@ -5,7 +5,7 @@
 	<meta charset="{i18n('html_charset')}">
 	<meta name="description" content="{$Theme.Desc}">
 	<meta name="keywords" content="{$Theme.Keys}">
-	{literal}<script> 
+	{literal}<script>
 		var addr_images = "{/literal}{$ADDR_IMAGES}{literal}";
 		var addr_site = "{/literal}{$ADDR_SITE}{literal}";
 	</script>{/literal}

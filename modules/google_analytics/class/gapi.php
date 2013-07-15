@@ -31,9 +31,6 @@
  * 
  */
 
- 
-namespace Gapi;
-
 /**
  * Class Gapi
  *
@@ -457,13 +454,13 @@ class Gapi
     
     //Convert newline delimited variables into url format then import to array
     parse_str(str_replace(array("\n","\r\n"), '&', $response['body']), $auth_token);
-    
+   
     if ((integer)substr($response['code'],0,1) !== 2 || !is_array($auth_token) || empty($auth_token['Auth']))
     {
       $this->_error = array(__('GAPI: Failed to authenticate user. Error: :error.', array(':error' => strip_tags($response['body']))));
     }
     
-    $this->auth_token = $auth_token['Auth'];
+	$this->auth_token = isset($auth_token['Auth']) ? $auth_token['Auth'] : NULL;
   }
   
   /**
@@ -618,7 +615,7 @@ class Gapi
     
     return array
     (
-      'body' => $response !== FALSE ? $response : __('Request failed, fopen provides no further information.'),
+      'body' => $response !== FALSE ? $response : __('Request failed, fopen provides no further information'),
       'code' => $response !== FALSE ? '200' : '400'
     );
   }
