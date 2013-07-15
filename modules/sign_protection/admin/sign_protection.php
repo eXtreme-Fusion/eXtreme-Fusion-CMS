@@ -30,7 +30,6 @@ try
     $_tpl = new AdminModuleIframe('sign_protection');
 	$_tpl->setHistory(__FILE__);
 	
-	
 	if ($_request->post('save')->show())
 	{
 		$_pdo->exec('UPDATE [sign_protection] SET `validation_type` = :type', array(':type', $_request->post('validation_type')->isNum(TRUE), PDO::PARAM_INT));

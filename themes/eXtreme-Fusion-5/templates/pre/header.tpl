@@ -5,12 +5,10 @@
 	<meta charset="{i18n('html_charset')}">
 	<meta name="description" content="{$Theme.Desc}">
 	<meta name="keywords" content="{$Theme.Keys}">
-	{literal}
-		<script> 
-			var addr_images = "{/literal}{$ADDR_IMAGES}{literal}";
-			var addr_site = "{/literal}{$ADDR_SITE}{literal}";
-		</script>
-	{/literal}
+	{literal}<script>
+		var addr_images = "{/literal}{$ADDR_IMAGES}{literal}";
+		var addr_site = "{/literal}{$ADDR_SITE}{literal}";
+	</script>{/literal}
 	<link href="{$ADDR_FAVICON}" rel="shortcut icon">
 	<link href="{$THEME_CSS}main.css" rel="stylesheet">
 	<link href="{$THEME_CSS}styles.css" rel="stylesheet">

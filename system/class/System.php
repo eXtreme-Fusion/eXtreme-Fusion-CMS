@@ -109,11 +109,11 @@ class System {
 				{
 					if ( ! $this->code)
 					{
-						return unserialize(file_get_contents($dir.$file));
+						return @unserialize(file_get_contents($dir.$file));
 					}
 					else
 					{
-						return unserialize(base64_decode(str_replace($key, $string, file_get_contents($dir.$file))));
+						return @unserialize(base64_decode(str_replace($key, $string, file_get_contents($dir.$file))));
 					}
 				}
 				else

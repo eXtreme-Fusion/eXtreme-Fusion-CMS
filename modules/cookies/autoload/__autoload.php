@@ -27,7 +27,5 @@ if ($message === NULL)
 
 if ($message)
 {
-	$_head->set('<script src="'.ADDR_SITE.'modules/cookies/templates/javascripts/cookies.js"></script>');
-	$_head->set('<script src="'.ADDR_COMMON_JS.'jquery.cookie.js"></script>');
-	$_head->set('<link href="'.ADDR_SITE.'modules/cookies/templates/stylesheets/cookies.css" rel="stylesheet">');
+	$_head->set('<script src="'.ADDR_SITE.'modules/cookies/templates/javascripts/cookies.js"></script>'.PHP_EOL.'	<script src="'.ADDR_COMMON_JS.'jquery.cookie.js"></script>'.PHP_EOL.'	<link href="'.ADDR_SITE.'modules/cookies/templates/stylesheets/cookies.css" rel="stylesheet">');
 }
