@@ -11,7 +11,7 @@ return array(
 	'Hide accounts' => 'Skrýt účty',
 	'Delete accounts' => 'Smazat účty',
 	'User profile settings' => 'Nastavení profilu uživatele',
-	'Hide user profiles for guests:' => 'Skrýt uživatelské profily pro hosty (nepřihlášené):',
+	'Hide users profiles for guests:' => 'Skrýt uživatelské profily pro hosty (nepřihlášené):',
 	'Maximum avatar size:' => 'Maximální velikost avataru:',
 	'width x height;' => 'šířka x výška',
 	'Maximum avatar size (bytes):' => 'Maximální rozměry avataru<br />(v bajtech):',
