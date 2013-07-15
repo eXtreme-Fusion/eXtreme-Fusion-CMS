@@ -12,11 +12,11 @@ return array(
 	'Bad Words' => 'Špatné slova (cenzura)',
 	'Bad word replacement:' => 'Zakázaná slova nahradit:',
 	'Maintenance mode' => 'Mód udržby',
-	'Maintenance level:' => 'Mód udržby pro level:',
 	'Administrators' => 'Administrátoři',
 	'Head administrators' => 'Hlavní administrátoři',
 	'Site owner' => 'Vlastník stránky',
-	'HTML code is allowed.' => 'Kód HTML je povolen.',
 	'Maintenance mode enabled:' => 'Mód udržby povolit:',
 	'Maintenance mode message:' => 'Odůvodnění zapnutí módu údržby na stránce:',
+	'Who is able to login?' => 'Kdo se může přihlásit?',
+	'Maintenance login form:' => 'Formulář přihlášení:'
 );
