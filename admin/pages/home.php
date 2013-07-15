@@ -57,11 +57,11 @@ try
 
 		if ($json === NULL)
 		{
-			if (extension_loaded('curl'))
+			$fields['system'] = SYSTEM_VERSION;
+			$fields['addr'] = ADDR_SITE;
+			if (function_exists('curl'))
 			{
 				$c = curl_init('http://extreme-fusion.org/curl/update.php');
-				$fields['system'] = SYSTEM_VERSION;
-				$fields['addr'] = ADDR_SITE;
 				curl_setopt($c, CURLOPT_POSTFIELDS, $fields);
 				curl_setopt($c, CURLOPT_NOBODY, 0);
 				curl_setopt($c, CURLOPT_HEADER, 0);
@@ -74,10 +74,54 @@ try
 				
 				$_system->cache('synchro', $json, 'synchro');
 			}
-			else
+			elseif (function_exists('fsockopen'))
 			{
-				$error = TRUE;
-				$_tpl->assign('curl_error', TRUE);
+				if ( ! ($r = fsockopen('extreme-fusion.org', 80, $errno, $errstr)))
+				{
+					exit($errstr);
+				}
+				else
+				{
+					$json = ''; $h = '';
+					socket_set_timeout($r, 10);
+					fwrite($r, "GET /curl/update.php?&system=".$fields['system']."&addr=".$fields['addr']." HTTP/1.0\r\nHost: extreme-fusion.org\r\n\r\n");
+					
+					do 
+					{ 
+						$h .= fread($r, 1);
+					} 
+					while ( ! preg_match('/\\r\\n\\r\\n$/', $h));
+					
+					
+					if (preg_match('/Content\\-Length:\\s+([0-9]*)\\r\\n/', $h, $m)) 
+					{
+						$json = fread($r, $m[1]);
+					} 
+					else
+					{
+						while ( ! feof($r)) $json .= fread($r, 4096);
+					}
+					
+					$_system->cache('synchro', $json, 'synchro');
+				}
+			}
+			elseif (function_exists('fopen'))
+			{
+				if ( ! ($r = fopen("http://extreme-fusion.org/curl/update.php?&system=".$fields['system']."&addr=".$fields['addr'], 'r')))
+				{
+					exit();
+				}
+				else
+				{
+					$json = '';
+					while ( ! feof($r)) 
+					{
+						$json .= fread($r, 8192);
+					}
+					fclose($r);
+					
+					$_system->cache('synchro', $json, 'synchro');
+				}
 			}
 		}
 		
