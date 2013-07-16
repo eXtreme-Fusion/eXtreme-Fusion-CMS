@@ -4,7 +4,7 @@ return array(
 	'Cookies' => 'Cookies',
 	'Data cache' => 'Data cache',
 	'Login time:' => 'Čas přihlášení:',
-	'Admin login time (in seconds).' => 'Čas pro přihlášení administrátora (v sekundách).',
+	'The duration of login session in seconds.' => 'Trvání relace záznamu v sekundách.',
 	'Domain cookies:' => 'Doménové cookies:',
 	'www domain' => 'Doména rpo cookies z "." na začátku, napřílad: <span class="italic">.domena.pl</span>',
 	'Default path for cookies' => 'Standartní <span class="italic">/</span>',
