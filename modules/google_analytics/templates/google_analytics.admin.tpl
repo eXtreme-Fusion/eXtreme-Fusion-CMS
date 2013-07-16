@@ -24,7 +24,7 @@
 				$(document).ready(function() {
 					$('.dataTable').dataTable({
 						"aaSorting": [],
-						"sAjaxSource": '../ajax/request.php?GetGoogleAnalitics=True',
+						"sAjaxSource": '../ajax/request.php',
 						"bProcessing": true,
 						"bDestroy": true,
 						"bJQueryUI": true,
