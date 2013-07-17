@@ -96,7 +96,8 @@ class URL
 		}
 		else
 		{
-			exit('Nie podano kontrolera');
+			// W Materiałach i wpisach pruje się więc wyłączam to.
+			//exit('Nie podano kontrolera');
 		}
 
 		unset($data['controller']);
