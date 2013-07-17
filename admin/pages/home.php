@@ -114,7 +114,8 @@ try
 				if ( ! $r = fopen("http://extreme-fusion.org/curl/update.php?&system=".$fields['system']."&addr=".$fields['addr'], 'r'))
 				{
 					$error = TRUE;
-					$_tpl->assign('error', TRUE); 
+					$_tpl->assign('error', TRUE);
+				}
 				else
 				{
 					$json = '';

@@ -25,8 +25,11 @@ try
 	{
 		throw new userException(__('Access denied'));
 	}
-
+	
+	$_fav->setFavByLink('contact/admin/contact.php', $_user->get('id'));
+	
 	$_tpl = new AdminModuleIframe('contact');
+	
 	$_tpl->setHistory(__FILE__);
 	
 	// Wyświetlenie komunikatów

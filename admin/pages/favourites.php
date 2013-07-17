@@ -53,7 +53,7 @@ try
 		else
 		{
 			$row['url'] = ADDR_MODULES.$row['link'];
-			$row['src'] = ADDR_ADMIN_IMAGES.$row['image'];
+			$row['src'] = ADDR_MODULES.$row['image'];
 		}
 
 		$row['title'] = __($row['title']);
