@@ -35,6 +35,7 @@ return array(
 	'Perm: admin settings_users' => 'Přístup do nastavení uživatelů.',
 	'Perm: admin settings_ipp' => 'Počet položek na stránku.',
 	'Perm: admin settings_logs' => 'Přístup do nastavení záznamů.',
+	'Perm: admin settings_synchro' => 'Dostęp do ustawień synchronizacji.',
 	'Perm: admin navigations' => 'Navigace stránky',
 	'Perm: admin smileys' => 'Přistup ke smajlíkům',
 	'Perm: admin submissions' => 'Přístup ke schvalování obsahu od uživatelů',
