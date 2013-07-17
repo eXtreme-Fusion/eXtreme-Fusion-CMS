@@ -506,7 +506,7 @@
 									</div>							
 								{/if}
 								<div class="synchro">
-									<input type="checkbox" name="synchro" value="true" {if !$curl_available && ! $fsockopen_available && ! $fopen_available}disabled="disabled" {/if}id="Synchro" />
+									<input type="checkbox" name="synchro" value="true" {if ! $curl_available && ! $fsockopen_available && ! $fopen_available}disabled="disabled" {/if}id="Synchro" />
 									<label for="Synchro">
 										{i18n('Synchro statement')}
 									</label>
