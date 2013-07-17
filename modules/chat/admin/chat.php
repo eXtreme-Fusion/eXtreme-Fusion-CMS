@@ -43,8 +43,10 @@ try
 	{
 		throw new userException(__('Access denied'));
 	}
-
+	$_fav->setFavByLink('chat/admin/chat.php', $_user->get('id'));
+	
 	$_tpl = new AdminModuleIframe('chat');
+	
 	$_tpl->setHistory(__FILE__);
 	
 	$row = $_pdo->getRow('SELECT * FROM [chat_settings]');

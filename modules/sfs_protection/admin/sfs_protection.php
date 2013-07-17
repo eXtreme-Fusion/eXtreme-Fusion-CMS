@@ -26,8 +26,11 @@ try
     {
         throw new userException(__('Access denied'));
     }
-
+	
+	$_fav->setFavByLink('sfs_protection/admin/sfs_protection.php', $_user->get('id'));
+	
     $_tpl = new AdminModuleIframe('sfs_protection');
+	
 	$_tpl->setHistory(__FILE__);
 	
 	if ($_request->get('action')->show() === 'delete' && $_request->get('id')->isNum())

@@ -40,7 +40,7 @@ $drop_table[1] = 'contact';
 
 $admin_page[1] = array(
 	'title' => 'Kontakt',
-	'image' => 'images/contact.png',
+	'image' => 'templates/images/contact.png',
 	'page' => 'admin/contact.php',
 	'perm' => 'admin'
 );

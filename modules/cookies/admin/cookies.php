@@ -27,8 +27,11 @@ try
     {
         throw new userException(__('Access denied'));
     }
-
+	
+	$_fav->setFavByLink('cookies/admin/cookies.php', $_user->get('id'));
+	
     $_tpl = new AdminModuleIframe('cookies');
+	
 	$_tpl->setHistory(__FILE__);
 
 	if ($_request->post('save')->show())

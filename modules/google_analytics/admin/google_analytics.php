@@ -29,8 +29,11 @@ try
 		{
 			throw new userException(__('Access denied'));
 		}
-		
+			
+		$_fav->setFavByLink('google_analytics/admin/google_analytics.php', $_user->get('id'));
+	
 		$_tpl = new AdminModuleIframe('google_analytics');
+		
 		$_tpl->setHistory(__FILE__);
 
 		$row = $_pdo->getRow('SELECT * FROM [google_analytics_sett]');

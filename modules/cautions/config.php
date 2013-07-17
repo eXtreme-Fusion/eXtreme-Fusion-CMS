@@ -40,7 +40,7 @@ $drop_table[1] = "cautions";
 
 $admin_page[1] = array(
 	'title' => 'Ostrzeżenia',
-	'image' => 'images/cautions.png',
+	'image' => 'templates/images/cautions.png',
 	'page' => 'admin/cautions.php',
 	'perm' => 'admin'
 );
