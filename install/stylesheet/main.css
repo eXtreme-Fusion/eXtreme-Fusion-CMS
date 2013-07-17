@@ -49,6 +49,7 @@ body {background:url(../../admin/templates/images/ui/iframe-shadow-top.png) repe
 .red{color:red}
 p {padding:0;}
 .formWarning {padding:5px 10px; margin-bottom: 5px}
+.formValid {padding:5px 10px; margin-bottom: 5px}
 #team .bold {
 	padding-top:10px;
 }
@@ -82,7 +83,14 @@ p {padding:0;}
 }
 .formWarning {
 	border-radius: 8px;
-	background-color: yellow;
+	background-color: rgba(255, 255, 50, 1);
+	margin-bottom: 10px;
+	box-shadow: 0px 0 0 2px rgba(56,56,54,0.5);
+	border: 1px solid #38382c;
+}
+.formValid {
+	border-radius: 8px;
+	background-color: rgba(135,255,0,0.5);
 	margin-bottom: 10px;
 	box-shadow: 0px 0 0 2px rgba(56,56,54,0.5);
 	border: 1px solid #38382c;

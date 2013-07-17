@@ -678,14 +678,29 @@ try
 		$_locale->setSubDir('admin');
 		$_locale->load('settings_synchro');
 		
-		if ($curl_loaded = extension_loaded('curl'))
+		if (function_exists('curl_init'))
 		{
+			$loaded = TRUE;
 			$_tpl->assign('curl_available', TRUE);
 		}
-
+		elseif (function_exists('fsockopen'))
+		{
+			$loaded = TRUE;
+			$_tpl->assign('fsockopen_available', TRUE);
+		}
+		elseif (function_exists('fopen'))
+		{
+			$loaded = TRUE;
+			$_tpl->assign('fopen_available', TRUE);
+		} 
+		else
+		{
+			$loaded = FALSE;
+		}
+		
 		if ($_POST)
 		{
-			if (isset($_POST['synchro']) && $_POST['synchro'] && $curl_loaded)
+			if (isset($_POST['synchro']) && $_POST['synchro'] && $loaded)
 			{
 				require DIR_SITE.'config.php';
 				

@@ -482,11 +482,31 @@
 					{elseif $step == 6}
 						<form action="index.php" method="post" id="This" autocomplete="off">
 							<div class="formMessage">
-								{if !$curl_available}
-									<div class="formWarning">{i18n('Curl warning')}</div>
+								{if ! $curl_available || ! $fsockopen_available || ! $fopen_available}
+									<div class="formWarning">{i18n('Warning extension:')}
+										<ul>
+											{if ! $curl_available}<li>curl</li>{/if}
+											{if ! $fsockopen_available}<li>fsockopen</li>{/if}
+											{if ! $fopen_available}<li>fopen</li>{/if}
+										</ul>
+										{if ! $curl_available && ! $fsockopen_available && ! $fopen_available}
+											{i18n('None required expansion available')}
+										{/if}
+									</div>
+								{/if}
+
+								{if $curl_available || $fsockopen_available || $fopen_available}
+									<div class="formValid">{i18n('Founded extension:')}
+										<ul>
+											{if $curl_available}<li>curl</li>{/if}
+											{if $fsockopen_available}<li>fsockopen</li>{/if}
+											{if $fopen_available}<li>fopen</li>{/if}
+										</ul>
+										{i18n('Required expansion available')}
+									</div>							
 								{/if}
 								<div class="synchro">
-									<input type="checkbox" name="synchro" value="true" {if !$curl_available}disabled="disabled" {/if}id="Synchro" />
+									<input type="checkbox" name="synchro" value="true" {if !$curl_available && ! $fsockopen_available && ! $fopen_available}disabled="disabled" {/if}id="Synchro" />
 									<label for="Synchro">
 										{i18n('Synchro statement')}
 									</label>
