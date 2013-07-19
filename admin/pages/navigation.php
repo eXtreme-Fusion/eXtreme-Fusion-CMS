@@ -46,9 +46,9 @@ try
 
 	$_tpl = new Iframe;
 
-	if (! is_numeric($_request->get('PageNum')->show()) && $_request->get('PageNum')->show() !== 'fav')
+	if ($_request->get('PageNum')->show() ==! FALSE && ! is_numeric($_request->get('PageNum')->show()) && $_request->get('PageNum')->show() !== 'fav')
 	{
-		throw new systemException('Naigation not exists.');
+		throw new systemException('Navigation not exists.');
 	}
 
 	$_SESSION['history'] = array(

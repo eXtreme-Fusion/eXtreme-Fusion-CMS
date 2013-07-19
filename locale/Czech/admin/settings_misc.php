@@ -2,10 +2,10 @@
 
 return array(
 	'Miscellaneous' => 'Různé',
-	'Use TinyMCE HTML editor:' => 'Používat TinyMCE editor:',
+	'Use CKEditor HTML editor:' => 'Používat CKEditor editor HTML:',
 	'For article and news admin only.' => 'Zahrnuje články a novinky v panelu administrátora.',
 	'SMTP Host:' => 'Adresa serveru SMTP:',
-	'Leave empty if sendmail is enabled.' => 'Ponechte prázdné, pokud je povoleno odesílání e-Mailů.',
+	'Leave blank if sendmail is enabled.' => 'Ponechte prázdné, pokud je povoleno odesílání e-Mailů.',
 	'SMTP Port:' => 'Port SMTP:',
 	'SMTP Username:' => 'Uživatel SMTP:',
 	'SMTP Password:' => 'Heslo SMTP:',

@@ -1,6 +1,9 @@
 <?php defined('EF5_SYSTEM') || exit;
 
 return array(
+	'Section' => 'Sekce',
+	'News' => 'Novinky',
+	'Cats' => 'Kategorie',
 	'Current news'  => 'Aktuální novinka',
 	'Id:' => 'Identifikátor:',
 	'Publication date:' => 'Datum přidání:',
@@ -35,6 +38,14 @@ return array(
 	'Category name:' => 'Název kategorie:',
 	'Category image:' => 'Obrázek kategorie:',
 	'Category language:' => 'Jazyk kategorie:',
-	'No news categories defined' => 'Nebyla definována kategorie novinek',
+	'There are no existing news categories.' => 'Nebyla definována kategorie novinek.',
 	'Same as a site language' => 'Stejný jako jazyk stránek',	
+	'Language:' => 'Język:',
+// To dodać do całego systemu
+
+'Polish' => 'Polský',
+'English' => 'Anglický',
+'Czech' => 'Český',
+
+
 );

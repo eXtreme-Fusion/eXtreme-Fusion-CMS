@@ -27,7 +27,7 @@ $mod_info = array(
 
 $admin_page[1] = array(
 	'title' => __('Cookies'),
-	'image' => '',
+	'image' => 'templates/images/cookies.png',
 	'page' => 'admin/cookies.php',
 	'perm' => 'admin'
 );

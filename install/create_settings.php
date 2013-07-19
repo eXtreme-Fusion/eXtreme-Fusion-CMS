@@ -202,6 +202,7 @@ $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, 
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.settings_ipp', 'settings_ipp.png', 'Item per Page', 'settings_ipp.php', 4)");
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.settings_logs', 'logs.png', 'Logs', 'settings_logs.php', 4)");
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.settings_login', 'login.png', 'Login', 'settings_login.php', 4)");
+$_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.settings_synchro', 'synchro.png', 'Synchronization', 'settings_synchro.php', 4)");
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.settings_routing', 'router.png', 'Router', 'settings_routing.php', 4)");
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.navigations', 'navigations.png', 'Site Links', 'navigations.php', 3)");
 $_pdo->exec("INSERT INTO ".$_dbconfig['prefix']."admin (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.smileys', 'smileys.png', 'Smileys', 'smileys.php', 3)");
@@ -339,6 +340,7 @@ $_pdo->exec("INSERT INTO `".$_dbconfig['prefix']."permissions` (`name`, `section
 	('admin.settings_users', 1, '".__('Perm: admin settings_users')."', 1),
 	('admin.settings_ipp', 1, '".__('Perm: admin settings_ipp')."', 1),
 	('admin.settings_logs', 1, '".__('Perm: admin settings_logs')."', 1),
+	('admin.settings_synchro', 1, '".__('Perm: admin settings_synchro')."', 1),
 	('admin.navigations', 1, '".__('Perm: admin navigations')."', 1),
 	('admin.smileys', 1, '".__('Perm: admin smileys')."', 1),
 	('admin.upgrade', 1, '".__('Perm: admin upgrade')."', 1),

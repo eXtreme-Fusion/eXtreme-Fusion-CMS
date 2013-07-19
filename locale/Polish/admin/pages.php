@@ -39,4 +39,5 @@ return array(
 	'User Fields' => 'Pola profilu',
 	'User Field Categories' => 'Kategorie pól profilu',
 	'Content Pages' => 'Strony treści',
+	'Synchronization' => 'Synchronizacja',
 );

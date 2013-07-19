@@ -35,6 +35,7 @@ return array(
 	'Perm: admin settings_users' => 'Dostęp do ustawień użytkowników.',
 	'Perm: admin settings_ipp' => 'Ilość elementów na stronie.',
 	'Perm: admin settings_logs' => 'Dostęp do ustawień logów admina.',
+	'Perm: admin settings_synchro' => 'Dostęp do ustawień synchronizacji.',
 	'Perm: admin navigations' => 'Nawigacja strony',
 	'Perm: admin smileys' => 'Dostęp do emotikon na stronie',
 	'Perm: admin submissions' => 'Dostęp do nadesłanych materiałów',

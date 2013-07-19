@@ -105,7 +105,8 @@ class URL
 		}
 		elseif ($module === NULL)
 		{
-			exit('Nie podano kontrolera');
+			// W Materiałach i wpisach pruje się więc wyłączam to.
+			//exit('Nie podano kontrolera');
 		}
 
 		if ($module && $controller)

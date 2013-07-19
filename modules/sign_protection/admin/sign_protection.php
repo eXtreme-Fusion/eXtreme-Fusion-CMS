@@ -26,10 +26,11 @@ try
     {
         throw new userException(__('Access denied'));
     }
-
-    $_tpl = new AdminModuleIframe('sign_protection');
-	$_tpl->setHistory(__FILE__);
+	$_fav->setFavByLink('sign_protection/admin/sign_protection.php', $_user->get('id'));
 	
+    $_tpl = new AdminModuleIframe('sign_protection');
+	
+	$_tpl->setHistory(__FILE__);
 	
 	if ($_request->post('save')->show())
 	{
