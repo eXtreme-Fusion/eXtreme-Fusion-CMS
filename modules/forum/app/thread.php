@@ -1,4 +1,4 @@
-<?php
+<?php defined('EF5_SYSTEM') || exit;
 
 class Thread_Controller extends Forum_Controller {
 
@@ -99,17 +99,14 @@ class Thread_Controller extends Forum_Controller {
 				array(':id', $id, PDO::PARAM_INT),
 			));
 
-			if ($_thread)
-			{
-				$entry = $this->pdo->exec('UPDATE [entries] SET `content` = :content WHERE `id` = :id AND `is_main` = 1', array(
-					array(':content', HELP::wordsProtect($this->request->post('content')->filters('trim', 'strip')), PDO::PARAM_STR),
-					array(':id', $_id = $thread['entry_id'], PDO::PARAM_INT),
-				));
+			$_entry = $this->pdo->exec('UPDATE [entries] SET `content` = :content WHERE `id` = :id AND `is_main` = 1', array(
+				array(':content', HELP::wordsProtect($this->request->post('content')->filters('trim', 'strip')), PDO::PARAM_STR),
+				array(':id', $_id = $thread['entry_id'], PDO::PARAM_INT),
+			));
 
-				if ($entry)
-				{
-					return HELP::redirect($this->url->path(array('module' => 'forum', 'controller' => 'thread', $id)).'#entry-'.$_id);
-				}
+			if ($_thread && $_entry)
+			{
+				return HELP::redirect($this->url->path(array('module' => 'forum', 'controller' => 'thread', $id)).'#entry-'.$_id);
 			}
 		}
 
@@ -139,15 +136,12 @@ class Thread_Controller extends Forum_Controller {
 		$_thread = $this->pdo->exec('DELETE FROM [threads] WHERE `id` = :id',
 			array(':id', $id, PDO::PARAM_INT));
 
-		if ($_thread)
-		{
-			$_entries = $this->pdo->exec('DELETE FROM [entries] WHERE `thread_id` = :id',
-				array(':id', $id, PDO::PARAM_INT));
+		$_entries = $this->pdo->exec('DELETE FROM [entries] WHERE `thread_id` = :id',
+			array(':id', $id, PDO::PARAM_INT));
 
-			if ($_entries)
-			{
-				return $this->router->redirect(array('module' => 'forum', 'controller' => 'category', $thread['category_id']));
-			}
+		if ($_thread && $_entries)
+		{
+			return $this->router->redirect(array('module' => 'forum', 'controller' => 'category', $thread['category_id']));
 		}
 
 		return $this->router->trace(array('controller' => 'error', 'action' => 500));

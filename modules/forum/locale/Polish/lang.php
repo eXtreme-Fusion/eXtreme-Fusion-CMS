@@ -22,6 +22,11 @@ return array(
 	'Remove thread'       => 'Usuń wątek',
 	'Remove'              => 'Usuń',
 	'Edit entry'          => 'Edytuj wpis',
+	'Manage forum'        => 'Zarządzaj forum dyskusyjnym',
+	'Edit board'          => 'Edytuj dział',
+	'Remove board'        => 'Usuń dział',
+	'Edit category'       => 'Edytuj kategorię',
+	'Remove category'     => 'Usuń kategorię',
 
 	'In this category has not been created any thread'   => 'W tej kategorii nie został utworzony żaden wątek',
 	'In this board has not been created any category'    => 'W tym dziale nie została utworzona żadna kategoria',

@@ -6,6 +6,8 @@ strong { font-weight: bold; }
 	margin: 0;
 }
 
+.error { clear: both; }
+
 .button + .button,
 .button + .button-group,
 .button-group + .button {
@@ -171,6 +173,17 @@ strong { font-weight: bold; }
 	min-height: 1px;
 	padding-right: 7px;
 	padding-left: 7px;
+}
+
+.col-actions a {
+	color: #272727;
+	text-decoration: none;
+}
+
+.col-actions a + a:before {
+	padding: 0 4px;
+	color: #739900;
+	content: "/\00a0";
 }
 
 .row {

@@ -1,4 +1,4 @@
-<?php
+<?php defined('EF5_SYSTEM') || exit;
 
 abstract class Forum_Controller extends Abstract_Controller {
 
