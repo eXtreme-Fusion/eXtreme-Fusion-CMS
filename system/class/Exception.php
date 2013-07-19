@@ -329,8 +329,6 @@ function pagesErrorHandler($exc) {
 	return $error;
 }
 
-
-
 function userErrorHandler(userException $exc) {
 	ob_start();
 		include DIR_ADMIN_TEMPLATES."pre".DS."exception_header.tpl";
@@ -348,9 +346,7 @@ function userErrorHandler(userException $exc) {
 	echo replaceException($getFooter);
 }
 
-
-
-function PDOErrorHandler($exc) {
+function PDOErrorHandler(PDOException $exc) {
 	ob_start();
 		include DIR_ADMIN_TEMPLATES."pre".DS."exception_header.tpl";
 		$getHeader = ob_get_contents();
