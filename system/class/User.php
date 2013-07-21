@@ -59,6 +59,12 @@ class User {
 	protected $_ip_v4;
 
 	protected $_custom_data;
+	
+	// Przechowuje zaserializowane ustawienia
+	protected $_cache = array();
+	
+	protected $_system;
+
 
 	/**
 	 * Czas ważności ciasteczka.
@@ -111,10 +117,11 @@ class User {
 	 * @param   Database  klasa bazy danych
 	 * @return  void
 	 */
-	public function __construct(Sett $sett, Data $pdo)
+	public function __construct(Sett $sett, Data $pdo, System $system)
 	{
 		$this->_sett = $sett;
 		$this->_pdo = $pdo;
+		$this->_system = $system;
 		$this->setAllRolesCache();
 		$this->setPermissionsCache();
 		$this->setPermissionsSectionsCache();
@@ -1087,7 +1094,14 @@ class User {
 			}
 			else
 			{
-				$data = $this->users[$id] = $this->_pdo->getRow('SELECT u.*, ud.* FROM [users] u LEFT JOIN [users_data] ud ON u.`id`= ud.`user_id` WHERE u.`id` = '.$id);
+				$this->_cache = $this->_system->cache('user_data-'.$id, NULL, 'system');
+				if ($this->_cache === NULL)
+				{
+					$this->_cache = $this->_pdo->getRow('SELECT u.*, ud.* FROM [users] u LEFT JOIN [users_data] ud ON u.`id`= ud.`user_id` WHERE u.`id` = '.$id);
+			
+					$this->_system->cache('user_data-'.$id, $this->_cache, 'system');
+				}
+				$data = $this->users[$id] = $this->_cache;
 			}
 
 			if ($data)

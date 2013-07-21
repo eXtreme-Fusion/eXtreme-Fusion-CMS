@@ -163,7 +163,7 @@ class SmileyBBcode
 		$bbcode_used = $parse;
 		$this->_locale->setSubDir('bbcodes');
 		
-		$this->_cache['bbcodes'] = $this->_system->cache('bbcodes', NULL, 'system');
+		$this->_cache['bbcodes'] = $this->_system->cache('parse_bbcodes', NULL, 'system');
 		if ($this->_cache['bbcodes'] === NULL)
 		{
 			$query = $this->_pdo->getData('SELECT `name` FROM [bbcodes] WHERE `name` != \'autolink\' ORDER BY `order` ASC');
@@ -175,7 +175,7 @@ class SmileyBBcode
 				}
 			}
 			
-			$this->_system->cache('bbcodes', $this->_cache['bbcodes'], 'system');
+			$this->_system->cache('parse_bbcodes', $this->_cache['bbcodes'], 'system');
 		}
 
 		$_locale = $this->_locale;
@@ -203,7 +203,7 @@ class SmileyBBcode
 	{
 		if ( ! preg_match("#\[code\]#sie", $text) && ! preg_match("#\<a href=#sie", $text))
 		{
-			$this->_cache['smileys'] = $this->_system->cache('smileys', NULL, 'system');
+			$this->_cache['smileys'] = $this->_system->cache('parse_smileys', NULL, 'system');
 			if ($this->_cache['smileys'] === NULL)
 			{
 				$query = $this->_pdo->getData('SELECT * FROM [smileys] WHERE `id` != 15 ORDER BY `id` ASC');
@@ -219,7 +219,7 @@ class SmileyBBcode
 					}
 				}
 				
-				$this->_system->cache('smileys', $this->_cache['smileys'], 'system');
+				$this->_system->cache('parse_smileys', $this->_cache['smileys'], 'system');
 			}
 			
 			foreach($this->_cache['smileys'] as $smileys)
