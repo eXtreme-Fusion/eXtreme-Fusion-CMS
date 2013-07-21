@@ -86,14 +86,17 @@ class URL
 	 */
 	public function path(array $data)
 	{
-		$controller = $module = $action = $ext = NULL;
+		$module = $directory = $controller = $action = $ext = NULL;
 
 		if (isset($data['module']))
 		{
 			$module = $data['module'];
 		}
 
-		unset($data['module']);
+		if (isset($data['directory']))
+		{
+			$directory = $this->main_sep.$data['directory'];
+		}
 
 		if (isset($data['controller']))
 		{
@@ -103,25 +106,13 @@ class URL
 		{
 			$controller = $this->controller;
 		}
-		elseif ($module === NULL)
-		{
-			// W Materiałach i wpisach pruje się więc wyłączam to.
-			//exit('Nie podano kontrolera');
-		}
 
-		if ($module && $controller)
-		{
-			$controller = $this->main_sep.$controller;
-		}
-
-		unset($data['controller']);
+		$controller = $this->main_sep.$controller;
 
 		if (isset($data['action']))
 		{
 			$action = $this->main_sep.$data['action'];
 		}
-
-		unset($data['action']);
 
 		if (isset($data['extension']) && $data['extension'])
 		{
@@ -132,7 +123,7 @@ class URL
 			$ext = $this->url_ext;
 		}
 
-		unset($data['extension']);
+		unset($data['module'], $data['directory'], $data['controller'], $data['action'], $data['extension']);
 
 		$params = array();
 
@@ -152,7 +143,7 @@ class URL
 
 		$trace = $this->getPathPrefix();
 
-		return ADDR_SITE.$trace.$module.$controller.$action.$params.$ext;
+		return preg_replace('#(?<!:)//+#', '/', ADDR_SITE.$trace.$module.$directory.$controller.$action.$params.$ext);
 	}
 
 }
