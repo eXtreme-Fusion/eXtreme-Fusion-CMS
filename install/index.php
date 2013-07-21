@@ -743,5 +743,5 @@ catch(userException $exception)
 }
 catch(PDOException $exception)
 {
-   echo $exception;
+   PDOErrorHandler($exception);
 }

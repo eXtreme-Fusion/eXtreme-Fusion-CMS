@@ -121,6 +121,9 @@ try
 
 			if ($name && $url)
 			{
+				// Czyszczenie cache
+				$_system->clearCache(array('system', 'navigation_panel'));
+				
 				if ($_request->get('action')->show() === 'edit' && $_request->get('id')->isNum())
 				{
 					$row = $_pdo->getRow('SELECT `order` FROM [navigation] WHERE `id`= :id',

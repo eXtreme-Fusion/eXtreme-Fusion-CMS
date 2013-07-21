@@ -368,7 +368,7 @@ return array(
 	'Internal error' => 'Błąd wewnętrzny',
 	'Error path' => 'Ścieżka błędu',
 	'In file' => 'W pliku',
-	'Function' => 'Funckja',
+	'Function' => 'Funkcja',
 	'Line' => 'Linia',
 	'Directories' => 'Katalogi',
 	'Directory' => 'Katalog',

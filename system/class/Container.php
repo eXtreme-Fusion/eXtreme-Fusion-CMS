@@ -23,7 +23,7 @@ class Container extends ServiceContainerBuilder
 
 	protected function getUserService()
 	{
-		return new User($this->getService('Sett'), $this->getService('Pdo'));
+		return new User($this->getService('Sett'), $this->getService('Pdo'), $this->getService('System'));
 	}
 
 	protected function getSettService()

@@ -30,6 +30,12 @@
 class Data extends PDO
 {
 	private $_prefix;
+	
+	// Licznik zapytan
+	private $_pdo_count = 0;
+	
+	// Wykonane zapytania
+	private $_pdo_queries = array();
 
 	public static function exceptionHandler($exception)
 	{
@@ -136,12 +142,18 @@ class Data extends PDO
 	public function query($query, $type = PDO::FETCH_ASSOC, $fetch = TRUE)
 	{
 		$d = parent::query(str_replace(array('[', ']'), array($this->_prefix, ''), $query));
-
+		
+		// Licznik zapytań
+		$this->_pdo_count++;
+		
+		// Jakie zapytania zostały wykonane
+		$this->_pdo_queries[] = $query;
+		
 		if ($fetch)
 		{
 			return $d->fetchAll($type);
 		}
-
+	
 		return $d;
 	}
 
@@ -412,7 +424,7 @@ class Data extends PDO
 	}
 	
 	// Czyści tabelę z przestarzałych wpisów
-	function cleanTable($table, $limit)
+	public function cleanTable($table, $limit)
 	{
 		if (! is_numeric($limit))
 		{
@@ -446,7 +458,7 @@ class Data extends PDO
 		return TRUE;
 	}
 	
-	function insert($table = null, $fields = null)
+	public function insert($table = null, $fields = null)
 	{
 		// Sprawdzanie, czy parametry nie zostały pominięte, a zmienna $fields jest tablicą
 		if (is_null($table) || is_null($fields) || !is_array($fields))
@@ -460,5 +472,17 @@ class Data extends PDO
 		return $this->exec("INSERT INTO ".$table." (`".$keys."`) VALUES ('".$values."')");
 
 	} // end of insert();
+	
+	// Pobieranie liczby wykonanych zapytań
+	public function getPDOcount()
+	{
+		return array($this->_pdo_count);
+	}
+	
+	// Pobieranie liczby wykonanych zapytań
+	public function getPDOqueries()
+	{
+		return array($this->_pdo_queries);
+	} 
 
 }

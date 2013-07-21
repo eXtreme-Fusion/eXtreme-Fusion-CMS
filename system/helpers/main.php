@@ -85,7 +85,15 @@ function optUrl(optClass &$_tpl)
 	{
 		return $_tpl->getFunc('url', 'path', $value);
 	}
-
+	
+	if ($value)
+	{
+		if (method_exists($_tpl, 'route'))
+		{
+			return $_tpl->route()->path($value);
+		}
+	}
+	
 	throw new systemException('Routing is not available.');
 }
 // Function for AJAX response

@@ -106,7 +106,7 @@ try
 	$_sett = $ec->sett;
 
 	//1. way:
-    $_user = $ec->register('User')->setArguments(array(new Reference('sett'), new Reference('pdo')))->get();
+    $_user = $ec->register('User')->setArguments(array(new Reference('sett'), new Reference('pdo'), new Reference('system')))->get();
 
 	if ($_request->post('login')->show() && $_request->post('username')->show() && $_request->post('password')->show())
 	{
