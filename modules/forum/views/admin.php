@@ -31,7 +31,7 @@
 						</td>
 						<td class="center">
 							<div class="button-group">
-								<!--a href="#" class="button" title="<?php echo __('Edit category'); ?>"><?php echo __('Edit'); ?></a-->
+								<a href="<?php echo $this->router->path(array('module' => 'forum', 'directory' => 'admin', 'controller' => 'category', 'action' => 'edit', $category['id'])); ?>" class="button" title="<?php echo __('Edit category'); ?>"><?php echo __('Edit'); ?></a>
 								<a href="<?php echo $this->router->path(array('module' => 'forum', 'directory' => 'admin', 'controller' => 'category', 'action' => 'remove', $category['id'])); ?>" class="button" title="<?php echo __('Remove category'); ?>"><?php echo __('Remove'); ?></a>
 							</div>
 						</td>
