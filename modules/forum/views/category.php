@@ -4,7 +4,7 @@
 	<li><strong><?php echo $category['title']; ?></strong></li>
 </ul>
 <?php $this->theme->middlePanel(__('Forum')); ?>
-		<?php if ($this->logged_in): ?>
+		<?php if (($this->logged_in && ! $category['is_locked']) || $this->is_admin): ?>
 		<nav class="forum-nav">
 			<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'create', $category['id'])); ?>" class="button"><?php echo __('Create a new thread'); ?></a>
 		</nav>
@@ -45,7 +45,7 @@
 				<?php endif; ?>
 			</tbody>
 		</table>
-		<?php if ($this->logged_in && $threads): ?>
+		<?php if ((($this->logged_in && ! $category['is_locked']) || $this->is_admin) && $threads): ?>
 		<nav class="forum-nav">
 			<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'create', $category['id'])); ?>" class="button"><?php echo __('Create a new thread'); ?></a>
 		</nav>

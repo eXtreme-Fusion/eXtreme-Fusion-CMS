@@ -40,8 +40,8 @@ $new_table[2] = array(
 		`id` int(11) NOT NULL AUTO_INCREMENT,
 		`board_id` int(11) NOT NULL,
 		`title` varchar(255) NOT NULL,
-		`description` text NOT NULL,
-		`is_closed` tinyint(1) NOT NULL DEFAULT '0',
+		`description` text,
+		`is_locked` tinyint(1) NOT NULL DEFAULT '0',
 		`order` int(10) NOT NULL,
 		PRIMARY KEY (`id`)
 	) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;"

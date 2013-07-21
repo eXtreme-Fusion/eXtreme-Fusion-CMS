@@ -5,10 +5,8 @@
 	<li><strong><?php echo $thread['title']; ?></strong></li>
 </ul>
 <?php $this->theme->middlePanel(__('Forum')); ?>
+		<?php if ($this->logged_in): ?>
 		<nav class="forum-nav">
-			<?php if ($this->logged_in): ?>
-			<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'reply', $thread['id'])); ?>" class="button"><?php echo __('Add reply'); ?></a>
-			<?php endif; ?>
 			<div class="button-group">
 				<?php if (($this->logged_in && $user->isAuthor($thread['user_id'])) || $this->is_admin): ?>
 				<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'edit', $thread['id'])); ?>" class="button"><?php echo __('Edit thread'); ?></a>
@@ -17,7 +15,9 @@
 				<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'remove', $thread['id'])); ?>" class="button"><?php echo __('Remove thread'); ?></a>
 				<?php endif; ?>
 			</div>
+			<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'reply', $thread['id'])); ?>" class="button"><?php echo __('Add reply'); ?></a>
 		</nav>
+		<?php endif; ?>
 		<table class="forum">
 			<thead>
 				<tr>

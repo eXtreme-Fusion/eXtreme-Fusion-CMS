@@ -37,7 +37,7 @@ class Thread_Controller extends Forum_Controller {
 			->model('category')
 			->findByID($id = $this->params[0]);
 
-		if ( ! $category)
+		if ( ! $category || ($category['is_locked'] && ! $this->is_admin))
 		{
 			return $this->router->trace(array('controller' => 'error', 'action' => 404));
 		}

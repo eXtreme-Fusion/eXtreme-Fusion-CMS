@@ -125,6 +125,15 @@ strong { font-weight: bold; }
 	color: #777;
 }
 
+.forum .category-locked {
+	padding: 3px 4px;
+	margin-left: 5px;
+	color: #777;
+	text-transform: uppercase;
+	background-color: #333;
+	border-radius: 2px;
+}
+
 .forum th {
 	font-weight: bold;
 	font-size: 13px;

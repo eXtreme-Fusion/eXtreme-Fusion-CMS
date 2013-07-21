@@ -16,7 +16,8 @@
 				<tr>
 					<td>
 						<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'category', $category['id'])); ?>" class="text-title"><?php echo $category['title']; ?></a>
-						<p class="text-small"><?php echo $category['description']; ?></p>
+						<?php if ($category['is_locked']): ?><span class="category-locked"><?php echo __('Locked'); ?></span><?php endif; ?>
+						<?php if ($description = $category['description']): ?><p class="text-small"><?php echo $description; ?></p><?php endif; ?>
 					</td>
 					<td class="align-center"><?php echo $category['threads']; ?></td>
 					<td class="align-center"><?php echo $category['entries']; ?></td>

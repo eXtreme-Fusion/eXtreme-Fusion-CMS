@@ -107,7 +107,10 @@ class URL
 			$controller = $this->controller;
 		}
 
-		$controller = $this->main_sep.$controller;
+		if ($controller)
+		{
+			$controller = $this->main_sep.$controller;
+		}
 
 		if (isset($data['action']))
 		{
