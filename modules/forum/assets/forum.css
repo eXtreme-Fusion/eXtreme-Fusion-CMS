@@ -168,6 +168,8 @@ strong { font-weight: bold; }
 
 .breadcrumbs li + li { padding-left: 0; }
 
+.breadcrumbs .active { font-weight: bold; }
+
 .col-12 { width: 100%; }
 .col-11 { width: 91.66666666666666%; }
 .col-10 { width: 83.33333333333334%; }

@@ -1,7 +1,7 @@
 <ul class="breadcrumbs">
 	<li><a href="<?php echo $this->router->path(array('module' => 'forum')); ?>"><?php echo __('Forum'); ?></a></li>
 	<li><a href="<?php echo $this->router->path(array('module' => 'forum')); ?>#board-<?php echo $category['board_id']; ?>"><?php echo $category['board']; ?></a></li>
-	<li><strong><?php echo $category['title']; ?></strong></li>
+	<li class="active"><?php echo $category['title']; ?></li>
 </ul>
 <?php $this->theme->middlePanel(__('Forum')); ?>
 		<?php if (($this->logged_in && ! $category['is_locked']) || $this->is_admin): ?>

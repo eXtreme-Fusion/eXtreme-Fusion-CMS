@@ -1,6 +1,6 @@
 <ul class="breadcrumbs">
 	<li><a href="<?php echo $this->router->path(array('module' => 'forum')); ?>"><?php echo __('Forum'); ?></a></li>
-	<li><strong><?php echo __('Manage forum'); ?></strong></li>
+	<li class="active"><?php echo __('Manage forum'); ?></li>
 </ul>
 <?php if ($boards = $board->fetchAll()): ?>
 <?php $this->theme->middlePanel(__('Forum')); ?>
