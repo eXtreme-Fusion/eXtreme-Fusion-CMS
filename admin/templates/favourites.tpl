@@ -1,5 +1,4 @@
-{if $upgrade}<div class="HomeBox"><div class="valid"><a href="{$ADDR_ADMIN_PAGES}upgrade.php">{i18n('Update is available.')}</a></div></div>{/if}
-<h3 class="ui-corner-all">{i18n('Favourites')}</h3>
+<h3 class="ui-corner-all">{$SystemVersion} - {i18n('Favourites')}</h3>
 <div class="tbl">
 	{section=pages}
 		<div class="EF-Nav ui-corner-all grid_2">
