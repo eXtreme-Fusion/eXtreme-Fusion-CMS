@@ -18,6 +18,8 @@
 - naprawa zarządzania panelami D&D na serwerach które mają włączoną przestarzałą funkcję magic quotes
 - poprawki modułów w których występował problem "Podejrzewany atak XSS!"
 - usunięcie błędu dotyczącego nadpisywania długich adresów
+- czytelniejsze komunikaty dla wyjątków PDO, dostępna lokalizajca błędu składni wraz z numerem i zapytaniem.
+- optymalizacja zapytań PDO przez wprowadzenie cache
 
         OD TERAZ DATA PRZY WERSJI OZNACZA DZIEŃ PREMIERY A NIE ROZPOCZĘCIA PRAC NAD SYSTEMEM
 

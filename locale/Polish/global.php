@@ -387,6 +387,7 @@ return array(
 	//User
 	'User error' => 'Błąd użytkownika',
 	'PDO Error' => 'Błąd interpretera PDO',
+	'PDO Queries' => 'Zapytanie PDO',
 
 	//Comments
 	'Add comments' => 'Skomentuj',
