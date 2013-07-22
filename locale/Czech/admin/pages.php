@@ -38,5 +38,6 @@ return array(
 	'Security Politics' => 'Bezpečnostní nastavení',
 	'User Fields' => 'Pole profilu',
 	'User Field Categories' => 'Kategorie pole profilu'
-	
+	'Content Pages' => 'Obsah stránek',
+	'Synchronization' => 'Synchronizacja',
 );

@@ -6,6 +6,8 @@ strong { font-weight: bold; }
 	margin: 0;
 }
 
+.error { clear: both; }
+
 .button + .button,
 .button + .button-group,
 .button-group + .button {
@@ -29,6 +31,11 @@ strong { font-weight: bold; }
 .button-group .button:last-child {
 	border-top-right-radius: 3px;
 	border-bottom-right-radius: 3px;
+}
+
+.forum + .forum,
+.forum-form + .forum-form {
+	margin-top: 12px;
 }
 
 .forum th:first-child { border-top-left-radius: 3px; }
@@ -123,6 +130,15 @@ strong { font-weight: bold; }
 	color: #777;
 }
 
+.forum .category-locked {
+	padding: 3px 4px;
+	margin-left: 5px;
+	color: #777;
+	text-transform: uppercase;
+	background-color: #333;
+	border-radius: 2px;
+}
+
 .forum th {
 	font-weight: bold;
 	font-size: 13px;
@@ -146,11 +162,14 @@ strong { font-weight: bold; }
 
 .breadcrumbs li + li:before {
 	padding-right: 12px;
+	font-weight: normal;
 	color: #555;
 	content: " \002F";
 }
 
 .breadcrumbs li + li { padding-left: 0; }
+
+.breadcrumbs .active { font-weight: bold; }
 
 .col-12 { width: 100%; }
 .col-11 { width: 91.66666666666666%; }
@@ -171,6 +190,17 @@ strong { font-weight: bold; }
 	min-height: 1px;
 	padding-right: 7px;
 	padding-left: 7px;
+}
+
+.col-actions a {
+	color: #272727;
+	text-decoration: none;
+}
+
+.col-actions a + a:before {
+	padding: 0 4px;
+	color: #739900;
+	content: "/\00a0";
 }
 
 .row {

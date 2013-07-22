@@ -26,6 +26,7 @@ try
         throw new userException(__('Access denied'));
     }
 
+	$_fav->setFavByLink('logs.php', $_user->get('id'));
     $_tpl = new Iframe;
 
 	// Czy usunąć przestarzałe wpisy Rejestru zdarzeń?

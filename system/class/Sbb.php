@@ -40,6 +40,9 @@ class SmileyBBcode
 	protected $_head;
 	protected $_user;
 	protected $_system;
+	// Przechowuje zaserializowane ustawienia
+	protected $_cache = array('bbcodes' => '', 'smileys' => '');
+
 	// Spoiler ładuje kod js, więc może byc tylko raz wywołany
 	protected $_spo_loaded = FALSE;
 
@@ -58,7 +61,7 @@ class SmileyBBcode
 
 	public static function getInstance($_sett, $_pdo, $_locale, $_head, $_user, $_system)
 	{
-		if (!self::$_inst)
+		if ( ! self::$_inst)
 		{
 			self::$_inst = new SmileyBBcode($_sett, $_pdo, $_locale, $_head, $_user, $_system);
 		}
@@ -71,24 +74,25 @@ class SmileyBBcode
 	{
 		$bbcode_used = FALSE;
 		$this->_locale->setSubDir('bbcodes');
-
-		$query = $this->_pdo->getData('SELECT `name` FROM [bbcodes] WHERE `name` != \'autolink\' ORDER BY `order` ASC');
-		if ($this->_pdo->getRowsCount($query))
+		
+		$this->_cache['bbcodes'] = $this->_system->cache('bbcodes', NULL, 'system');
+		if ($this->_cache['bbcodes'] === NULL)
 		{
-			$bbcodes = array();
-			foreach ($query as $row)
+			$query = $this->_pdo->getData('SELECT `name` FROM [bbcodes] WHERE `name` != \'autolink\' ORDER BY `order` ASC');
+			if ($this->_pdo->getRowsCount($query))
 			{
-				$bbcode_name[] = $row['name'];
+				foreach ($query as $row)
+				{
+					$this->_cache['bbcodes'][] = $row['name'];
+				}
 			}
-		}
-		else
-		{
-			return FALSE;
+			
+			$this->_system->cache('bbcodes', $this->_cache['bbcodes'], 'system');
 		}
 
 		$bbcode_info = array();
 		$_locale = $this->_locale;
-		foreach ($bbcode_name as $bbcode)
+		foreach ($this->_cache['bbcodes'] as $bbcode)
 		{
 			include DIR_SYSTEM.'bbcodes'.DS.$bbcode.'.php';
 
@@ -127,55 +131,58 @@ class SmileyBBcode
 
 	public function smileys($textarea = 'message')
 	{
-		$query = $this->_pdo->getData('SELECT * FROM [smileys] WHERE `id` != 15 ORDER BY `id` ASC');
-		if ($this->_pdo->getRowsCount($query))
+		$this->_cache['smileys'] = $this->_system->cache('smileys', NULL, 'system');
+		if ($this->_cache['smileys'] === NULL)
 		{
-			$i = 1; $smileys = array();
-			foreach ($query as $row)
+			$query = $this->_pdo->getData('SELECT * FROM [smileys] WHERE `id` != 15 ORDER BY `id` ASC');
+			if ($this->_pdo->getRowsCount($query))
 			{
-				$smileys[] = array(
-					'i' => $i,
-					'text' => $row['text'],
-					'code' => $row['code'],
-					'image' => $row['image'],
-					'textarea' => $textarea
-				);
-
-				$i++;
+				$i = 1;
+				foreach ($query as $row)
+				{
+					$this->_cache['smileys'][] = array(
+						'i' => $i,
+						'text' => $row['text'],
+						'code' => $row['code'],
+						'image' => $row['image'],
+						'textarea' => $textarea
+					);
+					
+					$i++;
+				}
 			}
+			
+			$this->_system->cache('smileys', $this->_cache['smileys'], 'system');
 		}
-		else
-		{
-			return FALSE;
-		}
-
-		return $smileys;
+		
+		return $this->_cache['smileys'];
 	}
 
 	public function parseBBCode($text, $parse = TRUE)
 	{
 		$bbcode_used = $parse;
 		$this->_locale->setSubDir('bbcodes');
-
-		$query = $this->_pdo->getData('SELECT `name` FROM [bbcodes] ORDER BY `order` ASC');
-		if ($this->_pdo->getRowsCount($query))
+		
+		$this->_cache['bbcodes'] = $this->_system->cache('parse_bbcodes', NULL, 'system');
+		if ($this->_cache['bbcodes'] === NULL)
 		{
-			$bbcodes = array();
-			foreach ($query as $row)
+			$query = $this->_pdo->getData('SELECT `name` FROM [bbcodes] WHERE `name` != \'autolink\' ORDER BY `order` ASC');
+			if ($this->_pdo->getRowsCount($query))
 			{
-				$bbcode_name[] = $row['name'];
+				foreach ($query as $row)
+				{
+					$this->_cache['bbcodes'][] = $row['name'];
+				}
 			}
-		}
-		else
-		{
-			return FALSE;
+			
+			$this->_system->cache('parse_bbcodes', $this->_cache['bbcodes'], 'system');
 		}
 
 		$_locale = $this->_locale;
 		$_user = $this->_user;
 		$_head = $this->_head;
 		$_system = $this->_system;
-		foreach ($bbcode_name as $bbcode)
+		foreach ($this->_cache['bbcodes'] as $bbcode)
 		{
 			if (file_exists(DIR_SYSTEM.'bbcodes'.DS.$bbcode.'.php'))
 			{
@@ -196,29 +203,30 @@ class SmileyBBcode
 	{
 		if ( ! preg_match("#\[code\]#sie", $text) && ! preg_match("#\<a href=#sie", $text))
 		{
-			$query = $this->_pdo->getData('SELECT * FROM [smileys] ORDER BY `id` ASC');
-			if ($this->_pdo->getRowsCount($query))
+			$this->_cache['smileys'] = $this->_system->cache('parse_smileys', NULL, 'system');
+			if ($this->_cache['smileys'] === NULL)
 			{
-				$smiley = array();
-				foreach ($query as $row)
+				$query = $this->_pdo->getData('SELECT * FROM [smileys] WHERE `id` != 15 ORDER BY `id` ASC');
+				if ($this->_pdo->getRowsCount($query))
 				{
-					$smiley[] = array(
-						'text' => $row['text'],
-						'code' => $row['code'],
-						'image' => $row['image']
-					);
+					foreach ($query as $row)
+					{
+						$this->_cache['smileys'][] = array(
+							'text' => $row['text'],
+							'code' => $row['code'],
+							'image' => $row['image']
+						);
+					}
 				}
-
-				foreach($smiley as $smileys)
-				{
-					$code = preg_quote($smileys['code'], '#');
-					$image = '<img src="'.ADDR_IMAGES.'smiley/'.$smileys['image'].'" alt="'.$smileys['text'].'">';
-					$text = preg_replace("#{$code}#si", $image, $text);
-				}
+				
+				$this->_system->cache('parse_smileys', $this->_cache['smileys'], 'system');
 			}
-			else
+			
+			foreach($this->_cache['smileys'] as $smileys)
 			{
-				return FALSE;
+				$code = preg_quote($smileys['code'], '#');
+				$image = '<img src="'.ADDR_IMAGES.'smiley/'.$smileys['image'].'" alt="'.$smileys['text'].'">';
+				$text = preg_replace("#{$code}#si", $image, $text);
 			}
 		}
 

@@ -27,6 +27,8 @@ try
         throw new userException(__('Access Denied'));
     }
 
+	$_fav->setFavByLink('permissions.php', $_user->get('id'));
+	
 	$_tpl = new Iframe;
 
 	if ($_request->get('act')->show() && $_request->get('status')->show() && $_request->get('type')->show())

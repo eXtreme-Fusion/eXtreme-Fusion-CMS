@@ -5,6 +5,8 @@ define('F_CLASS', '.'.DS.'app'.DS);
 define('F_VIEW', '.'.DS.'views'.DS);
 define('F_SRC', '.'.DS.'src'.DS);
 
+define('F_ADMIN', 'acp');
+
 define('F_EXT', '.php');
 
 define('LEFT', FALSE);
@@ -41,11 +43,20 @@ else
 	$app = 'index';
 }
 
-if (file_exists($path = F_CLASS.$app.F_EXT))
-{
-	// Pobieranie wszystkich parametrów
-	$params = $_route->getParams();
+$path = F_CLASS.$app.F_EXT;
 
+// Pobieranie wszystkich parametrów
+$params = $_route->getParams();
+
+if ($app === F_ADMIN && ! empty($params))
+{
+	$app = array_shift($params);
+
+	$path = F_CLASS.F_ADMIN.DIRECTORY_SEPARATOR.$app.F_EXT;
+}
+
+if (file_exists($path))
+{
 	// Załączanie klasy aplikacji
 	require_once $path;
 
@@ -91,7 +102,7 @@ if (file_exists($path = F_CLASS.$app.F_EXT))
 	}
 	catch(PDOException $exception)
 	{
-		echo $exception;
+		PDOErrorHandler($exception);
 	}
 
 	spl_autoload_unregister('autoloader');

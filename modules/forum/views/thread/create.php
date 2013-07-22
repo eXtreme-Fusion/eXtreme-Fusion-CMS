@@ -2,7 +2,7 @@
 	<li><a href="<?php echo $this->router->path(array('module' => 'forum')); ?>"><?php echo __('Forum'); ?></a></li>
 	<li><a href="<?php echo $this->router->path(array('module' => 'forum')); ?>#board-<?php echo $category['board_id']; ?>"><?php echo $category['board']; ?></a></li>
 	<li><a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'category', $category['id'])); ?>"><?php echo $category['title']; ?></a></li>
-	<li><strong><?php echo __('Create a new thread'); ?></strong></li>
+	<li class="active"><?php echo __('Create a new thread'); ?></li>
 </ul>
 <?php $this->theme->middlePanel(__('Forum')); ?>
 		<form action="<?php echo URL_REQUEST; ?>" method="post" id="thread-create">

@@ -90,13 +90,13 @@ class Themes extends optClass
 		{
 			$this->registerFunction('url', 'Url');
 		}
-		$this->_head->set('
-			<link href="'.ADDR_COMMON_CSS.'facebox.css" rel="stylesheet">'.PHP_EOL.'
-			<script src="'.ADDR_COMMON_JS.'facebox.js"></script>'.PHP_EOL.'
-			<script>$(function() {
-				$(\'a[rel*=facebox]\').facebox();
-			});</script>
-		');
+		$this->_head->set('	<link href="'.ADDR_COMMON_CSS.'facebox.css" rel="stylesheet">
+	<script src="'.ADDR_COMMON_JS.'facebox.js"></script>
+	<script>
+		$(function() {
+			$(\'a[rel*=facebox]\').facebox();
+		});
+	</script>');
 
 	}
 
@@ -283,15 +283,26 @@ class Themes extends optClass
 	}
 
 	public function showSubLinks($sep = "·", $class = "")
-	{
-		$query = $this->_pdo->getData(
-			"SELECT `name`, `url`, `window`, `visibility`, `rewrite` FROM [navigation]
-			WHERE `position`='2' OR `position`='3' ORDER BY `order`"
-		);
-		if ($this->_pdo->getRowsCount($query))
+	{	
+		$cache = $this->_system->cache('sublinks-'.(strtolower($this->_user->get('theme')) ? preg_replace("/[^a-zA-Z0-9_]/", '_', strtolower($this->_user->get('theme'))) : preg_replace("/[^a-zA-Z0-9_]/", '_', strtolower($this->_sett->get('theme')))), NULL, 'system');
+		if ($cache === NULL)
+		{
+			$query = $this->_pdo->getData("SELECT `name`, `url`, `window`, `visibility`, `rewrite` FROM [navigation] WHERE `position`='2' OR `position`='3' ORDER BY `order`");
+			if ($this->_pdo->getRowsCount($query))
+			{
+				foreach ($query as $row)
+				{
+					$cache[] = $row;
+				}
+			}
+			
+			$this->_system->cache('sublinks-'.(strtolower($this->_user->get('theme')) ? preg_replace("/[^a-zA-Z0-9_]/", '_', strtolower($this->_user->get('theme'))) : preg_replace("/[^a-zA-Z0-9_]/", '_', strtolower($this->_sett->get('theme')))), $cache, 'system');
+		}
+
+		if ($cache)
 		{
 			$i = 0; $menu = array();
-			foreach($query as $sdata)
+			foreach($cache as $sdata)
 			{
 				if ($sdata['url'] != "---" && $this->_user->hasAccess($sdata['visibility']))
 				{

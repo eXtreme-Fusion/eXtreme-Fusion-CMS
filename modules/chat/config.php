@@ -56,7 +56,7 @@ $new_row[1] = array(
 
 $admin_page[1] = array(
 	'title' => 'Chat',
-	'image' => 'images/chat.png',
+	'image' => 'templates/images/chat.png',
 	'page' => 'admin/chat.php',
 	'perm' => 'admin'
 );

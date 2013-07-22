@@ -7,9 +7,10 @@ return array(
 	'Step 1: Locale' => 'Krok 1: Jazyk',
 	'Step 2: Checking server configuration' => 'Krok 2: Kontrola konfigurace serveru',
 	'Step 3: File and Folder Permissions Test' => 'Krok 3: Kontrola přístupových práv k souborům a adresářům',
-	'Step 4: Database Settings' => 'Krok 4: Nastavení databáze',
-	'Step 5: Head Admin Details' => 'Krok 5: Vyplnění hlavního administrátora',
-	'Step 6: Final Settings' => 'Krok 6: Dokončení nastavení',
+	'Step 4: Database settings' => 'Krok 4: Nastavení databáze',
+	'Step 5: Admin account' => 'Krok 5: Učet administrátora',
+	'Step 6: System settings' => 'Krok 6: Nastavení systému',
+	'Step 7: Final settings' => 'Krok 7: Dokončení nastavení',
 	'Finish' => 'Zakończ',
 	// Permissions
 	'Perm: admin login' => 'Přihlášení do admin panelu.',
@@ -34,6 +35,7 @@ return array(
 	'Perm: admin settings_users' => 'Přístup do nastavení uživatelů.',
 	'Perm: admin settings_ipp' => 'Počet položek na stránku.',
 	'Perm: admin settings_logs' => 'Přístup do nastavení záznamů.',
+	'Perm: admin settings_synchro' => 'Dostęp do ustawień synchronizacji.',
 	'Perm: admin navigations' => 'Navigace stránky',
 	'Perm: admin smileys' => 'Přistup ke smajlíkům',
 	'Perm: admin submissions' => 'Přístup ke schvalování obsahu od uživatelů',
@@ -55,11 +57,8 @@ return array(
 	'Download more locales from <a href="http://www.extreme-fusion.org/">extreme-fusion.org</a>' => 'Jiné jazykové verze jsou dostupné na adrese <a href="http://www.extreme-fusion.org/">extreme-fusion.org</a>',
 	'I accept aGPL v3 License' => 'Souhlasím s licenčními podmínkami aGPL v3',
 	//Step 2
-	'Writeable' => 'Zapisovatelný',
 	'Unwriteable' => 'Nezapisovatelný',
-	'In order for setup to continue, the following files/folders must be writeable:' => 'Následující soubory a adresáře musí být zapisovatelné, aby se řádně dokončila instalace:',
-	'Write permissions check passed, click Next to continue.' => 'Oprávnění souborů a adresářů jsou správná, stiskněte pro pokračování tlačítko Další.',
-	'Write permissions check failed, please CHMOD files/folders marked Unwriteable.' => 'Oprávnění souborů a adresářů jsou nesprávná, zkontrolujte oprávnění pro vybrané soubory a adresáře.',
+	'The folders and files listed below must be set writeable (chmod 777).' => 'Poniższym katalogom i plikom należy ustawić zapisywalność (chmod 777).',
 	'Refresh' => 'Aktualizovat',
 	'PHP Version Error' => 'Váš server nesplňuje systémové požadavky: PHP interpreter je starší než verze :php_required.<br />
 							Co můžete udělat:
@@ -70,6 +69,7 @@ return array(
 							</ul>',
 	'Extension error' => 'Nenalezeno požadované rozšíření :extension_error. Měly by být načteny z vhodné konfigurace serveru',
 	'Files has not been changed.' => 'Soubory nebyly změněny.',
+	'Not found' => 'Nenalezeno',
 	// Step 3 - Access criteria
 	'Please enter your MySQL database access settings.' => 'Zadejte nastavení pro databázi MySQL.',
 	'Database Hostname:' => 'Adresa hostitele:',

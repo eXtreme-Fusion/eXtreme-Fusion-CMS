@@ -3,7 +3,7 @@
 	<li><a href="<?php echo $this->router->path(array('module' => 'forum')); ?>#board-<?php echo $thread['board_id']; ?>"><?php echo $thread['board']; ?></a></li>
 	<li><a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'category', $thread['category_id'])); ?>"><?php echo $thread['category']; ?></a></li>
 	<li><a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', $thread['id'])); ?>"><?php echo $thread['title']; ?></a></li>
-	<li><strong><?php echo __('Add reply'); ?></strong></li>
+	<li class="active"><?php echo __('Add reply'); ?></li>
 </ul>
 <?php $this->theme->middlePanel(__('Forum')); ?>
 		<form action="<?php echo URL_REQUEST; ?>" method="post" id="thread-reply">

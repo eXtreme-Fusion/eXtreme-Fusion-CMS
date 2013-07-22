@@ -27,7 +27,7 @@ $mod_info = array(
 
 $admin_page[1] = array(
 	'title' => 'SFS Protection',
-	'image' => 'images/protection.png',
+	'image' => 'templates/images/protection.png',
 	'page' => 'admin/sfs_protection.php',
 	'perm' => 'admin'
 );

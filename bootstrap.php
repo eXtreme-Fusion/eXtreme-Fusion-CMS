@@ -13,24 +13,7 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-|
-**********************************************************
-                ORIGINALLY BASED ON
----------------------------------------------------------
-| PHP-Fusion Content Management System
-| Copyright (C) 2002 - 2011 Nick Jones
-| http://www.php-fusion.co.uk/
-+-------------------------------------------------------
-| Author: Nick Jones (Digitanium)
-+-------------------------------------------------------
-| This program is released as free software under the
-| Affero GPL license. You can redistribute it and/or
-| modify it under the terms of this license which you
-| can read by viewing the included agpl.txt or online
-| at www.gnu.org/licenses/agpl.html. Removal of this
-| copyright header is strictly prohibited without
-| written permission from the original author(s).
-+-------------------------------------------------------*/
+*********************************************************/
 error_reporting(-1);
 
 if ( ! isset($_SESSION))
@@ -52,6 +35,29 @@ if (get_magic_quotes_runtime())
 		ini_set("magic_quotes_gpc", 0);
 		ini_set("magic_quotes_runtime", 0);
 	}
+}
+
+// Disabling magic quotes at runtime
+if (get_magic_quotes_gpc()) 
+{
+    $process = array(&$_GET, &$_POST, &$_COOKIE, &$_REQUEST);
+    while (list($key, $val) = each($process)) 
+	{
+        foreach ($val as $k => $v) 
+		{
+            unset($process[$key][$k]);
+            if (is_array($v)) 
+			{
+                $process[$key][stripslashes($k)] = $v;
+                $process[] = &$process[$key][stripslashes($k)];
+            } 
+			else
+			{
+                $process[$key][stripslashes($k)] = stripslashes($v);
+            }
+        }
+    }
+    unset($process);
 }
 
 // Undo register_globals
@@ -83,7 +89,9 @@ defined('DBS') || define('DBS', '^');
 
 defined('FILE_SELF') || define('FILE_SELF', basename($_SERVER['PHP_SELF']));
 defined('FILE_PATH') || define('FILE_PATH', $_SERVER['PHP_SELF']);
-defined('SITE_HOST') || define('SITE_HOST', $_SERVER['HTTP_HOST']);
+
+// HTTP_HOST może być niedostępne w CRON
+defined('SITE_HOST') || define('SITE_HOST', isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '');
 
 // System identifier
 defined('EF5_SYSTEM') || define('EF5_SYSTEM', TRUE);

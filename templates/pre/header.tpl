@@ -41,12 +41,10 @@
 		<meta charset="{i18n('html_charset')}">
 		<meta name="description" content="{$Theme.Desc}">
 		<meta name="keywords" content="{$Theme.Keys}">
-		{literal}
-			<script> 
-				var addr_images = "{/literal}{$ADDR_IMAGES}{literal}";
-				var addr_site = "{/literal}{$ADDR_SITE}{literal}";
-			</script>
-		{/literal}
+		{literal}<script> 
+			var addr_images = "{/literal}{$ADDR_IMAGES}{literal}";
+			var addr_site = "{/literal}{$ADDR_SITE}{literal}";
+		</script>{/literal}
 		<link href="{$ADDR_FAVICON}" type="image/x-icon" rel="shortcut icon">
 		<link href="{$ADDR_COMMON_CSS}grid.reset.css" media="screen" rel="stylesheet">
 		<link href="{$ADDR_COMMON_CSS}grid.text.css" media="screen" rel="stylesheet">
@@ -68,13 +66,11 @@
 		<script src="{$ADDR_COMMON_JS}facebox.js"></script>
 		<script src="{$ADDR_JS}main.js"></script>
 		<script src="{$ADDR_COMMON_JS}common.js"></script>
-		{literal}
-		<script> 
+		{literal}<script>
 			jQuery(function($){ 
 				$('a[rel*=facebox]').facebox();
 			});
-		</script>
-		{/literal}
+		</script>{/literal}
 		{$Theme.Tags}
 	</head>
 	<body>

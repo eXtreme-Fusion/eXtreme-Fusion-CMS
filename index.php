@@ -13,7 +13,6 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-|
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------+
@@ -141,7 +140,7 @@ try
 	{
 		$ec->statistics->saveUniqueVisit($_user->getIP());
 	}
-
+	
 	// Ładowanie pliku startowego modułu
 	if ($row = $ec->modules->getModuleBootstrap($_system))
 	{
@@ -182,7 +181,6 @@ try
 	// Sprawdzanie, czy w załadowanym pliku nastąpiła zmana trace'a (błąd 404, przymus logowania etc.).
 	if ($trace !== $_route->getExitFile())
 	{
-
 		// Załączanie pliku z trace'a. Zmienił się też TPL.
 		require $_route->getExitFile();
 
@@ -305,9 +303,6 @@ try
 	// Załączanie szablonu zamykającego stronę
 	$_tpl->template('pre'.DS.'footer'.$_route->getExt('tpl'));
 
-	// Usuwanie niepotrzebnych wpisów z tabeli użytkowników online.
-	$_pdo->exec('DELETE FROM [users_online] WHERE `last_activity` < '.(time()-60*60*2));
-
 	session_write_close();
 }
 catch(optException $exception)
@@ -324,5 +319,5 @@ catch(userException $exception)
 }
 catch(PDOException $exception)
 {
-   echo $exception;
+   PDOErrorHandler($exception);
 }

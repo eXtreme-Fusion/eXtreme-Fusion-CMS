@@ -44,6 +44,7 @@ try
         throw new userException(__('Access denied'));
     }
 
+	$_fav->setFavByLink('blacklist.php', $_user->get('id'));
 	$_tpl = new Iframe;
 	
 	// Wyświetlenie komunikatów

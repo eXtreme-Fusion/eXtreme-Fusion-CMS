@@ -33,14 +33,24 @@
 +-------------------------------------------------------*/
 $_locale->moduleLoad('lang', 'navigation_panel');
 
-$query = $_pdo->getData("
-	SELECT `name`, `url`, `window`, `visibility`, `rewrite` FROM [navigation]
-	WHERE `position` = 1 OR `position` = 3 ORDER BY `order`
-");
-
-if ($_pdo->getRowsCount($query))
+$cache = $_system->cache('navigation_panel', NULL, 'navigation_panel');
+if ($cache === NULL)
 {
-	foreach ($query as $data)
+	$query = $_pdo->getData("SELECT `name`, `url`, `window`, `visibility`, `rewrite` FROM [navigation]	WHERE `position` = 1 OR `position` = 3 ORDER BY `order`");
+	if ($_pdo->getRowsCount($query))
+	{
+		foreach ($query as $row)
+		{
+			$cache[] = $row;
+		}
+	}
+	
+	$_system->cache('navigation_panel', $cache, 'navigation_panel');
+}
+
+if($cache)
+{
+	foreach ($cache as $data)
 	{
 		if ($_user->hasAccess($data['visibility']))
 		{

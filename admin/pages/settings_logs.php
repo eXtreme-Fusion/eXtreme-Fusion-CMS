@@ -44,6 +44,8 @@ try
 		throw new userException(__('Access denied'));
 	}
 
+	$_fav->setFavByLink('settings_logs.php', $_user->get('id'));
+	
 	$_tpl = new Iframe;
 
 	// Czy mam zapisać dane z formularza?

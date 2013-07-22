@@ -44,6 +44,8 @@ try
 		throw new userException(__('Access denied'));
 	}
 
+	$_fav->setFavByLink('settings_routing.php', $_user->get('id'));
+	
 	$_tpl = new Iframe;
 
 	if ($_request->post('save')->show())
@@ -59,8 +61,6 @@ try
 			))
 		));
 		
-		// Petmanentne usuwanie cache z wyjatkiem pliku dodanego do wyjątku.
-		$_files->setOmitExt(array('.htaccess'));
 		$_files->rmDirRecursive(DIR_CACHE, TRUE);
 		
 		$_tpl->printMessage('valid', $_log->insertSuccess('edit', __('Data has been saved.')));

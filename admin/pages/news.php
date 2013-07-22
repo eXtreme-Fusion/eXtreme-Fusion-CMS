@@ -40,6 +40,8 @@ try
 
 	$_locale->load('news');
 
+	$_fav->setFavByLink('news.php', $_user->get('id'));
+	
 	$_tpl = new Iframe;
 
 	if($_request->get('page')->show() === 'news')

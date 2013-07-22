@@ -6,5 +6,6 @@ return array(
 	'News cats per page:' => 'Počet kategorií novinek na stránku:',
 	'News cats item per page:' => 'Prvků kategorií novinek na stránku:',
 	'This should be an uneven number.' => 'měl by být lichý počet',
-	'Notes per page:' => 'Poznámek na stránku:'
+	'Notes per page:' => 'Poznámek na stránku:',
+	'Comments per page:' => 'Komentáře na stránku:'
 );

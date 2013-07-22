@@ -47,7 +47,9 @@ body {background:url(../../admin/templates/images/ui/iframe-shadow-top.png) repe
 .left{float:left;}
 .right{float:right}
 .red{color:red}
-p {padding:10px 0;}
+p {padding:0;}
+.formWarning {padding:5px 10px; margin-bottom: 5px}
+.formValid {padding:5px 10px; margin-bottom: 5px}
 #team .bold {
 	padding-top:10px;
 }
@@ -65,19 +67,35 @@ p {padding:10px 0;}
 .formMessage {
 	overflow:hidden;
 	padding:5px 10px;
-	margin:10px 0;
+	margin:0 0 10px 0;
 }
 .formMessage  input{
 
+}
+
+.formMessage ul {
+	list-style-type: disc !important;
+	margin-left: 25px;
 }
 
 .formMessage label {
 
 }
 .formWarning {
-	border-radius:8px;
-	background-color: yellow;
+	border-radius: 8px;
+	background-color: rgba(255, 255, 50, 1);
+	margin-bottom: 10px;
+	box-shadow: 0px 0 0 2px rgba(56,56,54,0.5);
+	border: 1px solid #38382c;
 }
+.formValid {
+	border-radius: 8px;
+	background-color: rgba(135,255,0,0.5);
+	margin-bottom: 10px;
+	box-shadow: 0px 0 0 2px rgba(56,56,54,0.5);
+	border: 1px solid #38382c;
+}
+.synchro {margin-bottom:5px;}
 #CustomStep3 {display:none}
 #tab-crew-list {display:none;margin-top:10px}
 #crew-list {list-style:disc;cursor}
