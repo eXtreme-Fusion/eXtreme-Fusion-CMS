@@ -13,7 +13,7 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
+|
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------+
@@ -422,15 +422,15 @@ try
 			$db_host = isset($_POST['db_host']) ? trim($_POST['db_host']) : '';
 			// todo: sprawdzanie czy numeryczny
 			$db_port = isset($_POST['db_port']) ? trim($_POST['db_port']) : '';
-			
+
 			$db_user = isset($_POST['db_user']) ? trim($_POST['db_user']) : '';
 			$db_pass = isset($_POST['db_pass']) ? trim($_POST['db_pass']) : '';
 			$db_name = isset($_POST['db_name']) ? trim($_POST['db_name']) : '';
-			
+
 			$db_prefix = isset($_POST['db_prefix']) ? trim(HELP::strip($_POST['db_prefix'])) : '';
 			$cookie_prefix = isset($_POST['cookie_prefix']) ? trim(HELP::strip($_POST['cookie_prefix'])) : '';
 			$cache_prefix = isset($_POST['cache_prefix']) ? trim(HELP::strip($_POST['cache_prefix'])) : '';
-			
+
 			// todo: filtrowanie aresu do strony
 			$site_url = isset($_POST['site_url']) ? $_POST['site_url'] : '';
 
@@ -453,7 +453,7 @@ try
 			}
 
 			$success = FALSE;
-			
+
 			// db_prefix jest opcjonalny!
 			if ($db_host !== '' && $db_user !== '' && $db_name !== '' && $db_port !== '' && $site_url !== '')
 			{
@@ -462,10 +462,10 @@ try
 					$_pdo = new Data('mysql:host='.$db_host.';dbname='.$db_name.';port='.$db_port, $db_user, $db_pass, array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES '.$charset));
 					$_pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT);
 					$_pdo->config($db_prefix);
-					
+
 					// For php < 5.3.1: http://stackoverflow.com/a/4348744/1794927
 					$_pdo->query('SET NAMES '.$charset, NULL, FALSE);
-				
+
 					if (!$d = $_pdo->query("SHOW TABLES LIKE '$db_prefix%'"))
 					{
 						$table_name = $db_prefix.substr(strrev(time()), 0, 5);
@@ -637,10 +637,10 @@ try
 
 				$_pdo = new Data('mysql:host='.$_dbconfig['host'].';dbname='.$_dbconfig['database'].';port='.$_dbconfig['port'], $_dbconfig['user'], $_dbconfig['password'], array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES '.$_dbconfig['charset']));
 				$_pdo->config($_dbconfig['prefix']);
-				
+
 				// For php < 5.3.1: http://stackoverflow.com/a/4348744/1794927
 				$_pdo->query('SET NAMES '.$_dbconfig['charset'], NULL, FALSE);
-				
+
 				$localeset = $_SESSION['localeset'];
 				include 'create_settings.php';
 
@@ -677,40 +677,36 @@ try
 	{
 		$_locale->setSubDir('admin');
 		$_locale->load('settings_synchro');
-		
+
+		$loaded = FALSE;
 		if (function_exists('curl_init'))
 		{
 			$loaded = TRUE;
-			$_tpl->assign('curl_available', TRUE);
 		}
 		elseif (function_exists('fsockopen'))
 		{
 			$loaded = TRUE;
-			$_tpl->assign('fsockopen_available', TRUE);
 		}
 		elseif (function_exists('fopen'))
 		{
 			$loaded = TRUE;
-			$_tpl->assign('fopen_available', TRUE);
-		} 
-		else
-		{
-			$loaded = FALSE;
 		}
+		
+		$_tpl->assign('synchro_available', $loaded);
 		
 		if ($_POST)
 		{
 			if (isset($_POST['synchro']) && $_POST['synchro'] && $loaded)
 			{
 				require DIR_SITE.'config.php';
-				
+
 				$_pdo = new Data('mysql:host='.$_dbconfig['host'].';dbname='.$_dbconfig['database'].';port='.$_dbconfig['port'], $_dbconfig['user'], $_dbconfig['password'], array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES '.$_dbconfig['charset']));
 				$_pdo->config($_dbconfig['prefix']);
-				
+
 				// For php < 5.3.1: http://stackoverflow.com/a/4348744/1794927
 				$_pdo->query('SET NAMES '.$_dbconfig['charset'], NULL, FALSE);
-				
-				$_pdo->exec('UPDATE [settings] SET `value` = 1 WHERE `key` = \'synchro\'');	
+
+				$_pdo->exec('UPDATE [settings] SET `value` = 1 WHERE `key` = \'synchro\'');
 			}
 			goToStep(7);
 		}
@@ -722,7 +718,7 @@ try
 			restartInstall();
 			goToPage();
 		}
-		
+
 		$_files = new Files;
 		$_files->rmDirRecursive(DIR_SITE.'cache'.DS, TRUE);
 	}

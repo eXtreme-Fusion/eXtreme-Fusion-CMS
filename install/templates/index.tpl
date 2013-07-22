@@ -61,8 +61,6 @@
 		<div class='corner4px'><div class='ctl'><div class='ctr'><div class='ctc'></div></div></div><div class='cc'>
 			<div id="IframeOPT" class="container_12">
 
-
-
 				<div class="clear"></div>
 				<h3 class="ui-corner-all">
 					{$step_header}
@@ -482,31 +480,20 @@
 					{elseif $step == 6}
 						<form action="index.php" method="post" id="This" autocomplete="off">
 							<div class="formMessage">
-								{if ! $curl_available || ! $fsockopen_available || ! $fopen_available}
-									<div class="formWarning">{i18n('Warning extension:')}
+								{if !$synchro_available}
+									<div class="formWarning">
+										{i18n('None of the required components is available')}
 										<ul>
-											{if ! $curl_available}<li>curl</li>{/if}
-											{if ! $fsockopen_available}<li>fsockopen</li>{/if}
-											{if ! $fopen_available}<li>fopen</li>{/if}
+											<li>curl</li>
+											<li>fsockopen</li>
+											<li>fopen</li>
 										</ul>
-										{if ! $curl_available && ! $fsockopen_available && ! $fopen_available}
-											{i18n('None required expansion available')}
-										{/if}
+										{i18n('Installation suggest')}
 									</div>
 								{/if}
-
-								{if $curl_available || $fsockopen_available || $fopen_available}
-									<div class="formValid">{i18n('Founded extension:')}
-										<ul>
-											{if $curl_available}<li>curl</li>{/if}
-											{if $fsockopen_available}<li>fsockopen</li>{/if}
-											{if $fopen_available}<li>fopen</li>{/if}
-										</ul>
-										{i18n('Required expansion available')}
-									</div>							
-								{/if}
+								
 								<div class="synchro">
-									<input type="checkbox" name="synchro" value="true" {if ! $curl_available && ! $fsockopen_available && ! $fopen_available}disabled="disabled" {/if}id="Synchro" />
+									<input type="checkbox" name="synchro" value="true" {if ! $synchro_available}disabled="disabled" {/if}id="Synchro" />
 									<label for="Synchro">
 										{i18n('Synchro statement')}
 									</label>

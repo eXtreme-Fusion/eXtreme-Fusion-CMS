@@ -39,7 +39,8 @@ try
 	require_once DIR_SYSTEM.'admincore.php';
 
 	$_locale->load('home');
-
+	$_locale->load('settings_synchro');
+	
     if ( ! $_user->isLoggedIn())
     {
        $_request->redirect(ADDR_ADMIN.'index.php', array('action' => 'login'));
