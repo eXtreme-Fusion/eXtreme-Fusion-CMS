@@ -98,5 +98,4 @@ class Category_Controller extends Forum_Controller {
 		return $this->router->redirect(array('module' => 'forum', 'controller' => 'admin'));
 	}
 
-
 }

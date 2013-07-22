@@ -33,6 +33,10 @@ return array(
 	'Category order'       => 'Kolejność kategorii',
 	'Lock this category'   => 'Zablokuj tę kategorię',
 	'Locked'               => 'Zablokowane',
+	'Add a new board'      => 'Dodaj nowy dział',
+	'Board title'          => 'Tytuł działu',
+	'Board order'          => 'Kolejność działu',
+	'Add board'            => 'Dodaj dział',
 
 	'In this category has not been created any thread'   => 'W tej kategorii nie został utworzony żaden wątek',
 	'In this board has not been created any category'    => 'W tym dziale nie została utworzona żadna kategoria',

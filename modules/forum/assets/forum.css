@@ -33,6 +33,11 @@ strong { font-weight: bold; }
 	border-bottom-right-radius: 3px;
 }
 
+.forum + .forum,
+.forum-form + .forum-form {
+	margin-top: 12px;
+}
+
 .forum th:first-child { border-top-left-radius: 3px; }
 .forum th:last-child { border-top-right-radius: 3px; }
 
