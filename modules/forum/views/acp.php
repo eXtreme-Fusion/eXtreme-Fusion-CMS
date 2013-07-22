@@ -5,14 +5,14 @@
 <?php if ($boards = $board->fetchAll()): ?>
 <?php $this->theme->middlePanel(__('Forum')); ?>
 		<?php foreach ($boards as $board): ?>
-		<form action="<?php echo $this->router->path(array('module' => 'forum', 'directory' => 'admin', 'controller' => 'category', 'action' => 'add', $board['id'])); ?>" method="post" class="forum-form">
+		<form action="<?php echo $this->router->path(array('module' => 'forum', 'directory' => 'acp', 'controller' => 'category', 'action' => 'add', $board['id'])); ?>" method="post" class="forum-form">
 			<table class="forum" id="board-<?php echo $board['id']; ?>">
 				<thead>
 					<tr>
 						<th class="col-10 align-left"><?php echo $board['title']; ?></th>
 						<th class="col-1 col-actions">
-							<a href="<?php echo $this->router->path(array('module' => 'forum', 'directory' => 'admin', 'controller' => 'board', 'action' => 'edit', $board['id'])); ?>" title="<?php echo __('Edit board'); ?>"><?php echo __('Edit'); ?></a>
-							<a href="<?php echo $this->router->path(array('module' => 'forum', 'directory' => 'admin', 'controller' => 'board', 'action' => 'remove', $board['id'])); ?>" title="<?php echo __('Remove board'); ?>"><?php echo __('Remove'); ?></a>
+							<a href="<?php echo $this->router->path(array('module' => 'forum', 'directory' => 'acp', 'controller' => 'board', 'action' => 'edit', $board['id'])); ?>" title="<?php echo __('Edit board'); ?>"><?php echo __('Edit'); ?></a>
+							<a href="<?php echo $this->router->path(array('module' => 'forum', 'directory' => 'acp', 'controller' => 'board', 'action' => 'remove', $board['id'])); ?>" title="<?php echo __('Remove board'); ?>"><?php echo __('Remove'); ?></a>
 						</th>
 					</tr>
 				</thead>
@@ -31,8 +31,8 @@
 						</td>
 						<td class="center">
 							<div class="button-group">
-								<a href="<?php echo $this->router->path(array('module' => 'forum', 'directory' => 'admin', 'controller' => 'category', 'action' => 'edit', $_category['id'])); ?>" class="button" title="<?php echo __('Edit category'); ?>"><?php echo __('Edit'); ?></a>
-								<a href="<?php echo $this->router->path(array('module' => 'forum', 'directory' => 'admin', 'controller' => 'category', 'action' => 'remove', $_category['id'])); ?>" class="button" title="<?php echo __('Remove category'); ?>"><?php echo __('Remove'); ?></a>
+								<a href="<?php echo $this->router->path(array('module' => 'forum', 'directory' => 'acp', 'controller' => 'category', 'action' => 'edit', $_category['id'])); ?>" class="button" title="<?php echo __('Edit category'); ?>"><?php echo __('Edit'); ?></a>
+								<a href="<?php echo $this->router->path(array('module' => 'forum', 'directory' => 'acp', 'controller' => 'category', 'action' => 'remove', $_category['id'])); ?>" class="button" title="<?php echo __('Remove category'); ?>"><?php echo __('Remove'); ?></a>
 							</div>
 						</td>
 					</tr>
@@ -45,7 +45,7 @@
 <?php $this->theme->middlePanel(); ?>
 <?php endif; ?>
 <?php $this->theme->middlePanel(__('Add a new board')); ?>
-		<form action="<?php echo $this->router->path(array('module' => 'forum', 'directory' => 'admin', 'controller' => 'board', 'action' => 'add')); ?>" method="post">
+		<form action="<?php echo $this->router->path(array('module' => 'forum', 'directory' => 'acp', 'controller' => 'board', 'action' => 'add')); ?>" method="post">
 			<div class="tbl1">
 				<div class="formLabel col col-2"><label for="title"><?php echo __('Board title'); ?>:</label></div>
 				<div class="formField col col-8">

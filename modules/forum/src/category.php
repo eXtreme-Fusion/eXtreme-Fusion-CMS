@@ -1,4 +1,4 @@
-<?php
+<?php defined('EF5_SYSTEM') || exit;
 
 class Category_Model extends Abstract_Model {
 

@@ -1,4 +1,4 @@
-<?php
+<?php defined('EF5_SYSTEM') || exit;
 
 class Entry_Model extends Abstract_Model {
 

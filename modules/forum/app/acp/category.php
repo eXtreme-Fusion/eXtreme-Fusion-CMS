@@ -2,6 +2,8 @@
 
 class Category_Controller extends Forum_Controller {
 
+	protected $admin_area = TRUE;
+
 	public function add()
 	{
 		$board = $this
@@ -25,11 +27,11 @@ class Category_Controller extends Forum_Controller {
 
 			if ($_category)
 			{
-				return HELP::redirect($this->url->path(array('module' => 'forum', 'controller' => 'admin')).'#board-'.$id);
+				return HELP::redirect($this->url->path(array('module' => 'forum', 'controller' => 'acp')).'#board-'.$id);
 			}
 		}
 
-		return $this->view('admin/category', array(
+		return $this->view('acp/category', array(
 			'board_id' => $board['id'],
 			'board'    => $board['title'],
 			'title'    => $this->request->post('title')->show(),
@@ -59,11 +61,11 @@ class Category_Controller extends Forum_Controller {
 
 			if ($_category)
 			{
-				return HELP::redirect($this->url->path(array('module' => 'forum', 'controller' => 'admin')).'#board-'.$id);
+				return HELP::redirect($this->url->path(array('module' => 'forum', 'controller' => 'acp')).'#board-'.$id);
 			}
 		}
 
-		return $this->view('admin/category', array(
+		return $this->view('acp/category', array(
 			'board_id' => $category['board_id'],
 			'board'    => $category['board'],
 			'category' => $category,
@@ -95,7 +97,7 @@ class Category_Controller extends Forum_Controller {
 		$_thread = $this->pdo->exec('DELETE FROM [threads] WHERE `category_id` = :id',
 			array(':id', $id, PDO::PARAM_INT));
 
-		return $this->router->redirect(array('module' => 'forum', 'controller' => 'admin'));
+		return $this->router->redirect(array('module' => 'forum', 'controller' => 'acp'));
 	}
 
 }

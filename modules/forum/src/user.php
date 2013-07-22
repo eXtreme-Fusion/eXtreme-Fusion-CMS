@@ -1,4 +1,4 @@
-<?php
+<?php defined('EF5_SYSTEM') || exit;
 
 class User_Model extends Abstract_Model {
 

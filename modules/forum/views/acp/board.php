@@ -1,6 +1,6 @@
 <ul class="breadcrumbs">
 	<li><a href="<?php echo $this->router->path(array('module' => 'forum')); ?>"><?php echo __('Forum'); ?></a></li>
-	<li><a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'admin')); ?>"><?php echo __('Manage forum'); ?></a></li>
+	<li><a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'acp')); ?>"><?php echo __('Manage forum'); ?></a></li>
 	<li class="active"><?php echo $board['title']; ?></li>
 </ul>
 <?php $this->theme->middlePanel(__('Forum')); ?>

@@ -1,7 +1,7 @@
 <ul class="breadcrumbs">
 	<li><a href="<?php echo $this->router->path(array('module' => 'forum')); ?>"><?php echo __('Forum'); ?></a></li>
-	<li><a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'admin')); ?>"><?php echo __('Manage forum'); ?></a></li>
-	<li><a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'admin')); ?>#board-<?php echo $board_id; ?>"><?php echo $board; ?></a></li>
+	<li><a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'acp')); ?>"><?php echo __('Manage forum'); ?></a></li>
+	<li><a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'acp')); ?>#board-<?php echo $board_id; ?>"><?php echo $board; ?></a></li>
 	<li class="active"><?php echo isset($category) ? $category['title'] : __('Add category'); ?></li>
 </ul>
 <?php $this->theme->middlePanel(__('Forum')); ?>

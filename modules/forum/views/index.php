@@ -45,7 +45,7 @@
 <?php $this->theme->middlePanel(); ?>
 <?php if ($this->is_admin): ?>
 <nav class="forum-nav">
-	<a href="<?php echo ADDR_ADMIN; ?>" class="button"><?php echo __('Admin Control Panel'); ?></a>
-	<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'admin')); ?>" class="button"><?php echo __('Manage forum'); ?></a>
+	<?php if ($this->user->hasPermission('admin.login')): ?><a href="<?php echo ADDR_ADMIN; ?>" class="button"><?php echo __('Admin Control Panel'); ?></a><?php endif; ?>
+	<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'acp')); ?>" class="button"><?php echo __('Manage forum'); ?></a>
 </nav>
 <?php endif; ?>

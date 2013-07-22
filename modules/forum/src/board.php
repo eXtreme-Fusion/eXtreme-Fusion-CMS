@@ -1,4 +1,4 @@
-<?php
+<?php defined('EF5_SYSTEM') || exit;
 
 class Board_Model extends Abstract_Model {
 

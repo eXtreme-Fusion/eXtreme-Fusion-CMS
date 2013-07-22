@@ -2,6 +2,8 @@
 
 class Board_Controller extends Forum_Controller {
 
+	protected $admin_area = TRUE;
+
 	public function add()
 	{
 		if ($this->request->post('title')->show())
@@ -13,11 +15,11 @@ class Board_Controller extends Forum_Controller {
 
 			if ($_board && $id = $this->pdo->lastInsertId())
 			{
-				return HELP::redirect($this->url->path(array('module' => 'forum', 'controller' => 'admin')).'#board-'.$id);
+				return HELP::redirect($this->url->path(array('module' => 'forum', 'controller' => 'acp')).'#board-'.$id);
 			}
 		}
 
-		return $this->router->redirect(array('module' => 'forum', 'controller' => 'admin'));
+		return $this->router->redirect(array('module' => 'forum', 'controller' => 'acp'));
 	}
 
 	public function edit()
@@ -41,11 +43,11 @@ class Board_Controller extends Forum_Controller {
 
 			if ($_board)
 			{
-				return HELP::redirect($this->url->path(array('module' => 'forum', 'controller' => 'admin')).'#board-'.$id);
+				return HELP::redirect($this->url->path(array('module' => 'forum', 'controller' => 'acp')).'#board-'.$id);
 			}
 		}
 
-		return $this->view('admin/board', array(
+		return $this->view('acp/board', array(
 			'board' => $board,
 		));
 	}
@@ -87,7 +89,7 @@ class Board_Controller extends Forum_Controller {
 		$_categories = $this->pdo->exec('DELETE FROM [board_categories] WHERE `board_id` = :id',
 			array(':id', $id, PDO::PARAM_INT));
 
-		return $this->router->redirect(array('module' => 'forum', 'controller' => 'admin'));
+		return $this->router->redirect(array('module' => 'forum', 'controller' => 'acp'));
 	}
 
 }

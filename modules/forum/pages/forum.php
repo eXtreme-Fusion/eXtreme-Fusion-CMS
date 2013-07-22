@@ -5,7 +5,7 @@ define('F_CLASS', '.'.DS.'app'.DS);
 define('F_VIEW', '.'.DS.'views'.DS);
 define('F_SRC', '.'.DS.'src'.DS);
 
-define('F_ADMIN', 'admin');
+define('F_ADMIN', 'acp');
 
 define('F_EXT', '.php');
 
