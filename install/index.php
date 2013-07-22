@@ -691,9 +691,9 @@ try
 		{
 			$loaded = TRUE;
 		}
-		
+
 		$_tpl->assign('synchro_available', $loaded);
-		
+
 		if ($_POST)
 		{
 			if (isset($_POST['synchro']) && $_POST['synchro'] && $loaded)

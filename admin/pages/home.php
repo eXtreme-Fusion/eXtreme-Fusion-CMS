@@ -40,7 +40,7 @@ try
 
 	$_locale->load('home');
 	$_locale->load('settings_synchro');
-	
+
     if ( ! $_user->isLoggedIn())
     {
        $_request->redirect(ADDR_ADMIN.'index.php', array('action' => 'login'));
@@ -51,7 +51,7 @@ try
 	if ($_sett->get('version') < SYSTEM_VERSION)
 	{
 		$_tpl->assign('upgrade', TRUE);
-	} 
+	}
 	elseif ($_sett->get('synchro'))
 	{
 		$json = $_system->cache('synchro', NULL, 'synchro', 3600*24);
@@ -75,7 +75,7 @@ try
 				$json = ob_get_contents();
 				ob_end_clean();
 				curl_close($c);
-				
+
 				$_system->cache('synchro', $json, 'synchro');
 			}
 			elseif (function_exists('fsockopen'))
@@ -90,23 +90,23 @@ try
 					$json = ''; $h = '';
 					socket_set_timeout($r, 10);
 					fwrite($r, "GET /curl/update.php?&system=".$fields['system']."&addr=".$fields['addr']." HTTP/1.0\r\nHost: extreme-fusion.org\r\n\r\n");
-					
-					do 
-					{ 
+
+					do
+					{
 						$h .= fread($r, 1);
-					} 
+					}
 					while ( ! preg_match('/\\r\\n\\r\\n$/', $h));
-					
-					
-					if (preg_match('/Content\\-Length:\\s+([0-9]*)\\r\\n/', $h, $m)) 
+
+
+					if (preg_match('/Content\\-Length:\\s+([0-9]*)\\r\\n/', $h, $m))
 					{
 						$json = fread($r, $m[1]);
-					} 
+					}
 					else
 					{
 						while ( ! feof($r)) $json .= fread($r, 4096);
 					}
-					
+
 					$_system->cache('synchro', $json, 'synchro');
 				}
 			}
@@ -120,17 +120,17 @@ try
 				else
 				{
 					$json = '';
-					while ( ! feof($r)) 
+					while ( ! feof($r))
 					{
 						$json .= fread($r, 8192);
 					}
 					fclose($r);
-					
+
 					$_system->cache('synchro', $json, 'synchro');
 				}
-			} 
+			}
 		}
-		
+
 		if (! isset($error))
 		{
 			$json = json_decode($json, TRUE);
@@ -139,12 +139,12 @@ try
 				$_tpl->assign('update_href', $json['url']);
 			}
 		}
-	}	
+	}
 	else
 	{
 		$_tpl->assign('synchro_error', TRUE);
 	}
-	
+
 	if ($_request->post('note_add_save')->show() === 'yes')
 	{
 		$count = $_pdo->getMatchRowsCount('

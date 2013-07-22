@@ -491,7 +491,7 @@
 										{i18n('Installation suggest')}
 									</div>
 								{/if}
-								
+
 								<div class="synchro">
 									<input type="checkbox" name="synchro" value="true" {if ! $synchro_available}disabled="disabled" {/if}id="Synchro" />
 									<label for="Synchro">
