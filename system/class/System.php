@@ -182,7 +182,7 @@ class System {
 	 * @param   mixed    pliki pamięci podręcznej do usunięcia
 	 * @return  boolean  zawsze zwróci TRUE
 	 */
-	public function clearCache($dir = NULL, $cache = array())
+	public function clearCache($dir = '', $cache = array())
 	{
 		if (is_array($dir))
 		{
@@ -243,11 +243,8 @@ class System {
 				{
 					if (in_array(pathinfo($file->getPathname(), PATHINFO_FILENAME), $cache) || empty($cache))
 					{
-						if (file_exists($file->getPathname()))
-						{
-							// Usuwa plik pamięci podręcznej
-							unlink($file->getPathname());
-						}
+						// Usuwa plik pamięci podręcznej
+						unlink($file->getPathname());
 					}
 				}
 			}

@@ -600,6 +600,11 @@ class Router
 	{
 		return isset($this->_values[$id]) ? $this->_values[$id] : $default;
 	}
+	
+	public function getParams()
+	{
+		return $this->_params_void_order;//values;
+	}
 
 	public function getRequest()
 	{
