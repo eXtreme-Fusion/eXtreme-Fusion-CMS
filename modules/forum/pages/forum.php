@@ -102,7 +102,7 @@ if (file_exists($path))
 	}
 	catch(PDOException $exception)
 	{
-		echo $exception;
+		PDOErrorHandler($exception);
 	}
 
 	spl_autoload_unregister('autoloader');

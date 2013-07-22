@@ -9,9 +9,9 @@
 			<table class="forum" id="board-<?php echo $board['id']; ?>">
 				<thead>
 					<tr>
-						<th class="col-7 align-left"><?php echo $board['title']; ?></th>
+						<th class="col-10 align-left"><?php echo $board['title']; ?></th>
 						<th class="col-1 col-actions">
-							<!--a href="#" title="<?php echo __('Edit board'); ?>"><?php echo __('Edit'); ?></a-->
+							<a href="<?php echo $this->router->path(array('module' => 'forum', 'directory' => 'admin', 'controller' => 'board', 'action' => 'edit', $board['id'])); ?>" title="<?php echo __('Edit board'); ?>"><?php echo __('Edit'); ?></a>
 							<a href="<?php echo $this->router->path(array('module' => 'forum', 'directory' => 'admin', 'controller' => 'board', 'action' => 'remove', $board['id'])); ?>" title="<?php echo __('Remove board'); ?>"><?php echo __('Remove'); ?></a>
 						</th>
 					</tr>

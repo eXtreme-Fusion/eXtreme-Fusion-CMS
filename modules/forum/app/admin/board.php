@@ -20,6 +20,36 @@ class Board_Controller extends Forum_Controller {
 		return $this->router->redirect(array('module' => 'forum', 'controller' => 'admin'));
 	}
 
+	public function edit()
+	{
+		$board = $this
+			->model('board')
+			->findByID($id = $this->params[0]);
+
+		if ( ! $board)
+		{
+			return $this->router->trace(array('controller' => 'error', 'action' => 404));
+		}
+
+		if ($this->request->post('title')->show())
+		{
+			$_board = $this->pdo->exec('UPDATE [boards] SET `title` = :title, `order` = :order WHERE `id` = :id', array(
+				array(':title', HELP::wordsProtect($this->request->post('title')->filters('trim', 'strip')), PDO::PARAM_STR),
+				array(':order', $this->request->post('order')->show(), PDO::PARAM_INT),
+				array(':id', $id, PDO::PARAM_INT),
+			));
+
+			if ($_board)
+			{
+				return HELP::redirect($this->url->path(array('module' => 'forum', 'controller' => 'admin')).'#board-'.$id);
+			}
+		}
+
+		return $this->view('admin/board', array(
+			'board' => $board,
+		));
+	}
+
 	public function remove()
 	{
 		$board = $this
