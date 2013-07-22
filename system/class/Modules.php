@@ -524,9 +524,9 @@ class Modules
 		$data = $this->_pdo->getRow("SELECT `folder` FROM [modules] WHERE `folder`='{$folder}'");
 		if ($data)
 		{
-			if (file_exists(DIR_MODULES.$modules.DS.'locale'.DS.$this->_sett->get('locale').DS.'admin'.DS.'config.php'))
+			if (file_exists(DIR_MODULES.$folder.DS.'locale'.DS.$this->_sett->get('locale').DS.'admin'.DS.'config.php'))
 			{
-				$this->_locale->moduleLoad('config', $modules);
+				$this->_locale->moduleLoad('config', $folder);
 			}
 
 			include DIR_MODULES.$folder.DS.'config.php';
