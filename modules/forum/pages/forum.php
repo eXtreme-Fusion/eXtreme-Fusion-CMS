@@ -61,7 +61,8 @@ if (file_exists($path))
 	require_once $path;
 
 	$class_name = ucfirst($app).'_Controller';
-
+	
+	ob_start();
 	try
 	{
 		// Pobieranie nazwy akcji oraz usuwanie jej z parametrów
@@ -90,21 +91,26 @@ if (file_exists($path))
 	}
 	catch(optException $exception)
 	{
+		ob_clean();
 		optErrorHandler($exception, FALSE);
 	}
 	catch(systemException $exception)
 	{
+		ob_clean();
 		systemErrorHandler($exception, FALSE);
 	}
 	catch(userException $exception)
 	{
+		ob_clean();
 		userErrorHandler($exception, FALSE);
 	}
 	catch(PDOException $exception)
 	{
+		ob_clean();
 		PDOErrorHandler($exception, FALSE);
 	}
 
+	ob_end_flush();
 	spl_autoload_unregister('autoloader');
 	spl_autoload_register('__autoload');
 	
