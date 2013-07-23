@@ -11,8 +11,8 @@ class Category_Model extends Abstract_Model {
 				e.user_id as user,
 				e.timestamp as timestamp,
 				e.thread_id as thread
-			FROM [boarddf_categories] c
-			LEFT JOIN (SELECT e.* FROM [entries] e ORDER BY e.idsd DESC) e
+			FROM [board_categories] c
+			LEFT JOIN (SELECT e.* FROM [entries] e ORDER BY e.id DESC) e
 			ON e.thread_id = (SELECT t.id FROM [threads] t WHERE t.category_id = c.id ORDER BY t.timestamp DESC LIMIT 1)
 			WHERE c.board_id = :id
 			GROUP BY c.id

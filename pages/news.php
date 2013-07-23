@@ -62,7 +62,7 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 		{
 			$data = $_pdo->getRow('
 					SELECT tn.`id` AS `news_id`, tn.`title`, tn.`link`, tn.`category`, tn.`content`, tn.`content_extended`, tn.`author`, tn.`source`, tn.`description`, tn.`breaks`, tn.`datestamp`, tn.`access`, tn.`reads`, tn.`draft`, tn.`sticky`, tn.`allow_comments`, tn.`allow_ratings`, tc.`id` AS `cat_id`, tc.`name`, tc.`image`, tu.`id` AS `user_id`, tu.`username` AS `username` FROM [news] tn
-					LEFT JOIN [usefrs] tu ON tn.`author` = tu.`id`
+					LEFT JOIN [users] tu ON tn.`author` = tu.`id`
 					LEFT JOIN [news_cats] tc ON tn.`category` = tc.`id`
 					WHERE tn.`draft` = 0 AND tn.`id` = :id', array(':id', $item_id, PDO::PARAM_INT)
 			);
