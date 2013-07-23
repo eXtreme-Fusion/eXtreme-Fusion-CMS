@@ -49,14 +49,17 @@ class optException extends Exception
 	}
 }
 
-function optErrorHandler(optException $exc) 
+function optErrorHandler(optException $exc, $full = TRUE) 
 {
-	ob_start();
+	if ($full)
+	{
+		ob_start();
 		include DIR_ADMIN_TEMPLATES."pre".DS."exception_header.tpl";
 		$getHeader = ob_get_contents();
-	ob_end_clean();
-	
-	echo replaceException($getHeader);
+		ob_end_clean();
+
+		echo replaceException($getHeader);
+	}
 	echo '<h3>'.$exc->getType().' '.__('Internal error').' #'.$exc->getCode().'</h3>';
 	echo '<div class="error">'.$exc->getMessage().'</div>';
 
@@ -142,11 +145,14 @@ function optErrorHandler(optException $exc)
 	</div>
 
 <?php 
-	ob_start();
-		include DIR_ADMIN_TEMPLATES."pre".DS."exception_footer.tpl";
+	if ($full)
+	{
+		ob_start();
+		include DIR_ADMIN_TEMPLATES."pre/exception_footer.tpl";
 		$getFooter = ob_get_contents();
-	ob_end_clean();
-	echo replaceException($getFooter);
+		ob_end_clean();
+		echo replaceException($getFooter);
+	}
 }
 
 class uploadException extends Exception
@@ -189,30 +195,39 @@ class uploadException extends Exception
     }
 } 
 
-function uploadErrorHandler(uploadException $exc) {
-	ob_start();
-		include DIR_ADMIN_TEMPLATES."pre".DS."exception_header.tpl";
-		$getHeader = ob_get_contents();
-	ob_end_clean();
-	echo replaceException($getHeader);
+function uploadErrorHandler(uploadException $exc, $full = TRUE) {
+	if ($full)
+	{
+		ob_start();
+			include DIR_ADMIN_TEMPLATES."pre".DS."exception_header.tpl";
+			$getHeader = ob_get_contents();
+		ob_end_clean();
+		echo replaceException($getHeader);
+	}
 
 	echo '<h3>'.__('Upload error').'</h3>
 	<div class="error">'.$exc->getMessage().'</div>';
 
-	ob_start();
-		include DIR_ADMIN_TEMPLATES."pre".DS."exception_footer.tpl";
+	if ($full)
+	{
+		ob_start();
+		include DIR_ADMIN_TEMPLATES."pre/exception_footer.tpl";
 		$getFooter = ob_get_contents();
-	ob_end_clean();
-	echo replaceException($getFooter);
+		ob_end_clean();
+		echo replaceException($getFooter);
+	}
 }
 
-function systemErrorHandler(systemException $exc)
+function systemErrorHandler(systemException $exc, $full = TRUE)
 {
-	ob_start();
-		include DIR_ADMIN_TEMPLATES."pre".DS."exception_header.tpl";
-		$getHeader = ob_get_contents();
-	ob_end_clean();
-	echo replaceException($getHeader);
+	if ($full)
+	{
+		ob_start();
+			include DIR_ADMIN_TEMPLATES."pre".DS."exception_header.tpl";
+			$getHeader = ob_get_contents();
+		ob_end_clean();
+		echo replaceException($getHeader);
+	}
 	
 	echo '<h3>'.__('System error').'</h3>
 	<div class="error">'.$exc->getMessage().'</div>';
@@ -266,20 +281,26 @@ function systemErrorHandler(systemException $exc)
 		</div>
 	</div>
 	<?php
-	ob_start();
-		include DIR_ADMIN_TEMPLATES."pre".DS."exception_footer.tpl";
+	if ($full)
+	{
+		ob_start();
+		include DIR_ADMIN_TEMPLATES."pre/exception_footer.tpl";
 		$getFooter = ob_get_contents();
-	ob_end_clean();
-	echo replaceException($getFooter);
+		ob_end_clean();
+		echo replaceException($getFooter);
+	}
 }
 
-function argumentErrorHandler(argumentException $exc)
+function argumentErrorHandler(argumentException $exc, $full = TRUE)
 {
-	ob_start();
-		include DIR_ADMIN_TEMPLATES."pre".DS."exception_header.tpl";
-		$getHeader = ob_get_contents();
-	ob_end_clean();
-	echo replaceException($getHeader);
+	if ($full)
+	{
+		ob_start();
+			include DIR_ADMIN_TEMPLATES."pre".DS."exception_header.tpl";
+			$getHeader = ob_get_contents();
+		ob_end_clean();
+		echo replaceException($getHeader);
+	}
 	echo '<h3>'.__('Function argument error').'</h3>
 	<div class="error">'.__('Parameter of :parametr is wrong.', array(':parametr' => $exc->getMessage())).'</div>';
 	$trace = array_reverse($exc->getTrace()); ?>
@@ -317,11 +338,14 @@ function argumentErrorHandler(argumentException $exc)
 		</div>
 	</div>
 	<?php
-	ob_start();
-		include DIR_ADMIN_TEMPLATES."pre".DS."exception_footer.tpl";
+	if ($full)
+	{
+		ob_start();
+		include DIR_ADMIN_TEMPLATES."pre/exception_footer.tpl";
 		$getFooter = ob_get_contents();
-	ob_end_clean();
-	echo replaceException($getFooter);
+		ob_end_clean();
+		echo replaceException($getFooter);
+	}
 }
 
 function pagesErrorHandler($exc) {
@@ -344,29 +368,39 @@ function pagesErrorHandler($exc) {
 	return $error;
 }
 
-function userErrorHandler(userException $exc) {
-	ob_start();
-		include DIR_ADMIN_TEMPLATES."pre".DS."exception_header.tpl";
-		$getHeader = ob_get_contents();
-	ob_end_clean();
-	echo replaceException($getHeader);
+function userErrorHandler(userException $exc, $full = TRUE) {
+	
+	if ($full)
+	{
+		ob_start();
+			include DIR_ADMIN_TEMPLATES."pre".DS."exception_header.tpl";
+			$getHeader = ob_get_contents();
+		ob_end_clean();
+		echo replaceException($getHeader);
+	}
 
 	echo '<h3>'.__('User error').'</h3>
 	<div class="error">'.$exc->getMessage().'</div>';
 
-	ob_start();
-		include DIR_ADMIN_TEMPLATES."pre".DS."exception_footer.tpl";
+	if ($full)
+	{
+		ob_start();
+		include DIR_ADMIN_TEMPLATES."pre/exception_footer.tpl";
 		$getFooter = ob_get_contents();
-	ob_end_clean();
-	echo replaceException($getFooter);
+		ob_end_clean();
+		echo replaceException($getFooter);
+	}
 }
 
-function PDOErrorHandler(PDOException $exc) {
-	ob_start();
-		include DIR_ADMIN_TEMPLATES."pre".DS."exception_header.tpl";
-		$getHeader = ob_get_contents();
-	ob_end_clean();
-	echo replaceException($getHeader);
+function PDOErrorHandler(PDOException $exc, $full = TRUE) {
+	if ($full)
+	{
+		ob_start();
+			include DIR_ADMIN_TEMPLATES."pre".DS."exception_header.tpl";
+			$getHeader = ob_get_contents();
+		ob_end_clean();
+		echo replaceException($getHeader);
+	}
 	
 	if(strstr($exc->getMessage(), 'SQLSTATE[')) 
 	{ 
@@ -426,11 +460,14 @@ function PDOErrorHandler(PDOException $exc) {
 		</div>
 	</div>
 	<?php
-	ob_start();
+	if ($full)
+	{
+		ob_start();
 		include DIR_ADMIN_TEMPLATES."pre/exception_footer.tpl";
 		$getFooter = ob_get_contents();
-	ob_end_clean();
-	echo replaceException($getFooter);
+		ob_end_clean();
+		echo replaceException($getFooter);
+	}
 }
 
 function replaceException($text) 
@@ -447,5 +484,5 @@ function replaceException($text)
 		'{/literal}' 			=> ""
 	);
 	
-	return HELP::strReplaceAssoc($replace, $text);
+	return str_replace(array_keys($replace), array_values($replace), $text);
 }
