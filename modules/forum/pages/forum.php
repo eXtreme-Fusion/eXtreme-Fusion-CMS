@@ -1,5 +1,5 @@
 <?php
-chdir(dirname(__DIR__));
+chdir(dirname(dirname(__FILE__)));
 
 define('F_CLASS', '.'.DS.'app'.DS);
 define('F_VIEW', '.'.DS.'views'.DS);
@@ -107,6 +107,7 @@ if (file_exists($path))
 
 	spl_autoload_unregister('autoloader');
 	spl_autoload_register('__autoload');
+	
 }
 else
 {
