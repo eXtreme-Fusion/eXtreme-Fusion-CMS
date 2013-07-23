@@ -35,7 +35,17 @@
 
 <div class="ui-corner-all grid_6">
 	<h3 class="ui-corner-all">{i18n('Update')}</h3>
-	<div class="HomeBox"><div class="valid">{if $upgrade}<a href="{$ADDR_ADMIN_PAGES}upgrade.php">{i18n('Update is available.')}</a>{else}{i18n('You have currently version of eXtreme-Fusion CMS.')}{/if}</div></div>
+
+	{if $synchro_error || $error}
+		<div class="HomeBox"><div class="error"><a href="{$ADDR_ADMIN_PAGES}settings_synchro.php">{i18n('Synchronization is not active.')}</a></div></div>
+	{elseif $upgrade}
+		<div class="HomeBox"><div class="valid"><a href="{$ADDR_ADMIN_PAGES}upgrade.php">{i18n('Update is ready to install.')}</a></div></div>
+	{elseif $update_href}
+		<div class="HomeBox"><div class="valid"><a href="{$ADDR_ADMIN_PAGES}settings_synchro.php?action=download&amp;url={$update_href}">{i18n('Update is available.')}</a></div></div>
+	{else}
+		<div class="HomeBox"><div class="valid">{i18n('You have currently version of eXtreme-Fusion CMS.')}</div></div>
+	{/if}
+
 
 	<h3 class="ui-corner-all">{i18n('History')}</h3>
 	<div class="HomeBox">
@@ -111,9 +121,9 @@
 						<div class="Buttons">
 							<div class="center grid_2 button-c">
 								<input type="hidden" name="note_add" value="yes" />
-								
+
 								<span id="SendForm_ThisNotes" class="save"><strong>{i18n('Add')}<img src="{$ADDR_ADMIN_ICONS}pixel/plus.png" alt="" /></strong></span>
-								
+
 							</div>
 						</div>
 					</form>
@@ -128,7 +138,7 @@
 		-->
 		<h3 class="ui-corner-all">{i18n('Statistics')}</h3>
 		<div class="HomeBox"><div class="error">{i18n('Not&nbsp;plugged.')}</div></div>
-		
+
 		<h3 class="ui-corner-all">{i18n('Latest comments')}</h3>
 		<div class="HomeBox"><div class="error">{i18n('Not&nbsp;plugged.')}</div></div>
 </div>

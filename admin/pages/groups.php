@@ -27,6 +27,7 @@ try
         throw new userException(__('Access denied'));
     }
 
+	$_fav->setFavByLink('groups.php', $_user->get('id'));
 	$_tpl = new Iframe;
 
 	// Wyświetlenie komunikatów

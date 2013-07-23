@@ -368,7 +368,7 @@ return array(
 	'Internal error' => 'Błąd wewnętrzny',
 	'Error path' => 'Ścieżka błędu',
 	'In file' => 'W pliku',
-	'Function' => 'Funckja',
+	'Function' => 'Funkcja',
 	'Line' => 'Linia',
 	'Directories' => 'Katalogi',
 	'Directory' => 'Katalog',
@@ -387,6 +387,7 @@ return array(
 	//User
 	'User error' => 'Błąd użytkownika',
 	'PDO Error' => 'Błąd interpretera PDO',
+	'PDO Queries' => 'Zapytanie PDO',
 
 	//Comments
 	'Add comments' => 'Skomentuj',

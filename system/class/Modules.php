@@ -13,7 +13,7 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
+|
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------+
@@ -39,7 +39,8 @@ class Modules
 		$_pdo,
 		$_sett,
 		$_user,
-		$_tag;
+		$_tag,
+		$_locale;
 
 	protected $_categories = array();
 
@@ -61,7 +62,8 @@ class Modules
 		// Kategorie, do których można przypisywać moduły
 		$this->_categories = array(
 			'security',
-			'comments'
+			'comments',
+			'forum'
 		);
 	}
 
@@ -99,6 +101,19 @@ class Modules
 		return $modules;
 	}
 
+	public function getConfig($path)
+	{
+		if (file_exists($path))
+		{
+			include $path;
+			if (isset($mod_info))
+			{
+				return $mod_info;
+			}
+		}
+
+		return array();
+	}
 
 	public function getModuleBootstrap($_system, $cache_expire = 43200)
 	{
@@ -509,9 +524,9 @@ class Modules
 		$data = $this->_pdo->getRow("SELECT `folder` FROM [modules] WHERE `folder`='{$folder}'");
 		if ($data)
 		{
-			if (file_exists(DIR_MODULES.$modules.DS.'locale'.DS.$this->_sett->get('locale').DS.'admin'.DS.'config.php'))
+			if (file_exists(DIR_MODULES.$folder.DS.'locale'.DS.$this->_sett->get('locale').DS.'admin'.DS.'config.php'))
 			{
-				$this->_locale->moduleLoad('config', $modules);
+				$this->_locale->moduleLoad('config', $folder);
 			}
 
 			include DIR_MODULES.$folder.DS.'config.php';

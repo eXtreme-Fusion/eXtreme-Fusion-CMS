@@ -20,10 +20,14 @@ return array(
 	'News style:' => 'Styl novinek:',
 	'Single Column' => 'jednosloupcový',
 	'Double Column' => 'dvousloupcový',
+	'Enable language detection by browser?' => 'Povolit detekci jazyka vyhledávačem?',
 	'Default language:' => 'Jazyk stránky:',
 	'Default theme:' => 'Šablona (theme) stránky:',
 	'Default search place:' => 'Základní vyhledávací prostor:',
 	//Logs
-	'The data has been saved.' => 'Data byla uložena.',
-	'<strong>Error!</strong> The data has not been saved.' => '<strong>Chyba!</strong> Data nebyla uložena.'
+	'The language chosen is not avaible.' => 'Vybraný jazyk není dostupný.',
+	'The template chosen is not available.' => 'Vybraná šablona není dostupná.',
+	'Data has been saved. Please refresh the page to see changes.' => 'Data byla uložena. Změny viditelné po obnovení stránky.',
+	'System language has been changed.' => 'Jazyk systému byl změněn.',
+
 );

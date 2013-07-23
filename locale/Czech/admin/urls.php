@@ -19,6 +19,6 @@ return array(
 					 <p>Adresy, zveřejněny v níže uvedeném formuláři by neměly zahrnovat cesty k hlavní stránce.</p>
 					 <p>Příklad správného používání:</p>
 					 <br />
-					 <ul><li><strong>Aktuálny adresa:</strong> profile,1,Admin</li><li><strong>Nová adresa:</strong> profil-admina</ul>'
+					 <ul><li><strong>Aktuálny adresa:</strong> profile/1/Admin</li><li><strong>Nová adresa:</strong> profil-admina</ul>'
 
 );

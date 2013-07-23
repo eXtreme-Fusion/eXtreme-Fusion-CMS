@@ -229,19 +229,34 @@ function systemErrorHandler(systemException $exc)
 				</tr>
 			</thead>
 			<tbody>
-				<?php foreach($trace as $number => $item) {
-					if(isset($item['class'])) {
-						$callback = $item['class'].$item['type'].$item['function'];
-					} else {
-						$callback = $item['function'];
+				<?php 
+					if (!empty($trace))
+					{	
+						//var_dump($exc);
+						foreach($trace as $number => $item) {
+							if(isset($item['class'])) {
+								$callback = $item['class'].$item['type'].$item['function'];
+							} else {
+								$callback = $item['function'];
+							}
+							echo '<tr class="tbl1 border_bottom">
+							<td style="padding:6px;width:5%" class="center">'.$number.'</td>
+							<td style="width:40%">'.(isset($item['file']) ? $item['file'] : '-----').'</td>
+							<td style="width:45%">'.$callback.'</td>
+							<td style="width:10%" class="center">'.(isset($item['line']) ? $item['line'] : '-----').'</td>
+							</tr>';
+						}
 					}
-					echo '<tr class="tbl1 border_bottom">
-					<td style="padding:6px;width:5%" class="center">'.$number.'</td>
-					<td style="width:40%">'.(isset($item['file']) ? basename($item['file']) : '----').'</td>
-					<td style="width:45%">'.$callback.'</td>
-					<td style="width:10%" class="center">'.(isset($item['line']) ? basename($item['line']) : '----').'</td>
-					</tr>';
-				} ?>
+					else
+					{
+						echo '<tr class="tbl1 border_bottom">
+						<td style="padding:6px;width:5%" class="center">1</td>
+						<td style="width:40%">'.$exc->getFile().'</td>
+						<td style="width:45%">---</td>
+						<td style="width:10%" class="center">'.$exc->getLine().'</td>
+						</tr>';
+					}
+				?>
 			</tbody>
 		</table>
 		<div class="tbl Buttons" style="width:200px;margin:10px auto;">
@@ -288,9 +303,9 @@ function argumentErrorHandler(argumentException $exc)
 					}
 					echo '<tr class="tbl1 border_bottom">
 					<td style="padding:6px;width:5%" class="center">'.$number.'</td>
-					<td style="width:40%">'.(isset($item['file']) ? basename($item['file']) : '----').'</td>
+					<td style="width:40%">'.(isset($item['file']) ? $item['file'] : '-----').'</td>
 					<td style="width:45%">'.$callback.'</td>
-					<td style="width:10%" class="center">'.(isset($item['line']) ? basename($item['line']) : '----').'</td>
+					<td style="width:10%" class="center">'.(isset($item['line']) ? $item['line'] : '-----').'</td>
 					</tr>';
 				} ?>
 			</tbody>
@@ -329,8 +344,6 @@ function pagesErrorHandler($exc) {
 	return $error;
 }
 
-
-
 function userErrorHandler(userException $exc) {
 	ob_start();
 		include DIR_ADMIN_TEMPLATES."pre".DS."exception_header.tpl";
@@ -348,19 +361,36 @@ function userErrorHandler(userException $exc) {
 	echo replaceException($getFooter);
 }
 
-
-
-function PDOErrorHandler($exc) {
+function PDOErrorHandler(PDOException $exc) {
 	ob_start();
 		include DIR_ADMIN_TEMPLATES."pre".DS."exception_header.tpl";
 		$getHeader = ob_get_contents();
 	ob_end_clean();
 	echo replaceException($getHeader);
-
-	echo '<h3>'.__('PDO Error').'</h3>
-	<div class="error">'.$exc->getMessage().'</div>';
-	$trace = array_reverse($exc->getTrace()); ?>
+	
+	if(strstr($exc->getMessage(), 'SQLSTATE[')) 
+	{ 
+        preg_match('/SQLSTATE\[(.*)\]: (.*)/', $exc->getMessage(), $matches);
+		$code = $matches[1];
+		$message = $matches[2];
+    } 
+	
+	echo '<h3>'.__('PDO Error').' #SQLSTATE: '.$code.'</h3>
+	<div class="error">'.$message.'</div>';
+	$trace = array_reverse($exc->getTrace());
+	
+	?>
 	<div class="debug opt">
+		<?php 
+		foreach($trace as $number => $item) 
+		{
+			if(isset($item['function']) && $item['function'] === 'query' && isset($item['class']) && $item['class'] === 'Data' && isset($item['args'][0]) && ! is_object($item['args'][0])) 
+			{
+				echo '<h3>'.__('PDO Queries').'</h3>'; 
+				echo '<div class="error">'.$item['args'][0].'</div>';
+			}
+		} ?>
+		
 		<h3><?php echo __('Error path'); ?></h3>
 		<table id="TableOPT" class="dataTable">
 			<thead>
@@ -380,9 +410,9 @@ function PDOErrorHandler($exc) {
 					}
 					echo '<tr class="tbl1 border_bottom">
 					<td style="padding:6px;width:5%" class="center">'.$number.'</td>
-					<td style="width:40%">'.$exc->getFile().'</td>
+					<td style="width:40%">'.(isset($item['file']) ? $item['file'] : '-----').'</td>
 					<td style="width:45%">'.$callback.'</td>
-					<td style="width:10%" class="center">'.$item['line'].'</td>
+					<td style="width:10%" class="center">'.(isset($item['line']) ? $item['line'] : '-----').'</td>
 					</tr>';
 				} ?>
 			</tbody>

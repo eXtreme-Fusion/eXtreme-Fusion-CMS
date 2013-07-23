@@ -88,11 +88,13 @@ class System {
 
 		if ($this->code)
 		{
-			// TODO:: czy wartość $key/$string nie powinna być brana z zakodowanej cześci $data zamiast z nazwy pliku?
+			// TODO:: wartość $key/$string powinna być brana z zakodowanej cześci $data zamiast z nazwy pliku.
 			// TODO:: bo wydaje mi się że w obecnej formie może się zdarzyć tak, że w zawartości
 			// TODO:: cache'owanego pliku nie znajdzie wyrażenia spod tych zmiennych (które pochodzi z nazwy pliku a nie zawartości)
 			// TODO:: i wtedy łatwo rozkodować taki plik.
 
+			// TODO: kodowanie powinno odbywać się klasą Crypt
+			
 			// Tworzy klucz który jest mieszany z base64_decode/base64_encode,
 			// zabezpiecza przed bezpośrednim odczytaniem danych z przez base64_decode
 			$key = substr(sha1($file), 1, 7);
@@ -107,11 +109,11 @@ class System {
 				{
 					if ( ! $this->code)
 					{
-						return unserialize(file_get_contents($dir.$file));
+						return @unserialize(file_get_contents($dir.$file));
 					}
 					else
 					{
-						return unserialize(base64_decode(str_replace($key, $string, file_get_contents($dir.$file))));
+						return @unserialize(base64_decode(str_replace($key, $string, file_get_contents($dir.$file))));
 					}
 				}
 				else
@@ -147,7 +149,7 @@ class System {
 	}
 
 	/**
-	 * Usuwa pamięć podręczną ze wszystkich podkatalogów katalogu pamięci podręcznej
+	 * Czyści katalog pamięci podręcznej, usuwając podkatalogi z zawartością.
 	 *
 	 * @param   object   obiekt do zarzadzania plikami
 	 * @return  boolean
@@ -180,7 +182,7 @@ class System {
 	 * @param   mixed    pliki pamięci podręcznej do usunięcia
 	 * @return  boolean  zawsze zwróci TRUE
 	 */
-	public function clearCache($dir = NULL, $cache = array())
+	public function clearCache($dir = '', $cache = array())
 	{
 		if (is_array($dir))
 		{
@@ -241,11 +243,8 @@ class System {
 				{
 					if (in_array(pathinfo($file->getPathname(), PATHINFO_FILENAME), $cache) || empty($cache))
 					{
-						if (file_exists($file->getPathname()))
-						{
-							// Usuwa plik pamięci podręcznej
-							unlink($file->getPathname());
-						}
+						// Usuwa plik pamięci podręcznej
+						unlink($file->getPathname());
 					}
 				}
 			}

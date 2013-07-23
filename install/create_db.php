@@ -391,6 +391,7 @@ $result = $_pdo->query("CREATE TABLE ".$db_prefix."users (
 	`username` VARCHAR(30) NOT NULL DEFAULT '',
 	`password` CHAR(129) NOT NULL DEFAULT '',
 	`salt` CHAR(5) NOT NULL DEFAULT '',
+	`algo` VARCHAR(10) NOT NULL DEFAULT 'sha512',
 
 	`user_hash` VARCHAR(10) NOT NULL DEFAULT '',
 	`user_last_logged_in` INT UNSIGNED NOT NULL DEFAULT '0',
@@ -446,5 +447,19 @@ $result = $_pdo->query("CREATE TABLE ".$db_prefix."users_data (
   `location` VARCHAR(200) NOT NULL DEFAULT '',
   `sig` TEXT NOT NULL,
   PRIMARY KEY (`user_id`)
+) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";", NULL, FALSE);
+if ( ! $result) $fail = TRUE;
+
+$_pdo->query("DROP TABLE IF EXISTS ".$db_prefix."admin_favourites", NULL, FALSE);
+$result = $_pdo->query("CREATE TABLE ".$db_prefix."admin_favourites (
+	`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
+	`user_id` MEDIUMINT UNSIGNED NOT NULL,
+	`page_id` MEDIUMINT UNSIGNED NOT NULL,
+	`count` MEDIUMINT NOT NULL,
+	`time` INT UNSIGNED NOT NULL,
+	PRIMARY KEY (`id`),
+	UNIQUE KEY(`page_id`, `user_id`),
+	CONSTRAINT FOREIGN KEY (`page_id`) REFERENCES ".$db_prefix."admin(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT FOREIGN KEY (`user_id`) REFERENCES ".$db_prefix."users(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB CHARACTER SET ".$charset." COLLATE ".$collate.";", NULL, FALSE);
 if ( ! $result) $fail = TRUE;

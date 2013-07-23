@@ -35,9 +35,6 @@
 try
 {
 	require_once '../../config.php';
-	// TODO:: Niwelacja komunikatu o rozpoczętej sesji "Notice: A session had already been started - ignoring session_start()"
-	// TODO:: Albo bez require DIR_SITE.'bootstrap.php';
-	// TODO:: Albo z require DIR_SITE.'bootstrap.php'; lecz bez zmodyfikwanego bootstrap.php podczas rozpoczynania sesji.
 	require DIR_SITE.'bootstrap.php';
 	require_once DIR_SYSTEM.'admincore.php';
 
@@ -48,13 +45,17 @@ try
         throw new userException(__('Access denied'));
     }
 
+	// Tutaj jest to zbędne bo nie ma indeksu w tabeli admin dla tej zawartości.
+	//$_fav->setFavByLink('modules.php', $_user->get('id'));
+	
 	$_tpl = new Iframe;
-
+	
 	$_mod = new Modules($_pdo, $_sett, $_user, New Tag($_system, $_pdo), $_locale);
 
 	// Wyświetlenie komunikatów
 	if ($_request->get(array('status', 'act'))->show())
 	{
+		$_system->clearCacheRecursive($_files);
 		// Wyświetli komunikat
 		$_tpl->getMessage($_request->get('status')->show(), $_request->get('act')->show(),
 			array(
@@ -108,7 +109,6 @@ try
 			}
 
 			$_log->insertSuccess('install', __('Modules have been installed.'));
-			$_system->clearCache('system', array('__autoloadModulesList'));
 			$_request->redirect(FILE_PATH, array('act' => 'install', 'status' => 'ok'));
 
 		}
@@ -120,7 +120,6 @@ try
 			}
 
 			$_log->insertSuccess('uninstall', __('Modules have been uninstalled.'));
-			$_system->clearCache('system', array('__autoloadModulesList'));
 			$_request->redirect(FILE_PATH, array('act' => 'uninstall', 'status' => 'ok'));
 
 		}
@@ -135,7 +134,7 @@ try
 		$i = 0;
 		foreach($mod_list as $val)
 		{
-			if (include DIR_MODULES.$val[0].DS.'config.php')
+			if ($mod_info = $_mod->getConfig(DIR_MODULES.$val[0].DS.'config.php'))
 			{
 				$mod[] = array(
 					'row_color'		=> $i % 2 == 0 ? 'tbl1' : 'tbl2',

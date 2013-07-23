@@ -25,6 +25,8 @@ try
         throw new userException(__('Access denied'));
     }
 
+	$_fav->setFavByLink('phpinfo.php', $_user->get('id'));
+	
 	phpinfo();
 }
 catch(optException $exception)

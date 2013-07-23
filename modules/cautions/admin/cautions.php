@@ -26,9 +26,13 @@ try
 	{
 		throw new userException(__('Access denied'));
 	}
-
+	
+	$_fav->setFavByLink('cautions/admin/cautions.php', $_user->get('id'));
+	
     $_tpl = new AdminModuleIframe('cautions');
-
+	
+	$_tpl->setHistory(__FILE__);
+	
 	// Wyświetlenie komunikatów
 	if ($_request->get(array('status', 'act'))->show())
 	{

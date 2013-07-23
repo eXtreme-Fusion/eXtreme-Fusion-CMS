@@ -28,6 +28,7 @@ body {
 /* Rozszerzenia */
 textarea {resize:vertical;min-height:80px}
 .center {text-align:center !important;}
+.left{text-align:left !important;}
 .center-box {margin:0 auto !important;text-align:center !important;}
 .italic{font-style:italic}
 .underline{text-decoration:underline}
@@ -303,7 +304,8 @@ body.BodyIframe h3 {
 	font-size:11px;
 	list-style-type:circle;
 	}
-
+#synchro ul {list-style-type:disc; margin-left:50px;}
+#synchro p {margin: 5px 0}
 .uiTable { text-align: left; }
 .uiTable .selectAll { width: 16px; }
 .uiTable th, .uiTable td { padding: 10px; }

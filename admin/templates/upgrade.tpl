@@ -55,7 +55,7 @@
 		</form>
 	{else}
 		<div class="tbl1">
-			<div class="center grid_12">{i18n('There is no database upgrade available.')}</div>
+			<div class="center grid_12">{i18n('There is no updates ready to install.')}</div>
 		</div>
 	{/if}
 {/if}

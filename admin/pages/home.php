@@ -13,7 +13,6 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-|
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------+
@@ -40,6 +39,7 @@ try
 	require_once DIR_SYSTEM.'admincore.php';
 
 	$_locale->load('home');
+	$_locale->load('settings_synchro');
 
     if ( ! $_user->isLoggedIn())
     {
@@ -52,7 +52,99 @@ try
 	{
 		$_tpl->assign('upgrade', TRUE);
 	}
-	
+	elseif ($_sett->get('synchro'))
+	{
+		$json = $_system->cache('synchro', NULL, 'synchro', 3600*24);
+
+		if ($json === NULL)
+		{
+			$fields['system'] = SYSTEM_VERSION;
+			$fields['addr'] = ADDR_SITE;
+			if (function_exists('curl_init'))
+			{
+				$c = curl_init('http://extreme-fusion.org/curl/update.php');
+				curl_setopt($c, CURLOPT_POSTFIELDS, $fields);
+				curl_setopt($c, CURLOPT_NOBODY, 0);
+				curl_setopt($c, CURLOPT_HEADER, 0);
+				ob_start();
+				if ( ! curl_exec($c))
+				{
+					$error = TRUE;
+					$_tpl->assign('error', TRUE);
+				}
+				$json = ob_get_contents();
+				ob_end_clean();
+				curl_close($c);
+
+				$_system->cache('synchro', $json, 'synchro');
+			}
+			elseif (function_exists('fsockopen'))
+			{
+				if ( ! $r = fsockopen('extreme-fusion.org', 80, $errno, $errstr))
+				{
+					$error = TRUE;
+					$_tpl->assign('error', TRUE);
+				}
+				else
+				{
+					$json = ''; $h = '';
+					socket_set_timeout($r, 10);
+					fwrite($r, "GET /curl/update.php?&system=".$fields['system']."&addr=".$fields['addr']." HTTP/1.0\r\nHost: extreme-fusion.org\r\n\r\n");
+
+					do
+					{
+						$h .= fread($r, 1);
+					}
+					while ( ! preg_match('/\\r\\n\\r\\n$/', $h));
+
+
+					if (preg_match('/Content\\-Length:\\s+([0-9]*)\\r\\n/', $h, $m))
+					{
+						$json = fread($r, $m[1]);
+					}
+					else
+					{
+						while ( ! feof($r)) $json .= fread($r, 4096);
+					}
+
+					$_system->cache('synchro', $json, 'synchro');
+				}
+			}
+			elseif (function_exists('fopen'))
+			{
+				if ( ! $r = fopen("http://extreme-fusion.org/curl/update.php?&system=".$fields['system']."&addr=".$fields['addr'], 'r'))
+				{
+					$error = TRUE;
+					$_tpl->assign('error', TRUE);
+				}
+				else
+				{
+					$json = '';
+					while ( ! feof($r))
+					{
+						$json .= fread($r, 8192);
+					}
+					fclose($r);
+
+					$_system->cache('synchro', $json, 'synchro');
+				}
+			}
+		}
+
+		if (! isset($error))
+		{
+			$json = json_decode($json, TRUE);
+			if ($json['update'])
+			{
+				$_tpl->assign('update_href', $json['url']);
+			}
+		}
+	}
+	else
+	{
+		$_tpl->assign('synchro_error', TRUE);
+	}
+
 	if ($_request->post('note_add_save')->show() === 'yes')
 	{
 		$count = $_pdo->getMatchRowsCount('

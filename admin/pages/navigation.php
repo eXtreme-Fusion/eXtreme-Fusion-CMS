@@ -46,86 +46,98 @@ try
 
 	$_tpl = new Iframe;
 
+	if ($_request->get('PageNum')->show() ==! FALSE && ! is_numeric($_request->get('PageNum')->show()) && $_request->get('PageNum')->show() !== 'fav')
+	{
+		throw new systemException('Navigation not exists.');
+	}
+
 	$_SESSION['history'] = array(
 		'Page' => 'admin/pages/'.FILE_SELF.'?'.$_SERVER['QUERY_STRING'],
-		'Current' => $_request->get('PageNum')->show() ? intval($_request->get('PageNum')->show()) : 5
+		'Current' => $_request->get('PageNum')->show() ? $_request->get('PageNum')->show() : 5
 	);
 
 	if ($_request->get('PageNum')->show())
 	{
-		switch($_request->get('PageNum')->show())
+		if ($_request->get('PageNum')->show() === 'fav')
 		{
-			case 1:
-				$_tpl->assign('NavigationTitle', __('Manage content'));
-				break;
-			case 2:
-				$_tpl->assign('NavigationTitle', __('Manage users'));
-				break;
-			case 3:
-				$_tpl->assign('NavigationTitle', __('Manage site'));
-				break;
-			case 4:
-				$_tpl->assign('NavigationTitle', __('Settings'));
-				break;
-			case 5:
-				$_tpl->assign('NavigationTitle', __('Modules'));
-				break;
-			case 6:
-				$_tpl->assign('NavigationTitle', __('Panel'));
-				break;
-			case 7:
-				$_tpl->assign('NavigationTitle', __('System'));
-				break;
-			default:
-				$_tpl->assign('NavigationTitle', 'N/A');
-		}
-
-		$query = $_pdo->getData('SELECT * FROM [admin] WHERE `page` = :page ORDER BY `title`',
-			array(':page', $_request->get('PageNum')->show(), PDO::PARAM_INT)
-		);
-
-		$link = array();
-		if ($_pdo->getRowsCount($query))
-		{
-			foreach($query as $row)
-			{
-				if ($row['link'] !== 'reserved' && $_user->hasPermission($row['permissions']))
-				{
-					$link[] = array(
-						'Link'  => $_request->get('PageNum')->show() === '5' ? ADDR_MODULES.$row['link'] : $row['link'],
-						'Image' => $_request->get('PageNum')->show() === '5' ? ADDR_MODULES.$row['image'] : $row['image'],
-						'Title' => __($row['title'])
-					);
-				}
-			}
-		}
-
-		if ($_request->get('PageNum')->show() === '5')
-		{
-			if (count($link))
-			{
-				$_tpl->assign('NavigationTitle', __('Modules'));
-				$_tpl->assign('Modules', TRUE);
-				$_tpl->assign('AdminLink', $link);
-				$_tpl->template('navigation');
-			}
-			else
-			{
-				require DIR_ADMIN.'pages/modules.php';
-			}
-		}
-		elseif ($_request->get('PageNum')->show() === '6')
-		{
-			require DIR_ADMIN.'pages/home.php';
-		}
-		elseif ($_request->get('PageNum')->show() === '7')
-		{
-			require DIR_ADMIN.'pages/settings_ef.php';
+			require DIR_ADMIN.'pages/favourites.php';
 		}
 		else
 		{
-			$_tpl->assign('AdminLink', $link);
-			$_tpl->template('navigation');
+			switch($_request->get('PageNum')->show())
+			{
+				case 1:
+					$_tpl->assign('NavigationTitle', __('Manage content'));
+					break;
+				case 2:
+					$_tpl->assign('NavigationTitle', __('Manage users'));
+					break;
+				case 3:
+					$_tpl->assign('NavigationTitle', __('Manage site'));
+					break;
+				case 4:
+					$_tpl->assign('NavigationTitle', __('Settings'));
+					break;
+				case 5:
+					$_tpl->assign('NavigationTitle', __('Modules'));
+					break;
+				case 6:
+					$_tpl->assign('NavigationTitle', __('Panel'));
+					break;
+				case 7:
+					$_tpl->assign('NavigationTitle', __('System'));
+					break;
+				default:
+					$_tpl->assign('NavigationTitle', 'N/A');
+			}
+
+			$query = $_pdo->getData('SELECT * FROM [admin] WHERE `page` = :page ORDER BY `title`',
+				array(':page', $_request->get('PageNum')->show(), PDO::PARAM_INT)
+			);
+
+			$link = array();
+			if ($query)
+			{
+				foreach($query as $row)
+				{
+					if ($row['link'] !== 'reserved' && $_user->hasPermission($row['permissions']))
+					{
+						$link[] = array(
+							'Link'  => $_request->get('PageNum')->show() === '5' ? ADDR_MODULES.$row['link'] : $row['link'],
+							'Image' => $_request->get('PageNum')->show() === '5' ? ADDR_MODULES.$row['image'] : $row['image'],
+							'Title' => __($row['title'])
+						);
+					}
+				}
+			}
+
+			if ($_request->get('PageNum')->show() === '5')
+			{
+				if (count($link))
+				{
+					$_tpl->assign('NavigationTitle', __('Modules'));
+					$_tpl->assign('Modules', TRUE);
+					$_tpl->assign('AdminLink', $link);
+					$_tpl->template('navigation');
+				}
+				else
+				{
+					require DIR_ADMIN.'pages/modules.php';
+				}
+			}
+			elseif ($_request->get('PageNum')->show() === '6')
+			{
+				require DIR_ADMIN.'pages/home.php';
+			}
+			elseif ($_request->get('PageNum')->show() === '7')
+			{
+				require DIR_ADMIN.'pages/settings_ef.php';
+			}
+			else
+			{
+				$_tpl->assign('AdminLink', $link);
+				$_tpl->template('navigation');
+			}
 		}
 	}
 	else

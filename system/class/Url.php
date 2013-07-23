@@ -86,52 +86,53 @@ class URL
 	 */
 	public function path(array $data)
 	{
-		if (isset($data['controller']))
+		$module = $directory = $controller = $action = $ext = NULL;
+
+		if (isset($data['module']))
 		{
-			$ctrl = $data['controller'];
-		}
-		elseif ($this->controller)
-		{
-			$ctrl = $this->controller;
-		}
-		else
-		{
-			exit('Nie podano kontrolera');
+			$module = $data['module'];
 		}
 
-		unset($data['controller']);
+		if (isset($data['directory']))
+		{
+			$directory = $this->main_sep.$data['directory'];
+		}
+
+		if (isset($data['controller']))
+		{
+			$controller = $data['controller'];
+		}
+		elseif ($this->controller && $module === NULL)
+		{
+			$controller = $this->controller;
+		}
+
+		if ($controller)
+		{
+			$controller = $this->main_sep.$controller;
+		}
 
 		if (isset($data['action']))
 		{
 			$action = $this->main_sep.$data['action'];
 		}
-		else
+
+		if (isset($data['extension']) && $data['extension'])
 		{
-			$action = '';
+			$ext = '.'.str_replace('.', '', $data['extension']);
+		}
+		elseif ($this->ext_allowed)
+		{
+			$ext = $this->url_ext;
 		}
 
-		unset($data['action']);
-
-			if (isset($data['extension']) && $data['extension'])
-			{
-				$ext = '.'.str_replace('.', '', $data['extension']);
-			}
-			elseif ($this->ext_allowed)
-			{
-				$ext = $this->url_ext;
-			}
-			else
-			{
-				$ext = '';
-			}
-
-
-		unset($data['extension']);
+		unset($data['module'], $data['directory'], $data['controller'], $data['action'], $data['extension']);
 
 		$params = array();
+
 		foreach($data as $key => $val)
 		{
-			$params[] = !is_int($key) ? $key.$this->param_sep.$val : $val;
+			$params[] = ! is_int($key) ? $key.$this->param_sep.$val : $val;
 		}
 
 		if ($params)
@@ -143,9 +144,9 @@ class URL
 			$params = '';
 		}
 
-
 		$trace = $this->getPathPrefix();
 
-		return ADDR_SITE.$trace.$ctrl.$action.$params.$ext;
+		return preg_replace('#(?<!:)//+#', '/', ADDR_SITE.$trace.$module.$directory.$controller.$action.$params.$ext);
 	}
+
 }

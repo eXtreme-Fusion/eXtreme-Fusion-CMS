@@ -370,44 +370,6 @@ class Router
 		HELP::redirect($this->path($path));
 	}
 
-	// Przekierowanie na inny kontriker (plik).
-	public function goToFile($file, $action = NULL, array $params = array())
-	{
-
-		echo 'METODA KLASY ROUTER O NAZWIE GOTOFILE JEST PRZESTARZALA';
-		$str_params = '';
-		if ($params)
-		{
-			$temp = array();
-			foreach($params as $key => $val)
-			{
-				if (isNum($key, FALSE, FALSE))
-				{
-					$temp[] = $val;
-				}
-				else
-				{
-					$temp[] = $key.$this->_param_sep.$val;
-				}
-			}
-
-			$str_params = implode($this->_sep, $temp);
-
-			if ($str_params && $action)
-			{
-				$str_params = $this->_sep.$str_params;
-			}
-
-			if ($action === NULL)
-			{
-				$action = $this->_sep;
-			}
-		}
-
-		HELP::redirect($file.$action.$str_params.$this->_ext['url']);
-		exit;
-	}
-
 /*end of**********TEST*********/
 
 	public function setNewConfig($val)
@@ -415,6 +377,8 @@ class Router
 		$this->setPath($val);
 		$this->setValues();
 		$this->setFileName();
+		$this->setParams();
+		$this->setAction();
 		$this->setExitFile();
 		$this->_search_admin = FALSE;
 		$this->_search_more = TRUE;
@@ -635,6 +599,11 @@ class Router
 	public function getByID($id, $default = NULL)
 	{
 		return isset($this->_values[$id]) ? $this->_values[$id] : $default;
+	}
+	
+	public function getParams()
+	{
+		return $this->_params_void_order;//values;
 	}
 
 	public function getRequest()

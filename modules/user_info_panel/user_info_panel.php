@@ -32,7 +32,7 @@
 | written permission from the original author(s).
 +-------------------------------------------------------*/
 $_locale->moduleLoad('lang', 'user_info_panel');
-$_head->set('<link href="'.ADDR_MODULES.'user_info_panel/templates/stylesheet/user_info_panel.css" rel="stylesheet">');
+$_head->set('	<link href="'.ADDR_MODULES.'user_info_panel/templates/stylesheet/user_info_panel.css" rel="stylesheet">');
 
 if ($_user->isLoggedIn())
 {
