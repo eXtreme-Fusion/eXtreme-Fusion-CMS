@@ -37,11 +37,7 @@ try
 	require DIR_SITE.'bootstrap.php';
 	require_once DIR_SYSTEM.'admincore.php';
 	
-	$_locale->load(array(
-		'settings',
-		'upgrade'
-		)
-	);
+	$_locale->load(array('settings','upgrade'));
 
     if ( ! $_user->hasPermission('admin.upgrade'))
 	{
@@ -72,15 +68,9 @@ try
 				Zapytania wymagane podczas aktualizacji
 			*/
 		
-			$_pdo->exec('ALTER TABLE [statistics] CHANGE `ip` `ip` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT \'0.0.0.0\'');
-			
 			$_pdo->exec("INSERT INTO [admin] (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.settings_synchro', 'synchro.png', 'Synchronization', 'settings_synchro.php', 4)");
 			
-			$count = $_sett->update(array
-				(
-					'version' => SYSTEM_VERSION
-				)
-			);
+			$count = $_sett->update(array('version' => SYSTEM_VERSION));
 			
 			if ($count)
 			{
