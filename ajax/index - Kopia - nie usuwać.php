@@ -111,17 +111,17 @@ try
 }
 catch(optException $exception)
 {
-	optErrorHandler($exception);
+	optErrorHandler($exception, FALSE);
 }
 catch(systemException $exception)
 {
-	systemErrorHandler($exception);
+	systemErrorHandler($exception, FALSE);
 }
 catch(userException $exception)
 {
-	userErrorHandler($exception);
+	userErrorHandler($exception, FALSE);
 }
 catch(PDOException $exception)
 {
-    PDOErrorHandler($exception);
+    PDOErrorHandler($exception, FALSE);
 }
