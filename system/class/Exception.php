@@ -382,12 +382,14 @@ function PDOErrorHandler(PDOException $exc) {
 	?>
 	<div class="debug opt">
 		<?php 
+		$i = 0;
 		foreach($trace as $number => $item) 
 		{
-			if(isset($item['function']) && $item['function'] === 'query' && isset($item['class']) && $item['class'] === 'Data' && isset($item['args'][0]) && ! is_object($item['args'][0])) 
+			if(isset($item['class']) && $item['class'] === 'Data' && isset($item['args'][0]) && ! is_object($item['args'][0]) && $i<=1) 
 			{
 				echo '<h3>'.__('PDO Queries').'</h3>'; 
 				echo '<div class="error">'.$item['args'][0].'</div>';
+				$i++;
 			}
 		} ?>
 		
