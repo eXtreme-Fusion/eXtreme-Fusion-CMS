@@ -51,8 +51,7 @@ class optException extends Exception
 
 function optErrorHandler(optException $exc, $full = TRUE) 
 {
-	if ($full)
-	{
+	?> <div class="exception"> <?php if ($full) {
 		ob_start();
 		include DIR_ADMIN_TEMPLATES."pre".DS."exception_header.tpl";
 		$getHeader = ob_get_contents();
@@ -61,7 +60,7 @@ function optErrorHandler(optException $exc, $full = TRUE)
 		echo replaceException($getHeader);
 	}
 	echo '<h3>'.$exc->getType().' '.__('Internal error').' #'.$exc->getCode().'</h3>';
-	echo '<div class="error">'.$exc->getMessage().'</div>';
+	echo '<div class="center"><span class="error">'.$exc->getMessage().'</span></div>';
 
 	if($exc->getCode() >= 100) 
 	{
@@ -73,15 +72,15 @@ function optErrorHandler(optException $exc, $full = TRUE)
 	}
 
 	$trace = array_reverse($exc->getTrace()); ?>
-	<div class="debug opt">
+	
 		<h3><?php echo __('Error path'); ?></h3>
 		<table id="TableOPT" class="dataTable">
 			<thead>
 				<tr>
-					<th style="width:5%">#</th>
+					<th style="width:5%;text-align:center">#</th>
 					<th style="width:40%"><?php echo __('In file'); ?></th>
 					<th style="width:45%"><?php echo __('Function'); ?></th>
-					<th style="width:10%"><?php echo __('Line'); ?></th>
+					<th style="width:10%;text-align:center"><?php echo __('Line'); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -137,25 +136,21 @@ function optErrorHandler(optException $exc, $full = TRUE)
 
 			</tbody>
 		</table>
-		<?php if ($full)
-		{ ?>
+		<?php if ($full) { ?>
 		<div class="tbl Buttons" style="width:200px;margin:10px auto;">
 			<div class="center button-c">
 				<span class="Cancel" onclick="history.back()"><strong><?php echo __('Back'); ?> <img style="position: absolute;" src="<?php echo ADDR_ADMIN; ?>/templates/images/icons/pixel/undo.png" alt="" ></strong></span>
 			</div>
 		</div>
-		<?php } ?>
-	</div>
+		<?php } ?></div>
 
-<?php 
-	if ($full)
-	{
-		ob_start();
-		include DIR_ADMIN_TEMPLATES."pre/exception_footer.tpl";
-		$getFooter = ob_get_contents();
-		ob_end_clean();
-		echo replaceException($getFooter);
-	}
+		<?php if ($full) {
+				ob_start();
+				include DIR_ADMIN_TEMPLATES."pre/exception_footer.tpl";
+				$getFooter = ob_get_contents();
+				ob_end_clean();
+				echo replaceException($getFooter);
+			}
 }
 
 class uploadException extends Exception
@@ -199,8 +194,7 @@ class uploadException extends Exception
 } 
 
 function uploadErrorHandler(uploadException $exc, $full = TRUE) {
-	if ($full)
-	{
+	?> <div class="exception"> <?php if ($full) {
 		ob_start();
 			include DIR_ADMIN_TEMPLATES."pre".DS."exception_header.tpl";
 			$getHeader = ob_get_contents();
@@ -209,10 +203,9 @@ function uploadErrorHandler(uploadException $exc, $full = TRUE) {
 	}
 
 	echo '<h3>'.__('Upload error').'</h3>
-	<div class="error">'.$exc->getMessage().'</div>';
+	<div class="center"><span class="error">'.$exc->getMessage().'</span></div>';
 
-	if ($full)
-	{
+	if ($full) {
 		ob_start();
 		include DIR_ADMIN_TEMPLATES."pre/exception_footer.tpl";
 		$getFooter = ob_get_contents();
@@ -223,8 +216,7 @@ function uploadErrorHandler(uploadException $exc, $full = TRUE) {
 
 function systemErrorHandler(systemException $exc, $full = TRUE)
 {
-	if ($full)
-	{
+	?> <div class="exception"> <?php if ($full) {
 		ob_start();
 			include DIR_ADMIN_TEMPLATES."pre".DS."exception_header.tpl";
 			$getHeader = ob_get_contents();
@@ -233,17 +225,17 @@ function systemErrorHandler(systemException $exc, $full = TRUE)
 	}
 	
 	echo '<h3>'.__('System error').'</h3>
-	<div class="error">'.$exc->getMessage().'</div>';
+	<div class="center"><span class="error">'.$exc->getMessage().'</span></div>';
 	$trace = array_reverse($exc->getTrace()); ?>
-	<div class="debug opt">
+	
 		<h3><?php echo __('Error path'); ?></h3>
 		<table id="TableOPT" class="dataTable">
 			<thead>
 				<tr>
-					<th style="width:5%">#</th>
+					<th style="width:5%;text-align:center">#</th>
 					<th style="width:40%"><?php echo __('In file'); ?></th>
 					<th style="width:45%"><?php echo __('Function'); ?></th>
-					<th style="width:10%"><?php echo __('Line'); ?></th>
+					<th style="width:10%;text-align:center"><?php echo __('Line'); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -277,18 +269,14 @@ function systemErrorHandler(systemException $exc, $full = TRUE)
 				?>
 			</tbody>
 		</table>
-		<?php if ($full)
-		{ ?>
+		<?php if ($full) { ?>
 		<div class="tbl Buttons" style="width:200px;margin:10px auto;">
 			<div class="center button-c">
 				<span class="Cancel" onclick="history.back()"><strong><?php echo __('Back'); ?> <img style="position: absolute;" src="<?php echo ADDR_ADMIN; ?>/templates/images/icons/pixel/undo.png" alt="" ></strong></span>
 			</div>
 		</div>
-		<?php } ?>
-	</div>
-	<?php
-	if ($full)
-	{
+		<?php } ?></div>
+	<?php if ($full) {
 		ob_start();
 		include DIR_ADMIN_TEMPLATES."pre/exception_footer.tpl";
 		$getFooter = ob_get_contents();
@@ -299,8 +287,7 @@ function systemErrorHandler(systemException $exc, $full = TRUE)
 
 function argumentErrorHandler(argumentException $exc, $full = TRUE)
 {
-	if ($full)
-	{
+	?> <div class="exception"> <?php if ($full) {
 		ob_start();
 			include DIR_ADMIN_TEMPLATES."pre".DS."exception_header.tpl";
 			$getHeader = ob_get_contents();
@@ -310,15 +297,15 @@ function argumentErrorHandler(argumentException $exc, $full = TRUE)
 	echo '<h3>'.__('Function argument error').'</h3>
 	<div class="error">'.__('Parameter of :parametr is wrong.', array(':parametr' => $exc->getMessage())).'</div>';
 	$trace = array_reverse($exc->getTrace()); ?>
-	<div class="debug opt">
+	
 		<h3><?php echo __('Error path'); ?></h3>
 		<table id="TableOPT" class="dataTable">
 			<thead>
 				<tr>
-					<th style="width:5%">#</th>
+					<th style="width:5%;text-align:center">#</th>
 					<th style="width:40%"><?php echo __('In file'); ?></th>
 					<th style="width:45%"><?php echo __('Function'); ?></th>
-					<th style="width:10%"><?php echo __('Line'); ?></th>
+					<th style="width:10%;text-align:center"><?php echo __('Line'); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -337,24 +324,20 @@ function argumentErrorHandler(argumentException $exc, $full = TRUE)
 				} ?>
 			</tbody>
 		</table>
-		<?php if ($full)
-		{ ?>
+		<?php if ($full) { ?>
 		<div class="tbl Buttons" style="width:200px;margin:10px auto;">
 			<div class="center button-c">
 				<span class="Cancel" onclick="history.back()"><strong><?php echo __('Back'); ?> <img style="position: absolute;" src="<?php echo ADDR_ADMIN; ?>/templates/images/icons/pixel/undo.png" alt="" ></strong></span>
 			</div>
 		</div>
-		<?php } ?>
-	</div>
-	<?php
-	if ($full)
-	{
-		ob_start();
-		include DIR_ADMIN_TEMPLATES."pre/exception_footer.tpl";
-		$getFooter = ob_get_contents();
-		ob_end_clean();
-		echo replaceException($getFooter);
-	}
+		<?php } ?></div>
+		<?php if ($full) {
+			ob_start();
+			include DIR_ADMIN_TEMPLATES."pre/exception_footer.tpl";
+			$getFooter = ob_get_contents();
+			ob_end_clean();
+			echo replaceException($getFooter);
+		}
 }
 
 function pagesErrorHandler($exc) {
@@ -379,8 +362,7 @@ function pagesErrorHandler($exc) {
 
 function userErrorHandler(userException $exc, $full = TRUE) {
 	
-	if ($full)
-	{
+	?> <div class="exception"> <?php if ($full) {
 		ob_start();
 			include DIR_ADMIN_TEMPLATES."pre".DS."exception_header.tpl";
 			$getHeader = ob_get_contents();
@@ -389,10 +371,9 @@ function userErrorHandler(userException $exc, $full = TRUE) {
 	}
 
 	echo '<h3>'.__('User error').'</h3>
-	<div class="error">'.$exc->getMessage().'</div>';
+	<div class="center"><span class="error">'.$exc->getMessage().'</span></div>';
 
-	if ($full)
-	{
+	if ($full) {
 		ob_start();
 		include DIR_ADMIN_TEMPLATES."pre/exception_footer.tpl";
 		$getFooter = ob_get_contents();
@@ -402,8 +383,7 @@ function userErrorHandler(userException $exc, $full = TRUE) {
 }
 
 function PDOErrorHandler(PDOException $exc, $full = TRUE) {
-	if ($full)
-	{
+	?> <div class="exception"> <?php if ($full) {
 		ob_start();
 			include DIR_ADMIN_TEMPLATES."pre".DS."exception_header.tpl";
 			$getHeader = ob_get_contents();
@@ -419,19 +399,16 @@ function PDOErrorHandler(PDOException $exc, $full = TRUE) {
     } 
 	
 	echo '<h3>'.__('PDO Error').' #SQLSTATE: '.$code.'</h3>
-	<div class="error">'.$message.'</div>';
+	<div class="center"><span class="error">'.$message.'</span></div>';
 	$trace = array_reverse($exc->getTrace());
 	
-	?>
-	<div class="debug opt">
-		<?php 
 		$i = 0;
 		foreach($trace as $number => $item) 
 		{
 			if(isset($item['class']) && $item['class'] === 'Data' && isset($item['args'][0]) && ! is_object($item['args'][0]) && $i<1) 
 			{
 				echo '<h3>'.__('PDO Queries').'</h3>'; 
-				echo '<div class="error">'.$item['args'][0].'</div>';
+				echo '<div class="center"><span class="error">'.$item['args'][0].'</span></div>';
 				$i++;
 			}
 		} ?>
@@ -440,10 +417,10 @@ function PDOErrorHandler(PDOException $exc, $full = TRUE) {
 		<table id="TableOPT" class="dataTable">
 			<thead>
 				<tr>
-					<th style="width:5%">#</th>
+					<th style="width:5%;text-align:center">#</th>
 					<th style="width:40%"><?php echo __('In file'); ?></th>
 					<th style="width:45%"><?php echo __('Function'); ?></th>
-					<th style="width:10%"><?php echo __('Line'); ?></th>
+					<th style="width:10%;text-align:center"><?php echo __('Line'); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -462,24 +439,20 @@ function PDOErrorHandler(PDOException $exc, $full = TRUE) {
 				} ?>
 			</tbody>
 		</table>
-		<?php if ($full)
-		{ ?>
+		<?php if ($full) { ?>
 		<div class="tbl Buttons" style="width:200px;margin:10px auto;">
 			<div class="center button-c">
 				<span class="Cancel" onclick="history.back()"><strong><?php echo __('Back'); ?> <img style="position: absolute;" src="<?php echo ADDR_ADMIN; ?>/templates/images/icons/pixel/undo.png" alt="" ></strong></span>
 			</div>
 		</div>
-		<?php } ?>
-	</div>
-	<?php
-	if ($full)
-	{
-		ob_start();
-		include DIR_ADMIN_TEMPLATES."pre/exception_footer.tpl";
-		$getFooter = ob_get_contents();
-		ob_end_clean();
-		echo replaceException($getFooter);
-	}
+		<?php } ?></div>
+		<?php if ($full) {
+			ob_start();
+			include DIR_ADMIN_TEMPLATES."pre/exception_footer.tpl";
+			$getFooter = ob_get_contents();
+			ob_end_clean();
+			echo replaceException($getFooter);
+		}
 }
 
 function replaceException($text) 
