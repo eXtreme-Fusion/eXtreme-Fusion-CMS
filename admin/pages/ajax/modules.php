@@ -79,7 +79,7 @@ try
 				$req = json_decode($_request->post('SortOrder')->show());
 				
 				$_tag = new Tag($_system, $_pdo);
-				$_modules = new Modules($_pdo, $_sett, $_user, $_tag, $_locale);
+				$_modules = new Modules($_pdo, $_sett, $_user, $_tag, $_locale, $_system);
 				$_panels = new Panels($_pdo);
 
 				$_panels->setModulesInst($_modules);	

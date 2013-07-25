@@ -61,7 +61,7 @@ try
 			$fields['system'] = urlencode(base64_encode(SYSTEM_VERSION));
 			$fields['addr'] = urlencode(base64_decode(ADDR_SITE));
 			if (function_exists('curl_init'))
-			{
+			{echo 1;
 				$c = curl_init('http://extreme-fusion.org/curl/update.php?system='.$fields['system'].'&addr='.$fields['addr']);
 				
 				curl_setopt($c, CURLOPT_NOBODY, 0);
@@ -79,7 +79,7 @@ try
 				$_system->cache('synchro', $json, 'synchro');
 			}
 			elseif (function_exists('fsockopen'))
-			{
+			{echo 1;
 				if ( ! $r = fsockopen('extreme-fusion.org', 80, $errno, $errstr))
 				{
 					$error = TRUE;
@@ -111,7 +111,7 @@ try
 				}
 			}
 			elseif (function_exists('fopen'))
-			{
+			{echo 1;
 				if ( ! $r = fopen("http://extreme-fusion.org/curl/update.php?&system=".$fields['system']."&addr=".$fields['addr'], 'r'))
 				{
 					$error = TRUE;
