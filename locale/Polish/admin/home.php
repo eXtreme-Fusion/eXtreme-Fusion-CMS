@@ -29,6 +29,12 @@ return array(
 	'Only author can edit this note.' => 'Tylko autor może edytować tą notatkę.',
 	'You have created maximum number of notes. Remove some.' => 'Utworzyłeś już maksymalną ilość notatek. Usuń jakieś.',
 	'Added' => 'Dodano',
-	'by' => 'przez'
+	'by' => 'przez',
+	
+	// Synchronization
+	'Synchronization is not active.' => 'Synchronizacja jest nie aktywna.',
+	'Update is ready to install.' => 'Aktualizacja jest gotowa do zainstalowania.',
+	'Update is available.' => 'Dostępna jest aktualizacja.',
+	'You have currently version of eXtreme-Fusion CMS.' => 'Posiadasz aktualną wersję eXtreme-Fusion CMS.',
 	
 );
