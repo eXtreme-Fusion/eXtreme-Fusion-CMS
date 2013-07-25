@@ -54,7 +54,7 @@ try
 	}
 	elseif ($_sett->get('synchro'))
 	{
-		$json = $_system->cache('synchro', NULL, 'synchro', 0);
+		$json = $_system->cache('synchro', NULL, 'synchro', 3600*24);
 
 		if ($json === NULL)
 		{
