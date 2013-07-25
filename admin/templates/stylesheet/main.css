@@ -183,7 +183,7 @@ h1 {
 .status a {color:#e79300;}
 .info {color:#2e74b2;background:#e4edf5;border:1px #d8e1e9 solid;}
 .info a {color:#2e74b2;}
-.error {color:#ce2700;background:#fbd3b1;border:1px #f5c69a solid;}
+.error {color:#ce2700;background:#fbd3b1;border:1px #f5c69a solid;margin:10px 0;display:block}
 .error a {color:#ce2700;}
 .valid {color:#6da827;background:#e0f2cb;border:1px #ccebac solid;}
 .valid a {color:#6da827;}

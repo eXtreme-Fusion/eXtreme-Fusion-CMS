@@ -37,18 +37,12 @@ try
 	require DIR_SITE.'bootstrap.php';
 	require_once DIR_SYSTEM.'admincore.php';
 	
-	$_locale->load(array(
-		'settings',
-		'upgrade'
-		)
-	);
+	$_locale->load(array('settings', 'upgrade'));
 
     if ( ! $_user->hasPermission('admin.upgrade'))
 	{
 		throw new userException(__('Access denied'));
 	}
-	
-	$_fav->setFavByLink('upgrade.php', $_user->get('id'));
 	
 	$_tpl = new Iframe;
 
@@ -64,39 +58,77 @@ try
 		);
     }
 
-	if ($_sett->get('version') < SYSTEM_VERSION)
+	if (SYSTEM_VERSION !== $_sett->get('version'))
 	{
-		if ($_request->post('save')->show())
-		{
-			/*
-				Zapytania wymagane podczas aktualizacji
-			*/
+		$new_version = explode('.', SYSTEM_VERSION);
+		$new_version = (int) $new_version[2];
 		
-			$_pdo->exec('ALTER TABLE [statistics] CHANGE `ip` `ip` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT \'0.0.0.0\'');
-			
-			$_pdo->exec("INSERT INTO [admin] (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.settings_synchro', 'synchro.png', 'Synchronization', 'settings_synchro.php', 4)");
-			
-			$count = $_sett->update(array
-				(
-					'version' => SYSTEM_VERSION
-				)
-			);
-			
-			if ($count)
+		$old_version = explode('.', $_sett->get('version'));
+		$old_version = (int) $old_version[2];
+		
+		if ($old_version !== ($new_version-1) || $_sett->get('version') >= SYSTEM_VERSION)
+		{
+			$_tpl->printMessage('error', 'Nie możesz skorzystać z tej aktualizacji. Pobierz inną, właściwą dla Twojej wersji systemu CMS: https://github.com/eXtreme-Fusion/EF5-updates');
+		}
+		else
+		{
+			if ($_request->post('save')->show())
 			{
-				$_log->insertSuccess('updating', __('The update has been finished successfully.'));
-				$_request->redirect(FILE_PATH, array('act' => 'updating', 'status' => 'ok'));
+				/*
+					Zapytania wymagane podczas aktualizacji
+				*/
+			
+				$_pdo->exec("INSERT INTO [admin] (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.settings_synchro', 'synchro.png', 'Synchronization', 'settings_synchro.php', 4)");
+				$_pdo->exec("INSERT INTO [permissions] (`name`, `section`, `description`, `is_system`) VALUES ('admin.settings_synchro', 1, '".__('Perm: admin settings_synchro')."', 1)");
+				
+				if(file_exists(DIR_SITE.'system'.DS.'opt'.DS.'opt.error.php'))
+				{
+					@unlink(DIR_SITE.'system'.DS.'opt'.DS.'opt.error.php');
+				}
+				
+				if(file_exists(DIR_SITE.'themes'.DS.'eXtreme-Fusion-5'.DS.'core'.DS.'theme.php'))
+				{
+					//@unlink(DIR_SITE.'themes'.DS.'eXtreme-Fusion-5'.DS.'core'.DS.'theme.php');
+				}
+
+				$_pdo->exec("CREATE TABLE [admin_favourites] 
+					(
+						`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
+						`user_id` MEDIUMINT UNSIGNED NOT NULL,
+						`page_id` MEDIUMINT UNSIGNED NOT NULL,
+						`count` MEDIUMINT NOT NULL,
+						`time` INT UNSIGNED NOT NULL,
+						PRIMARY KEY (`id`),
+						UNIQUE KEY(`page_id`, `user_id`),
+						CONSTRAINT FOREIGN KEY (`page_id`) REFERENCES [admin](`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+						CONSTRAINT FOREIGN KEY (`user_id`) REFERENCES [users](`id`) ON DELETE CASCADE ON UPDATE CASCADE
+					) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;"
+				);
+
+				$_pdo->exec("ALTER TABLE [users] ADD `algo` VARCHAR(10) NOT NULL DEFAULT 'sha512' AFTER `salt`");
+				$_pdo->exec("INSERT INTO [settings] (`key`, `value`) VALUES ('algorithm', 'sha512')");
+				$_pdo->exec("INSERT INTO [settings] (`key`, `value`) VALUES ('synchro', '0')");
+				$_pdo->exec("DELETE FROM [admin] WHERE `link` = 'panel_editor.php'");
+				$_pdo->exec("DELETE FROM [admin] WHERE `link` = 'upgrade.php'");
+				
+				$count = $_sett->update(array('version' => SYSTEM_VERSION));
+				
+				if ($count)
+				{
+					$_log->insertSuccess('updating', __('The update has been finished successfully.'));
+					$_files->rmDirRecursive(DIR_CACHE);
+					$_request->redirect(FILE_PATH, array('act' => 'updating', 'status' => 'ok'));
+				}
+
+				$_log->insertFail('updating', __('Error! The update has not been finished.'));
+				$_request->redirect(FILE_PATH, array('act' => 'updating', 'status' => 'error'));
 			}
 
-			$_log->insertFail('updating', __('Error! The update has not been finished.'));
-			$_request->redirect(FILE_PATH, array('act' => 'updating', 'status' => 'error'));
+			$_tpl->assign('upgrade', TRUE);
 		}
-
-		$_tpl->assign('upgrade', TRUE);
 	}
-
+	
 	$_tpl->template('upgrade');
-
 }
 catch(optException $exception)
 {
@@ -109,4 +141,8 @@ catch(systemException $exception)
 catch(userException $exception)
 {
 	userErrorHandler($exception);
+}
+catch(PDOException $exception)
+{
+   echo $exception;
 }

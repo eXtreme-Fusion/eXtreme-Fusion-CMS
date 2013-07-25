@@ -17,6 +17,7 @@
 	<link href="{$ADDR_COMMON_CSS}grid.960.css" rel="stylesheet">
 	<link href="{$ADDR_COMMON_CSS}jquery-ui.css" rel="stylesheet">
 	<link href="{$ADDR_CSS}main.css" rel="stylesheet">
+	
 	<!--[if lt IE 9]>
 	<script src="{$THEME_JS}html5shiv.min.js"></script>
 	<![endif]-->

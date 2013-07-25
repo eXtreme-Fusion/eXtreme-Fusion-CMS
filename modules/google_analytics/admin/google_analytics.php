@@ -63,7 +63,7 @@ try
 				
 				$google_analytics->requestReportData($row['account_id'], $dimensions, $metrics, '-visits');
 				
-				$_system->cache('google_analytics', $google_analytics);
+				$_system->cache('google_analytics', $google_analytics, 'google_analytics');
 			}
 
 			if ( ! is_array($google_analytics->_error))

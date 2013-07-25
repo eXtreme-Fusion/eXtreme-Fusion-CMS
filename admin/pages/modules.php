@@ -50,7 +50,7 @@ try
 	
 	$_tpl = new Iframe;
 	
-	$_mod = new Modules($_pdo, $_sett, $_user, New Tag($_system, $_pdo), $_locale);
+	$_mod = new Modules($_pdo, $_sett, $_user, New Tag($_system, $_pdo), $_locale, $_system);
 
 	// Wyświetlenie komunikatów
 	if ($_request->get(array('status', 'act'))->show())

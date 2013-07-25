@@ -8,5 +8,6 @@ return array(
 	'The update has been finished successfully.' => 'Dokončení aktualizace databáze úspěšně.',
 	//Logs
 	'Update has been finished successfully.' => 'Tato aktualizace byla dokončena úspěšně.',
-	'Error! The update has not been finished.' => 'Došlo k chybě! Nepodařilo se dokončit aktualizaci.'
+	'Error! The update has not been finished.' => 'Došlo k chybě! Nepodařilo se dokončit aktualizaci.',
+	'Perm: admin settings_synchro' => 'Dostęp do ustawień synchronizacji.'
 );

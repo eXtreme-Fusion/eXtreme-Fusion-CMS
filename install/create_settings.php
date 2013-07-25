@@ -118,7 +118,7 @@ $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'userthemes', 'val
 //$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'flood_autoban', 'value' => 1));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'deactivation_action', 'value' => 0));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'change_name', 'value' => 0));
-$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'algorithm)', 'value' => 'sha512'));
+$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'algorithm', 'value' => 'sha512'));
 
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'maintenance', 'value' => 0));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'maintenance_message', 'value' => __('Welcome to eXtreme-Fusion CMS. Thank for using our CMS, Please turn off the maintenance mode in security, onces you have finished configuring your site.')));

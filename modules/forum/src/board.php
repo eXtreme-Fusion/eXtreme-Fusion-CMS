@@ -2,6 +2,8 @@
 
 class Board_Model extends Abstract_Model {
 
+	
+	
 	public function findByID($id)
 	{
 		return $this->_pdo->getRow('

@@ -58,12 +58,12 @@ try
 
 		if ($json === NULL)
 		{
-			$fields['system'] = SYSTEM_VERSION;
-			$fields['addr'] = ADDR_SITE;
+			$fields['system'] = urlencode(base64_encode(SYSTEM_VERSION));
+			$fields['addr'] = urlencode(base64_decode(ADDR_SITE));
 			if (function_exists('curl_init'))
 			{
-				$c = curl_init('http://extreme-fusion.org/curl/update.php');
-				curl_setopt($c, CURLOPT_POSTFIELDS, $fields);
+				$c = curl_init('http://extreme-fusion.org/curl/update.php?system='.$fields['system'].'&addr='.$fields['addr']);
+				
 				curl_setopt($c, CURLOPT_NOBODY, 0);
 				curl_setopt($c, CURLOPT_HEADER, 0);
 				ob_start();
@@ -98,7 +98,7 @@ try
 					while ( ! preg_match('/\\r\\n\\r\\n$/', $h));
 
 
-					if (preg_match('/Content\\-Length:\\s+([0-9]*)\\r\\n/', $h, $m))
+					if (preg_match('/Content\\-Length:\\s+([0-9]*)\\r\\n/', $h, $m) && $m[1] > 0)
 					{
 						$json = fread($r, $m[1]);
 					}
@@ -134,6 +134,7 @@ try
 		if (! isset($error))
 		{
 			$json = json_decode($json, TRUE);
+			
 			if ($json['update'])
 			{
 				$_tpl->assign('update_href', $json['url']);
