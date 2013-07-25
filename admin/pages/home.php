@@ -59,7 +59,7 @@ try
 		if ($json === NULL)
 		{
 			$fields['system'] = urlencode(base64_encode(SYSTEM_VERSION));
-			$fields['addr'] = urlencode(base64_decode(ADDR_SITE));
+			$fields['addr'] = urlencode(base64_encode(ADDR_SITE));
 			if (function_exists('curl_init'))
 			{
 				$c = curl_init('http://extreme-fusion.org/curl/update.php?system='.$fields['system'].'&addr='.$fields['addr']);
