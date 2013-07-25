@@ -32,7 +32,6 @@ return array(
 	'by' => 'podle',
 	
 	// Synchronization
-	'Synchronization is not active.' => 'Synchronizacja jest nie aktywna.',
 	'Update is ready to install.' => 'Aktualizacja jest gotowa do zainstalowania.',
 	'Update is available.' => 'Dostępna jest aktualizacja.',
 	'You have currently version of eXtreme-Fusion CMS.' => 'Posiadasz aktualną wersję eXtreme-Fusion CMS.',
