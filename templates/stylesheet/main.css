@@ -341,8 +341,7 @@ table td {
 	white-space:nowrap;
 }
 
-
-
+/* Wyjątki */
 .exception .error {
 	width:95%;
 	display: inline-block;margin: 10px 0;
