@@ -23,7 +23,7 @@ class Container extends ServiceContainerBuilder
 
 	protected function getUserService()
 	{
-		return new User($this->getService('Sett'), $this->getService('Pdo'));
+		return new User($this->getService('Sett'), $this->getService('Pdo'), $this->getService('System'));
 	}
 
 	protected function getSettService()
@@ -86,7 +86,7 @@ class Container extends ServiceContainerBuilder
 
 	protected function getModulesService()
 	{
-		return new Modules($this->getService('Pdo'), $this->getService('Sett'), $this->getService('User'), $this->getService('Tag'), $this->getService('Locales'));
+		return new Modules($this->getService('Pdo'), $this->getService('Sett'), $this->getService('User'), $this->getService('Tag'), $this->getService('Locales'), $this->getService('System'));
 	}
 
 	protected function getStatisticsService()

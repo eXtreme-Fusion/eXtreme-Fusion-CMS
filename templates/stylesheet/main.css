@@ -340,3 +340,17 @@ table td {
 	font-family:Monaco, Menlo, Consolas, "Courier New", monospace;
 	white-space:nowrap;
 }
+
+/* Wyjątki */
+.exception .error {
+	width:95%;
+	display: inline-block;margin: 10px 0;
+}
+
+.exception  {
+	background-color:#333333;
+	border-radius: 0 0 5px 5px;
+	overflow:hidden;
+}
+
+.exception th {text-align:left;font-weight: bold;}

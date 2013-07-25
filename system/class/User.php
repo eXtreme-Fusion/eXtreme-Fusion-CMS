@@ -59,6 +59,12 @@ class User {
 	protected $_ip_v4;
 
 	protected $_custom_data;
+	
+	// Przechowuje zaserializowane ustawienia
+	protected $_cache = array();
+	
+	protected $_system;
+
 
 	/**
 	 * Czas ważności ciasteczka.
@@ -111,10 +117,11 @@ class User {
 	 * @param   Database  klasa bazy danych
 	 * @return  void
 	 */
-	public function __construct(Sett $sett, Data $pdo)
+	public function __construct(Sett $sett, Data $pdo, System $system)
 	{
 		$this->_sett = $sett;
 		$this->_pdo = $pdo;
+		$this->_system = $system;
 		$this->setAllRolesCache();
 		$this->setPermissionsCache();
 		$this->setPermissionsSectionsCache();
@@ -1087,7 +1094,14 @@ class User {
 			}
 			else
 			{
-				$data = $this->users[$id] = $this->_pdo->getRow('SELECT u.*, ud.* FROM [users] u LEFT JOIN [users_data] ud ON u.`id`= ud.`user_id` WHERE u.`id` = '.$id);
+				$this->_cache = $this->_system->cache('user_data-'.$id, NULL, 'system');
+				if ($this->_cache === NULL)
+				{
+					$this->_cache = $this->_pdo->getRow('SELECT u.*, ud.* FROM [users] u LEFT JOIN [users_data] ud ON u.`id`= ud.`user_id` WHERE u.`id` = '.$id);
+			
+					$this->_system->cache('user_data-'.$id, $this->_cache, 'system');
+				}
+				$data = $this->users[$id] = $this->_cache;
 			}
 
 			if ($data)
@@ -1605,12 +1619,20 @@ class User {
 	 */
 	protected function setAllRolesCache()
 	{
-		$query = $this->_pdo->getData('SELECT * FROM [groups]');
-		foreach($query as $role)
+		$this->_cache = $this->_system->cache('groups', NULL, 'system');
+		if ($this->_cache === NULL)
 		{
-			$role['permissions'] = unserialize($role['permissions']);
-			$this->_all_roles[$role['id']] = $role;
+			$query = $this->_pdo->getData('SELECT * FROM [groups]');
+			foreach($query as $role)
+			{
+				$role['permissions'] = unserialize($role['permissions']);
+				$this->_cache[$role['id']] = $role;
+			}
+	
+			$this->_system->cache('groups', $this->_cache, 'system');
 		}
+
+		$this->_all_roles = $this->_cache;
 	}
 
 	/**
@@ -1621,12 +1643,19 @@ class User {
 	 */
 	protected function setPermissionsCache()
 	{
-		$r = $this->_pdo->query('SELECT * FROM [permissions]');
-
-		foreach($r as $d)
+		$this->_cache = $this->_system->cache('permissions', NULL, 'system');
+		if ($this->_cache === NULL)
 		{
-			$this->_perms[] = $d;
+			$query = $this->_pdo->getData('SELECT * FROM [permissions]');
+			foreach($query as $d)
+			{
+				$this->_cache[] = $d;
+			}
+	
+			$this->_system->cache('permissions', $this->_cache, 'system');
 		}
+
+		$this->_perms = $this->_cache;
 	}
 
 	/**
@@ -1637,12 +1666,19 @@ class User {
 	 */
 	protected function setPermissionsSectionsCache()
 	{
-		$r = $this->_pdo->query('SELECT * FROM [permissions_sections]');
-
-		foreach($r as $d)
+		$this->_cache = $this->_system->cache('permissions_sections', NULL, 'system');
+		if ($this->_cache === NULL)
 		{
-			$this->_perms_sections[] = $d;
+			$query = $this->_pdo->getData('SELECT * FROM [permissions_sections]');
+			foreach($query as $d)
+			{
+				$this->_cache[] = $d;
+			}
+	
+			$this->_system->cache('permissions_sections', $this->_cache, 'system');
 		}
+
+		$this->_perms_sections = $this->_cache;
 	}
 
 	/**

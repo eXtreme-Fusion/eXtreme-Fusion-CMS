@@ -29,6 +29,12 @@ return array(
 	'Only author can edit this note.' => 'Pouze autor může upravovat tuto poznámku.',
 	'You have created maximum number of notes. Remove some.' => 'Už jste vytvořili maximální počet poznámek. Musíte nějaké odstranit.',
 	'Added' => 'Přidáno',
-	'by' => 'podle'
+	'by' => 'podle',
+	
+	// Synchronization
+	'Synchronization is not active.' => 'Synchronizacja jest nie aktywna.',
+	'Update is ready to install.' => 'Aktualizacja jest gotowa do zainstalowania.',
+	'Update is available.' => 'Dostępna jest aktualizacja.',
+	'You have currently version of eXtreme-Fusion CMS.' => 'Posiadasz aktualną wersję eXtreme-Fusion CMS.',
 	
 );

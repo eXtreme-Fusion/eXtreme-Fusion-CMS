@@ -51,6 +51,11 @@ class Parser extends optClass
 		{
 			$this->registerFunction('url', 'Url');
 		}
+		
+		if (function_exists('optRouter'))
+		{
+			$this->registerFunction('Router', 'Router');
+		}
 		$this->httpHeaders(OPT_HTML);
 		$this->assignMain();
 	}
@@ -100,7 +105,6 @@ class Parser extends optClass
 	{
 		return self::$_theme->sidePanel($title);
 	}
-	//
 	
 	private function assignMain()
 	{
@@ -282,6 +286,8 @@ class pageNavParser extends optClass
 	private $_route;
 	private $_request;
 
+	protected static $_obj;
+	
 	public function __construct($_route = NULL, $_request = NULL)
 	{
 		$this->plugins = OPT_DIR.'plugins'.DS;
@@ -318,7 +324,32 @@ class pageNavParser extends optClass
 	{
 		return $this->_request;
 	}
-
+	
+	public static function registerFunc($obj_name, $obj)
+	{
+		if (is_object($obj))
+		{
+			return self::$_obj[$obj_name] = $obj;
+		}
+		
+		throw new systemException('Wrong argument type.');
+	}
+	
+	public static function getFunc($obj_name, $func_name, array $args)
+	{
+		return self::$_obj[$obj_name]->$func_name($args);
+	}
+	
+	public function funcExists($obj_name, $func_name)
+	{
+		if (isset(self::$_obj[$obj_name]))
+		{
+			return method_exists(self::$_obj[$obj_name], $func_name);
+		}
+		
+		return FALSE;
+	}
+	
 	// Parametr drugi to katalog, w którym znajduje się szablon.
 	// Doskonałe dla modułów, które mogą w ten sposób definiować własne szablony stronicowania,
 	// używając AJAXA lub innych technik.

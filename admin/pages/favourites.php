@@ -63,11 +63,6 @@ try
 
 	$_tpl->assign('pages', $pages);
 	
-	if ($_sett->get('version') < SYSTEM_VERSION)
-	{
-		$_tpl->assign('upgrade', TRUE);
-	}
-	
 	$_tpl->template('favourites');
 }
 catch(optException $exception)

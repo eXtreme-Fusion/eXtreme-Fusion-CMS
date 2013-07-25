@@ -8,5 +8,6 @@ return array(
 	'The update has been finished successfully.' => 'Aktualizację zakończono pomyślnie.',
 	//Logs
 	'Update has been finished successfully.' => 'Aktualizacja została ukończona pomyślnie.',
-	'Error! The update has not been finished.' => 'Wystąpił błąd! Nie udało się ukończyć aktualizacji.'
+	'Error! The update has not been finished.' => 'Wystąpił błąd! Nie udało się ukończyć aktualizacji.',
+	'Perm: admin settings_synchro' => 'Dostęp do ustawień synchronizacji.'
 );

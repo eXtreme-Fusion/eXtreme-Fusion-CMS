@@ -50,11 +50,12 @@ try
 	
 	$_tpl = new Iframe;
 	
-	$_mod = new Modules($_pdo, $_sett, $_user, New Tag($_system, $_pdo), $_locale);
+	$_mod = new Modules($_pdo, $_sett, $_user, New Tag($_system, $_pdo), $_locale, $_system);
 
 	// Wyświetlenie komunikatów
 	if ($_request->get(array('status', 'act'))->show())
 	{
+		$_system->clearCacheRecursive($_files);
 		// Wyświetli komunikat
 		$_tpl->getMessage($_request->get('status')->show(), $_request->get('act')->show(),
 			array(
@@ -108,7 +109,6 @@ try
 			}
 
 			$_log->insertSuccess('install', __('Modules have been installed.'));
-			$_system->clearCache('system', array('__autoloadModulesList'));
 			$_request->redirect(FILE_PATH, array('act' => 'install', 'status' => 'ok'));
 
 		}
@@ -120,7 +120,6 @@ try
 			}
 
 			$_log->insertSuccess('uninstall', __('Modules have been uninstalled.'));
-			$_system->clearCache('system', array('__autoloadModulesList'));
 			$_request->redirect(FILE_PATH, array('act' => 'uninstall', 'status' => 'ok'));
 
 		}
