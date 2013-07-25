@@ -122,18 +122,22 @@ class Modules
 		$this->_cache['autoloadModulesList'] = $this->_system->cache('__autoloadModulesList', NULL, 'system', $cache_expire);
 		if ($this->_cache['autoloadModulesList'] === NULL)
 		{
-			foreach($this->getInstalled() as $dir)
+			$this->_cache['autoloadModulesList'] = array();
+			if ($installed = $this->getInstalled())
 			{
-				if (file_exists(DIR_MODULES.$dir) && is_dir(DIR_MODULES.$dir.DS))
+				foreach($this->getInstalled() as $dir)
 				{
-					if (file_exists(DIR_MODULES.$dir.DS.'autoload'.DS.'__autoload.php'))
+					if (file_exists(DIR_MODULES.$dir) && is_dir(DIR_MODULES.$dir.DS))
 					{
-						$this->_cache['autoloadModulesList'][] = $dir;
+						if (file_exists(DIR_MODULES.$dir.DS.'autoload'.DS.'__autoload.php'))
+						{
+							$this->_cache['autoloadModulesList'][] = $dir;
+						}
 					}
 				}
-			}
 
-			sort($this->_cache['autoloadModulesList']);
+				sort($this->_cache['autoloadModulesList']);
+			}
 			$this->_system->cache('__autoloadModulesList', $this->_cache['autoloadModulesList'], 'system');
 		}
 
@@ -150,6 +154,8 @@ class Modules
 		$this->_cache['modules'] = $this->_system->cache('modules', NULL, 'system');
 		if ($this->_cache['modules'] === NULL)
 		{
+			$this->_cache['modules'] = array();
+			
 			$query = $this->_pdo->getData('SELECT `folder` FROM [modules]');
 			foreach($query as $d)
 			{
