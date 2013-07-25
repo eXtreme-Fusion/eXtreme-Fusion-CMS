@@ -44,8 +44,6 @@ try
 		throw new userException(__('Access denied'));
 	}
 	
-	$_fav->setFavByLink('upgrade.php', $_user->get('id'));
-	
 	$_tpl = new Iframe;
 
 	if ($_request->get(array('status', 'act'))->show())
@@ -69,7 +67,7 @@ try
 			*/
 		
 			$_pdo->exec("INSERT INTO [admin] (`permissions`, `image`, `title`, `link`, `page`) VALUES ('admin.settings_synchro', 'synchro.png', 'Synchronization', 'settings_synchro.php', 4)");
-			$_pdo->exec("INSERT INTO [permisions] (`name`, `section`, `description`, `is_system`) VALUES ('admin.settings_synchro', 1, '".__('Perm: admin settings_synchro')."', 1)");
+			$_pdo->exec("INSERT INTO [permissions] (`name`, `section`, `description`, `is_system`) VALUES ('admin.settings_synchro', 1, '".__('Perm: admin settings_synchro')."', 1)");
 			
 			if(file_exists(DIR_SITE.'system'.DS.'opt'.DS.'opt.error.php'))
 			{
@@ -98,14 +96,15 @@ try
 			$_pdo->exec("ALTER TABLE [users] ADD `algo` VARCHAR(10) NOT NULL DEFAULT 'sha512' AFTER `salt`");
 			$_pdo->exec("INSERT INTO [settings] (`key`, `value`) VALUES ('algorithm', 'sha512')");
 			$_pdo->exec("INSERT INTO [settings] (`key`, `value`) VALUES ('synchro', '0')");
-			$_pdo->exec("DELETE FROM [admin] WHERE `link` = panel_editor.php");
-			$_pdo->exec("DELETE FROM [admin] WHERE `link` = upgrade.php");
+			$_pdo->exec("DELETE FROM [admin] WHERE `link` = 'panel_editor.php'");
+			$_pdo->exec("DELETE FROM [admin] WHERE `link` = 'upgrade.php'");
 			
 			$count = $_sett->update(array('version' => SYSTEM_VERSION));
 			
 			if ($count)
 			{
 				$_log->insertSuccess('updating', __('The update has been finished successfully.'));
+				$_files->rmDirRecursive(DIR_CACHE);
 				$_request->redirect(FILE_PATH, array('act' => 'updating', 'status' => 'ok'));
 			}
 
@@ -130,4 +129,8 @@ catch(systemException $exception)
 catch(userException $exception)
 {
 	userErrorHandler($exception);
+}
+catch(PDOException $exception)
+{
+   echo $exception;
 }
