@@ -194,8 +194,10 @@ class SmileyBBcode
 			}
 		}
 
-		$text = HELP::descript($text, FALSE);
+		$text = nl2br(HELP::descript($text, FALSE));
+		
 		$this->_locale->setSubDir('');
+		
 		return $text;
 	}
 
