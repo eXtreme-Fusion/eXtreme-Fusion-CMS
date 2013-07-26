@@ -60,13 +60,10 @@ try
 
 	if (SYSTEM_VERSION !== $_sett->get('version'))
 	{
-		$new_version = explode('.', SYSTEM_VERSION);
-		$new_version = (int) $new_version[2];
+		$new_version = (int) str_replace('.', '', SYSTEM_VERSION);
+		$old_version =  (int) str_replace('.', '', $_sett->get('version'));
 		
-		$old_version = explode('.', $_sett->get('version'));
-		$old_version = (int) $old_version[2];
-		
-		if ($old_version !== ($new_version-1) || $_sett->get('version') >= SYSTEM_VERSION)
+		if ($old_version !== ($new_version-1))
 		{
 			$_tpl->printMessage('error', 'Nie możesz skorzystać z tej aktualizacji. Pobierz inną, właściwą dla Twojej wersji systemu CMS: https://github.com/eXtreme-Fusion/EF5-updates');
 		}
