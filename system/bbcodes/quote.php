@@ -32,6 +32,6 @@ $bbcode_info = array(
 
 if($bbcode_used)
 {
-	$qcount = substr_count($text, "[quote]");
-	for ($i=0;$i < $qcount;$i++) $text = preg_replace('#\[quote\](.*?)\[/quote\]#si', '<blockquote><div class=\'quote\'>\1</div></blockquote>', $text);
+	$count = substr_count($text, "[quote]");
+	for ($i=0;$i < $count;$i++) $text = preg_replace('#\[quote\](.*?)\[/quote\]#si', '<blockquote><div class=\'quote\'>\1</div></blockquote>', $text);
 }

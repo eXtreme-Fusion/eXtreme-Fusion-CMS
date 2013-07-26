@@ -32,5 +32,6 @@ $bbcode_info = array(
 
 if($bbcode_used)
 {
-	$text = preg_replace("#\[code\](.*?)\[/code\]#sie", "'<div class=\'code\'>\\1</div>'", $text, 1);
+	$count = substr_count($text, "[code]");
+	for ($i=0;$i < $count;$i++) $text = preg_replace("#\[code\](.*?)\[/code\]#sie", "'<div class=\'code\'>\\1</div>'", $text, 1);
 }
