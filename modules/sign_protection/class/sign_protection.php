@@ -48,6 +48,7 @@ class sign_protection implements Security_Intf
 	protected $_ommit = TRUE;		// Czy generować utrudnione zagadki?
 
 	protected $_tpl;
+	protected $_locale;
 	protected $_crypt;
 	protected $_pdo;
 
@@ -64,7 +65,7 @@ class sign_protection implements Security_Intf
 	public function getView()
 	{
 		$this->_tpl->assignGroup(array(
-			'message' => __('Nie licząc cyfr przepisz :znak znak od lewej strony, a następnie (nie licząc znaków) wszystkie cyfry od początku kodu :warunek', array(':znak' => $this->getNonNumKey(), ':warunek' => ($this->getNumsToOmmit() ? ' z pominieciem '.$this->getNumsToOmmit().($this->getNumsPosToOmmit() ? ' ostatnich' : ' pierwszych'): ''))),
+			'info' => __('Nie licząc cyfr przepisz :znak znak od lewej strony, a następnie (nie licząc znaków) wszystkie cyfry od początku kodu :warunek', array(':znak' => $this->getNonNumKey(), ':warunek' => ($this->getNumsToOmmit() ? ' z pominieciem '.$this->getNumsToOmmit().($this->getNumsPosToOmmit() ? ' ostatnich' : ' pierwszych'): ''))),
 			'answer' => $this->_crypt->encrypt($this->getAnswer()),
 			'code' => $this->getCode()
 		));
@@ -91,11 +92,13 @@ class sign_protection implements Security_Intf
 		);
 	}
 
-	public function setObjects($_tpl, $_pdo = NULL)
+	public function setObjects($_tpl, $_pdo, $_locale)
 	{
 		$this->_pdo = $_pdo;
 		$this->_tpl = $_tpl;
-
+		
+		$this->_locale = $_locale;
+		
 		$this->_tpl->root = DIR_MODULES.'sign_protection'.DS.'templates'.DS;
 		$this->_tpl->compile = DIR_CACHE;
 

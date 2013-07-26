@@ -49,7 +49,7 @@ try
 		$_tpl = new General(DIR_ADMIN_PAGES.DS.'ajax'.DS.'templates'.DS);
 		
 		$_tag = new Tag($_system, $_pdo);
-		$_modules = new Modules($_pdo, $_sett, $_user, $_tag, $_locale, $_system);
+		$_modules = new Modules($_pdo, $_sett, $_user, $_tag, $_locale, $_system, $_request);
 		
 		$_panels = new Panels($_pdo);
 		

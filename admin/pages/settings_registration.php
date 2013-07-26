@@ -39,7 +39,7 @@ try
 	
 	$_locale->load('settings_registration');
 	
-	$_security = new Security($_pdo, $_request);
+	$_security = new Security($_pdo, $_request, $_locale);
 
 	if ( ! $_user->hasPermission('admin.registration'))
 	{
