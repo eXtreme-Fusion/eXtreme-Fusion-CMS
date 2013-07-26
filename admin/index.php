@@ -32,10 +32,27 @@
 +--------------------------------------------------------*/
 try
 {
-	require_once '../config.php';
-	require DIR_SITE.'bootstrap.php';
-	require_once DIR_SYSTEM.'admincore.php';
+	define('DIR_BASE', realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..').DIRECTORY_SEPARATOR);
 
+	if ( ! file_exists(DIR_BASE.'config.php'))
+	{
+		if (file_exists(DIR_BASE.'install'.DIRECTORY_SEPARATOR))
+		{
+			header('Location: ../install/');
+			exit;
+		}
+		else
+		{
+			die('Installer not found on server. Please upload install directory again.');
+		}
+	}
+	else
+	{
+		require DIR_BASE.'config.php';
+		require DIR_SITE.'bootstrap.php';
+		require_once DIR_SYSTEM.'admincore.php';
+	}
+	
 	$_locale->load('favourites');
 	
 	$tpl = new AdminMainEngine;
