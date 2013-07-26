@@ -53,7 +53,7 @@ class Modules
 	 * @param   User	  obiekt klasy użytkownika
 	 * @return  void
 	 */
-	public function __construct(Data $pdo, Sett $sett, User $user, Tag $tag, Locales $locale, System $system)
+	public function __construct(Data $pdo, Sett $sett, User $user, Tag $tag, Locales $locale, System $system, Request $request)
 	{
 		$this->_pdo   = $pdo;
 		$this->_sett  = $sett;
@@ -61,6 +61,7 @@ class Modules
 		$this->_tag   = $tag;
 		$this->_locale   = $locale;
 		$this->_system   = $system;
+		$this->_request   = $request;
 		// Kategorie, do których można przypisywać moduły
 		$this->_categories = array(
 			'security',
@@ -380,7 +381,7 @@ class Modules
 
 				if ($mod_info['category'] === 'security')
 				{
-					$_security = new Security($this->_pdo);
+					$_security = new Security($this->_pdo, $this->_request, $this->_locale);
 					$_security->checkModuleBeforeInstall($mod_info['dir']);
 				}
 			}
