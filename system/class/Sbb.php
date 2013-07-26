@@ -194,14 +194,16 @@ class SmileyBBcode
 			}
 		}
 
-		$text = HELP::descript($text, FALSE);
+		$text = nl2br(HELP::descript($text, FALSE));
+		
 		$this->_locale->setSubDir('');
+		
 		return $text;
 	}
 
 	public function parseSmiley($text)
 	{
-		if ( ! preg_match("#\[code\]#sie", $text) && ! preg_match("#\<a href=#sie", $text))
+		if ( ! preg_match("#\<div class='code'>#sie", $text) && ! preg_match("#\<a href=#sie", $text))
 		{
 			$this->_cache['smileys'] = $this->_system->cache('parse_smileys', NULL, 'system');
 			if ($this->_cache['smileys'] === NULL)
