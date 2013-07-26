@@ -41,6 +41,8 @@ class sfs_protection implements Security_Intf
 	
 	protected $_pdo;
 	
+	protected $_locale;
+	
 	public function __construct()
 	{
 		$this->detectGetMethod();
@@ -63,7 +65,7 @@ class sfs_protection implements Security_Intf
 	public function getView()
 	{
 		$this->_tpl->assignGroup(array(
-			'message' => __('System rejestracji chroniony przez <a href="http://rafik.eu/">SFSProtection&trade;</a>.'),
+			'info' => __('The forms protected by :name', array(':name' => '<a href="http://rafik.eu/">SFSProtection&trade;</a>.')),
 			'user_ip' => $_SERVER['REMOTE_ADDR'],
 			'answer' => $this->getUserAnswer()
 		));
@@ -106,11 +108,14 @@ class sfs_protection implements Security_Intf
 		return TRUE;
 	}
 
-	public function setObjects($_tpl, $_pdo = NULL)
+	public function setObjects($_tpl, $_pdo, $_locale)
 	{
 		$this->_pdo = $_pdo;
+		
+		$this->_locale = $_locale;
+		$this->_locale->moduleLoad('view', 'sfs_protection');
+		
 		$this->_tpl = $_tpl;
-
 		$this->_tpl->root = DIR_MODULES.'sfs_protection'.DS.'templates'.DS;
 		$this->_tpl->compile = DIR_CACHE;
 	}

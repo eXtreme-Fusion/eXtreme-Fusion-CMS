@@ -48,8 +48,8 @@
 
 			{if $security}{$security}{/if}
 			<div class="tbl center">
-				<div class="grid_11 center">
-					<input type="reset" value="{i18n('Clean')}" class="button1" />
+				<div class="tbl center">
+					<input type="reset" value="{i18n('Clean')}" class="button" />
 					<input type="hidden" name="send_mail" value="{$contact.email}" />
 					<input type="hidden" name="security" value="{$answer}" />
 					<input class="Send" type="submit" name="send_message" value="{i18n('Send')}">

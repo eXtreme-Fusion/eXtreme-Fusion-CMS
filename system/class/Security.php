@@ -42,7 +42,7 @@ interface Security_Intf
 	 */
 
 	// Służy do przekazania do klasy obiektów takich jak PDO czy Settings
-	public function setObjects($_tpl);
+	public function setObjects($_tpl, $_pdo, $_locale);
 }
 
 // Interfejs dla klasy wewnętrznej obsługującej systemy zabezpieczeń
@@ -78,11 +78,13 @@ class Security
 {
 	protected $_pdo;
 	protected $_request;
+	protected $_locale;
 
-	public function __construct($_pdo, $_request)
+	public function __construct($_pdo, $_request, $_locale)
 	{
 		$this->_pdo = $_pdo;
 		$this->_request = $_request;
+		$this->_locale = $_locale;
 	}
 
 	/**

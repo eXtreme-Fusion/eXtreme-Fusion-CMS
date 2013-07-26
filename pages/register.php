@@ -40,13 +40,13 @@ $_protection = NULL;
 
 if ($validate_method = $_sett->getUnserialized('validation', 'register'))
 {
-	$_security = new Security($_pdo, $_request);
+	$_security = new Security($_pdo, $_request, $_locale);
 
 	// Zwraca referencje obiektu klasy zabezpieczejącej
 	if ($_protection = $_security->getCurrentModule($validate_method))
 	{
 		// Przekazywanie referencji do obiektów
-		$_protection->setObjects(new Basic, $_pdo, $_sett, $_system);
+		$_protection->setObjects($_tpl, $_pdo, $_locale);
 	}
 }
 
