@@ -206,7 +206,13 @@ Class HELP
 		return $string;
 	}
 
-
+	public static function validUpVersion($current, $new)
+	{
+		$current = (int) str_replace('.', '', $current);
+		$new = (int) str_replace('.', '', $new);
+		
+		return $current === ($new-1);
+	}
 
 	public static function cleanSelectOptions($data)
 	{
