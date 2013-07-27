@@ -18,7 +18,7 @@
 			{elseif $error == 7}
 			{i18n('E-mail address is on blacklist.')}
 			{elseif $error == 8}
-			{i18n('Security code is not valid.')}
+			{i18n('The safety form returns error.')}
 			{/if}
 		</p>
 		{/section}
