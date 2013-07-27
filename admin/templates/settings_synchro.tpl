@@ -18,7 +18,7 @@
 <h3>{i18n('Synchronization')}</h3>
 {if $url}
 	<div class="center">
-		<p><a href="{$url}">{i18('Download update')}</a></p>
+		<p><a href="{$url}">{i18n('Download update')}</a></p>
 		<p>{i18n('After putting files into FTP server, go here.', array(':url' => $upgrade))}</p>
 	</div>
 {else}
