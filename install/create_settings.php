@@ -145,7 +145,7 @@ $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'loging', 'value' 
 	'user_active_time' => 60*5						// 5min
 ))));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'routing', 'value' => serialize(array(
-	'param_sep' => '/',
+	'param_sep' => '-',
 	'main_sep' => '/',
 	'url_ext' => '.html',
 	'tpl_ext' => '.tpl',

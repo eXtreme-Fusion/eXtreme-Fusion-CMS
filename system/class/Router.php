@@ -271,7 +271,7 @@ class Router
 		}
 
 		$this->_params_void = $new;
-
+		
 		$new = array();
 		$i = 1;
 		if ($this->_params_void_order)
@@ -286,7 +286,7 @@ class Router
 			}
 
 			$this->_params_void_order = $new;
-		}
+		}var_dump($this->_params_void_order);
 	}
 
 	/**
