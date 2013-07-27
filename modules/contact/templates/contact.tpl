@@ -7,7 +7,7 @@
 					{if $error == '1'}
 						{i18n('The required fields are not filled.')}
 					{elseif $error == '2'}
-						{i18n('The safety code is invalid.')}
+						{i18n('The safety form returns error.')}
 					{elseif $error == '3'}
 						{i18n('Sender\'s e-mail address is invalid.')}
 					{elseif $error == '4'}
@@ -24,12 +24,12 @@
 				<p>{$contact.description}</strong>
 			</div>
 			<div class="tbl">
-				<div class="formLabel grid_2 sep_1"><label for="email">{i18n('Your e-mail address:')}</label></div>
+				<div class="formLabel grid_2 sep_1"><label for="user_email">{i18n('Your e-mail address:')}</label></div>
 				<div class="formField grid_7">
 					{if $iUSER}
-						<input type="text" name="email" id="email" class="textbox" style="width:368px;" value="{$email}" />
+						<input type="text" name="user_email" id="user_email" class="textbox" style="width:368px;" value="{$user_email}" />
 					{else}
-						<input type="text" name="email" id="email" class="textbox" style="width:368px;" value="{$email}"/>
+						<input type="text" name="user_email" id="user_email" class="textbox" style="width:368px;" value="{$user_email}"/>
 					{/if}
 				</div>
 			</div>
@@ -48,8 +48,8 @@
 
 			{if $security}{$security}{/if}
 			<div class="tbl center">
-				<div class="grid_11 center">
-					<input type="reset" value="{i18n('Clean')}" class="button1" />
+				<div class="tbl center">
+					<input type="reset" value="{i18n('Clean')}" class="button" />
 					<input type="hidden" name="send_mail" value="{$contact.email}" />
 					<input type="hidden" name="security" value="{$answer}" />
 					<input class="Send" type="submit" name="send_message" value="{i18n('Send')}">

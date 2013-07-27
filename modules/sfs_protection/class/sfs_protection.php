@@ -41,6 +41,8 @@ class sfs_protection implements Security_Intf
 	
 	protected $_pdo;
 	
+	protected $_locale;
+	
 	public function __construct()
 	{
 		$this->detectGetMethod();
@@ -63,7 +65,7 @@ class sfs_protection implements Security_Intf
 	public function getView()
 	{
 		$this->_tpl->assignGroup(array(
-			'message' => __('System rejestracji chroniony przez <a href="http://rafik.eu/">SFSProtection&trade;</a>.'),
+			'info' => __('The forms protected by :name', array(':name' => '<a href="http://rafik.eu/">SFSProtection&trade;</a>.')),
 			'user_ip' => $_SERVER['REMOTE_ADDR'],
 			'answer' => $this->getUserAnswer()
 		));
@@ -106,11 +108,14 @@ class sfs_protection implements Security_Intf
 		return TRUE;
 	}
 
-	public function setObjects($_tpl, $_pdo = NULL)
+	public function setObjects($_tpl, $_pdo, $_locale)
 	{
 		$this->_pdo = $_pdo;
+		
+		$this->_locale = $_locale;
+		$this->_locale->moduleLoad('view', 'sfs_protection');
+		
 		$this->_tpl = $_tpl;
-
 		$this->_tpl->root = DIR_MODULES.'sfs_protection'.DS.'templates'.DS;
 		$this->_tpl->compile = DIR_CACHE;
 	}
@@ -199,6 +204,8 @@ class sfs_protection implements Security_Intf
 		$this->_url = 'http://www.stopforumspam.com/api?username='.$this->_name.'&email='.$this->_email.'&ip='.$this->_ip;
 		$this->getContent();
 		
+		$this->_name = isset($this->_name) ? $this->_name : '----';
+		
 		if($this->_appears === FALSE && $this->_logs === TRUE)
 		{
 			$this->_pdo->exec('INSERT INTO [sfs_protection] (`name`, `email`, `ip`, `datestamp`) VALUES (:name, :email, :ip, '.time().')',
@@ -248,24 +255,31 @@ class sfs_protection implements Security_Intf
 	{
 		if($this->_method === 'fgc')
 		{
-			$xml = new SimpleXMLElement(file_get_contents($this->_url));
-			if ($xml->appears == 'yes') 
+			$xml = new SimpleXMLElement(file_get_contents(stripslashes($this->_url)));
+			foreach($xml->appears as $d)
 			{
-				$this->_appears = FALSE;
+				if ($d == 'yes') 
+				{
+					$this->_appears = FALSE;
+				}
 			}
 		}
 		else
 		{
 			$_init = curl_init(); 
 			curl_setopt($_init, CURLOPT_RETURNTRANSFER, 1); 
-			curl_setopt($_init, CURLOPT_URL, $this->_url); 
+			curl_setopt($_init, CURLOPT_URL, stripslashes($this->_url)); 
 			$xml = new SimpleXMLElement(curl_exec($_init));
-			if ($xml->appears == 'yes') 
+			foreach($xml->appears as $d)
 			{
-				$this->_appears = FALSE;
+				if ($d == 'yes') 
+				{
+					$this->_appears = FALSE;
+				}
 			}
 			curl_close($_init);
 		}
+		
 	}
 	
 	

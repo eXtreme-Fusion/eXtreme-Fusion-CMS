@@ -48,9 +48,17 @@ try
 
 	$_tpl = new Iframe;
 
-	if ($_sett->get('version') < SYSTEM_VERSION)
+	
+	if ($_sett->get('version') !== SYSTEM_VERSION)
 	{
-		$_tpl->assign('upgrade', TRUE);
+		if (! HELP::validUpVersion($_sett->get('version'), SYSTEM_VERSION))
+		{
+			$_tpl->assign('updating_error', TRUE);
+		}
+		else
+		{
+			$_tpl->assign('upgrade', TRUE);
+		}
 	}
 	elseif ($_sett->get('synchro'))
 	{
@@ -59,7 +67,7 @@ try
 		if ($json === NULL)
 		{
 			$fields['system'] = urlencode(base64_encode(SYSTEM_VERSION));
-			$fields['addr'] = urlencode(base64_decode(ADDR_SITE));
+			$fields['addr'] = urlencode(base64_encode(ADDR_SITE));
 			if (function_exists('curl_init'))
 			{
 				$c = curl_init('http://extreme-fusion.org/curl/update.php?system='.$fields['system'].'&addr='.$fields['addr']);

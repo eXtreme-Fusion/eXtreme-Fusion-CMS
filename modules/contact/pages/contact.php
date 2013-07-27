@@ -23,13 +23,13 @@ $_protection = NULL;
 //TODO: Dorobić zarzadzanie typem zabezpieczenia
 if ($validate_method = 'sfs_protection')
 {
-	$_security = new Security($_pdo, $_request);
+	$_security = new Security($_pdo, $_request, $_locale);
 
 	// Zwraca referencje obiektu klasy zabezpieczejącej
 	if ($_protection = $_security->getCurrentModule($validate_method))
 	{
 		// Przekazywanie referencji do obiektów
-		$_protection->setObjects(new Basic, $_pdo, $_sett, $_system);
+		$_protection->setObjects($_tpl, $_pdo, $_locale);
 	}
 }
 
@@ -64,35 +64,35 @@ if ($id && $title)
 			throw new systemException('Recipient\'s e-mail address is invalid.');
 		}
 
-		if (! $_request->post('email')->show() || ! $_request->post('subject')->show() || ! $_request->post('message')->show())
+		if (! $_request->post('user_email')->show() || ! $_request->post('subject')->show() || ! $_request->post('message')->show())
 		{
 			$error[] = '1';
 		}
 
 		if ($_protection)
-		{
+		{	
 			if ( ! $_protection->isValidAnswer($_security->getUserAnswer($_protection->getResponseInputs())))
 			{
 				$error['security'] = '2';
 			}
 		}
 
-		if ( ! $_request->post('email')->isEmail())
+		if ( ! $_request->post('user_email')->isEmail())
 		{
 			$error[] = '3';
 		}
 
 		if ( ! $error)
 		{
-			if ($_mail->send($_request->post('send_mail')->show(), $_request->post('email')->show(), $_request->post('subject')->filters('trim', 'strip'), $_request->post('message')->show()))
+			if ($_mail->send($_request->post('send_mail')->show(), $_request->post('user_email')->show(), $_request->post('subject')->filters('trim', 'strip'), $_request->post('message')->show()))
 			{
 				// Czy wysłać kopię do nadawcy?
 				if ($_request->post('sendme_copy')->show())
 				{
 					$message = 'Wiadomośc do: '.$row['title'].'<br /><br />'.$_request->post('message')->show();
-					if ($_mail->send($_request->post('email')->show(), $_sett->get('contact_email'), $_request->post('subject')->filters('trim', 'strip'), $message))
+					if ($_mail->send($_request->post('user_email')->show(), $_sett->get('contact_email'), $_request->post('subject')->filters('trim', 'strip'), $message))
 					{
-						$_tpl->printMessage('valid', 'The message has been sent.');
+						$_tpl->printMessage('valid', __('The message has been sent.'));
 					}
 					else
 					{
@@ -101,7 +101,7 @@ if ($id && $title)
 				}
 				else
 				{
-					$_tpl->printMessage('valid', 'The message has been sent.');
+					$_tpl->printMessage('valid', __('The message has been sent.'));
 				}
 			}
 			else
@@ -114,7 +114,7 @@ if ($id && $title)
 		{
 			$_tpl->assignGroup(array(
 				'error' => $error,
-				'email' => $_request->post('email')->show(),
+				'user_email' => $_request->post('user_email')->show(),
 				'subject' => $_request->post('subject')->show(),
 				'form_message' => $_request->post('message')->show(),
 				'sendme_copy' => $_request->post('sendme_copy')->show() ? $_request->post('sendme_copy')->show() : NULL
@@ -123,7 +123,7 @@ if ($id && $title)
 	}
 	elseif (iUSER)
 	{
-		$_tpl->assign('email', $_user->get('email'));
+		$_tpl->assign('user_email', $_user->get('user_email'));
 	}
 
 

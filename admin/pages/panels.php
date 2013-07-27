@@ -32,7 +32,7 @@ try
 	$_tpl = new Iframe;
 
 	$_tag = new Tag($_system, $_pdo);
-	$_modules = new Modules($_pdo, $_sett, $_user, $_tag, $_locale, $_system);
+	$_modules = new Modules($_pdo, $_sett, $_user, $_tag, $_locale, $_system, $_request);
 	$_panels = new Panels($_pdo);
 
 	$_panels->setModulesInst($_modules);	
