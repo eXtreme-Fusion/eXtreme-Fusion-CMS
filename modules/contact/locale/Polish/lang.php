@@ -3,11 +3,13 @@
 return array(
 	'Contact' => 'Kontakt',
 	'The required fields are not filled.' => 'Nie uzupełniono wymaganych pól.',
-	'The safety code is invalid.' => 'Podano niepoprawny kod bezpieczeństwa.',
+	'The safety form returns error.' => 'Zabezpieczenie formularza zwraca błąd.',
 	'Sender\'s e-mail address is invalid.' => 'Adres nadawcy wiadomości jest nieprawidłowy.',
 	'Your e-mail address:' => 'Twój adres e-mail:',
 	'Send me a copy:' => 'Wyślij mi kopię:',
 	'There are no contact forms added.' => 'Brak formularzy kontaktowych.',
+	'Contact with :contact' => 'Kontakt z :contact',
+	'Clean' => 'Wyczyść',
 	
 	
 	

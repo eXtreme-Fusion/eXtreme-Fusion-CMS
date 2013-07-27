@@ -23,7 +23,7 @@ return array(
 	'E-mail address is already in use.' => 'Adres e-mail jest już używany.',
 	'E-mail address is on blacklist.' => 'Adres e-mail znajduje się na czarnej liście.',
 	'The user account has been created successfully.' => 'Konto użytkownika zostało utworzone.',
-	'Security code is not valid.' => 'Kod zabezpieczający nie jest poprawny.',
+	'The safety form returns error.' => 'Zabezpieczenie formularza zwraca błąd.',
 	'Activation e-mail has been sent.' => 'E-mail aktywacyjny został wysłany.',
 	'Account is waiting for an admin activation.' => 'Konto czeka na aktywacje przez administratora.',
 );

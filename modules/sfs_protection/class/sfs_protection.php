@@ -204,6 +204,8 @@ class sfs_protection implements Security_Intf
 		$this->_url = 'http://www.stopforumspam.com/api?username='.$this->_name.'&email='.$this->_email.'&ip='.$this->_ip;
 		$this->getContent();
 		
+		$this->_name = isset($this->_name) ? $this->_name : '----';
+		
 		if($this->_appears === FALSE && $this->_logs === TRUE)
 		{
 			$this->_pdo->exec('INSERT INTO [sfs_protection] (`name`, `email`, `ip`, `datestamp`) VALUES (:name, :email, :ip, '.time().')',
@@ -253,24 +255,31 @@ class sfs_protection implements Security_Intf
 	{
 		if($this->_method === 'fgc')
 		{
-			$xml = new SimpleXMLElement(file_get_contents($this->_url));
-			if ($xml->appears == 'yes') 
+			$xml = new SimpleXMLElement(file_get_contents(stripslashes($this->_url)));
+			foreach($xml->appears as $d)
 			{
-				$this->_appears = FALSE;
+				if ($d == 'yes') 
+				{
+					$this->_appears = FALSE;
+				}
 			}
 		}
 		else
 		{
 			$_init = curl_init(); 
 			curl_setopt($_init, CURLOPT_RETURNTRANSFER, 1); 
-			curl_setopt($_init, CURLOPT_URL, $this->_url); 
+			curl_setopt($_init, CURLOPT_URL, stripslashes($this->_url)); 
 			$xml = new SimpleXMLElement(curl_exec($_init));
-			if ($xml->appears == 'yes') 
+			foreach($xml->appears as $d)
 			{
-				$this->_appears = FALSE;
+				if ($d == 'yes') 
+				{
+					$this->_appears = FALSE;
+				}
 			}
 			curl_close($_init);
 		}
+		
 	}
 	
 	
