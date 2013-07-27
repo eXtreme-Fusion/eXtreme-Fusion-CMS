@@ -29,7 +29,7 @@ try
 	}
 
 	$_fav->setFavByLink('settings_synchro.php', $_user->get('id'));
-	
+
 	$_tpl = new Iframe;
 
 	if ($_request->get('action', NULL)->show() === NULL)

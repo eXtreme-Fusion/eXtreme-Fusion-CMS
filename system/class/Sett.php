@@ -142,7 +142,7 @@ class Sett {
 		}
 
 		// Czyści pamięć podręczną
-		$this->clearCache('system', '');
+		$this->clearCache('system');
 				
 		// Ustawienia zostały zapisane
 		return TRUE;
