@@ -11,5 +11,6 @@ return array(
 	'Synchronization' => 'Synchronizacja',
 	'Synchronization is not active.' => 'Synchronizacja nie jest aktywna.',
 	'Download update' => 'Pobierz aktualizację',
-	'After putting files into FTP server, go here.' => 'Po zamieszczeniu plików na serwerze FTP, przejdź <a href=":url">tutaj</a>'
+	'After putting files into FTP server, go here.' => 'Po zamieszczeniu plików na serwerze FTP, przejdź <a href=":url">tutaj</a>',
+	'Curl warning' => 'Rozszerzenie curl nie zostało włączone. Należy przejść do kolejnego etapu instalacji lub skonfigurować odpowiednio PHP.',
 );
