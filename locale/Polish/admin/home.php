@@ -31,9 +31,9 @@ return array(
 	'Added' => 'Dodano',
 	'by' => 'przez',
 	
-	// Synchronization
+	// Updating
 	'Update is ready to install.' => 'Aktualizacja jest gotowa do zainstalowania.',
 	'Update is available.' => 'Dostępna jest aktualizacja.',
 	'You have currently version of eXtreme-Fusion CMS.' => 'Posiadasz aktualną wersję eXtreme-Fusion CMS.',
-	
+	'Updating error' => 'Nie możesz skorzystać z tej aktualizacji.<br /> Pobierz inną, właściwą dla Twojej wersji systemu CMS.<br /> <a href="https://github.com/eXtreme-Fusion/EF5-updates">https://github.com/eXtreme-Fusion/EF5-updates</a>'
 );

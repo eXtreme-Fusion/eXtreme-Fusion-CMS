@@ -153,7 +153,7 @@ if ($_user->iGuest())
 		if (count($data) === 3)
 		{
 			// Sprawdzanie czy kod bezpieczeństwa jest prawidłowy
-			if ($_route->getByID(3) != '' && $_route->getByID(3) === $data['valid_code'])
+			if ($_route->getParamVoid(1) != '' && $_route->getParamVoid(1) === $data['valid_code'])
 			{
 				$time = explode('_', $data['valid_code']);
 

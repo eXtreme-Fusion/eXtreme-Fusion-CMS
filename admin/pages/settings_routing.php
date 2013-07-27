@@ -13,7 +13,7 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
+|
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------+
@@ -36,7 +36,7 @@ try
 	require_once '../../config.php';
 	require DIR_SITE.'bootstrap.php';
 	require_once DIR_SYSTEM.'admincore.php';
-	
+
 	$_locale->load('settings_routing');
 
 	if ( ! $_user->hasPermission('admin.settings_routing'))
@@ -45,25 +45,32 @@ try
 	}
 
 	$_fav->setFavByLink('settings_routing.php', $_user->get('id'));
-	
+
 	$_tpl = new Iframe;
 
 	if ($_request->post('save')->show())
 	{
-		$_sett->update(array(
-			'routing' => serialize(array(
-				'param_sep' => $_request->post('param_sep')->strip(),
-				'main_sep' => $_request->post('main_sep')->strip(),
-				'url_ext' => $_request->post('url_ext')->strip(),
-				'tpl_ext' => $_request->post('tpl_ext')->strip(),
-				'logic_ext' => $_request->post('logic_ext')->strip(),
-				'ext_allowed' => $_request->post('ext_allowed')->isNum(TRUE)
-			))
-		));
-		
-		$_files->rmDirRecursive(DIR_CACHE, TRUE);
-		
-		$_tpl->printMessage('valid', $_log->insertSuccess('edit', __('Data has been saved.')));
+		if ($_request->post('param_sep')->strip() === $_request->post('main_sep')->strip())
+		{
+			$_tpl->printMessage('error', 'Separator parametrów nie może byc jednocześnie separatorem linków.');
+		}
+		else
+		{
+			$_sett->update(array(
+				'routing' => serialize(array(
+					'param_sep' => $_request->post('param_sep')->strip(),
+					'main_sep' => $_request->post('main_sep')->strip(),
+					'url_ext' => $_request->post('url_ext')->strip(),
+					'tpl_ext' => $_request->post('tpl_ext')->strip(),
+					'logic_ext' => $_request->post('logic_ext')->strip(),
+					'ext_allowed' => $_request->post('ext_allowed')->isNum(TRUE)
+				))
+			));
+
+			$_files->rmDirRecursive(DIR_CACHE, TRUE);
+
+			$_tpl->printMessage('valid', $_log->insertSuccess('edit', __('Data has been saved.')));
+		}
 	}
 
 	$_tpl->assignGroup(array(

@@ -36,7 +36,9 @@
 <div class="ui-corner-all grid_6">
 	<h3 class="ui-corner-all">{i18n('Update')}</h3>
 
-	{if $synchro_error || $error}
+	{if $updating_error}
+		<div class="HomeBox"><div class="error">{i18n('Updating error')}</div></div>
+	{elseif $synchro_error || $error}
 		<div class="HomeBox"><div class="error"><a href="{$ADDR_ADMIN_PAGES}settings_synchro.php">{i18n('Synchronization is not active.')}</a></div></div>
 	{elseif $upgrade}
 		<div class="HomeBox"><div class="valid"><a href="{$ADDR_ADMIN_PAGES}upgrade.php">{i18n('Update is ready to install.')}</a></div></div>

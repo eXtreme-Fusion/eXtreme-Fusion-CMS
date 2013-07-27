@@ -59,14 +59,8 @@ try
     }
 
 	if (SYSTEM_VERSION !== $_sett->get('version'))
-	{
-		$new_version = explode('.', SYSTEM_VERSION);
-		$new_version = (int) $new_version[2];
-		
-		$old_version = explode('.', $_sett->get('version'));
-		$old_version = (int) $old_version[2];
-		
-		if ($old_version !== ($new_version-1) || $_sett->get('version') >= SYSTEM_VERSION)
+	{		
+		if (! HELP::validUpVersion($_sett->get('version'), SYSTEM_VERSION))
 		{
 			$_tpl->printMessage('error', 'Nie możesz skorzystać z tej aktualizacji. Pobierz inną, właściwą dla Twojej wersji systemu CMS: https://github.com/eXtreme-Fusion/EF5-updates');
 		}
@@ -111,17 +105,33 @@ try
 				$_pdo->exec("DELETE FROM [admin] WHERE `link` = 'panel_editor.php'");
 				$_pdo->exec("DELETE FROM [admin] WHERE `link` = 'upgrade.php'");
 				
-				$count = $_sett->update(array('version' => SYSTEM_VERSION));
 				
-				if ($count)
-				{
+				$_sett->update(array(
+					'routing' => serialize(array(
+						'param_sep' => '-',
+						'main_sep' => $_sett->getUns('routing', 'main_sep'),
+						'url_ext' => $_sett->getUns('routing', 'url_ext'),
+						'tpl_ext' => $_sett->getUns('routing', 'tpl_ext'),
+						'logic_ext' => $_sett->getUns('routing', 'logic_ext'),
+						'ext_allowed' => $_sett->getUns('routing', 'ext_allowed')
+					));
+
+					))
+				));
+			
+				$_sett->update(array('version' => SYSTEM_VERSION));
+				
+				
+				
+				//if ($count)
+				//{
 					$_log->insertSuccess('updating', __('The update has been finished successfully.'));
 					$_files->rmDirRecursive(DIR_CACHE);
 					$_request->redirect(FILE_PATH, array('act' => 'updating', 'status' => 'ok'));
-				}
+				//}
 
-				$_log->insertFail('updating', __('Error! The update has not been finished.'));
-				$_request->redirect(FILE_PATH, array('act' => 'updating', 'status' => 'error'));
+				//$_log->insertFail('updating', __('Error! The update has not been finished.'));
+				//$_request->redirect(FILE_PATH, array('act' => 'updating', 'status' => 'error'));
 			}
 
 			$_tpl->assign('upgrade', TRUE);

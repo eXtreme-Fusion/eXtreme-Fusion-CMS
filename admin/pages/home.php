@@ -48,9 +48,17 @@ try
 
 	$_tpl = new Iframe;
 
-	if ($_sett->get('version') < SYSTEM_VERSION)
+	
+	if ($_sett->get('version') !== SYSTEM_VERSION)
 	{
-		$_tpl->assign('upgrade', TRUE);
+		if (! HELP::validUpVersion($_sett->get('version'), SYSTEM_VERSION))
+		{
+			$_tpl->assign('updating_error', TRUE);
+		}
+		else
+		{
+			$_tpl->assign('upgrade', TRUE);
+		}
 	}
 	elseif ($_sett->get('synchro'))
 	{
