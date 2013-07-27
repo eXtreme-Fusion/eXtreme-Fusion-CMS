@@ -1,4 +1,4 @@
-Options +FollowSymlinks
+Options FollowSymlinks
 
 <Files .*>
 	Order Deny,Allow
