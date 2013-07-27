@@ -580,6 +580,7 @@ class User {
 			}
 		}
 
+		$this->_system->clearCache('system', 'user_data-'.$id);
 		return TRUE;
 	}
 
@@ -1090,7 +1091,7 @@ class User {
 		{
 			if (isset($this->_users[$id]))
 			{
-				$data = $this->users[$id];
+				$data = $this->_users[$id];
 			}
 			else
 			{
@@ -1101,7 +1102,7 @@ class User {
 			
 					$this->_system->cache('user_data-'.$id, $this->_cache, 'system');
 				}
-				$data = $this->users[$id] = $this->_cache;
+				$data = $this->_users[$id] = $this->_cache;
 			}
 
 			if ($data)

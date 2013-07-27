@@ -87,7 +87,7 @@ class Router
 
 		$this->_url = new URL($this->_ext['url'], $this->_sep, $this->_param_sep, $this->_rewrite, $this->_path_info_exists);
 		$this->_ext_allowed = $this->_url->extAllowed();
-		
+
 		/**
 		 * Metoda zwróci FALSE, jeśli żądanie nie spełnia warunku dotyczącego rozszerzenia.
 		 * Wyświetli się błąd 404, więc wykonanie poniższych metod jest niepotrzebne.
@@ -271,7 +271,7 @@ class Router
 		}
 
 		$this->_params_void = $new;
-		
+
 		$new = array();
 		$i = 1;
 		if ($this->_params_void_order)
@@ -286,7 +286,7 @@ class Router
 			}
 
 			$this->_params_void_order = $new;
-		}var_dump($this->_params_void_order);
+		}
 	}
 
 	/**
@@ -600,7 +600,7 @@ class Router
 	{
 		return isset($this->_values[$id]) ? $this->_values[$id] : $default;
 	}
-	
+
 	public function getParams()
 	{
 		return $this->_params_void_order;//values;
