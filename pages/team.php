@@ -65,7 +65,7 @@ $row = $_pdo->getRow('SELECT * FROM [users] WHERE `id` = 1 and `role` = 1');
 		'joined' => HELP::showDate('shortdate', $row['joined']),
 		'last_visit' => $last_visit,
 		'link' => HELP::profileLink($row['username'], $row['id']),
-		'last_visit_time' => ($row['lastvisit'] != 0 ? HELP::showDate('shortdate', $row['lastvisit']) : __('Nie był na stronie')),
+		'last_visit_time' => ($row['lastvisit'] != 0 ? HELP::showDate('shortdate', $row['lastvisit']) : __('Never logged in')),
 		'is_online' => inArray($row['id'], $_user->getOnline(), 'id') ? 1 : 0,
 	);
 
@@ -96,7 +96,7 @@ if ($_pdo->getRowsCount($query))
 			'joined' => HELP::showDate('shortdate', $row['joined']),
 			'last_visit' => $last_visit,
 			'link' => HELP::profileLink($row['username'], $row['id']),
-			'last_visit_time' => ($row['lastvisit'] != 0 ? HELP::showDate('shortdate', $row['lastvisit']) : __('Nie był na stronie')),
+			'last_visit_time' => ($row['lastvisit'] != 0 ? HELP::showDate('shortdate', $row['lastvisit']) : __('Never logged in')),
 			'is_online' => inArray($row['id'], $_user->getOnline(), 'id') ? 1 : 0,
 		);
 	}
@@ -148,7 +148,7 @@ if($groups)
 					'joined' => HELP::showDate('shortdate', $user['joined']),
 					'last_visit' => $last_visit,
 					'link' => HELP::profileLink($user['username'], $user['id']),
-					'last_visit_time' => ($user['lastvisit'] != 0 ? HELP::showDate('shortdate', $user['lastvisit']) : __('Nie był na stronie')),
+					'last_visit_time' => ($user['lastvisit'] != 0 ? HELP::showDate('shortdate', $user['lastvisit']) : __('Never logged in')),
 					'is_online' => inArray($user['id'], $_user->getOnline(), 'id') ? 1 : 0
 				);
 			}

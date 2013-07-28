@@ -25,9 +25,8 @@
 setlocale(LC_TIME, array('cs_CS.UTF-8', 'Czech'));
 
 return array(
-'Charset' => 'UTF-8',
 
-
+	'html_charset' => 'UTF-8',
 
 	'An unexpected error occurred' => 'Došlo k neočekávané chybě',
 
@@ -358,9 +357,83 @@ return array(
 	'Edit account' => 'Upravit účet',
 	'Language:' => 'Jazyk:',
 	
+	'Never logged in' => 'Nie był na stronie',
+	
 	'Polish' => 'Polský',
 	'English' => 'Anglický',
 	'Czech' => 'Český',
 	
-	'Modules under Development.' => 'Modul ve fázi vývoje.'
+	'Modules under Development.' => 'Modul ve fázi vývoje.',
+	
+	// Footer
+	'Unique visits:' => 'Unikalnych wizyt:',
+
+	// Error exceptions
+
+	// Uload
+	'The uploaded file exceeds the upload_max_filesize directive in php.ini.' => 'Wysyłany plik przekracza maksymalny rozmiar ustawiony w dyrektywie \'upload_max_filesize\' w pliku php.ini',
+	'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.' => 'Wysyłany plik przekracza maksymalny rozmiar ustawiony w dyrektywie \'MAX_FILE_SIZE\' przeznaczonej dla formularzy HTML.',
+	'The uploaded file was only partially uploaded.' => 'Wysyłany plik został zapisany tylko w części.',
+	'No file was uploaded.' => 'Żaden plik nie został wysłany.',
+	'Missing a temporary folder.' => 'Brak folderu tymczasowego.',
+	'Failed to write file to disk.' => 'Przerwane zapisywanie pliku na dysku.',
+	'File upload stopped by extension.' => 'Wysyłanie pliku zatrzymane przez wyjątek.',
+	'Unknown upload error.' => 'Wystąpił nie znany błąd podczas wysyłania pliku.',
+	'Upload error' => 'Błąd wysyłanie plików',
+
+	//System
+	'System error' => 'Błąd systemu',
+	'Internal error' => 'Błąd wewnętrzny',
+	'Error path' => 'Ścieżka błędu',
+	'In file' => 'W pliku',
+	'Function' => 'Funkcja',
+	'Line' => 'Linia',
+	'Directories' => 'Katalogi',
+	'Directory' => 'Katalog',
+	'Path' => 'Ścieżka',
+	'Status' => 'Status',
+	'Exist' => 'Istnieje',
+	'Does not exist' => 'Nie istnieje',
+	'File' => 'Plik',
+	'Method' => 'Metoda',
+	'Templates' => 'Templateka',
+
+	// Arguments
+	'Function argument error' => 'Błąd argumentów funkcji',
+	'Parameter of :parametr is wrong.' => 'Parametr :parametr jest nie prawidłowy.',
+
+	//User
+	'User error' => 'Błąd użytkownika',
+	'PDO Error' => 'Błąd interpretera PDO',
+	'PDO Queries' => 'Zapytanie PDO',
+
+	//Comments
+	'Add comments' => 'Skomentuj',
+	'Your name' => 'Twoja ksywka',
+	'Enter a comment' => 'Wpisz komentarz...',
+	'Add replay' => 'Dodaj odpowiedź',
+	'Adding your comment' => 'Dodawanie komentarza',
+	'Comment has been added' => 'Komentarz został dodany',
+	'Commenting has been disabled for your group permissions' => 'Komentowanie zostało wyłączone dla twojej grupy uprawnień',
+	'Error: Not entered the content of comments' => 'Błąd: nie podano treści komentarza',
+	'Update comments' => 'Edytuj komentarz',
+	'Delete comments' => 'Usuń komentarz',
+
+	//News Categories
+	'Bugs' => 'Błędy',
+	'Downloads' => 'Download',
+	'eXtreme-Fusion' => 'eXtreme-Fusion',
+	'Games' => 'Gry',
+	'Graphics' => 'Grafika',
+	'Hardware' => 'Sprzęt',
+	'Journal' => 'Dziennik',
+	'Members' => 'Użytkownicy',
+	'Mods' => 'Modyfikacje',
+	'Movies' => 'Filmy',
+	'Network' => 'Sieć',
+	'News' => 'Newsy',
+	'Security' => 'Bezpieczeństwo',
+	'Software' => 'Oprogramowanie',
+	'Themes' => 'Skórki',
+	'Windows' => 'Windows',
 );

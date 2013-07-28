@@ -503,7 +503,7 @@ try
 							'avatar' => $_user->getAvatarAddr($data['id']),
 							'joined' => HELP::showDate('shortdate', $data['joined']),
 							'status' => $data['status'],
-							'visit' => ($data['lastvisit'] != 0 ? HELP::showDate('shortdate', $data['lastvisit']) : __('Nie był na stronie')),
+							'visit' => ($data['lastvisit'] != 0 ? HELP::showDate('shortdate', $data['lastvisit']) : __('Never logged in')),
 							'theme' => $data['theme']
 						);
 					}
