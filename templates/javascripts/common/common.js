@@ -143,6 +143,11 @@ $(function() {
 			}
 		});
 	});
+	
+	// Wracanie do poprzedniej strony
+	$('.back').click(function(e){
+		history.back();
+	});
 });
 
 function addText(f,i,a,e){if(e==undefined){e="inputform"}if(f==undefined){f="message"}element=document.forms[e].elements[f];element.focus();if(document.selection){var c=document.selection.createRange();var h=c.text.length;c.text=i+c.text+a;return false}else{if(element.setSelectionRange){var b=element.selectionStart,g=element.selectionEnd;var d=element.scrollTop;element.value=element.value.substring(0,b)+i+element.value.substring(b,g)+a+element.value.substring(g);element.setSelectionRange(b+i.length,g+i.length);element.scrollTop=d;element.focus()}else{var d=element.scrollTop;element.value+=i+a;element.scrollTop=d;element.focus()}}}
