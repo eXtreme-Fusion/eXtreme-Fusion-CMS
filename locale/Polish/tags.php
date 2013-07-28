@@ -2,7 +2,7 @@
 
 return array(
 	'List of keywords' => 'Lista słów kluczowych',
-	'List of most popular keywords on' => 'Lista najpopularniejszych słów kluczowych na',
+	'List of most popular keywords on ' => 'Lista najpopularniejszych słów kluczowych na ',
 	'Materials containing the keyword <span class="italic">:tag</span>' => 'Materiały zawierające słowo kluczowe <span class="italic">:tag</span>',
 	'Keyword' => 'Słowo kluczowe',
 	'Keyword :keyword' => 'Słowo kluczowe :keyword',

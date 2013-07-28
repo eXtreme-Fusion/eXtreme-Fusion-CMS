@@ -131,7 +131,7 @@ else
 	$theme = array(
 		'Title' => __('Keywords').' » '.$_sett->get('site_name'),
 		'Keys' => $k,
-		'Desc' => __('List of most popular keywords on '.$_sett->get('site_name'))
+		'Desc' => __('List of most popular keywords on ').$_sett->get('site_name')
 	);
 	
 	$_tpl->assign('tags', $cache);
