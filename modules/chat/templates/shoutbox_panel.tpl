@@ -33,35 +33,36 @@
 | written permission from the original author(s).
 +-------------------------------------------------------*/
 *}
+{if $isInstalled}
+	<div id="ShoutBoxPanel">
+		{php} $this->sidePanel(__('ShoutBox')); {/php}
+		<div id="ShoutBoxUpArrow"></div>
+			<p>{i18n('Posted in')}: <span id="chat_post"></span></p>
 
-<div id="ShoutBoxPanel">
-	{php} $this->sidePanel(__('ShoutBox')); {/php}
-	<div id="ShoutBoxUpArrow"></div>
-		<p>{i18n('Posted in')}: <span id="chat_post"></span></p>
-
-		<div class="InfoBoxPanel">
-			{if $IsLoggedIn}
-			<form action="{$URL_REQUEST}" method="post" id="ShoutBoxForm">
-				<div class="line center">
-					<textarea class="InfoBoxInput" name="content"></textarea>
-					<input class="InfoBoxButton" type="submit" name="send" value="{i18n('Send')}" />
+			<div class="InfoBoxPanel">
+				{if $IsLoggedIn}
+				<form action="{$URL_REQUEST}" method="post" id="ShoutBoxForm">
+					<div class="line center">
+						<textarea class="InfoBoxInput" name="content"></textarea>
+						<input class="InfoBoxButton" type="submit" name="send" value="{i18n('Send')}" />
+					</div>
+				</form>
+				{else}
+				<div class="InfoBoxTop"></div>
+				<div class="InfoBoxCon">
+					<div id="ShoutboxIcon"></div>
+					<div class="InfoBoxCenterRight">
+						<p class="center margin-vertical-10"><strong>{i18n('You must login to post a message!')}</p>
+					</div>
 				</div>
-			</form>
-			{else}
-			<div class="InfoBoxTop"></div>
-			<div class="InfoBoxCon">
-				<div id="ShoutboxIcon"></div>
-				<div class="InfoBoxCenterRight">
-					<p class="center margin-vertical-10"><strong>{i18n('You must login to post a message!')}</p>
-				</div>
+				<div class="InfoBoxEnd"></div>
+				{/if}
 			</div>
-			<div class="InfoBoxEnd"></div>
-			{/if}
-		</div>
-		<div id="ShoutBoxPosts">
-		</div>
-		<div class="center margin-top-10"><a href="{$url_chat}">{i18n('ARCHIVE')}</a></div>
+			<div id="ShoutBoxPosts">
+			</div>
+			<div class="center margin-top-10"><a href="{$url_chat}">{i18n('ARCHIVE')}</a></div>
 
-	<div id="ShoutBoxDownArrow"></div>
-	{php} $this->sidePanel(); {/php}
-</div>
+		<div id="ShoutBoxDownArrow"></div>
+		{php} $this->sidePanel(); {/php}
+	</div>
+{/if}

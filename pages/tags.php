@@ -35,7 +35,7 @@ $_locale->load('tags');
 
 $_head->set($_tpl->getHeaders());
 
-! class_exists('Tag') || $_tag = New Tag($_system, $_pdo);
+
 
 if ( ! $_theme->tplExists())
 {
