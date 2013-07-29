@@ -40,7 +40,7 @@ try
 	$_panels->adminMakeListPanels($_user, TRUE);
 	
 	// TO DO 
-	// Sprawdzaæ czy panel XXXX nie wymaga zainstalwania modu³u i czy po odinstalowaniu nie zosta³ w zarz¹dzaniu panelami.
+	// SprawdzaÄ‡ czy panel XXXX nie wymaga zainstalwania moduÅ‚u i czy po odinstalowaniu nie zostaÅ‚ w zarzÄ…dzaniu panelami.
 	
 	$_tpl->assign('noact_panels', $_panels->adminGetInactivePanels());
 	$_tpl->assign('panel', $_panels->adminGetPanel());
