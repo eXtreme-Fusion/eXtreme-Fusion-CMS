@@ -25,9 +25,9 @@
 setlocale(LC_TIME, array('cs_CS.UTF-8', 'Czech'));
 
 return array(
-'Charset' => 'UTF-8',
 
 
+	'html_charset' => 'UTF-8',
 
 	'An unexpected error occurred' => 'Došlo k neočekávané chybě',
 

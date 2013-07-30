@@ -114,8 +114,6 @@ try
 						'tpl_ext' => $_sett->getUns('routing', 'tpl_ext'),
 						'logic_ext' => $_sett->getUns('routing', 'logic_ext'),
 						'ext_allowed' => $_sett->getUns('routing', 'ext_allowed')
-					));
-
 					))
 				));
 			
