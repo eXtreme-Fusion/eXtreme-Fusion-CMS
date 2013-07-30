@@ -23,7 +23,7 @@ try
 
 	$_locale->load('settings_synchro');
 
-	if ( ! $_user->hasPermission('admin.settings_synchro'))
+	if ( ! $_user->hasPermission('admin.settings_synchro') || $_locale->getLang() === 'Czech')
 	{
 		throw new userException(__('Access denied'));
 	}
