@@ -17,45 +17,54 @@
 try
 {
 	require_once '../../../system/sitecore.php';
- 
+        include DIR_MODULES.'google_analytics/class/gapi.php';
+        
 	if ($_user->isLoggedIn())
 	{
 		if ($_user->hasPermission('module.google_analytics.preview'))
 		{
-			$row = $_pdo->getRow('SELECT * FROM [google_analytics_sett]');
+			$google_analytics_list = $_system->cache('google_analytics_data', NULL, 'google_analytics', 86700);
 			
-			$google_analytics = new Gapi($row['email'], $row['password']);
-
-			$dimensions = array(
-					'source',
-					'networkDomain',
-					'browser',
-					'browserVersion',
-					'operatingSystem',
-					'operatingSystemVersion',
-					'country'
-			);
-
-			$metrics = array(
-					'pageviews',
-					'visits'
-			);
-
-			$google_analytics->requestReportData($row['account_id'], $dimensions, $metrics, '-visits');
-
-			$google_analytics_list = '{"aaData":[';
-			if ( ! is_array($google_analytics->_error))
+			if ($google_analytics_list === NULL)
 			{
-				foreach ($google_analytics->getResults() as $result)
-				{
-					$google_analytics_list .= '["'.$result->networkDomain().'","'.$result->source().'","'.$result->browser().' '.$result->browserVersion().'","'.$result->operatingSystem().' '.$result->operatingSystemVersion().'","'. $result->country().'","'.number_format($result->getPageviews(), 0, '', '.').'","'.number_format($result->getVisits(), 0, '', '.').'"],';
-				}
-			}
-			$google_analytics_list .= ']}';
-			$google_analytics_list = str_replace(',]}', ']}', $google_analytics_list);
+				$row = $_pdo->getRow('SELECT * FROM [google_analytics_sett]');
+                        
+				$google_analytics = new Gapi($row['email'], $row['password']);
 
+				$dimensions = array(
+								'source',
+								'networkDomain',
+								'browser',
+								'browserVersion',
+								'operatingSystem',
+								'operatingSystemVersion',
+								'country'
+				);
+
+				$metrics = array(
+								'pageviews',
+								'visits'
+				);
+
+				$google_analytics->requestReportData($row['account_id'], $dimensions, $metrics, '-visits');
+
+				$google_analytics_list = '{"aaData":[';
+				if ( ! is_array($google_analytics->_error))
+				{
+						foreach ($google_analytics->getResults() as $result)
+						{
+								$google_analytics_list .= '["'.$result->networkDomain().'","'.$result->source().'","'.$result->browser().' '.$result->browserVersion().'","'.$result->operatingSystem().' '.$result->operatingSystemVersion().'","'. $result->country().'","'.number_format($result->getPageviews(), 0, '', '.').'","'.number_format($result->getVisits(), 0, '', '.').'"],';
+						}
+				}
+				$google_analytics_list .= ']}';
+				$google_analytics_list = str_replace(',]}', ']}', $google_analytics_list);
+
+				$_system->cache('google_analytics_data', $google_analytics_list, 'google_analytics');
+			}
+                        
 			_e($google_analytics_list);
 		}
+                
 		$google_analytics_list = '{"aaData":[';
 		$google_analytics_list .= ']}';
 		_e($google_analytics_list);

@@ -1,4 +1,4 @@
-<h3>{i18n('Google Analitics')} - {i18n('Navigation')}</h3>
+<h3>{i18n('Google Analytics ')} - {i18n('Navigation')}</h3>
 <div class="capmain"></div>
 <div class="tbl Buttons">
 	<div class="center grid_2 button-l">
@@ -35,7 +35,7 @@
 			{/literal}
 		</script>
 
-		<h3>{i18n('Google Analitics')} - {i18n('Report of')} {$updated_day} {i18n('hour')} {$updated_hour}</h3>
+		<h3>{i18n('Google Analytics ')} - {i18n('Report of')} {$updated_day} {i18n('hour')} {$updated_hour}</h3>
 		<div class="grid_4"><strong>{i18n('Daily average visits:')}</strong> {$total_results}</div>
 		<div class="grid_4"><strong>{i18n('Total visits:')}</strong> {$visits}</div>
 		<div class="grid_4"><strong>{i18n('Total page views:')}</strong> {$page_views}</div>
@@ -56,7 +56,7 @@
 			</tbody>
 		</table>
 	{else}
-		<h3>{i18n('Google Analitics')} - {i18n('Error')}</h3>
+		<h3>{i18n('Google Analytics ')} - {i18n('Error')}</h3>
 		<div class="capmain"></div>
 		<div class="error">
 			{section=Error}
@@ -66,7 +66,7 @@
 	{/if}
 {/if}
 {if $page === 'sett'}
-	<h3 class="ui-corner-all">{$SystemVersion} - {i18n('Google Analitics')}</h3>
+	<h3 class="ui-corner-all">{$SystemVersion} - {i18n('Google Analytics ')}</h3>
 	{if $message}<div class="{$class}">{$message}</div>{/if}
 
 	<form id="This" action="{$URL_REQUEST}" method="post">

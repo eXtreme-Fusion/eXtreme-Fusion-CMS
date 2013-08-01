@@ -19,7 +19,8 @@ try
 	require_once '../../../config.php';
 	require DIR_SITE.'bootstrap.php';
 	require_once DIR_SYSTEM.'admincore.php';
-	
+	include DIR_MODULES.'google_analytics/class/gapi.php';
+                                
 	$_locale->moduleLoad('admin', 'google_analytics');
 
 	if($_request->get('page')->show() === 'preview')

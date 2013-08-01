@@ -14,7 +14,7 @@
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
 *********************************************************/
-error_reporting(-1);
+error_reporting(E_ALL);
 
 if ( ! isset($_SESSION))
 {
