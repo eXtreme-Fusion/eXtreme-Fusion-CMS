@@ -1,7 +1,7 @@
 <?php
 
 return array(
-	'The forms protected by :name' => 'System formularzy zabezpieczony przez :name',
-	'Forms protection' => 'Zabezpieczenie formularzy',
-	'Detected as a bot' => 'System uznał Cię jako bota, formularz nie został przesłany',
+	'The forms protected by :name' => 'Systém formulářů zabezpečen ochranou :name',
+	'Forms protection' => 'Bezpečnostní formuláře',
+	'Detected as a bot' => 'Systém Vás rozpoznal jako bota, formulář nebyl odeslán',
 );
