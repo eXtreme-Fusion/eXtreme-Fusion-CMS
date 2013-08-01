@@ -98,8 +98,8 @@ return array(
 	'There are empty fields left!' => 'Pole jsou prázdné!',
 	'Please make sure you have filled out all the MySQL connection fields.' => 'Sprawdź, czy wszystkie pola są wypełnione.',
 	'Tables prefix (Advanced settings) is already in use or prefix has not been written, and tables prefix exist in the database with the same name as that system is trying to create. Please enter a different prefix for tables.' => 'Předpona tabulek (Pokročilé nastavení)  se již používá nebo předpona nebyla zapsána popřípadě tabulky již existují se stejným názvem v databázi a systém se snaží se je snaží vytvořit. Prosím, zadejte jinou předponu pro tabulky.',
-	'NOTE! If after installation you experience problems with links and URLs (error 404), you must reinstall the system without checking the box below, or change the $_route in config.php.' => 'UWAGA! Jeżeli po zakończeniu instalacji wystąpią problemy z linkami i adresami URL (błędy 404), należy przeinstalować system nie zaznaczając poniższego pola lub zmienić ustawienia $_route w pliku config.php.',
-	'The names of the files listed below please change with the instructions.' => 'Nazwy poniższych plików proszę zmienić według instrukcji.',
+	'NOTE! If after installation you experience problems with links and URLs (error 404), you must reinstall the system without checking the box below, or change the $_route in config.php.' => 'POZOR! Jeżeli po zakończeniu instalacji wystąpią problemy z linkami i adresami URL (błędy 404), należy przeinstalować system nie zaznaczając poniższego pola lub zmienić ustawienia $_route w pliku config.php.',
+	'The names of the files listed below please change with the instructions.' => 'Názvy souborů jsou uvedeny níže, změňte postupujte podle pokynů.',
 	'modRewrite warning' => 'Instalační program nemohl zjistit, zda váš server podporuje modRewrite.<br />
 	Zaškrtněte toto políčko, pokud jste si jisti, že výše uvedený modul je k dispozici. <br />
 	Zodpovídá za vytváření odkazů přátelských na vyhledávání.', 	
