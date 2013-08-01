@@ -35,6 +35,6 @@
 	<p>{$footer}</p>
 	<address>Theme by <a href="http://nlds-group.com/" title="NLDS-Group.com"><img src="{$THEME_IMAGES}nlds_logo.png" alt="NLDS-Group.com"></a></address>
 	{if $admin_panel_link}<p>{$admin_panel_link}</p>{/if}
-	{if $visits_count}<p>Unikalnych wizyt: {$visits_count}</p>{/if}
+	{if $visits_count}<p>{i18n('Unique visits:')} {$visits_count}</p>{/if}
 </footer>
 {/if}

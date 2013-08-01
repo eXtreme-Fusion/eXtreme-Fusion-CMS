@@ -16,7 +16,7 @@
 *********************************************************/
 $_locale->moduleLoad('lang', 'tags_panel');
 
-! class_exists('Tag') || $_tag = New Tag($_system, $_pdo);
+
 
 $cache = $_system->cache('tags,'.$_user->getCacheName(), NULL, 'tags_panel', 0);
 

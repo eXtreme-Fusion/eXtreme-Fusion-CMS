@@ -14,12 +14,16 @@
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
 *********************************************************/
-$_locale->moduleLoad('shoutbox', 'chat');
-$_head->set('	<script src="'.ADDR_SITE.'modules/chat/templates/shoutbox.js"></script>');
-
-if ($_user->isLoggedIn()) 
+if($_modules->isInstalled('chat'))
 {
-	$_panel->assign('IsLoggedIn', TRUE);
-}
+	$_panel->assign('isInstalled', TRUE);
+	$_locale->moduleLoad('shoutbox', 'chat');
+	$_head->set('	<script src="'.ADDR_SITE.'modules/chat/templates/shoutbox.js"></script>');
 
-$_panel->assign('url_chat', $_url->path(array('controller' => 'chat')));
+	if ($_user->isLoggedIn()) 
+	{
+		$_panel->assign('IsLoggedIn', TRUE);
+	}
+
+	$_panel->assign('url_chat', $_url->path(array('controller' => 'chat')));
+}

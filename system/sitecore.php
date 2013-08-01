@@ -98,6 +98,9 @@ try
 	# Requests
 	$_request = $ec->request;
 
+	# Tags
+	! class_exists('Tag') || $_tag = New Tag($_system, $_pdo);
+
 	// Checking whether there are required database tables
 	require_once DIR_SYSTEM.'table_list.php';
 

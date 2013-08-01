@@ -51,8 +51,6 @@ try
 			throw new userException(__('Access Denied'));
 		}
 
-		! class_exists('Tag') || $_tag = New Tag($_system, $_pdo);
-
 		// Wyświetlenie komunikatów
 		if ($_request->get(array('status', 'act'))->show())
 		{

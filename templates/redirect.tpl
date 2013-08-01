@@ -16,18 +16,18 @@
 |
 *********************************************************/
 *}
-{panel=i18n('Ostrzeżenie')}
+{panel=i18n('Notice')}
 {if $url_valid}
 	<div class="info">
-		<p class="bold">Czy jesteś pewny, że chesz opuścić tę witrynę i przejść do wybranego adresu internetowego:</p>
+		<p class="bold">{i18n('Are you sure, want to leave this site and go to the selected web address:')}</p>
 		<p class="small">{$url}</p>
 	</div>
 	<div class="valid">
-		<p class="small italic"><a href="{$url}" target="_blank">Jeśli w ciągu 15 sekund nie nastąpiło przekierowanie, kliknij w ten tekst aby przejść do wybranego adresu internetowego.</a></p>
+		<p class="small italic"><a href="{$url}" target="_blank">{i18n('If during the 15 seconds you are not redirected, please click on this text to move to chosen web address.')}</a></p>
 	</div>
 {else}
 	<div class="error">
-		<p class="bold">Podany adres internetowy jest nie prawidłowy!</p>
+		<p class="bold">{i18n('Given the Internet address is not valid!')}</p>
 	</div>
 {/if}
 {/panel}

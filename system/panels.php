@@ -40,7 +40,7 @@ $side_types = array(
 );
 
 $_panels = new Panels($_pdo, '..'.DS.'..'.DS.'modules'.DS);
-
+$_modules = new Modules($_pdo, $_sett, $_user, $_tag, $_locale, $_system, $_request);
 
 ob_start();
 

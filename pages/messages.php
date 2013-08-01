@@ -80,7 +80,7 @@ if ($_route->getAction() === NULL)
 			'Desc' => 'W łatwy sposób możesz komunikować się z użytkownikami.'
 		);
 
-		$i = 0;
+		$i = 0; $bookmarks['inbox'] = FALSE; $bookmarks['outbox'] = FALSE; $bookmarks['draft'] = FALSE;
 		foreach($query as $row)
 		{
 			$userid = $row['to'] == $_user->get('id') ? $row['from'] : $row['to'];
@@ -99,6 +99,7 @@ if ($_route->getAction() === NULL)
 			// Czy wiadomość wysłao do mnie?
 			if ($row['to'] === $_user->get('id'))
 			{
+				$bookmarks['inbox'] = TRUE;
 				if ($row['read'] === '0')
 				{
 					// Jeszcze nie została przeczytana.
@@ -112,6 +113,7 @@ if ($_route->getAction() === NULL)
 			}
 			else
 			{
+				$bookmarks['outbox'] = TRUE;
 				if ($row['read'] === '0')
 				{
 					// Jeszcze nie została przeczytana przez odbiorcę.
@@ -128,11 +130,11 @@ if ($_route->getAction() === NULL)
 		}
 
 		$_tpl->assign('data', $data);
+		
+		$_tpl->assign('has_messages', array('inbox' => $bookmarks['inbox'], 'outbox' => $bookmarks['outbox'], 'draft' => $bookmarks['draft']));
 	}
 	
-	// Sprawdzanie, czy są jakieś wiadomości w kategoriach "odebrane", "wysłane", "robocze" - do zrobienia :)
-	$_tpl->assign('has_messages', array('inbox' => TRUE, 'outbox' => TRUE, 'draft' => TRUE));
-
+	
 	// Link do "Nowej wiadomości"
 	$_tpl->assign('url_new_message', $_route->path(array('controller' => 'messages', 'action' => 'new')));
 }

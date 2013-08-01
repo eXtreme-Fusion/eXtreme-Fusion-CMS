@@ -46,10 +46,10 @@
 							<div class="details">
 								{$comment.author}, {$comment.datestamp}
 								{if $comment.edit}
-									<a href="{$ADDR_AJAX}comments.php?id={$comment.id}&amp;action=edit&amp;request=get" id="{$comment.id}" rel="facebox" class="facebox">[Edycja]</a>
+									<a href="{$ADDR_AJAX}comments.php?id={$comment.id}&amp;action=edit&amp;request=get" id="{$comment.id}" rel="facebox" class="facebox">[{i18n('Edit')}]</a>
 								{/if}
 								{if $comment.delete}
-									<a href="{$ADDR_AJAX}comments.php?id={$comment.id}&amp;action=delete&amp;request=get" id="{$comment.id}" rel="facebox">[Usuń]</a>
+									<a href="{$ADDR_AJAX}comments.php?id={$comment.id}&amp;action=delete&amp;request=get" id="{$comment.id}" rel="facebox">[{i18n('Delete')}]</a>
 								{/if}
 								<a href="#body_{$comment.id}" class="block-right">[#{$comment.id}]</a>
 							</div>
