@@ -114,16 +114,10 @@ return array(
 	'Repeat Login password:' => 'Potvrdit heslo pro přihlášení:',
 	'Email address:' => 'Adresa e-mailu:',
 	// Step 6 - User details validation
-	'User name contains invalid characters.' => 'Uživatelské jméno obsahuje nepodporované znaky.',
-	'User name field can not be left empty.' => 'Uživatelské pole jména nemůže být prázdné!',
 	'Your login does not appear to be valid.' => 'Uživatelské jméno je nesprávné.',
 	'Your two login passwords do not match.' => 'Uživatelská hesla se neshodují.',
-	'Invalid login password, please use alpha numeric characters only.<br />Password must be a minimum of 6 characters long.' => 'Nesprávné heslo, prosím, používejte pouze alfanumerické znaky.<br />Heslo musí obsahovat minimálně 6 znaků.',
-	'Login password fields can not be left empty' => 'Pole pro heslo nemůže být prázdné!',
 	'Your email address does not appear to be valid.' => 'Byla zadána neplatná adresa e-mailu',
-	'Email field can not be left empty.' => 'Pole e-mailové adresy nemůže být prázdné!',
 	'Setup complete' => '<div class="valid">Instalace dokončena. Děkujeme, že jste se rozhodli používat eXtreme-Fusion 5 - Ninja Edition!</div>',
-	'Your user settings are not correct:' => 'Tyto uživatelské údaje zahrnují následující chyby:',
 	'Administrator account has not been created.' => 'Administrátorský účet nebyl vytvořen.',
 	//Welcome Message
 	'Welcome to your site' => 'Vítejte na své nové stránce.',
@@ -155,7 +149,10 @@ return array(
 	'News Cats' => 'Kategorie novinek',
 	'Contact' => 'Kontakt',
 	'Search' => 'Vyhledávání',
-	'Submit News' => 'Přidat novinku',
+	'Rules' => 'Pravidla',
+	'Tags' => 'Klíčové slova',
+	'Team' => 'Redakce',
+	'Pages' => 'Vlastní stránky',
 	// Stage 6 - User Field Categories
 	'Contact Information' => 'Kontaktní informace',
 	'Information' => 'Informace',
@@ -165,12 +162,20 @@ return array(
 	'Website' => 'Webová stránka',
 	'Living place' => 'Bydliště',
 	'Signature' => 'Podpis',
-	'Rewrite info' => 'Váš server je připraven spolupracovat s rewrite modulem, ale systém nemá oprávnění ke změně názvu souboru. Pokud chcete mít SEO URLs, přejmenujte soubor z "rewrite" na ".htaccess". V opačném případě tuto zprávu ignorujte.',
 	// Example news
-	'Example news title' => 'Příklad novinky',
-	'Example news content' => 'Vítejte na své webové stránce.',
-	'Example news url' => 'příklad adresy novinky',
-	'Example news description' => 'Příklad popisu novinky',
+	'Example news title' => 'Witaj na stronie internetowej opartej o eXtreme-Fusion 5',
+	'Example news content' => '<p style="text-align: center;">
+	To co tu widzisz, jest zbudowane dzięki darmowemu Systemowi Zarządzania Treścią (CMS) <a href="http://extreme-fusion.org/">eXtreme-Fusion 5</a>.</p>
+	<p>
+	Jeśli jesteś Administratorem tej strony, zaloguj się przez formularz widoczny po prawej stronie.<br />
+	Następnie przejdź do Panelu Zarządzania, by dokonać konfiguracji, dodać treść lub utworzyć nowe konta użytkowników.</p>
+	<p>
+	Rozbudowa Twojej strony www odbywa się przez instalację Modułów, dla przykładu Punktacji, zachęcającej do aktywności.</p>
+	<p style="text-align: center;">
+	Jeżeli nie jesteś Administratorem tej strony, ale chcesz posiadać własny serwis internetowy, to przejdź na nasz <a href="http://extreme-fusion.org/">Support</a>, skąd pobierzesz system EF5 oraz otrzymasz pomoc od Społeczności.<br />
+	&nbsp;</p>',
+	'Example news url' => 'witaj_na_stronie_internetowej_opartej_o_extreme-fusion_5',
+	'Example news description' => 'To co tu widzisz, jest zbudowane dzięki darmowemu Systemowi Zarządzania Treścią (CMS) eXtreme-Fusion 5.',
 	// Some additional informations
 	'The installation was interrupted. The system can be unstable.' => 'Instalace byla přerušena. Systém může být nestabilní.',
 	'Start the installation again.' => 'Spusťte instalaci znovu',
