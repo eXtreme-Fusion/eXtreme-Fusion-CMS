@@ -2,7 +2,7 @@
 
 return array(
 	'Google Analytics ' => 'Google Analytics',
-        'Navigation' => 'Nawigacja',
+	'Navigation' => 'Nawigacja',
 	'Google Analytics module status' => 'Status modulu Google Analytics',
 	'On' => 'Zapnutý',
 	'Off' => 'Vypnutý',
