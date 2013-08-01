@@ -98,7 +98,7 @@ return array(
 	'There are empty fields left!' => 'Pole jsou prázdné!',
 	'Please make sure you have filled out all the MySQL connection fields.' => 'Sprawdź, czy wszystkie pola są wypełnione.',
 	'Tables prefix (Advanced settings) is already in use or prefix has not been written, and tables prefix exist in the database with the same name as that system is trying to create. Please enter a different prefix for tables.' => 'Předpona tabulek (Pokročilé nastavení)  se již používá nebo předpona nebyla zapsána popřípadě tabulky již existují se stejným názvem v databázi a systém se snaží se je snaží vytvořit. Prosím, zadejte jinou předponu pro tabulky.',
-	'NOTE! If after installation you experience problems with links and URLs (error 404), you must reinstall the system without checking the box below, or change the $_route in config.php.' => 'POZOR! Jeżeli po zakończeniu instalacji wystąpią problemy z linkami i adresami URL (błędy 404), należy przeinstalować system nie zaznaczając poniższego pola lub zmienić ustawienia $_route w pliku config.php.',
+	'NOTE! If after installation you experience problems with links and URLs (error 404), you must reinstall the system without checking the box below, or change the $_route in config.php.' => 'POZOR! Pokud po ukončení instalace máte problémy s odkazy a adresami URL (chyby 404), znovu přeinstalujte systém s níže nezašknutým polem nebo změňte nastavení $_route v souboru config.php.',
 	'The names of the files listed below please change with the instructions.' => 'Názvy souborů jsou uvedeny níže, změňte postupujte podle pokynů.',
 	'modRewrite warning' => 'Instalační program nemohl zjistit, zda váš server podporuje modRewrite.<br />
 	Zaškrtněte toto políčko, pokud jste si jisti, že výše uvedený modul je k dispozici. <br />
@@ -163,19 +163,19 @@ return array(
 	'Living place' => 'Bydliště',
 	'Signature' => 'Podpis',
 	// Example news
-	'Example news title' => 'Witaj na stronie internetowej opartej o eXtreme-Fusion 5',
+	'Example news title' => 'Vítejte na webu běžícím na redakčním systému eXtreme-Fusion 5',
 	'Example news content' => '<p style="text-align: center;">
-	To co tu widzisz, jest zbudowane dzięki darmowemu Systemowi Zarządzania Treścią (CMS) <a href="http://extreme-fusion.org/">eXtreme-Fusion 5</a>.</p>
+	To, co zde vidíte, je web vytvořen pomocí bezplatného redakčního systému (CMS) <a href="http://extreme-fusion.org/">eXtreme-Fusion 5</a>.</p>
 	<p>
-	Jeśli jesteś Administratorem tej strony, zaloguj się przez formularz widoczny po prawej stronie.<br />
-	Następnie przejdź do Panelu Zarządzania, by dokonać konfiguracji, dodać treść lub utworzyć nowe konta użytkowników.</p>
+	Pokud jste správcem této stránky, přihlaste se pomocí formuláře na pravé straněwebu.<br />
+	Pak jděte do administračního panelu a konfigurujte a přidávat obsah nebo vytvářejte nové uživatelské účty.</p>
 	<p>
-	Rozbudowa Twojej strony www odbywa się przez instalację Modułów, dla przykładu Punktacji, zachęcającej do aktywności.</p>
+	Rozvoj Vaší stránky je možno vykonat přes sekci Moduly, pro příklad modul Bodování, který ohodnocuje body aktivnost na webu.</p>
 	<p style="text-align: center;">
-	Jeżeli nie jesteś Administratorem tej strony, ale chcesz posiadać własny serwis internetowy, to przejdź na nasz <a href="http://extreme-fusion.org/">Support</a>, skąd pobierzesz system EF5 oraz otrzymasz pomoc od Społeczności.<br />
+	Pokud nejste správcem této stránky, ale chcete mít své vlastní webové stránky, přejděte na naší <a href="http://extreme-fusion.org/">Podporu</a>, kde stáhnete system EF5 či získáte pomoc od komunity.<br />
 	&nbsp;</p>',
-	'Example news url' => 'witaj_na_stronie_internetowej_opartej_o_extreme-fusion_5',
-	'Example news description' => 'To co tu widzisz, jest zbudowane dzięki darmowemu Systemowi Zarządzania Treścią (CMS) eXtreme-Fusion 5.',
+	'Example news url' => 'vítejte_na_strance_bezici_na_extreme-fusion_5',
+	'Example news description' => 'To, co zde vidíte, je web vytvořen pomocí bezplatného redakčního systému eXtreme-Fusion 5.',
 	// Some additional informations
 	'The installation was interrupted. The system can be unstable.' => 'Instalace byla přerušena. Systém může být nestabilní.',
 	'Start the installation again.' => 'Spusťte instalaci znovu',
