@@ -48,12 +48,10 @@
 
 			{if $security}{$security}{/if}
 			<div class="tbl center">
-				<div class="tbl center">
-					<input type="reset" value="{i18n('Clean')}" class="button" />
-					<input type="hidden" name="send_mail" value="{$contact.email}" />
-					<input type="hidden" name="security" value="{$answer}" />
-					<input class="Send" type="submit" name="send_message" value="{i18n('Send')}">
-				</div>
+				<input type="reset" value="{i18n('Clean')}" class="button" />
+				<input type="hidden" name="send_mail" value="{$contact.email}" />
+				<input type="hidden" name="security" value="{$answer}" />
+				<input class="Send" type="submit" name="send_message" value="{i18n('Send')}">
 			</div>
 		</form>
 	{php} $this->middlePanel(); {/php}

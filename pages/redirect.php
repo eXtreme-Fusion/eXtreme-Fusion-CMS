@@ -33,6 +33,7 @@
 
 // Wszystkie linki wychodzące ze strony w postaci komentarzy, postów, czatów będą przechodziły przez ten plik w postaci redirect.php?url=http://asd.pl
 // Można będzie wykorzystać później do reklamy :) lub inforamcji czy jesteś pewien, że chcesz przejść pod wskazany adres.
+$_locale->load('redirect');
 
 $_tpl->assign('url', base64_decode(urldecode($_route->getAction())));
 

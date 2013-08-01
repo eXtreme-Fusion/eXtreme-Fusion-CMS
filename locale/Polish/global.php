@@ -225,7 +225,6 @@ return array(
 	'global_159' => 'Wpisz kod potwierdzający:',
 	// Footer Counter
 	'global_170' => 'unikalna wizyta',
-	'global_171' => 'unikalnych wizyt',
 	'global_172' => 'Wygenerowano w&nbsp;sekund: %s',
 	'global_173' => 'zapytań MySQL',
 	// Admin Navigation
@@ -343,12 +342,17 @@ return array(
 	'Confirm new password:' => 'Potwierdź nowe hasło:',
 	'Edit account' => 'Edytuj konto',
 	'Language:' => 'Język:',
+	
+	'Never logged in' => 'Nie był na stronie',
 
 	'Polish' => 'Polski',
 	'English' => 'Angielski',
 	'Czech' => 'Czeski',
 
 	'Modules under Development.' => 'Moduł w trakcie rozwoju.',
+	
+	// Footer
+	'Unique visits:' => 'Unikalnych wizyt:',
 
 	// Error exceptions
 
@@ -397,6 +401,9 @@ return array(
 	'Adding your comment' => 'Dodawanie komentarza',
 	'Comment has been added' => 'Komentarz został dodany',
 	'Commenting has been disabled for your group permissions' => 'Komentowanie zostało wyłączone dla twojej grupy uprawnień',
+	'Error: Not entered the content of comments' => 'Błąd: nie podano treści komentarza',
+	'Update comments' => 'Edytuj komentarz',
+	'Delete comments' => 'Usuń komentarz',
 
 	//News Categories
 	'Bugs' => 'Błędy',
