@@ -37,7 +37,7 @@ return array(
 	'Item per Page' => 'Prvky na stránce',
 	'Security Politics' => 'Bezpečnostní nastavení',
 	'User Fields' => 'Pole profilu',
-	'User Field Categories' => 'Kategorie pole profilu'
+	'User Field Categories' => 'Kategorie pole profilu',
 	'Content Pages' => 'Obsah stránek',
 	'Synchronization' => 'Synchronizacja',
 );

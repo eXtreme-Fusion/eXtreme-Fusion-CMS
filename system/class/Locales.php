@@ -194,8 +194,22 @@ class Locales
 
 		return FALSE;
 	}
+
+	/**
+	 * Zwraca używany język.
+	 *
+	 * @return   string
+	 */
+	public function getLang()
+	{
+		return $this->_lang;
+	}
 }
 
+/**
+ * Klasa może być wczytywana wielokrotnie, więc warunek
+ * zabezpiecza aplikację przed próbą nadpisania funkcji.
+ */
 if ( ! function_exists('__'))
 {
 	/**

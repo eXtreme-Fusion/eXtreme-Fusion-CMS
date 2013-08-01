@@ -82,7 +82,7 @@ if (ini_get('register_globals'))
 	}
 }
 
-defined ('SYSTEM_VERSION') || define('SYSTEM_VERSION', '5.0.3');
+defined ('SYSTEM_VERSION') || define('SYSTEM_VERSION', '5.0.4-unstable-master-repo');
 
 // Array-imploded data separator for Database fields
 defined('DBS') || define('DBS', '^');

@@ -257,5 +257,5 @@ if ($row)
 }
 else
 {
-	$_route->trace(array('controller' => 'error', 'action' => 404, 'params' => NULL));
+	$_route->trace(array('controller' => 'error', 'action' => 404));
 }

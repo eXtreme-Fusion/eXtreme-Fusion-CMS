@@ -42,7 +42,7 @@ if ($_request->get('action')->show() === 'delete')
 	{
 		if ($_comment->canDelete($_request->get('id')->show()))
 		{
-			_e('<div id="ajax"><p class="delete center" id="'.$_request->get('id')->show().'"><span class="pointer button">'.__('Delete comments').'</span></p></div>');
+			_e('<div id="ajax"><p class="delete center" id="'.$_request->get('id')->show().'"><span class="pointer button">'.__('Delete this comment').'</span></p></div>');
 		}
 	}
 }
@@ -84,7 +84,7 @@ elseif ($_request->post('action')->show() === 'edit')
 		{
 			$r = array(
 				'status'  => 0,
-				'content' => __('Error: Not entered the content of comments'),
+				'content' => __('Error: Not entered the content of comment'),
 			);
 
 			if ($_request->post('post')->show())
