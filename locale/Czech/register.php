@@ -23,7 +23,7 @@ return array(
 	'E-mail address is already in use.' => 'Tuto e-mailovou adresu již někdo používá.',
 	'E-mail address is on blacklist.' => 'E-mailová adresa je v černé listině.',
 	'The user account has been created successfully.' => 'Uživatelský účet byl vytvořen správně.',
-	'Security code is not valid.' => 'Bezpečnostní kód není správný.',
+	'The safety form returns error.' => 'Zabezpečovací formulář vrací chybu.',
 	'Activation e-mail has been sent.' => 'Aktivační e-mail byl odeslán.',
 	'Account is waiting for an admin activation.' => 'Váš účet čeká na aktivaci administrátorem.',
 );
