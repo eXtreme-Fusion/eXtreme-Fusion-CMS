@@ -11,7 +11,7 @@ return array(
 	'Step 5: Admin account' => 'Krok 5: Učet administrátora',
 	'Step 6: System settings' => 'Krok 6: Nastavení systému',
 	'Step 7: Final settings' => 'Krok 7: Dokončení nastavení',
-	'Finish' => 'Zakończ',
+	'Finish' => 'Dokončit',
 	// Permissions
 	'Perm: admin login' => 'Přihlášení do admin panelu.',
 	'Perm: admin bbcodes' => 'Správa štítků BBCodes.',
@@ -163,7 +163,7 @@ return array(
 	'Living place' => 'Bydliště',
 	'Signature' => 'Podpis',
 	// Example news
-	'Example news title' => 'Vítejte na webu běžícím na redakčním systému eXtreme-Fusion 5',
+	'Example news title' => 'Vítejte na webu s redakčním systémem eXtreme-Fusion 5',
 	'Example news content' => '<p style="text-align: center;">
 	To, co zde vidíte, je web vytvořen pomocí bezplatného redakčního systému (CMS) <a href="http://extreme-fusion.org/">eXtreme-Fusion 5</a>.</p>
 	<p>
