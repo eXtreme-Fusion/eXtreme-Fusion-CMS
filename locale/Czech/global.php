@@ -305,9 +305,9 @@ return array(
 	//Czas sesji
 
 	// Function showCopyrights()
-	'Powered by :system' => 'Strona oparta na systemie CMS :system.<br />Copyright 2002-2013 <a href="http://php-fusion.co.uk/">PHP-Fusion</a>. Released as free software without warranties under <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">aGPL v3</a>.',
+	'Powered by :system' => 'Web běží na systému :system.<br />Copyright 2002-2013 <a href="http://php-fusion.co.uk/">PHP-Fusion</a>. Released as free software without warranties under <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">aGPL v3</a>.',
 
-	'Powered by :system under :license License' => 'Strona oparta na systemie CMS :system.<br />Copyright 2002-2013 <a href="http://php-fusion.co.uk/">PHP-Fusion</a>. Released as free software without warranties under <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">aGPL v3</a>.',
+	'Powered by :system under :license License' => 'Web běží na systému :system.<br />Copyright 2002-2013 <a href="http://php-fusion.co.uk/">PHP-Fusion</a>. Released as free software without warranties under <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">aGPL v3</a>.',
 
 	'Yes' => 'Ano',
 	'No' => 'Ne',
@@ -356,7 +356,7 @@ return array(
 
 	// Error exceptions
 
-		// Uload
+	// Uload
 	'The uploaded file exceeds the upload_max_filesize directive in php.ini.' => 'Wysyłany plik przekracza maksymalny rozmiar ustawiony w dyrektywie \'upload_max_filesize\' w pliku php.ini',
 	'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.' => 'Wysyłany plik przekracza maksymalny rozmiar ustawiony w dyrektywie \'MAX_FILE_SIZE\' przeznaczonej dla formularzy HTML.',
 	'The uploaded file was only partially uploaded.' => 'Wysyłany plik został zapisany tylko w części.',
@@ -369,24 +369,24 @@ return array(
 
 	//System
 	'System error' => 'Chyba systému',
-	'Internal error' => 'Błąd wewnętrzny',
-	'Error path' => 'Ścieżka błędu',
-	'In file' => 'W pliku',
+	'Internal error' => 'Vnitřní chyba',
+	'Error path' => 'Chyba cesty',
+	'In file' => 'V soubory',
 	'Function' => 'Funkce',
 	'Line' => 'Řádek',
-	'Directories' => 'Katalogi',
-	'Directory' => 'Katalog',
-	'Path' => 'Ścieżka',
+	'Directories' => 'Adresáře',
+	'Directory' => 'Adresář',
+	'Path' => 'Cesta',
 	'Status' => 'Status',
-	'Exist' => 'Istnieje',
-	'Does not exist' => 'Nie istnieje',
+	'Exist' => 'Existuje',
+	'Does not exist' => 'Neexistuje',
 	'File' => 'Soubor',
 	'Method' => 'Metoda',
-	'Templates' => 'Templateka',
+	'Templates' => 'Šablony',
 
 	// Arguments
-	'Function argument error' => 'Błąd argumentów funkcji',
-	'Parameter of :parametr is wrong.' => 'Parametr :parametr jest nie prawidłowy.',
+	'Function argument error' => 'Chyba argumentů funkce',
+	'Parameter of :parametr is wrong.' => 'Parametr :parametr je nesprávny.',
 
 	//User
 	'User error' => 'Chyba uživatele',
