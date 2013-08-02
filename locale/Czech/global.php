@@ -359,13 +359,13 @@ return array(
 	// Uload
 	'The uploaded file exceeds the upload_max_filesize directive in php.ini.' => 'Wysyłany plik przekracza maksymalny rozmiar ustawiony w dyrektywie \'upload_max_filesize\' w pliku php.ini',
 	'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.' => 'Wysyłany plik przekracza maksymalny rozmiar ustawiony w dyrektywie \'MAX_FILE_SIZE\' przeznaczonej dla formularzy HTML.',
-	'The uploaded file was only partially uploaded.' => 'Wysyłany plik został zapisany tylko w części.',
-	'No file was uploaded.' => 'Żaden plik nie został wysłany.',
-	'Missing a temporary folder.' => 'Brak folderu tymczasowego.',
-	'Failed to write file to disk.' => 'Przerwane zapisywanie pliku na dysku.',
-	'File upload stopped by extension.' => 'Wysyłanie pliku zatrzymane przez wyjątek.',
-	'Unknown upload error.' => 'Wystąpił nie znany błąd podczas wysyłania pliku.',
-	'Upload error' => 'Błąd wysyłanie plików',
+	'The uploaded file was only partially uploaded.' => 'Nahraný soubor byl nahrán pouze částečně.',
+	'No file was uploaded.' => 'Žádný soubor nebyl odeslán.',
+	'Missing a temporary folder.' => 'Žádná dočasná složka.',
+	'Failed to write file to disk.' => 'Nepodařilo se zapsat soubor na disk.',
+	'File upload stopped by extension.' => 'Nahrávání souboru zastaveno rozšířením.',
+	'Unknown upload error.' => 'Došlo k neznámé chybě při nahrávání souboru.',
+	'Upload error' => 'Chyba při odesílání souborů',
 
 	//System
 	'System error' => 'Chyba systému',
