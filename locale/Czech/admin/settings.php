@@ -2,7 +2,7 @@
 
 return array(
 	//Site Settings
-	'Main' => 'Hlavní',
+	'General' => 'Hlavní',
 	'Site name:' => 'Název stránky:',
 	'Site description:' => 'Popis stránky:',
 	'Site URL:' => 'Adresa stránky:',
@@ -20,16 +20,14 @@ return array(
 	'News style:' => 'Styl novinek:',
 	'Single Column' => 'jednosloupcový',
 	'Double Column' => 'dvousloupcový',
+	'Enable language detection by browser?' => 'Povolit detekci jazyka vyhledávačem?',
 	'Default language:' => 'Jazyk stránky:',
 	'Default theme:' => 'Šablona (theme) stránky:',
 	'Default search place:' => 'Základní vyhledávací prostor:',
-	'Turn of left panels on:' => 'Vypnout levé panely na:',
-	'Turn of right panels on:' => 'Vypnout pravé panely na:',
-	'Turn of top panels on:' => 'Vypnout horní panely na:',
-	'Turn of footer panels on:' => 'Vypnout dolní panely na:',
-	'Example' => '<em>Příklad:</em><br />/news.php<br />/index.php<br />',
-	
 	//Logs
-	'The data has been saved.' => 'Data byla uložena.',
-	'<strong>Error!</strong> The data has not been saved.' => '<strong>Chyba!</strong> Data nebyla uložena.'
+	'The language chosen is not avaible.' => 'Vybraný jazyk není dostupný.',
+	'The template chosen is not available.' => 'Vybraná šablona není dostupná.',
+	'Data has been saved. Please refresh the page to see changes.' => 'Data byla uložena. Změny viditelné po obnovení stránky.',
+	'System language has been changed.' => 'Jazyk systému byl změněn.',
+
 );

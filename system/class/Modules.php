@@ -1,14 +1,37 @@
 <?php
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
+/*********************************************************
+| eXtreme-Fusion 5
 | Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
 | http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.
-| http://extreme-fusion.org/ef5/license/
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+|
+**********************************************************
+                ORIGINALLY BASED ON
+---------------------------------------------------------+
+| PHP-Fusion Content Management System
+| Copyright (C) 2002 - 2011 Nick Jones
+| http://www.php-fusion.co.uk/
++--------------------------------------------------------+
+| Author: Nick Jones (Digitanium)
+| Co-Author: Christian Damsgaard J�rgensen (PMM)
++--------------------------------------------------------+
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
++--------------------------------------------------------*/
 
 class Modules
 {
@@ -16,7 +39,9 @@ class Modules
 		$_pdo,
 		$_sett,
 		$_user,
-		$_tag;
+		$_tag,
+		$_system,
+		$_locale;
 
 	protected $_categories = array();
 
@@ -28,17 +53,20 @@ class Modules
 	 * @param   User	  obiekt klasy użytkownika
 	 * @return  void
 	 */
-	public function __construct(Data $pdo, Sett $sett, User $user, Tag $tag, Locales $locale)
+	public function __construct(Data $pdo, Sett $sett, User $user, Tag $tag, Locales $locale, System $system, Request $request)
 	{
 		$this->_pdo   = $pdo;
 		$this->_sett  = $sett;
 		$this->_user  = $user;
 		$this->_tag   = $tag;
 		$this->_locale   = $locale;
+		$this->_system   = $system;
+		$this->_request   = $request;
 		// Kategorie, do których można przypisywać moduły
 		$this->_categories = array(
 			'security',
-			'comments'
+			'comments',
+			'forum'
 		);
 	}
 
@@ -76,29 +104,45 @@ class Modules
 		return $modules;
 	}
 
+	public function getConfig($path)
+	{
+		if (file_exists($path))
+		{
+			include $path;
+			if (isset($mod_info))
+			{
+				return $mod_info;
+			}
+		}
+
+		return array();
+	}
 
 	public function getModuleBootstrap($_system, $cache_expire = 43200)
 	{
-		$row = $_system->cache('__autoloadModulesList', NULL, 'system', $cache_expire);
-		if ($row === NULL)
+		$this->_cache['autoloadModulesList'] = $this->_system->cache('__autoloadModulesList', NULL, 'system', $cache_expire);
+		if ($this->_cache['autoloadModulesList'] === NULL)
 		{
-			$row = array();
-			foreach($this->getInstalled() as $dir)
+			$this->_cache['autoloadModulesList'] = array();
+			if ($installed = $this->getInstalled())
 			{
-				if (file_exists(DIR_MODULES.$dir) && is_dir(DIR_MODULES.$dir.DS))
+				foreach($this->getInstalled() as $dir)
 				{
-					if (file_exists(DIR_MODULES.$dir.DS.'autoload'.DS.'__autoload.php'))
+					if (file_exists(DIR_MODULES.$dir) && is_dir(DIR_MODULES.$dir.DS))
 					{
-						$row[] = $dir;
+						if (file_exists(DIR_MODULES.$dir.DS.'autoload'.DS.'__autoload.php'))
+						{
+							$this->_cache['autoloadModulesList'][] = $dir;
+						}
 					}
 				}
-			}
 
-			sort($row);
-			$_system->cache('__autoloadModulesList', $row, 'system');
+				sort($this->_cache['autoloadModulesList']);
+			}
+			$this->_system->cache('__autoloadModulesList', $this->_cache['autoloadModulesList'], 'system');
 		}
 
-		return $row;
+		return $this->_cache['autoloadModulesList'];
 	}
 
 	/**
@@ -108,17 +152,23 @@ class Modules
 	 */
 	public function getInstalled()
 	{
-		$q = $this->_pdo->getData('SELECT `folder` FROM [modules]');
-
-		$items = array();
-		foreach($q as $d)
+		$this->_cache['modules'] = $this->_system->cache('modules', NULL, 'system');
+		if ($this->_cache['modules'] === NULL)
 		{
-			$items[] = $d['folder'];
+			$this->_cache['modules'] = array();
+			
+			$query = $this->_pdo->getData('SELECT `folder` FROM [modules]');
+			foreach($query as $d)
+			{
+				$this->_cache['modules'][] = $d['folder'];
+			}
+	
+			$this->_system->cache('modules', $this->_cache['modules'], 'system');
 		}
 
-		return $items;
+		return $this->_cache['modules'];
 	}
-
+	
 	/**
 	 * Sprawdza dane tworzonych uprawnień
 	 *
@@ -331,7 +381,7 @@ class Modules
 
 				if ($mod_info['category'] === 'security')
 				{
-					$_security = new Security($this->_pdo);
+					$_security = new Security($this->_pdo, $this->_request, $this->_locale);
 					$_security->checkModuleBeforeInstall($mod_info['dir']);
 				}
 			}
@@ -486,9 +536,9 @@ class Modules
 		$data = $this->_pdo->getRow("SELECT `folder` FROM [modules] WHERE `folder`='{$folder}'");
 		if ($data)
 		{
-			if (file_exists(DIR_MODULES.$modules.DS.'locale'.DS.$this->_sett->get('locale').DS.'admin'.DS.'config.php'))
+			if (file_exists(DIR_MODULES.$folder.DS.'locale'.DS.$this->_sett->get('locale').DS.'admin'.DS.'config.php'))
 			{
-				$this->_locale->moduleLoad('config', $modules);
+				$this->_locale->moduleLoad('config', $folder);
 			}
 
 			include DIR_MODULES.$folder.DS.'config.php';
@@ -571,10 +621,28 @@ class Modules
 		}
 	}
 
-	// $folder - nazwa modułu/katalogu modułu
-	// sprawdzanie, czy moduł jest zainstalowany
-	public function isInstalled($folder)
+	/**
+	 * Pobiera z bazy danych nazwy katalogów zainstalowanych modułów
+	 * Porównuje parametr w listą zainstalowanych modułów.
+	 *
+	 * @return bool
+	 */
+	public function isInstalled($name)
 	{
-		return (bool) $this->_pdo->getRow('SELECT `id` FROM [modules] WHERE `folder` = :folder', array(':folder', HELP::strip($folder), PDO::PARAM_STR));
+		$this->_cache['modules'] = $this->_system->cache('modules', NULL, 'system');
+		if ($this->_cache['modules'] === NULL)
+		{
+			$this->_cache['modules'] = array();
+			
+			$query = $this->_pdo->getData('SELECT `folder` FROM [modules]');
+			foreach($query as $d)
+			{
+				$this->_cache['modules'][] = $d['folder'];
+			}
+	
+			$this->_system->cache('modules', $this->_cache['modules'], 'system');
+		}
+		
+		return in_array($name, $this->_cache['modules']);
 	}
 }

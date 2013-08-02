@@ -10,6 +10,7 @@ body {
 	font-size:12px;
 	color:#333;
 	overflow-x:hidden;
+	background: url(../images/ui/iframe-shadow-top.png) repeat-x;
 	}
 * table,table {
 	margin:0;
@@ -26,7 +27,8 @@ body {
 
 /* Rozszerzenia */
 textarea {resize:vertical;min-height:80px}
-.center {text-align:center;}
+.center {text-align:center !important;}
+.left{text-align:left !important;}
 .center-box {margin:0 auto !important;text-align:center !important;}
 .italic{font-style:italic}
 .underline{text-decoration:underline}
@@ -181,7 +183,7 @@ h1 {
 .status a {color:#e79300;}
 .info {color:#2e74b2;background:#e4edf5;border:1px #d8e1e9 solid;}
 .info a {color:#2e74b2;}
-.error {color:#ce2700;background:#fbd3b1;border:1px #f5c69a solid;}
+.error {color:#ce2700;background:#fbd3b1;border:1px #f5c69a solid;margin:10px 0;display:block}
 .error a {color:#ce2700;}
 .valid {color:#6da827;background:#e0f2cb;border:1px #ccebac solid;}
 .valid a {color:#6da827;}
@@ -302,7 +304,8 @@ body.BodyIframe h3 {
 	font-size:11px;
 	list-style-type:circle;
 	}
-
+#synchro ul {list-style-type:disc; margin-left:50px;}
+#synchro p {margin: 5px 0}
 .uiTable { text-align: left; }
 .uiTable .selectAll { width: 16px; }
 .uiTable th, .uiTable td { padding: 10px; }

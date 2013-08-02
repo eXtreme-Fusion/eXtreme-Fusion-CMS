@@ -1,25 +1,5 @@
 (function($){$.fn.clearDefault=function(){return this.each(function(){var default_value=$(this).val();$(this).focus(function(){if($(this).val()==default_value)$(this).val("");});$(this).blur(function(){/*if($(this).val()=="")$(this).val(default_value);*/});});};})(jQuery);
 
-// jQuery.noConflict();
-
-// Manipulowanie domyœln¹ zawartoœci¹ pola
-function valueSystem(id) {
-	jQuery(function() {
-		var val = jQuery(id).val();
-		jQuery(id).focus(
-			function() {
-				if (this.value == val) {
-					this.value = '';
-				}
-			}
-		).blur(function() {
-			if (this.value == '') {
-				this.value = val;
-			}
-		});
-	});
-}
- 
 jQuery(function() {
 
 	jQuery('.dataTable').dataTable({
@@ -36,7 +16,7 @@ jQuery(function() {
 		var GetTitle = jQuery(this).children('strong').html();
 		jQuery(this).replaceWith(GetTitle);
 	});
-	
+
 	// ============================
 	// Dark tooltips
 	// ============================
@@ -62,14 +42,6 @@ jQuery(function() {
 	// ============================
 	jQuery('.FacebookLike iframe').each(function() {
 		jQuery(this).attr("allowtransparency", "true");
-	});
-
-	// ============================
-	// Button Save
-	// ============================
-	jQuery('span.Save').bind('click', function() {
-		var FormSubmitID = (this.id).split('_');
-		jQuery('#' +FormSubmitID[1]).submit();
 	});
 
 	// ============================
@@ -126,15 +98,23 @@ jQuery(function() {
 	// PL: Funkcja pobieraj¹ca nazwe buttona i zmieniaj¹ca treœæ w textarea
 	// EN: Function grabbing button name and add text in textarea
 	// ============================
-	
+
 	function ReplaceText(Button, To, Before, After) {
 		$("input[name=" +Button+ "]").click(function() {
 			addText(To, Before, After);
 		});
 	}
-	
+	/*
+	------------------------------------------
+	// From EF4/PF6
+	Flipbox written by CrappoMan
+	simonpatterson@dsl.pipex.com
+	This code maybe is not a flipbox, but we added this info about author
+	becuse it had been written in original file in EF4.
+	------------------------------------------
+	*/
 	function addText(elname, wrap1, wrap2, form) {
-		if (document.selection) { // for IE 
+		if (document.selection) { // for IE
 			var str = document.selection.createRange().text;
 			document.forms[form].elements[elname].focus();
 			var sel = document.selection.createRange();
@@ -183,3 +163,4 @@ jQuery(function() {
 			document.forms[form].elements[elname].focus();
 		}
 	}
+	// end of from ef4/pf6

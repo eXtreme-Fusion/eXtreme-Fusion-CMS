@@ -1,3 +1,38 @@
+{*
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
+|
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
+|
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+|
+**********************************************************
+                ORIGINALLY BASED ON
+---------------------------------------------------------
+| PHP-Fusion Content Management System
+| Copyright (C) 2002 - 2011 Nick Jones
+| http://www.php-fusion.co.uk/
++------------------------------------------------------
+| Author: Nick Jones (Digitanium)
++------------------------------------------------------
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
++------------------------------------------------------*/
+*}
+
 <h3>{$SystemVersion} - {i18n('Settings')} &raquo; {i18n('Date and Time')}</h3>
 {if $message}<div class="{$class}">{$message}</div>{/if}
 
@@ -55,13 +90,13 @@
 				<div><label><input type="radio" name="user_custom_offset_timezone" value="1"{if $user_custom_offset_timezone == 1} checked="checked"{/if} /> {i18n('Set the default value of time shift.')}</label></div>
 			</div>
 		</div>
-		<div class="tbl AdminButtons">
+		<div class="tbl Buttons">
 			<div class="grid_2 center button-l">
 				<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="{i18n('Back')}" /></strong></span>
 			</div>
 			<div class="grid_2 center button-r">
 				<input type="hidden" name="save_settings" value="yes" />
-				<span id="SendForm_Settings" class="Save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="{i18n('Save')}" /></strong></span>
+				<span id="SendForm_Settings" class="save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="{i18n('Save')}" /></strong></span>
 			</div>
 		</div>
 	</form>
@@ -100,13 +135,13 @@
 				</div>
 			{/section}
 		{/if}
-		<div class="tbl AdminButtons">
+		<div class="tbl Buttons">
 			<div class="grid_2 center button-l">
 				<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="{i18n('Back')}" /></strong></span>
 			</div>
 			<div class="grid_2 center button-r">
 				<input type="hidden" name="save_formats" value="yes" />
-				<span id="SendForm_Formats" class="Save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="{i18n('Save')}" /></strong></span>
+				<span id="SendForm_Formats" class="save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="{i18n('Save')}" /></strong></span>
 			</div>
 		</div>
 	</form>

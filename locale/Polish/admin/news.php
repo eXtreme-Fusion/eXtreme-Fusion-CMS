@@ -1,6 +1,9 @@
 <?php defined('EF5_SYSTEM') || exit;
 
 return array(
+	'Section' => 'Sekcja',
+	'News' => 'Newsy',
+	'Cats' => 'Kategorie',
 	'Current news'  => 'Istniejące newsy',
 	'Id:' => 'Identyfikator:',
 	'Publication date:' => 'Data publikacji:',

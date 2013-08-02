@@ -28,7 +28,7 @@ return array(
 	'Submissions' => 'Schvalovací sekce',
 	'Upgrade' => 'Aktualizace',
 	'User Groups' => 'Skupiny uživatele',
-	'Main' => 'Hlavní',
+	'General' => 'Hlavní',
 	'Time and Date' => 'Datum a čas',
 	'Registration' => 'Registrace',
 	'Miscellaneous' => 'Různé',
@@ -37,6 +37,7 @@ return array(
 	'Item per Page' => 'Prvky na stránce',
 	'Security Politics' => 'Bezpečnostní nastavení',
 	'User Fields' => 'Pole profilu',
-	'User Field Categories' => 'Kategorie pole profilu'
-	
+	'User Field Categories' => 'Kategorie pole profilu',
+	'Content Pages' => 'Obsah stránek',
+	'Synchronization' => 'Synchronizace',
 );

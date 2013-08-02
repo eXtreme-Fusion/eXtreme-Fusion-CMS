@@ -1,13 +1,37 @@
 <?php
-/*---------------------------------------------------------------+
-| eXtreme-Fusion - Content Management System - version 5         |
-+----------------------------------------------------------------+
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 |
-| http://extreme-fusion.org/                               		 |
-+----------------------------------------------------------------+
-| This product is licensed under the BSD License.				 |
-| http://extreme-fusion.org/ef5/license/						 |
-+---------------------------------------------------------------*/
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
+|
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
+|
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+|
+**********************************************************
+                ORIGINALLY BASED ON
+---------------------------------------------------------
+| PHP-Fusion Content Management System
+| Copyright (C) 2002 - 2011 Nick Jones
+| http://www.php-fusion.co.uk/
++-------------------------------------------------------
+| Author: Nick Jones (Digitanium)
+| Author: Marcus Gottschalk (MarcusG)
++-------------------------------------------------------
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
++-------------------------------------------------------*/
 try
 {
 	require_once '../../../config.php';
@@ -19,17 +43,13 @@ try
 	{
 		throw new userException(__('Access denied'));
 	}
-
+	$_fav->setFavByLink('chat/admin/chat.php', $_user->get('id'));
+	
 	$_tpl = new AdminModuleIframe('chat');
-
+	
+	$_tpl->setHistory(__FILE__);
+	
 	$row = $_pdo->getRow('SELECT * FROM [chat_settings]');
-
-	if ($_request->get(array('status', 'act'))->show())
-	{
-		$_tpl->logAndShow($_request->get('status')->show(), $_request->get('act')->show(), array(
-			'update' => array(__('Data has been saved.'), __('Error! Data has not been saved.'))
-		));
-	}
 
 	if ($_request->post('save')->show())
 	{
@@ -45,10 +65,8 @@ try
 
 		if ($count)
 		{
-			HELP::redirect(FILE_SELF.'?act=update&status=ok');
+			$_tpl->printMessage('valid', $_log->insertSuccess('edit', __('Data has been saved.')));
 		}
-
-		HELP::redirect(FILE_SELF.'?act=update&status=error');
 	}
 
 	$_tpl->assignGroup(array

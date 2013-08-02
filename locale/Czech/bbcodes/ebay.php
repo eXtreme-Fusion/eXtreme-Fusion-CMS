@@ -2,5 +2,5 @@
 
 return array(
 	'eBay' => 'Aukce eBay',
-	'Returns items on eBay' => 'Vrací položky na eBay\'u'
+	'Returns items on eBay' => 'Vyhledává předměty na aukcich eBay\'u'
 );

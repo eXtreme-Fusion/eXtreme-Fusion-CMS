@@ -1,14 +1,19 @@
 <?php defined('EF5_SYSTEM') || exit;
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+*********************************************************/
 /**
  Metody, których nie należy używać na zewnątrz klasy, bo mają swoje rozbudowane odpowiedniki:
 	- query() [odpowiednik to np. getData()]
@@ -25,6 +30,12 @@
 class Data extends PDO
 {
 	private $_prefix;
+	
+	// Licznik zapytan
+	private $_pdo_count = 0;
+	
+	// Wykonane zapytania
+	private $_pdo_queries = array();
 
 	public static function exceptionHandler($exception)
 	{
@@ -131,12 +142,18 @@ class Data extends PDO
 	public function query($query, $type = PDO::FETCH_ASSOC, $fetch = TRUE)
 	{
 		$d = parent::query(str_replace(array('[', ']'), array($this->_prefix, ''), $query));
-
+		
+		// Licznik zapytań
+		$this->_pdo_count++;
+		
+		// Jakie zapytania zostały wykonane
+		$this->_pdo_queries[] = $query;
+		
 		if ($fetch)
 		{
 			return $d->fetchAll($type);
 		}
-
+	
 		return $d;
 	}
 
@@ -407,7 +424,7 @@ class Data extends PDO
 	}
 	
 	// Czyści tabelę z przestarzałych wpisów
-	function cleanTable($table, $limit)
+	public function cleanTable($table, $limit)
 	{
 		if (! is_numeric($limit))
 		{
@@ -441,7 +458,7 @@ class Data extends PDO
 		return TRUE;
 	}
 	
-	function insert($table = null, $fields = null)
+	public function insert($table = null, $fields = null)
 	{
 		// Sprawdzanie, czy parametry nie zostały pominięte, a zmienna $fields jest tablicą
 		if (is_null($table) || is_null($fields) || !is_array($fields))
@@ -455,5 +472,17 @@ class Data extends PDO
 		return $this->exec("INSERT INTO ".$table." (`".$keys."`) VALUES ('".$values."')");
 
 	} // end of insert();
+	
+	// Pobieranie liczby wykonanych zapytań
+	public function getPDOcount()
+	{
+		return array($this->_pdo_count);
+	}
+	
+	// Pobieranie liczby wykonanych zapytań
+	public function getPDOqueries()
+	{
+		return array($this->_pdo_queries);
+	} 
 
 }

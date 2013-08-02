@@ -1,8 +1,39 @@
 <?php defined('EF5_SYSTEM') || exit;
-
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
+|
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
+|
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+| 
+**********************************************************
+                ORIGINALLY BASED ON
+---------------------------------------------------------+
+| PHP-Fusion Content Management System
+| Copyright (C) 2002 - 2011 Nick Jones
+| http://www.php-fusion.co.uk/
++--------------------------------------------------------+
+| Author: Nick Jones (Digitanium)
++--------------------------------------------------------+
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
++--------------------------------------------------------*/
 
 /*$theme = array(
-	'Title' => $data['title'].' &raquo; '.$_sett->get('site_name'),
+	'Title' => $data['title'].' » '.$_sett->get('site_name'),
 	'Keys' => $k,
 	'Desc' => $data['description']
 );*/
@@ -36,7 +67,7 @@ if ($_route->getAction() == NULL)
 	$_tpl->assign('data', $data);
 	
 	$theme = array(
-		'Title' => 'Materiały i wpisy &raquo; '.$_sett->get('site_name'),
+		'Title' => 'Materiały i wpisy » '.$_sett->get('site_name'),
 		'Keys' => '',
 		'Desc' => ''
 	);
@@ -80,7 +111,7 @@ elseif ($_route->getAction() === 'type')
 								'name' => $row['name'],
 								'description' => $row['description'],
 								'link' => $_route->path(array('action' => 'category', $_route->getParamVoid(1), $row['id'], HELP::Title2Link($row['name']))),
-								'thumbnail' => $row['thumbnail'] ? DIR_UPLOAD.'images'.DS.$row['thumbnail'] : FALSE
+								'thumbnail' => $row['thumbnail']
 							);
 						}
 
@@ -92,7 +123,7 @@ elseif ($_route->getAction() === 'type')
 				$_tpl->assign('type', $type['name']);
 				
 				$theme = array(
-					'Title' => $type['name'].' &raquo; '.$_sett->get('site_name'),
+					'Title' => $type['name'].' » '.$_sett->get('site_name'),
 					'Keys' => '',
 					'Desc' => ''
 				);
@@ -127,6 +158,7 @@ elseif ($_route->getAction() === 'category')
 						$data[] = array(
 							'title' => $row['title'],
 							'preview' => $row['preview'],
+							'thumbnail' => $row['thumbnail'],
 							'date' => HELP::showdate('longdate', $row['date']),
 							'author' => HELP::profileLink(NULL, $row['author']),
 							'link' => $_route->path(array('action' => $row['id'], HELP::Title2Link($row['title'])))
@@ -146,7 +178,7 @@ elseif ($_route->getAction() === 'category')
 				$_tpl->assign('data', $data);
 				
 				$theme = array(
-					'Title' => $category.' &raquo; '.$_sett->get('site_name'),
+					'Title' => $category.' » '.$_sett->get('site_name'),
 					'Keys' => HELP::Title2Link($category),
 					'Desc' => 'Materiały w kategorii '.$category
 				);
@@ -193,6 +225,7 @@ elseif ($_route->getAction() === 'categories')
 						$data[] = array(
 							'title' => $row['title'],
 							'preview' => $row['preview'],
+							'thumbnail' => $row['thumbnail'],
 							'date' => HELP::showdate('longdate', $row['date']),
 							'author' => HELP::profileLink(NULL, $row['author']),
 							'link' => $_route->path(array('action' => $row['id'], HELP::Title2Link($row['title'])))
@@ -207,7 +240,7 @@ elseif ($_route->getAction() === 'categories')
 				$_tpl->assign('data', $data);
 				
 				$theme = array(
-					'Title' => $category.' &raquo; '.$_sett->get('site_name'),
+					'Title' => $category.' » '.$_sett->get('site_name'),
 					'Keys' => HELP::Title2Link($category),
 					'Desc' => 'Materiały w kategorii '.$category
 				);
@@ -222,13 +255,14 @@ elseif ($_route->getAction() === 'categories')
 	{
 		$page = 'categories_list';
 
-		$query = $_pdo->getData('SELECT `id`, `name`, `description` FROM [pages_categories] ORDER BY `id` DESC');
+		$query = $_pdo->getData('SELECT `id`, `name`, `description`, `thumbnail` FROM [pages_categories] ORDER BY `id` DESC');
 		$data = array();
 		foreach($query as $row)
 		{
 			$data[] = array(
 				'name' => $row['name'],
 				'description' => $row['description'],
+				'thumbnail' => $row['thumbnail'],
 				'link' => $_route->path(array('action' => 'categories', $row['id'], HELP::Title2Link($row['name'])))
 			);
 		}
@@ -236,7 +270,7 @@ elseif ($_route->getAction() === 'categories')
 		$_tpl->assign('data', $data);
 		
 		$theme = array(
-			'Title' => 'Kategorie materiałów &raquo; '.$_sett->get('site_name'),
+			'Title' => 'Kategorie materiałów » '.$_sett->get('site_name'),
 			'Keys' => '',
 			'Desc' => 'Kategorie materiałów zamieszczanych na stronie'
 		);
@@ -250,13 +284,14 @@ elseif (isNum($_route->getAction(), FALSE))
 	if ($row = $_pdo->getRow('SELECT * FROM [pages] WHERE `id` = '.$_route->getAction()))
 	{
 
-		$type = $_pdo->getRow('SELECT `id`, `name`, `insight_groups` FROM [pages_types] WHERE id = :id', array(':id', $row['type'], PDO::PARAM_INT));
+		$type = $_pdo->getRow('SELECT `id`, `name`, `insight_groups`, `user_allow_comments` FROM [pages_types] WHERE id = :id', array(':id', $row['type'], PDO::PARAM_INT));
 
 		if ($_user->hasAccess($type['insight_groups']))
 		{
 			$_tpl->assign('data', array(
 				'title' => $row['title'],
 				'content' => $row['content'],
+				'thumbnail' => $row['thumbnail'],
 				'preview' => $row['preview'],
 				'date' => HELP::showdate('longdate', $row['date']),
 				'author' => HELP::profileLink(NULL, $row['author'])
@@ -264,7 +299,7 @@ elseif (isNum($_route->getAction(), FALSE))
 
 
 
-			! class_exists('Tag') || $_tag = New Tag($_system, $_pdo);
+			
 			$keyword = array(); $k = array();
 			if ($keys = $_tag->getTag('PAGES', $row['id'])){
 				foreach($keys as $var){
@@ -289,7 +324,7 @@ elseif (isNum($_route->getAction(), FALSE))
 			}
 
 			$theme = array(
-				'Title' => $row['title'].' &raquo; '.$_sett->get('site_name'),
+				'Title' => $row['title'].' » '.$_sett->get('site_name'),
 				'Keys' => implode(', ', $k),
 				'Desc' => $row['description']
 			);
@@ -297,14 +332,15 @@ elseif (isNum($_route->getAction(), FALSE))
 			$_comment = $ec->comment;
 			
 			$_tpl->assignGroup(array(
-				'comments' => $_comment->get($_route->getFileName(), $_route->getAction()),
+				'comments' => $_comment->get($_route->getFileName(), $_route->getAction(), 0, 100),
 				'entry' => $row['title'],
 				'type' => array(
 					'url' => $_route->path(array('action' => 'type', $type['id'], HELP::Title2Link($type['name']))),
 					'name' => $type['name']
 				),
 				'keyword' => $keyword,
-				'cats' => $cats_data
+				'cats' => $cats_data,
+				'user_allow_comments' => $type['user_allow_comments']
 				//'category' => $category
 			));
 

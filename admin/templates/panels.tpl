@@ -2,9 +2,9 @@
 
 {*<h3>{$SystemVersion} - {i18n('Inactive panels')}</h3>*}
 <h3>{$SystemVersion} - {i18n('Panels managment')}</h3>
-<div class="tbl AdminButtons">
+<div class="tbl Buttons">
 	<div class="center grid_4 button-c">
-		<span><a href="panel_editor.php" class="Save"><strong>{i18n('Add new panel')}<img src="{$ADDR_ADMIN_ICONS}pixel/plus.png" alt="" /></strong></a></span>
+		<span><a href="panel_editor.php" class="save"><strong>{i18n('Add new panel')}<img src="{$ADDR_ADMIN_ICONS}pixel/plus.png" alt="" /></strong></a></span>
 	</div>
 </div>
 
@@ -187,7 +187,7 @@
 		{/section}
 	</div>
 </div>
-<div class="tbl AdminButtons">
+<div class="tbl Buttons">
 	<div class="center grid_2 button-c">
 		<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
 	</div>

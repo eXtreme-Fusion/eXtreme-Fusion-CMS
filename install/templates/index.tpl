@@ -1,18 +1,53 @@
+{*
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
+|
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
+|
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+|
+**********************************************************
+                ORIGINALLY BASED ON
+---------------------------------------------------------+
+| PHP-Fusion Content Management System
+| Copyright (C) 2002 - 2011 Nick Jones
+| http://www.php-fusion.co.uk/
++--------------------------------------------------------+
+| Author: Nick Jones (Digitanium)
++--------------------------------------------------------+
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
++--------------------------------------------------------*/
+*}
+
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="{$charset}">
 		<title>{$title}</title>
-		<link rel="stylesheet" href="{$ADDR_ADMIN}templates/stylesheet/grid.reset.css">
-		<link rel="stylesheet" href="{$ADDR_ADMIN}templates/stylesheet/grid.text.css">
-		<link rel="stylesheet" href="{$ADDR_ADMIN}templates/stylesheet/grid.960.css">
+		<link rel="stylesheet" href="{$ADDR_SITE}templates/stylesheet/common/grid.reset.css">
+		<link rel="stylesheet" href="{$ADDR_SITE}templates/stylesheet/common/grid.text.css">
+		<link rel="stylesheet" href="{$ADDR_SITE}templates/stylesheet/common/grid.960.css">
+		<link rel="stylesheet" href="{$ADDR_SITE}templates/stylesheet/common/jquery.uniform.css">
+		<link rel="stylesheet" href="{$ADDR_SITE}templates/stylesheet/common/jquery.table.css">
 		<link rel="stylesheet" href="{$ADDR_INSTALL}stylesheet/jquery.ui.css">
-		<link rel="stylesheet" href="{$ADDR_INSTALL}stylesheet/jquery.uniform.css">
-		<link rel="stylesheet" href="{$ADDR_INSTALL}stylesheet/jquery.table.css">
 		<link rel="stylesheet" href="{$ADDR_INSTALL}stylesheet/main.css">
 		<script src="{$ADDR_SITE}templates/javascripts/common/jquery.js"></script>
-		<script src="{$ADDR_ADMIN}templates/javascripts/jquery.uniform.js"></script>
-		<script src="{$ADDR_INSTALL}javascripts/passwordStrengthMeter.js"></script>
+		<script src="{$ADDR_SITE}templates/javascripts/common/jquery.uniform.js"></script>
+		<script src="{$ADDR_SITE}templates/javascripts/common/jquery.passwordStrengthMeter.js"></script>
 		<script src="{$ADDR_INSTALL}javascripts/main.js"></script>
 	</head>
 	<body>
@@ -25,8 +60,6 @@
 	<div id="Content">
 		<div class='corner4px'><div class='ctl'><div class='ctr'><div class='ctc'></div></div></div><div class='cc'>
 			<div id="IframeOPT" class="container_12">
-
-
 
 				<div class="clear"></div>
 				<h3 class="ui-corner-all">
@@ -43,7 +76,7 @@
 
 					{if $step == 0}
 						<p>{i18n('The installation was interrupted. The system can be unstable.')}</p>
-						<p><a href={$ADDR_INSTALL} title={i18n('Start the installation again.')}>{i18n('Start the installation again.')}</a></p>
+						<p><a href={$ADDR_INSTALL} title="{i18n('Start the installation again.')}">{i18n('Start the installation again.')}</a></p>
 					{elseif $step == 1}
 						<form action="index.php" method="post" id="This" autocomplete="off">
 
@@ -63,8 +96,8 @@
 							<div class="center">
 								<label>
 									<input type="checkbox" name="AcceptCC" value="yes">
-									<a id="AcceptLink" href="http://extreme-fusion.org/ef5/license/" target="_blank">
-									{i18n('I accept BSD License')}
+									<a id="AcceptLink" href="{$ADDR_SITE}LICENSE" target="_blank">
+									{i18n('I accept aGPL v3 License')}
 									</a>
 								</label>
 							</div>
@@ -158,7 +191,7 @@
 									<a id="refresh" class="SendButton" style="width:100px;margin:0 auto;">
 										<strong class="o">
 											<strong class="m">
-												<strong>{i18n('Refresh')} &raquo;</strong>
+												<strong>{i18n('Refresh')}</strong>
 											</strong>
 										</strong>
 									</a>
@@ -177,7 +210,7 @@
 							<a class="CancelButton" style="width:100px;margin:0 auto;">
 								<strong class="o">
 									<strong class="m">
-										<strong title={i18n('Stop the installation or start from the begining.')}>{i18n('Stop installation')}</strong>
+										<strong title="{i18n('Stop the installation or start from the begining.')}">{i18n('Stop installation')}</strong>
 									</strong>
 								</strong>
 							</a>
@@ -232,7 +265,7 @@
 						<a class="CancelButton" style="width:100px;margin:0 auto;">
 							<strong class="o">
 								<strong class="m">
-									<strong title={i18n('Stop the installation or start from the begining.')}>{i18n('Stop installation')}</strong>
+									<strong title="{i18n('Stop the installation or start from the begining.')}">{i18n('Stop installation')}</strong>
 								</strong>
 							</strong>
 						</a>
@@ -246,7 +279,7 @@
 						{else}
 							{if $database_connection_error}
 								<div class='error'><strong>{i18n('Error:')}</strong> {i18n('Unable to connect with MySQL database.')}</div><br />
-								<div class='status'>{i18n('Sprawdź, czy podane dane są prawidłowe lub skontaktuj się z dostawcą hostingu.')}</div>
+								<div class='status'>{i18n('Please ensure your MySQL username and password are correct.')}</div>
 							{else}
 								{if $table_prefix_error}
 									<div class='error'><strong>{i18n('Error:')}</strong> {i18n('Table prefix error.')}</div><br />
@@ -286,8 +319,8 @@
 								<div class="clear"></div>
 							</div>
 							<div class="tbl1">
-								<div class="formLabel grid_4"><label for="03">{i18n('Password:')}</label></div>
-								<div class="formField grid_3"><input id="03" type='password' name='db_pass' /></div>
+								<div class="formLabel grid_4"><label for="01">{i18n('Database Password:')}</label></div>
+								<div class="formField grid_3"><input id="01" type='password' name='db_pass' /></div>
 								<div class="clear"></div>
 							</div>
 
@@ -314,33 +347,33 @@
 								{/if}
 
 								<div class="tbl1">
-									<div class="formLabel grid_4"><label for="01">{i18n('Database Hostname:')}*</label></div>
-									<div class="formField grid_3"><input id="01" type='text' value='{$db_host}' name='db_host' /></div>
+									<div class="formLabel grid_4"><label for="07">{i18n('Database Hostname:')}*</label></div>
+									<div class="formField grid_3"><input id="07" type='text' value='{$db_host}' name='db_host' /></div>
 									<div class="clear"></div>
 								</div>
 								<div class="tbl2">
-									<div class="formLabel grid_4"><label for="01">{i18n('Database Port:')}*</label></div>
-									<div class="formField grid_3"><input id="01" type='text' value='{$db_port}' name='db_port' /></div>
+									<div class="formLabel grid_4"><label for="08">{i18n('Database Port:')}*</label></div>
+									<div class="formField grid_3"><input id="08" type='text' value='{$db_port}' name='db_port' /></div>
 									<div class="clear"></div>
 								</div>
 								<div class="tbl1">
-									<div class="formLabel grid_4"><label for="05">{i18n('Table Prefix:')}</label></div>
-									<div class="formField grid_3"><input id="05" type='text' value='{$db_prefix}' name='db_prefix' /></div>
+									<div class="formLabel grid_4"><label for="09">{i18n('Table Prefix:')}</label></div>
+									<div class="formField grid_3"><input id="09" type='text' value='{$db_prefix}' name='db_prefix' /></div>
 									<div class="clear"></div>
 								</div>
 								<div class="tbl2">
-									<div class="formLabel grid_4"><label for="06">{i18n('Cookie Prefix:')}</label></div>
-									<div class="formField grid_3"><input id="06" type='text' value='{$cookie_prefix}' name='cookie_prefix' /></div>
+									<div class="formLabel grid_4"><label for="10">{i18n('Cookie Prefix:')}</label></div>
+									<div class="formField grid_3"><input id="10" type='text' value='{$cookie_prefix}' name='cookie_prefix' /></div>
 									<div class="clear"></div>
 								</div>
 								<div class="tbl1">
-									<div class="formLabel grid_4"><label for="06">{i18n('Cache Prefix:')}</label></div>
-									<div class="formField grid_3"><input id="06" type='text' value='{$cache_prefix}' name='cache_prefix' /></div>
+									<div class="formLabel grid_4"><label for="11">{i18n('Cache Prefix:')}</label></div>
+									<div class="formField grid_3"><input id="11" type='text' value='{$cache_prefix}' name='cache_prefix' /></div>
 									<div class="clear"></div>
 								</div>
 								<div class="tbl2">
-									<div class="formLabel grid_4"><label for="06">{i18n('URL:')}*</label></div>
-									<div class="formField grid_3"><input id="06" type='text' value='{$site_url}' name='site_url' /></div>
+									<div class="formLabel grid_4"><label for="12">{i18n('URL:')}*</label></div>
+									<div class="formField grid_3"><input id="12" type='text' value='{$site_url}' name='site_url' /></div>
 									<div class="clear"></div>
 								</div>
 							</div>
@@ -361,7 +394,7 @@
 						<a class="CancelButton" style="width:100px;margin:0 auto;">
 							<strong class="o">
 								<strong class="m">
-									<strong title={i18n('Stop the installation or start from the begining.')}>{i18n('Stop installation')}</strong>
+									<strong title="{i18n('Stop the installation or start from the begining.')}">{i18n('Stop installation')}</strong>
 								</strong>
 							</strong>
 						</a>
@@ -376,27 +409,27 @@
 							{/if}
 
 							{if $empty_form_error}
-								<div class='error'><strong>{i18n('Error:')}</strong> {i18n('Empty fields.')}</div><br />
+								<div class='error'><strong>{i18n('Error:')}</strong> {i18n('There are empty fields left!')}</div><br />
 							{else}
 								{if $username_error}
-									{i18n('Your login does not appear to be valid.')}
+									<div class='error'><strong>{i18n('Error:')}</strong> {i18n('Your login does not appear to be valid.')}</div><br />
 								{/if}
 
 								{if $password_error}
-									{i18n('Your two login passwords do not match.')}
+									<div class='error'><strong>{i18n('Error:')}</strong> {i18n('Your two login passwords do not match.')}</div><br />
 								{/if}
 
 								{if $email_error}
-									{i18n('Your email address does not appear to be valid.')}
+									<div class='error'><strong>{i18n('Error:')}</strong> {i18n('Your email address does not appear to be valid.')}</div><br />
 								{/if}
 
 								{if $account_creating_error}
-									Konto administratora nie zostało utworzone
+									<div class='error'><strong>{i18n('Error:')}</strong> {i18n('Administrator account has not been created.')}</div><br />
 								{/if}
 							{/if}
 
 							<form action="index.php" method="post" id="This" autocomplete="off">
-								<div class="info">{i18n('Primary Super Admin login details')}</div><br />
+								<div class="info">{i18n('Super Admin login details')}</div><br />
 								<div class="tbl1">
 									<div class="formLabel grid_4"><label for="username">{i18n('Username:')}*</label></div>
 									<div class="formField grid_3"><input id="username" type='text' value='{$username}' name='username' maxlength='30' /></div>
@@ -440,11 +473,61 @@
 							<a class="CancelButton" style="width:100px;margin:0 auto;">
 								<strong class="o">
 									<strong class="m">
-										<strong title={i18n('Stop the installation or start from the begining.')}>{i18n('Stop installation')}</strong>
+										<strong title="{i18n('Stop the installation or start from the begining.')}">{i18n('Stop installation')}</strong>
 									</strong>
 								</strong>
 							</a>
 					{elseif $step == 6}
+						<form action="index.php" method="post" id="This" autocomplete="off">
+							<div class="formMessage">
+								{if !$synchro_available}
+									<div class="formWarning">
+										{i18n('None of the required components is available')}
+										<ul>
+											<li>curl</li>
+											<li>fsockopen</li>
+											<li>fopen</li>
+										</ul>
+										{i18n('Installation suggest')}
+									</div>
+								{/if}
+
+								<div class="synchro">
+									<input type="checkbox" name="synchro" value="true" {if ! $synchro_available}disabled="disabled" {/if}id="Synchro" />
+									<label for="Synchro">
+										{i18n('Synchro statement')}
+									</label>
+								</div>
+								<p>{i18n('Synchro policy')}</p>
+							</div>
+							<br /><hr /><br />
+							<div class="center" style="width:240px; margin:15px auto; overflow:hidden">
+								<input type='hidden' name='step' value='6'>
+								<a id="refresh" class="SendButton" style="width:100px;float:left;margin-right:20px">
+									<strong class="o">
+										<strong class="m">
+											<strong>{i18n('Refresh')}</strong>
+										</strong>
+									</strong>
+								</a>
+								<a id="SendForm_This" class="SendButton" style="width:100px;float:left">
+									<strong class="o">
+										<strong class="m">
+											<strong>{i18n('Next')} &raquo;</strong>
+										</strong>
+									</strong>
+								</a>
+							</div>
+							<div class="clear"></div>
+						</form>
+						<a class="CancelButton" style="width:100px;margin:0 auto;">
+							<strong class="o">
+								<strong class="m">
+									<strong title="{i18n('Stop the installation or start from the begining.')}">{i18n('Stop installation')}</strong>
+								</strong>
+							</strong>
+						</a>
+					{elseif $step == 7}
 
 						<div class="center">{i18n('Setup complete')}</div><br />
 						<form action="index.php" method="post" id="This" autocomplete="off">
@@ -459,6 +542,10 @@
 							</a>
 						</form>
 					{/if}
+					<div class="center">
+						<p>Copyright © 2005 - 2013 by the <a href="http://extreme-fusion.org/" rel="copyright">eXtreme-Fusion</a> Crew</p>
+						<p>Copyright 2002-2013 <a href="http://php-fusion.co.uk/">PHP-Fusion</a>. Released as free software without warranties under <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">aGPL v3</a>.</p>
+					</div>
 				</div>
 				<div class="clear"></div>
 
@@ -466,5 +553,6 @@
 		</div>
 		<div class='cfl'><div class='cfr'><div class='cfc'></div></div></div></div>
 	</div>
+
 </body>
 </html>

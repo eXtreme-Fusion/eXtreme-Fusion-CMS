@@ -1,3 +1,39 @@
+{*
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
+|
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
+|
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+| 
+**********************************************************
+                ORIGINALLY BASED ON
+---------------------------------------------------------
+| PHP-Fusion Content Management System
+| Copyright (C) 2002 - 2011 Nick Jones
+| http://www.php-fusion.co.uk/
++------------------------------------------------------
+| Author: Nick Jones (Digitanium)
+| Co-Author: Christian Damsgaard J?rgensen (PMM)
++------------------------------------------------------
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
++------------------------------------------------------*/
+*}
+
 <h3 class="ui-corner-all">{$SystemVersion} - {i18n('Modules')}</h3>
 {if $message}<div class="{$class}">{$message}</div>{/if}
 
@@ -26,20 +62,20 @@
 
 			</div>
 		{/section}
-		<div class="tbl">
+		{*<div class="tbl">
 			<div class="tbl">{i18n('Legend:')}</div>
 			<div class="modDevelopmentLegend">{i18n('Modules under Development.')}</div>
 			<div class="modInstalledDevelopmentLegend">{i18n('Installed Modules under Development.')}</div>
 			<div class="modOfficialLegend">{i18n('Modules officially released.')}</div>
 			<div class="modInstallOfficialLegend">{i18n('Installed Modules officially released.')}</div>
-		</div>
-		<div class="tbl AdminButtons">
+		</div>*}
+		<div class="tbl Buttons">
 			<div class="center grid_2 button-l">
 				<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="" /></strong></span>
 			</div>
 			<div class="center grid_2 button-r">
 				<input type="hidden" name="save" value="yes" />
-				<span class="Save" id="SendForm_This" ><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
+				<span class="save" id="SendForm_This" ><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="" /></strong></span>
 			</div>
 		</div>
 	</form>

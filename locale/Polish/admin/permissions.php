@@ -2,6 +2,7 @@
 
 return array(
 	'Section:' => 'Sekcja:',
+	'ID:' => 'Identyfikator:',
 	'Permission' => 'Uprawnienie',
 	'Permissions' => 'Uprawnienia',
 	'Edit permission' => 'Edycja uprawnienia',

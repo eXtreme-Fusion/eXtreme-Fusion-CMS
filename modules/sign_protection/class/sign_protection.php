@@ -1,13 +1,19 @@
 <?php
-/*---------------------------------------------------------------+
-| eXtreme-Fusion - Content Management System - version 5         |
-+----------------------------------------------------------------+
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 |
-| http://extreme-fusion.org/                               		 |
-+----------------------------------------------------------------+
-| This product is licensed under the BSD License.				 |
-| http://extreme-fusion.org/ef5/license/						 |
-+---------------------------------------------------------------*/
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
+|
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
+|
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+*********************************************************/
 
 /**
  * Klasa ta zawiera zbiór metod odpowiedzialnych
@@ -42,6 +48,7 @@ class sign_protection implements Security_Intf
 	protected $_ommit = TRUE;		// Czy generować utrudnione zagadki?
 
 	protected $_tpl;
+	protected $_locale;
 	protected $_crypt;
 	protected $_pdo;
 
@@ -58,7 +65,7 @@ class sign_protection implements Security_Intf
 	public function getView()
 	{
 		$this->_tpl->assignGroup(array(
-			'message' => __('Nie licząc cyfr przepisz :znak znak od lewej strony, a następnie (nie licząc znaków) wszystkie cyfry od początku kodu :warunek', array(':znak' => $this->getNonNumKey(), ':warunek' => ($this->getNumsToOmmit() ? ' z pominieciem '.$this->getNumsToOmmit().($this->getNumsPosToOmmit() ? ' ostatnich' : ' pierwszych'): ''))),
+			'info' => __('Nie licząc cyfr przepisz :znak znak od lewej strony, a następnie (nie licząc znaków) wszystkie cyfry od początku kodu :warunek', array(':znak' => $this->getNonNumKey(), ':warunek' => ($this->getNumsToOmmit() ? ' z pominieciem '.$this->getNumsToOmmit().($this->getNumsPosToOmmit() ? ' ostatnich' : ' pierwszych'): ''))),
 			'answer' => $this->_crypt->encrypt($this->getAnswer()),
 			'code' => $this->getCode()
 		));
@@ -85,13 +92,15 @@ class sign_protection implements Security_Intf
 		);
 	}
 
-	public function setObjects($_tpl, $_pdo = NULL)
+	public function setObjects($_tpl, $_pdo, $_locale)
 	{
 		$this->_pdo = $_pdo;
 		$this->_tpl = $_tpl;
-
+		
+		$this->_locale = $_locale;
+		
 		$this->_tpl->root = DIR_MODULES.'sign_protection'.DS.'templates'.DS;
-		$this->_tpl->compile = DIR_MODULES.'sign_protection'.DS.'templates_c'.DS;
+		$this->_tpl->compile = DIR_CACHE;
 
 		$this->_ommit = (bool) $this->_pdo->getField('SELECT `validation_type` FROM [sign_protection]');
 

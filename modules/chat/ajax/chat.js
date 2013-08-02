@@ -1,8 +1,8 @@
 $(function() {
   refresh();
-  
+
   $('#chat_form form').submit(function() {
-    $.post('modules/chat/ajax/send.php', {
+    $.post(addr_site+'modules/chat/ajax/send.php', {
         content: $('input[name*="content"]', this).val(),
         send: 'send'
       },
@@ -11,20 +11,20 @@ $(function() {
         $('input[name*="content"]').val('');
         refresh();
       }
-    ); 
+    );
     return false;
   });
-  
+
   setInterval(function() {
     refresh();
   },+refresh_chat);
-  
+
 });
 
 function refresh() {
   var posts = $('#chat_post').html();
   $.ajax({
-    url: 'modules/chat/ajax/messages.php', type: 'GET', success: function (html){
+    url: addr_site+'modules/chat/ajax/messages.php', type: 'GET', success: function (html){
       $('#chat_messages section').html(html);
       setTimeout(function(){
         var posts2 = $('#chat_post').html();
@@ -34,7 +34,7 @@ function refresh() {
         }
       },400);
     }, error:function(){
-      $('#chat_messages section').html('Wystąpił błąd! Odśwież stronę.');
+      $('#chat_messages section').html('An error occurred! Refresh the page.');
     }
   });
 }

@@ -2,5 +2,5 @@
 
 return array(
 	'Small' => 'Zmenšení',
-	'Minimizes the selected text' => 'Zmenšení vybraného textu'
+	'Minimizes the selected text' => 'Zmenší vybraný text'
 );

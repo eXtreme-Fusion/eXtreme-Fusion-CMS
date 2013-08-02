@@ -1,17 +1,36 @@
 $(function() {
 
-	$('#messages_page form').submit(function() {
+	$('#messages_page form').submit(function(e) {
 
-		var new_message = $('#message_subject').length;
+		// Blokowanie standardowego wysłania danych formularza
+		e.preventDefault();
 
-		if (new_message) {
-			new_message = $('#message_subject').val();
-			if (new_message == '') {
-				alert('Nie podano tematu wiadomości');
+		var $this = $(this);
+		var $search_user = $this.find('#search_user');
+
+		var new_message = '';
+
+		if ($search_user) {
+
+			// Sprawdzanie, czy wybrano adresata wiadomości
+			if ($search_user.is(':visible'))
+			{
+				$search_user.focus();
+				$search_user.addClass('error-field');
+
+				// Przerywanie działania funkcji
 				return false;
 			}
-		} else {
-			new_message = '';
+
+			new_message = $('#message_subject').val();
+
+			// Sprawdzanie, czy podano temat wiadomości.
+			if (new_message == '') {
+				// Wyświetlanie informacji
+				alert('Nie podano tematu wiadomości');
+				// Przerywanie działania funkcji.
+				return false;
+			}
 		}
 
 		var to_user = $('input[name*="to"]', this).val();
@@ -25,27 +44,29 @@ $(function() {
 			action: 'send'
 		},
 		function(data) {
-			$('#message').val('');
 			if (new_message) {
 				$('#message_subject').parent().remove();
 				$('input[name*="item_id"]').val(data);
+				$this.find('#defender_user img').remove();
 			}
-			// co to? zakomentować
-			//else
-			//{
-			//	$('#form_request').html(data);
-			//}
+
+			$this.find('#message').val('').focus();
+
 			refresh_pw();
 		});
-
-		return false;
 	});
-	
+
 	// Wyszukiwanie użytkownika po jego loginie
-	searchUser(false, false);
+	$('#search_user').searchEngine({'is_here_admin_panel': 0, 'self_search': 0, 'only_active': 1, 'php_file': 'ajax/search_users_extended.php'});
+
+	// Zmiana adresata wiadomości
+	$('body').on('click', '#defender_user img', function() {
+		$(this).parent().remove();
+		$('#messages_page form #search_user').val('').show();
+	});
 
 	// Wybieranie adresata wiadomości
-	$('body').on('click', '.defender', function() {
+	$('body').on('click', '#defenders li', function() {
 		var id = $(this).attr('id').split('-')[1];
 		var username = $(this).text();
 
@@ -58,13 +79,15 @@ $(function() {
 	// end of Wybieranie adresata wiadomości
 
 	// Odświeżanie okna rozmowy
-
 	function refresh_pw() {
 		var posts = $('#ajax_messages article').length;
 		var item_id = $('input[name*="item_id"]').val();
 
 		$.ajax({
-			url: addr_site+'pages/ajax/messages.php', data: 'item_id='+item_id, type: 'GET', success: function (html) {
+			url: addr_site+'pages/ajax/messages.php', 
+			data: 'item_id='+item_id, 
+			type: 'GET', 
+			success: function(html){
 				$('#ajax_messages').html(html);
 				setTimeout(function(){
 					var posts2 = $('#ajax_messages article').length;
@@ -80,8 +103,8 @@ $(function() {
 	}
 
 	var refresh = false;
-	$('#messages_page').hover(function() {
-		if (!refresh) {
+	$('#messages_page').hover(function(){
+		if (!refresh){
 			refresh_pw();
 			refresh = true;
 		}
@@ -89,11 +112,10 @@ $(function() {
 		refresh = false;
 	});
 
-	setInterval(function() {
+	setInterval(function(){
 		refresh_pw();
 	}, 30000);
 
 	refresh_pw();
-
 	// end of Odświeżania okna rozmowy
 });

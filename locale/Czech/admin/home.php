@@ -9,7 +9,8 @@ return array(
 	'Update' => 'Aktualizace',
 	'Notes' => 'Poznámky',
 	'Quick&nbsp;news' => 'Rychlá novinky',
-	'You&nbsp;have&nbsp;currently&nbsp;version&nbsp;eXtreme&nbsp;-&nbsp;Fusion&nbsp;:version' => 'Máte aktuální verzi eXtreme-Fusion :version',
+	'You have currently version of eXtreme-Fusion CMS.' => 'Máte aktuální verzi eXtreme-Fusion CMS.',
+	'Update is available.' => 'Aktualizace je dostupná.',
 	'Quick news has been added.' => 'Rychlá novinka byla přidána.',
 	'Error! Quick news has not been added.' => 'Došlo k chybě! Rychlá novinka nebyla přidána.',
 	'Note has been added.' => 'Poznámka byla přidána.',
@@ -28,6 +29,11 @@ return array(
 	'Only author can edit this note.' => 'Pouze autor může upravovat tuto poznámku.',
 	'You have created maximum number of notes. Remove some.' => 'Už jste vytvořili maximální počet poznámek. Musíte nějaké odstranit.',
 	'Added' => 'Přidáno',
-	'by' => 'podle'
+	'by' => 'podle',
 	
+	// Updating
+	'Update is ready to install.' => 'Aktualizacja jest gotowa do zainstalowania.',
+	'Update is available.' => 'Dostępna jest aktualizacja.',
+	'You have currently version of eXtreme-Fusion CMS.' => 'Posiadasz aktualną wersję eXtreme-Fusion CMS.',
+	 'Updating error' => 'Nemůžete použít tuto aktualizaci.<br /> Stahněte takovou, která je vhodná pro vaši verzi redakčního systému.<br /> <a href="https://github.com/eXtreme-Fusion/EF5-updates">https://github.com/eXtreme-Fusion/EF5-updates</a>' 
 );

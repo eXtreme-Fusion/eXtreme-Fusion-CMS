@@ -1,33 +1,122 @@
-<?php defined('EF5_SYSTEM') || exit;
-/*---------------------------------------------------------------+
-| eXtreme-Fusion - Content Management System - version 5         |
-+----------------------------------------------------------------+
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 |
-| http://extreme-fusion.org/                               		 |
-+----------------------------------------------------------------+
-| This product is licensed under the BSD License.				 |
-| http://extreme-fusion.org/ef5/license/						 |
-+---------------------------------------------------------------*/
-$_locale->moduleLoad('lang', 'forum');
+<?php
+chdir(dirname(dirname(__FILE__)));
 
-! class_exists('Tree') || $_tree = New Tree($_pdo, 'forum_drzewko');
+define('F_CLASS', '.'.DS.'app'.DS);
+define('F_VIEW', '.'.DS.'views'.DS);
+define('F_SRC', '.'.DS.'src'.DS);
 
-$id = ($_route->getByID(1) ? $_route->getByID(1) : 1);
+define('F_ADMIN', 'acp');
 
-include DIR_MODULES.'forum'.DS.'config.php';
+define('F_EXT', '.php');
 
-$_tpl->assign('config', $mod_info);
+define('LEFT', FALSE);
+define('RIGHT', FALSE);
 
+function autoloader($class_name)
+{
+	$class_name = strtolower($class_name);
 
-$_tpl->assign('drzewko', $_tree->get($id));
+	if (file_exists($path = F_CLASS.$class_name.F_EXT))
+	{
+		require_once $path;
+		return;
+	}
 
-// Pobieranie listy potomastwa
-//var_dump($_tree->getChildren($id));
+	if (file_exists($path = F_SRC.$class_name.F_EXT))
+	{
+		require_once $path;
+		return;
+	}
 
-// Dodawanie nowej gal陑i
-//$_tree->add('15');
+	throw new systemException(__('Class :name does not exist',
+		array(':name' => $class_name)));
+}
 
-// Wy渨ietlanie okruszk體 chleba :D
-$_tpl->assign('Breadcrumb', $_tree->getNav($id));
+spl_autoload_register('autoloader');
 
-$_tpl->setPageCompileDir(DIR_MODULES.'forum'.DS.'templates'.DS);
+if ($_route->getAction())
+{
+	$app = $_route->getAction();
+}
+else
+{
+	$app = 'index';
+}
+
+$path = F_CLASS.$app.F_EXT;
+
+// Pobieranie wszystkich parametr贸w
+$params = $_route->getParams();
+
+if ($app === F_ADMIN && ! empty($params))
+{
+	$app = array_shift($params);
+
+	$path = F_CLASS.F_ADMIN.DIRECTORY_SEPARATOR.$app.F_EXT;
+}
+
+if (file_exists($path))
+{
+	// Za艂膮czanie klasy aplikacji
+	require_once $path;
+
+	$class_name = ucfirst($app).'_Controller';
+	
+	ob_start();
+	try
+	{
+		// Pobieranie nazwy akcji oraz usuwanie jej z parametr贸w
+		$action = array_shift($params);
+
+		// Je偶eli zamiast nazwy akcji znajdzie si臋 liczba, jest ona dodawana na pocz膮tek parametr贸w
+		$params = is_numeric($action) ? array_merge(array($action), $params) : $params;
+
+		// W przypadku, gdy nazw膮 akcji jest liczba, automatycznie wybierana jest akcja `index`
+		$action = isset($action) && ! is_numeric($action) ? $action : 'index';
+
+		// Przekazywanie do konstruktora akcji i parametr贸w
+		$_obj = new $class_name($action, $params);
+
+		// Przekazywanie obiektu DI
+		$_obj
+			->set('ec', $ec)
+			->set('router', $_route)
+			->set('locale', $_locale)
+			->set('user', $_user)
+			->set('url', $_url)
+			->set('theme', $_theme);
+
+		// Wy艣wietlanie strony
+		$_obj->render();
+	}
+	catch(optException $exception)
+	{
+		ob_clean();
+		optErrorHandler($exception, FALSE);
+	}
+	catch(systemException $exception)
+	{
+		ob_clean();
+		systemErrorHandler($exception, FALSE);
+	}
+	catch(userException $exception)
+	{
+		ob_clean();
+		userErrorHandler($exception, FALSE);
+	}
+	catch(PDOException $exception)
+	{
+		ob_clean();
+		PDOErrorHandler($exception, FALSE);
+	}
+
+	ob_end_flush();
+	spl_autoload_unregister('autoloader');
+	spl_autoload_register('__autoload');
+	
+}
+else
+{
+	// B艂膮d 404 bez przekierowania.
+	$_route->trace(array('controller' => 'error', 'action' => 404));
+}

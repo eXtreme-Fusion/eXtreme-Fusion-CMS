@@ -1,7 +1,7 @@
 <h4>Zabezpieczenie rejestracji</h4>
 
 <div class="tbl center">
-	<div class="center">{$message}</div>
+	<div class="center">{$info}</div>
 </div>
 <div class="tbl">
 	<div class="formLabel sep_1 grid_3">Kod:</div>

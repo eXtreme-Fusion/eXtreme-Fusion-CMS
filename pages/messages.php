@@ -1,14 +1,42 @@
 <?php defined('EF5_SYSTEM') || exit;
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
+/*********************************************************
+| eXtreme-Fusion 5
 | Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
 | http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.
-| http://extreme-fusion.org/ef5/license/
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+| 
+**********************************************************
+                ORIGINALLY BASED ON
+---------------------------------------------------------+
+| PHP-Fusion Content Management System
+| Copyright (C) 2002 - 2011 Nick Jones
+| http://www.php-fusion.co.uk/
++--------------------------------------------------------+
+| Author: Nick Jones (Digitanium)
++--------------------------------------------------------+
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
++--------------------------------------------------------*/
+/*
+Do zrobienie
+Sprawdzanie czy po wpisaniu w polu nazwa użytkownika jest wpisana nazwa użytkownika istniejącego konta użytkownica
+Bo w przeciwnym wypadku powinien być zablokowany klawisz wyślij, po wpisaniu pierwszej lepszej nazwy i kliknięciu 
+wyślij wyskakuje informacja o podejrzewanym ataku XSS
+*/
 $_user->onlyForUsers($_route);
 
 $_head->set('<meta name="robots" content="noindex">');
@@ -52,7 +80,7 @@ if ($_route->getAction() === NULL)
 			'Desc' => 'W łatwy sposób możesz komunikować się z użytkownikami.'
 		);
 
-		$i = 0;
+		$i = 0; $bookmarks['inbox'] = FALSE; $bookmarks['outbox'] = FALSE; $bookmarks['draft'] = FALSE;
 		foreach($query as $row)
 		{
 			$userid = $row['to'] == $_user->get('id') ? $row['from'] : $row['to'];
@@ -71,6 +99,7 @@ if ($_route->getAction() === NULL)
 			// Czy wiadomość wysłao do mnie?
 			if ($row['to'] === $_user->get('id'))
 			{
+				$bookmarks['inbox'] = TRUE;
 				if ($row['read'] === '0')
 				{
 					// Jeszcze nie została przeczytana.
@@ -84,6 +113,7 @@ if ($_route->getAction() === NULL)
 			}
 			else
 			{
+				$bookmarks['outbox'] = TRUE;
 				if ($row['read'] === '0')
 				{
 					// Jeszcze nie została przeczytana przez odbiorcę.
@@ -100,11 +130,11 @@ if ($_route->getAction() === NULL)
 		}
 
 		$_tpl->assign('data', $data);
+		
+		$_tpl->assign('has_messages', array('inbox' => $bookmarks['inbox'], 'outbox' => $bookmarks['outbox'], 'draft' => $bookmarks['draft']));
 	}
 	
-	// Sprawdzanie, czy są jakieś wiadomości w kategoriach "odebrane", "wysłane", "robocze" - do zrobienia :)
-	$_tpl->assign('has_messages', array('inbox' => TRUE, 'outbox' => TRUE, 'draft' => TRUE));
-
+	
 	// Link do "Nowej wiadomości"
 	$_tpl->assign('url_new_message', $_route->path(array('controller' => 'messages', 'action' => 'new')));
 }
@@ -120,7 +150,7 @@ elseif ($_route->getAction() === 'view')
 		$recipient = $_user->getByID($_route->getParamVoid(1), 'username');
 
 		$theme = array(
-			'Title' => __('Wyślij wiadomość do: ').$recipient.' &raquo; '.$_sett->get('site_name'),
+			'Title' => __('Wyślij wiadomość do: ').$recipient.' » '.$_sett->get('site_name'),
 			'Keys' => 'prywatne wiadomości, komunikacja, chat z '.$recipient,
 			'Desc' => 'W łatwy sposób możesz komunikować się z '.$recipient.'.'
 		);

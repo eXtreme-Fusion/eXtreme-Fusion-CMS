@@ -1,2 +1,0 @@
-W katalogu search są locale, które prawdopodobnie stamtąd wylecą
-Obecnie są używane tylko w pliku settings_main.php wię cjeśli je edytujesz, to sprawdź czy czegoś nie popsułeś w ustawieniach

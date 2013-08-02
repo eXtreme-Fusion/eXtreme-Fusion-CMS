@@ -1,13 +1,19 @@
 <?php
-/*---------------------------------------------------------------+
-| eXtreme-Fusion - Content Management System - version 5         |
-+----------------------------------------------------------------+
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 |
-| http://extreme-fusion.org/                               		 |
-+----------------------------------------------------------------+
-| This product is licensed under the BSD License.				 |
-| http://extreme-fusion.org/ef5/license/						 |
-+---------------------------------------------------------------*/
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
+|
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
+|
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+*********************************************************/
 try
 {
 	require_once '../../../config.php';
@@ -19,9 +25,13 @@ try
 	{
 		throw new userException(__('Access denied'));
 	}
-
+	
+	$_fav->setFavByLink('contact/admin/contact.php', $_user->get('id'));
+	
 	$_tpl = new AdminModuleIframe('contact');
-
+	
+	$_tpl->setHistory(__FILE__);
+	
 	// Wyświetlenie komunikatów
 	if ($_request->get(array('status', 'act'))->show())
 	{
@@ -29,13 +39,13 @@ try
 		$_tpl->getMessage($_request->get('status')->show(), $_request->get('act')->show(), 
 			array(
 				'add' => array(
-					__('Formularz kontaktowy został dodany.'), __('Błąd podczas dodawania formularza.')
+					__('Contact form has been added.'), __('Error! Contact form has not been added.')
 				),
 				'edit' => array(
-					__('Formularz kontaktowy został zedytowany.'), __('Błąd podczas edycji formularza.')
+					__('Contact form has been edited.'), __('Error! Contact form has not been edited.')
 				),
 				'delete' => array(
-					__('Formularz kontaktowy został usunięty.'), __('Błąd podczas usuwania formularza.')
+					__('Contact form has been deleted.'), __('Error! Contact form has not been deleted.')
 				)
 			)
 		);
@@ -51,11 +61,11 @@ try
 	
 		if ($count)
 		{
-			$_log->insertSuccess('delete', __('Formularz kontaktowy został usunięty.'));
+			$_log->insertSuccess('delete', __('Contact form has been deleted.'));
 			$_request->redirect(FILE_PATH, array('act' => 'delete', 'status' => 'ok'));
 		}
 
-		$_log->insertFail('delete', __('Błąd podczas usuwania formularza.'));
+		$_log->insertFail('delete', __('Error! Contact form has not been deleted.'));
 		$_request->redirect(FILE_PATH, array('act' => 'delete', 'status' => 'error'));
 	}
 	elseif ($_request->post('save')->show() && $_request->post('email')->isEmail() && $_request->post('title')->show())
@@ -97,11 +107,11 @@ try
 				
 			if ($count)
 			{
-				$_log->insertSuccess('add', __('Formularz kontaktowy został dodany.'));
+				$_log->insertSuccess('add', __('Contact form has been added.'));
 				$_request->redirect(FILE_PATH, array('act' => 'add', 'status' => 'ok'));
 			}
 
-			$_log->insertFail('add', __('Błąd podczas dodawania formularza.'));
+			$_log->insertFail('add', __('Error! Contact form has not been added.'));
 			$_request->redirect(FILE_PATH, array('act' => 'add', 'status' => 'error'));
 		}
 		

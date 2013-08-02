@@ -970,7 +970,7 @@
 
 		public function error($type, $message, $code)
 		{
-			include_once(OPT_DIR.'opt.error.php');
+			//include_once(OPT_DIR.'opt.error.php');
 			require_once(OPT_DIR.'opt.core.php');
 			optErrorMessage($this, $type, $message, $code, end($this->filenames));
 		} // end error();
@@ -1204,8 +1204,10 @@
 					}
 				}
 				closedir($dir);
+				
 				file_put_contents($this -> plugins.'plugins.php', '<'."?php\n".$code.'?'.'>');
 				file_put_contents($this -> plugins.'compile.php', '<'."?php\n".$compileCode.'?'.'>');
+				
 				eval($code);
 			}
 			return true;

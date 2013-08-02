@@ -1,14 +1,19 @@
 <?php
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+*********************************************************/
 
 class Edit
 {
@@ -63,6 +68,34 @@ class Edit
 		return html_entity_decode($this->_var);
 	}
 
+	public function removeSpecial($remove_spaces = TRUE)
+	{
+		$new = array();
+		
+		if ($remove_spaces)
+		{
+			for($i = 0, $c = strlen($this->_var); $i < $c; $i++)
+			{
+				if ($this->_var[$i] !== ' ' && ctype_alnum($this->_var[$i]))
+				{
+					$new[] = $this->_var[$i];
+				}
+			}
+		}
+		else
+		{
+			for($i = 0, $c = strlen($this->_var); $i < $c; $i++)
+			{
+				if (ctype_alnum($this->_var[$i]))
+				{
+					$new[] = $this->_var[$i];
+				}
+			}
+		}
+		
+		return implode('', $new);
+	}
+	
 	// Zamienia tablicę na ciąg łącząc poszczególne wartości separatorem.
 	public function implode($sep = DBS)
 	{
@@ -85,7 +118,7 @@ class Edit
 		{
 			if ($exception)
 			{
-				throw new systemException('Nieprawidłowy typ danych. Oczekiwano wartości numerycznej, a otrzymano: '.$this->_var);
+				throw new systemException('Nieprawidłowy typ danych. Oczekiwano wartości numerycznej, a otrzymano: '.($this->_var === FALSE ? 'boolean FALSE' : print_r($this->_var)));
 			}
 
 			return FALSE;
@@ -150,21 +183,6 @@ class Edit
 	public function trim()
 	{
 		return trim($this->_var);
-	}
-
-	//==================================
-	//PL: Zmiana tytułów dla linków
-	//EN: Changing the title for links
-	//==================================
-	public function setTitleForLinks()
-	{
-		$a = array("Ą","Ś","Ę","Ó","Ł","Ż","Ź","Ć","Ń","ą","ś","ę","ó","ł","ż","ź","ć","ń","ü","&quot"," - "," ",".","!",";",":","(",")","[","]","{","}","|","?",",","/","+","=","#","@","$","%","^","&","*");
-		$b = array("A","S","E","O","L","Z","Z","C","N","a","s","e","o","l","z","z","c","n","u","","-","_","","","","","","","","","","","","","","","","","","","","","","","");
-		$c = array("--","---","__","___");
-		$d = array("-","-","_","_");
-		$e = strtolower(str_replace($a,$b,$this->_var));
-		$f = str_replace($c,$d,$e);
-		return $f;
 	}
 	
 	public function filters()

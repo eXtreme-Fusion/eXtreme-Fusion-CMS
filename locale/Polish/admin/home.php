@@ -9,7 +9,8 @@ return array(
 	'Update' => 'Aktualizacja',
 	'Notes' => 'Notatki',
 	'Quick&nbsp;news' => 'Szybki&nbsp;news',
-	'You&nbsp;have&nbsp;currently&nbsp;version&nbsp;eXtreme&nbsp;-&nbsp;Fusion&nbsp;:version' => 'Posiadasz&nbsp;aktualną&nbsp;wersję&nbsp;eXtreme&nbsp;-&nbsp;Fusion&nbsp;:version',
+	'You have currently version of eXtreme-Fusion CMS.' => 'Posiadasz aktualną wersję eXtreme-Fusion CMS.',
+	'Update is available.' => 'Dostępna jest aktualizacja.',
 	'Quick news has been added.' => 'Szybki news został dodany.',
 	'Error! Quick news has not been added.' => 'Wystąpił błąd! Szybki news nie został dodany.',
 	'Note has been added.' => 'Notatka została dodana.',
@@ -28,6 +29,11 @@ return array(
 	'Only author can edit this note.' => 'Tylko autor może edytować tą notatkę.',
 	'You have created maximum number of notes. Remove some.' => 'Utworzyłeś już maksymalną ilość notatek. Usuń jakieś.',
 	'Added' => 'Dodano',
-	'by' => 'przez'
+	'by' => 'przez',
 	
+	// Updating
+	'Update is ready to install.' => 'Aktualizacja jest gotowa do zainstalowania.',
+	'Update is available.' => 'Dostępna jest aktualizacja.',
+	'You have currently version of eXtreme-Fusion CMS.' => 'Posiadasz aktualną wersję eXtreme-Fusion CMS.',
+	'Updating error' => 'Nie możesz skorzystać z tej aktualizacji.<br /> Pobierz inną, właściwą dla Twojej wersji systemu CMS.<br /> <a href="https://github.com/eXtreme-Fusion/EF5-updates">https://github.com/eXtreme-Fusion/EF5-updates</a>'
 );

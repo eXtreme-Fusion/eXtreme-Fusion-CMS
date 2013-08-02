@@ -1,6 +1,6 @@
-<h3>{i18n('Google Analitics')} - {i18n('Navigation')}</h3>
+<h3>{i18n('Google Analytics ')} - {i18n('Navigation')}</h3>
 <div class="capmain"></div>
-<div class="tbl AdminButtons">
+<div class="tbl Buttons">
 	<div class="center grid_2 button-l">
 		{if $page === 'preview'}
 			<span class="Cancels"><strong>{i18n('Podgląd')}</strong></span>
@@ -24,7 +24,7 @@
 				$(document).ready(function() {
 					$('.dataTable').dataTable({
 						"aaSorting": [],
-						"sAjaxSource": '../ajax/request.php?GetGoogleAnalitics=True',
+						"sAjaxSource": '../ajax/request.php',
 						"bProcessing": true,
 						"bDestroy": true,
 						"bJQueryUI": true,
@@ -35,7 +35,7 @@
 			{/literal}
 		</script>
 
-		<h3>{i18n('Google Analitics')} - {i18n('Report of')} {$updated_day} {i18n('hour')} {$updated_hour}</h3>
+		<h3>{i18n('Google Analytics ')} - {i18n('Report of')} {$updated_day} {i18n('hour')} {$updated_hour}</h3>
 		<div class="grid_4"><strong>{i18n('Daily average visits:')}</strong> {$total_results}</div>
 		<div class="grid_4"><strong>{i18n('Total visits:')}</strong> {$visits}</div>
 		<div class="grid_4"><strong>{i18n('Total page views:')}</strong> {$page_views}</div>
@@ -56,7 +56,7 @@
 			</tbody>
 		</table>
 	{else}
-		<h3>{i18n('Google Analitics')} - {i18n('Error')}</h3>
+		<h3>{i18n('Google Analytics ')} - {i18n('Error')}</h3>
 		<div class="capmain"></div>
 		<div class="error">
 			{section=Error}
@@ -66,7 +66,7 @@
 	{/if}
 {/if}
 {if $page === 'sett'}
-	<h3 class="ui-corner-all">{$SystemVersion} - {i18n('Google Analitics')}</h3>
+	<h3 class="ui-corner-all">{$SystemVersion} - {i18n('Google Analytics ')}</h3>
 	{if $message}<div class="{$class}">{$message}</div>{/if}
 
 	<form id="This" action="{$URL_REQUEST}" method="post">
@@ -97,13 +97,13 @@
 			<div class="formField grid_7"><input type="text" id="profile_id" name="profile_id" class="num_255" value="{$profile_id}" ></div>
 		</div>
 		
-		<div class="tbl AdminButtons">
+		<div class="tbl Buttons">
 			<div class="center grid_2 button-l">
 				<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="{i18n('Back')}" /></strong></span>
 			</div>
 			<div class="center grid_2 button-r">
 				<input type="hidden" name="save" value="yes" />
-				<span class="Save" id="SendForm_This"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="{i18n('Save')}" /></strong></span>
+				<span class="save" id="SendForm_This"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="{i18n('Save')}" /></strong></span>
 			</div>
 		</div>
 	</form>

@@ -1,13 +1,19 @@
 <?php defined('EF5_SYSTEM') || exit;
-/*---------------------------------------------------------------+
-| eXtreme-Fusion - Content Management System - version 5         |
-+----------------------------------------------------------------+
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 |
-| http://extreme-fusion.org/                               		 |
-+----------------------------------------------------------------+
-| This product is licensed under the BSD License.				 |
-| http://extreme-fusion.org/ef5/license/						 |
-+---------------------------------------------------------------*/
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
+|
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
+|
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+*********************************************************/
 
 $mod_info = array(
 	'title' => 'SFSProtection&trade;',
@@ -21,7 +27,7 @@ $mod_info = array(
 
 $admin_page[1] = array(
 	'title' => 'SFS Protection',
-	'image' => 'images/protection.png',
+	'image' => 'templates/images/protection.png',
 	'page' => 'admin/sfs_protection.php',
 	'perm' => 'admin'
 );
@@ -34,11 +40,11 @@ $perm[1] = array(
 $new_table[1] = array(
 	"sfs_protection",
 	"(
-		`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+		`id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 		`name` VARCHAR(100) NOT NULL DEFAULT '',
 		`email` VARCHAR(100) NOT NULL DEFAULT '',
 		`ip` VARCHAR(20) NOT NULL DEFAULT '0.0.0.0',
-		`datestamp` INT(10) NOT NULL DEFAULT '0',
+		`datestamp` INT NOT NULL DEFAULT '0',
 		PRIMARY KEY (`id`)
 	) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;"
 );

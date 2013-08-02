@@ -122,7 +122,7 @@ if (isset($_COOKIE['sb_theme'])) {
 		setcookie("sb_theme", "", time() - 10000);
 	}
 } else {
-	$theme = "classic";
+	$theme = "bittersweet";
 }
 
 $gt = new GetTextReader($lang . ".pot");

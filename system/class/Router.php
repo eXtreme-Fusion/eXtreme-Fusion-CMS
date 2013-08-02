@@ -1,14 +1,19 @@
 <?php
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+*********************************************************/
 
 /* DEBUGOWANIE:
 echo 'Akcja ^: '.var_dump($_route->getAction()).'<br />';
@@ -51,14 +56,14 @@ class Router
 		$_action = '';			  	/**********TEST*********/
 
 	protected $_path_info_exists;
-	
+
 	protected $_installed_modules = array();
 
 	public function __construct($request, $_sett, $rewrite, $main_param, $path_info_exists, $opening_page, $ret_default = FALSE, $search_more = TRUE, $search_admin = FALSE, $searching = '')
 	{
 		$this->_sett = $_sett;
 		$this->_request = $request;
-		
+
 		$this->_rewrite = $rewrite;
 		$this->_sep = $this->_sett->getUns('routing', 'main_sep');
 		$this->_param_sep = $this->_sett->getUns('routing', 'param_sep');
@@ -77,12 +82,12 @@ class Router
 		);
 
 		$this->_path_info_exists = $path_info_exists;
-		
+
 		$this->setEnv();
-				
+
 		$this->_url = new URL($this->_ext['url'], $this->_sep, $this->_param_sep, $this->_rewrite, $this->_path_info_exists);
 		$this->_ext_allowed = $this->_url->extAllowed();
-		
+
 		/**
 		 * Metoda zwróci FALSE, jeśli żądanie nie spełnia warunku dotyczącego rozszerzenia.
 		 * Wyświetli się błąd 404, więc wykonanie poniższych metod jest niepotrzebne.
@@ -94,10 +99,10 @@ class Router
 			$this->setParams();
 			$this->setAction();
 		}
-		
+
 		$this->_url->setController($this->getFileName());
 	}
-	
+
 	/**
 	 * Konfiguruje środowisko pracy dla Routera.
 	 * Tworzy stałą PATH_INFO zawierającą żądanie URL.
@@ -108,21 +113,51 @@ class Router
 		{
 			$dirname = dirname($_SERVER['SCRIPT_NAME']);
 
-			if ($dirname === $this->_sep)
+			$to_replace = array($this->_sep.'index.php');
+
+			if ($dirname !== $this->_sep)
 			{
-				$to_replace = $this->_sep.'index.php';
+				$to_replace[] = $dirname;
 			}
-			else
-			{
-				$to_replace = array($dirname, $this->_sep.'index.php');
-			}
-			
-			define('PATH_INFO', str_replace($to_replace, '', $_SERVER['REQUEST_URI']));
+
+			defined('PATH_INFO') || define('PATH_INFO', $this->strReplace($to_replace, '', $_SERVER['REQUEST_URI']));
 		}
 		else
 		{
-			define('PATH_INFO', $this->_request->get('q', '')->show());
+			defined('PATH_INFO') || define('PATH_INFO', $this->_request->get('q', '')->show());
 		}
+	}
+
+	// Zamienia pierwsze wystąpienie elementu w ciągu
+	protected function strReplace($old, $new, $haystack)
+	{
+		if (is_array($new))
+		{
+			if (count($old) !== count($new))
+			{
+				throw new systemException('Wrong number of elements in the arrays. Arrays must have the same number of elements.');
+			}
+
+			foreach($old as $key => $val)
+			{
+				if (strlen($pos = stripos($haystack, $val)))
+				{
+					$haystack = substr_replace($haystack, $new[$key], $pos, strlen($val));
+				}
+			}
+		}
+		else
+		{
+			foreach($old as $val)
+			{
+				if (strlen($pos = stripos($haystack,$val)))
+				{
+					$haystack = substr_replace($haystack, $new, $pos, strlen($val));
+				}
+			}
+		}
+
+		return $haystack;
 	}
 
 /*start of**********TEST*********/
@@ -335,44 +370,6 @@ class Router
 		HELP::redirect($this->path($path));
 	}
 
-	// Przekierowanie na inny kontriker (plik).
-	public function goToFile($file, $action = NULL, array $params = array())
-	{
-	
-		echo 'METODA KLASY ROUTER O NAZWIE GOTOFILE JEST PRZESTARZALA';
-		$str_params = '';
-		if ($params)
-		{
-			$temp = array();
-			foreach($params as $key => $val)
-			{
-				if (isNum($key, FALSE, FALSE))
-				{
-					$temp[] = $val;
-				}
-				else
-				{
-					$temp[] = $key.$this->_param_sep.$val;
-				}
-			}
-
-			$str_params = implode($this->_sep, $temp);
-
-			if ($str_params && $action)
-			{
-				$str_params = $this->_sep.$str_params;
-			}
-
-			if ($action === NULL)
-			{
-				$action = $this->_sep;
-			}
-		}
-
-		HELP::redirect($file.$action.$str_params.$this->_ext['url']);
-		exit;
-	}
-
 /*end of**********TEST*********/
 
 	public function setNewConfig($val)
@@ -380,6 +377,8 @@ class Router
 		$this->setPath($val);
 		$this->setValues();
 		$this->setFileName();
+		$this->setParams();
+		$this->setAction();
 		$this->setExitFile();
 		$this->_search_admin = FALSE;
 		$this->_search_more = TRUE;
@@ -390,18 +389,20 @@ class Router
 		$this->_folders = $folders;
 	}
 
-	protected function setPath()
+	protected function setPath($path = NULL)
 	{
-		$path = PATH_INFO;
+		if ($path === NULL)
+		{
+			$path = PATH_INFO;
+		}
 
 		if ($path && $path !== '/')
 		{
-			$path_len = strlen($path);
 			if (substr($path, 0, 1) === '/')
 			{
-				$path = substr($path, 1, $path_len);
+				$path = substr($path, 1);
 			}
-			
+
 			if ($this->_ext_allowed)
 			{
 				if (in_array($ext = strrchr($path, '.'), array('.html', '.htm', '.php')))
@@ -436,13 +437,13 @@ class Router
 		}
 		else
 		{
-			$this->_path = 'news';
+			$this->_path = $this->getOpeningPage();
 			return TRUE;
 		}
 
 		if ($path === 'index')
 		{
-			$path = 'news';
+			$path = $this->getOpeningPage();
 		}
 
 		$this->_path = $path;
@@ -473,7 +474,7 @@ class Router
 	/**
 	 * Ustawia kontroler i akcję do wywołania
 	 *
-	 * Może być przydatne gdy na danej podstronie chcemy wyświetlić 
+	 * Może być przydatne gdy na danej podstronie chcemy wyświetlić
 	 * najpierw panel logowania przed właściwą treścią bez przekierowania
 	 * na podstronę logowania.
 	 */
@@ -482,7 +483,7 @@ class Router
 		if (isset($trace['controller']))
 		{
 			$this->_file_name = $trace['controller'];
-			$this->setExitFile();
+			$this->setExitFile(FALSE);
 		}
 
 		if (isset($trace['action']))
@@ -495,10 +496,10 @@ class Router
 	{
 		$this->_installed_modules = $installed;
 	}
-	
-	public function setExitFile()
+
+	public function setExitFile($shared = TRUE)
 	{
-		if ($this->_exit_file)
+		if ($this->_exit_file && $shared)
 		{
 			if (file_exists($this->_exit_file))
 			{
@@ -531,7 +532,7 @@ class Router
 				{
 					continue;
 				}
-				
+
 				if (file_exists($val.DS.$file))
 				{
 					$this->_exit_file = $val.$file;
@@ -574,10 +575,7 @@ class Router
 
 	public function getExitFile()
 	{
-		if ($this->_exit_file)
-		{
-			return $this->_exit_file ? $this->_exit_file : FALSE;
-		}
+		return $this->_exit_file ? $this->_exit_file : FALSE;
 	}
 
 	public function getFileName()
@@ -598,9 +596,14 @@ class Router
 		return $this->_ext['url'];
 	}
 
-	public function getByID($id)
+	public function getByID($id, $default = NULL)
 	{
-		return isset($this->_values[$id]) ? $this->_values[$id] : FALSE;
+		return isset($this->_values[$id]) ? $this->_values[$id] : $default;
+	}
+
+	public function getParams()
+	{
+		return $this->_params_void_order;//values;
 	}
 
 	public function getRequest()
@@ -627,5 +630,4 @@ class Router
 	{
 		return $this->_url->path($data);
 	}
-
 }

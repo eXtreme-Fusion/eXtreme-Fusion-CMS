@@ -1,17 +1,101 @@
 <?php
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+**********************************************************
+ 	Some open-source code comes from
+---------------------------------------------------------+
+| PHP-Fusion Content Management System
+| Copyright (C) 2002 - 2011 Nick Jones
+| http://www.php-fusion.co.uk/
++--------------------------------------------------------+
+| Author: Nick Jones (Digitanium)
++--------------------------------------------------------+
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
++--------------------------------------------------------*/
 
 defined('EF5_SYSTEM') || exit;
 
+/**
+ * URL parser for template files.
+ *
+ * Code to parsing: {url('controller=>', 'login', 'action=>', 'redirect', 'param')}
+ */
+function optUrl(optClass &$_tpl)
+{
+	$value = array_slice(func_get_args(), 1);
+
+	if ($value)
+	{
+		$ret = array(); $id = NULL;
+		foreach($value as $array)
+		{
+			// Czyszczenie danych wejściowych
+			$data = array_map('trim', explode('=>', $array));
+
+			// Kontrola danych wejściowych
+			if ($data[0] !== '')
+			{
+				// Sprawdzanie, czy element ma przypisany klucz.
+				if (count($data) == 2)
+				{
+					// Zapisujemy klucz. Wartości na razie nie znamy.
+					$id = $data[0];
+				}
+				else
+				{
+					if ($id)
+					{
+						// Zapis wartości o kluczu zapisanym wcześniej.
+						$ret[$id] = $data[0];
+					}
+					else
+					{
+						// Parametr.
+						$ret[] = $data[0];
+					}
+
+					// Resetowanie zmiennej, by nie było konfliktu w razie wystąpienia parametru.
+					$id = NULL;
+				}
+			}
+		}
+
+		$value = $ret;
+	}
+
+	if ($_tpl->funcExists('url', 'path'))
+	{
+		return $_tpl->getFunc('url', 'path', $value);
+	}
+	
+	if ($value)
+	{
+		if (method_exists($_tpl, 'route'))
+		{
+			return $_tpl->route()->path($value);
+		}
+	}
+	
+	throw new systemException('Routing is not available.');
+}
 // Function for AJAX response
 function _e($val)
 {
@@ -36,7 +120,7 @@ function inArray($value, $array, $id = NULL)
 			}
 		}
 	}
-	
+
 	return FALSE;
 }
 
@@ -52,22 +136,31 @@ function __autoload($class_name)
 	$data = explode('_', $class_name);
 	if (count($data) > 1)
 	{
-		$path = implode(DIRECTORY_SEPARATOR, $data);
+		$name = implode(DIRECTORY_SEPARATOR, $data);
 	}
 	else
 	{
-		$path = $class_name;
+		$name = $class_name;
 	}
 	
-	$path = DIR_CLASS.$path.'.php';
-
-    if (file_exists($path))
+	$tmp_path = array(DIR_CLASS.$name.'.php');
+	foreach (new DirectoryIterator(DIR_MODULES) as $file)
 	{
-		include $path;
+		if ( ! in_array($file->getFilename(), array('..', '.', '.svn', '.gitignore')))
+		{
+			if (file_exists(DIR_MODULES.$file->getFilename().DS.'class'.DS.$name.'.php'))
+			{
+				$tmp_path[] = DIR_MODULES.$file->getFilename().DS.'class'.DS.$name.'.php';
+			}
+		}
 	}
-	else
+	
+	foreach($tmp_path as $path)
 	{
-		throw new systemException("Unable to load $class_name.");
+		if (file_exists($path))
+		{
+			include $path;
+		}
 	}
 }
 
@@ -88,6 +181,78 @@ Class HELP
 		self::$_url = $url;
 	}
 
+	public static function wordsProtect($string)
+	{
+		if (self::$_sett->get('bad_words_enabled'))
+		{
+			$to_replace = explode(PHP_EOL, self::$_sett->get('bad_words'));
+			foreach($to_replace as $key => $val)
+			{
+				if ($val)
+				{
+					$new = '';
+					if ($val[strlen($val)-1] === ' ')
+					{
+						$new = ' ';
+					}
+
+					$to_replace[$key] = trim($val).$new;
+				}
+			}
+
+			return str_replace($to_replace, self::$_sett->get('bad_word_replace'), $string);
+		}
+
+		return $string;
+	}
+
+	public static function validUpVersion($current, $new)
+	{
+		$current = (int) str_replace('.', '', $current);
+		$new = (int) str_replace('.', '', $new);
+		
+		return $current === ($new-1);
+	}
+
+	public static function cleanSelectOptions($data)
+	{
+		// Rzutowanie typów w celu konwersji stringa na tablicę.
+		$data = (array) $data;
+
+		// Zapisywanie typu danych wejściowych w celu zwrócenia return w odpowiednim.
+		$type = (int) is_array($data);
+
+		$option_new = array();
+		foreach($data as $val)
+		{
+			$val = trim($val);
+			if ($val)
+			{
+				// Usuwanie spacji pomiędzy wyrazami
+
+				$val_new = array();
+				for($i = 0, $c = strlen($val); $i < $c; $i++)
+				{
+					if ($val[$i] === ' ' && isset($val[$i+1]) && $val[$i+1] === ' ')
+					{
+						continue;
+					}
+
+					$val_new[] = $val[$i];
+				}
+
+				$option_new[] = implode('', $val_new);
+			}
+		}
+
+		if ($type === 1)
+		{
+			return $option_new;
+		}
+
+		return isset($option_new[0]) ? $option_new[0] : array();
+	}
+
 	/** METODY NAPISANE PRZEZ EF TEAM: **/
 	public static function daysToSeconds($time, $conv = FALSE)
 	{
@@ -102,19 +267,42 @@ Class HELP
 		}
 	}
 
+	// Zwraca tę część stringa, która wystąpi przed $needle.
+	public static function strstr_before($haystack, $needle) {
+		$haystack = strrev($haystack);
+		$haystack = strrev(strstr($haystack, '.'));
+		return substr($haystack, 0, -1);
+	}
+
+	public static function truncate($data, $limit = 20)
+	{
+		if (str_word_count($data) > $limit)
+		{
+			$body = explode(' ', $data);
+			$short_content = array();
+			for ($n = 0; $n < $limit; $n++)
+			{
+				$short_content[] = $body[$n];
+			}
+
+			return implode(' ', $short_content);
+		}
+
+		return $data;
+	}
 	// TODO:: Przerobic na metodę routera
-	public static function createNaviLink($url)
+	public static function createNaviLink($url, $not_parse = FALSE)
 	{
 		if (!preg_match('/^http:/i', $url))
 		{
 			if ($url)
-			{	
-				return ADDR_SITE.self::$_url->getPathPrefix().$url;
+			{
+				return ADDR_SITE.self::$_url->getPathPrefix($not_parse).$url;
 			}
 
 			return ADDR_SITE;
 		}
-		
+
 		return $url;
 	}
 
@@ -164,7 +352,7 @@ Class HELP
 
 		$array = $data;
 	}
-	
+
 	// Usuwa z tablicy element o numerycznym indeksie, po czym przesuwa pozostałe indeksy
 	public static function arrayRemoveElement($key, &$array)
 	{
@@ -179,13 +367,13 @@ Class HELP
 					$to_remove = $i;
 				}
 			}
-			
+
 			if (isset($to_remove))
 			{
 				unset($array[$to_remove]);
 			}
 		}
-		
+
 		return FALSE;
 	}
 
@@ -280,17 +468,17 @@ Class HELP
 	{
 		return rand(0, count($array)-1);
 	}
-	
+
 	//==================================
 	//PL: Oznaczenie kolorem znalezionego wyrażenia w ciągu
 	//==================================
 	public static function highlight($text, $search, $color = '#99bb00')
 	{
 		$txt = str_ireplace($search, '<span style="background: '.$color.'; font-weight: bold;">'.$search.'</span>', $text);
- 
+
 		return $txt;
 	}
-	
+
 	//==================================
 	//PL: Rozkodowywanie adresów URL
 	//EN: Decoding URL
@@ -309,12 +497,12 @@ Class HELP
 			'<', '>', '{', '}', '|', '`', '^', '€', '‰', 'ƒ',
 			'Δ', 'Π', 'Ω', 'α', 'β', '£', '§', '©', 'µ', '∞'
 		);
-		
+
 		$txt = str_replace($coding, $encoding, $text);
-		
+
 		return $txt;
 	}
-	
+
 	//==================================
 	//PL: Aliasy dla klas parsującej BBCode
 	//==================================
@@ -322,7 +510,7 @@ Class HELP
 	{
 		return self::$_sbb->parseBBCode($text);
 	}
-	
+
 	//==================================
 	//PL: Aliasy dla klas parsującej Uśmieszki
 	//==================================
@@ -330,7 +518,7 @@ Class HELP
 	{
 		return self::$_sbb->parseSmiley($text);
 	}
-	
+
 	//==================================
 	//PL: Aliasy dla klas parsującej BBCode i Uśmieszki
 	//==================================
@@ -342,51 +530,25 @@ Class HELP
 	/** koniec METODY NAPISANE PRZEZ EF TEAM **/
 
 
-	// Javascript email encoder by Tyler Akins
-	// http://rumkin.com/tools/mailto_encoder/
-	public static function hide_email($email, $title = "", $subject = "")
+	// Javascript email encoder by Maurits van der Schee
+	// http://www.maurits.vdschee.nl/php_hide_email/
+	public static function hide_email($email)
 	{
 		if (strpos($email, "@"))
 		{
-			$parts = explode("@", $email);
-			$MailLink = "<a href='mailto:".$parts[0]."@".$parts[1];
-			if ($subject != "")
-			{
-				$MailLink .= "?subject=".urlencode($subject);
-			}
-			$MailLink .= "'>".($title?$title:$parts[0]."@".$parts[1])."</a>";
-			$MailLetters = "";
-			for ($i = 0; $i < strlen($MailLink); $i++)
-			{
-				$l = substr($MailLink, $i, 1);
-				if (strpos($MailLetters, $l) === FALSE)
-				{
-					$p = rand(0, strlen($MailLetters));
-					$MailLetters = substr($MailLetters, 0, $p).$l.substr($MailLetters, $p, strlen($MailLetters));
-				}
-			}
-			$MailLettersEnc = str_replace("\\", "\\\\", $MailLetters);
-			$MailLettersEnc = str_replace("\"", "\\\"", $MailLettersEnc);
-			$MailIndexes = "";
-			for ($i = 0; $i < strlen($MailLink); $i ++)
-			{
-				$index = strpos($MailLetters, substr($MailLink, $i, 1));
-				$index += 48;
-				$MailIndexes .= chr($index);
-			}
-			$MailIndexes = str_replace("\\", "\\\\", $MailIndexes);
-			$MailIndexes = str_replace("\"", "\\\"", $MailIndexes);
+			$character_set = '+-.0123456789@ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz';
+			$key = str_shuffle($character_set);
+			$cipher_text = '';
+			$id = 'e'.rand(1,999999999);
+			for ($i=0;$i<strlen($email);$i+=1)
+			$cipher_text.= $key[strpos($character_set, $email[$i])];
+			$script = 'var a="'.$key.'";var b=a.split("").sort().join("");var c="'.$cipher_text.'";var d="";';
+			$script.= 'for(var e=0;e<c.length;e++)d+=b.charAt(a.indexOf(c.charAt(e)));';
+			$script.= 'document.getElementById("'.$id.'").innerHTML="<a href=\\"mailto:"+d+"\\">"+d+"</a>"';
+			$script = "eval(\"".str_replace(array("\\", '"'),array("\\\\", '\"'), $script)."\")";
+			$script = '<script type="text/javascript">/*<![CDATA[*/'.$script.'/*]]>*/</script>';
 
-			$res = "<script type='text/javascript'>";
-			$res .= "ML=\"".str_replace("<", "xxxx", $MailLettersEnc)."\";";
-			$res .= "MI=\"".str_replace("<", "xxxx", $MailIndexes)."\";";
-			$res .= "ML=ML.replace(/xxxx/g, '<');";
-			$res .= "MI=MI.replace(/xxxx/g, '<');";	$res .= "OT=\"\";";
-			$res .= "for(j=0;j < MI.length;j++){";
-			$res .= "OT+=ML.charAt(MI.charCodeAt(j)-48);";
-			$res .= "}document.write(OT);";
-			$res .= "</script>";
-			return $res;
+			return '<span id="'.$id.'">[N/A]</span>'.$script;
 		}
 		else
 		{
@@ -640,28 +802,15 @@ Class HELP
 	//==================================
 	// Prevent any possible XSS attacks via $_GET.
 	//==================================
-	public static function stripget($check_url)
+	public static function stripget($_dbconfig)
 	{
-		$return = FALSE;
-		if (is_array($check_url))
+		$request = strtolower(urldecode($_SERVER['QUERY_STRING']));
+		$protarray = array('union','drop','select','into','where','update','from','/*','set ',$_dbconfig['prefix'].'users',$_dbconfig['prefix'].'users(',$_dbconfig['prefix'].'groups','phpinfo','escapeshellarg','exec','fopen','fwrite','escapeshellcmd','passthru','proc_close','proc_get_status','proc_nice','proc_open','proc_terminate','shell_exec','system','telnet','ssh','cmd','mv','chmod','chdir','locate','killall','passwd','kill','script','bash','perl','mysql','~root','.history','~nobody','getenv');
+		$check = str_replace($protarray, '*', $request);
+		if ($request !== $check)
 		{
-			foreach ($check_url as $value)
-			{
-				if (HELP::stripget($value) == TRUE)
-				{
-					return TRUE;
-				}
-			}
+			throw new systemException(die('Podejrzewany atak XSS!'));
 		}
-		else
-		{
-			$check_url = str_replace(array("\"", "\'"), array("", ""), urldecode($check_url));
-			if (preg_match("/<[^<>]+>/i", $check_url))
-			{
-				return TRUE;
-			}
-		}
-		return $return;
 	}
 
 	public static function quotes_gpc()
@@ -717,7 +866,7 @@ Class HELP
 	public static function MonthsPL($months)
 	{
 		$en = array("January","February","March","April","May","June","July","August","September","October","November","December","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday");
-		$pl = array("Styczeń","Luty","Marzec","Kwiercień","Maj","Czerwiec","Lipiec","Sierpień","Wrzesień","Październik","Listopad","Grudzień","poniedziałek","wtorek","środa","czwartek","piątek","sobota","niedziela");
+		$pl = array("Styczeń","Luty","Marzec","Kwiecień","Maj","Czerwiec","Lipiec","Sierpień","Wrzesień","Październik","Listopad","Grudzień","poniedziałek","wtorek","środa","czwartek","piątek","sobota","niedziela");
 		$months = str_replace($en,$pl,$months);
 		return $months;
 	}
@@ -729,7 +878,7 @@ Class HELP
 	public static function Title2Link($text)
 	{
 		if( ! is_array($text))
-		{		
+		{
 			$a = array("Ą","Ś","Ę","Ó","Ł","Ż","Ź","Ć","Ń","ą","ś","ę","ó","ł","ż","ź","ć","ń","ü","&quot"," - "," ",".","!",";",":","(",")","[","]","{","}","|","?",",","+","=","#","@","$","%","^","&","*");
 			$b = array("A","S","E","O","L","Z","Z","C","N","a","s","e","o","l","z","z","c","n","u","","-","_","","","","","","","","","","","","","","","","","","","","","","");
 			$c = array("--","---","__","___");
@@ -738,14 +887,16 @@ Class HELP
 			$textdoublereplaced = str_replace($c,$d,$textreplaced);
 			return $textdoublereplaced;
 		}
-		
+
 		throw new systemException('Przesłana tablica nie może być przetworzona.');
 	}
 
 	// Strip file name
 	public static function stripfilename($filename)
 	{
-		$filename = strtolower(str_replace(" ", "_", $filename));
+		$a = array("Ą","Ś","Ę","Ó","Ł","Ż","Ź","Ć","Ń","ą","ś","ę","ó","ł","ż","ź","ć","ń","ü","&quot"," - "," ",".","!",";",":","(",")","[","]","{","}","|","?",",","+","=","#","@","$","%","^","&","*");
+		$b = array("A","S","E","O","L","Z","Z","C","N","a","s","e","o","l","z","z","c","n","u","","-","_","","","","","","","","","","","","","","","","","","","","","","");
+		$filename = strtolower(str_replace($a,$b,$filename));
 		$filename = preg_replace("/[^a-zA-Z0-9_-]/", "", $filename);
 		$filename = preg_replace("/^\W/", "", $filename);
 		$filename = preg_replace('/([_-])\1+/', '$1', $filename);
@@ -758,11 +909,7 @@ Class HELP
 	// Check that site or user theme exists
 	public static function theme_exists($theme)
 	{
-		if ( ! file_exists(DIR_THEMES) || ! is_dir(DIR_THEMES))
-		{
-			return FALSE;
-		}
-		elseif (file_exists(DIR_THEMES.$theme.DS.'core'.DS.'theme.php'))
+		if (file_exists(DIR_THEMES.$theme.DS.'view.php'))
 		{
 			defined('ADDR_THEME') || define('ADDR_THEME', ADDR_THEMES.$theme.'/');
 			defined('DIR_THEME') || define('DIR_THEME', DIR_THEMES.$theme.DS);
@@ -771,7 +918,7 @@ Class HELP
 			defined('THEME_IMAGES') || define('THEME_IMAGES', ADDR_THEME.'templates/images/');
 			return TRUE;
 		}
-		else
+		/*else
 		{
 			$dh = opendir(DIR_THEMES);
 			while (FALSE !== ($entry = readdir($dh)))
@@ -802,10 +949,12 @@ Class HELP
 			{
 				return FALSE;
 			}
-		}
+		}*/
+
+		return FALSE;
 	}
 
-	public function formatOrphan($content)
+	public static function formatOrphan($content)
 	{
 		return $content = preg_replace("/\s([aiouwzAIOUWZ])\s/", " $1&nbsp;", $content);
 
@@ -825,20 +974,21 @@ Class HELP
 			}
 		}
 	}
-	
+
 	// Format the date & time accordingly
-	public static function showDate($format, $val) 
+	public static function showDate($format, $val)
 	{
-		if ($format === 'shortdate' || $format == 'longdate') 
+		$val += intval(self::$_sett->get('offset_timezone')) * 3600;
+		if ($format === 'shortdate' || $format == 'longdate')
 		{
-			return strftime(self::$_sett->get($format), $val);
-		} 
+			return iconv('ISO-8859-2', 'UTF-8', strftime(self::$_sett->get($format), $val));
+		}
 		else
 		{
-			return strftime('shortdate', $val);
+			return iconv('ISO-8859-2', 'UTF-8', strftime('shortdate', $val));
 		}
 	}
-	
+
 	// Przetwarza ciąg znaków, który ma trafić do meta tagu Desciption
 	// Usuwanie białych znaków
 	public static function cleanDescription($data, $length = 135)
@@ -852,9 +1002,9 @@ Class HELP
 				$clean[] = $val;
 			}
 		}
-	
+
 		$return = implode(' ', $clean);
-		
+
 		if (strlen($return) > $length)
 		{
 			$break = $length;
@@ -866,7 +1016,7 @@ Class HELP
 					break;
 				}
 			}
-			
+
 			if ($break === $length)
 			{
 				for ($i = $length, $c = $length+80; $i < $c; $i++)
@@ -878,24 +1028,16 @@ Class HELP
 					}
 				}
 			}
-			
+
 			return substr($return, 0, $break);
 		}
-		
+
 		return $return;
 	}
-}
 
-// Funkcje do przepisania....
-// Format the date & time accordingly
-function showdate($format, $val) {
-    global $_sett, $_user;
-    if ( ! $offset = $_user->get('offset')) {
-        $offset = $_sett->get('offset_timezone');
-    }
-    if ($format == "shortdate" || $format == "longdate") {
-        return strftime($_sett->get($format), $val + ($offset * 3600));
-    } else {
-        return strftime($format, $val + ($offset * 3600));
-    }
+	// http://www.php.net/manual/en/function.str-replace.php#95198
+	public static function strReplaceAssoc(array $replace, $text)
+	{
+	   return str_replace(array_keys($replace), array_values($replace), $text);
+	}
 }

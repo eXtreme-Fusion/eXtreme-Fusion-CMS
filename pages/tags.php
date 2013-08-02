@@ -1,19 +1,41 @@
 <?php defined('EF5_SYSTEM') || exit;
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+| 
+**********************************************************
+                ORIGINALLY BASED ON
+---------------------------------------------------------+
+| PHP-Fusion Content Management System
+| Copyright (C) 2002 - 2011 Nick Jones
+| http://www.php-fusion.co.uk/
++--------------------------------------------------------+
+| Author: Nick Jones (Digitanium)
++--------------------------------------------------------+
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
++--------------------------------------------------------*/
 $_locale->load('tags');
 
 $_head->set($_tpl->getHeaders());
 
-! class_exists('Tag') || $_tag = New Tag($_system, $_pdo);
+
 
 if ( ! $_theme->tplExists())
 {
@@ -42,8 +64,8 @@ if ($_route->getAction())
 				//if($var['value'] === $param[1])
 				//{
 					$cache[] = array(
-						'tag_title_iteam' => $var['title'],
-						'tag_url_iteam' => $_route->path(array('controller' => strtolower($var['supplement']), 'action' => $var['supplement_id'], HELP::Title2Link($var['title'])))
+						'tag_title_item' => $var['title'],
+						'tag_url_item' => $_route->path(array('controller' => strtolower($var['supplement']), 'action' => $var['supplement_id'], HELP::Title2Link($var['title'])))
 					);
 				//}
 			}
@@ -52,9 +74,9 @@ if ($_route->getAction())
 	}
 
 	$theme = array(
-		'Title' => __('Tag').' &raquo; '.$_route->getAction().' &raquo; '.$_sett->get('site_name'),
-		'Keys' => 'Tag '.$_route->getAction().', słowo kluczowe'.$_route->getAction().', '.$_route->getAction(),
-		'Desc' => 'Lista elementów przypisanych do słowa kluczowego '.$_route->getAction()
+		'Title' => __('Keyword').' » '.$_route->getAction().' » '.$_sett->get('site_name'),
+		'Keys' => __('Keyword :keyword', array(':keyword' => $_route->getAction())),
+		'Desc' => __('A list of items assigned to a keyword :keyword', array(':keyword' => $_route->getAction()))
 	);
 	
 	$_tpl->assign('url_tag', $_route->path(array('controller' => 'tags')));
@@ -64,7 +86,7 @@ if ($_route->getAction())
 }
 else
 {
-	$cache = $_system->cache('tags,'.$_user->getCacheName(), NULL, 'tags', $_sett->getUns('cache', 'expire_tags')); $k = array();
+	$cache = $_system->cache('tags,'.$_user->getCacheName(), NULL, 'tags', $_sett->getUns('cache', 'expire_tags'));
 	$f = array(); $g = array();
 	if ($cache === NULL)
 	{
@@ -95,17 +117,21 @@ else
 		}
 	}
 	
-	foreach($cache as $vk)
+	$k = array();
+	if ($cache)
 	{
-		$k[] = $vk['tag_name'];
+		foreach($cache as $vk)
+		{
+			$k[] = $vk['tag_name'];
+		}
 	}
 	
 	$k = implode(', ', $k);
 	
 	$theme = array(
-		'Title' => __('Tagi').' &raquo; '.$_sett->get('site_name'),
+		'Title' => __('Keywords').' » '.$_sett->get('site_name'),
 		'Keys' => $k,
-		'Desc' => 'Lista najpopularniejszych tagów na '.$_sett->get('site_name').'.'
+		'Desc' => __('List of most popular keywords on ').$_sett->get('site_name')
 	);
 	
 	$_tpl->assign('tags', $cache);

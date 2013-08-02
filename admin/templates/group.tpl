@@ -20,13 +20,13 @@
 			<label><input type="radio" name="team" value="1"{if $group.team == 1} checked="checked"{/if} /> {i18n('Yes')}</label>
 			<label><input type="radio" name="team" value="0"{if $group.team == 0} checked="checked"{/if} /> {i18n('No')}</label></div>
 	</div>
-	<div class="tbl AdminButtons">
+	<div class="tbl Buttons">
 		<div class="center grid_2 button-l">
 			<span class="Cancel"><strong>{i18n('Back')}<img src="{$ADDR_ADMIN_ICONS}pixel/undo.png" alt="{i18n('Back')}"></strong></span>
 		</div>
 		<div class="center grid_2 button-r">
 			<input type="hidden" name="save" value="yes" />
-			<span id="SendForm_This" class="Save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="{i18n('Save')}"></strong></span>
+			<span id="SendForm_This" class="save"><strong>{i18n('Save')}<img src="{$ADDR_ADMIN_ICONS}pixel/diskette.png" alt="{i18n('Save')}"></strong></span>
 		</div>
 	</div>
 	{if $group.id > 1}

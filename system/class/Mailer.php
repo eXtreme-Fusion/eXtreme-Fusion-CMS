@@ -1,14 +1,40 @@
 <?php
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
+/*********************************************************
+| eXtreme-Fusion 5
 | Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
 | http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.
-| http://extreme-fusion.org/ef5/license/
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+**********************************************************
+
+.---------------------------------------------------------------------------.
+|  Software: PHPMailer - PHP email class                                    |
+|   Version: 5.2.1                                                          |
+|      Site: https://code.google.com/a/apache-extras.org/p/phpmailer/       |
+| ------------------------------------------------------------------------- |
+|     Admin: Jim Jagielski (project admininistrator)                        |
+|   Authors: Andy Prevost (codeworxtech) codeworxtech@users.sourceforge.net |
+|          : Marcus Bointon (coolbru) coolbru@users.sourceforge.net         |
+|          : Jim Jagielski (jimjag) jimjag@gmail.com                        |
+|   Founder: Brent R. Matzelle (original founder)                           |
+| Copyright (c) 2010-2012, Jim Jagielski. All Rights Reserved.              |
+| Copyright (c) 2004-2009, Andy Prevost. All Rights Reserved.               |
+| Copyright (c) 2001-2003, Brent R. Matzelle                                |
+| ------------------------------------------------------------------------- |
+|   License: Distributed under the Lesser General Public License (LGPL)     |
+|            http://www.gnu.org/copyleft/lesser.html                        |
+| This program is distributed in the hope that it will be useful - WITHOUT  |
+| ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or     |
+| FITNESS FOR A PARTICULAR PURPOSE.                                         |
+'--------------------------------------------------------------------------*/
 /*	Notatka dla rozwijających klasę:
 
 	Aby wysłać ukryte kopie wiadomości (Bbc), trzeba skorzystać z funkcji mail() lub protokołu `sendmail`.
@@ -77,8 +103,8 @@ class Mailer
 		/**
 		 * Niektóre systemy pocztowe blokują odbiór wiadomości pochodzących z adresu e-mail
 		 * nie należacego do domeny, z której wiadomość jest wysyłana.
-		 * Dlatego jako nadawce wiadomości (MAIL FROM przy komunikacji z SMTP) zamieszcza się 
-		 * no-reply@domain.com, natomiast w nagłówku Reply-To przesyła się adres e-mail, 
+		 * Dlatego jako nadawce wiadomości (MAIL FROM przy komunikacji z SMTP) zamieszcza się
+		 * no-reply@domain.com, natomiast w nagłówku Reply-To przesyła się adres e-mail,
 		 * na który mają być wysyłane odpowiedzi pisane przez adresata.
 		 */
 		$this->_reply_to = $this->_from = $from;
@@ -118,7 +144,8 @@ class Mailer
 			}
 
 			// Wysyłanie wiadomości przez funkcję mail()
-			return mail($this->_to, $this->_subject, $this->_message, implode('', $this->_headers));
+			// todo: co się dzieje bez @? Wg dokumentacji funkcja zwraca false albo true bez (bool) i bez @.
+			return (bool) @mail($this->_to, $this->_subject, $this->_message, implode('', $this->_headers));
 		}
 
 		throw new userException('Nieprawidłowe dane do wysyłki maila.');
@@ -212,7 +239,7 @@ class Mailer
 					$this->addHeaders(array('To: '.$rcpt.$this->_eol));
 					if ( ! $this->sendBySMTP())
 					{
-						return FALSE;
+						throw new systemException(__('System nie może nawiązać polączenia z serwerem :host :port lub nazwa użytkownika i hasło jest nie prawidłowe.', array(':host' => $this->_data['smtp_host'],':port' => $this->_data['smtp_port'],)));
 					}
 
 					// Usuwanie odbiorcy wysłanego maila z tablicy nagłówka
@@ -224,9 +251,9 @@ class Mailer
 				foreach($to as $rcpt)
 				{
 					// Wysyłanie wiadomości przez funkcję mail()
-					if ( ! mail($rcpt, $this->_subject, $this->_message, implode('', $this->_headers)))
+					if ( ! @mail($rcpt, $this->_subject, $this->_message, implode('', $this->_headers)))
 					{
-						return FALSE;
+						throw new systemException(__('System nie ma skonfigurowanej opcji \'mail\', zmień ustawienia w php.ini lub użyj funkcji ini_set()'));
 					}
 				}
 			}

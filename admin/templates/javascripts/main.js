@@ -67,11 +67,11 @@ $(function(){
 	$(".tipTip").tipTip();
 	$(".tip").simpletooltip();
 
-	$('.AdminButtons .Cancel').click(function() {
+	$('.Buttons .Cancel').click(function() {
 		history.back();
 	});
-	
-	$('.AdminButtons img').css({'position': 'absolute'});
+
+	$('.Buttons img').css({'position': 'absolute'});
 
 	// ============================
 	// Uprawnienia
@@ -137,34 +137,6 @@ $(function(){
 			$(this).fadeOut("slow");
 		});
 	});
-
-	// ============================
-	// Wysyłanie formularzy przez link
-	// ============================
-	$('.AdminButtons .Save').bind('click', function() {
-		$('#Preview').remove();
-		var FormSubmitID = (this.id).split('_');
-		$('#' +FormSubmitID[1]).submit();
-	});
-
-	$('.AdminButtons .save').bind('click', function() {
-		$('#Preview').remove();
-		var FormSubmitID = (this.id).split('_');
-		$('#' +FormSubmitID[1]).submit();
-	});
-
-	$('.AdminButtons .Preview').bind('click', function() {
-		$('#Save').remove();
-		var FormSubmitID = (this.id).split('_');
-		$('#' +FormSubmitID[1]).submit();
-	})
-
-	$('.AdminButtons .Delete').bind('click', function() {
-		$('#Preview').remove();
-		$('#Save').remove();
-		var FormSubmitID = (this.id).split('_');
-		$('#' +FormSubmitID[1]).submit();
-	})
 
 	// ============================
 	// Przesłanie wartości z select do input
@@ -283,78 +255,81 @@ $(function(){
 
 	// Wyśrodkowywanie buttonów
 
-	$('.AdminButtons').each(function() {
+	$('.Buttons').each(function(e) {
 		var c = $(this).children('.button-c');
 		var r = $(this).children('.button-r');
 		var l = $(this).children('.button-l');
 
-		var sum = 0;
+		if (c.length > 0 || l.length > 0 || r.length > 0) {
 
-		// Tylko jeden button na środku
-		if (c.length == 1 && !r.lenght && !l.length) {
+			var sum = 0;
 
-			c.each(function() {
-				if ($(this).hasClass('grid_2')) {
-					sum = sum + 2;
-				} else if ($(this).hasClass('grid_4')) {
-					sum = sum + 4;
-				} else {
-					sum = sum + 6;
-				}
-			});
+			// Tylko jeden button na środku
+			if (c.length == 1 && !r.lenght && !l.length) {
 
-			var bg = (12-sum)/2;
+				c.each(function() {
+					if ($(this).hasClass('grid_2')) {
+						sum = sum + 2;
+					} else if ($(this).hasClass('grid_4')) {
+						sum = sum + 4;
+					} else {
+						sum = sum + 6;
+					}
+				});
 
-			c.before('<div class="grid_'+bg+' buttons-bg">&nbsp;</div>');
-			c.after('<div class="grid_'+bg+' buttons-bg">&nbsp;</div>');
-		}
-		// Brak buttonów na środku, jeden button z lewej i jeden z prawej strony
-		else if (!c.length && (r.length == 1 && l.length == 1))
-		{
-			if (r.hasClass('grid_2')) {
-				sum = sum + 2;
-			} else {
-				sum = sum + 4;
+				var bg = (12-sum)/2;
+
+				c.before('<div class="grid_'+bg+' buttons-bg">&nbsp;</div>');
+				c.after('<div class="grid_'+bg+' buttons-bg">&nbsp;</div>');
 			}
-			if (l.hasClass('grid_2')) {
-				sum = sum + 2;
-			} else {
-				sum = sum + 4;
-			}
-
-			var bg = (12-sum)/2;
-
-			l.before('<div class="grid_'+bg+' buttons-bg">&nbsp;</div>');
-			r.after('<div class="grid_'+bg+' buttons-bg">&nbsp;</div>');
-
-		}
-		// W środku jest kilka buttonów lub jeden; ponadto jeden z lewej i jeden z prawej;
-		else if (l.length == 1 && c.length >= 1 && r.length == 1)
-		{
-			if (r.hasClass('grid_2')) {
-				sum = sum + 2;
-			} else {
-				sum = sum + 4;
-			}
-			if (l.hasClass('grid_2')) {
-				sum = sum + 2;
-			} else {
-				sum = sum + 4;
-			}
-
-			c.each(function() {
-				if ($(this).hasClass('grid_2')) {
+			// Brak buttonów na środku, jeden button z lewej i jeden z prawej strony
+			else if (!c.length && (r.length == 1 && l.length == 1))
+			{
+				if (r.hasClass('grid_2')) {
 					sum = sum + 2;
 				} else {
 					sum = sum + 4;
 				}
-			});
+				if (l.hasClass('grid_2')) {
+					sum = sum + 2;
+				} else {
+					sum = sum + 4;
+				}
 
-			var bg = (12-sum)/2;
+				var bg = (12-sum)/2;
 
-			l.before('<div class="grid_'+bg+' buttons-bg">&nbsp;</div>');
-			r.after('<div class="grid_'+bg+' buttons-bg">&nbsp;</div>');
-		} else alert('ulozenie buttonow na tej podstronie jest nieprawidlowe');
+				l.before('<div class="grid_'+bg+' buttons-bg">&nbsp;</div>');
+				r.after('<div class="grid_'+bg+' buttons-bg">&nbsp;</div>');
+
+			}
+			// W środku jest kilka buttonów lub jeden; ponadto jeden z lewej i jeden z prawej;
+			else if (l.length == 1 && c.length >= 1 && r.length == 1)
+			{
+				if (r.hasClass('grid_2')) {
+					sum = sum + 2;
+				} else {
+					sum = sum + 4;
+				}
+				if (l.hasClass('grid_2')) {
+					sum = sum + 2;
+				} else {
+					sum = sum + 4;
+				}
+
+				c.each(function() {
+					if ($(this).hasClass('grid_2')) {
+						sum = sum + 2;
+					} else {
+						sum = sum + 4;
+					}
+				});
+
+				var bg = (12-sum)/2;
+
+				l.before('<div class="grid_'+bg+' buttons-bg">&nbsp;</div>');
+				r.after('<div class="grid_'+bg+' buttons-bg">&nbsp;</div>');
+			} else alert('ulozenie buttonow na tej podstronie jest nieprawidlowe');
+		}
 	});
 
 	/* Zakładki w Panelu Admina */

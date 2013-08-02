@@ -1,14 +1,19 @@
 <?php
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
+/*********************************************************
+| eXtreme-Fusion 5
 | Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
 | http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.
-| http://extreme-fusion.org/ef5/license/
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+*********************************************************/
 class Tag {
 
 	// Przechowuje obiekt bazy danych, do późniejszych zapytań
@@ -121,7 +126,7 @@ class Tag {
 			{
 				if($table = strtolower($row['supplement']))
 				{
-					$iteam = $this->_pdo->getRow('SELECT `title`, `description` FROM ['.$table.'] WHERE id= :id ORDER BY `id` DESC',
+					$item = $this->_pdo->getRow('SELECT `title`, `description` FROM ['.$table.'] WHERE id= :id ORDER BY `id` DESC',
 						array(':id', $row['supplement_id'], PDO::PARAM_INT)
 					);
 				}
@@ -133,8 +138,8 @@ class Tag {
 					'value' => $row['value'],
 					'value_for_link' => $row['value_for_link'],
 					'access' => $row['access'],
-					'title' => $iteam['title'],
-					'description' => $iteam['description']
+					'title' => $item['title'],
+					'description' => $item['description']
 				);
 			}
 
@@ -157,7 +162,7 @@ class Tag {
 	{
 		$this->_data = new Edit($supplement);
 
-		$query = $this->_pdo->getData('SELECT `id`, `supplement`, `supplement_id`, `value`, `value_for_link`, `access` FROM [tags] WHERE supplement = :supplement ORDER BY `id` DESC',
+		$query = $this->_pdo->getData('SELECT `id`, `supplement`, `supplement_id`, `value`, `value_for_link`, `access` FROM [tags] WHERE supplement = :supplement ORDER BY RAND() DESC',
 			array(':supplement', $this->_data->filters('trim', 'strip'), PDO::PARAM_STR)
 		);
 
@@ -168,7 +173,7 @@ class Tag {
 			{
 				if($table = strtolower($row['supplement']))
 				{
-					$iteam = $this->_pdo->getRow('SELECT `title`, `description` FROM ['.$table.'] WHERE id= :id ORDER BY `id` DESC',
+					$item = $this->_pdo->getRow('SELECT `title`, `description` FROM ['.$table.'] WHERE id= :id ORDER BY `id` DESC',
 						array(':id', $row['supplement_id'], PDO::PARAM_INT)
 					);
 				}
@@ -180,8 +185,8 @@ class Tag {
 					'value' => $row['value'],
 					'value_for_link' => $row['value_for_link'],
 					'access' => $row['access'],
-					'title' => $iteam['title'],
-					'description' => $iteam['description']
+					'title' => $item['title'],
+					'description' => $item['description']
 				);
 			}
 
@@ -217,7 +222,7 @@ class Tag {
 				{
 					if($table = strtolower($row['supplement']))
 					{
-						$iteam = $this->_pdo->getRow('SELECT `title`, `description` FROM ['.$table.'] WHERE id= :id ORDER BY `id` DESC',
+						$item = $this->_pdo->getRow('SELECT `title`, `description` FROM ['.$table.'] WHERE id= :id ORDER BY `id` DESC',
 							array(':id', $row['supplement_id'], PDO::PARAM_INT)
 						);
 					}
@@ -229,8 +234,8 @@ class Tag {
 						'value' => $row['value'],
 						'value_for_link' => $row['value_for_link'],
 						'access' => $row['access'],
-						'title' => $iteam['title'],
-						'description' => $iteam['description']
+						'title' => $item['title'],
+						'description' => $item['description']
 					);
 				}
 
@@ -276,7 +281,7 @@ class Tag {
 				{
 					if($table = strtolower($row['supplement']))
 					{
-						$iteam = $this->_pdo->getRow('SELECT `title`, `description` FROM ['.$table.'] WHERE id= :id ORDER BY `id` DESC',
+						$item = $this->_pdo->getRow('SELECT `title`, `description` FROM ['.$table.'] WHERE id= :id ORDER BY `id` DESC',
 							array(':id', $row['supplement_id'], PDO::PARAM_INT)
 						);
 					}
@@ -288,8 +293,8 @@ class Tag {
 						'value' => $row['value'],
 						'value_for_link' => $row['value_for_link'],
 						'access' => $row['access'],
-						'title' => $iteam['title'],
-						'description' => $iteam['description']
+						'title' => $item['title'],
+						'description' => $item['description']
 					);
 				}
 
@@ -323,7 +328,7 @@ class Tag {
 			{
 				if($table = strtolower($row['supplement']))
 				{
-					$iteam = $this->_pdo->getRow('SELECT `title`, `description` FROM ['.$table.'] WHERE id= :id ORDER BY `id` DESC',
+					$item = $this->_pdo->getRow('SELECT `title`, `description` FROM ['.$table.'] WHERE id= :id ORDER BY `id` DESC',
 						array(':id', $row['supplement_id'], PDO::PARAM_INT)
 					);
 				}
@@ -335,8 +340,8 @@ class Tag {
 					'value' => $row['value'],
 					'value_for_link' => $row['value_for_link'],
 					'access' => $row['access'],
-					'title' => $iteam['title'],
-					'description' => $iteam['description']
+					'title' => $item['title'],
+					'description' => $item['description']
 				);
 			}
 		}
@@ -368,7 +373,7 @@ class Tag {
 			{
 				if($table = strtolower($row['supplement']))
 				{
-					$iteam = $this->_pdo->getRow('SELECT `title`, `description` FROM ['.$table.'] WHERE id= :id ORDER BY `id` DESC',
+					$item = $this->_pdo->getRow('SELECT `title`, `description` FROM ['.$table.'] WHERE id= :id ORDER BY `id` DESC',
 						array(':id', $row['supplement_id'], PDO::PARAM_INT)
 					);
 				}
@@ -380,8 +385,8 @@ class Tag {
 					'value' => $row['value'],
 					'value_for_link' => $row['value_for_link'],
 					'access' => $row['access'],
-					'title' => $iteam['title'],
-					'description' => $iteam['description']
+					'title' => $item['title'],
+					'description' => $item['description']
 				);
 			}
 
@@ -415,7 +420,7 @@ class Tag {
 			{
 				if($table = strtolower($row['supplement']))
 				{
-					$iteam = $this->_pdo->getRow('SELECT `title`, `description` FROM ['.$table.'] WHERE id= :id ORDER BY `id` DESC',
+					$item = $this->_pdo->getRow('SELECT `title`, `description` FROM ['.$table.'] WHERE id= :id ORDER BY `id` DESC',
 						array(':id', $row['supplement_id'], PDO::PARAM_INT)
 					);
 				}
@@ -427,8 +432,8 @@ class Tag {
 					'value' => $row['value'],
 					'value_for_link' => $row['value_for_link'],
 					'access' => $row['access'],
-					'title' => $iteam['title'],
-					'description' => $iteam['description']
+					'title' => $item['title'],
+					'description' => $item['description']
 				);
 			}
 

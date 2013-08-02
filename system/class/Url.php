@@ -1,5 +1,19 @@
 <?php
-
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
+|
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
+|
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+*********************************************************/
 class URL
 {
 	private
@@ -30,20 +44,20 @@ class URL
 	{
 		return $this->ext_allowed;
 	}
-	
+
 	public function setController($controller)
 	{
 		$this->controller = $controller;
 	}
-	
-	public function getPathPrefix()
+
+	public function getPathPrefix($not_parse = FALSE)
 	{
-		if ($this->rewrite_loaded)
+		if ($this->rewrite_loaded || $not_parse)
 		{
 			return '';
 		}
 		elseif ($this->path_info_exists)
-		{//echo 4; exit;
+		{
 			return 'index.php/';
 		}
 
@@ -51,73 +65,74 @@ class URL
 	}
 
 	/**
-	 * Generator linków dla plików szablonu.
+	 * Generator linkÃ³w dla plikÃ³w szablonu.
 	 *
-	 * Predefiniowane indeksy (niewymagane, mog¹ zostaæ pominiête):
+	 * Predefiniowane indeksy (niewymagane, mogÄ… zostaÄ‡ pominiÄ™te):
 	 * - controller
 	 * - action
 	 * - extension
 	 *
-	 * Pozosta³e to parametry, które mog¹ mieæ nazwê (indeks tablicy)
-	 * lub byæ tylko wartoœci¹. Przyk³ad:
+	 * PozostaÅ‚e to parametry, ktÃ³re mogÄ… mieÄ‡ nazwÄ™ (indeks tablicy)
+	 * lub byÄ‡ tylko wartoÅ›ciÄ…. PrzykÅ‚ad:
 	 *
 	 *	$_route->path(array('param1', 'param2' => 'value_for_param2'));
 	 *
-	 * Przyk³ad u¿ycia dla podstrony profile.html:
+	 * PrzykÅ‚ad uÅ¼ycia dla podstrony profile.html:
 	 *
 	 *	$_route->path(array('controller' => 'profile', 'action' => 'user', 457, 'extension' => 'html'));
 	 *
-	 * Przy za³adowanym "rewrite module" wygenerowany zostanie nastêpuj¹cy link:
+	 * Przy zaÅ‚adowanym "rewrite module" wygenerowany zostanie nastÄ™pujÄ…cy link:
 	 * http://twojastrona/profile/user/457.html
 	 */
 	public function path(array $data)
 	{
-		if (isset($data['controller']))
+		$module = $directory = $controller = $action = $ext = NULL;
+
+		if (isset($data['module']))
 		{
-			$ctrl = $data['controller'];
-		}
-		elseif ($this->controller)
-		{
-			$ctrl = $this->controller;
-		}
-		else
-		{
-			exit('Nie podano kontrolera');
+			$module = $data['module'];
 		}
 
-		unset($data['controller']);
+		if (isset($data['directory']))
+		{
+			$directory = $this->main_sep.$data['directory'];
+		}
+
+		if (isset($data['controller']))
+		{
+			$controller = $data['controller'];
+		}
+		elseif ($this->controller && $module === NULL)
+		{
+			$controller = $this->controller;
+		}
+
+		if ($controller)
+		{
+			$controller = $this->main_sep.$controller;
+		}
 
 		if (isset($data['action']))
 		{
 			$action = $this->main_sep.$data['action'];
 		}
-		else
+
+		if (isset($data['extension']) && $data['extension'])
 		{
-			$action = '';
+			$ext = '.'.str_replace('.', '', $data['extension']);
+		}
+		elseif ($this->ext_allowed)
+		{
+			$ext = $this->url_ext;
 		}
 
-		unset($data['action']);
-
-			if (isset($data['extension']) && $data['extension'])
-			{
-				$ext = '.'.str_replace('.', '', $data['extension']);
-			}
-			elseif ($this->ext_allowed)
-			{
-				$ext = $this->url_ext;
-			}
-			else
-			{
-				$ext = '';
-			}
-
-
-		unset($data['extension']);
+		unset($data['module'], $data['directory'], $data['controller'], $data['action'], $data['extension']);
 
 		$params = array();
+
 		foreach($data as $key => $val)
 		{
-			$params[] = !is_int($key) ? $key.$this->param_sep.$val : $val;
+			$params[] = ! is_int($key) ? $key.$this->param_sep.$val : $val;
 		}
 
 		if ($params)
@@ -129,9 +144,9 @@ class URL
 			$params = '';
 		}
 
-		
 		$trace = $this->getPathPrefix();
 
-		return ADDR_SITE.$trace.$ctrl.$action.$params.$ext;
+		return preg_replace('#(?<!:)//+#', '/', ADDR_SITE.$trace.$module.$directory.$controller.$action.$params.$ext);
 	}
+
 }

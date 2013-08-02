@@ -1,67 +1,65 @@
 <?php
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
+/*********************************************************
+| eXtreme-Fusion 5
 | Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
 | http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.
-| http://extreme-fusion.org/ef5/license/
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+*********************************************************/
 
 # THIS CLASS IS A VIEW
 
+/**
+ * DziÄ™ki Bogu, po ciÄ™zkiej pracy, udaÅ‚o siÄ™ przebudowaÄ‡ stronicowanie.
+ * HOW TO USE:
+ * 		$ec->paging->setPagesCount($rows_count, $current_page, $per_page);
+ *		$ec->pageNav->get($ec->pageNav->create($_tpl, $buttons_count), 'tpl_filename');
+ */
+
 interface PageNavIntf
 {
-	// Wyœwietla stronicowanie
-	public function create($show_go_to_first = TRUE, $show_go_to_last = TRUE);
+	// WyÅ›wietla stronicowanie
+	public function create($_tpl, $links_count, $show_go_to_first = TRUE, $show_go_to_last = TRUE);
 
 	public function get(array $paging, $filename, $dir = NULL);
 
-	// Zwraca tablicê z numerami podstron do wyœwietlenia
+	// Zwraca tablicÄ™ z numerami podstron do wyÅ›wietlenia
 	public function getPagesNums();
 
-	// Zwraca iloœæ numerów podstron, jakie zostan¹ wyœwietlone w nawigacji
-	// z uwzglêdnieniem aktualnej pozycji i wyjœciowej iloœci
+	// Zwraca iloÅ›Ä‡ numerÃ³w podstron, jakie zostanÄ… wyÅ›wietlone w nawigacji
+	// z uwzglÄ™dnieniem aktualnej pozycji i wyjÅ›ciowej iloÅ›ci
 	public function getLinksCount();
 }
 
-class PageNav implements PageNavIntf
+class PageNav extends Observer implements PageNavIntf
 {
 	private
 		$_paging,
 		$_tpl;
 
 	private
-		$_links_count,					// Iloœæ podstron, jakie bêd¹ wyœwietlane w nawigacji
-		$_pages_nums = array(), 		// Tablica z numerami podstron z uwzglêdnieniem $_links_count
-		$_route,						// Tablica z formatem linków stronicowania
+		$_links_count,					// IloÅ›Ä‡ podstron, jakie bÄ™dÄ… wyÅ›wietlane w nawigacji
+		$_pages_nums = array(), 		// Tablica z numerami podstron z uwzglÄ™dnieniem $_links_count
+		$_route,						// Tablica z formatem linkÃ³w stronicowania
 		$_default_ext = 'html';
 
-	// Nalezy pamiêtaæ, aby parametr $links_count przes³any do konstruktora by³ parsowany przez funkcjê intval()!!
-	public function __construct(Paging $paging, $tpl, $links_count = 5, $route)
+	// Nalezy pamiÄ™taÄ‡, aby parametr $links_count przesÅ‚any do konstruktora byÅ‚ parsowany przez funkcjÄ™ intval()!!
+	public function __construct(Paging $paging)
 	{
-		if ($links_count >= 1)
-		{
-			$this->_links_count = $links_count;
-		}
-		else
-		{
-			throw new systemException('B³¹d! Parametr czwarty nie mo¿e przyjmowaæ wartoœci mniejszej od <span class="italic">1</span>.');
-		}
-
-		$this->_route = $route;
-
 		$this->_paging = $paging;
-		$this->_tpl = $tpl;
-
-		$this->createListToDisplay();
 	}
 
 	private function createListToDisplay()
 	{
-		// Sprawdza, czy liczba numerów stron do wyœwietlenia jest parzysta
+		// Sprawdza, czy liczba numerÃ³w stron do wyÅ›wietlenia jest parzysta
 		if ($this->_links_count % 2 == 0)
 		{
 			/* Wyliczanie pierwszego i ostatniego numeru podstrony */
@@ -75,48 +73,61 @@ class PageNav implements PageNavIntf
 			$end = $this->_paging->getCurrentPage()+floor($this->_links_count/2);
 		}
 
-		// Sprawdzanie, czy ostatni numer reprezentuje istniej¹c¹ podstronê
+		// Sprawdzanie, czy ostatni numer reprezentuje istniejÄ…cÄ… podstronÄ™
 		if ($end > $this->_paging->getLastPage())
 		{
-			// Skoro wyliczony numer  wykracza poza numery reprezentuj¹ce istniej¹ce podstrony,
-			// to trzeba cofn¹æ do ty³u numer pierwszej, aby wyœwietli³o siê tyle numerów, ile chciano.
+			// Skoro wyliczony numer  wykracza poza numery reprezentujÄ…ce istniejÄ…ce podstrony,
+			// to trzeba cofnÄ…Ä‡ do tyÅ‚u numer pierwszej, aby wyÅ›wietliÅ‚o siÄ™ tyle numerÃ³w, ile chciano.
 			$begin -= $end - $this->_paging->getLastPage();
 
-			// Ostatni wyœwietlany numer podstrony bêdzie równy ilorazowi wszystkich materia³ów a ich iloœci na podstronê.
+			// Ostatni wyÅ›wietlany numer podstrony bÄ™dzie rÃ³wny ilorazowi wszystkich materiaÅ‚Ã³w a ich iloÅ›ci na podstronÄ™.
 			$end = $this->_paging->getLastPage();
 		}
 
 		// Sprawdzanie, czy pierwszy numer nie jest mniejszy od 1
 		if ($begin < 1)
 		{
-			// Skoro wyliczony numer wykracza poza numery reprezentuj¹ce istniej¹ce podstrony (jest mniejszy od 1, a taka podstrona przecie¿ nie istnieje),
-			// to trzeba przesun¹æ do przodu numer ostatniej, aby wyœwietli³o siê tyle numerów, ile chciano.
+			// Skoro wyliczony numer wykracza poza numery reprezentujÄ…ce istniejÄ…ce podstrony (jest mniejszy od 1, a taka podstrona przecieÅ¼ nie istnieje),
+			// to trzeba przesunÄ…Ä‡ do przodu numer ostatniej, aby wyÅ›wietliÅ‚o siÄ™ tyle numerÃ³w, ile chciano.
 			$end += 1 - $begin;
 
-			// Pierwszy wyœwietlany numer podstrony bêdzie równy 1
+			// Pierwszy wyÅ›wietlany numer podstrony bÄ™dzie rÃ³wny 1
 			$begin = 1;
 
-			// Sprawdzanie, czy w wyniku przesuwania do przodu ostatniej podstrony nie przekroczono zakresu istniej¹cych podstron
+			// Sprawdzanie, czy w wyniku przesuwania do przodu ostatniej podstrony nie przekroczono zakresu istniejÄ…cych podstron
 			if ($end > $this->_paging->getLastPage())
 			{
-				// Skoro zakres przekroczono, to ostatni wyœwietlany numer podstrony bêdzie równy ilorazowi wszystkich materia³ów a ich iloœci na podstronê.
-				// Niestety, iloœæ wyœwietlanych numerów podstron bêdzie mniejsza ni¿ chciano, gdy¿ ich tyle nie istnieje.
+				// Skoro zakres przekroczono, to ostatni wyÅ›wietlany numer podstrony bÄ™dzie rÃ³wny ilorazowi wszystkich materiaÅ‚Ã³w a ich iloÅ›ci na podstronÄ™.
+				// Niestety, iloÅ›Ä‡ wyÅ›wietlanych numerÃ³w podstron bÄ™dzie mniejsza niÅ¼ chciano, gdyÅ¼ ich tyle nie istnieje.
 				$end = $this->_paging->getLastPage();
 			}
 		}
 
-		// Skoro znamy pocz¹tkowy i koñcowy numer podstron, trzeba je wyodrêbniæ.
+		// Skoro znamy poczÄ…tkowy i koÅ„cowy numer podstron, trzeba je wyodrÄ™bniÄ‡.
 		for($i = $begin; $i <= $end; $i++)
 		{
 			$this->_pages_nums[] = $i;
 		}
 	}
 
-	public function create($show_go_to_first = TRUE, $show_go_to_last = TRUE)
+	public function create($_tpl, $links_count, $show_go_to_first = TRUE, $show_go_to_last = TRUE)
 	{
+		$this->_tpl = $_tpl;
+
+		if ($links_count >= 1)
+		{
+			$this->_links_count = $links_count;
+		}
+		else
+		{
+			throw new systemException('BÅ‚Ä…d! Parametr czwarty nie moÅ¼e przyjmowaÄ‡ wartoÅ›ci mniejszej od <span class="italic">1</span>.');
+		}
+
+		$this->createListToDisplay();
+
 		$page_nav['nums'] = $this->getPagesNums();
 
-		// Nadawanie domyœlnej wartoœci
+		// Nadawanie domyÅ›lnej wartoÅ›ci
 		$page_nav['first'] = NULL;
 		$page_nav['last'] = NULL;
 
@@ -131,7 +142,6 @@ class PageNav implements PageNavIntf
 		}
 
 		$page_nav['current'] = $this->_paging->getCurrentPage();
-		$page_nav['route'] = $this->_route;
 
 		$page_nav['prev'] = $this->_paging->getPrevPage();
 		$page_nav['next'] = $this->_paging->getNextPage();
@@ -139,21 +149,12 @@ class PageNav implements PageNavIntf
 		return $page_nav;
 	}
 
-	// W odrêbnym stosie OPT tworzy szablon, który przechwycony przez bufor danych jest zwracany przez metodê
-	public function get(array $paging, $filename, $dir = NULL)
+	// W odrÄ™bnym stosie OPT tworzy szablon, ktÃ³ry przechwycony przez bufor danych jest zwracany przez metodÄ™
+	public function get(array $paging, $filename, $dir = NULL, $comments = TRUE)
 	{
 		if ($paging)
 		{
-
-			/* TO DO
-				Notice: Undefined index: route in C:\ef5gif\system\class\StaticContainer.php on line 14
-				Call Stack
-				#	Time	Memory	Function	Location
-				1	0.0020	965336	{main}( )	..\news.php:0
-				2	0.0447	4520680	PageNav->get( )	..\news.php:275
-				3	0.0451	4543680	StaticContainer->get( )	..\PageNav.php:147
-			*/
-			$_tpl = new pageNavParser(StaticContainer::has('route') ? StaticContainer::get('route') : NULL);
+			$_tpl = new pageNavParser(StaticContainer::get('route', NULL), StaticContainer::get('request', NULL));
 
 			$_tpl->assignGroup(array(
 				'nums' => count($paging['nums']) > 1 ? $paging['nums'] : NULL,
@@ -162,8 +163,6 @@ class PageNav implements PageNavIntf
 				'prev' => $paging['prev'],
 				'next' => $paging['next'],
 				'current' => $paging['current'],
-				'page' => isset($paging['route'][0]) ? $paging['route'][0] : NULL,
-				'id' => isset($paging['route'][1]) ? $paging['route'][1] : NULL,
 				'ext' => isset($paging['route'][2]) ? $this->_route === FALSE ? '.'.$paging['route'][2] : '' : $this->_route === FALSE ? '.'.$this->_default_ext : ''
 			));
 
@@ -175,8 +174,18 @@ class PageNav implements PageNavIntf
 
 			ob_end_clean();
 
+			if (isset(parent::$_obj))
+			{
+				parent::$_obj->assign('page_nav', $out);
+			}
 			$this->_tpl->assign('page_nav', $out);
 		}
+	}
+
+	public function getComments(array $paging, $filename, $data)
+	{
+		$this->get($paging, $filename);
+		$this->_tpl->assign('comments', $data);
 	}
 
 	public function getPagesNums()

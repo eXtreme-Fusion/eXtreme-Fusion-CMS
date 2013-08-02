@@ -1,20 +1,25 @@
 <?php
-/***********************************************************
-| eXtreme-Fusion 5.0 Beta 5
-| Content Management System       
+/*********************************************************
+| eXtreme-Fusion 5
+| Content Management System
 |
-| Copyright (c) 2005-2012 eXtreme-Fusion Crew                	 
-| http://extreme-fusion.org/                               		 
+| Copyright (c) 2005-2013 eXtreme-Fusion Crew
+| http://extreme-fusion.org/
 |
-| This product is licensed under the BSD License.				 
-| http://extreme-fusion.org/ef5/license/						 
-***********************************************************/
+| This program is released as free software under the
+| Affero GPL license. You can redistribute it and/or
+| modify it under the terms of this license which you
+| can read by viewing the included agpl.txt or online
+| at www.gnu.org/licenses/agpl.html. Removal of this
+| copyright header is strictly prohibited without
+| written permission from the original author(s).
+*********************************************************/
 
 /**
- * Przyk³ad dzia³ania:
+ * PrzykÅ‚ad dziaÅ‚ania:
  *
-	// Drugi parametr koniecznie 8 znaków.
-	$c = new Crypt('klucz szyfruj¹cy', '=thn<.?!');
+	// Drugi parametr koniecznie 8 znakÃ³w.
+	$c = new Crypt('klucz szyfrujÄ…cy', '=thn<.?!');
 
 	echo $e = $c->encrypt('test');
 	echo $c->decrypt($e);
@@ -29,11 +34,11 @@ class Crypt
 	protected $_iv;
 
 	/**
-	 * Przy pominiêciu drugiego parametru, kodowanie udbywa siê w jedn¹ stronê.
-	 * Wektor inicjuj¹cy `iv` jest zmienny z prze³adowaniem strony.
+	 * Przy pominiÄ™ciu drugiego parametru, kodowanie udbywa siÄ™ w jednÄ… stronÄ™.
+	 * Wektor inicjujÄ…cy `iv` jest zmienny z przeÅ‚adowaniem strony.
 
-	 * Jeœli dane maj¹ byæ rozkodowane w przysz³oœci, nale¿y posiadaæ sta³y wektor inicjuj¹cy i podaæ go drugim parametrem.
-	 * Niezmienny musi byæ te¿ `key` - klucz szyfruj¹cy.
+	 * JeÅ›li dane majÄ… byÄ‡ rozkodowane w przyszÅ‚oÅ›ci, naleÅ¼y posiadaÄ‡ staÅ‚y wektor inicjujÄ…cy i podaÄ‡ go drugim parametrem.
+	 * Niezmienny musi byÄ‡ teÅ¼ `key` - klucz szyfrujÄ…cy.
 	 */
 	public function __construct($key, $iv = NULL, $cipher = MCRYPT_BLOWFISH, $mode = MCRYPT_MODE_CBC, $source = MCRYPT_DEV_URANDOM)
 	{
@@ -59,12 +64,12 @@ class Crypt
 
 	public function encrypt($data)
 	{
-		return base64_encode(mcrypt_encrypt($this->_cipher, $this->_key, $data, $this->_mode, $this->_iv));
+		return urlencode(base64_encode(mcrypt_encrypt($this->_cipher, $this->_key, $data, $this->_mode, $this->_iv)));
 	}
 
 	public function decrypt($data)
 	{
-		return mcrypt_decrypt($this->_cipher, $this->_key, base64_decode($data), $this->_mode, $this->_iv);
+		return mcrypt_decrypt($this->_cipher, $this->_key, base64_decode(urldecode($data)), $this->_mode, $this->_iv);
 	}
 	
 	public function correctAnswer($user_answer, $answer)
