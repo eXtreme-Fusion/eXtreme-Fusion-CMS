@@ -1,4 +1,4 @@
-{panel='Błąd wewnętrzny'}
+{panel=i18n('Internal error')}
 
 <div class="error">{$Message}</div>
 
@@ -7,9 +7,9 @@
 		<thead>
 			<tr>
 				<th style="width:5%">#</th>
-				<th style="width:40%">W pliku</th>
-				<th style="width:45%">Funkcja</th>
-				<th style="width:10%">Linia</th>
+				<th style="width:40%">{i18n('In file')}</th>
+				<th style="width:45%">{i18n('Function')}</th>
+				<th style="width:10%">{i18n('Line')}</th>
 			</tr>
 		</thead>
 		<tbody>

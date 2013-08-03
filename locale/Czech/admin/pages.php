@@ -39,5 +39,5 @@ return array(
 	'User Fields' => 'Pole profilu',
 	'User Field Categories' => 'Kategorie pole profilu',
 	'Content Pages' => 'Obsah stránek',
-	'Synchronization' => 'Synchronizacja',
+	'Synchronization' => 'Synchronizace',
 );

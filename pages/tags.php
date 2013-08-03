@@ -35,7 +35,7 @@ $_locale->load('tags');
 
 $_head->set($_tpl->getHeaders());
 
-! class_exists('Tag') || $_tag = New Tag($_system, $_pdo);
+
 
 if ( ! $_theme->tplExists())
 {
@@ -74,9 +74,9 @@ if ($_route->getAction())
 	}
 
 	$theme = array(
-		'Title' => __('Tag').' » '.$_route->getAction().' » '.$_sett->get('site_name'),
-		'Keys' => 'Tag '.$_route->getAction().', słowo kluczowe'.$_route->getAction().', '.$_route->getAction(),
-		'Desc' => 'Lista elementów przypisanych do słowa kluczowego '.$_route->getAction()
+		'Title' => __('Keyword').' » '.$_route->getAction().' » '.$_sett->get('site_name'),
+		'Keys' => __('Keyword :keyword', array(':keyword' => $_route->getAction())),
+		'Desc' => __('A list of items assigned to a keyword :keyword', array(':keyword' => $_route->getAction()))
 	);
 	
 	$_tpl->assign('url_tag', $_route->path(array('controller' => 'tags')));
@@ -129,9 +129,9 @@ else
 	$k = implode(', ', $k);
 	
 	$theme = array(
-		'Title' => __('Tagi').' » '.$_sett->get('site_name'),
+		'Title' => __('Keywords').' » '.$_sett->get('site_name'),
 		'Keys' => $k,
-		'Desc' => 'Lista najpopularniejszych tagów na '.$_sett->get('site_name').'.'
+		'Desc' => __('List of most popular keywords on ').$_sett->get('site_name')
 	);
 	
 	$_tpl->assign('tags', $cache);

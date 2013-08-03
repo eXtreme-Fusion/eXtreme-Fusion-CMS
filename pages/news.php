@@ -48,8 +48,6 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 		$_head->set('	<link href="'.ADDR_CSS.'news.css" rel="stylesheet">');
 	}
 
-	! class_exists('Tag') || $_tag = New Tag($_system, $_pdo);
-
 	$item_id = $_route->getAction();
 
 	if (isNum($item_id))

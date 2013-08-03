@@ -1,7 +1,8 @@
 <?php defined('EF5_SYSTEM') || exit;
 
 return array(
-	'Google Analitics' => 'Google Analytics',
+	'Google Analytics ' => 'Google Analytics',
+	'Navigation' => 'Nawigacja',
 	'Google Analytics module status' => 'Status modulu Google Analytics',
 	'On' => 'Zapnutý',
 	'Off' => 'Vypnutý',

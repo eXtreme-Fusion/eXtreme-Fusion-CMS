@@ -11,7 +11,7 @@ return array(
 	'Step 5: Admin account' => 'Krok 5: Učet administrátora',
 	'Step 6: System settings' => 'Krok 6: Nastavení systému',
 	'Step 7: Final settings' => 'Krok 7: Dokončení nastavení',
-	'Finish' => 'Zakończ',
+	'Finish' => 'Dokončit',
 	// Permissions
 	'Perm: admin login' => 'Přihlášení do admin panelu.',
 	'Perm: admin bbcodes' => 'Správa štítků BBCodes.',
@@ -35,7 +35,7 @@ return array(
 	'Perm: admin settings_users' => 'Přístup do nastavení uživatelů.',
 	'Perm: admin settings_ipp' => 'Počet položek na stránku.',
 	'Perm: admin settings_logs' => 'Přístup do nastavení záznamů.',
-	'Perm: admin settings_synchro' => 'Dostęp do ustawień synchronizacji.',
+	'Perm: admin settings_synchro' => 'Přístup do nastavení synchronizace.',
 	'Perm: admin navigations' => 'Navigace stránky',
 	'Perm: admin smileys' => 'Přistup ke smajlíkům',
 	'Perm: admin submissions' => 'Přístup ke schvalování obsahu od uživatelů',
@@ -93,20 +93,16 @@ return array(
 	'Could not write or delete MySQL tables.' => 'Nebylo možné uložit nebo odstranit MySQL tabulky.',
 	'Please make sure your MySQL user has read, write and delete permission for the selected database.' => 'Zkontrolujte, zda MySQL uživatel databáze má právo na číst, zapisovat a mazat data v databázi.',
 	'Table prefix error.' => 'Chyba v předponě tabulky.',
-	'The specified table prefix is already in use.' => 'Zadali jste předponu tabulky, která je již obsazena. Zadejte prosím jinou předponu.',
 	'Unable to connect with MySQL database.' => 'Nelze se připojit k databázi MySQL.',
-	'The specified MySQL database does not exist.' => 'Zadaná MySQL databáze neexistuje',
-	'Unable to connect with MySQL.' => 'Nelze se připojit k MySQL',
 	'Please ensure your MySQL username and password are correct.' => 'Zkontrolujte nastavení, uživatelské jméno a heslo pro databázi MySQL.',
 	'There are empty fields left!' => 'Pole jsou prázdné!',
-	'Please make sure you have filled out all the MySQL connection fields.' => 'Ujistěte se, že všechna pole jsou vyplněna.',
+	'Please make sure you have filled out all the MySQL connection fields.' => 'Sprawdź, czy wszystkie pola są wypełnione.',
 	'Tables prefix (Advanced settings) is already in use or prefix has not been written, and tables prefix exist in the database with the same name as that system is trying to create. Please enter a different prefix for tables.' => 'Předpona tabulek (Pokročilé nastavení)  se již používá nebo předpona nebyla zapsána popřípadě tabulky již existují se stejným názvem v databázi a systém se snaží se je snaží vytvořit. Prosím, zadejte jinou předponu pro tabulky.',
-	'UWAGA! Jeżeli po zakończeniu instalacji wystąpią problemy z linkami i adresami URL (błędy 404), należy przeinstalować system nie zaznaczając poniższego pola lub zmienić ustawienia $_route w pliku config.php.' => 'NOTE! If after installation you experience problems with links and URLs (error 404), you must reinstall the system without checking the box below, or change the $ _route in config.php.',
-	'The names of the files listed below please change with the instructions.' => 'Jména souborů jsou uvedeny níže prosím změnte je podle pokynů.',
-	'The folders and files listed below must be set writeable (chmod 777).' => 'Složky a soubory uvedené níže musí být zapisovatelné (chmod 777).',
+	'NOTE! If after installation you experience problems with links and URLs (error 404), you must reinstall the system without checking the box below, or change the $_route in config.php.' => 'POZOR! Pokud po ukončení instalace máte problémy s odkazy a adresami URL (chyby 404), znovu přeinstalujte systém s níže nezašknutým polem nebo změňte nastavení $_route v souboru config.php.',
+	'The names of the files listed below please change with the instructions.' => 'Názvy souborů jsou uvedeny níže, změňte postupujte podle pokynů.',
 	'modRewrite warning' => 'Instalační program nemohl zjistit, zda váš server podporuje modRewrite.<br />
 	Zaškrtněte toto políčko, pokud jste si jisti, že výše uvedený modul je k dispozici. <br />
-	Zodpovídá za vytváření odkazů přátelských na vyhledávání.', 
+	Zodpovídá za vytváření odkazů přátelských na vyhledávání.', 	
 	'FURL warning' => 'Instalátor rozpoznal, że užíváte jiné server než Apache.<br />
 	Abyste mohli používat odkazy přátelské pro vyhledávače, server musí podporovat cestu PATH_INFO.<br />
 	Po dokončení instalace systém zkusí zjistit, jest-li je cesta dostupná, ale existuje zde riziko záměny.<br />
@@ -118,16 +114,10 @@ return array(
 	'Repeat Login password:' => 'Potvrdit heslo pro přihlášení:',
 	'Email address:' => 'Adresa e-mailu:',
 	// Step 6 - User details validation
-	'User name contains invalid characters.' => 'Uživatelské jméno obsahuje nepodporované znaky.',
-	'User name field can not be left empty.' => 'Uživatelské pole jména nemůže být prázdné!',
 	'Your login does not appear to be valid.' => 'Uživatelské jméno je nesprávné.',
 	'Your two login passwords do not match.' => 'Uživatelská hesla se neshodují.',
-	'Invalid login password, please use alpha numeric characters only.<br />Password must be a minimum of 6 characters long.' => 'Nesprávné heslo, prosím, používejte pouze alfanumerické znaky.<br />Heslo musí obsahovat minimálně 6 znaků.',
-	'Login password fields can not be left empty' => 'Pole pro heslo nemůže být prázdné!',
 	'Your email address does not appear to be valid.' => 'Byla zadána neplatná adresa e-mailu',
-	'Email field can not be left empty.' => 'Pole e-mailové adresy nemůže být prázdné!',
 	'Setup complete' => '<div class="valid">Instalace dokončena. Děkujeme, že jste se rozhodli používat eXtreme-Fusion 5 - Ninja Edition!</div>',
-	'Your user settings are not correct:' => 'Tyto uživatelské údaje zahrnují následující chyby:',
 	'Administrator account has not been created.' => 'Administrátorský účet nebyl vytvořen.',
 	//Welcome Message
 	'Welcome to your site' => 'Vítejte na své nové stránce.',
@@ -159,7 +149,10 @@ return array(
 	'News Cats' => 'Kategorie novinek',
 	'Contact' => 'Kontakt',
 	'Search' => 'Vyhledávání',
-	'Submit News' => 'Přidat novinku',
+	'Rules' => 'Pravidla',
+	'Tags' => 'Klíčové slova',
+	'Team' => 'Redakce',
+	'Pages' => 'Vlastní stránky',
 	// Stage 6 - User Field Categories
 	'Contact Information' => 'Kontaktní informace',
 	'Information' => 'Informace',
@@ -169,12 +162,20 @@ return array(
 	'Website' => 'Webová stránka',
 	'Living place' => 'Bydliště',
 	'Signature' => 'Podpis',
-	'Rewrite info' => 'Váš server je připraven spolupracovat s rewrite modulem, ale systém nemá oprávnění ke změně názvu souboru. Pokud chcete mít SEO URLs, přejmenujte soubor z "rewrite" na ".htaccess". V opačném případě tuto zprávu ignorujte.',
 	// Example news
-	'Example news title' => 'Příklad novinky',
-	'Example news content' => 'Vítejte na své webové stránce.',
-	'Example news url' => 'příklad adresy novinky',
-	'Example news description' => 'Příklad popisu novinky',
+	'Example news title' => 'Vítejte na webu běžícím na redakčním systému eXtreme-Fusion 5',
+	'Example news content' => '<p style="text-align: center;">
+	To, co zde vidíte, je web vytvořen pomocí bezplatného redakčního systému (CMS) <a href="http://extreme-fusion.org/">eXtreme-Fusion 5</a>.</p>
+	<p>
+	Pokud jste správcem této stránky, přihlaste se pomocí formuláře na pravé straněwebu.<br />
+	Pak jděte do administračního panelu a konfigurujte a přidávat obsah nebo vytvářejte nové uživatelské účty.</p>
+	<p>
+	Rozvoj Vaší stránky je možno vykonat přes sekci Moduly, pro příklad modul Bodování, který ohodnocuje body aktivnost na webu.</p>
+	<p style="text-align: center;">
+	Pokud nejste správcem této stránky, ale chcete mít své vlastní webové stránky, přejděte na naší <a href="http://extreme-fusion.org/">Podporu</a>, kde stáhnete system EF5 či získáte pomoc od komunity.<br />
+	&nbsp;</p>',
+	'Example news url' => 'vítejte_na_strance_bezici_na_extreme-fusion_5',
+	'Example news description' => 'To, co zde vidíte, je web vytvořen pomocí bezplatného redakčního systému eXtreme-Fusion 5.',
 	// Some additional informations
 	'The installation was interrupted. The system can be unstable.' => 'Instalace byla přerušena. Systém může být nestabilní.',
 	'Start the installation again.' => 'Spusťte instalaci znovu',

@@ -42,10 +42,10 @@
 			<nav class="tab_menu">
 				<p><a href="{$url_new_message}" class="button">{i18n('Write a message')}</a></p>
 				<ul>
-					<li><a href="javascript:void(0)" id="tab_all" class="tab">Wszystkie</a></li>
-					{if $has_messages.inbox}<li><a href="javascript:void(0)" id="tab_inbox" class="tab">Odebrane</a></li>{/if}
-					{if $has_messages.outbox}<li><a href="javascript:void(0)" id="tab_outbox" class="tab">Wysłane</a></li>{/if}
-					{*{if $has_messages.draft}<li><a href="javascript:void(0)" id="tab_draft" class="tab">Robocze</a></li>{/if}*}
+					<li><a href="javascript:void(0)" id="tab_all" class="tab">{i18n('All')}</a></li>
+					{if $has_messages.inbox}<li><a href="javascript:void(0)" id="tab_inbox" class="tab">{i18n('Inbox')}</a></li>{/if}
+					{if $has_messages.outbox}<li><a href="javascript:void(0)" id="tab_outbox" class="tab">{i18n('Outbox')}</a></li>{/if}
+					{if $has_messages.draft}<li><a href="javascript:void(0)" id="tab_draft" class="tab">{i18n('Drafts')}</a></li>{/if}
 				</ul>
 			</nav>
 
@@ -56,16 +56,16 @@
 						<img src="{$data.user_avatar}" alt="Avatar" class="avatar border_light">
 						<div class="pw_cont">
 							<span class="interlocutor">{$data.user_link}</span>
-							<h4><a href="{$data.msg_link}" title="{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}" class="white">{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}</a></h4>
+							<h4><a href="{$data.msg_link}" title="{if $data.subject}{$data.subject}{else}{i18n('No subject...')}{/if}" class="white">{if $data.subject}{$data.subject}{else}{i18n('No subject...')}{/if}</a></h4>
 							<time datetime="{$data.datetime}" class="text_light">{$data.datestamp}</time>
 							{if $data.read_status == '1'}
-								<p class="new_mes">Nowa</p>
+								<p class="new_mes">{i18n('New')}</p>
 							{elseif $data.read_status == '2'}
-								<p class="read_mes">Przeczytana</p>
+								<p class="read_mes">{i18n('Read')}</p>
 							{elseif $data.read_status == '3'}
-								<p class="sent_mes">Wysłana</p>
+								<p class="sent_mes">{i18n('Sent')}</p>
 							{elseif $data.read_status == '4'}
-								<p class="del_mes">Dostarczona</p>
+								<p class="del_mes">{i18n('Delivered')}</p>
 							{/if}
 						</div>
 					</article>
@@ -80,12 +80,12 @@
 								<img src="{$data.user_avatar}" alt="Avatar" class="avatar border_light">
 								<div class="pw_cont">
 									<span class="interlocutor">{$data.user_link}</span>
-									<h4><a href="{$data.msg_link}" title="{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}" class="white">{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}</a></h4>
+									<h4><a href="{$data.msg_link}" title="{if $data.subject}{$data.subject}{else}{i18n('No subject...')}{/if}" class="white">{if $data.subject}{$data.subject}{else}{i18n('No subject...')}{/if}</a></h4>
 									<time datetime="{$data.datetime}" class="text_light">{$data.datestamp}</time>
 									{if $data.read_status == '1'}
-										<p class="new_mes">Nowa</p>
+										<p class="new_mes">{i18n('New')}</p>
 									{elseif $data.read_status == '2'}
-										<p class="read_mes">Przeczytana</p>
+										<p class="read_mes">{i18n('Read')}</p>
 									{/if}
 								</div>
 							</article>
@@ -102,12 +102,12 @@
 								<img src="{$data.user_avatar}" alt="Avatar" class="avatar border_light">
 								<div class="pw_cont">
 									<span class="interlocutor">{$data.user_link}</span>
-									<h4><a href="{$data.msg_link}" title="{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}" class="white">{if $data.subject}{$data.subject}{else}{i18n('Bez tematu')}{/if}</a></h4>
+									<h4><a href="{$data.msg_link}" title="{if $data.subject}{$data.subject}{else}{i18n('No subject...')}{/if}" class="white">{if $data.subject}{$data.subject}{else}{i18n('No subject...')}{/if}</a></h4>
 									<time datetime="{$data.datetime}" class="text_light">{$data.datestamp}</time>
 									{if $data.read_status == '3'}
-										<p class="sent_mes">Wysłana</p>
+										<p class="sent_mes">{i18n('Sent')}</p>
 									{elseif $data.read_status == '4'}
-										<p class="del_mes">Dostarczona</p>
+										<p class="del_mes">{i18n('Delivered')}</p>
 									{/if}
 								</div>
 							</article>
@@ -173,9 +173,10 @@
 					{if $smiley.i % 10 == 0}</div><div class="line center">{/if}
 				{/section}
 			</div>
-			<div class="line center">
-				<a href="{url('controller=>', 'messages')}" class="button">{i18n('Back')}</a>
-				<input type="submit" name="send" class="button" value="{i18n('Send')}">
+			<div class="tbl center">
+				<input type="reset" value="{i18n('Back')}" class="button back" />
+				<input type="reset" value="{i18n('Clean')}" class="button" />
+				<input type="submit" name="send" class="Send" value="{i18n('Send')}">
 				{* Zmienna item_id istnieje tylko dla podstrony `entry`. Przy nowej konwersacji jest otrzymywane przez żądanie Ajax. *}
 				<input type="hidden" value="{$item_id}" name="item_id">
 			</div>

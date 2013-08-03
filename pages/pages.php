@@ -299,7 +299,7 @@ elseif (isNum($_route->getAction(), FALSE))
 
 
 
-			! class_exists('Tag') || $_tag = New Tag($_system, $_pdo);
+			
 			$keyword = array(); $k = array();
 			if ($keys = $_tag->getTag('PAGES', $row['id'])){
 				foreach($keys as $var){

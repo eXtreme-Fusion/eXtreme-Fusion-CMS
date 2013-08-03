@@ -38,7 +38,10 @@ try
 	$_panels->setModulesInst($_modules);	
    
 	$_panels->adminMakeListPanels($_user, TRUE);
-
+	
+	// TO DO 
+	// Sprawdzać czy panel XXXX nie wymaga zainstalwania modułu i czy po odinstalowaniu nie został w zarządzaniu panelami.
+	
 	$_tpl->assign('noact_panels', $_panels->adminGetInactivePanels());
 	$_tpl->assign('panel', $_panels->adminGetPanel());
 	$_tpl->template('panels');

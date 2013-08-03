@@ -168,7 +168,7 @@ class Modules
 
 		return $this->_cache['modules'];
 	}
-
+	
 	/**
 	 * Sprawdza dane tworzonych uprawnień
 	 *
@@ -621,10 +621,28 @@ class Modules
 		}
 	}
 
-	// $folder - nazwa modułu/katalogu modułu
-	// sprawdzanie, czy moduł jest zainstalowany
-	public function isInstalled($folder)
+	/**
+	 * Pobiera z bazy danych nazwy katalogów zainstalowanych modułów
+	 * Porównuje parametr w listą zainstalowanych modułów.
+	 *
+	 * @return bool
+	 */
+	public function isInstalled($name)
 	{
-		return (bool) $this->_pdo->getRow('SELECT `id` FROM [modules] WHERE `folder` = :folder', array(':folder', HELP::strip($folder), PDO::PARAM_STR));
+		$this->_cache['modules'] = $this->_system->cache('modules', NULL, 'system');
+		if ($this->_cache['modules'] === NULL)
+		{
+			$this->_cache['modules'] = array();
+			
+			$query = $this->_pdo->getData('SELECT `folder` FROM [modules]');
+			foreach($query as $d)
+			{
+				$this->_cache['modules'][] = $d['folder'];
+			}
+	
+			$this->_system->cache('modules', $this->_cache['modules'], 'system');
+		}
+		
+		return in_array($name, $this->_cache['modules']);
 	}
 }
