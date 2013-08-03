@@ -11,7 +11,7 @@ return array(
 	'Step 5: Admin account' => 'Krok 5: Učet administrátora',
 	'Step 6: System settings' => 'Krok 6: Nastavení systému',
 	'Step 7: Final settings' => 'Krok 7: Dokončení nastavení',
-	'Finish' => 'Zakończ',
+	'Finish' => 'Dokončit',
 	// Permissions
 	'Perm: admin login' => 'Přihlášení do admin panelu.',
 	'Perm: admin bbcodes' => 'Správa štítků BBCodes.',
