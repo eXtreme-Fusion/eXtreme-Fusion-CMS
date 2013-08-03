@@ -675,10 +675,6 @@ try
 	}
 	else if (getStepNum() === 6)
 	{
-		if ($_SESSION['localeset'] === 'Czech')
-		{
-			goToStep(7);
-		}
 		$_locale->setSubDir('admin');
 		$_locale->load('settings_synchro');
 
