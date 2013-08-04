@@ -3,11 +3,13 @@
 return array(
 'Contact' => 'Kontakt',
 'The required fields are not filled.' => 'Nebyly vyplněny všechny požadované pole.',
-'The safety code is invalid.' => 'Zadáli jste špatný bezpečnostní kod.',
+'The safety form returns error.' => 'Zabezpečovací formulář vrací chybu.',
 'Sender\'s e-mail address is invalid.' => 'Adresa e-mailu odesílatele je neplatná.',
 'Your e-mail address:' => 'Vaše e-mailová adresa:',
 'Send me a copy:' => 'Zaslat mi kopii:',
 'There are no contact forms added.' => 'Žádné kontaktní formuláře.',
+'Contact with :contact' => 'Kontakt s :contact',
+'Clean' => 'Vymazat',
 
 
 

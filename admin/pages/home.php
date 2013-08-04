@@ -149,7 +149,7 @@ try
 			}
 		}
 	}
-	elseif ($_locale->getLang() !== 'Czech')
+	else
 	{
 		$_tpl->assign('synchro_error', TRUE);
 	}
