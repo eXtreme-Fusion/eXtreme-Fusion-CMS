@@ -79,6 +79,9 @@ try
 
 	# System configuration
     $_system = $ec->system;
+	
+	# Tags
+	! class_exists('Tag') || $_tag = New Tag($_system, $_pdo);
 
 	require_once DIR_SYSTEM.'table_list.php';
 
