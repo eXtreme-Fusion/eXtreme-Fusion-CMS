@@ -307,7 +307,7 @@ Tato zpráva byla zaslána automaticky. Neodpovídejte prosím na ni.',
 // Function showCopyrights()
 'Powered by :system' => 'Web běží na systému :system.<br />Copyright 2002-2013 <a href="http://php-fusion.co.uk/">PHP-Fusion</a>. Released as free software without warranties under <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">aGPL v3</a>.',
 
-'Powered by :system under :license License' => 'Web běží na systému :system.<br />Copyright 2002-2013 <a href="http://php-fusion.co.uk/">PHP-Fusion</a>. Released as free software without warranties under <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">aGPL v3</a>.',
+'Powered by :system under :license License' => 'Web běží na systému CMS :system.<br />Copyright 2002-2013 <a href="http://php-fusion.co.uk/">PHP-Fusion</a>. Released as free software without warranties under <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">aGPL v3</a>.',
 
 'Yes' => 'Ano',
 'No' => 'Ne',

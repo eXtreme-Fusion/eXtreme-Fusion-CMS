@@ -378,7 +378,7 @@ Class HELP
 	}
 
 	// Konwertuje znaki językowe w nazwach miesięcy i innych wyrażeniach na UTF8
-	public static function strfTimeToUTF($keys, $time)
+	public static function strfTimeUTF($keys, $time)
 	{
 		$ttime = strftime($keys, $time);
 		// Sprawdzamy czy znaki są kodowane w UTF-8
@@ -387,7 +387,7 @@ Class HELP
 			// Jeśli tak wyświetlamy je bez zmiany kodowania
 			return $ttime;
 		}
-
+echo mb_detect_encoding($ttime);
 		// Zmiana kodowania na UTF-8
 		return iconv(mb_detect_encoding($ttime), 'UTF-8', $ttime);
 	}
@@ -988,31 +988,38 @@ Class HELP
 	public static function showDate($format, $val)
 	{
 		$val += intval(self::$_sett->get('offset_timezone')) * 3600;
+		
 		if ($format === 'shortdate' || $format == 'longdate')
 		{
-			// Sprawdzamy czy znaki są kodowane w UTF-8
-			if (mb_detect_encoding(strftime(self::$_sett->get($format), $val)) === 'UTF-8')
-			{	
-				// Jeśli tak wyświetlamy je bez zmiany kodowania
-				return strftime(self::$_sett->get($format), $val);
-			}
-			
-			// Zmiana kodowania na UTF-8
-			return iconv(mb_detect_encoding(strftime(self::$_sett->get($format), $val)), 'UTF-8', strftime(self::$_sett->get($format), $val));
-			
+			$format = self::$_sett->get($format);
 		}
 		else
 		{
-			// Sprawdzamy czy znaki są kodowane w UTF-8
-			if (mb_detect_encoding(strftime(self::$_sett->get($format), $val)) === 'UTF-8')
-			{	
-				// Jeśli tak wyświetlamy je bez zmiany kodowania
-				return strftime('shortdate', $val);
-			}
-			
-			// Zmiana kodowania na UTF-8
-			return iconv(mb_detect_encoding(strftime(self::$_sett->get($format), $val)), 'UTF-8', strftime('shortdate', $val));
+			$format = self::$_sett->get('shortdate');
 		}
+		
+		$strftime = strftime($format, $val);
+		return self::toUTF($strftime);
+	}
+	
+	public static function date2UTF($date)
+	{
+		return self::toUTF($date);
+	}
+	
+	public static function toUTF($src)
+	{
+		$encoding = mb_detect_encoding($src);
+		
+		// Sprawdzamy czy znaki są kodowane w UTF-8
+		if ($encoding === 'UTF-8')
+		{	
+			// Jeśli tak wyświetlamy je bez zmiany kodowania
+			return $src;
+		}
+		
+		// Zmiana kodowania na UTF-8
+		return iconv($encoding, 'UTF-8', $src);
 	}
 
 	// Przetwarza ciąg znaków, który ma trafić do meta tagu Desciption
