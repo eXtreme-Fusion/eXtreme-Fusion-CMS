@@ -73,6 +73,7 @@ try
 
 		if ($count)
 		{
+			$_system->clearCacheRecursive($_files);
 			$_log->insertSuccess('delete', __('Smiley has been deleted.'));
 			$_request->redirect(FILE_PATH, array('act' => 'delete', 'status' => 'ok'));
 		}
@@ -99,6 +100,7 @@ try
 	
 			if ($count)
 			{
+				$_system->clearCacheRecursive($_files);
 				$_log->insertSuccess('edit', __('Smiley has been edited.'));
 				$_request->redirect(FILE_PATH, array('act' => 'edit', 'status' => 'ok'));
 			}
@@ -118,6 +120,7 @@ try
 
 			if ($count)
 			{
+				$_system->clearCacheRecursive($_files);
 				$_log->insertSuccess('add', __('Smiley has been added.'));
 				$_request->redirect(FILE_PATH, array('act' => 'add', 'status' => 'ok'));
 			}
