@@ -296,6 +296,7 @@ try
 
 					$i++;
 				}
+				$_system->clearCacheRecursive($_files);
 				_e(__('Dane zostały pomyślnie zapisane'));
 			}
 
@@ -319,6 +320,7 @@ try
 
 					$i++;
 				}
+				$_system->clearCacheRecursive($_files);
 				_e(__('Dane zostały pomyślnie zapisane'));
 			}
 
@@ -342,7 +344,7 @@ try
 
 					$i++;
 				}
-				$_system->clearCache('profiles');
+				$_system->clearCacheRecursive($_files);
 				_e(__('Dane zostały pomyślnie zapisane'));
 			}
 
