@@ -1,18 +1,18 @@
 <?php defined('EF5_SYSTEM') || exit;
 
 return array(
-	'User Panel' => 'Panel użytkownika',
+	'User Panel' => 'Panel&nbsp;użytkownika',
 	'Hello :username!' => 'Witaj :username!',
 	'Unread messages: :msg' => 'Nieprzeczytanych wiadomości: :msg',
-	'Edit profile' => 'Edytuj profil',
+	'Edit profile' => 'Edytuj&nbsp;profil',
 	'Messages' => 'Wiadomości',
 	'Users' => 'Użytkownicy',
 	'Admin Panel' => 'Administracja',
-	'Login' => 'Zaloguj się',
+	'Login' => 'Zaloguj&nbsp;się',
 	'Logout' => 'Wyloguj',
-	'Username:' => 'Nazwa użytkownika:',
+	'Username:' => 'Nazwa&nbsp;użytkownika:',
 	'Password:' => 'Hasło:',
-	'Remember me' => 'Pamiętaj logowanie',
+	'Remember me' => 'Pamiętaj&nbsp;logowanie',
 	'Register' => 'Rejestracja',
-	'Forgot password' => 'Odzyskiwanie hasła'
+	'Forgot password' => 'Odzyskiwanie&nbsp;hasła'
 );

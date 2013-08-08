@@ -91,7 +91,7 @@ try
 					unset($permissions);
 				}
 
-				$_system->clearCache();
+				$_system->clearCache('system', array('groups', 'permissions'));
 
 				if ($count)
 				{
@@ -184,7 +184,7 @@ try
 
 				unset($permissions);
 
-				$_system->clearCache();
+				$_system->clearCache('system', array('groups', 'permissions'));
 
 				if ($count)
 				{
@@ -243,7 +243,7 @@ try
 			
 			$_pdo->exec('UPDATE [users] SET `role` = 2 WHERE `role` = '.$_request->get('id')->show());
 			
-			$_system->clearCache();
+			$_system->clearCache('system', array('groups', 'permissions'));
 
 			if ($count)
 			{
