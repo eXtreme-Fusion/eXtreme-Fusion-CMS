@@ -32,14 +32,18 @@
 | written permission from the original author(s).
 +--------------------------------------------------------*/
 
-/*$theme = array(
-	'Title' => $data['title'].' » '.$_sett->get('site_name'),
-	'Keys' => $k,
-	'Desc' => $data['description']
-);*/
-
-// TO DO Będziesz dodawać cache dla tej strony użyj: $_sett->getUns('cache', 'expire_pages') //
-
+/*
+ * To do
+ * Przekazać nagłówki do systemu
+ * $theme = array(
+		'Title' => '',
+		'Keys' => '',
+		'Desc' => ''
+	);
+ * 
+ * Będziesz dodawać cache dla tej strony użyj: 
+ * $_sett->getUns('cache', 'expire_pages')
+ */
 
 if ($_user->isLoggedIn())
 {
