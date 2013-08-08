@@ -32,6 +32,16 @@
 +--------------------------------------------------------*/
 $_locale->load('news_cats');
 
+/*
+ * To do
+ * Przekazać nagłówki do systemu
+ * $theme = array(
+		'Title' => '',
+		'Keys' => '',
+		'Desc' => ''
+	);
+ */
+
 // Ładowanie styli z szablonu
 $_head->set($_tpl->getHeaders());
 
