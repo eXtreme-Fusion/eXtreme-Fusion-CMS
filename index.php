@@ -45,10 +45,12 @@ try
 	{
 		exit('eXtreme-Fusion '.$_sett->get('version'));
 	}
-
-	if ($_user->bannedByIP())
+	
+	$banned_by_ip = $_user->bannedByIP();
+	
+	if ($banned_by_ip)
 	{
-		$_route->trace(array('controller' => 'error', 'action' => 403, 'params' => NULL));
+		$_route->trace(array('controller' => 'error', 'action' => 403));
 	}
 
 	StaticContainer::register('route', $_route);
@@ -170,7 +172,7 @@ try
 	// Sprawdzanie, czy plik istnieje
 	if ( ! $_route->getExitFile())
 	{
-		$_route->trace(array('controller' => 'error', 'action' => 404, 'params' => NULL));
+		$_route->trace(array('controller' => 'error', 'action' => 404));
 	}
 
 	$trace = $_route->getExitFile();
@@ -290,7 +292,7 @@ try
 	defined('CONTENT') || define('CONTENT', ob_get_contents());
 	ob_end_clean();
 
-	if ($_route->getFileName() === 'maintenance')
+	if ($_route->getFileName() === 'maintenance' || $banned_by_ip)
 	{
 		// Renderowanie strony bez menu, paneli bocznych i stopki
 		$_theme->page(TRUE, FALSE, FALSE, FALSE, FALSE);
