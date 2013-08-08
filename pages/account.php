@@ -46,42 +46,42 @@ $status = $_route->getByID(1);
 $error  = $_route->getByID(2);
 
 $theme = array(
-	'Title' => 'Ustawienia konta użytkownika - '.$_user->get('username').' » '.$_sett->get('site_name'),
-	'Keys'  => 'Ustawienia profilu, ustawienia konta, edycja konta, profil',
-	'Desc'  => 'W tym miescju możesz dokonać aktualizacji swoich danych osobowych.',
+	'Title' => __('User account settings - :username » :sitename', array(':username' => $_user->get('username'), ':sitename' => $_sett->get('site_name'))),
+	'Keys'  => __('profile settings, account settings, edit account profile'),
+	'Desc'  => __('Here you can update your personal information'),
 );
 
 $_sbb = $ec->getService('Sbb');
 
 if (isset($status) && $status == 'ok')
 {
-	$_tpl->printMessage('valid', __('Konto edytowane prawidłowo'));
+	$_tpl->printMessage('valid', __('Informations has been saved'));
 }
 elseif (isset($status) && $status == 'error')
 {
 	if (isset($status) && $status == 'error' && isset($error) && $error == 1)
 	{
-		$_tpl->printMessage('error', __('Pola z nazwą użytkownika i emailem nie mogą być puste.'));
+		$_tpl->printMessage('error', __('The fields with the user name and e-mail can not be empty'));
 	}
 	elseif (isset($status) && $status == 'error' && isset($error) && $error == 2)
 	{
-		$_tpl->printMessage('error', __('Nazwa użytkownika zawiera niedozwolone znaki.'));
+		$_tpl->printMessage('error', __('User name contains illegal characters'));
 	}
 	elseif (isset($status) && $status == 'error' && isset($error) && $error == 3)
 	{
-		$_tpl->printMessage('error', __('Podano nieprawidłowe aktualne hasło.'));
+		$_tpl->printMessage('error', __('Your current password is incorrect'));
 	}
 	elseif (isset($status) && $status == 'error' && isset($error) && $error == 4)
 	{
-		$_tpl->printMessage('error', __('Hasła użytkownika nie pasują do siebie.'));
+		$_tpl->printMessage('error', __('User passwords do not fit together'));
 	}
 	elseif (isset($status) && $status == 'error' && isset($error) && $error == 5)
 	{
-		$_tpl->printMessage('error', __('Wystąpił błąd przy próbie zmiany hasła. Prosimy o kontakt z Administracją.'));
+		$_tpl->printMessage('error', __('An error occurred while trying to change the password. Please contact the Administration'));
 	}
 	elseif (isset($status) && $status == 'error' && isset($error) && $error == 6)
 	{
-		$_tpl->printMessage('error', __('Adres email zawiera niedozwolone znaki.'));
+		$_tpl->printMessage('error', __('E-mail address contains illegal characters'));
 	}
 	elseif (isset($status) && $status == 'error' && isset($error) && $error == 7 && $_route->getByID(3))
 	{
@@ -89,7 +89,7 @@ elseif (isset($status) && $status == 'error')
 	}
 	else
 	{
-		$_tpl->printMessage('error', __('Błąd podczas edycji konta'));
+		$_tpl->printMessage('error', __('Error when editing your account'));
 	}
 }
 
