@@ -31,11 +31,12 @@
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
 +--------------------------------------------------------*/
+$_locale->load('maintenance');
 
 $theme = array(
-	'Title' => 'Tryb prac na serwerze. Zapraszamy wkrótce » '.$_sett->get('site_name'),
-	'Keys' => 'Tryb serwisowy, przerwa techniczna, usterka, aktualizacja',
-	'Desc' => ''
+	'Title' => __('Ongoing maintenance work on the site. Please come back later on :sitename', array(':sitename' => $_sett->get('site_name'))),
+	'Keys' => __('service mode, technical break, malfunction, update'),
+	'Desc' => __('Ongoing maintenance work on the site. We apologize for the malfunction')
 );
 
 // Blokuje wykonywanie pliku TPL z katalogu szablonu.
@@ -51,8 +52,3 @@ $_tpl->assign('maintenance',
 		'logged_in' => $_user->isLoggedIn()
 	)
 );
-
-/*
-	Należy zablokować wyświetlanie się wszystkiego poza plikiem maintenance
-	Mianowicie wszystkie panele, top, stopka do usunięcia z podglądu.
-*/

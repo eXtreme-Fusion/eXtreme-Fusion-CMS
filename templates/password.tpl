@@ -32,13 +32,13 @@
 +--------------------------------------------------------*/
 *}
 
-{panel=i18n('Odzyskiwanie dostępu do konta')}
+{panel=i18n('Recovering access to your account')}
 	{if $message}<div class="{$class}">{$message}</div>{/if}
 
 	{if !$action}
 	<div id="password_form">
-		<p>Podaj adres e-mail, na który konto zostało zarejestrowane.</p>
-		<p>Nowe hasło zostanie automatycznie utworzone i na niego wysłane.</p>
+		<p>{i18n('Enter your e-mail address to which the account is registered.')}</p>
+		<p>{i18n('The new password will be created and sent to this address.')}</p>
 		<form action="{$URL_REQUEST}" method="post">
 			<input type="email" name="email" required>
 			<input type="submit" name="check" value="Wyślij hasło" class="button">

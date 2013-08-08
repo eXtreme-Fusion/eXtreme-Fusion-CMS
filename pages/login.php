@@ -32,13 +32,14 @@
 | written permission from the original author(s).
 +--------------------------------------------------------*/
 $_head->set('<meta name="robots" content="noindex" />');
+$_locale->load('login');
 
 if ($_user->isLoggedIn())
 {
 	$theme = array(
-		'Title' => 'Panel użytkownika - '.$_user->get('username').' » '.$_sett->get('site_name'),
-		'Keys' => 'Wyloguj, edycja konta, prywatne wiadomości, konta użytkowników',
-		'Desc' => 'Łatwy dostęp do najpotrzebniejszych miejsc na stronie.'
+		'Title' => __('User panel - :username » :sitename', array(':username' => $_user->get('username'), ':sitename' => $_sett->get('site_name'))),
+		'Keys'  => __('logout, edit accounts, private messaging, user accounts'),
+		'Desc'  => __('Easy access to the the most needed places in website')
 	);
 
 	if ($_route->getAction())
@@ -56,7 +57,7 @@ if ($_user->isLoggedIn())
 
 	if ($count)
 	{
-		$_tpl->assign('messages', __('Nieprzeczytanych wiadomości: :msg', array(':msg' => $count)));
+		$_tpl->assign('messages', __('Unread messages: :msg', array(':msg' => $count)));
 	}
 
 	if ($_user->hasPermission('admin.login'))
@@ -72,9 +73,9 @@ if ($_user->isLoggedIn())
 else
 {
 	$theme = array(
-		'Title' => $_sett->get('site_name').' » Panel logowania',
-		'Keys' => 'Zaloguj się, logowanie, rejestracja',
-		'Desc' => 'Przez poniższy formularz możesz zalogować się do '.$_sett->get('site_name')
+		'Title' => __('Login panel to :sitename', array(':sitename' => $_sett->get('site_name'))),
+		'Keys' => __('log in, log on, sign up, create an account'),
+		'Desc' => __('Through this form you can sign up to :sitename', array(':sitename' => $_sett->get('site_name'))),
 	);
 
 	if ($_sett->get('enable_registration'))

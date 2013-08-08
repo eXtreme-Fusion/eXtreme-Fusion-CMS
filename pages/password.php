@@ -35,10 +35,10 @@ $_locale->load('password');
 $_head->set('<link href="'.ADDR_TEMPLATES.'stylesheet/password.css" media="screen" rel="stylesheet">');
 
 $theme = array(
-		'Title' => __('Odzyskaj swoje hasło').' » '.$_sett->get('site_name'),
-		'Keys' => 'Odzyskiwanie hasła, zapomniałem hasła, hasło',
-		'Desc' => 'Jeśli nie pamiętasz hasła do swojego proflu możesz wysłać nowe hasło na adres podany podczas rejestracji.'
-	);
+	'Title' => __('Recover your password » :sitename', array(':sitename' => $_sett->get('site_name'))),
+	'Keys' => __('Recovering passwords, forgotten passwords, password'),
+	'Desc' => __('If you forget the password to your profile, you can send a new password to the address provided when registering')
+);
 
 if ($_user->iGuest())
 {
@@ -49,39 +49,39 @@ if ($_user->iGuest())
 	{
 		if ($_route->getParam('status') === 'ok')
 		{
-			$_tpl->printMessage('valid', __('Dziękujemy! Dalsze intrukcje zostały przesłane mailem.'));
+			$_tpl->printMessage('valid', __('Thank you! Further instructions were sent by an e-mail.'));
 		}
 		elseif ($_route->getParam('status') === '2')
 		{
-			$_tpl->printMessage('error', __('Twoje konto wymaga akceptacji Administratora. Prosimy o kontakt.'));
+			$_tpl->printMessage('error', __('Your account requires the activation by the administrator. Please contact us.'));
 		}
 		elseif ($_route->getParam('status') === '3')
 		{
-			$_tpl->printMessage('error', __('Twoje konto jest obecnie zablokowane. Proszę o kontakt z Administratorem.'));
+			$_tpl->printMessage('error', __('Your account is currently banned. Please contact the administrator.'));
 		}
 		elseif ($_route->getParam('status') === 'ready')
 		{
-			$_tpl->printMessage('valid', __('Nowe hasło zostało wysłane drogą mailową.'));
+			$_tpl->printMessage('valid', __('News password has been sent by an e-mail.'));
 		}
 		elseif ($_route->getParam('status') === 'not-ready')
 		{
-			$_tpl->printMessage('error', __('Nieprawidłowy link potwierdzający własność konta mailowego.'));
+			$_tpl->printMessage('error', __('Incorrect confirmation link.'));
 		}
 		elseif ($_route->getParam('status') === 'to-active')
 		{
-			$_tpl->printMessage('error', __('Nowe hasło zostało wysłane drogą mailową, ale wymagana jest aktywacja konta przez Administratora.'));
+			$_tpl->printMessage('error', __('New password has been sent by an e-mail, but there is also requirement of activation by the administrator.'));
 		}
 		elseif ($_route->getParam('status') === 'banned')
 		{
-			$_tpl->printMessage('error', __('Nowe hasło zostało wysłane drogą mailową, ale twoje konto jest obecnie zablokowane. Proszę o kontakt z Administratorem.'));
+			$_tpl->printMessage('error', __('New password has been sent by an e-mail, but your account is currently banned. Please contact the administrator.'));
 		}
 		elseif ($_route->getParam('status') === 'db-error')
 		{
-			$_tpl->printMessage('error', __('Nie udało się zapisać nowego hasła w bazie. Proszę o kontakt z Administratorem.'));
+			$_tpl->printMessage('error', __('Error! New password has not been saved to the database. Please contact the administrator.'));
 		}
 		elseif ($_route->getParam('status') === 'time-error')
 		{
-			$_tpl->printMessage('error', __('Link generujący nowe hasło jest przestarzały. Należy rozpocząć od nowa procedurę Odzyskiwania dostępu do konta.'));
+			$_tpl->printMessage('error', __('Link that generates new password is outdated. Please start password recovery operation from the begining.'));
 		}
 	}
 
@@ -105,12 +105,18 @@ if ($_user->iGuest())
 						$hash = time().'_'.substr(uniqid(md5(time())), 1, 10);
 						$_user->update($data['id'], array('valid_code' => $hash));
 
-						// Do Tymcio - jak bedziesz robił tutaj locale, to zrób short_index - myślę że wiesz co mam na myśli ;)
-						$status = $_mail->send($_request->post('email')->show(), $_sett->get('contact_email'), __('Generowanie nowego hasła'),
-						'Poproszono o zmianę hasła w serwisie '.$_sett->get('site_name').' dostępnym pod adresem '.ADDR_SITE.'.'.PHP_EOL.'
-						Jeżeli nie korzystałeś/aś z procedury odzyskiwania dostępu do konta, prosimy o zignorowanie tej wiadomości.'.PHP_EOL.PHP_EOL.'
-							W celu wygenerowania nowego hasła, proszę przejść pod nastepujący adres:'.PHP_EOL.PHP_EOL.'
-							<a href="'.$_route->path(array('controller' => 'password', 'action' => 'renew', 'user-'.$data['id'], $hash)).'">'.$_route->path(array('controller' => 'password', 'action' => 'renew', 'user-'.$data['id'], $hash)).'</a>'
+						$status = $_mail->send(
+								$_request->post('email')->show(), 
+								$_sett->get('contact_email'), 
+								__('Generate new password » :sitename', array(':sitename' => $_sett->get('site_name'))),
+								__('Asked to change your password on website: :sitename avaible at address: <a href=":addressite">:addressite</a>.:eol If you did not use password recovery option, please ignore this message.:eol To generate new password, please go to the following website address: :eol <a href=":addrgen">:addrgen</a>', 
+									array(
+										':sitename' => $_sett->get('site_name'),
+										':eol' => PHP_EOL,
+										':addressite' => ADDR_SITE,
+										':addrgen' => $_route->path(array('controller' => 'password', 'action' => 'renew', 'user-'.$data['id'], $hash))
+									)
+								)
 						);
 						if ($status)
 						{
@@ -134,13 +140,13 @@ if ($_user->iGuest())
 				}
 				else
 				{
-					$_tpl->printMessage('error', __('Podany adres e-mail nie istnieje w bazie danych.'));
+					$_tpl->printMessage('error', __('Error! This e-mail address exists in our database.'));
 				}
 
 			}
 			else
 			{
-				$_tpl->printMessage('error', __('Podana w polu formularza wartość nie jest zgodna z formatem adresu e-mail.'));
+				$_tpl->printMessage('error', __('Error! The value given in form is not compatible with format of an e-mail address.'));
 			}
 		}
 	}
@@ -163,16 +169,18 @@ if ($_user->iGuest())
 					$salt = substr(sha512(uniqid(rand(), true)), 0, 5);
 					$password = substr(md5(uniqid(time())), 2, 15);
 
-					$new_status = '0';
-
 					if ($data['status'] === '1' || $data['status'] === '2')
 					{
 						if ($_sett->get('admin_activation') || $data['status'] === '2')
 						{
 							if ($_user->update($_route->getParam('user'), array('password' => sha512($salt.'^'.$password), 'salt' => $salt, 'status' => 2, 'valid_code' => '')))
 							{
-								// Do Tymcio - jak bedziesz robił tutaj locale, to zrób short_index - myślę że wiesz co mam na myśli ;)
-								$_mail->send($data['email'], $_sett->get('contact_email'), __('Nowe hasło'), '<p>Twoje nowe hasło: '.$password.'</p><p>Dziękujemy za skorzystanie z Systemu odzyskiwania konta.</p>');
+								$_mail->send(
+									$data['email'], 
+									$_sett->get('contact_email'),
+									__('New Password » :sitename', array(':sitename' => $_sett->get('site_name'))),
+									__('Your new password: :pass. Thank you for using password recovery system', array(':pass' => $password))
+								);
 
 								$_route->redirect(array('action' => 'message', 'status' => 'to-active'));
 							}
@@ -181,9 +189,13 @@ if ($_user->iGuest())
 						{
 							if ($_user->update($_route->getParam('user'), array('password' => sha512($salt.'^'.$password), 'salt' => $salt, 'status' => 0, 'valid_code' => '')))
 							{
-								// Do Tymcio - jak bedziesz robił tutaj locale, to zrób short_index - myślę że wiesz co mam na myśli ;)
-								$_mail->send($data['email'], $_sett->get('contact_email'), __('Nowe hasło'), '<p>Twoje nowe hasło: '.$password.'</p><p>Dziękujemy za skorzystanie z Systemu odzyskiwania konta.</p>');
-
+								$_mail->send(
+									$data['email'], 
+									$_sett->get('contact_email'),
+									__('New Password » :sitename', array(':sitename' => $_sett->get('site_name'))),
+									__('Your new password: :pass. Thank you for using password recovery system', array(':pass' => $password))
+								);
+								
 								$_route->redirect(array('action' => 'message', 'status' => 'ready'));
 							}
 						}
@@ -192,9 +204,13 @@ if ($_user->iGuest())
 					{
 						if ($_user->update($_route->getParam('user'), array('password' => sha512($salt.'^'.$password), 'salt' => $salt, 'valid_code' => '')))
 						{
-							// Do Tymcio - jak bedziesz robił tutaj locale, to zrób short_index - myślę że wiesz co mam na myśli ;)
-							$_mail->send($data['email'], $_sett->get('contact_email'), __('Nowe hasło'), '<p>Twoje nowe hasło: '.$password.'</p><p>Dziękujemy za skorzystanie z Systemu odzyskiwania konta.</p>');
-
+							$_mail->send(
+								$data['email'], 
+								$_sett->get('contact_email'),
+								__('New Password » :sitename', array(':sitename' => $_sett->get('site_name'))),
+								__('Your new password: :pass. Thank you for using password recovery system', array(':pass' => $password))
+							);
+							
 							$_route->redirect(array('action' => 'message', 'status' => 'banned'));
 						}
 					}
@@ -202,9 +218,13 @@ if ($_user->iGuest())
 					{
 						if ($_user->update($_route->getParam('user'), array('password' => sha512($salt.'^'.$password), 'salt' => $salt, 'valid_code' => '')))
 						{
-							// Do Tymcio - jak bedziesz robił tutaj locale, to zrób short_index - myślę że wiesz co mam na myśli ;)
-							$_mail->send($data['email'], $_sett->get('contact_email'), __('Nowe hasło'), '<p>Twoje nowe hasło: '.$password.'</p><p>Dziękujemy za skorzystanie z Systemu odzyskiwania konta.</p>');
-
+							$_mail->send(
+								$data['email'], 
+								$_sett->get('contact_email'),
+								__('New Password » :sitename', array(':sitename' => $_sett->get('site_name'))),
+								__('Your new password: :pass. Thank you for using password recovery system', array(':pass' => $password))
+							);
+							
 							$_route->redirect(array('action' => 'message', 'status' => 'ready'));
 						}
 					}
@@ -223,7 +243,7 @@ if ($_user->iGuest())
 		}
 		else
 		{
-			throw new systemException(__('Błąd! Nie udało się pobrać wszystkich danych wymaganych do zmiany hasła.'));
+			throw new systemException(__('Error! Failed to download all the data required to change your password.'));
 		}
 	}
 }
