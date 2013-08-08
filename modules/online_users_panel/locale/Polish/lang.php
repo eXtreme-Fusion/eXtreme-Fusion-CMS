@@ -1,9 +1,9 @@
 <?php defined('EF5_SYSTEM') || exit;
 
 return array(
-	'Users online'    => 'Aktualnie online',
-	'Guests online'   => 'Gości online',
+	'Users online'    => 'Aktualnie&nbsp;online',
+	'Guests online'   => 'Gości&nbsp;online',
 	'Logged in users' => 'Zalogowanych',
 	'Total members'   => 'Użytkowników',
-	'Last member'     => 'Ostatni użytkownik',
+	'Last member'     => 'Ostatni&nbsp;użytkownik',
 );
