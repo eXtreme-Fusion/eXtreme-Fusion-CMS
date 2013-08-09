@@ -23,7 +23,7 @@
  Affero GPL license.*/
 
 /** TODO: Konfiguracja języka w osobnym pliku (`locale.php`) ***/
-setlocale(LC_TIME, array('pl_PL.UTF-8', 'Polish'));
+setlocale(LC_TIME, array('pl', 'pl_PL', 'Polish_Poland.28592'));
 
 return array(
 
@@ -96,7 +96,7 @@ return array(
 
 	'User Panel' => 'Panel użytkownika',
 	'Admin Panel' => 'Administracja',
-	
+
 	'--No selection--' => '--Brak wyboru--',
 	'--Default--' => '--Domyślne--',
 
@@ -342,7 +342,7 @@ return array(
 	'Confirm new password:' => 'Potwierdź nowe hasło:',
 	'Edit account' => 'Edytuj konto',
 	'Language:' => 'Język:',
-	
+
 	'Never logged in' => 'Nie był na stronie',
 
 	'Polish' => 'Polski',
@@ -350,7 +350,7 @@ return array(
 	'Czech' => 'Czeski',
 
 	'Modules under Development.' => 'Moduł w trakcie rozwoju.',
-	
+
 	// Footer
 	'Unique visits:' => 'Unikalnych wizyt:',
 

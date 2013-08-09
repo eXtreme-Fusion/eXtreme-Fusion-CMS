@@ -3,6 +3,7 @@
 	<head>
 		<title></title>
 		<meta charset="{i18n('html_charset')}" />
+		
 		<link rel="shortcut icon" href="{$ADDR_FAVICON}" type="image/x-icon" />
 		<link href="{$ADDR_COMMON_CSS}grid.reset.css" media="screen" rel="stylesheet" />
 		<link href="{$ADDR_COMMON_CSS}grid.text.css" media="screen" rel="stylesheet" />

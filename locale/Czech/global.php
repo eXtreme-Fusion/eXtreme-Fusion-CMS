@@ -23,7 +23,7 @@ This program is released as free software under the
 Affero GPL license.*/
 
 /** TODO: Konfiguracja języka w osobnym pliku (`locale.php`) ***/
-setlocale(LC_TIME, array('cs_CS.UTF-8', 'Czech'));
+setlocale(LC_TIME, array('cs_CS', 'cs', 'Czech_Czech.28592'));
 
 return array(
 
