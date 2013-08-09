@@ -22,7 +22,11 @@ Translator and tester: Michał Pospieszyński (sony)
 This program is released as free software under the
 Affero GPL license.*/
 
-/** TODO: Konfiguracja języka w osobnym pliku (`locale.php`) ***/
+/**
+ * We are not loading UTF-8 locales, because there is a problem
+ * with encoding detection. Function mb_detect_encoding is not working
+ * correctly, so converting the UTF-8 string to UTF-8 may tear down locale marks.
+ */
 setlocale(LC_TIME, array('cs_CS', 'cs', 'Czech_Czech.28592'));
 
 return array(
