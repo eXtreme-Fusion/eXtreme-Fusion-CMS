@@ -19,15 +19,7 @@ $_locale->load('error');
 
 if (isNum($_route->getAction()))
 {
-	if ($_route->getAction() === 404)
-	{
-		header("HTTP/1.0 404 Not Found");
-		$theme = array(
-			'Title' => __('Error 404 - Page not found'),
-			'Desc' => __('Not found this pages')
-		);
-	}
-	elseif ($_route->getAction() === 401)
+	if ($_route->getAction() === 401)
 	{
 		header("HTTP/1.0 401 Unauthorized");
 		$theme = array(
@@ -41,6 +33,14 @@ if (isNum($_route->getAction()))
 		$theme = array(
 			'Title' => __('Error 403 - Forbidden'),
 			'Desc' => __('Access this page is forbidden')
+		);
+	}
+	elseif ($_route->getAction() === 404)
+	{
+		header("HTTP/1.0 404 Not Found");
+		$theme = array(
+			'Title' => __('Error 404 - Page not found'),
+			'Desc' => __('Not found this pages')
 		);
 	}
 	elseif ($_route->getAction() === 500)
