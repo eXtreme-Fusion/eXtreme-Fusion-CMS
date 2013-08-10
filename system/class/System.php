@@ -161,6 +161,8 @@ class System {
 
 	/**
 	 * Opróżnia katalog pamięci podręcznej usuwając tylko pliki o roszerzeniach tpl, php lub txt.
+	 * 
+	 *	Nie usuwa plików z podfolderów folderu $dir! Aby je uunąć, użyj clearCacheRecursive().
 	 *
 	 *     // Usuwa całą pamięć podręczną z głównego katalogu pamięci podręcznej.
 	 *     $_system->clearCache();

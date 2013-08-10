@@ -23,7 +23,7 @@ This program is released as free software under the
 Affero GPL license.*/
 
 /** TODO: Konfiguracja języka w osobnym pliku (`locale.php`) ***/
-setlocale(LC_TIME, array('cs_CS.UTF-8', 'Czech'));
+setlocale(LC_TIME, array('cs_CS', 'cs', 'Czech_Czech.28592'));
 
 return array(
 
@@ -307,7 +307,7 @@ Tato zpráva byla zaslána automaticky. Neodpovídejte prosím na ni.',
 // Function showCopyrights()
 'Powered by :system' => 'Web běží na systému :system.<br />Copyright 2002-2013 <a href="http://php-fusion.co.uk/">PHP-Fusion</a>. Released as free software without warranties under <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">aGPL v3</a>.',
 
-'Powered by :system under :license License' => 'Web běží na systému :system.<br />Copyright 2002-2013 <a href="http://php-fusion.co.uk/">PHP-Fusion</a>. Released as free software without warranties under <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">aGPL v3</a>.',
+'Powered by :system under :license License' => 'Web běží na systému CMS :system.<br />Copyright 2002-2013 <a href="http://php-fusion.co.uk/">PHP-Fusion</a>. Released as free software without warranties under <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">aGPL v3</a>.',
 
 'Yes' => 'Ano',
 'No' => 'Ne',

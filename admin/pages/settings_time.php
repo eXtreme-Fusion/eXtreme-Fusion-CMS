@@ -13,7 +13,7 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
-| 
+|
 **********************************************************
                 ORIGINALLY BASED ON
 ---------------------------------------------------------+
@@ -32,20 +32,20 @@
 | written permission from the original author(s).
 +--------------------------------------------------------*/
 try
-{
+{ header('Content-Type: text/html; charset=UTF-8');
 	require_once '../../config.php';
 	require DIR_SITE.'bootstrap.php';
 	require_once DIR_SYSTEM.'admincore.php';
-	
+
 	$_locale->load('settings_time');
 
 	if ( ! $_user->hasPermission('admin.settings_time'))
 	{
 		throw new userException(__('Access denied'));
 	}
-	
+
 	$_fav->setFavByLink('settings_time.php', $_user->get('id'));
-	
+
 	$_tpl = new Iframe;
 
 	if ($_request->get(array('status', 'act'))->show())
@@ -67,9 +67,9 @@ try
 			'offset_timezone' => $_request->post('offset_timezone')->strip(),
 			'user_custom_offset_timezone' => $_request->post('user_custom_offset_timezone')->isNum(TRUE)
 		));
-		
+
 		$_system->clearCacheRecursive($_files);
-		
+
 		$_tpl->printMessage('valid', $_log->insertSuccess('edit', __('Data has been saved.')));
 		$_tpl->assign('view', 'settings');
 	}
@@ -142,27 +142,27 @@ try
 	$strf_time = time()+($_sett->get('offset_timezone')*3600);
 
 	$date_opts = array(
-		'%m/%d/%Y' => HELP::strfTimeToUTF("%m/%d/%Y", $strf_time),
-		'%d/%m/%Y' => HELP::strfTimeToUTF("%d/%m/%Y", $strf_time),
-		'%d-%m-%Y' => HELP::strfTimeToUTF("%d-%m-%Y", $strf_time),
-		'%d.%m.%Y' => HELP::strfTimeToUTF("%d.%m.%Y", $strf_time),
-		'%m/%d/%Y %H:%M' => HELP::strfTimeToUTF("%m/%d/%Y %H:%M", $strf_time),
-		'%d/%m/%Y %H:%M' => HELP::strfTimeToUTF("%d/%m/%Y %H:%M", $strf_time),
-		'%d-%m-%Y %H:%M' => HELP::strfTimeToUTF("%d-%m-%Y %H:%M", $strf_time),
-		'%d.%m.%Y %H:%M' => HELP::strfTimeToUTF("%d.%m.%Y %H:%M", $strf_time),
-		'%m/%d/%Y %H:%M:%S' => HELP::strfTimeToUTF("%m/%d/%Y %H:%M:%S", $strf_time),
-		'%d/%m/%Y %H:%M:%S' => HELP::strfTimeToUTF("%d/%m/%Y %H:%M:%S", $strf_time),
-		'%d-%m-%Y %H:%M:%S' => HELP::strfTimeToUTF("%d-%m-%Y %H:%M:%S", $strf_time),
-		'%d.%m.%Y %H:%M:%S' => HELP::strfTimeToUTF("%d.%m.%Y %H:%M:%S", $strf_time),
-		'%B %d %Y' => HELP::strfTimeToUTF("%B %d %Y", $strf_time),
-		'%d. %B %Y' => HELP::strfTimeToUTF("%d. %B %Y", $strf_time),
-		'%d %B %Y' => HELP::strfTimeToUTF("%d %B %Y", $strf_time),
-		'%B %d %Y %H:%M' => HELP::strfTimeToUTF("%B %d %Y %H:%M", $strf_time),
-		'%d. %B %Y %H:%M' => HELP::strfTimeToUTF("%d. %B %Y %H:%M", $strf_time),
-		'%d %B %Y %H:%M' => HELP::strfTimeToUTF("%d %B %Y %H:%M", $strf_time),
-		'%B %d %Y %H:%M:%S' => HELP::strfTimeToUTF("%B %d %Y %H:%M:%S", $strf_time),
-		'%d. %B %Y %H:%M:%S' => HELP::strfTimeToUTF("%d. %B %Y %H:%M:%S", $strf_time),
-		'%d %B %Y %H:%M:%S' => HELP::strfTimeToUTF("%d %B %Y %H:%M:%S", $strf_time)
+		'%m/%d/%Y' => HELP::strfTimeInUTF("%m/%d/%Y", $strf_time),
+		'%d/%m/%Y' => HELP::strfTimeInUTF("%d/%m/%Y", $strf_time),
+		'%d-%m-%Y' => HELP::strfTimeInUTF("%d-%m-%Y", $strf_time),
+		'%d.%m.%Y' => HELP::strfTimeInUTF("%d.%m.%Y", $strf_time),
+		'%m/%d/%Y %H:%M' => HELP::strfTimeInUTF("%m/%d/%Y %H:%M", $strf_time),
+		'%d/%m/%Y %H:%M' => HELP::strfTimeInUTF("%d/%m/%Y %H:%M", $strf_time),
+		'%d-%m-%Y %H:%M' => HELP::strfTimeInUTF("%d-%m-%Y %H:%M", $strf_time),
+		'%d.%m.%Y %H:%M' => HELP::strfTimeInUTF("%d.%m.%Y %H:%M", $strf_time),
+		'%m/%d/%Y %H:%M:%S' => HELP::strfTimeInUTF("%m/%d/%Y %H:%M:%S", $strf_time),
+		'%d/%m/%Y %H:%M:%S' => HELP::strfTimeInUTF("%d/%m/%Y %H:%M:%S", $strf_time),
+		'%d-%m-%Y %H:%M:%S' => HELP::strfTimeInUTF("%d-%m-%Y %H:%M:%S", $strf_time),
+		'%d.%m.%Y %H:%M:%S' => HELP::strfTimeInUTF("%d.%m.%Y %H:%M:%S", $strf_time),
+		'%B %d %Y' => HELP::strfTimeInUTF("%B %d %Y", $strf_time),
+		'%d. %B %Y' => HELP::strfTimeInUTF("%d. %B %Y", $strf_time),
+		'%d %B %Y' => HELP::strfTimeInUTF("%d %B %Y", $strf_time),
+		'%B %d %Y %H:%M' => HELP::strfTimeInUTF("%B %d %Y %H:%M", $strf_time),
+		'%d. %B %Y %H:%M' => HELP::strfTimeInUTF("%d. %B %Y %H:%M", $strf_time),
+		'%d %B %Y %H:%M' => HELP::strfTimeInUTF("%d %B %Y %H:%M", $strf_time),
+		'%B %d %Y %H:%M:%S' => HELP::strfTimeInUTF("%B %d %Y %H:%M:%S", $strf_time),
+		'%d. %B %Y %H:%M:%S' => HELP::strfTimeInUTF("%d. %B %Y %H:%M:%S", $strf_time),
+		'%d %B %Y %H:%M:%S' => HELP::strfTimeInUTF("%d %B %Y %H:%M:%S", $strf_time)
 	);
 
 	// Dołączanie niestandardowych formatów stworzonych przez użytkownika
@@ -171,7 +171,7 @@ try
 	$i = 0; $format = array();
 	foreach($db_formats as $row)
 	{
-		$preview = HELP::strfTimeToUTF($row['value'], $strf_time);
+		$preview = HELP::strfTimeInUTF($row['value'], $strf_time);
 		$date_opts[$row['value']] = $preview;
 
 		$format[] = array(

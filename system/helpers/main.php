@@ -85,7 +85,7 @@ function optUrl(optClass &$_tpl)
 	{
 		return $_tpl->getFunc('url', 'path', $value);
 	}
-	
+
 	if ($value)
 	{
 		if (method_exists($_tpl, 'route'))
@@ -93,13 +93,18 @@ function optUrl(optClass &$_tpl)
 			return $_tpl->route()->path($value);
 		}
 	}
-	
+
 	throw new systemException('Routing is not available.');
 }
 // Function for AJAX response
 function _e($val)
 {
 	echo $val; exit;
+}
+
+function arrLast($src)
+{
+	return $src[count($src)-1];
 }
 
 // Sprawdza, czy element istnieje w tablicy dwuwymiarowej
@@ -142,7 +147,7 @@ function __autoload($class_name)
 	{
 		$name = $class_name;
 	}
-	
+
 	$tmp_path = array(DIR_CLASS.$name.'.php');
 	foreach (new DirectoryIterator(DIR_MODULES) as $file)
 	{
@@ -154,7 +159,7 @@ function __autoload($class_name)
 			}
 		}
 	}
-	
+
 	foreach($tmp_path as $path)
 	{
 		if (file_exists($path))
@@ -210,7 +215,7 @@ Class HELP
 	{
 		$current = (int) str_replace('.', '', $current);
 		$new = (int) str_replace('.', '', $new);
-		
+
 		return $current === ($new-1);
 	}
 
@@ -378,18 +383,10 @@ Class HELP
 	}
 
 	// Konwertuje znaki językowe w nazwach miesięcy i innych wyrażeniach na UTF8
-	public static function strfTimeToUTF($keys, $time)
+	public static function strfTimeInUTF($keys, $time)
 	{
-		$ttime = strftime($keys, $time);
-		// Sprawdzamy czy znaki są kodowane w UTF-8
-		if (mb_detect_encoding($ttime) === 'UTF-8')
-		{	
-			// Jeśli tak wyświetlamy je bez zmiany kodowania
-			return $ttime;
-		}
-
 		// Zmiana kodowania na UTF-8
-		return iconv(mb_detect_encoding($ttime), 'UTF-8', $ttime);
+		return iconv('ISO-8859-2', 'UTF-8', strftime($keys, $time));
 	}
 
 	//==================================
@@ -988,31 +985,38 @@ Class HELP
 	public static function showDate($format, $val)
 	{
 		$val += intval(self::$_sett->get('offset_timezone')) * 3600;
+
 		if ($format === 'shortdate' || $format == 'longdate')
 		{
-			// Sprawdzamy czy znaki są kodowane w UTF-8
-			if (mb_detect_encoding(strftime(self::$_sett->get($format), $val)) === 'UTF-8')
-			{	
-				// Jeśli tak wyświetlamy je bez zmiany kodowania
-				return strftime(self::$_sett->get($format), $val);
-			}
-			
-			// Zmiana kodowania na UTF-8
-			return iconv(mb_detect_encoding(strftime(self::$_sett->get($format), $val)), 'UTF-8', strftime(self::$_sett->get($format), $val));
-			
+			$format = self::$_sett->get($format);
 		}
 		else
 		{
-			// Sprawdzamy czy znaki są kodowane w UTF-8
-			if (mb_detect_encoding(strftime(self::$_sett->get($format), $val)) === 'UTF-8')
-			{	
-				// Jeśli tak wyświetlamy je bez zmiany kodowania
-				return strftime('shortdate', $val);
-			}
-			
-			// Zmiana kodowania na UTF-8
-			return iconv(mb_detect_encoding(strftime(self::$_sett->get($format), $val)), 'UTF-8', strftime('shortdate', $val));
+			$format = self::$_sett->get('shortdate');
 		}
+
+		$strftime = strftime($format, $val);
+		return self::toUTF($strftime);
+	}
+
+	public static function date2UTF($date)
+	{
+		return self::toUTF($date);
+	}
+
+	public static function toUTF($src)
+	{
+		$encoding = mb_detect_encoding($src);
+
+		// Sprawdzamy czy znaki są kodowane w UTF-8
+		if ($encoding === 'UTF-8')
+		{
+			// Jeśli tak wyświetlamy je bez zmiany kodowania
+			return $src;
+		}
+
+		// Zmiana kodowania na UTF-8
+		return iconv($encoding, 'UTF-8', $src);
 	}
 
 	// Przetwarza ciąg znaków, który ma trafić do meta tagu Desciption
