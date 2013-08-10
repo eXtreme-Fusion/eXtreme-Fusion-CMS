@@ -1,6 +1,9 @@
 <?php
+$htaccess = '### PL: Blokada wyświetlania zawartości katalogów'.PHP_EOL;
+$htaccess .= 'Options -Indexes'.PHP_EOL.PHP_EOL;
 
-$htaccess = 'Options FollowSymlinks'.PHP_EOL.PHP_EOL;
+$htaccess .= '### PL: Dowiązanie symboliczne'.PHP_EOL;
+$htaccess .= 'Options +FollowSymLinks'.PHP_EOL.PHP_EOL;
 
 $htaccess .= '<Files .*>'.PHP_EOL;
 $htaccess .= '	Order Deny,Allow'.PHP_EOL;
