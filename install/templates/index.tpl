@@ -298,6 +298,10 @@
 											<div class='valid'>{i18n('Database connection established.')}</div><br />
 											<div class='valid'>{i18n('Config file successfully written.')}</div><br />
 											<div class='error'><strong>{i18n('Error:')}</strong> {i18n('Unable to create database tables.')}</div>
+										{elseif $htaccess_write_error}
+											<div class='valid'>{i18n('Database connection established.')}</div><br />
+											<div class='error'><strong>{i18n('Error:')}</strong> {i18n('Unable to write .htaccess file.')}</div><br />
+											<div class='status'>{i18n('Please ensure .htaccess is writable.')}</div>
 										{/if}
 									{/if}
 								{/if}

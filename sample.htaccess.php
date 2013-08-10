@@ -1,4 +1,8 @@
-Options FollowSymlinks
+### PL: Blokada wyświetlania zawartości katalogów
+Options -Indexes
+
+### PL: Dowiązanie symboliczne
+Options +FollowSymLinks
 
 <Files .*>
 	Order Deny,Allow
@@ -7,8 +11,13 @@ Options FollowSymlinks
 
 <IfModule mod_rewrite.c>
 	RewriteEngine On
-	RewriteRule ^(?:cache|tmp|system)\b.* index.php/error/403/ [L]
+	RewriteRule ^(?:cache|system|tmp)\b.* http://localhost/root/error/403/ [L]
 
+	ErrorDocument 401 http://localhost/root/error/401/
+	ErrorDocument 403 http://localhost/root/error/403/
+	ErrorDocument 404 http://localhost/root/error/404/
+	ErrorDocument 500 http://localhost/root/error/500/
+	
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteRule .* index.php/$0 [L]
