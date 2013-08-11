@@ -337,24 +337,6 @@ try
 				$config_error = TRUE;
 			}
 		}
-		
-		if ( ! file_exists(DIR_SITE.'.htaccess'))
-		{
-			if (file_exists(DIR_SITE.'sample.htaccess') && function_exists('rename'))
-			{
-				@rename(DIR_SITE.'sample.htaccess', DIR_SITE.'.htaccess');
-			}
-			else
-			{
-				$handle = fopen(DIR_SITE.'.htaccess', 'w');
-				fclose($handle);
-			}
-
-			if (! file_exists(DIR_SITE.'.htaccess'))
-			{
-				$config_error = TRUE;
-			}
-		}
 
 		if ($config_error)
 		{
@@ -376,8 +358,7 @@ try
 			DIR_SITE.'templates'.DS.'images'.DS.'news'.DS.'thumbs'.DS => FALSE,
 			DIR_SITE.'templates'.DS.'images'.DS.'news_cats'.DS => FALSE,
 			DIR_SITE.'tmp'.DS => FALSE,
-			DIR_SITE.'config.php' => FALSE,
-			DIR_SITE.'.htaccess' => FALSE
+			DIR_SITE.'config.php' => FALSE
 		);
 
 		$write_check = TRUE; $chmod_error = array(); $i = 0;
@@ -536,19 +517,6 @@ try
 							else
 							{
 								$_tpl->assign('config_write_error', TRUE);
-							}
-							
-							
-							include_once 'create_htaccess.php';
-
-							$temp = fopen(DIR_SITE.'.htaccess','w');
-							if (fwrite($temp, $htaccess))
-							{
-								fclose($temp);
-							}
-							else
-							{
-								$_tpl->assign('htaccess_write_error', TRUE);
 							}
 						}
 						catch (PDOException $e)

@@ -90,8 +90,6 @@ return array(
 	'Unable to create database tables.' => 'Nelze vytvořit tabulky v databázi.',
 	'Unable to write config file.' => 'Nelze zapsat konfigurační soubor',
 	'Please ensure config.php is writable.' => 'Ujistěte se, že soubor config.php je zapisovatelný.',
-	'Unable to write .htaccess file.' => 'Brak możliwości zapisu pliku .htaccess.',
-	'Please ensure .htaccess is writable.' => 'Sprawdź, czy plik .htaccess jest zapisywalny.',
 	'Could not write or delete MySQL tables.' => 'Nebylo možné uložit nebo odstranit MySQL tabulky.',
 	'Please make sure your MySQL user has read, write and delete permission for the selected database.' => 'Zkontrolujte, zda MySQL uživatel databáze má právo na číst, zapisovat a mazat data v databázi.',
 	'Table prefix error.' => 'Chyba v předponě tabulky.',
