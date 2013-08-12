@@ -22,8 +22,12 @@
  This program is released as free software under the
  Affero GPL license.*/
 
-/** TODO: Konfiguracja języka w osobnym pliku (`locale.php`) ***/
-setlocale(LC_TIME, array('pl', 'pl_PL', 'Polish_Poland.28592'));
+/**
+ * Nie ładujemy locali UTF-8, gdyż jest problem z rozpoznaniem kodowania.
+ * Funkcja mb_detect_encoding nie działa prawidłowo,
+ * a konwertowanie ciągu UTF-8 do UTF-8 może powodować stratę znaków.
+ */
+setlocale(LC_TIME, array('pl_PL', 'pl', 'Polish_Poland.28592'));
 
 return array(
 

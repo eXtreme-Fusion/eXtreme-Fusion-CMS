@@ -382,7 +382,16 @@ Class HELP
 		return FALSE;
 	}
 
-	// Konwertuje znaki językowe w nazwach miesięcy i innych wyrażeniach na UTF8
+	/**
+	 * Konwertuje znaki językowe w nazwach miesięcy
+	 * i innych wyrażeniach na UTF-8.
+	 *
+	 *
+	 *
+	 * @param string $keys
+	 * @param type $time
+	 * @return type
+	 */
 	public static function strfTimeInUTF($keys, $time)
 	{
 		// Zmiana kodowania na UTF-8

@@ -32,7 +32,7 @@
 | written permission from the original author(s).
 +--------------------------------------------------------*/
 try
-{ header('Content-Type: text/html; charset=UTF-8');
+{
 	require_once '../../config.php';
 	require DIR_SITE.'bootstrap.php';
 	require_once DIR_SYSTEM.'admincore.php';
