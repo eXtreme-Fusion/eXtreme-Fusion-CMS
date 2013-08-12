@@ -37,7 +37,7 @@ return array(
 	'Cautions!' => 'Ostrzeżenie!',
 	'Posted in' => 'Napisanych postów',
 	'Send' => 'Wyślij',
-	'You must login to post a message!' => 'Musisz zalogować się, aby móc dodać wiadomość!',
+	'You must be logged in to post a message!' => 'Musisz zalogować się, aby móc dodać wiadomość!',
 	'No messages have been posted.' => 'Brak wiadomości.',	
 	'ARCHIVE' => 'ARCHIWUM'
 );
