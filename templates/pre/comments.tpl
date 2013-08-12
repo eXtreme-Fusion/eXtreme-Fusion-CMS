@@ -26,6 +26,7 @@
 					<div class="line center"><span id="send" class="button">{i18n('Add replay')}</span></div>
 				</form>
 			</div>
+			<div class="clear"></div>
 		{else}
 			<p class="center">{i18n('Commenting has been disabled for your group permissions')}</p>
 		{/if}
@@ -62,7 +63,9 @@
 			{/section}
 			{if $count/2 >= $limit/2}{$page_nav}{/if}
 		</div>
+		<div class="clear"></div>
 	{/if}
 {if ! $only_comments}
 	</div>
+	<div class="clear"></div>
 {/if}
