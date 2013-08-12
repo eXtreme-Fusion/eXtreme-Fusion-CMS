@@ -1,4 +1,8 @@
-Options FollowSymlinks
+### PL: Blokada wyświetlania zawartości katalogów
+Options -Indexes
+
+### PL: Dowiązanie symboliczne
+Options +FollowSymLinks 
 
 <Files .*>
 	Order Deny,Allow
