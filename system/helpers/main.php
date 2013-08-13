@@ -176,14 +176,16 @@ Class HELP
 		$_pdo,
 		$_sett,
 		$_user,
-		$_url;
+		$_url,
+		$_date;
 
-	public static function init($pdo, $sett, $user, $url)
+	public static function init($pdo, $sett, $user, $url, $date)
 	{
 		self::$_pdo  = $pdo;
 		self::$_sett = $sett;
 		self::$_user = $user;
 		self::$_url = $url;
+		self::$_date = $date;
 	}
 
 	public static function wordsProtect($string)
@@ -380,22 +382,6 @@ Class HELP
 		}
 
 		return FALSE;
-	}
-
-	/**
-	 * Konwertuje znaki językowe w nazwach miesięcy
-	 * i innych wyrażeniach na UTF-8.
-	 *
-	 *
-	 *
-	 * @param string $keys
-	 * @param type $time
-	 * @return type
-	 */
-	public static function strfTimeInUTF($keys, $time)
-	{
-		// Zmiana kodowania na UTF-8
-		return iconv('ISO-8859-2', 'UTF-8', strftime($keys, $time));
 	}
 
 	//==================================
@@ -1003,15 +989,10 @@ Class HELP
 		{
 			$format = self::$_sett->get('shortdate');
 		}
-
-		$strftime = strftime($format, $val);
-		return self::toUTF($strftime);
+		
+		return self::$_date->getDate($format, $val);
 	}
 
-	public static function date2UTF($date)
-	{
-		return self::toUTF($date);
-	}
 
 	public static function toUTF($src)
 	{

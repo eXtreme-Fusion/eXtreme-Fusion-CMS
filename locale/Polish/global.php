@@ -27,7 +27,7 @@
  * Funkcja mb_detect_encoding nie działa prawidłowo,
  * a konwertowanie ciągu UTF-8 do UTF-8 może powodować stratę znaków.
  */
-setlocale(LC_TIME, array('pl_PL', 'pl', 'Polish_Poland.28592'));
+setlocale(LC_TIME, array('pl_PL.UTF-8', 'Polish'));
 
 return array(
 
@@ -426,4 +426,8 @@ return array(
 	'Software' => 'Oprogramowanie',
 	'Themes' => 'Skórki',
 	'Windows' => 'Windows',
+ 
+	'IndexMonats' => array('styczeń','luty' , 'marzec' , 'kwiecień' , 'maj' , 'czerwiec' , 'lipiec' , 'sierpień' , 'wrzesień' , 'październik' , 'listopad' , 'grudzień'),
+	'IndexNiceMonats' => array('stycznia' , 'lutego' , 'marca' , 'kwietnia' , 'maja' , 'czerwca' , 'lipca' , 'sierpnia' , 'września' , 'października' , 'listopada' , 'grudnia'),
+	'IndexDays' => array('Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota', 'Niedziela'),
 );

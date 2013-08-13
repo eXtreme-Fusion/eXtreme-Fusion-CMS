@@ -90,7 +90,10 @@ try
 
 	# Members
     $_user = $ec->user;
-
+	
+	# Date
+	$_date = $ec->date;
+	
 	# Admin action logger
     $_log = new Logger($_user, $_pdo, $_sett->get('logger_active'));
 
@@ -116,7 +119,7 @@ try
 
 	$_url = new Url($_sett->getUns('routing', 'url_ext'), $_sett->getUns('routing', 'main_sep'), $_sett->getUns('routing', 'param_sep'), $_system->rewriteAvailable(), $_system->pathInfoExists());
 
-	HELP::init($_pdo, $_sett, $_user, $_url);
+	HELP::init($_pdo, $_sett, $_user, $_url, $_date);
 
 	define('URL_REQUEST', isset($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'] != '' ? HELP::cleanurl($_SERVER['REQUEST_URI']) : $_SERVER['SCRIPT_NAME']);
 	define('URL_QUERY', isset($_SERVER['QUERY_STRING']) ? HELP::cleanurl($_SERVER['QUERY_STRING']) : '');
