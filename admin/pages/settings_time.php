@@ -139,30 +139,30 @@ try
 		'12.0'		=> '(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka'
 	);
 
-	$strf_time = time()+($_sett->get('offset_timezone')*3600);
+	$time = time()+($_sett->get('offset_timezone')*3600);
 
 	$date_opts = array(
-		'%m/%d/%Y' => HELP::strfTimeInUTF("%m/%d/%Y", $strf_time),
-		'%d/%m/%Y' => HELP::strfTimeInUTF("%d/%m/%Y", $strf_time),
-		'%d-%m-%Y' => HELP::strfTimeInUTF("%d-%m-%Y", $strf_time),
-		'%d.%m.%Y' => HELP::strfTimeInUTF("%d.%m.%Y", $strf_time),
-		'%m/%d/%Y %H:%M' => HELP::strfTimeInUTF("%m/%d/%Y %H:%M", $strf_time),
-		'%d/%m/%Y %H:%M' => HELP::strfTimeInUTF("%d/%m/%Y %H:%M", $strf_time),
-		'%d-%m-%Y %H:%M' => HELP::strfTimeInUTF("%d-%m-%Y %H:%M", $strf_time),
-		'%d.%m.%Y %H:%M' => HELP::strfTimeInUTF("%d.%m.%Y %H:%M", $strf_time),
-		'%m/%d/%Y %H:%M:%S' => HELP::strfTimeInUTF("%m/%d/%Y %H:%M:%S", $strf_time),
-		'%d/%m/%Y %H:%M:%S' => HELP::strfTimeInUTF("%d/%m/%Y %H:%M:%S", $strf_time),
-		'%d-%m-%Y %H:%M:%S' => HELP::strfTimeInUTF("%d-%m-%Y %H:%M:%S", $strf_time),
-		'%d.%m.%Y %H:%M:%S' => HELP::strfTimeInUTF("%d.%m.%Y %H:%M:%S", $strf_time),
-		'%B %d %Y' => HELP::strfTimeInUTF("%B %d %Y", $strf_time),
-		'%d. %B %Y' => HELP::strfTimeInUTF("%d. %B %Y", $strf_time),
-		'%d %B %Y' => HELP::strfTimeInUTF("%d %B %Y", $strf_time),
-		'%B %d %Y %H:%M' => HELP::strfTimeInUTF("%B %d %Y %H:%M", $strf_time),
-		'%d. %B %Y %H:%M' => HELP::strfTimeInUTF("%d. %B %Y %H:%M", $strf_time),
-		'%d %B %Y %H:%M' => HELP::strfTimeInUTF("%d %B %Y %H:%M", $strf_time),
-		'%B %d %Y %H:%M:%S' => HELP::strfTimeInUTF("%B %d %Y %H:%M:%S", $strf_time),
-		'%d. %B %Y %H:%M:%S' => HELP::strfTimeInUTF("%d. %B %Y %H:%M:%S", $strf_time),
-		'%d %B %Y %H:%M:%S' => HELP::strfTimeInUTF("%d %B %Y %H:%M:%S", $strf_time)
+		'm d Y' => $_date->getDate("m d Y", $time),
+		'd/m/Y' => $_date->getDate("d/m/Y", $time),
+		'd-m-Y' => $_date->getDate("d-m-Y", $time),
+		'd.m.Y' => $_date->getDate("d.m.Y", $time),
+		'm/d/Y H:i' => $_date->getDate("m/d/Y H:i", $time),
+		'd/m/Y H:i' => $_date->getDate("d/m/Y H:i", $time),
+		'd-m-Y H:i' => $_date->getDate("d-m-Y H:i", $time),
+		'd.m.Y H:i' => $_date->getDate("d.m.Y H:i", $time),
+		'm/d/Y H:i:s' => $_date->getDate("m/d/Y H:i:s", $time),
+		'd/m/Y H:i:s' => $_date->getDate("d/m/Y H:i:s", $time),
+		'd-m-Y H:i:s' => $_date->getDate("d-m-Y H:i:s", $time),
+		'd.m.Y H:i:s' => $_date->getDate("d.m.Y H:i:s", $time),
+		'F d Y' => $_date->getDate("F d Y", $time),
+		'd. F Y' => $_date->getDate("d. F Y", $time),
+		'd F Y' => $_date->getDate("d F Y", $time),
+		'F d Y H:i' => $_date->getDate("F d Y H:i", $time),
+		'd. F Y H:i' => $_date->getDate("d. F Y H:i", $time),
+		'd F Y H:i' => $_date->getDate("d F Y H:i", $time),
+		'F d Y H:i:s' => $_date->getDate("F d Y H:i:s", $time),
+		'd. F Y H:i:s' => $_date->getDate("d. F Y H:i:s", $time),
+		'd F Y H:i:s' => $_date->getDate("d F Y H:i:s", $time)
 	);
 
 	// Dołączanie niestandardowych formatów stworzonych przez użytkownika
@@ -171,7 +171,7 @@ try
 	$i = 0; $format = array();
 	foreach($db_formats as $row)
 	{
-		$preview = HELP::strfTimeInUTF($row['value'], $strf_time);
+		$preview = $_date->getDate($row['value'], $time);
 		$date_opts[$row['value']] = $preview;
 
 		$format[] = array(

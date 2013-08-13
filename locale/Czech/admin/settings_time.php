@@ -14,7 +14,7 @@ return array(
 	'Let define the time shift relative to the default zone.' => 'Nechte definovat časový posun vzhledem k výchozí zóně.',
 	'Set the default value of time shift.' => 'Nastavit defaultní hodnotu času posunovače.',
 	'New date and time format:' => 'Váš nový formát datumu a času:',
-	'Time format help' => 'Seznam dostupných parametrů najdete zde: <a href="http://www.php.net/manual/en/function.strftime.php" title="Allowed parameters for PHP" rel="blank">http://www.php.net/manual/en/function.strftime.php</a>',
+	'Time format help' => 'Seznam dostupných parametrů najdete zde: <a href="http://www.php.net/manual/en/function.date.php" title="Allowed parameters for PHP" rel="blank">http://www.php.net/manual/en/function.date.php</a>',
 	'Existing date and time formats' => 'Existující formáty datumu a času',
 	'Value:' => 'Hodnota:',
 	'Overview:' => 'Náhled:',

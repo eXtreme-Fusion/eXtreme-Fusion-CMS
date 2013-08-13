@@ -93,4 +93,9 @@ class Container extends ServiceContainerBuilder
 	{
 		return new Statistics($this->getService('Pdo'), $this->getService('System'));
 	}
+	
+	protected function getDateService()
+	{
+		return new Date($this->getService('Sett'), $this->getService('Locales'));
+	}
 }

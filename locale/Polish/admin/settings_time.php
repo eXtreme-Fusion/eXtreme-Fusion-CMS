@@ -14,7 +14,7 @@ return array(
 	'Let define the time shift relative to the default zone.' => 'Pozwól określać przesunięcie czasu względem domyślnej strefy.',
 	'Set the default value of time shift.' => 'Ustaw domyślną wartość przesunięcia czasu.',
 	'New date and time format:' => 'Twój nowy format daty i czasu:',
-	'Time format help' => 'Lista dostępnych parametrów znajduje się tutaj: <a href="http://www.php.net/manual/en/function.strftime.php" title="Allowed parameters for PHP" rel="blank">http://www.php.net/manual/en/function.strftime.php</a>',
+	'Time format help' => 'Lista dostępnych parametrów znajduje się tutaj: <a href="http://www.php.net/manual/en/function.date.php" title="Allowed parameters for PHP" rel="blank">http://www.php.net/manual/en/function.date.php</a>',
 	'Existing date and time formats' => 'Istniejące formaty daty i czasu',
 	'Value:' => 'Wartość:',
 	'Overview:' => 'Podgląd:',

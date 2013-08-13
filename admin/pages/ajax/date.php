@@ -41,8 +41,8 @@ try
 	{
 		if ($_request->post('value')->show())
 		{
-			$strf_time = time() + ($_sett->get('offset_timezone')*3600);
-			echo HELP::strfTimeInUTF($_request->post('value')->show(), $strf_time); exit;
+			$time = time() + ($_sett->get('offset_timezone')*3600);
+			echo $_date->getDate($_request->post('value')->show(), $time); exit;
 		}
 	}
 }
