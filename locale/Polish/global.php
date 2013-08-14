@@ -27,7 +27,7 @@
  * Funkcja mb_detect_encoding nie działa prawidłowo,
  * a konwertowanie ciągu UTF-8 do UTF-8 może powodować stratę znaków.
  */
-setlocale(LC_TIME, array('pl_PL.UTF-8', 'Polish'));
+setlocale(LC_TIME, array('pl_PL', 'pl_PL.UTF8', 'pl', 'Polish_Polish.28592', 'Polish'));
 
 return array(
 

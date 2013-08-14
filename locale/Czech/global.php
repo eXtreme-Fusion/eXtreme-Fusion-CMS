@@ -27,7 +27,7 @@ Affero GPL license.*/
  * with encoding detection. Function mb_detect_encoding is not working
  * correctly, so converting the UTF-8 string to UTF-8 may tear down locale marks.
  */
-setlocale(LC_TIME, array('cs_CS.UTF-8', 'Czech'));
+setlocale(LC_TIME, array('cs_CS', 'cs_CS.UTF-8', 'cs', 'Czech_Chech.28592', 'Czech'));
 
 return array(
 
