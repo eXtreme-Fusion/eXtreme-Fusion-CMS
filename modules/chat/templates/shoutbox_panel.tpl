@@ -52,7 +52,7 @@
 				<div class="InfoBoxCon">
 					<div id="ShoutboxIcon"></div>
 					<div class="InfoBoxCenterRight">
-						<p class="center margin-vertical-10"><strong>{i18n('You must login to post a message!')}</strong>></p>
+						<p class="center margin-vertical-10"><strong>{i18n('You must login to post a message!')}</strong></p>
 					</div>
 				</div>
 				<div class="InfoBoxEnd"></div>
