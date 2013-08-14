@@ -35,11 +35,11 @@ class Date
 			 ),
 			'F' => array(
 				'form' => 'n',
-				'string' => __('IndexMonats')
+				'string' => __('IndexMonths')
 			 ),
 			'f' => array(
 				'form' => 'n',
-				'string' => __('IndexNiceMonats')
+				'string' => __('IndexNiceMonths')
 			 )
 		);
 		

@@ -36,7 +36,7 @@ return array(
 	'Cautions!' => 'Varování!',
 	'Posted in' => 'Napsaných příspěvků',
 	'Send' => 'Odeslat',
-	'You must login to post a message!' => 'Musíte být přihlášeni, abyste mohli psát zprávy!',
+	'You must be logged in to post a message!' => 'Musíte být přihlášeni, abyste mohli psát zprávy!',
 	'No messages have been posted.' => 'Nejsou žádné zprávy.',
 	'ARCHIVE' => 'ARCHÍV'
 );
