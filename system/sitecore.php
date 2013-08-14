@@ -98,6 +98,9 @@ try
 	# Requests
 	$_request = $ec->request;
 
+	# Date
+	$_date = $ec->date;
+
 	# Tags
 	! class_exists('Tag') || $_tag = New Tag($_system, $_pdo);
 
@@ -148,7 +151,7 @@ try
 	Parser::registerFunc('url', $_url);
 	
 	# Helper class
-	HELP::init($_pdo, $_sett, $_user, $_url);
+	HELP::init($_pdo, $_sett, $_user, $_url, $_date);
 
 	// Załączenie wymaganych plików
 	require_once DIR_SYSTEM.'table_list.php';
