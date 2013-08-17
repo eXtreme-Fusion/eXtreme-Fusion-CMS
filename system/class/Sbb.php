@@ -63,7 +63,7 @@ class SmileyBBcode
 	{
 		if ( ! self::$_inst)
 		{
-			self::$_inst = new SmileyBBcode($_sett, $_pdo, $_locale, $_head, $_user, $_system);
+			self::$_inst = new self($_sett, $_pdo, $_locale, $_head, $_user, $_system);
 		}
 
 		return self::$_inst;
