@@ -21,7 +21,7 @@
 			<tbody>
 				<?php if ($threads): ?>
 				<?php foreach ($threads as $thread): ?>
-				<tr>
+				<tr class="<?php echo $thread['row_color']; ?>">
 					<td>
 						<?php if ($thread['is_pinned']): ?><em class="pinned">(<?php echo __('Pinned'); ?>)</em><?php endif; ?>
 						<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', $thread['id'])); ?>" class="text-title"><?php echo $thread['title']; ?></a>

@@ -1060,4 +1060,26 @@ Class HELP
 	{
 	   return str_replace(array_keys($replace), array_values($replace), $text);
 	}
+	
+	// http://www.php.net/manual/en/function.array-push.php#58705
+	public static function array_push_associative(&$arr) 
+	{
+		$args = func_get_args();
+		foreach ($args as $arg) 
+		{
+			if (is_array($arg)) 
+			{
+				foreach ($arg as $key => $value) 
+				{
+					$arr[$key] = $value;
+				}
+			}
+			else
+			{
+				$arr[$arg] = '';
+			}
+		}
+		
+		return $arr;
+	}
 }
