@@ -27,8 +27,8 @@
 			</thead>
 			<tbody>
 				<?php foreach ($entries as $entry): ?>
-				<tr id="entry-<?php echo $entry['id']; ?>">
-					<td>
+				<tr class="<?php echo $entry['row_color']; ?>" id="entry-<?php echo $entry['id']; ?>">
+					<td class="align-top">
 						<div class="row">
 							<div class="col col-5">
 								<img src="<?php echo $this->user->getAvatarAddr($entry['user_id']); ?>" alt="<?php echo $entry['username']; ?>" class="avatar">

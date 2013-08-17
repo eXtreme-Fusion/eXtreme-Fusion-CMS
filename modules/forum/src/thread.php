@@ -24,10 +24,24 @@ class Thread_Model extends Abstract_Model {
 				t.timestamp DESC 
 		', array(':id', $id, PDO::PARAM_INT));
 
-		if ( ! $this->_pdo->getRowsCount($threads))
+		if ($this->_pdo->getRowsCount($threads))
+		{	
+			$data = array(); $i = 0;
+			foreach ($threads as $index => $var)
+			{
+				$data[$index] = $var;
+				
+				HELP::array_push_associative($data[$index], array('row_color' => $i % 2 == 0 ? 'cals1' : 'cals2'));
+				
+				$i++;
+			}
+			
+			return $data;
+		}
+		else
+		{
 			return FALSE;
-
-		return $threads;
+		}
 	}
 
 	public function findByID($id)

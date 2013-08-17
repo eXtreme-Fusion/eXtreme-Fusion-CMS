@@ -20,13 +20,31 @@ class Category_Model extends Abstract_Model {
 		', array(':id', $id, PDO::PARAM_INT));
 
 		$_categories = array();
-
+		
 		foreach ($categories as $category)
 		{
 			$_categories[] = array_merge($category, $this->getCount($category['id']));
 		}
 
-		return $_categories;
+		if ($_categories)
+		{	
+			$data = array(); $i = 0;
+			foreach ($_categories as $index => $var)
+			{
+				$data[$index] = $var;
+				
+				HELP::array_push_associative($data[$index], array('row_color' => $i % 2 == 0 ? 'cals1' : 'cals2'));
+				
+				$i++;
+			}
+			
+			return $data;
+		}
+		else
+		{
+			return FALSE;
+		}
+		
 	}
 
 	public function findByID($id)

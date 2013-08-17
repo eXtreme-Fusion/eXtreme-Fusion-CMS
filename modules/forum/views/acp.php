@@ -23,7 +23,7 @@
 					</tr>
 					<?php if ($categories = $category->fetchByID($board['id'])): ?>
 					<?php foreach ($categories as $_category): ?>
-					<tr>
+					<tr class="<?php echo $_category['row_color']; ?>">
 						<td>
 							<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'category', $_category['id'])); ?>" class="text-title"><?php echo $_category['title']; ?></a>
 							<?php if ($_category['is_locked']): ?><span class="category-locked"><?php echo __('Locked'); ?></span><?php endif; ?>
