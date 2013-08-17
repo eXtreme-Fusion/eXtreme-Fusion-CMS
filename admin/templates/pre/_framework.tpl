@@ -44,6 +44,7 @@
 						<div id="login-holder">
 							<div id="logo-login">
 								<img src="{$ADMIN_TEMPLATE_IMAGES}shared/extreme-fusion-logo.png" alt="eXtreme-Fusion logo">
+								<a href="{$ADDR_SITE}" title="Strona główna">Strona główna</a>
 							</div>
 							<div class="clear"></div>
 							<div id="loginbox">
