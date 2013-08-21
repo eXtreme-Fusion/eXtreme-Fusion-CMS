@@ -151,6 +151,7 @@ try
 		'd-m-Y H:i' => $_date->getDate("d-m-Y H:i", $time),
 		'd.m.Y H:i' => $_date->getDate("d.m.Y H:i", $time),
 		'm/d/Y H:i:s' => $_date->getDate("m/d/Y H:i:s", $time),
+		'd/m/Y H:i' => $_date->getDate("d/m/Y H:i", $time),
 		'd/m/Y H:i:s' => $_date->getDate("d/m/Y H:i:s", $time),
 		'd-m-Y H:i:s' => $_date->getDate("d-m-Y H:i:s", $time),
 		'd.m.Y H:i:s' => $_date->getDate("d.m.Y H:i:s", $time),
