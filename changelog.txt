@@ -1,5 +1,12 @@
 			eXtreme-Fusion 5.0.4
-
+Fixes:
+- dodanie pustej linii do .htaccess - serwery, które modyfikują ten plik, nie powiny wyświetlać już błędu 500
+- usunięcie błędu z wyświetlaniem polskich nazw miesięcy
+- czyszczenie cache po przypisaniu uzytkownika do grupy
+Improvements:
+- dodanie panelu ostatnich tematów na forum
+- tłumaczenie czeskich plików językowych
+- wprowadzenie synchronizacji dla języka czeskiego
 
 
 			eXtreme-Fusion 5.0.3 2013.07.31

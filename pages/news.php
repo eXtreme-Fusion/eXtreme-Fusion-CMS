@@ -100,7 +100,7 @@ if ($_route->getAction() && $_route->getAction() !== 'page')
 				'author_id' => $data['user_id'],
 				'author_name' => $_user->getUsername($data['user_id']),
 				'author_link' => $_route->path(array('controller' => 'profile', 'action' => $data['user_id'], HELP::Title2Link($data['username']))),
-				'date' => HELP::showDate('shortdate', $data['datestamp']),
+				'date' => HELP::showDate('longdate', $data['datestamp']),
 				'datetime' => date('c', $data['datestamp']),
 				'source' => $data['source'],
 				'keyword' => $keyword,

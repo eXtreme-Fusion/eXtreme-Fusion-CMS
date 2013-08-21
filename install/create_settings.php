@@ -95,8 +95,8 @@ $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'bad_words_enabled
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'bad_words', 'value' => ''));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'bad_word_replace', 'value' => '****'));
 
-$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'shortdate', 'value' => '%d/%m/%Y %H:%M'));
-$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'longdate', 'value' => '%B %d %Y %H:%M:%S'));
+$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'shortdate', 'value' => 'd/m/Y H:i'));
+$_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'longdate', 'value' => 'd F Y H:i:s'));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'timezone', 'value' => 'Europe/London'));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'offset_timezone', 'value' => '1.0'));
 $_pdo->insert($_dbconfig['prefix'].'settings', array('key' => 'user_custom_offset_timezone', 'value' => '0'));

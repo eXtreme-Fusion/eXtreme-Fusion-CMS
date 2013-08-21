@@ -49,7 +49,7 @@ class Date
 			{
 				$timestamp = time();
 			}
-			
+			//var_dump($data); exit;
 			foreach ($data as $var)
 			{
 				if (array_key_exists($var, $lang))
