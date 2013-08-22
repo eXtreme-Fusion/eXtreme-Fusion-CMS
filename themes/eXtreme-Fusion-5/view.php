@@ -18,7 +18,7 @@ class Theme extends Themes implements Theme_Intf
 	 * Poszczególne elementy szablonu mogą być wyłączone z poziomu modułu, dzięki parametrom.
 	 * Z tego powodu zalecamy korzystać z warunków if ($parametr).
 	 *
-	 * templates/page.tpl
+	 * THEME/templates/page.tpl
 	 */
 	public function page($logo = TRUE, $menu = TRUE, $left = TRUE, $right = TRUE, $footer = TRUE)
 	{
@@ -32,11 +32,11 @@ class Theme extends Themes implements Theme_Intf
 		 * Przekazywanie paneli do szablonu
 		 * Kolejność ustawiasz w panelu admina, Zarządzanie stroną -> Panele.
 		 */
-		 
-		// Przekazywanie kolumny z panelami z lewej strony 
+
+		// Przekazywanie kolumny z panelami z lewej strony
 		if ($left)  $this->assign('LEFT', LEFT);
-		
-		// Przekazywanie kolumny z panelami z prawej strony 
+
+		// Przekazywanie kolumny z panelami z prawej strony
 		if ($right) $this->assign('RIGHT', RIGHT);
 
 		// Część środkowa strony - panele górne, treść podstrony, panele dolne
@@ -52,10 +52,10 @@ class Theme extends Themes implements Theme_Intf
 		$this->assign('admin_panel_link', $this->showAdminPanelLink());
 
 		/**
-		 * Licznik unikalnych odwiedzin - o ile jest właczony. 
-		 * Aby włączyć/wyłączyć przejdź do Panel admina -> Ustawienia -> Różne
+		 * Licznik unikalnych odwiedzin - o ile jest włączony.
+		 * Aby włączyć/wyłączyć, przejdź do Panel admina -> Ustawienia -> Różne.
 		 */
-		 
+
 		// Sprawdzanie, czy licznik unikalnych odwiedzin jest włączony.
 		// Jak w przypadku stopki, korzystamy z obiektu ustawień.
 		if ($this->obj('sett')->get('visits_counter_enabled'))
@@ -64,15 +64,15 @@ class Theme extends Themes implements Theme_Intf
 			$this->assign('visits_count', $this->getVisitsCount());
 		}
 
-		// Wyświetlanie szablonu: templates/page.tpl
+		// Wyświetlanie szablonu: THEME/templates/page.tpl
 		$this->render('page');
-		
+
 	}
 
-	/** 
-	 * Pojedynczy panel boczny
+	/**
+	 * Pojedynczy panel boczny.
 	 *
-	 * templates/side_panel.tpl
+	 * THEME/templates/side_panel.tpl
 	 */
 	public function sidePanel($title = NULL)
 	{
@@ -82,14 +82,14 @@ class Theme extends Themes implements Theme_Intf
 			'open' => (bool) $title
 		));
 
-		// Wyświetlanie szablonu: templates/side_panel.tpl
+		// Wyświetlanie szablonu: THEME/templates/side_panel.tpl
 		$this->render('side_panel');
 	}
 
 	/**
-	 * Pojedynczy panel środkowy
+	 * Pojedynczy panel środkowy.
 	 *
-	 * templates/middle_panel.tpl
+	 * THEME/templates/middle_panel.tpl
 	 */
 	public function middlePanel($title = NULL)
 	{
@@ -99,17 +99,18 @@ class Theme extends Themes implements Theme_Intf
 			'open' => (bool) $title
 		));
 
-		// Wyświetlanie szablonu: templates/middle_panel.tpl
+		// Wyświetlanie szablonu: THEME/templates/middle_panel.tpl
 		$this->render('middle_panel');
 	}
 
-	// Dodatki do newsów
+	/**
+	 * Dodatki do newsów.
+	 *
+	 * BASE/templates/news.tpl
+	 * THEME/templates/news.tpl
+	 */
 	public function news()
 	{
-		/**
-		 * (opcjonalne)
-		 * Addons to assign as variables for news.tpl 
-		 * from templates directory in the system destination path.
-		 */
+		// Assign addons for news (optional).
 	}
 }
