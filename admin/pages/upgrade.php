@@ -70,10 +70,6 @@ try
 			{
 				/** ZAPYTANIA DLA NOWEJ WERSJI **/
 
-				$_sett->update(array(
-					'shortdate' => 'd/m/Y H:i',
-					'longdate' => 'd F Y H:i:s',
-				));
 
 
 				/** KONIEC ZAPYTAŃ DLA NOWEJ WERSJI **/
