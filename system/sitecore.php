@@ -102,18 +102,17 @@ try
 	$_date = $ec->date;
 
 	# Tags
-	! class_exists('Tag') || $_tag = New Tag($_system, $_pdo);
-
+	$_tag = $ec->tag;
+	
+	# Settings
+	$_sett = $ec->sett;
+	
+	# Users
+    $_user = $ec->user;
+	
 	// Checking whether there are required database tables
 	require_once DIR_SYSTEM.'table_list.php';
-
-    //1. way: $_sett = $ec->register('sett')->setArguments(array($_system, $_pdo))->get();
-	//2. way:
-	$_sett = $ec->sett;
-
-	//1. way:
-    $_user = $ec->register('User')->setArguments(array(new Reference('sett'), new Reference('pdo'), new Reference('system')))->get();
-
+	
 	if ($_request->post('login')->show() && $_request->post('username')->show() && $_request->post('password')->show())
 	{
 		// Sprawdzanie danych logowania
@@ -137,9 +136,10 @@ try
 			$_user->userLoggedInByCookie($_COOKIE['user']);
 		}
 	}
-
-    $_locale = new Locales($ec->getService('User')->getLang(), DIR_LOCALE);
-
+	
+	# Locales
+	$_locale = $ec->locales;
+	
 	define('URL_REQUEST', isset($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'] != '' ? HELP::cleanurl($_SERVER['REQUEST_URI']) : $_SERVER['SCRIPT_NAME']);
 	define('URL_QUERY', isset($_SERVER['QUERY_STRING']) ? HELP::cleanurl($_SERVER['QUERY_STRING']) : '');
 
@@ -152,9 +152,6 @@ try
 	
 	# Helper class
 	HELP::init($_pdo, $_sett, $_user, $_url, $_date);
-
-	// Załączenie wymaganych plików
-	require_once DIR_SYSTEM.'table_list.php';
 
     if ( ! $_sett->get())
     {
@@ -179,7 +176,6 @@ try
 		$_user->userLogout();
 		HELP::redirect(ADDR_SITE);
 	}
-
 
 	if ($_user->iUSER())
 	{
