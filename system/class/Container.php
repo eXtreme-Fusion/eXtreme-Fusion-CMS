@@ -96,6 +96,6 @@ class Container extends ServiceContainerBuilder
 	
 	protected function getDateService()
 	{
-		return new Date($this->getService('Sett'), $this->getService('Locales'));
+		return new Date($this->getService('Sett'));
 	}
 }

@@ -94,6 +94,9 @@ if ($tables === NULL)
 
 if ($tables)
 {
+	# Locales
+	$_locale = $ec->locales;
+	
 	header('Content-Type: text/html; charset=utf-8');
 
 	// todo: sprawdzac czy katalog install istnieje na serwerze i dopiero wtedy słowo "ponownej instalacji" powinno być linkowane. Jeśli katalogu nie ma, to trzeba w komunikacie napisać że należy wrzucić pliki instalacyjne
