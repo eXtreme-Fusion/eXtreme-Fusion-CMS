@@ -3,7 +3,11 @@
 /**
  * W tym pliku nie zamieszczamy kodu HTML, jedynie PHP.
  * Poprzez $this->assign('nazwa', 'wartość'), można przekazać
- * dane do pliku *.tpl.
+ * dane z bazy lub innego źródła do pliku *.tpl.
+ *
+ * Legenda:
+ * 	THEME - katalog, w którym znajduje się ten plik
+ * 	BASE  - katalog, w którym znjduje się cały system i plik config.php
  */
 class Theme extends Themes implements Theme_Intf
 {
@@ -106,11 +110,16 @@ class Theme extends Themes implements Theme_Intf
 	/**
 	 * Dodatki do newsów.
 	 *
+	 * Funkcja ta spełnia inną rolę, niż w wersji EF 4.
+	 * Jest opcjonalna, ale użyteczna dla osób,
+	 * które chciałyby przekazać dodatkowe dane do szablonu newsów.
+	 *
 	 * BASE/templates/news.tpl
 	 * THEME/templates/news.tpl
 	 */
 	public function news()
 	{
 		// Assign addons for news (optional).
+		// $this->assign(...
 	}
 }
