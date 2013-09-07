@@ -19,9 +19,9 @@ class Date
 	protected $_sett = array();
 
 	/* Konstruktor klasy Date
-	 * Przechowuje obiekt _lang i _sett
+	 * Przechowuje obiekt _sett
 	 */
-	public function __construct($_sett, $_lang)
+	public function __construct($_sett)
 	{
 		$this->_sett = $_sett;
 	}
