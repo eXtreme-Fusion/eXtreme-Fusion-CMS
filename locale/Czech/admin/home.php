@@ -32,8 +32,8 @@ return array(
 	'by' => 'podle',
 	
 	// Updating
-	'Update is ready to install.' => 'Aktualizacja jest gotowa do zainstalowania.',
-	'Update is available.' => 'Dostępna jest aktualizacja.',
-	'You have currently version of eXtreme-Fusion CMS.' => 'Posiadasz aktualną wersję eXtreme-Fusion CMS.',
+	'Update is ready to install.' => 'Aktualizace je připravena pro instalaci.',
+	'Update is available.' => 'Aktualizace je dostupná.',
+	'You have currently version of eXtreme-Fusion CMS.' => 'Máte aktuální verzi eXtreme-Fusion CMS.',
 	 'Updating error' => 'Nemůžete použít tuto aktualizaci.<br /> Stahněte takovou, která je vhodná pro vaši verzi redakčního systému.<br /> <a href="https://github.com/eXtreme-Fusion/EF5-updates">https://github.com/eXtreme-Fusion/EF5-updates</a>' 
 );
