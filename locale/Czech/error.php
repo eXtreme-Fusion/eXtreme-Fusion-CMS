@@ -1,12 +1,12 @@
 <?php defined('EF5_SYSTEM') || exit;
 
 return array(
-	'Error 404 - Page not found' => 'Błąd 404 - Nie znaleziono takiej podstrony',
-	'Not found this pages' => 'Nie znaleziono takiej podstrony',
-	'Error 401 - Unauthorized' => 'Błąd 401 - Brak autoryzacji',
-	'The request requires user authentication' => 'Nieautoryzowany dostęp – żądanie zasobu, który wymaga uwierzytelnienia',
-	'Error 403 - Forbidden' => 'Błąd 403 - Dostęp zabroniony',
-	'Access this page is forbidden' => 'Dostęp do tej częsci strony jest zabroniony',
-	'Error 500 - Internal Server Error' => 'Błąd 500 - Wewnętrzny błąd serwera',
-	'Internal Server Error' => 'Wewnętrzny błąd serwera – serwer napotkał niespodziewane trudności, które uniemożliwiły zrealizowanie żądania',
+	'Error 404 - Page not found' => 'Chyba 404 - Nebyla nalezena stránka',
+	'Not found this pages' => 'Nebyly nalezeny takové stránky',
+	'Error 401 - Unauthorized' => 'Chyba 401 - Chyba autorizace',
+	'The request requires user authentication' => 'Neautorizovaný přístup - požaduje uživatelské ověření',
+	'Error 403 - Forbidden' => 'Chyba 403 - Přístup zamítnut',
+	'Access this page is forbidden' => 'Přístup do této části stránek je Vám zakázán',
+	'Error 500 - Internal Server Error' => 'Chyba 500 - Interní chyba serveru',
+	'Internal Server Error' => 'Interní chyba serveru - Na serveru došlo k neočekávaným problémům, které bránily dokončení žádosti',
 );
