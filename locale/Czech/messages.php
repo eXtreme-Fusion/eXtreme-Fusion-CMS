@@ -19,7 +19,6 @@ return array(
 	'New' => 'Nové',
 	'Read' => 'Přečtené',
 	'Sent' => 'Odeslané',
-	'Delivered' => 'Dovávané',
  
 	'Private messaging inbox » :sitename' => 'Schránka soukromých přijatých zpráv » :sitename',
 	'private messaging, communication, chat' => 'soukromé zprávy, komunikace, diskuze',
