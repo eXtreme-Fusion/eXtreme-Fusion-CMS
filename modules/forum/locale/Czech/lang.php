@@ -42,6 +42,6 @@ return array(
 	'In this board has not been created any category' => 'V této sekci nebyla vytvořena žádná kategorie',
 	'This forum does not have any boards and categories' => 'Toto fórum nemá žádné sekce ani kategorie',
 
-	'No threads have been found' => 'Nie utworzono jeszcze żadnych wątków.',
-	'Latest Active Threads' => 'Ostatnio aktywne tematy',
+	'No threads have been found' => 'Nebyla vytvořena žádná témata.',
+	'Latest Active Threads' => 'Nedávná aktivní témata',
 );
