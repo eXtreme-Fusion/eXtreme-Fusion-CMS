@@ -22,11 +22,11 @@ return array(
 	'New Password » :sitename' => 'Nové heslo » :sitename',
 	'Your new password: :pass. Thank you for using password recovery system' => 'Tvoje nové heslo: :pass. Děkujeme za využití systému obnovení hesla',
 	
-	'Recover your password » :sitename' => 'Odzyskaj swoje hasło » :sitename',
-	'Recovering passwords, forgotten passwords, password' => 'Odzyskiwanie hasła, zapomniałem hasła, hasło',
-	'If you forget the password to your profile, you can send a new password to the address provided when registering' => 'Jeśli nie pamiętasz hasła do swojego profilu możesz wysłać nowe hasło na adres podany podczas rejestracji',
+	'Recover your password » :sitename' => 'Obnovit Vaše heslo » :sitename',
+	'Recovering passwords, forgotten passwords, password' => 'Obnovení hesla, zapomenuté heslo, heslo',
+	'If you forget the password to your profile, you can send a new password to the address provided when registering' => 'Pokud zapomenete heslo k Vašemu profilu, můžete si poslat nové heslo na adresu uvedenou při registraci',
 
-	'Recovering access to your account' => 'Odzyskiwanie dostępu do konta',
-	'Enter your e-mail address to which the account is registered.' => 'Podaj adres e-mail, na który konto zostało zarejestrowane.',
-	'The new password will be created and sent to this address.' => 'Nowe hasło zostanie automatycznie utworzone i na niego wysłane.'	
+	'Recovering access to your account' => 'Obnovení přístupu k Vašemu účtu',
+	'Enter your e-mail address to which the account is registered.' => 'Zadejte svou e-mailovou adresu, na kterou je Váš účet registrován.',
+	'The new password will be created and sent to this address.' => 'Nové heslo bude vytvořeno a odesláno na tuto adresu.'	
 );
