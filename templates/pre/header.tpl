@@ -55,7 +55,7 @@
 		<link href="{$ADDR_COMMON_CSS}jquery.validationEngine.css" media="screen" rel="stylesheet">
 		<link href="{$ADDR_CSS}main.css" media="screen" rel="stylesheet">
 		<link href="{$ADDR_COMMON_CSS}facebox.css" media="screen" rel="stylesheet">
-		<link href="{$THEME_CSS}styles.css" media="screen" rel="stylesheet">
+		
 		<script src="{$ADDR_COMMON_JS}jquery.js"></script>
 		<script src="{$ADDR_COMMON_JS}jquery.uniform.js"></script>
 		<script src="{$ADDR_COMMON_JS}jquery.tooltip.js"></script>
@@ -72,5 +72,7 @@
 			});
 		</script>{/literal}
 		{$Theme.Tags}
+		
+		<link href="{$THEME_CSS}styles.css" media="screen" rel="stylesheet">
 	</head>
-	<body>
+	<body>               
