@@ -427,8 +427,8 @@ return array(
 	'Themes' => 'Šablony',
 	'Windows' => 'Windows',
  
-	'IndexMonths' => array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'),
-	'IndexNiceMonths' => array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'),
-	'IndexDays' => array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'),
+	'IndexMonths' => array('leden', 'únor', 'březen', 'duben', 'květen', 'červen', 'červenec', 'srpen', 'zaří', 'říjen', 'listopad', 'prosinec'),
+	'IndexNiceMonths' => array('ledna', 'února', 'března', 'dubna', 'května', 'června', 'července', 'srpna', 'zaří', 'října', 'listopadu', 'prosince'),
+	'IndexDays' => array('pondělí', 'úterý', 'středa', 'čtvrtek', 'pátek', 'sobota', 'neděle'),
 );
 
