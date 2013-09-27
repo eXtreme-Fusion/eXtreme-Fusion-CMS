@@ -39,7 +39,7 @@ class Request
 	 Dla pierwszego parametru będącego tablicą:
 		*Metoda sprawdza, czy wartości z przekazanej tablicy są istniejącymi indeksami zmiennej $_GET.
 		*Jeśli któryś indeks nie istnieje, to do obiektu klasy Edit trafia wartość domyślna z drugiego parametru tej metody.
-		*Jeśli wszystkie indeksy istnieją, to do obiektu klasy Edit trafia tablica wartości spod tych indeksów.
+		*Jeśli wszystkie indeksy istnieją, to do obiektu klasy Edit trafia tablica elementów o tych indeksach z zachowanymi kluczami.
 	 Dla pierwszego parametru będącego typem string:
 		*Metoda sprawdza czy istnieje taki indeks w tablicy $_GET.
 		*Jeśli istnieje, to wartość z tablicy $_GET trafia do obiektu klasy Edit:
