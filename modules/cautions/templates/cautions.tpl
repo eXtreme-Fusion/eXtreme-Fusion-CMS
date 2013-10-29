@@ -18,10 +18,10 @@
 				<div class="grid_4">{$caution.content}</div>
 				{if $permission}
 					<div class="grid_2">
-						<a href="javascript:void(0);" class="tip admin-box" rel="{$ADDR_MODULES}cautions/admin/cautions.php?user={$caution.user_id}&action=edit&caution_id={$caution.ID}&fromPage=true" title="{i18n('Edit')}">
+						<a href="{$ADDR_MODULES}cautions/admin/cautions.php?user={$caution.user_id}&action=edit&caution_id={$caution.id}" title="{i18n('Edit')}">
 							<img src="{$ADDR_ADMIN_ICONS}edit.png" alt="{i18n('Edit')}" />
 						</a>
-						<a href="javascript:void(0);" class="tip admin-box" rel="{$ADDR_MODULES}cautions/admin/cautions.php?action=delete&caution_id={$caution.ID}&fromPage=true" title="{i18n('Delete')}">
+						<a href="{$ADDR_MODULES}cautions/admin/cautions.php?action=delete&caution_id={$caution.id}" title="{i18n('Delete')}">
 							<img src="{$ADDR_ADMIN_ICONS}delete.png" alt="{i18n('Delete')}" />
 						</a>
 					</div>
