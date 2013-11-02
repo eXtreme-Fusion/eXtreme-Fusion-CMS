@@ -62,6 +62,42 @@ if ($_route->getAction() && $_route->getAction() == 'error')
 }
 // *********************************************
 
+// Statystyki 100% działa
+// *********************************************
+$ds_cout = $_pdo->getRow('SELECT SUM(count) AS count FROM [download]');
+$ds_files = $_pdo->getRow('SELECT Count(cat) AS files FROM [download]');
+
+$_tpl->assign('statistics', array(
+    'count' => $ds_cout['count'],
+    'files' => $ds_files['files'],
+));
+
+if ($data = $_pdo->getRow('SELECT td.id, td.title, td.count, td.cat, tc.id, tc.access FROM [download] td LEFT JOIN [download_cat] tc ON td.cat=tc.id WHERE tc.`access` IN ('.$_user->listRoles().') ORDER BY count DESC LIMIT 0,1'))
+{
+    $_tpl->assign('popular', array(
+        'link' => $_route->path(array('controller' => 'downloads', 'action' => 'view', $data['id'], HELP::Title2Link($data['title']))),
+        'title_long' => $data['title'],
+        'title_short' => HELP::trimlink($data['title'], 100),
+        'count' => $data['count']
+    ));
+    unset($data);
+}
+
+if ($data = $_pdo->getRow('SELECT td.id, td.title, td.count, td.cat, td.datestamp, tc.id, tc.access FROM [download] td LEFT JOIN [download_cat] tc ON td.cat=tc.id WHERE tc.`access` IN ('.$_user->listRoles().')ORDER BY datestamp DESC LIMIT 0,1'))
+{
+    $_tpl->assign('latest', array(
+        'link' => $_route->path(array('controller' => 'downloads', 'action' => 'view', $data['id'], HELP::Title2Link($data['title']))),
+        'title_long' => $data['title'],
+        'title_short' => HELP::trimlink($data['title'], 100),
+        'count' => $data['count']
+    ));
+    unset($data);
+}
+// *********************************************
+
+
+
+
 $_tpl->assign('Theme', $theme);
 
 // Definiowanie katalogu templatek modu�u
