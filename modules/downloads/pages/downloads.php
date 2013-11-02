@@ -64,11 +64,11 @@ if ($_route->getAction() && $_route->getAction() == 'error')
 
 // Statystyki 100% działa
 // *********************************************
-$ds_cout = $_pdo->getRow('SELECT SUM(`count`) AS count FROM [download]');
+$ds_count = $_pdo->getRow('SELECT SUM(`count`) AS count FROM [download]');
 $ds_files = $_pdo->getRow('SELECT Count(`cat`) AS files FROM [download]');
 
 $_tpl->assign('statistics', array(
-    'count' => $ds_cout['count'],
+    'count' => $ds_count['count'],
     'files' => $ds_files['files'],
 ));
 
@@ -116,10 +116,10 @@ if ($_route->getAction() == 'view' && isNum($_route->getParamVoid(1), FALSE))
         {
             $_route->redirect(array('controller' => 'downloads', 'action' => 'error', 'Could not access'));
         }
-        
-        if (HELP::Title2Link($data['title']) !== $_route->getParamVoid(2))
+
+        if (HELP::Title2Link($data['title']) !== $_route->getByID(3))
         {
-            $_route->redirect(array('controller' => 'downloads', 'action' => 'error', 'No file was found'));
+            //$_route->redirect(array('controller' => 'downloads', 'action' => 'error', 'No file was found'));
         }
      
         $_tpl->assign('result', TRUE);
@@ -138,8 +138,6 @@ if ($_route->getAction() == 'view' && isNum($_route->getParamVoid(1), FALSE))
             }
         }
         
-        var_dump($_route->getByID(2));
-        
         $_tpl->assign('view', array(
             'title' => $data['title'],
             'base_link' => $_route->path(array('controller' => 'downloads')),
@@ -148,10 +146,10 @@ if ($_route->getAction() == 'view' && isNum($_route->getParamVoid(1), FALSE))
             'cat_name' => $data['name'],
             'version' => $data['version'],
             'description' => ($data['description'] != '' ? nl2br($_sbb->parseAllTags($data['description'])) : nl2br(stripslashes($data['description_short']))),
-            'filesize' => $data['filesize'],
+            'filesize' => $_files->getFileSize($data['filesize']),
             'download_link' => $_route->path(array('controller' => 'downloads', 'action' => 'prepare', 'file-'.$data['id'], $data['title'], 'ready')),
             'homepage' => $data['homepage'] ? $homepage : '',
-            'screenshot_src' => $_download_sett->get('screenshot') && $data['image'] ? DIR_SITE.'upload'.DS.'images'.DS.$data['image'] : '',
+            'screenshot_src' => $_download_sett->get('screenshot') && $data['image'] ? ADDR_SITE.'upload/images/'.$data['image'] : '',
             'author_name' => $_user->getUsername($data['user_id']),
             'author_link' => $_route->path(array('controller' => 'profile', 'action' => $data['user_id'], HELP::Title2Link($data['username']))),
             'datestamp' => HELP::showDate('shortdate', $data['datestamp']),
