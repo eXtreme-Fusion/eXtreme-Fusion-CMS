@@ -83,7 +83,56 @@
             {$comments}
         {/if}
     {/if}
-{else}               
+{else}           
+    
+    <form name='filter_form' method='get' action='".FUSION_SELF."'>
+        <table class='tbl' cellpadding='1' cellspacing='0' style='width:100%;'>
+            <tr>
+                <td class='tbl1' style='width:40%; text-align:left;'>Użyj filtrów po prawej, aby zawęzić zakres poszukiwań.</td>
+                <td class='tbl1' style='width:60%; text-align:right;'>Szukaj
+                    <select name='cat_id' class='textbox' onchange='this.form.submit();'>
+                        <option value='all'>Wszystkie</option>
+                        {section=category_list}
+                            <option value="{$category_list.value}"{if $category_list.selected} selected="selected"{/if}>{$category_list.display}</option>
+                        {/section}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class='tbl1' style='width:40%; text-align:left;'></td>
+                <td class='tbl1' style='width:60%; text-align:right;'>
+                Sortuj wg: <select name='orderby' class='textbox' onchange='this.form.submit();'>
+                <option value='id'{if $order_by == 'id'} selected='selected'{/if}>ID</option>
+                <option value='title'{if $order_by == 'title'} selected='selected'{/if}>Tytułu</option>
+                <option value='user'{if $order_by == 'user'} selected='selected'{/if}>Autora</option>
+                <option value='count'{if $order_by == 'count'} selected='selected'{/if}>Pobrań</option>
+                <option value='datestamp'{if $order_by == 'datestamp'} selected='selected'{/if}>Daty</option>
+                </select>
+                <select name='sort' class='textbox' onchange='this.form.submit();'>
+                <option value='ASC'{if $sort == 'ASC'} selected='selected'{/if}>Rosnąco</option>
+                <option value='DESC'{if $sort == 'DESC'} selected='selected'{/if}>Malejąco</option>
+                </select>
+                </td>
+            </tr>
+            <tr>
+                <td class='tbl1' style='width:40%; text-align:left;'></td>
+                <td class='tbl1' style='width:60%; text-align:right;'>
+                    <input id='filter_button' type='submit' class='button' value='Zastosuj' />
+                </td>
+            </tr>
+        </table>
+    </form>
+    <hr />
+    <div style='text-align:right;'>
+        <form name='searchform' method='get' action='".BASEDIR."search.php'>
+            <span class='small'>Przeszukaj download: </span>
+            <input type='text' name='stext' class='textbox' style='width:150px' />
+            <input type='submit' name='search' value='Szukaj' class='button' />
+            <input type='hidden' name='stype' value='downloads' />
+        </form>
+    </div>
+    <hr />
+
     {php} $this->middlePanel(__('Download')); {/php}
             <div class="info">{i18n('There are no files added.')}</div>
     {php} $this->middlePanel(); {/php}

@@ -94,7 +94,8 @@ if ($data = $_pdo->getRow('SELECT td.`id` AS `file_id`, td.`title`, td.`count`, 
     unset($data);
 }
 // *********************************************
-
+// Podgląd konkretnej strony z plikiem 100% działa
+// *********************************************
 if ($_route->getAction() == 'view' && isNum($_route->getParamVoid(1), FALSE))
 {
     ! class_exists('DownloadSett') || $_download_sett = New DownloadSett($_system, $_pdo);
@@ -119,7 +120,7 @@ if ($_route->getAction() == 'view' && isNum($_route->getParamVoid(1), FALSE))
 
         if (HELP::Title2Link($data['title']) !== $_route->getByID(3))
         {
-            //$_route->redirect(array('controller' => 'downloads', 'action' => 'error', 'No file was found'));
+            $_route->redirect(array('controller' => 'downloads', 'action' => 'error', 'No file was found'));
         }
      
         $_tpl->assign('result', TRUE);
@@ -130,11 +131,11 @@ if ($_route->getAction() == 'view' && isNum($_route->getParamVoid(1), FALSE))
         {
             if ( ! strstr($data['homepage'], 'http://') && ! strstr($data['homepage'], 'https://')) 
             {
-                    $homepage = 'http://'.$data['homepage'];
+                $homepage = 'http://'.$data['homepage'];
             } 
             else
             {
-                    $homepage = $data['homepage'];
+                $homepage = $data['homepage'];
             }
         }
         
@@ -183,9 +184,47 @@ if ($_route->getAction() == 'view' && isNum($_route->getParamVoid(1), FALSE))
                 ));
             }
         }
+        unset($data);
+    }
+    else
+    {
+        $_route->redirect(array('controller' => 'downloads', 'action' => 'error', 'There is no such file'));
     }
 }
+// *********************************************
+// Podgląd konkretnej strony z plikiem 100% działa
+// *********************************************
 
+if ( ! $_route->getAction() || ! inArray($_route->getAction(), array('error', 'prepare', 'view')))
+{
+    if ($_route->getAction() == 'cat' && isNum($_route->getParamVoid(1), FALSE))
+    {
+        $query = $_pdo->getData('
+            SELECT `id`, `name`
+            FROM [download_cat]
+            WHERE `access` IN ('.$_user->listRoles().')
+            ORDER BY name
+        ');    
+
+        $category = array();
+        if ($_pdo->getRowsCount($query))
+        {
+            foreach($query as $row)
+            {
+                $category[$row['id']] = $row['name'];
+            }
+        }
+         
+        $_tpl->assignGroup( array(
+            'category_list' => $_tpl->createSelectOpts($category, $_route->getParamVoid(1), TRUE),
+            'order_by' => 'user',
+            'sort' => 'DESC'
+        ));
+        
+        $_head->set('    <script>/* <![CDATA[ */ jQuery(document).ready(function() { jQuery("#filter_button").hide();});/* ]]>*/</script>');
+    }
+}
+// *********************************************
 
 $_tpl->assign('Theme', $theme);
     
