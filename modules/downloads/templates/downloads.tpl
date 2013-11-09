@@ -133,9 +133,19 @@
     <hr />
 
     {php} $this->middlePanel(__('Download')); {/php}
-       <table class="tbl2">
-            <thead>
-                <tr>
+       <table class='tbl2'>
+            {if $cat_list} 
+                <thead>
+                {section=cat_list}
+                <tr class='tbl2'>
+                    <td colspan='8' class='tbl1 bold left'>{$cat_list.name}</td>
+                </tr>
+                {if $cat_list.description}
+                <tr'>
+                    <td colspan='8' class='quote tbl-border left'>{$cat_list.description}</td>
+                </tr>
+                {/if}
+                <tr class='tbl1'>
                     <th class="grid_4 bold">Nazwa</th>
                     <th class="grid_2 bold">Data</th>
                     <th class="grid_2 bold">Autor</th>
@@ -143,81 +153,38 @@
                     <th class="grid_2 bold">Pobrań</th>
                     <th class="grid_2 bold">Komentarzy</th>
                 </tr>
-            </thead>
-            <tbody>
-                
-            {if $cat_list} 
-                {section=cat_list}
+                </thead>
+                <tbody>
+                {if $cat_list.list}
+                    {foreach=$cat_list.list; list}
+                        <tr class='tbl2'>
+                            <td>{if @list.new}[ NEW ]{/if}<a href='{@list.title_link}'>{@list.title}</a></td>
+                            <td>{@list.datestamp}</td>
+                            <td><a href='{@list.user_link}'>{@list.user_name}</a></td>
+                            <td>{@list.version}</td>
+                            <td>{@list.count}</td>
+                            <td>{@list.comment_count}</td>
+                        </tr>
+                        <tr class='{@list.row}'>
+                            <td colspan='8' class='tbl1 small'>
+                            {if @list.screenshot}
+                                    <img src='{@list.image_thumb}' style='float: left;margin:3px;' alt='{@list.title}' />
+                            {/if}
+                            {if @list.description_short}
+                                    {@list.description_short}
+                            {/if}
+                            </td>
+                        </tr>
+                        {/foreach}
+                {else}
                     <tr class='{$cat_list.row}'>
-                        <td colspan='8' class='tbl2' style='text-align:left;font-weight:bold;'>{$cat_list.name}</td>
+                        <td colspan='8' class='tbl2 center' style='text-align:center'>Brak udostępnionych plików do pobrania.</td>
                     </tr>
-                    {if $cat_list.description}
-                        <tr class='{$cat_list.row}'>
-                            <td colspan='8' class='tbl1 small' style='text-align:left;'>{$cat_list.description}<hr /></td>
-                        </tr>
-                    {/if}
-                    {if $cat_list.exists}
-                        {foreach=$cat_list.list; list}
-                            <tr class='{@list.row}'>
-                                <td>{if @list.new}[ NEW ]{/if}<a href='{@list.title_link}'>{@list.title}</a></td>
-                                <td>{@list.datestamp}</td>
-                                <td><a href='{@list.user_link}'>{@list.user_name}</a></td>
-                                <td>{@list.version}</td>
-                                <td>{@list.count}</td>
-                                <td>{@list.comment_count}</td>
-                            </tr>
-                            <tr>
-                                <td colspan='8' class='tbl1 small'>
-                                {if @list.screenshot}
-                                        <img src='{@list.image_thumb}' style='float: left;margin:3px;' alt='{@list.title}' />
-                                {/if}
-                                {if @list.description_short}
-                                        {@list.description_short}
-                                {/if}
-                                </td>
-                            </tr>
-                         {/foreach}
-                    {else}
-                        <tr>
-                            <td colspan='8' style='text-align:center'>Brak udostępnionych plików do pobrania.</td>
-                        </tr>
-                    {/if}
-                    
+                {/if}
+                </tbody>
                 {/section}
             {/if}
-         
-            <!--{if $list}
-            {section=list}
-            <tr class='{$list.row}'>
-                <td>{if $list.new}[ NEW ]{/if}<a href='{$list.title_link}'>{$list.title}</a></td>
-                <td>{$list.datestamp}</td>
-                <td><a href='{$list.user_link}'>{$list.user_name}</a></td>
-                <td>{$list.version}</td>
-                <td>{$list.count}</td>
-                <td>{$list.comment_count}</td>
-            </tr>
-            <tr>
-                <td colspan='8' class='tbl1 small'>
-                {if $list.screenshot}
-                        <img src='{$list.image_thumb}' style='float: left;margin:3px;' alt='{$list.title}' />
-                {/if}
-                {if $list.description_short}
-                        {$list.description_short}
-                {/if}
-                </td>
-            </tr>
-            {/section}
-            
-            {else}
-            <tr>
-                <td colspan='8' style='text-align:center'>Brak udostępnionych plików do pobrania.</td>
-            </tr>
-            {/if}
-            
-            -->
-           
-            </tbody>
-        </table>
+            </table>
     {php} $this->middlePanel(); {/php}
 {/if}
 
