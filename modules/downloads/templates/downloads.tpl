@@ -84,8 +84,7 @@
         {/if}
     {/if}
 {else}           
-    
-    <form name='filter_form' method='get' action='".FUSION_SELF."'>
+    <form name='filter_form' method='get' action='{$URL_REQUEST}'>
         <table class='tbl' cellpadding='1' cellspacing='0' style='width:100%;'>
             <tr>
                 <td class='tbl1' style='width:40%; text-align:left;'>Użyj filtrów po prawej, aby zawęzić zakres poszukiwań.</td>
@@ -124,7 +123,7 @@
     </form>
     <hr />
     <div style='text-align:right;'>
-        <form name='searchform' method='get' action='".BASEDIR."search.php'>
+        <form name='searchform' method='get' action='{$URL_REQUEST}'>
             <span class='small'>Przeszukaj download: </span>
             <input type='text' name='stext' class='textbox' style='width:150px' />
             <input type='submit' name='search' value='Szukaj' class='button' />
@@ -134,7 +133,91 @@
     <hr />
 
     {php} $this->middlePanel(__('Download')); {/php}
-            <div class="info">{i18n('There are no files added.')}</div>
+       <table class="tbl2">
+            <thead>
+                <tr>
+                    <th class="grid_4 bold">Nazwa</th>
+                    <th class="grid_2 bold">Data</th>
+                    <th class="grid_2 bold">Autor</th>
+                    <th class="grid_2 bold">Wersja</th>
+                    <th class="grid_2 bold">Pobrań</th>
+                    <th class="grid_2 bold">Komentarzy</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            {if $cat_list} 
+                {section=cat_list}
+                    <tr class='{$cat_list.row}'>
+                        <td colspan='8' class='tbl2' style='text-align:left;font-weight:bold;'>{$cat_list.name}</td>
+                    </tr>
+                    {if $cat_list.description}
+                        <tr class='{$cat_list.row}'>
+                            <td colspan='8' class='tbl1 small' style='text-align:left;'>{$cat_list.description}<hr /></td>
+                        </tr>
+                    {/if}
+                    {if $cat_list.exists}
+                        {foreach=$cat_list.list; list}
+                            <tr class='{@list.row}'>
+                                <td>{if @list.new}[ NEW ]{/if}<a href='{@list.title_link}'>{@list.title}</a></td>
+                                <td>{@list.datestamp}</td>
+                                <td><a href='{@list.user_link}'>{@list.user_name}</a></td>
+                                <td>{@list.version}</td>
+                                <td>{@list.count}</td>
+                                <td>{@list.comment_count}</td>
+                            </tr>
+                            <tr>
+                                <td colspan='8' class='tbl1 small'>
+                                {if @list.screenshot}
+                                        <img src='{@list.image_thumb}' style='float: left;margin:3px;' alt='{@list.title}' />
+                                {/if}
+                                {if @list.description_short}
+                                        {@list.description_short}
+                                {/if}
+                                </td>
+                            </tr>
+                         {/foreach}
+                    {else}
+                        <tr>
+                            <td colspan='8' style='text-align:center'>Brak udostępnionych plików do pobrania.</td>
+                        </tr>
+                    {/if}
+                    
+                {/section}
+            {/if}
+         
+            <!--{if $list}
+            {section=list}
+            <tr class='{$list.row}'>
+                <td>{if $list.new}[ NEW ]{/if}<a href='{$list.title_link}'>{$list.title}</a></td>
+                <td>{$list.datestamp}</td>
+                <td><a href='{$list.user_link}'>{$list.user_name}</a></td>
+                <td>{$list.version}</td>
+                <td>{$list.count}</td>
+                <td>{$list.comment_count}</td>
+            </tr>
+            <tr>
+                <td colspan='8' class='tbl1 small'>
+                {if $list.screenshot}
+                        <img src='{$list.image_thumb}' style='float: left;margin:3px;' alt='{$list.title}' />
+                {/if}
+                {if $list.description_short}
+                        {$list.description_short}
+                {/if}
+                </td>
+            </tr>
+            {/section}
+            
+            {else}
+            <tr>
+                <td colspan='8' style='text-align:center'>Brak udostępnionych plików do pobrania.</td>
+            </tr>
+            {/if}
+            
+            -->
+           
+            </tbody>
+        </table>
     {php} $this->middlePanel(); {/php}
 {/if}
 

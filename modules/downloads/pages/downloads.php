@@ -13,14 +13,14 @@ $theme = array(
 // *********************************************
 if ($_route->getAction() && $_route->getAction() == 'prepare' && isNum($_route->getParam('file'), FALSE))
 {
-    if ($data = $_pdo->getRow('SELECT `url`, `file`, `cat` FROM [download] WHERE `id`= :id', array(array(':id', $_route->getParam('file'), PDO::PARAM_INT))))
+    if ($data = $_pdo->getRow('SELECT `url`, `file`, `cat` FROM [download] WHERE `id`= :id', array(':id', $_route->getParam('file'), PDO::PARAM_INT)))
     {
-       $cdata = $_pdo->getRow('SELECT `access` FROM [download_cat] WHERE `id`= :id', array(array(':id', $data['cat'], PDO::PARAM_INT)));
+       $cdata = $_pdo->getRow('SELECT `access` FROM [download_cat] WHERE `id`= :id', array(':id', $data['cat'], PDO::PARAM_INT));
        if ($_user->hasAccess($cdata['access']))
        {
             if (isset($data['file']) && file_exists(DIR_SITE.'upload'.DS.'files'.DS.$data['file']))
             {
-                $_pdo->exec('UPDATE [download] SET `count` = `count`+1 WHERE `id`= :id', array(array(':id', $_route->getParam('file'), PDO::PARAM_INT)));
+                $_pdo->exec('UPDATE [download] SET `count` = `count`+1 WHERE `id`= :id', array(':id', $_route->getParam('file'), PDO::PARAM_INT));
                 require_once DIR_MODULES.'downloads'.DS.'class'.DS.'class.httpdownload.php';
                 ob_end_clean();
                 $object = new httpdownload;
@@ -99,7 +99,6 @@ if ($data = $_pdo->getRow('SELECT td.`id` AS `file_id`, td.`title`, td.`count`, 
 if ($_route->getAction() == 'view' && isNum($_route->getParamVoid(1), FALSE))
 {
     ! class_exists('DownloadSett') || $_download_sett = New DownloadSett($_system, $_pdo);
-		
     
     $_head->set('    <link rel="stylesheet" href="'.ADDR_SITE.'modules/downloads/templates/script/colorbox/colorbox.css" type="text/css" media="screen" />
     <script type="text/javascript" src="'.ADDR_SITE.'modules/downloads/templates/script/colorbox/jquery.colorbox.js"></script>
@@ -197,36 +196,101 @@ if ($_route->getAction() == 'view' && isNum($_route->getParamVoid(1), FALSE))
 
 if ( ! $_route->getAction() || ! inArray($_route->getAction(), array('error', 'prepare', 'view')))
 {
-    if ($_route->getAction() == 'cat' && isNum($_route->getParamVoid(1), FALSE))
-    {
-        $query = $_pdo->getData('
-            SELECT `id`, `name`
-            FROM [download_cat]
-            WHERE `access` IN ('.$_user->listRoles().')
-            ORDER BY name
-        ');    
+    ! class_exists('DownloadSett') || $_download_sett = New DownloadSett($_system, $_pdo);
+    
+    $query = $_pdo->getData('
+        SELECT `id`, `name`, `description`, `access`, `sorting`
+        FROM [download_cat]
+        WHERE `access` IN ('.$_user->listRoles().')
+	ORDER BY `name`'
+    );  
 
-        $category = array();
-        if ($_pdo->getRowsCount($query))
+    $category = array();
+    if ($_pdo->getRowsCount($query))
+    {
+        foreach($query as $row)
         {
-            foreach($query as $row)
-            {
-                $category[$row['id']] = $row['name'];
-            }
+            $category[$row['id']] = $row['name'];
         }
-         
-        $_tpl->assignGroup( array(
-            'category_list' => $_tpl->createSelectOpts($category, $_route->getParamVoid(1), TRUE),
-            'order_by' => 'user',
-            'sort' => 'DESC'
-        ));
+    }
+
+    $_tpl->assignGroup(array(
+        'category_list' => $_tpl->createSelectOpts($category, $_route->getParamVoid(1), TRUE),
+        'order_by' => 'user',
+        'sort' => 'DESC'
+    ));
+
+    unset($category);
+
+    $_head->set('    <script>/* <![CDATA[ */ jQuery(document).ready(function() { jQuery("#filter_button").hide();});/* ]]>*/</script>');
+
+    if ($_pdo->getRowsCount($query))
+    {	
+        $sign_cat = array(); $sign = array(); $j=0;
+        foreach($query as $row)
+        {
+            if ($_user->hasAccess($row['access']))
+            {                
+                $rows = $_pdo->getRow('SELECT Count(`id`) FROM [download] WHERE `cat` = :cat', array(':cat', $row['id'], PDO::PARAM_INT));
+
+                if ($rows) 
+                {
+                    $query = $_pdo->getData('SELECT td.`id`, td.`user`, td.`datestamp`, td.`image_thumb`, td.`cat`,
+                            td.`title`, td.`version`, td.`count`, td.`description_short`,
+                            tu.`id` AS user_id, tu.`username`, tu.`status`
+                            FROM [download] td
+                            LEFT JOIN [users] tu ON td.`user`=tu.`id`
+                            WHERE td.`cat`=:cat'
+                    , array(':cat', 2, PDO::PARAM_INT));
+
+                    if ($_pdo->getRowsCount($query))
+                    {
+                        $i=0;
+                        foreach($query as $data)
+                        {
+                            if ($data['cat'] === $row['id'])
+                            {
+                                $count = $_pdo->getRow('SELECT Count(`id`) AS comments FROM [comments] WHERE `content_type` = "downloads" AND `content_id` = :content_id ', array(':content_id', $data['id'], PDO::PARAM_INT));
+                                $sign[] = array(
+                                    'row' => $i % 2 == 0 ? 'tbl1' : 'tbl2',
+                                    'new' => $data['datestamp'] + 604800 > time() + ($_sett->get('offset_timezone') * 3600),
+                                    'image_thumb' => isset($data['image_thumb']) && $data['image_thumb'] != '' && file_exists(DIR_SITE.'upload'.DS.'images'.DS.$data['image_thumb']) ? ADDR_SITE.'upload/images/'.$data['image_thumb'] : ADDR_MODULES.'downloads/templates/images/no_image.png',
+                                    'title_link' => $_route->path(array('controller' => 'downloads', 'action' => 'view', $data['id'], HELP::Title2Link($data['title']))),
+                                    'title' => $data['title'],
+                                    'datestamp' => HELP::showDate('shortdate', $data['datestamp']),
+                                    'user_link' => $_route->path(array('controller' => 'profile', 'action' => $data['user_id'], HELP::Title2Link($data['username']))),
+                                    'user_name' => $data['username'],
+                                    'version' => ($data['version'] ?  $data['version'] : "--"),
+                                    'count' => $data['count'],
+                                    'comment_count' => $count['comments'],                                        
+                                    'screenshot' => $_download_sett->get('screenshot'),
+                                    'description_short' => $data['description_short'] ? nl2br(stripslashes($data['description_short'])) : ''
+                                );
+                                $i++;
+                            }
+                        }
+                        
+                        $sign_cat[] = array(
+                            'row' => $i % 2 == 0 ? 'tbl1' : 'tbl2',
+                            'id' => $row['id'],
+                            'name' => $row['name'],
+                            'description' => $row['description'],
+                            'exists' => $data['cat'] === $row['id'],
+                            'list' => $sign
+                        );
+                    }
+                }
+            }
+            
+            $j++;
+        }
         
-        $_head->set('    <script>/* <![CDATA[ */ jQuery(document).ready(function() { jQuery("#filter_button").hide();});/* ]]>*/</script>');
+        $_tpl->assign('cat_list', $sign_cat);
     }
 }
 // *********************************************
 
 $_tpl->assign('Theme', $theme);
     
-// Definiowanie katalogu templatek modu�u
+// Definiowanie katalogu templatek modułu
 $_tpl->setPageCompileDir(DIR_MODULES.'downloads'.DS.'templates'.DS);
