@@ -36,7 +36,7 @@ abstract class Admin_Controller
 
 		if (is_numeric($this->_sAction[0]))
 		{
-			throw new LogicException('Action name can not bwgin with numeric character.');
+			throw new LogicException('Action name can not begin with numeric character.');
 		}
 
 		if (empty($this->_sAction))
