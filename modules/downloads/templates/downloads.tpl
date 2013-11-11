@@ -140,8 +140,8 @@
                 <tr class='tbl2'>
                     <td colspan='8' class='tbl1 bold left'>{$cat_list.name}</td>
                 </tr>
-                {if $cat_list.description}
-                <tr'>
+                {if $cat_list.category_description}
+                <tr>
                     <td colspan='8' class='quote tbl-border left'>{$cat_list.description}</td>
                 </tr>
                 {/if}

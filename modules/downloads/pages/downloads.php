@@ -141,7 +141,7 @@ if ($_route->getAction() == 'view' && isNum($_route->getParamVoid(1), FALSE))
         $_tpl->assign('view', array(
             'title' => $data['title'],
             'base_link' => $_route->path(array('controller' => 'downloads')),
-            'cat_link' => $_route->path(array('controller' => 'downloads', 'action' => 'cat', $data['cat'], $data['name'])),
+            'cat_link' => $_route->path(array('controller' => 'downloads', 'action' => 'category', $data['cat'], $data['name'])),
             'cat_id' => $data['cat'],
             'cat_name' => $data['name'],
             'version' => $data['version'],
@@ -198,8 +198,31 @@ if ( ! $_route->getAction() || ! inArray($_route->getAction(), array('error', 'p
 {
     ! class_exists('DownloadSett') || $_download_sett = New DownloadSett($_system, $_pdo);
     
+    $sign_cat = array(); $j = 0; $sign = array(); $i = 0; $d = array(); $description = FALSE; $filter = ''; $order_by = '';
+        
+    if (isNum($_route->getParamVoid(1), FALSE)) 
+    {
+        $filter .= ' AND `id`='.$_route->getParamVoid(1);
+        if ($_route->getParamVoid(2) === 'orderby') 
+        {
+            $order_by = $_route->getParamVoid(3);
+        } 
+        else
+        {
+            $order_by = 'td.`datestamp`';
+        }
+        if ($_route->getParamVoid(4) === 'sort') 
+        {
+            $sort = $_route->getParamVoid(5);
+        } 
+        else
+        {
+                $sort = 'ASC';
+        }
+    }
+    
     $query = $_pdo->getData('
-        SELECT `id`, `name`, `description`, `access`, `sorting`
+        SELECT `id`, `name`
         FROM [download_cat]
         WHERE `access` IN ('.$_user->listRoles().')
 	ORDER BY `name`'
@@ -215,22 +238,32 @@ if ( ! $_route->getAction() || ! inArray($_route->getAction(), array('error', 'p
     }
 
     $_tpl->assignGroup(array(
-        'category_list' => $_tpl->createSelectOpts($category, $_route->getParamVoid(1), TRUE),
+        'category_list' => $_tpl->createSelectOpts($category, intval($_route->getParamVoid(1)), TRUE),
         'order_by' => 'user',
         'sort' => 'DESC'
     ));
-
-    unset($category);
+    
+    unset($category, $query);
 
     $_head->set('    <script>/* <![CDATA[ */ jQuery(document).ready(function() { jQuery("#filter_button").hide();});/* ]]>*/</script>');
 
+    $query = $_pdo->getData('
+        SELECT `id`, `name`, `description`, `access`, `sorting`
+        FROM [download_cat]
+        WHERE `access` IN ('.$_user->listRoles().')'.$filter.'
+	ORDER BY `name`'
+    );
+    
     if ($_pdo->getRowsCount($query))
-    {	
-        $sign_cat = array(); $j=0; $sign = array(); $i=0; $d = array(); 
+    {
         foreach($query as $row)
         {
             if ($_user->hasAccess($row['access']))
-            {                
+            { 
+                if ($_route->getAction() === 'category' && $row['description'] !== '') 
+                {
+                    $description = TRUE;
+                }
                 $rows = $_pdo->getRow('SELECT Count(`id`) FROM [download] WHERE `cat` = :cat', array(':cat', $row['id'], PDO::PARAM_INT));
 
                 if ($rows) 
@@ -240,7 +273,9 @@ if ( ! $_route->getAction() || ! inArray($_route->getAction(), array('error', 'p
                             tu.`id` AS user_id, tu.`username`, tu.`status`
                             FROM [download] td
                             LEFT JOIN [users] tu ON td.`user`=tu.`id`
-                            WHERE td.`cat`=:cat'
+                            WHERE td.`cat`=:cat
+                            GROUP BY td.`id`
+                            ORDER BY '.($order_by == "" ? $row['sorting'] : $order_by." ".$sort)
                     , array(':cat', $row['id'], PDO::PARAM_INT));
 
                     if ($_pdo->getRowsCount($query))
@@ -275,7 +310,8 @@ if ( ! $_route->getAction() || ! inArray($_route->getAction(), array('error', 'p
                         'id' => $row['id'],
                         'name' => $row['name'],
                         'description' => $row['description'],
-                        'list' => isset($sign) ? $sign : FALSE
+                        'list' => isset($sign) ? $sign : FALSE,
+                        'category_description' => $description
                     );
                     
                     unset($query, $data, $sign);    
@@ -283,7 +319,7 @@ if ( ! $_route->getAction() || ! inArray($_route->getAction(), array('error', 'p
             }
             $j++;
         }
-
+        
         $_tpl->assign('cat_list', $sign_cat);
     }
 }
