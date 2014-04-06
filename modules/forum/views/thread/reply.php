@@ -1,3 +1,7 @@
+<?php if ($thread['is_locked']): ?>
+	<?php return HELP::redirect($this->url->path(array('module' => 'forum', 'controller' => 'thread', $thread['id']))); ?>
+<?php endif; ?>
+
 <ul class="breadcrumbs">
 	<li><a href="<?php echo $this->router->path(array('module' => 'forum')); ?>"><?php echo __('Forum'); ?></a></li>
 	<li><a href="<?php echo $this->router->path(array('module' => 'forum')); ?>#board-<?php echo $thread['board_id']; ?>"><?php echo $thread['board']; ?></a></li>

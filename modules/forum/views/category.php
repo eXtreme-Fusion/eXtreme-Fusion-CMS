@@ -24,6 +24,7 @@
 				<tr class="<?php echo $thread['row_color']; ?>">
 					<td>
 						<?php if ($thread['is_pinned']): ?><em class="pinned">(<?php echo __('Pinned'); ?>)</em><?php endif; ?>
+						<?php if ($thread['is_locked']): ?><img src="<?php echo ADDR_MODULES; ?>forum/templates/images/lock.png" alt="<?php echo __('Thread locked'); ?>" style="margin: 2px;" /><?php endif; ?>
 						<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', $thread['id'])); ?>" class="text-title"><?php echo $thread['title']; ?></a>
 					</td>
 					<td class="align-center"><?php echo HELP::profileLink($thread['username'], $thread['user_id']); ?></td>

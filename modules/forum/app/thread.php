@@ -189,5 +189,76 @@ class Thread_Controller extends Forum_Controller {
 			'smileys' => $this->bbcode->smileys(),
 		));
 	}
+	
+	public function locked()
+	{
+		if ( ! $this->is_admin)
+		{
+			return $this->router->trace(array('controller' => 'error', 'action' => 404));
+		}
+
+		$thread = $this
+			->model('thread')
+			->findByID($id = $this->params[0]);
+
+		if ( ! $thread)
+		{
+			return $this->router->trace(array('controller' => 'error', 'action' => 404));
+		}
+
+		if ($thread['is_locked'] == 0)
+		{
+			$_thread = $this->pdo->exec('UPDATE [threads] SET `is_locked` = 1 WHERE `id` = :id',
+				array(':id', $id, PDO::PARAM_INT));
+				
+			if ($_thread)
+			{
+				return $this->router->redirect(array('module' => 'forum', 'controller' => 'category', $thread['category_id']));
+			}
+		}
+		else
+		{
+			$_thread = $this->pdo->exec('UPDATE [threads] SET `is_locked` = 0 WHERE `id` = :id',
+				array(':id', $id, PDO::PARAM_INT));
+				
+			if ($_thread)
+			{
+				return HELP::redirect($this->url->path(array('module' => 'forum', 'controller' => 'thread', $id)));
+			}
+		}
+
+		return $this->router->trace(array('controller' => 'error', 'action' => 500));
+	}
+	
+	public function refresh()
+	{
+		if ( ! $this->is_admin)
+		{
+			return $this->router->trace(array('controller' => 'error', 'action' => 404));
+		}
+
+		$thread = $this
+			->model('thread')
+			->findByID($id = $this->params[0]);
+
+		if ( ! $thread)
+		{
+			return $this->router->trace(array('controller' => 'error', 'action' => 404));
+		}
+
+		$_thread = $this->pdo->exec('UPDATE [entries] SET `timestamp` = :date WHERE `thread_id` = :id ORDER BY `timestamp` DESC LIMIT 1',
+			array(
+				array(':id', $id, PDO::PARAM_INT),
+				array(':date', time(), PDO::PARAM_INT)
+			)
+		);
+
+		if ($_thread)
+		{
+			return HELP::redirect($this->url->path(array('module' => 'forum', 'controller' => 'thread', $id)));
+		}
+
+		return $this->router->trace(array('controller' => 'error', 'action' => 500));
+	}
 
 }

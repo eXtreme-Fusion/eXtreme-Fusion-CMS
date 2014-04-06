@@ -1,5 +1,5 @@
 {if $isInstalled}
-		{php} $this->sidePanel(__('Latest Active Threads')); {/php}
+		{php} $this->middlePanel(__('Latest Active Threads')); {/php}
 		{if $threads}
 			<table class="tbl2">
 				<thead>
@@ -13,7 +13,7 @@
 				<tbody>
 					{section=threads}
 					<tr class="{$threads.row}">
-						<td><a href="{$threads.link}" class="text-link">{$threads.title}</a></td>
+						<td>{if $threads.is_locked}<img src="{$ADDR_MODULES}forum/templates/images/mini/lock.png" alt="{i18n('Thread locked')}" />&nbsp;{/if}<a href="{$threads.link}" class="text-link">{$threads.title}</a></td>
 						<td>{$threads.autor}</td>
 						<td>{$threads.entries}</td>
 						<td>{$threads.entry_user}</td>
@@ -24,6 +24,6 @@
 		{else}
 			<div class="info">{i18n('No threads have been found')}</div>
 		{/if}
-		{php} $this->sidePanel(); {/php}
+		{php} $this->middlePanel(); {/php}
 		</div>
 {/if}
