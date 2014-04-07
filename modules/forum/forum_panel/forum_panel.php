@@ -50,7 +50,8 @@ if($_modules->isInstalled('forum'))
 				'autor' => HELP::profileLink($row['username'], $row['user_id']),
 				'title' => $row['title'],
 				'entries' => $row['entries'],
-				'entry_user' => HELP::profileLink(NULL, $row['entry_user'])
+				'entry_user' => HELP::profileLink(NULL, $row['entry_user']),
+				'is_locked' => $row['is_locked']
 			);
 			$i++;
 		}

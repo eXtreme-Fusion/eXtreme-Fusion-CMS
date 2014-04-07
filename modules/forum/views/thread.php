@@ -15,7 +15,9 @@
 				<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'remove', $thread['id'])); ?>" class="button"><?php echo __('Remove thread'); ?></a>
 				<?php endif; ?>
 			</div>
-			<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'reply', $thread['id'])); ?>" class="button"><?php echo __('Add reply'); ?></a>
+			<?php if ( ! $thread['is_locked']): ?>
+				<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'reply', $thread['id'])); ?>" class="button"><?php echo __('Add reply'); ?></a>
+			<?php endif; ?>
 		</nav>
 		<?php endif; ?>
 		<table class="forum">
@@ -56,8 +58,15 @@
 				<?php endforeach; ?>
 			</tbody>
 		</table>
+	<?php if ($this->is_admin): ?>
+	<nav class="forum-nav">
+		<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'refresh', $thread['id'])); ?>" class="button"><?php echo __('Refresh'); ?></a>
+		<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'locked', $thread['id'])); ?>" class="button"><?php if ($thread['is_locked'] == 1) { echo __('Unlock'); } else { echo __('Lock'); }?></a>
+	</nav>
+	<?php endif; ?>
 <?php $this->theme->middlePanel(); ?>
 <?php if ($this->logged_in): $_user = $this->user; ?>
+<?php if ( ! $thread['is_locked']): ?>
 <?php $this->theme->middlePanel(__('Quick reply')); ?>
 		<form action="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'reply', $thread['id'])); ?>" method="post">
 			<table class="forum">
@@ -90,4 +99,5 @@
 			</table>
 		</form>
 <?php $this->theme->middlePanel(); ?>
+<?php endif; ?>
 <?php endif; ?>

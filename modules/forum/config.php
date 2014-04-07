@@ -55,6 +55,7 @@ $new_table[3] = array(
 		`user_id` int(11) NOT NULL,
 		`title` varchar(255) NOT NULL,
 		`is_pinned` tinyint(1) NOT NULL DEFAULT '0',
+		`is_locked` tinyint(1) NOT NULL DEFAULT '0',
 		`timestamp` int(10) NOT NULL,
 		PRIMARY KEY (`id`)
 	) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;"
