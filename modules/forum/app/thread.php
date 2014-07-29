@@ -12,6 +12,15 @@ class Thread_Controller extends Forum_Controller {
 		{
 			return $this->router->trace(array('controller' => 'error', 'action' => 404));
 		}
+		
+		if ($this->user->hasPermission('module.forum.'.$thread['board_id'].'.'.HELP::Title2Link($thread['category'])))
+		{
+			$thread['mod'] = TRUE;
+		}
+		else
+		{
+			$thread['mod'] = FALSE;
+		}
 
 		$entries = $this
 			->model('entry')
@@ -85,66 +94,96 @@ class Thread_Controller extends Forum_Controller {
 		$thread = $this
 			->model('thread')
 			->findByID($id = $this->params[0]);
-
+		
+		$user = $this->model('user', array($this->user));
+		
 		if ( ! $thread)
 		{
 			return $this->router->trace(array('controller' => 'error', 'action' => 404));
 		}
-
-		if ($this->request->post('title')->show() && $this->request->post('content')->show())
+		
+		if ($this->user->hasPermission('module.forum.'.$thread['board_id'].'.'.HELP::Title2Link($thread['category'])))
 		{
-			$_thread = $this->pdo->exec('UPDATE [threads] SET `title` = :title, `is_pinned` = :is_pinned WHERE `id` = :id', array(
-				array(':title', HELP::wordsProtect($this->request->post('title')->filters('trim', 'strip')), PDO::PARAM_STR),
-				array(':is_pinned', ($this->is_admin && $this->request->post('is_pinned')->show()), PDO::PARAM_BOOL),
-				array(':id', $id, PDO::PARAM_INT),
-			));
-
-			$_entry = $this->pdo->exec('UPDATE [entries] SET `content` = :content WHERE `id` = :id AND `is_main` = 1', array(
-				array(':content', HELP::wordsProtect($this->request->post('content')->filters('trim', 'strip')), PDO::PARAM_STR),
-				array(':id', $_id = $thread['entry_id'], PDO::PARAM_INT),
-			));
-
-			if ($_thread && $_entry)
-			{
-				return HELP::redirect($this->url->path(array('module' => 'forum', 'controller' => 'thread', $id)).'#entry-'.$_id);
-			}
+			$thread['mod'] = TRUE;
 		}
+		else
+		{
+			$thread['mod'] = FALSE;
+		}
+		
+		if ($this->is_admin || $thread['mod'] || $user->isAuthor($thread['user_id']))
+		{
+			if ($this->request->post('title')->show() && $this->request->post('content')->show())
+			{
+				$_thread = $this->pdo->exec('UPDATE [threads] SET `title` = :title, `is_pinned` = :is_pinned WHERE `id` = :id', array(
+					array(':title', HELP::wordsProtect($this->request->post('title')->filters('trim', 'strip')), PDO::PARAM_STR),
+					array(':is_pinned', ($this->is_admin && $this->request->post('is_pinned')->show()), PDO::PARAM_BOOL),
+					array(':id', $id, PDO::PARAM_INT),
+				));
 
-		return $this->view('thread/edit', array(
-			'thread'  => $thread,
-			'bbcodes' => $this->bbcode->bbcodes(),
-			'smileys' => $this->bbcode->smileys(),
-		));
+				$_entry = $this->pdo->exec('UPDATE [entries] SET `content` = :content WHERE `id` = :id AND `is_main` = 1', array(
+					array(':content', HELP::wordsProtect($this->request->post('content')->filters('trim', 'strip')), PDO::PARAM_STR),
+					array(':id', $_id = $thread['entry_id'], PDO::PARAM_INT),
+				));
+
+				if ($_thread && $_entry)
+				{
+					return HELP::redirect($this->url->path(array('module' => 'forum', 'controller' => 'thread', $id)).'#entry-'.$_id);
+				}
+			}
+
+			return $this->view('thread/edit', array(
+				'thread'  => $thread,
+				'bbcodes' => $this->bbcode->bbcodes(),
+				'smileys' => $this->bbcode->smileys(),
+			));
+		}
+		else
+		{
+			return $this->router->trace(array('controller' => 'error', 'action' => 403));
+		}
 	}
 
 	public function remove()
 	{
-		if ( ! $this->is_admin)
-		{
-			return $this->router->trace(array('controller' => 'error', 'action' => 404));
-		}
-
 		$thread = $this
 			->model('thread')
 			->findByID($id = $this->params[0]);
-
+			
 		if ( ! $thread)
 		{
 			return $this->router->trace(array('controller' => 'error', 'action' => 404));
 		}
 
-		$_thread = $this->pdo->exec('DELETE FROM [threads] WHERE `id` = :id',
-			array(':id', $id, PDO::PARAM_INT));
-
-		$_entries = $this->pdo->exec('DELETE FROM [entries] WHERE `thread_id` = :id',
-			array(':id', $id, PDO::PARAM_INT));
-
-		if ($_thread && $_entries)
+		if ($this->user->hasPermission('module.forum.'.$thread['board_id'].'.'.HELP::Title2Link($thread['category'])))
 		{
-			return $this->router->redirect(array('module' => 'forum', 'controller' => 'category', $thread['category_id']));
+			$thread['mod'] = TRUE;
 		}
+		else
+		{
+			$thread['mod'] = FALSE;
+		}
+		
+		if ($this->is_admin || $thread['mod'])
+		{
 
-		return $this->router->trace(array('controller' => 'error', 'action' => 500));
+			$_thread = $this->pdo->exec('DELETE FROM [threads] WHERE `id` = :id',
+				array(':id', $id, PDO::PARAM_INT));
+
+			$_entries = $this->pdo->exec('DELETE FROM [entries] WHERE `thread_id` = :id',
+				array(':id', $id, PDO::PARAM_INT));
+
+			if ($_thread && $_entries)
+			{
+				return $this->router->redirect(array('module' => 'forum', 'controller' => 'category', $thread['category_id']));
+			}
+
+			return $this->router->trace(array('controller' => 'error', 'action' => 500));
+		}
+		else
+		{
+			return $this->router->trace(array('controller' => 'error', 'action' => 403));
+		}
 	}
 
 	public function reply()
@@ -192,11 +231,6 @@ class Thread_Controller extends Forum_Controller {
 	
 	public function locked()
 	{
-		if ( ! $this->is_admin)
-		{
-			return $this->router->trace(array('controller' => 'error', 'action' => 404));
-		}
-
 		$thread = $this
 			->model('thread')
 			->findByID($id = $this->params[0]);
@@ -205,38 +239,49 @@ class Thread_Controller extends Forum_Controller {
 		{
 			return $this->router->trace(array('controller' => 'error', 'action' => 404));
 		}
-
-		if ($thread['is_locked'] == 0)
+		
+		if ($this->user->hasPermission('module.forum.'.$thread['board_id'].'.'.HELP::Title2Link($thread['category'])))
 		{
-			$_thread = $this->pdo->exec('UPDATE [threads] SET `is_locked` = 1 WHERE `id` = :id',
-				array(':id', $id, PDO::PARAM_INT));
-				
-			if ($_thread)
-			{
-				return $this->router->redirect(array('module' => 'forum', 'controller' => 'category', $thread['category_id']));
-			}
+			$thread['mod'] = TRUE;
 		}
 		else
 		{
-			$_thread = $this->pdo->exec('UPDATE [threads] SET `is_locked` = 0 WHERE `id` = :id',
-				array(':id', $id, PDO::PARAM_INT));
-				
-			if ($_thread)
-			{
-				return HELP::redirect($this->url->path(array('module' => 'forum', 'controller' => 'thread', $id)));
-			}
+			$thread['mod'] = FALSE;
 		}
+		
+		if ($this->is_admin || $thread['mod'])
+		{
+			if ($thread['is_locked'] == 0)
+			{
+				$_thread = $this->pdo->exec('UPDATE [threads] SET `is_locked` = 1 WHERE `id` = :id',
+					array(':id', $id, PDO::PARAM_INT));
+					
+				if ($_thread)
+				{
+					return $this->router->redirect(array('module' => 'forum', 'controller' => 'category', $thread['category_id']));
+				}
+			}
+			else
+			{
+				$_thread = $this->pdo->exec('UPDATE [threads] SET `is_locked` = 0 WHERE `id` = :id',
+					array(':id', $id, PDO::PARAM_INT));
+					
+				if ($_thread)
+				{
+					return HELP::redirect($this->url->path(array('module' => 'forum', 'controller' => 'thread', $id)));
+				}
+			}
 
-		return $this->router->trace(array('controller' => 'error', 'action' => 500));
+			return $this->router->trace(array('controller' => 'error', 'action' => 500));
+		}
+		else
+		{
+			return $this->router->trace(array('controller' => 'error', 'action' => 403));
+		}
 	}
 	
 	public function refresh()
 	{
-		if ( ! $this->is_admin)
-		{
-			return $this->router->trace(array('controller' => 'error', 'action' => 404));
-		}
-
 		$thread = $this
 			->model('thread')
 			->findByID($id = $this->params[0]);
@@ -245,20 +290,36 @@ class Thread_Controller extends Forum_Controller {
 		{
 			return $this->router->trace(array('controller' => 'error', 'action' => 404));
 		}
-
-		$_thread = $this->pdo->exec('UPDATE [entries] SET `timestamp` = :date WHERE `thread_id` = :id ORDER BY `timestamp` DESC LIMIT 1',
-			array(
-				array(':id', $id, PDO::PARAM_INT),
-				array(':date', time(), PDO::PARAM_INT)
-			)
-		);
-
-		if ($_thread)
+		
+		if ($this->user->hasPermission('module.forum.'.$thread['board_id'].'.'.HELP::Title2Link($thread['category'])))
 		{
-			return HELP::redirect($this->url->path(array('module' => 'forum', 'controller' => 'thread', $id)));
+			$thread['mod'] = TRUE;
 		}
+		else
+		{
+			$thread['mod'] = FALSE;
+		}
+		
+		if ($this->is_admin || $thread['mod'])
+		{
+			$_thread = $this->pdo->exec('UPDATE [entries] SET `timestamp` = :date WHERE `thread_id` = :id ORDER BY `timestamp` DESC LIMIT 1',
+				array(
+					array(':id', $id, PDO::PARAM_INT),
+					array(':date', time(), PDO::PARAM_INT)
+				)
+			);
 
-		return $this->router->trace(array('controller' => 'error', 'action' => 500));
+			if ($_thread)
+			{
+				return HELP::redirect($this->url->path(array('module' => 'forum', 'controller' => 'thread', $id)));
+			}
+
+			return $this->router->trace(array('controller' => 'error', 'action' => 500));
+		}
+		else
+		{
+			return $this->router->trace(array('controller' => 'error', 'action' => 403));
+		}
 	}
 
 }

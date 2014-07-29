@@ -8,10 +8,10 @@
 		<?php if ($this->logged_in): ?>
 		<nav class="forum-nav">
 			<div class="button-group">
-				<?php if (($this->logged_in && $user->isAuthor($thread['user_id'])) || $this->is_admin): ?>
+				<?php if (($this->logged_in && $user->isAuthor($thread['user_id'])) || $this->is_admin || $thread['mod']): ?>
 				<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'edit', $thread['id'])); ?>" class="button"><?php echo __('Edit thread'); ?></a>
 				<?php endif; ?>
-				<?php if ($this->is_admin): ?>
+				<?php if ($this->is_admin || $thread['mod']): ?>
 				<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'remove', $thread['id'])); ?>" class="button"><?php echo __('Remove thread'); ?></a>
 				<?php endif; ?>
 			</div>
@@ -47,8 +47,8 @@
 							<p class="top-info"><?php echo __('Created on'); ?>: <strong><?php echo HELP::showDate('longdate', $entry['timestamp']); ?></strong></p>
 							<?php if ($this->logged_in && ! $entry['is_main']): ?>
 							<p class="top-options">
-								<?php if ($user->isAuthor($entry['user_id']) || $this->is_admin): ?><a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'entry', 'action' => 'edit', $entry['id'])); ?>"><?php echo __('Edit'); ?></a><?php endif; ?>
-								<?php if ($this->is_admin): ?>&bull; <a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'entry', 'action' => 'remove', $entry['id'])); ?>"><?php echo __('Remove'); ?></a><?php endif; ?>
+								<?php if ($user->isAuthor($entry['user_id']) || $this->is_admin || $thread['mod']): ?><a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'entry', 'action' => 'edit', $entry['id'])); ?>"><?php echo __('Edit'); ?></a><?php endif; ?>
+								<?php if ($this->is_admin || $thread['mod']): ?>&bull; <a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'entry', 'action' => 'remove', $entry['id'])); ?>"><?php echo __('Remove'); ?></a><?php endif; ?>
 							</p>
 							<?php endif; ?>
 						</header>
@@ -58,10 +58,10 @@
 				<?php endforeach; ?>
 			</tbody>
 		</table>
-	<?php if ($this->is_admin): ?>
+	<?php if ($this->is_admin || $thread['mod']): ?>
 	<nav class="forum-nav">
 		<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'refresh', $thread['id'])); ?>" class="button"><?php echo __('Refresh'); ?></a>
-		<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'locked', $thread['id'])); ?>" class="button"><?php if ($thread['is_locked'] == 1) { echo __('Unlock'); } else { echo __('Lock'); }?></a>
+		<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'thread', 'action' => 'locked', $thread['id'])); ?>" class="button"><?php if ($thread['is_locked'] == 1)  echo __('Unlock'); else echo __('Lock'); ?></a>
 	</nav>
 	<?php endif; ?>
 <?php $this->theme->middlePanel(); ?>

@@ -24,6 +24,8 @@ class Category_Controller extends Forum_Controller {
 				array(':is_locked', (bool) $this->request->post('is_locked', FALSE)->show(), PDO::PARAM_BOOL),
 				array(':order', $this->request->post('order')->show(), PDO::PARAM_INT),
 			));
+			
+			$_perm = $this->pdo->exec("INSERT INTO [permissions] (`name`, `description`, `section`, `is_system`) VALUES ('module.forum.".$id.".".HELP::Title2Link($this->request->post('title')->filters('trim', 'strip'))."', 'Moderowanie działu ".$this->request->post('title')->filters('trim', 'strip')."', 6, 0)");
 
 			if ($_category)
 			{
