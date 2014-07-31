@@ -19,6 +19,7 @@ if($_modules->isInstalled('chat'))
 	$_panel->assign('isInstalled', TRUE);
 	$_locale->moduleLoad('shoutbox', 'chat');
 	$_head->set('	<script src="'.ADDR_SITE.'modules/chat/templates/shoutbox.js"></script>');
+	$_head->set('	<link href="'.ADDR_SITE.'modules/chat/templates/shoutbox.css" rel="stylesheet">');
 
 	if ($_user->isLoggedIn()) 
 	{

@@ -37,14 +37,17 @@ $_sbb =  $ec->sbb;
 			$result = $_pdo->getData('SELECT * FROM [chat_messages] ORDER BY `id` DESC LIMIT 0,'.intval($chat_settings['panel_limit']));
 		}
 
+		$i = 1;
 		foreach ($result as $row)
 		{
 			$posts[] = array(
 				'id' => $row['id'],
 				'user' => HELP::profileLink(NULL, $row['user_id']),
 				'content' => $_sbb->parseAllTags($row['content']),
-				'date' => HELP::showDate('longdate', $row['datestamp'])
+				'date' => HELP::showDate('longdate', $row['datestamp']),
+				'class' => $i % 2 == 0 ? 'tbl1' : 'tbl2'
 			);
+			$i++;
 		}
 	}
 
