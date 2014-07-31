@@ -43,7 +43,7 @@
 				{if $IsLoggedIn}
 				<form action="{$URL_REQUEST}" method="post" id="ShoutBoxForm">
 					<div class="line center">
-						<textarea class="InfoBoxInput" name="content"></textarea>
+						<textarea class="InfoBoxInput tbl2" name="content"></textarea>
 						<input class="InfoBoxButton" type="submit" name="send" value="{i18n('Send')}" />
 					</div>
 				</form>
