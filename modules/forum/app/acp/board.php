@@ -8,9 +8,21 @@ class Board_Controller extends Forum_Controller {
 	{
 		if ($this->request->post('title')->show())
 		{
+			if (!$this->request->post('order')->show())
+			{
+				$order = $this->pdo->getMatchRowsCount('SELECT `id` FROM [boards]')+1;
+			}
+			else
+			{
+				$order = $this->request->post('order')->show();
+				$_order = $this->pdo->exec('UPDATE [boards] SET `order`=`order`+1 WHERE `order`>=:order',
+					array(':order', $order, PDO::PARAM_INT)
+				);
+			}
+		
 			$_board = $this->pdo->exec('INSERT INTO [boards] (`title`, `order`) VALUES (:title, :order)', array(
 				array(':title', HELP::wordsProtect($this->request->post('title')->filters('trim', 'strip')), PDO::PARAM_STR),
-				array(':order', $this->request->post('order')->show(), PDO::PARAM_INT),
+				array(':order', $order, PDO::PARAM_INT),
 			));
 
 			if ($_board && $id = $this->pdo->lastInsertId())
@@ -62,9 +74,16 @@ class Board_Controller extends Forum_Controller {
 		{
 			return $this->router->trace(array('controller' => 'error', 'action' => 404));
 		}
+		
+		$d = $this->pdo->getRow('SELECT `order` FROM [boards] WHERE `id` = :id', array(':id', $id, PDO::PARAM_INT));
+		$board['order'] = $d['order'];
 
 		$_board = $this->pdo->exec('DELETE FROM [boards] WHERE `id` = :id',
 			array(':id', $id, PDO::PARAM_INT));
+			
+		$_order = $this->pdo->exec('UPDATE [boards] SET `order`=`order`-1 WHERE `order`>:order',
+			array(':order', $board['order'], PDO::PARAM_INT)
+		);
 
 		$_threads = $this->pdo->getData('
 			SELECT t.*
