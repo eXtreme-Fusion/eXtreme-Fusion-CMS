@@ -47,6 +47,30 @@ class Board_Controller extends Forum_Controller {
 
 		if ($this->request->post('title')->show())
 		{
+			$d = $this->pdo->getRow('SELECT `order` FROM [boards] WHERE `id` = :id', array(':id', $id, PDO::PARAM_INT));
+			$board['order'] = $d['order'];
+			
+			if ($this->request->post('order')->show() < $board['order'])
+			{
+				// UP
+				$_order = $this->pdo->exec('UPDATE [boards] SET `order`=`order`+1 WHERE `order`<:order AND `order`>=:order_new',
+					array(
+						array(':order', $board['order'], PDO::PARAM_INT),
+						array(':order_new', $this->request->post('order')->show(), PDO::PARAM_INT)
+					)
+				);
+			}
+			elseif ($this->request->post('order')->show() > $board['order'])
+			{
+				// DOWN
+				$_order = $this->pdo->exec('UPDATE [boards] SET `order`=`order`-1 WHERE `order`>:order AND `order`<=:order_new',
+					array(
+						array(':order', $board['order'], PDO::PARAM_INT),
+						array(':order_new', $this->request->post('order')->show(), PDO::PARAM_INT)
+					)
+				);
+			}
+			
 			$_board = $this->pdo->exec('UPDATE [boards] SET `title` = :title, `order` = :order WHERE `id` = :id', array(
 				array(':title', HELP::wordsProtect($this->request->post('title')->filters('trim', 'strip')), PDO::PARAM_STR),
 				array(':order', $this->request->post('order')->show(), PDO::PARAM_INT),

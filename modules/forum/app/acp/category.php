@@ -62,9 +62,38 @@ class Category_Controller extends Forum_Controller {
 		{
 			return $this->router->trace(array('controller' => 'error', 'action' => 404));
 		}
-
+		
 		if ($this->request->post('title')->show())
 		{
+			$d = $this->pdo->getRow('SELECT `board_id`, `order` FROM [board_categories] WHERE `id` = :id', array(':id', $id, PDO::PARAM_INT));
+			$board = array(
+				'b_id' => $d['board_id'],
+				'order' => $d['order']
+			);
+			
+			if ($this->request->post('order')->show() < $board['order'])
+			{
+				// UP
+				$_order = $this->pdo->exec('UPDATE [board_categories] SET `order`=`order`+1 WHERE `order`<:order AND `order`>=:order_new AND `board_id` = :bid',
+					array(
+						array(':order', $board['order'], PDO::PARAM_INT),
+						array(':order_new', $this->request->post('order')->show(), PDO::PARAM_INT),
+						array(':bid', $board['b_id'], PDO::PARAM_INT)
+					)
+				);
+			}
+			elseif ($this->request->post('order')->show() > $board['order'])
+			{
+				// DOWN
+				$_order = $this->pdo->exec('UPDATE [board_categories] SET `order`=`order`-1 WHERE `order`>:order AND `order`<=:order_new AND `board_id` = :bid',
+					array(
+						array(':order', $board['order'], PDO::PARAM_INT),
+						array(':order_new', $this->request->post('order')->show(), PDO::PARAM_INT),
+						array(':bid', $board['b_id'], PDO::PARAM_INT)
+					)
+				);
+			}
+
 			$_category = $this->pdo->exec('UPDATE [board_categories] SET `title` = :title, `description` = :description, `is_locked` = :is_locked, `order` = :order WHERE `id` = :id', array(
 				array(':title', HELP::wordsProtect($this->request->post('title')->filters('trim', 'strip')), PDO::PARAM_STR),
 				array(':description', HELP::wordsProtect($this->request->post('description')->filters('trim', 'strip')), PDO::PARAM_STR),
