@@ -33,7 +33,11 @@ return array(
 	'Remove category'      => 'Usuń kategorię',
 	'Add category'         => 'Dodaj kategorię',
 	'Category title'       => 'Tytuł kategorii',
+	'Category type'		   => 'Typ kategorii',
+	'Normal'			   => 'Zwykła',
+	'URL'				   => 'Adres internetowy',
 	'Category description' => 'Opis kategorii',
+	'Category URL'		   => 'Adres przekierowania',
 	'Category order'       => 'Kolejność kategorii',
 	'Lock this category'   => 'Zablokuj tę kategorię',
 	'Locked'               => 'Zablokowane',
@@ -41,6 +45,7 @@ return array(
 	'Board title'          => 'Tytuł działu',
 	'Board order'          => 'Kolejność działu',
 	'Add board'            => 'Dodaj dział',
+	'optional'			   => 'opcjonalnie',
 
 	'In this category has not been created any thread'   => 'W tej kategorii nie został utworzony żaden wątek',
 	'In this board has not been created any category'    => 'W tym dziale nie została utworzona żadna kategoria',
@@ -48,4 +53,9 @@ return array(
  
 	'No threads have been found' => 'Nie utworzono jeszcze żadnych tematów dyskusyjnych.',
 	'Latest Active Threads' => 'Ostatnio aktywne tematy',
+	
+	'In a moment, you will be redirected to the webpage :adress' => 'Za chwilę zostaniesz przekierowany na stronę :adress',
+	'If you don\'t want to wait, press the button...' => 'Jeśli nie chcesz czekać, kliknij...',
+	
+	'Admin Control Panel' => 'Panel kontroli administratora',
 );

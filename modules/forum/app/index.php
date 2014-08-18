@@ -6,10 +6,12 @@ class Index_Controller extends Forum_Controller {
 	{
 		$board    = $this->model('board');
 		$category = $this->model('category');
+		$move = $this->model('move');
 
 		return $this->view('index', array(
 			'board'    => $board,
 			'category' => $category,
+			'move' => $move
 		));
 	}
 

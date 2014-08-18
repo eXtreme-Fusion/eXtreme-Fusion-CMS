@@ -12,6 +12,11 @@ class Category_Controller extends Forum_Controller {
 		{
 			return $this->router->trace(array('controller' => 'error', 'action' => 404));
 		}
+		
+		if ($category['url'] != NULL)
+		{
+			return $this->router->trace(array('controller' => 'error', 'action' => 403));
+		}
 
 		$threads = $this
 			->model('thread')
