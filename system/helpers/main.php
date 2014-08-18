@@ -527,6 +527,20 @@ Class HELP
 	{
 		return self::$_sbb->parseAllTags($text);
 	}
+	
+	//==================================
+	//PL: Sprawdzanie poprawności adresu URL
+	//==================================
+	public static function checkURL($url, $replace = array('http://', 'https://', 'www.', '/'))
+	{
+		$host = str_replace($replace, NULL, $url);
+	
+		if (checkdnsrr($host) == TRUE)
+		{
+			return true;
+		}
+		return false;
+	}
 
 	/** koniec METODY NAPISANE PRZEZ EF TEAM **/
 
@@ -696,9 +710,10 @@ Class HELP
 	//PL: Przekierowania
 	//EN: Redirects
 	//==================================
-	public static function redirect($location)
+	public static function redirect($location, $time = 0)
 	{
-		header('Location: '.$location);
+		header('Refresh:'.$time.'; URL='.$location);
+		//header('Location: '.$location);
 		exit;
 	}
 
