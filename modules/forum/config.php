@@ -43,6 +43,8 @@ $new_table[2] = array(
 		`description` text,
 		`is_locked` tinyint(1) NOT NULL DEFAULT '0',
 		`order` int(10) NOT NULL,
+		`url` varchar(200) NOT NULL DEFAULT '',
+		`visits` mediumint NOT NULL DEFAULT '0',
 		PRIMARY KEY (`id`)
 	) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;"
 );
