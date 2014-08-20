@@ -14,30 +14,43 @@ class Category_Controller extends Forum_Controller {
 		{
 			return $this->router->trace(array('controller' => 'error', 'action' => 404));
 		}
-		
-		if (!$this->request->post('order')->show())
-		{
-			$order = $this->pdo->getMatchRowsCount('SELECT `id` FROM [board_categories] WHERE `board_id` = '.$id)+1;
-		}
-		else
-		{
-			$order = $this->request->post('order')->show();
-			$_order = $this->pdo->exec('UPDATE [board_categories] SET `order`=`order`+1 WHERE `order`>=:order',
-				array(':order', $order, PDO::PARAM_INT)
-			);
-		}
 
 		if ($this->request->post('title')->show() && $this->request->post('submit')->show())
 		{
-			$_category = $this->pdo->exec('INSERT INTO [board_categories] (`board_id`, `title`, `description`, `is_locked`, `order`) VALUES (:board, :title, :description, :is_locked, :order)', array(
+			if (!$this->request->post('order')->show())
+			{
+				$order = $this->pdo->getMatchRowsCount('SELECT `id` FROM [board_categories] WHERE `board_id` = '.$id)+1;
+			}
+			else
+			{
+				$order = $this->request->post('order')->show();
+				$_order = $this->pdo->exec('UPDATE [board_categories] SET `order`=`order`+1 WHERE `order`>=:order',
+					array(':order', $order, PDO::PARAM_INT)
+				);
+			}
+			
+			$url = '';
+			if ($this->request->post('url')->show())
+			{
+				if (HELP::checkURL($this->request->post('url')->show(), array('http://', 'https://', 'www.')))
+				{
+					$url = $this->request->post('url')->show();
+				}
+			}
+		
+			$_category = $this->pdo->exec('INSERT INTO [board_categories] (`board_id`, `title`, `description`, `is_locked`, `order`, `url`) VALUES (:board, :title, :description, :is_locked, :order, :url)', array(
 				array(':board', $id, PDO::PARAM_INT),
 				array(':title', HELP::wordsProtect($this->request->post('title')->filters('trim', 'strip')), PDO::PARAM_STR),
 				array(':description', HELP::wordsProtect($this->request->post('description')->filters('trim', 'strip')), PDO::PARAM_STR),
 				array(':is_locked', (bool) $this->request->post('is_locked', FALSE)->show(), PDO::PARAM_BOOL),
 				array(':order', $order, PDO::PARAM_INT),
+				array(':url', $url, PDO::PARAM_STR)
 			));
 			
-			$_perm = $this->pdo->exec("INSERT INTO [permissions] (`name`, `description`, `section`, `is_system`) VALUES ('module.forum.".$id.".".HELP::Title2Link($this->request->post('title')->filters('trim', 'strip'))."', 'Moderowanie działu ".$this->request->post('title')->filters('trim', 'strip')."', 6, 0)");
+			if ( ! $this->request->post('url')->show())
+			{
+				$_perm = $this->pdo->exec("INSERT INTO [permissions] (`name`, `description`, `section`, `is_system`) VALUES ('module.forum.".$id.".".HELP::Title2Link($this->request->post('title')->filters('trim', 'strip'))."', 'Moderowanie działu ".$this->request->post('title')->filters('trim', 'strip')."', 6, 0)");
+			}
 
 			if ($_category)
 			{
@@ -126,10 +139,11 @@ class Category_Controller extends Forum_Controller {
 			return $this->router->trace(array('controller' => 'error', 'action' => 404));
 		}
 
-		$d = $this->pdo->getRow('SELECT `board_id`, `order` FROM [board_categories] WHERE `id` = :id', array(':id', $id, PDO::PARAM_INT));
+		$d = $this->pdo->getRow('SELECT `board_id`, `order`, `title` FROM [board_categories] WHERE `id` = :id', array(':id', $id, PDO::PARAM_INT));
 		$board = array(
 			'b_id' => $d['board_id'],
-			'order' => $d['order']
+			'order' => $d['order'],
+			'title' => $d['title']
 		);
 		
 		$_category = $this->pdo->exec('DELETE FROM [board_categories] WHERE `id` = :id',

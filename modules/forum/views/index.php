@@ -14,6 +14,15 @@
 				<?php if ($categories = $category->fetchByID($board['id'])): ?>
 				<?php foreach ($categories as $_category): ?>
 				<tr class="<?php echo $_category['row_color']; ?>">
+					<?php if ($_category['url'] != NULL): ?>
+					<td colspan="3">
+						<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'move', $_category['id'])); ?>" target="_blank" class="text-title"><?php echo $_category['title'] ?></a>
+						<?php if ($description = $_category['description']): ?><p class="text-small"><?php echo $description; ?></p><?php endif; ?>
+					</td>
+					<td class="align-center">
+						Odwiedzin: <?php echo $_category['visits']; ?>
+					</td>
+					<?php else: ?>
 					<td>
 						<a href="<?php echo $this->router->path(array('module' => 'forum', 'controller' => 'category', $_category['id'])); ?>" class="text-title"><?php echo $_category['title']; ?></a>
 						<?php if ($_category['is_locked']): ?><span class="category-locked"><?php echo __('Locked'); ?></span><?php endif; ?>
@@ -29,6 +38,7 @@
 						<?php echo __('None'); ?>
 						<?php endif; ?>
 					</td>
+					<?php endif; ?>
 				</tr>
 				<?php endforeach; ?>
 				<?php else: ?>
