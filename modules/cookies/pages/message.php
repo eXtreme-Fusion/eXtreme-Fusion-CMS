@@ -32,7 +32,7 @@ if ($message === NULL)
 // Sprawdzanie, czy dane istnieją w cache/bazie
 if ($message)
 {
-	$_tpl = new General(dirname(__DIR__).DS.'templates'.DS);
+	$_tpl = new General(dirname(__FILE__).DS.'templates'.DS);
 
 	$_tpl->assign('message', $message);
 
